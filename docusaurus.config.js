@@ -3,7 +3,7 @@ module.exports = {
   title: 'Casdoor',
   tagline: 'A UI-first centralized authentication / Single-Sign-On (SSO) platform based on OAuth 2.0 / OIDC',
   url: 'https://casdoor.github.io',
-  baseUrl: '/casdoor-website/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
