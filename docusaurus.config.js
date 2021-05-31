@@ -29,6 +29,11 @@ module.exports = {
           label: 'GitHub',
           position: 'right',
         },
+        {
+          href: 'https://oa.casbin.com/',
+          label: 'OA',
+          position: 'left',
+        }
       ],
     },
     footer: {
