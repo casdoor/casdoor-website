@@ -9,6 +9,10 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'casdoor', // Usually your GitHub org/user name.
   projectName: 'casdoor-website', // Usually your repo name.
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh-CN', 'fr', 'de', 'jp', 'ko', 'ru'],
+  },
   themeConfig: {
     navbar: {
       title: 'Casdoor',
@@ -33,7 +37,11 @@ module.exports = {
           href: 'https://oa.casbin.com/',
           label: 'OA',
           position: 'left',
-        }
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
       ],
     },
     footer: {
