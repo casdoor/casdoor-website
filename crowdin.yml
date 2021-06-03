@@ -1,5 +1,5 @@
 project_id: '458576'
-api_token: CROWDIN_PERSONAL_TOKEN
+api_token_env: 'CROWDIN_PERSONAL_TOKEN'
 preserve_hierarchy: true
 files: [
     # JSON translation files
