@@ -11,7 +11,7 @@ module.exports = {
   projectName: 'casdoor-website', // Usually your repo name.
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'zh-CN', 'fr', 'de', 'ko', 'ru', 'jp']
+    locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'jp']
   },
   themeConfig: {
     navbar: {
@@ -40,7 +40,7 @@ module.exports = {
         },
         {
           type: 'localeDropdown',
-          position: 'left',
+          position: 'right',
         }
       ],
     },
