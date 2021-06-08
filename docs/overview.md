@@ -7,6 +7,26 @@ Casdoor is a UI-first centralized authentication / [Single-Sign-On (SSO)](https:
 
 Casdoor serves both the web UI and the login requests from the application users.
 
+## Casdoor features:
+
+1. Front-end and back-end separate architecture, developed by Golang, Casdoor supports high concurrency, provides web-based managing UI and supports multiple languages(Chinese, English).
+
+2. Casdoor supports Github, Google, QQ, WeChat third-party applications login, and support the extension of third-party login with plugins.
+
+3. With [Casbin](https://casbin.org/) based authorization management, Casdoor supports ACL, RBAC, ABAC, RESTful accessing control models.
+
+4. Phone verification code, email verification code and forget password features.
+
+5. Accessing logs auditing and recording.
+
+6. Alibaba Cloud, Tencent Cloud, Qiniu Cloud image CDN cloud storage.
+
+7. Customizable register, login, and forget password pages.
+
+8. Casdoor supports integration with existing systems using db sync method, users can transition to Casdoor smoothly.
+
+9. Casdoor supports mainstream databases: MySQL, PostgreSQL, SQL Server etc,  and support the extension of new database with plugins.
+
 ## Online demo
 
 ### Casdoor
