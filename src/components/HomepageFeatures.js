@@ -5,31 +5,28 @@ import styles from './HomepageFeatures.module.css';
 const FeatureList = [
   {
     title: 'Easy to Use',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('../../static/img/model.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Within a few steps, we can setup a Casdoor app and realize our authorization management.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Frontend Backend Separation',
+    Svg: require('../../static/img/storage.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Casdoor has a front-end back-end separation architecture, with maneuverable web UI and supporting high concurrency.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
+    title: 'Supporting Multi-Language',
+    Svg: require('../../static/img/language.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Casdoor is supporting multi-languages, using i18n to support Endlish and Chinese UI. For more language support, welcome to propose in <a href="https://github.com/casbin/">our community</a>.
       </>
     ),
   },

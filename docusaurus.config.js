@@ -6,7 +6,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
   organizationName: 'casdoor', // Usually your GitHub org/user name.
   projectName: 'casdoor-website', // Usually your repo name.
   i18n: {
@@ -14,11 +14,19 @@ module.exports = {
     locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'jp']
   },
   themeConfig: {
+    announcementBar: {
+      id: 'tryout',
+      content:
+        '🚪<a target="_blank" rel="noopener noreferrer" href="https://door.casbin.com/login">Try out the Casdoor online demo</a>🚪',
+      backgroundColor: '#fcffff',
+      textColor: '#000',
+      isCloseable: false,
+    },
     navbar: {
       title: 'Casdoor',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/casbin.svg',
       },
       items: [
         {
@@ -51,17 +59,29 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Overview',
               to: '/docs/overview',
             },
+            {
+              label: 'Get Started',
+              to: '/docs/basic/installation'
+            }
           ],
         },
         {
           title: 'Community',
           items: [
             {
+              label: 'Casbin',
+              href: 'https://casbin.org/'
+            },
+            {
               label: 'Stack Overflow',
               href: 'https://stackoverflow.com/search?q=casbin',
+            },
+            {
+              label: 'Gitter',
+              href: 'https://gitter.im/casbin/Lobby'
             },
             {
               label: 'Twitter',
@@ -83,7 +103,12 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      logo: {
+        alt: 'Casbin Logo',
+        src: 'img/favicon.png',
+        href: 'https://casbin.org/',
+      },
+      copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
     },
   },
   presets: [
