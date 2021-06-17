@@ -14,14 +14,6 @@ module.exports = {
     locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'jp']
   },
   themeConfig: {
-    announcementBar: {
-      id: 'tryout',
-      content:
-        '🚪<a target="_blank" rel="noopener noreferrer" href="https://door.casbin.com/login">Try out the Casdoor online demo</a>🚪',
-      backgroundColor: '#fcffff',
-      textColor: '#000',
-      isCloseable: false,
-    },
     navbar: {
       title: 'Casdoor',
       logo: {
@@ -105,7 +97,7 @@ module.exports = {
       ],
       logo: {
         alt: 'Casbin Logo',
-        src: 'img/favicon.png',
+        src: 'img/casbin.png',
         href: 'https://casbin.org/',
       },
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,

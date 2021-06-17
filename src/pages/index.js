@@ -19,6 +19,11 @@ function HomepageHeader() {
             to="/docs/overview">
             Get Started
           </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="https://door.casbin.com/">
+            Online Demo
+          </Link>
         </div>
       </div>
     </header>
@@ -29,7 +34,7 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title={`A UI-first centralized authentication / Single-Sign-On (SSO) platform based on OAuth 2.0 / OIDC`}
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>
