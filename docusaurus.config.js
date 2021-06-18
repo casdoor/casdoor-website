@@ -27,12 +27,12 @@ module.exports = {
           position: 'left',
           label: 'Docs',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/casbin/casdoor',
-          label: 'GitHub',
-          position: 'right',
+          href: 'https://door.casbin.com/swagger/',
+          label: 'API',
+          position: 'left',
         },
+        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://oa.casbin.com/',
           label: 'OA',
@@ -41,7 +41,13 @@ module.exports = {
         {
           type: 'localeDropdown',
           position: 'right',
-        }
+        },
+        {
+          href: 'https://github.com/casbin/casdoor',
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
+        },
       ],
     },
     footer: {
@@ -57,7 +63,11 @@ module.exports = {
             {
               label: 'Get Started',
               to: '/docs/basic/installation'
-            }
+            },
+            {
+              label: 'Casdoor API',
+              href: 'https://door.casbin.com/swagger/'
+            },
           ],
         },
         {
@@ -92,6 +102,11 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/casbin/casdoor',
             },
+            {
+              html: `
+              <iframe src="https://ghbtns.com/github-btn.html?user=casbin&repo=casdoor&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub">Casdoor</iframe>
+              `
+            },
           ],
         },
       ],
@@ -111,13 +126,13 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/casdoor/casdoor-website/tree/master/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+            'https://github.com/casdoor/casdoor-website/tree/master/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
