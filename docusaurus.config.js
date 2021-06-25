@@ -107,6 +107,25 @@ module.exports = {
               <iframe src="https://ghbtns.com/github-btn.html?user=casbin&repo=casdoor&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub">Casdoor</iframe>
               `
             },
+            {
+              html: `
+              <head>
+              <script>
+              var _hmt = _hmt || [];
+              </script>
+              </head>
+              <body>
+              <script type="text/javascript">
+              (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?2da024e456a28e98936a8ea6a049b295";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+                })();
+                </script>
+                </body>
+              `
+            }
           ],
         },
       ],
