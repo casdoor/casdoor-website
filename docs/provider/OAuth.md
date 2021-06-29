@@ -5,7 +5,7 @@ title: OAuth Providers
 
 Casdoor can uses other OAuth applications as a sign in method.
 
-Now, Casdoor supports `GitHub`, `Google`, `QQ` and `WeChat` as OAuth application providers. Icons of providers will be shown in login and signup pages after adding to Casdoor.
+Now, Casdoor supports `GitHub`, `Google`, `facebook`, `gitee`, `dingtalk`, `weibo`, `QQ` and `WeChat`, as OAuth application providers. Icons of providers will be shown in login and signup pages after adding to Casdoor.
 
 ## Add an OAuth provider
 

@@ -14,15 +14,39 @@ module.exports = {
     'overview',
     {
       type: 'category',
-      label: 'The Basic',
+      label: 'Get Started',
       collapsed: false,
       items: ['basic/installation', 'basic/basic-concept-introduction'],
     },
     {
       type: 'category',
+      label: 'Applications',
+      collapsed: false,
+      items: ['application/overview'],
+    },
+    {
+      type: 'category',
       label: 'Providers',
       collapsed: false,
-      items: ['provider/overview', 'provider/OAuth', 'provider/email', 'provider/sms']
+      items: ['provider/overview', 'provider/OAuth', 'provider/email', 'provider/sms'],
     },
+    {
+      type: 'category',
+      label: 'Organizations',
+      collapsed: false,
+      items: ['organization/overview'],
+    },
+    {
+      type: 'category',
+      label: 'Users',
+      collapsed: false,
+      items: ['user/overview'],
+    },
+    {
+      type: 'category',
+      label: 'Tokens',
+      collapsed: false,
+      items: ['token/overview'],
+    }
   ],
 };

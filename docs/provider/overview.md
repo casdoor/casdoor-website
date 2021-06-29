@@ -1,9 +1,9 @@
 ---
 sidebar_position: 1
-title: Provider Overview
+title: Overview
 ---
 
-Casdoor uses providers to provide services for the platform. In this chapter you will learn how to add providers for Casdoor.
+Casdoor uses providers to provide third-party services for the platform. In this chapter you will learn how to add providers for Casdoor.
 
 Casdoor will only use providers added by the organization owner when it receives a request from a user in the organization.
 
