@@ -11,7 +11,7 @@ module.exports = {
   projectName: 'casdoor-website', // Usually your repo name.
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'jp']
+    locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'ja']
   },
   themeConfig: {
     navbar: {
@@ -27,12 +27,12 @@ module.exports = {
           position: 'left',
           label: 'Docs',
         },
+        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://door.casbin.com/swagger/',
           label: 'API',
           position: 'left',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://oa.casbin.com/',
           label: 'OA',
@@ -41,6 +41,13 @@ module.exports = {
         {
           type: 'localeDropdown',
           position: 'right',
+          dropdownItemsBefore: [],
+          dropdownItemsAfter: [
+            {
+              to: 'https://crowdin.com/project/casdoor',
+              label: 'Help translate',
+            },
+          ],
         },
         {
           href: 'https://github.com/casbin/casdoor',
@@ -131,7 +138,7 @@ module.exports = {
       ],
       logo: {
         alt: 'Casbin Logo',
-        src: 'img/casbin.png',
+        src: 'img/casbin_min.svg',
         href: 'https://casbin.org/',
       },
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
