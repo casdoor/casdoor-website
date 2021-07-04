@@ -26,7 +26,7 @@ const FeatureList = [
     Svg: require('../../static/img/language.svg').default,
     description: (
       <>
-        Casdoor is supporting multi-languages, using i18n to support Endlish and Chinese UI. For more language support, welcome to propose in <a href="https://github.com/casbin/">our community</a>.
+        Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in <a href="https://github.com/casbin/">our community</a>.
       </>
     ),
   },
