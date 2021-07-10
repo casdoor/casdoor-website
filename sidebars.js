@@ -47,6 +47,12 @@ module.exports = {
       label: 'Tokens',
       collapsed: false,
       items: ['token/overview'],
+    },
+    {
+      type: 'category',
+      label: 'Deploy',
+      collapsed: false,
+      items: ['deploy/nginx'],
     }
   ],
 };

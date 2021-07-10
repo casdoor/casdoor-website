@@ -139,4 +139,15 @@ Well done, next visit http://127.0.0.1:7001 in your favorite browser, if you can
   - `driverName`, `dataSourceName` and `dbName` are introduced before, so wont't repeat.
   - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
+  
+- If casdoor needs to be publicly accessible(possess public IP), also need to modify `web/src/auth/Auth.js`:
+
+  ```javascript
+  export let authConfig = {
+    serverUrl: "http://example.com", // your Casdoor URL, like the official one: https://door.casbin.com, or http:1.1.1.1:8000
+    ...
+  }
+  ```
+
+  
 
