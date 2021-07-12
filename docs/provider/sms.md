@@ -10,5 +10,5 @@ We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send
 1. Add a new provider the same way we mentioned in [OAuth](/docs/provider/OAuth)
 2. Select `Phone` in `Category`
 3. Select your provider type (`Aliyun` or `Tencent Cloud`)
-4. Get your information from Aliyun or Tencent Cloud and fill them
+4. Get your information from Aliyun or Tencent Cloud and fill them out
 

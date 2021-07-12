@@ -53,6 +53,7 @@ module.exports = {
       label: 'Deploy',
       collapsed: false,
       items: ['deploy/nginx'],
-    }
+    },
+    'internationalization'
   ],
 };

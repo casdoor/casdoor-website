@@ -3,6 +3,15 @@ sidebar_position: 1
 title: Set up Casdoor
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Requirement
+
+* [Golang](https://golang.org/dl/)
+* [Node.js](https://nodejs.org/en/download/)
+* [yarn](https://yarnpkg.com/en/), both **npm** and **yarn** are fine
+
 ## Installation
 
 It is very simple to install Casdoor, you can use `go get`
@@ -19,7 +28,7 @@ git clone https://github.com/casbin/casdoor
 
 ## Config
 
-All configures are placed in `conf/`, including `app.conf` and `oss.conf`. The former stores application-related infomation, while the latter only stores OSS-related configuration. You can modify two files to set all configures.
+All configures are placed in `conf/`, including `app.conf` and `oss.conf`. The former stores application-related information, while the latter only stores OSS-related configuration. You can modify two files to set all configures.
 
 But for the first time of use, you don’t need to figure out everything, which will be introduced later. Now you just need a few simple configures to run casdoor on your personal computer.
 
@@ -27,7 +36,7 @@ Nevertheless, the database info should be configured first. Casdoor uses [XORM](
 
 - Setup database (MySQL):
 
-  Casdoor will store its users, nodes and topics informations in a MySQL database named: `casdoor`, will create it if not existed. The DB connection string can be specified at: https://github.com/casbin/casdoor/blob/master/conf/app.conf
+  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`, will create it if not existed. The DB connection string can be specified at: https://github.com/casbin/casdoor/blob/master/conf/app.conf
 
   ```ini
   driverName = mysql
@@ -51,40 +60,96 @@ Nevertheless, the database info should be configured first. Casdoor uses [XORM](
 
 - Other database...
 
-## Run
+## Run (Dev Environment)
 
 After completing the above simple configuration steps, you can run Casdoor. Casdoor has a front-end back-end separation architecture. The frontend uses javascript and React, backend uses [beego](https://beego.me/) and xorm.
 
 ### backend
+Start with the backend part, we start the backend server:
 
-```shell
+```bash
 go run main.go
 ```
 
-Or build first, and run:
-
-```shell
-go build && ./main
-```
+After the server is successfully running on the specific port, then we start the frontend part.
 
 ### frontend
 
 Casdoor's package management tool uses npm and yarn, so you can choose any. Open a new terminal and run:
 
-```sh
-cd web
+<Tabs
+  defaultValue="yarn"
+  values={[
+    { label: 'Yarn', value: 'yarn', },
+    { label: 'npm', value: 'npm', },
+  ]
+}>
 
-## npm
-npm install
-npm run start
+<TabItem value="yarn">
 
-## yarn
+```bash
 yarn install
 yarn run start
 ```
 
-Well done, next visit http://127.0.0.1:7001 in your favorite browser, if you can see login page of Casdoor, it means everything is ok!
+</TabItem>
 
+<TabItem value="npm">
+
+```bash
+npm install
+npm run start
+```
+
+</TabItem>
+
+</Tabs>
+
+Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
+
+## Run (Production Environment)
+
+### Frontend
+
+Build static pages:
+
+<Tabs
+  defaultValue="yarn"
+  values={[
+    { label: 'Yarn', value: 'yarn', },
+    { label: 'npm', value: 'npm', },
+  ]
+}>
+<TabItem value="yarn">
+
+```bash
+yarn run build
+```
+
+</TabItem>
+
+<TabItem value="npm">
+
+```bash
+npm run build
+```
+
+</TabItem>
+</Tabs>
+
+### Backend
+
+We build the project and there will be an executable file **casdoor**, then we start the service:
+
+```bash
+go build && ./casdoor
+```
+
+Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you can see login page of Casdoor, it means everything is ok!
+
+:::tip
+To customize the port, please edit the ```conf/app.conf``` file to set another port to set up Casdoor.
+:::
 ## Some details
 
 - Github corner
@@ -104,7 +169,7 @@ Well done, next visit http://127.0.0.1:7001 in your favorite browser, if you can
 
   We use an OSS to store and provide user avatars. You must modify the file `conf/oss.conf` to tell the backend your OSS info. For OSS providers, we support Aliyun(`[aliyun]`), awss3(`[s3]`) now.
 
-  ```
+  ```conf
   [provider]
   accessId = id
   accessKey = key
@@ -118,7 +183,7 @@ Well done, next visit http://127.0.0.1:7001 in your favorite browser, if you can
 
   `conf/app.conf` stores the important configuration of casdoor, which is very helpful for you to use Casdoor better.
 
-  ```
+  ```json
   appname = casdoor
   httpport = 8000
   runmode = dev
@@ -134,9 +199,9 @@ Well done, next visit http://127.0.0.1:7001 in your favorite browser, if you can
 
   - `appname` is the application name, which currently has no practical use
   - `httpport` is the port that your back-end application is listening on
-  - `rundev` is `dev` or `prod`
-  - `SessionOn` decides whether to enable session,used by default
-  - `driverName`, `dataSourceName` and `dbName` are introduced before, so wont't repeat.
+  - `runmode` is `dev` or `prod`
+  - `SessionOn` decides whether to enable session,used by default.
+  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
   - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
   

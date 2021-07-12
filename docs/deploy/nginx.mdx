@@ -2,6 +2,10 @@
 sidebar_position: 1
 title: Nginx
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Although Casdoor is a front-end back-end separation architecture, in the production environment, the back-end program still provides static file services for front-end files. Therefore, you can use reverse proxy software such as [Nginx](https://www.nginx.com/) to proxy all traffic for the Casdoor domain and redirect it to the port monitored by the backend go program.
 
 In this chapter you will learn how to use Nginx to reverse proxy your backend Go program, quickly start the Casdoor service.
@@ -12,10 +16,30 @@ Now assume that you have downloaded Casdoor and completed the necessary configur
 
 You only needs to build static files, like this:
 
-```sh
-cd web/
+<Tabs
+  defaultValue="yarn"
+  values={[
+    { label: 'Yarn', value: 'yarn', },
+    { label: 'npm', value: 'npm', },
+  ]
+}>
+
+<TabItem value="yarn">
+
+```bash
+yarn install && yarn run build
+```
+
+</TabItem>
+
+<TabItem value="npm">
+
+```bash
 npm install && npm run build
 ```
+</TabItem>
+
+</Tabs>
 
 ## 2. Run the back end program
 
@@ -31,7 +55,7 @@ go build && ./main
 
 ## 3. Configure and run Nginx
 
-```sh
+```bash
 vim /path/to/nginx/nginx.conf
 ```
 
@@ -53,7 +77,7 @@ server {
 
 Then restart your nginx process, in CentOS7, run:
 
-```sh
+```bash
 systemctl restart nginx
 ```
 
