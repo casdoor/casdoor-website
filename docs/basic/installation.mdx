@@ -3,9 +3,6 @@ sidebar_position: 1
 title: Set up Casdoor
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 ## Requirement
 
 * [Golang](https://golang.org/dl/)
@@ -77,6 +74,11 @@ After the server is successfully running on the specific port, then we start the
 
 Casdoor's package management tool uses npm and yarn, so you can choose any. Open a new terminal and run:
 
+````mdx-code-block
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 <Tabs
   defaultValue="yarn"
   values={[
@@ -105,6 +107,8 @@ npm run start
 
 </Tabs>
 
+````
+
 Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
 
 ## Run (Production Environment)
@@ -112,6 +116,8 @@ Open your favorite browser and visit **http://localhost:7001**, you will see the
 ### Frontend
 
 Build static pages:
+
+````mdx-code-block
 
 <Tabs
   defaultValue="yarn"
@@ -137,6 +143,8 @@ npm run build
 </TabItem>
 </Tabs>
 
+````
+
 ### Backend
 
 We build the project and there will be an executable file **casdoor**, then we start the service:
@@ -150,6 +158,7 @@ Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you
 :::tip
 To customize the port, please edit the ```conf/app.conf``` file to set another port to set up Casdoor.
 :::
+
 ## Some details
 
 - Github corner
@@ -213,6 +222,3 @@ To customize the port, please edit the ```conf/app.conf``` file to set another p
     ...
   }
   ```
-
-  
-
