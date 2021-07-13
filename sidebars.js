@@ -54,6 +54,12 @@ module.exports = {
       collapsed: false,
       items: ['deploy/nginx'],
     },
+    {
+      type: 'category',
+      label: 'LDAP',
+      collapsed: false,
+      items: ['ldap/overview', 'ldap/config'],
+    },
     'internationalization'
   ],
 };
