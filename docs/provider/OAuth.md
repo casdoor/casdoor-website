@@ -26,54 +26,64 @@ OK, Next you can choose the third-party platform you need. We will show you the 
 
 ### Google:heavy_check_mark:
 
+To obtain OAuth 2.0 client credential, you can visit [Google API console](https://console.developers.google.com) and log in using your Google account, follow the instructions of Google Cloud Platform, and get your Client Id and Client Secret.
 
+:::tip
+For more detailed usages, please visit [Google Identity Platform](https://developers.google.com/identity) to know more about Google OAuth verification.
+:::
 
 ### GitHub:heavy_check_mark:
 
-
+GitHub OAuth support both web application flow and device flow, to obtain OAuth credential, please visit [GitHub docs](https://docs.github.com/en/rest/guides/basics-of-authentication) to get more information.
 
 ### Facebook:heavy_check_mark:
 
+To obtain Facebook OAuth 2.0 client credential, please visit [Facebook for developers](https://developers.facebook.com/), create a Facebook developer account and follow the instructions of Facebook developer platform to get your client id and client secret.
 
-
-### Twitter(still woking🚧)
+###  Twitter(still working🚧)
 
 > Twitter’s application steps are somewhat troublesome, and the official restrictions are a bit strict, so it may be more difficult to apply for a developer account than other third-party platforms.
 
-Visit [Develeper Portal](https://developer.twitter.com/en/portal/dashboard), register if you don't have an account. Twitter needs to know what you are applying for a developer account for. You must fill in it carefully, otherwise it will not pass.
+Visit [Developer Portal](https://developer.twitter.com/en/portal/dashboard), register if you don't have an account. Twitter needs to know what you are applying for a developer account for. You must fill in it carefully, otherwise it will not pass.
 
 After the application is approved, create an application, fill in the callback address and other information, you need to do two things, which will be set is **Authentication settings** section.
 
 - Manually turn on **3-legged OAuth**, for Sign in with Twitter, posting Tweets on behalf of other accounts and more.
 - Enable **Request email address from users**, for getting user email address.
 
-### LinkedIn:heavy_check_mark:
+###  LinkedIn:heavy_check_mark:
 
-
+Visit [LinkedIn developers website](https://www.linkedin.com/developers/), follow the instructions on LinkedIn developers platform and fill the form, then you can get your Client Id and Client Secret.
 
 ### Weibo:heavy_check_mark:
 
 Weibo's developer account application is not difficult, but the speed is relatively slow, it takes about 2-3 days.
 
-Visit [Develeper Website](https://open.weibo.com/developers/basicinfo), filling in basic infomation and waiting for a long review...
+Visit [Developer Website](https://open.weibo.com/developers/basicinfo), filling in basic information and waiting for a long review...
 
 After the review is approved, you can get the Client Id and Client Secret.
 
-### Wechat:heavy_check_mark:
+### WeChat:heavy_check_mark:
 
+Visit [WeChat developer platform](https://open.weixin.qq.com/), register as a developer, after your web application or your mobile application is approved, then you get you App Id and App Secret.
 
+For more detailed information, please visit [WeChat Open Platform](https://developers.weixin.qq.com/doc/oplatform/en/Website_App/WeChat_Login/Wechat_Login.html).
 
 ### Tencent QQ:heavy_check_mark:
 
+Visit authentication platform of QQ - [Connect QQ](https://connect.qq.com/manage.html#/).
 
+First you need to apply to [become a developer](https://wiki.connect.qq.com/%E6%88%90%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85), after the review is approved, follow the instructions of the platform and get your Client Id and Client Secret.
 
 ### DingTalk:heavy_check_mark:
 
+Visit [DingTalk developer platform](https://open-dev.dingtalk.com/?spm=ding_open_doc.document.0.0.140a645fxfAUAE#/loginMan) and log in using your DingTalk account, after enter the platform, follow the instructions of the platform and you will get your Client Id and Client Secret.
 
+For more detailed information please visit [DingTalk developer docs](https://developers.dingtalk.com/document/app/obtain-identity-credentials).
 
 ### Gitee:heavy_check_mark:
 
-Visit [official website](https://gitee.com/api/v5/oauth_doc#/list-item-3) , which has shown the specific application steps, and after filling in, you can get the most important information, ClientId and ClientSecret.
+Visit [official website](https://gitee.com/api/v5/oauth_doc#/list-item-3), which has shown the specific application steps, and after filling in, you can get the most important information, Client Id and Client Secret.
 
 ## Add an OAuth provider
 
