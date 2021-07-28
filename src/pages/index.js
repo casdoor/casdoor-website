@@ -16,11 +16,13 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
+            style={{marginTop: "2rem", marginRight: "2rem", marginLeft: "2rem"}}
             to="/docs/overview">
             Get Started
           </Link>
           <Link
             className="button button--secondary button--lg"
+            style={{marginTop: "2rem", marginRight: "2rem", marginLeft: "2rem"}}
             to="https://door.casbin.com/">
             Online Demo
           </Link>

@@ -22,9 +22,5 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 40px;
-  margin-bottom: auto;
-  margin: 40px, 40px, 40px, 40px;
-  margin-left: 34%;
-  margin-right: 34%;
+  align-items: center;
 }
