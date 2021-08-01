@@ -6,7 +6,7 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: 1rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -23,4 +23,27 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.contentlogin {
+  padding: 60px 0;
+  font-size: 1.3rem;
+  justify-content: center;
+  background-color: #f7f7f7;
+  line-height: 40px;
+}
+
+.contentsignup {
+  padding: 60px 0;
+  font-size: 1.3rem;
+  justify-content: center;
+  line-height: 40px;
+}
+
+.contentforget {
+  padding: 60px 0;
+  font-size: 1.3rem;
+  justify-content: center;
+  background-color: #f7f7f7;
+  line-height: 40px;
 }
