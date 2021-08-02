@@ -16,7 +16,7 @@ module.exports = {
       type: 'category',
       label: 'Get Started',
       collapsed: false,
-      items: ['basic/installation', 'basic/basic-concept-introduction'],
+      items: ['basic/installation', 'basic/basic-concept-introduction', 'basic/SDKs'],
     },
     {
       type: 'category',
