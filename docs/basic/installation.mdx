@@ -60,7 +60,7 @@ Nevertheless, the database info should be configured first. Casdoor uses [XORM](
 ## Run through Docker
 - Install Docker and Docker-compose,you see [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
 - vi casdoor/conf/app.conf
-- Modify dataSourceName = root:123@tcp(localhost:3306)/ to dataSourceName = root:123@tcp(db:3306)/
+- Modify dataSourceName = root:123@tcp(localhost:3306)/ to dataSourceName = root:123@tcp(`db`:3306)/
 - Execute the following command
   ```shell
   docker-compose up
@@ -68,6 +68,9 @@ Nevertheless, the database info should be configured first. Casdoor uses [XORM](
 - Open browser:
 
   http://localhost:8000/
+:::tip
+mysql and casdoor are in different docker containers.
+:::
 
 ## Run (Dev Environment)
 
