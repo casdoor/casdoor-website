@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Install Guide
+
 ---
 
 ## Requirement
@@ -70,6 +71,7 @@ According to actual needs, it is divided into `dev` mode and `prod` mode
 After completing the above simple configuration steps, you can run Casdoor. Casdoor has a front-end back-end separation architecture. The frontend uses javascript and React, backend uses [beego](https://beego.me/) and xorm.
 
 ##### Backend
+
 You can start the backend server with this command,
 
 ```bash
@@ -125,7 +127,6 @@ Open your favorite browser and visit **http://localhost:7001**, you will see the
 Build static pages:
 
 ````mdx-code-block
-
 <Tabs
   defaultValue="yarn"
   values={[
@@ -175,15 +176,16 @@ To customize the port, please edit the ```conf/app.conf``` file to set another p
 - Modify `dataSourceName = root:123@tcp(localhost:3306)/` to `dataSourceName = root:123@tcp(`db`:3306)/`
 
 - Execute the following command
+
   ```shell
   docker-compose up
   ```
-  
+
 - Open browser:
 
   http://localhost:8000/
   :::tip
-  
+
   - `MySQL` and `Casdoor server` are in different docker containers.
   - After modifying `conf/app.conf`, re-execute `docker-compose up`
 
@@ -200,7 +202,7 @@ To customize the port, please edit the ```conf/app.conf``` file to set another p
 
     ```javascript
   export const ShowGithubCorner = true
-
+  
   export const GithubRepo = "https://github.com/casbin/casdoor" //your github repository
     ```
 
@@ -243,7 +245,7 @@ To customize the port, please edit the ```conf/app.conf``` file to set another p
   - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
   - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
-  
+
 - If casdoor needs to be publicly accessible(possess public IP), also need to modify `web/src/auth/Auth.js`:
 
   ```javascript
@@ -252,3 +254,63 @@ To customize the port, please edit the ```conf/app.conf``` file to set another p
     ...
   }
   ```
+
+  ## Build & Publish (using nginx in linux)
+
+  Before building and publishing, we should do these things first:
+
+  - Install go (The version can not lower than 1.14). 
+    - https://golang.org/doc/install
+    - http://docscn.studygolang.com/doc/install (for Chinese)
+  - Install yarn (Since the installation process of yarn is parallel, the speed of yarn is much faster than npm)
+    - https://classic.yarnpkg.com/en/docs/install/#windows-stable
+    - https://yarn.bootcss.com/docs/install/#windows-stable (for Chinese)
+  - Install nginx: `sudo apt-get install nginx`
+
+  ### Build Forentend
+
+  ```bash
+  $ cd web/
+  $ yarn  # install the dependencies
+  $ yarn build  # build the forentend, the output path should be: "/casdoor/web/build"
+  ```
+
+  ### Build & Run Backend
+
+  ```bash
+  $ cd ..
+  $ go mod tidy	# install the dependencies
+  $ go build main.go	# build
+  $ ./main	# run Backend (default port is 8000)
+  ```
+
+  ### Setup Nginx
+
+  #### Edit nginx.conf
+
+  Generally speaking, you could find this file: "/etc/nginx/nginx.conf"
+
+  ```nginx
+  server {
+      listen          80;		# listen on port 80
+  
+      if ($http_user_agent ~ MSIE){
+          return 403;
+      }
+  
+      location / {
+          index index.html;	
+          root /casdoor/web/build;	# the Frontend build files path
+          try_files $uri $uri/ /index.html;	# importent
+      }
+  
+  
+      location /api {
+          proxy_pass        http://127.0.0.1:8000/api;	# the endpoint + "/api", in this case, endpoint is "localhost"
+          proxy_set_header  X-Real-IP  $remote_addr;
+      }
+  }
+  ```
+
+  
+
