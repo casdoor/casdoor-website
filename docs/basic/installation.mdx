@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Set up Casdoor
+title: Install Guide
 ---
 
 ## Requirement
@@ -57,40 +57,32 @@ Nevertheless, the database info should be configured first. Casdoor uses [XORM](
 
 - Other database...
 
-## Run through Docker
-- Install Docker and Docker-compose,you see [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
-- vi casdoor/conf/app.conf
-- Modify dataSourceName = root:123@tcp(localhost:3306)/ to dataSourceName = root:123@tcp(`db`:3306)/
-- Execute the following command
-  ```shell
-  docker-compose up
-  ```
-- Open browser:
+## Run
 
-  http://localhost:8000/
-:::tip
-mysql and casdoor are in different docker containers.
-:::
+There are currently two methods to start, you can choose one according to your own situation.
 
-## Run (Dev Environment)
+### Manully
+
+According to actual needs, it is divided into `dev` mode and `prod` mode
+
+#### Dev Environment
 
 After completing the above simple configuration steps, you can run Casdoor. Casdoor has a front-end back-end separation architecture. The frontend uses javascript and React, backend uses [beego](https://beego.me/) and xorm.
 
-### backend
-Start with the backend part, we start the backend server:
+##### Backend
+You can start the backend server with this command,
 
 ```bash
 go run main.go
 ```
 
-After the server is successfully running on the specific port, then we start the frontend part.
+After the server is successfully running on the specific port, then we can start the frontend part.
 
-### frontend
+##### Frontend
 
 Casdoor's package management tool uses npm and yarn, so you can choose any. Open a new terminal and run:
 
 ````mdx-code-block
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -126,9 +118,9 @@ npm run start
 
 Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
 
-## Run (Production Environment)
+#### Produnction Environment
 
-### Frontend
+##### Frontend
 
 Build static pages:
 
@@ -160,7 +152,7 @@ npm run build
 
 ````
 
-### Backend
+##### Backend
 
 We build the project and there will be an executable file **casdoor**, then we start the service:
 
@@ -173,6 +165,29 @@ Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you
 :::tip
 To customize the port, please edit the ```conf/app.conf``` file to set another port to set up Casdoor.
 :::
+
+### Docker
+
+- Install `Docker` and `Docker-compose`, refer to [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
+
+- vi conf/app.conf
+
+- Modify `dataSourceName = root:123@tcp(localhost:3306)/` to `dataSourceName = root:123@tcp(`db`:3306)/`
+
+- Execute the following command
+  ```shell
+  docker-compose up
+  ```
+  
+- Open browser:
+
+  http://localhost:8000/
+  :::tip
+  
+  - `MySQL` and `Casdoor server` are in different docker containers.
+  - After modifying `conf/app.conf`, re-execute `docker-compose up`
+
+  :::
 
 ## Some details
 
