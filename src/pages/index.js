@@ -30,7 +30,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/login" width="600" height= "590" scrolling="no"></iframe>
+      <iframe style={{marginRight: "140px", transform: "scale(0.9)"}} src="https://door.casbin.com/login" width="600" height= "590" frameborder="0" scrolling="no"></iframe>
     </header>
   );
 }
@@ -56,7 +56,7 @@ function ContentLogin() {
           And if your want more providers, please propose it in <Link href="https://github.com/casbin/casdoor">our Casdoor community</Link>
           </div>
           <div>
-            <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/login" width="600" height= "590" scrolling="no"></iframe>
+            <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/login" width="600" height= "590" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@ function ContentSignup() {
       <div className="container text--center">
         <div className="row">
         <div>
-            <iframe style={{marginRight: "30px", transform: "scale(0.85)"}} src="https://door.casbin.com/signup" width="600" height= "700" scrolling="no"></iframe>
+            <iframe style={{marginRight: "30px", transform: "scale(0.85)"}} src="https://door.casbin.com/signup" width="600" height= "700" frameborder="0" scrolling="no"></iframe>
           </div>
           <div className="col">
           Casdoor also support sign up directly. By filling your <b>Username</b>, <b>Display name</b>, <b>Password</b> and <b>Email</b>, after your receive your <b>Email code</b>, you can sign up in Casdoor, 
@@ -94,7 +94,7 @@ function ContentForget() {
             </p>
           </div>
           <div>
-            <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/forget" width="600" height= "580" scrolling="no"></iframe>
+            <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/forget" width="600" height= "580" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
