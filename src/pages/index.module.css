@@ -21,7 +21,7 @@
 .buttons {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
@@ -46,4 +46,17 @@
   justify-content: center;
   background-color: #f7f7f7;
   line-height: 40px;
+}
+
+.headerborder {
+  transform: scale(0.85);
+  height: 620px;
+  margin-right: 120px;
+  box-shadow: 0 0 50px black;
+}
+
+.gradientborder {
+  transform: scale(0.85);
+  height: 620px;
+  box-shadow: 0 0 50px grey;
 }
