@@ -18,19 +18,21 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            style={{marginTop: "2rem", marginRight: "2rem", marginLeft: "2rem"}}
+            style={{marginTop: "2rem", marginRight: "3rem", marginLeft: "3rem"}}
             to="/docs/overview">
             Get Started
           </Link>
           <Link
             className="button button--secondary button--lg"
-            style={{marginTop: "2rem", marginRight: "2rem", marginLeft: "2rem"}}
+            style={{marginTop: "2rem", marginRight: "3rem", marginLeft: "3rem"}}
             to="https://door.casbin.com/">
             Online Demo
           </Link>
         </div>
       </div>
-      <iframe style={{marginRight: "140px", transform: "scale(0.9)"}} src="https://door.casbin.com/login" width="600" height= "590" frameborder="0" scrolling="no"></iframe>
+      <div className={styles.headerborder}>
+      <iframe src="https://door.casbin.com/login" width="550" height= "600" frameborder="0" scrolling="no"></iframe>
+      </div>
     </header>
   );
 }
@@ -55,8 +57,8 @@ function ContentLogin() {
           <br />
           And if your want more providers, please propose it in <Link href="https://github.com/casbin/casdoor">our Casdoor community</Link>
           </div>
-          <div>
-            <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/login" width="600" height= "590" frameborder="0" scrolling="no"></iframe>
+          <div className={styles.gradientborder}>
+            <iframe src="https://door.casbin.com/login" width="600" height= "580" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
@@ -69,8 +71,8 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-        <div>
-            <iframe style={{marginRight: "30px", transform: "scale(0.85)"}} src="https://door.casbin.com/signup" width="600" height= "700" frameborder="0" scrolling="no"></iframe>
+        <div className={styles.gradientborder}>
+            <iframe src="https://door.casbin.com/signup" width="600" height= "620" frameborder="0" scrolling="no"></iframe>
           </div>
           <div className="col">
           Casdoor also support sign up directly. By filling your <b>Username</b>, <b>Display name</b>, <b>Password</b> and <b>Email</b>, after your receive your <b>Email code</b>, you can sign up in Casdoor, 
@@ -93,8 +95,8 @@ function ContentForget() {
             To retrieve your password, you can enter your username, email or phone linked to your account and enter the verification code sent to your email or your phone, enter your new password and confirm to reset your new password.
             </p>
           </div>
-          <div>
-            <iframe style={{marginRight: "30px", transform: "scale(0.9)"}} src="https://door.casbin.com/forget" width="600" height= "580" frameborder="0" scrolling="no"></iframe>
+          <div className={styles.gradientborder}>
+            <iframe src="https://door.casbin.com/forget" width="600" height= "580" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
