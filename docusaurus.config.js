@@ -27,6 +27,7 @@ module.exports = {
         alt: 'My Site Logo',
         src: 'img/casbin.svg',
       },
+      hideOnScroll: true,
       items: [
         {
           type: 'doc',
@@ -149,6 +150,7 @@ module.exports = {
       },
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
     },
+    hideableSidebar: true,
   },
   presets: [
     [

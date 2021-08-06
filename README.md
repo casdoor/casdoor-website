@@ -92,8 +92,7 @@ non-documentation pages of the site, such as the homepage.
 
 ### Test the change
 
-1.  If possible, test any visual changes in all latest versions of common
-    browsers, on both desktop and mobile.
+If possible, test any visual changes in all latest versions of common browsers, on both desktop and mobile.
 
 ### Push it
 
@@ -111,16 +110,17 @@ non-documentation pages of the site, such as the homepage.
 
 ## Translation
 
-[Crowdin](https://crowdin.com/project/casdoor) is used for Casdoor website's translation. You can contribute to the translation of your proficient languages on that.
+[Crowdin](https://crowdin.com/project/casdoor) is used for Casdoor website's translation. For more technical details, please see how [Docusaurus using Crowdin](https://docusaurus.io/docs/i18n/crowdin).  You can contribute to the translation of your proficient languages on that. The Crowdin translation project is [Casdoor](https://crowdin.com/project/casdoor), welcome to add new translations and propose in our community to add more language supports.
 
 ### Build the translation project locally
+
 Please contact the Casdoor team for manager access on Crowdin.
 
-### Manually trigger Crowdin [DEPRECATED]
+### Manually trigger Crowdin:
 
 - Install Crowdin CLI:
 
-https://support.crowdin.com/cli-tool/
+  https://support.crowdin.com/cli-tool/
 
 - Setup environment variable:
 
@@ -138,6 +138,12 @@ yarn run crowdin upload
 
 ```
 yarn run crowdin download
+```
+
+Docusaurus provide [a script to automate](https://docusaurus.io/docs/i18n/crowdin#automate-with-ci) the write translations, upload and download translations from Crowdin:
+
+```
+yarn run crowdin:sync
 ```
 
 ## License
