@@ -31,7 +31,7 @@ function HomepageHeader() {
         </div>
       </div>
       <div className={styles.headerborder}>
-      <iframe src="https://door.casbin.com/login" width="550" height= "600" frameborder="0" scrolling="no"></iframe>
+      <iframe src="https://door.casbin.com/login" width="550" height= "620" frameborder="0" scrolling="no">Your browser</iframe>
       </div>
     </header>
   );
@@ -58,7 +58,7 @@ function ContentLogin() {
           And if your want more providers, please propose it in <Link href="https://github.com/casbin/casdoor">our Casdoor community</Link>
           </div>
           <div className={styles.gradientborder}>
-            <iframe src="https://door.casbin.com/login" width="600" height= "580" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://door.casbin.com/login" width="600" height= "620" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ function ContentForget() {
             </p>
           </div>
           <div className={styles.gradientborder}>
-            <iframe src="https://door.casbin.com/forget" width="600" height= "580" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://door.casbin.com/forget" width="600" height= "620" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
