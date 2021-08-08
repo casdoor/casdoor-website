@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: OAuth Providers
+title: OAuth
 ---
 
 Casdoor can uses other OAuth applications as a sign in method.

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: SMS Providers
+title: SMS
 ---
 
 We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send SMS for Casdoor. Now, `go-sms-sender` supports Aliyun and Tencent Cloud SMS APIs. You can raise an issue, or make a pull request if you want to support other SMS providers.

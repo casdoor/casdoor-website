@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Email Providers
+title: Email
 ---
 
 ## Add an Email provider
