@@ -1,3 +1,6 @@
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Casdoor',
@@ -149,6 +152,10 @@ module.exports = {
         href: 'https://casbin.org/',
       },
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
     },
     hideableSidebar: true,
   },
