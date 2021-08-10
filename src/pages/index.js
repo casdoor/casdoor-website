@@ -31,7 +31,7 @@ function HomepageHeader() {
         </div>
       </div>
       <div className={styles.headerborder}>
-      <iframe src="https://door.casbin.com/login" width="550" height= "620" frameborder="0" scrolling="no">Your browser</iframe>
+      <iframe src="https://door.casbin.com/login" width="550" height= "620" frameborder="0" scrolling="no"></iframe>
       </div>
     </header>
   );
