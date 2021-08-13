@@ -25,27 +25,24 @@
   align-items: center;
 }
 
-.contentlogin {
+@mixin content {
   padding: 60px 0;
   font-size: 1.3rem;
   justify-content: center;
   background-color: var(--ifm-color-emphasis-100);
   line-height: 40px;
+}
+
+.contentlogin {
+  @include content;
 }
 
 .contentsignup {
-  padding: 60px 0;
-  font-size: 1.3rem;
-  justify-content: center;
-  line-height: 40px;
+  @include content;
 }
 
 .contentforget {
-  padding: 60px 0;
-  font-size: 1.3rem;
-  justify-content: center;
-  background-color: var(--ifm-color-emphasis-100);
-  line-height: 40px;
+  @include content;
 }
 
 .headerborder {
