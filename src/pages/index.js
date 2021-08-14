@@ -57,8 +57,8 @@ function ContentLogin() {
           <br />
           And if your want more providers, please propose it in <Link href="https://github.com/casbin/casdoor">our Casdoor community</Link>
           </div>
-          <div className={styles.gradientborder}>
-            <iframe src="https://door.casbin.com/login" width="600" height= "620" frameborder="0" scrolling="no"></iframe>
+          <div className={styles.signingradientborder}>
+            <iframe src="https://door.casbin.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "660" frameborder="0" scrolling="no"></iframe>
           </div>
         </div>
       </div>
