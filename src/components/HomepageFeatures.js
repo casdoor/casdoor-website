@@ -1,32 +1,42 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
-
+import Translate, {translate} from '@docusaurus/Translate';
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: translate({
+          message: 'Easy to Use',
+    }),
     Svg: require('../../static/img/model.svg').default,
     description: (
       <>
+      <Translate>
         Within a few steps, we can setup a Casdoor app and realize our authorization management.
+        </Translate>
       </>
     ),
   },
   {
-    title: 'Frontend Backend Separation',
+    title: translate({
+          message: 'Frontend Backend Separation',
+    }),
     Svg: require('../../static/img/storage.svg').default,
     description: (
       <>
+      <Translate>
         Casdoor has a front-end back-end separation architecture, with maneuverable web UI and supporting high concurrency.
+        </Translate>
       </>
     ),
   },
   {
-    title: 'Supporting Multi-Language',
+    title: translate({
+          message: 'Supporting Multi-Language',
+    }),
     Svg: require('../../static/img/language.svg').default,
     description: (
       <>
-        Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in <a href="https://github.com/casbin/">our community</a>.
+      <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casbin/"><Translate>our community</Translate></a>.
       </>
     ),
   },
