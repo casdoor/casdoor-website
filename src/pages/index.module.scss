@@ -29,12 +29,12 @@
   padding: 60px 0;
   font-size: 1.3rem;
   justify-content: center;
-  background-color: var(--ifm-color-emphasis-100);
   line-height: 40px;
 }
 
 .contentlogin {
   @include content;
+  background-color: var(--ifm-color-emphasis-100);
 }
 
 .contentsignup {
@@ -43,6 +43,7 @@
 
 .contentforget {
   @include content;
+  background-color: var(--ifm-color-emphasis-100);
 }
 
 .headerborder {
@@ -55,5 +56,12 @@
 .gradientborder {
   transform: scale(0.85);
   height: 620px;
+  box-shadow: 0 0 50px grey;
+}
+
+/*Due to the height of sign iframe, a new style is created here*/
+.signingradientborder {
+  transform: scale(0.85);
+  height: 660px;
   box-shadow: 0 0 50px grey;
 }
