@@ -151,6 +151,7 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
     },
     prism: {
+      additionalLanguages: ['nginx'],
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
