@@ -12,9 +12,24 @@
   overflow: hidden;
 }
 
-@media screen and (max-width: 966px) {
-  .heroBanner {
-    padding: 2rem;
+@media only screen and (max-width: 996px) {
+    .heroBanner {
+      display: flex;
+      flex-direction: column;
+    }
+  
+  .headerborder {
+    margin-right: 7vw;
+    margin-left: 7vw;
+    box-shadow: 0 0 50px black;
+  }
+
+  .signingradientborder {
+    margin: auto;
+  }
+
+  .gradientborder {
+    margin: auto;
   }
 }
 
@@ -49,11 +64,12 @@
 .headerborder {
   transform: scale(0.85);
   height: 620px;
-  margin-right: 120px;
+  margin-right: 7vw;
   box-shadow: 0 0 50px black;
 }
 
 .gradientborder {
+  margin: auto;
   transform: scale(0.85);
   height: 620px;
   box-shadow: 0 0 50px grey;
