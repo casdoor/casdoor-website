@@ -1,4 +1,5 @@
 import React from 'react';
+import { gsap } from 'gsap';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -10,6 +11,21 @@ import Translate, {translate} from '@docusaurus/Translate';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
+
+  const onEnter = ({ currentTarget }) => {
+    gsap.to(currentTarget, {
+      duration: 0.5,
+      scale: 1,
+    });
+  };
+
+  const onLeave = ({ currentTarget }) => {
+    gsap.to(currentTarget, {
+      duration: 0.5,
+      scale: 0.85,
+    });
+  };
+
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
@@ -32,7 +48,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <div className={styles.headerborder}>
+      <div className={styles.headerborder} onMouseEnter={onEnter} onMouseLeave={onLeave}>
       <iframe src="https://door.casbin.com/login" width="550" height= "620" frameborder="0" scrolling="no"></iframe>
       </div>
     </header>
