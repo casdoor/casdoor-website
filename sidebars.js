@@ -22,7 +22,7 @@ module.exports = {
       type: 'category',
       label: 'Applications',
       collapsed: false,
-      items: ['application/overview'],
+      items: ['application/overview', 'application/config', 'application/terminology'],
     },
     {
       type: 'category',
