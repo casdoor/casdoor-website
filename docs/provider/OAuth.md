@@ -28,13 +28,23 @@ OK, Next you can choose the third-party platform you need. We will show you the 
 
 To obtain OAuth 2.0 client credential, you can visit [Google API console](https://console.developers.google.com) and log in using your Google account, follow the instructions of Google Cloud Platform, and get your Client Id and Client Secret.
 
-:::tip
 For more detailed usages, please visit [Google Identity Platform](https://developers.google.com/identity) to know more about Google OAuth verification.
-:::
 
 ### GitHub:heavy_check_mark:
 
 GitHub OAuth support both web application flow and device flow, to obtain OAuth credential, please visit [GitHub docs](https://docs.github.com/en/rest/guides/basics-of-authentication) to get more information.
+
+:::caution
+
+**Tricks:** While we can't set multiple redirect urls in GitHub, so in development and production environment, we need to set different GitHub providers. 
+
+In development environment, Casdoor will only display the GitHub provider **with** "localhost" in its name. And in productoin environment, Casdoor will only display the GitHub provider **without** "localhost" in its name.
+
+This is how we do in our online demo:
+
+![githublocalhost](/img/githublocalhost.png)
+
+:::
 
 ### Facebook:heavy_check_mark:
 
