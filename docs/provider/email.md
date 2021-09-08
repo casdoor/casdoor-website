@@ -5,7 +5,6 @@ title: Email
 
 ## Add an Email provider
 
-1. Add a new provider the same way we mentioned in [OAuth](/docs/provider/OAuth)
+1. Add a new provider the same way we mentioned in [SMS](/docs/provider/sms)
 2. Select `Email` in `Category`
-3. Fill `Username`, `Password`, `Host` and `Port`
-
+3. Deploy a smtp server and set up smtp service, fill `Username`, `Password`, `Host`, `Port` and save.
