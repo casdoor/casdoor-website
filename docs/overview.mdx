@@ -37,6 +37,75 @@ Casdoor serves both the web UI and the login requests from the application users
 
 9. Casdoor supports mainstream databases: MySQL, PostgreSQL, SQL Server etc,  and support the extension of new database with plugins.
 
+## How it works:
+
+### Step 0 (Pre-knowledge)
+1. Casdoor's authorization process is built upon the OAuth 2.0 protocol, therefore it's highly recommended to take a brief look at how indeed does OAuth 2.0 works. An [introduction](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) of OAuth 2.0.
+
+![image](https://user-images.githubusercontent.com/46557895/132336955-e25ab988-64b3-4087-b332-d9e724322acd.png)
+
+### Step 1 (Authorization Request) 
+
+Your Application (could be a website or whatever) should compose an URL in this format `endpoint/login/oauth/authorize?client_id=xxx&response_type=code&redirect_uri=xxx&scope=read&state=xxx`. In the URL replace `endpoint` with your Casdoor's host URL, and replace `xxx` with your own info.
+
+:::note Hints  
+
+How to fill out the `xxx` parts?  
+
++ For `client_id`: you can find this under each single Application  
+
++ For `redirect_uri`: you should set this to your own Application's callback URL, with this info, Casdoor can know where to send info back after authorization  
+
++ For `state`: you should fill this out with your Application name  
+
+:::
+
+The Application will speak to the user: *"Hey, now I need some resources and I need your permission to take these resources, you mind go to this URL and fill out your username and password for me?"*  
+
+With the correctly composed URL, your Application will make a user launch a request to this URL, and the `Authorization Request` is done.  
+
+### Step 2 (Authorization Grant) 
+
+This step is straightforward: the user is redirected to the URL composed above, and the user should see the login page from Casdoor.  
+By typing the correct username and credential into the login form, Casdoor now knows the identity of the user, and is about to send two keywords: `code` and `state` back to the callback URL set in Step 1.  
+
+The user opens the URL and provides the credentials to Casdoor. Casdoor will say: *"Looking good ~ this is the user (who is authorizing the Application to get the `code` and `state`) I know in my database, and I will send the `code` and `state` back to the Application using the callback URL (`redirect_uri`)"*  
+
+With these two keywords send back to your Application, the authrization is now granted to the app, and thus `Authorization Grant` is completed.  
+
+:::tip
+
+Casdoor also provides third-party login, in this case, you will not see the credentials enter page but a list of third-party providers. You can login to your app using these providers, with Casdoor as a middle layer (middleware).   
+
+:::
+
+### Step 3 (Authorization Grant) 
+
+In this step, your Application already has the code in hand from Step 2, and it will speak to Casdoor: *"Hey, now the user agreed to give me the `code`, you wanna check this `code` out and give me the `access_token`?"*  
+
+### Step 4 (Access Token) 
+
+In this step, Casdoor speaks back to the Application: *"You know what, this `code` seems legit, you must be the right Application. Come, here's the `access_token`."*  
+With this `code`, that Casdoor knows that it is an authorized Application (authorization given by the correct user in Step 2) trying to get the `access_token` (will be used later to get more useful things).
+
+### Step 5 (Access Token)
+
+In this step, your Application says: *"Nice one, just got the fresh-and-tasty `access_token`, I can now use it to get something more valuable from the `Resource Server`!"*  
+
+And your Application turns to the `Resource Server`: *"Hey buddy, wanna check this `access_token` out? I got this from Casdoor and you want to see if this is the correct one you had with Casdoor?"*  
+
+### Step 6 (Protected Resource)
+
+The `Resource Server` speaks back to your Application: *"Not bad ~ it seems just like the one I had with Casdoor, and Casdoor says whoever hold this `access_token` can have these `Protected Resource`. Now, you take it!"*  
+
+And this is basically how Casdoor works with your Application.
+
+:::note Hint
+
+Casdoor can play both `Authorization Server` and `Resource Server` parts, i.e. Casdoor authorizes our Application to get resources (e.g. usually the current logged in user's info) from Casdoor's database.
+
+:::
+
 ## Online demo
 
 ### Casdoor
