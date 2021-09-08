@@ -23,13 +23,13 @@ Roughly like this:
 | jwtSecret        | Yes  | Same as Casdoor JWT secret.                         |
 | organizationName | Yes  | Application.organization                            |
 
-The function signature in Go language is as follows, similar to other languages:
+The function signature in Go is as follows, similar to other languages:
 
 ```go
 func InitConfig(endpoint string, clientId string, clientSecret string, jwtSecret string, organizationName string)
 ```
 
-You can refer to the [usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/auth.go#L29),
+You can refer to the [usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/account.go#L32),
 
 ```go
 var CasdoorEndpoint = "http://localhost:8000"
