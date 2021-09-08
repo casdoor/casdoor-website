@@ -95,6 +95,14 @@ For more detailed information please visit [DingTalk developer docs](https://dev
 
 Visit [official website](https://gitee.com/api/v5/oauth_doc#/list-item-3), which has shown the specific application steps, and after filling in, you can get the most important information, Client Id and Client Secret.
 
+:::caution
+
+Since Casdoor needs to obtain the user's email, the email option must be checked, otherwise it will cause scope authorization errors.
+
+![gitee scope](/img/giteescope.jpg)
+
+:::
+
 ## Add an OAuth provider
 
 1. Navigate to your Casdoor index page
