@@ -167,6 +167,23 @@ Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you
 To customize the port, please edit the ```conf/app.conf``` file to set another port to set up Casdoor.
 :::
 
+:::info casdoor port details
+
+In **dev** environment, the frontend is run by ```npm run``` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **http://localhost:7001**.
+
+In **prod** environment, the frontend files is first built by ```npm build``` and served in port 8000, so if you want to go to Casdoor login page, you need to set Casdoor link as **http://SERVER_IP:8000** (If you are using reverse proxy, you need to set the link as **your domain**).
+
+#### Take our official forum Casnode as an example:
+
+[Casnode](https://casnode.org) uses Casdoor to handle authentication.
+
+When we are testing Casnode in **dev** environment, we set the `serverUrl` as http://localhost:7001, so when we test signin and signup functionality using Casdoor, it will go to localhost 7001 which is the Casdoor port.
+
+And when we put Casnode to **prod** environment, we set the `serverUrl` as https://door.casbin.com, so users can signin or signup using Casdoor.
+
+![Casnode Example](/img/casnodeexample.png)
+:::
+
 ### Docker
 
 - Install `Docker` and `Docker-compose`, refer to [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
