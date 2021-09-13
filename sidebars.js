@@ -20,6 +20,12 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Organizations',
+      collapsed: false,
+      items: ['organization/overview'],
+    },
+    {
+      type: 'category',
       label: 'Applications',
       collapsed: false,
       items: ['application/overview', 'application/config', 'application/terminology'],
@@ -29,12 +35,6 @@ module.exports = {
       label: 'Providers',
       collapsed: false,
       items: ['provider/overview', 'provider/OAuth', 'provider/email', 'provider/sms', 'provider/storage'],
-    },
-    {
-      type: 'category',
-      label: 'Organizations',
-      collapsed: false,
-      items: ['organization/overview'],
     },
     {
       type: 'category',
