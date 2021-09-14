@@ -29,12 +29,20 @@ module.exports = {
       label: 'Applications',
       collapsed: false,
       items: ['application/overview', 'application/config', 'application/terminology'],
-    },
+     },
     {
-      type: 'category',
-      label: 'Providers',
-      collapsed: false,
-      items: ['provider/overview', 'provider/OAuth', 'provider/email', 'provider/sms', 'provider/storage'],
+    type: 'category',
+    label: 'Providers',
+    collapsed: false,
+      items: ['provider/overview',
+      {
+        OAuth: [
+          'provider/oauth/overview',
+          'provider/oauth/github',
+        ]
+      },
+      'provider/email', 'provider/sms', 'provider/storage'],
+
     },
     {
       type: 'category',
