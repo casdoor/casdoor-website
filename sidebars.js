@@ -28,7 +28,14 @@ module.exports = {
       type: 'category',
       label: 'Providers',
       collapsed: false,
-      items: ['provider/overview', 'provider/OAuth', 'provider/email', 'provider/sms', 'provider/storage'],
+      items: ['provider/overview',
+      {
+        OAuth: [
+          'provider/oauth/overview',
+          'provider/oauth/github',
+        ]
+      },
+      'provider/email', 'provider/sms', 'provider/storage'],
     },
     {
       type: 'category',

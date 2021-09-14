@@ -1,6 +1,6 @@
 ---
-sidebar_position: 2
-title: OAuth
+sidebar_position: 1
+title: Overview
 ---
 
 Casdoor can uses other OAuth applications as a sign in method.
@@ -9,7 +9,7 @@ Now, Casdoor supports many OAuth application providers. Icons of providers will 
 
 |Google|GitHub|Facebook| Twitter | LinkedIn | Weibo | WeChat | Tencent QQ | Dingtalk | Gitee | Email | SMS |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-|<img src="https://cdn.casbin.org/img/social_google.png" width="40"></img>|<img src="https://cdn.casbin.org/img/social_github.png" width="40"></img>|<img src="https://cdn.casbin.org/img/social_facebook.png" width="40"></img>|<img src="https://cdn.casbin.org/img/social_twitter.png" width="40"></img> |<img src="https://cdn.casbin.org/img/social_linkedin.png" width="40"></img>| <img src="https://cdn.casbin.org/img/social_weibo.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_wechat.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_qq.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_gitee.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_mail.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_msg.png" width="40"></img> |
+|<img src="https://cdn.casbin.org/img/social_google.png" width="40"></img>|[<img src="https://cdn.casbin.org/img/social_github.png" width="40"></img>](/docs/provider/oauth/github)|<img src="https://cdn.casbin.org/img/social_facebook.png" width="40"></img>|<img src="https://cdn.casbin.org/img/social_twitter.png" width="40"></img> |<img src="https://cdn.casbin.org/img/social_linkedin.png" width="40"></img>| <img src="https://cdn.casbin.org/img/social_weibo.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_wechat.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_qq.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_gitee.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_mail.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_msg.png" width="40"></img> |
 |✅|✅|✅|🚧|✅|✅|✅|✅|✅|✅|✅|✅|
 
 We will show you how to apply for a third-party service and add it to casdoor.
@@ -22,53 +22,12 @@ Before this, there are some general concepts you need to understand.
 - **Scope**, Permission granted to you by the user, such as basic profile, Email address and posts and others.
 - **ClientId/AppId**, **ClientKey/AppSecret**, This is the most important information, and it is what you need to get after you apply for a developer account, **can not share** the key/secret with anyone.
 
-OK, Next you can choose the third-party platform you need. We will show you the proposal forms and service addresses of all supported platforms. If you still have any questions, please contact us in the community.
-
 ### Google:heavy_check_mark:
 
 To obtain OAuth 2.0 client credential, you can visit [Google API console](https://console.developers.google.com) and log in using your Google account, follow the instructions of Google Cloud Platform, and get your Client Id and Client Secret.
 
 For more detailed usages, please visit [Google Identity Platform](https://developers.google.com/identity) to know more about Google OAuth verification.
 
-### GitHub:heavy_check_mark:
-
-GitHub OAuth support both web application flow and device flow, please continue reading to obtain OAuth credential.
-
-First, please visit [GitHub developer settings](https://github.com/settings/applications/new) to register a new OAuth app.
-
-![GitHub](/img/providers/OAuth/github.png)
-
-Then fill the **application name**, **homepage url**, **description** and **Authorization callback URL**.
-
-:::info Set authorization callback URL correctly
-
-In GitHub OAuth config, the `authorization callback URL` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**
-
-More details please read [App config](/docs/application/config#further-understanding)
-
-:::
-
-After registering your GitHub OAuth app, you can generate your `Client Secret` now!
-
-![GitHub Client ID](/img/providers/OAuth/githubclient.png)
-
-Add a GitHub OAuth provider and fill the `Client ID` and `Client Secret` in your Casdoor
-
-![Github Provider](/img/providers/OAuth/githubprovider.png)
-
-Now you can use GitHub as third party service to complete authentication.
-
-:::caution
-
-**Tricks:** While we can't set multiple redirect urls in GitHub, so in development and production environment, we need to set different GitHub providers. 
-
-In development environment, Casdoor will only display the GitHub provider **with** "localhost" in its name. And in productoin environment, Casdoor will only display the GitHub provider **without** "localhost" in its name.
-
-This is how we do in our online demo:
-
-![githublocalhost](/img/githublocalhost.png)
-
-:::
 
 ### Facebook:heavy_check_mark:
 
