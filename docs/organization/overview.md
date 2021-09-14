@@ -3,17 +3,8 @@ sidebar_position: 1
 title: Overview
 ---
 
-An organization is a set of users and applications.
+Organization is the basic unit for Casdoor, it manages users and applications. If a user signed in to an organization, then he can access all applications belong to the organization without signing in again.
 
-Organizations are basic units for a SSO platform. If a user signed in to an organization, then he can access all applications of the organization without signing in again.
+In the config of [applications](/docs/application/config) and [providers](/docs/provider/overview), choosing an organization is important, it determines whether a user can access the application using specific providers.
 
-- `Owner`
-- `Name`
-- `CreatedTime` 
-- `DisplayName` Name shown in UI
-- `WebsiteUrl`
-- `Favicon`
-- `PasswordType` plain or hashed
-- `PasswordSalt`
-- `PhonePrefix` We think that users in the same organization are in the same country or region, and have the same phone prefix. So we do not record user phone prefix in `User`, but record them in `Organization`.
-- `DefaultAvatar` When the organization avatar is not set, the default avatar will be used
+We can also set up LDAP in Casdoor, for more details, please see [LDAP](/docs/ldap/overview)
