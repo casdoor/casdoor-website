@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: Githee
+title: Gitee
 ---
 
 To set up Gitee OAuth provider, please go to [Gitee developer](https://gitee.com/oauth/applications), if you have not created applications before, the gitee workbench would like this:
