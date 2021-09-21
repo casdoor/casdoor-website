@@ -39,7 +39,8 @@ module.exports = {
         OAuth: [
           'provider/oauth/overview',
           'provider/oauth/github',
-          'provider/oauth/gitee'
+          'provider/oauth/gitee',
+          'provider/oauth/linkedin'
         ]
       },
       'provider/email', 'provider/sms', 'provider/storage'],

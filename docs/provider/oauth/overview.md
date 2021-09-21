@@ -44,10 +44,6 @@ After the application is approved, create an application, fill in the callback a
 - Manually turn on **3-legged OAuth**, for Sign in with Twitter, posting Tweets on behalf of other accounts and more.
 - Enable **Request email address from users**, for getting user email address.
 
-###  LinkedIn:heavy_check_mark:
-
-Visit [LinkedIn developers website](https://www.linkedin.com/developers/), follow the instructions on LinkedIn developers platform and fill the form, then you can get your Client Id and Client Secret.
-
 ### Weibo:heavy_check_mark:
 
 Weibo's developer account application is not difficult, but the speed is relatively slow, it takes about 2-3 days.

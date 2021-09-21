@@ -11,7 +11,7 @@ Now, we have 4 kinds of providers:
 
 - **OAuth providers**
 
-  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ and many other OAuth applications to Casdoor, for more details, please see [OAuth](/docs/provider/OAuth).
+  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ and many other OAuth applications to Casdoor, for more details, please see [OAuth](/docs/provider/oauth/overview).
 
 - **SMS Providers**
 
