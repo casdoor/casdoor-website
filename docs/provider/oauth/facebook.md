@@ -42,7 +42,7 @@ Switch mode from **In development** to **Live** in the top bar of dashboard
 
 Then your `App ID` and `App secrets` can be used in Casdoor.
 
-![facebookapp](/img/providers/OAuth/facebookapp.png)
+![facebookapp](/img/providers/OAuth/facebookappclient.png)
 
 Add a Facebook OAuth provider and fill the `Client ID` and `Client Secrets` with `App ID` and `App Secrets` in your Casdoor.
 
