@@ -28,11 +28,6 @@ To obtain OAuth 2.0 client credential, you can visit [Google API console](https:
 
 For more detailed usages, please visit [Google Identity Platform](https://developers.google.com/identity) to know more about Google OAuth verification.
 
-
-### Facebook:heavy_check_mark:
-
-To obtain Facebook OAuth 2.0 client credential, please visit [Facebook for developers](https://developers.facebook.com/), create a Facebook developer account and follow the instructions of Facebook developer platform to get your client id and client secret.
-
 ###  Twitter(still working🚧)
 
 > Twitter’s application steps are somewhat troublesome, and the official restrictions are a bit strict, so it may be more difficult to apply for a developer account than other third-party platforms.
