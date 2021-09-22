@@ -96,6 +96,7 @@ import TabItem from '@theme/TabItem';
 
 <Tabs
   defaultValue="yarn"
+  groupId="yarn-npm"
   values={[
     { label: 'Yarn', value: 'yarn', },
     { label: 'npm', value: 'npm', },
@@ -126,6 +127,8 @@ npm run start
 
 Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
 
+Input `admin` and `123` to test login functionality is working fine.
+
 #### Produnction Environment
 
 ##### Frontend
@@ -135,6 +138,7 @@ Build static pages:
 ````mdx-code-block
 <Tabs
   defaultValue="yarn"
+  groupId="yarn-npm"
   values={[
     { label: 'Yarn', value: 'yarn', },
     { label: 'npm', value: 'npm', },
@@ -167,7 +171,7 @@ We build the project and there will be an executable file **casdoor**, then we s
 go build && ./casdoor
 ```
 
-Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you can see login page of Casdoor, it means everything is ok!
+Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you can see login page of Casdoor, and you can login using `admin` and `123` as user and password, it means everything is ok!
 
 :::tip
 To customize the port, please edit the ```conf/app.conf``` file to set another port to set up Casdoor.
@@ -194,7 +198,7 @@ And when we put Casnode to **prod** environment, we set the `serverUrl` as https
 
 - Install `Docker` and `Docker-compose`, refer to [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
 
-- vi conf/app.conf
+- Edit `conf/app.conf`
 
 - Modify `dataSourceName = root:123@tcp(localhost:3306)/` to `dataSourceName = root:123@tcp(`db`:3306)/`
 
@@ -277,63 +281,3 @@ And when we put Casnode to **prod** environment, we set the `serverUrl` as https
     ...
   }
   ```
-
-  ## Build & Publish (using nginx in linux)
-
-  Before building and publishing, we should do these things first:
-
-  - Install go (The version can not lower than 1.14). 
-    - https://golang.org/doc/install
-    - http://docscn.studygolang.com/doc/install (for Chinese)
-  - Install yarn (Since the installation process of yarn is parallel, the speed of yarn is much faster than npm)
-    - https://classic.yarnpkg.com/en/docs/install/#windows-stable
-    - https://yarn.bootcss.com/docs/install/#windows-stable (for Chinese)
-  - Install nginx: `sudo apt-get install nginx`
-
-  ### Build Forentend
-
-  ```bash
-  $ cd web/
-  $ yarn  # install the dependencies
-  $ yarn build  # build the forentend, the output path should be: "/casdoor/web/build"
-  ```
-
-  ### Build & Run Backend
-
-  ```bash
-  $ cd ..
-  $ go mod tidy	# install the dependencies
-  $ go build main.go	# build
-  $ ./main	# run Backend (default port is 8000)
-  ```
-
-  ### Setup Nginx
-
-  #### Edit nginx.conf
-
-  Generally speaking, you could find this file: "/etc/nginx/nginx.conf"
-
-  ```nginx
-  server {
-      listen          80;		# listen on port 80
-  
-      if ($http_user_agent ~ MSIE){
-          return 403;
-      }
-  
-      location / {
-          index index.html;	
-          root /casdoor/web/build;	# the Frontend build files path
-          try_files $uri $uri/ /index.html;	# importent
-      }
-  
-  
-      location /api {
-          proxy_pass        http://127.0.0.1:8000/api;	# the endpoint + "/api", in this case, endpoint is "localhost"
-          proxy_set_header  X-Real-IP  $remote_addr;
-      }
-  }
-  ```
-
-  
-
