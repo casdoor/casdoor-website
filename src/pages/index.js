@@ -39,6 +39,32 @@ function HomepageHeader() {
   );
 }
 
+function LearnHow() {
+  return  (
+  <div className="hero">
+    <div className="learn-how">
+      <div className="contain">
+        <div className="row">
+          <div className="col col--7">
+            <p className="learnhow__title">
+              <small><Translate>Description</Translate></small>
+            </p>
+            <p className="learnhow__subtitle">
+              <big>
+                <Translate>Casdoor's authentication process is built upon OAuth 2.0 protocol. The detailed protocol flow illustrated here.</Translate>
+            </big>
+            </p>
+          </div>
+          <div className="col">
+          <img className="image" src='../../static/img/principles.gif' />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  );
+}
+
 function ContentLogin() {
   return (
     <div className={styles.contentlogin}>
@@ -115,6 +141,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <LearnHow />
         <ContentLogin />
         <ContentSignup />
         <ContentForget />
