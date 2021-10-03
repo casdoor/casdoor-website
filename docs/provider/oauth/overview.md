@@ -22,12 +22,6 @@ Before this, there are some general concepts you need to understand.
 - **Scope**, Permission granted to you by the user, such as basic profile, Email address and posts and others.
 - **ClientId/AppId**, **ClientKey/AppSecret**, This is the most important information, and it is what you need to get after you apply for a developer account, **can not share** the key/secret with anyone.
 
-### Google:heavy_check_mark:
-
-To obtain OAuth 2.0 client credential, you can visit [Google API console](https://console.developers.google.com) and log in using your Google account, follow the instructions of Google Cloud Platform, and get your Client Id and Client Secret.
-
-For more detailed usages, please visit [Google Identity Platform](https://developers.google.com/identity) to know more about Google OAuth verification.
-
 ###  Twitter(still working🚧)
 
 > Twitter’s application steps are somewhat troublesome, and the official restrictions are a bit strict, so it may be more difficult to apply for a developer account than other third-party platforms.
