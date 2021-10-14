@@ -45,13 +45,19 @@ func init() {
 
 More specific behavior can refer to [the source codes of casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk).
 
-## Step2. Get token and parse
+## Step2. SDK access Casdoor
+
+With previous configured ```authConfig```, Casdoor SDK now can turn to casdoor server to verify users, note that SDK uses ```SetBasicAuth``` method in net/http library to get ```ClientId``` and ```ClientSecret``` from Casdoor server and verify users in your application.
+
+More details please refer to https://github.com/casdoor/casdoor-go-sdk/blob/master/auth/base.go#L42
+
+## Step3. Get token and parse
 
 After casdoor verification passed, it will be redirected to your application with code and state, like `http://forum.casbin.org?code=xxx&state=yyyy`.
 
 Your web application can get the `code`, `state` and call `GetOAuthToken(code, state)`, then parse out jwt token.
 
-[Usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/auth.go#L36),
+See [Usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/auth.go#L36) as a reference:
 
 ```go
 code := c.Input().Get("code")
@@ -68,9 +74,9 @@ if err != nil {
 }
 ```
 
-## Step3. Set Session in your app
+## Step4. Set Session in your app
 
-You need to verify the information parsed from the second step. After it is correct (it may be modified), it proves that the user verification has passed, and you can set up the session in your own application.
+You need to verify the information parsed from the third step. After it is correct (it may be modified), it proves that the user verification has passed, and you can set up the session in your own application.
 
 **At this point, the user login is actually completed**.
 
@@ -95,7 +101,7 @@ c.SetSessionUser(claims)				// see here
 
 That's it!
 
-## Step4. Interact with the users table
+## Step5. Interact with the users table
 
 You may not only need to log in, but you will also get user details, or update users information, etc.
 
@@ -104,9 +110,11 @@ The SDK provides several key functions, and you need to customize them in more d
 - `GetUser(name string)`, get one user by user name.
 - `GetUsers()`, get all users.
 - `UpdateUser(auth.User)/AddUser(auth.User)/DeleteUser(auth.User)`, write user to database.
+- `CheckUserPassword(auth.User)`, check user's password.
 
 ## Summary
 
 casdoor SDKs are very convenient for casdoor application development. It does not require us to learn how to interact with the casdoor server from 0, which reduces our burden.
+
 Of course, these SDKs are still in the development stage (you can see that most of the versions are still in 0.1:smile:), if you have any suggestions, welcome to communicate with us in the community!
 
