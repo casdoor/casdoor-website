@@ -39,6 +39,26 @@ function HomepageHeader() {
   );
 }
 
+function LearnHowTo() {
+  return (
+    <div className={styles.explain}>
+      <div className="container text--center">
+        <div className="row">
+        <div className={styles.explaingif}>
+            <img src="/img/principles.gif" height="90%" width="90%"></img>
+          </div>
+          <div className="col">
+          <div className={styles.explaintext}>
+          <Translate>As an authentication platform, </Translate><br /><Translate>Casdoor implements the authentication by communicating with providers and users.</Translate>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 function ContentLogin() {
   return (
     <div className={styles.contentlogin}>
@@ -115,6 +135,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <LearnHowTo />
         <ContentLogin />
         <ContentSignup />
         <ContentForget />

@@ -49,16 +49,15 @@
 
 .contentlogin {
   @include content;
-  background-color: var(--ifm-color-emphasis-100);
 }
 
 .contentsignup {
   @include content;
+  background-color: var(--ifm-color-emphasis-100);
 }
 
 .contentforget {
   @include content;
-  background-color: var(--ifm-color-emphasis-100);
 }
 
 .headerborder {
@@ -80,4 +79,24 @@
   transform: scale(0.85);
   height: 680px;
   box-shadow: 0 0 50px grey;
+}
+
+/*Workflow explain gif layout here*/
+.explain {
+  padding: 20px 20px 0 20px;
+  font-size: 1.3rem;
+  justify-content: center;
+  line-height: 40px;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.explaingif {
+  padding: 20px 20px 20px 20px;
+  font-size: 1.3rem;
+  justify-content: center;
+  line-height: 20px;
+}
+
+.explaintext {
+  padding: 60px 0 60px 0;
 }
