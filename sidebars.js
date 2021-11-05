@@ -52,7 +52,7 @@ module.exports = {
       type: 'category',
       label: 'Users',
       collapsed: false,
-      items: ['user/overview'],
+      items: ['user/overview', 'user/manipulation'],
     },
     {
       type: 'category',
