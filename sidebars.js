@@ -72,6 +72,12 @@ module.exports = {
       collapsed: false,
       items: ['ldap/overview', 'ldap/config'],
     },
-    'internationalization'
+    {
+      type: 'category',
+      label: 'Integrations',
+      collapsed: false,
+      items: ['integration/spring-boot']
+    },
+    'internationalization'  
   ],
 };
