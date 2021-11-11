@@ -21,7 +21,7 @@ Choose Web platform for this app:
 
 ![Facebook web](/img/providers/OAuth/facebookweb.png)
 
-After fill the website url, you can go to **Facebook Login > Settings**, and fill valid OAuth Redirect URIs
+After filling the website url, you can go to **Facebook Login > Settings**, and fill valid OAuth Redirect URIs
 
 ![Redirecturis](/img/providers/OAuth/facebookredirecturl.png)
 
