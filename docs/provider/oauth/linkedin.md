@@ -7,7 +7,7 @@ To set up Linkedin OAuth provider, please go to [Linkedin developer](https://www
 ![Linkedin](/img/providers/OAuth/linkedin.png)
 
 
-After fill in the form above and create your app, you'll need to verify the Linkedin page associated with the app
+After filling in the form above and create your app, you'll need to verify the Linkedin page associated with the app
 
 ![Linkedin Verify](/img/providers/OAuth/linkedin-verify.png)
 
