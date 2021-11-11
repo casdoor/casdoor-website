@@ -21,7 +21,7 @@ A random string, automatically generated when creating the LDAP server configura
 
 ### Server Name
 
-A friendly name used for managers to identify different servers.
+A friendly name is used for managers to identify different servers.
 
 > e.g:
 > `Example LDAP Server`
@@ -35,7 +35,7 @@ LDAP server's host.
 
 ### Server Port
 
-LDAP server's port, only allow numbers.
+LDAP server's ports, only allow numbers.
 
 > e.g:
 > `389`
