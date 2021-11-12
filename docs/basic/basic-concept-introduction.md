@@ -13,7 +13,7 @@ Organizations are basic units for a SSO platform. If a user signed in to an orga
 
 ## Application
 
-If you want to use Casdoor to provide login service for your web Web APPs, you can add them as Casdoor applications.
+If you want to use Casdoor to provide login service for your Web APPs, you can add them as Casdoor applications.
 
 Users can access all applications in their organizations without login twice.
 
@@ -27,5 +27,5 @@ As an authentication platform, Casdoor is able to manage users.
 
 ## Token
 
-Casdoor is based on OAuth. Tokens are users' OAuth token.
+Casdoor is based on OAuth. Tokens are the OAuth access tokens for users.
 
