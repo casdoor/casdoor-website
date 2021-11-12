@@ -31,7 +31,7 @@ More details please read [App config](/docs/application/config#further-understan
 
 :::
 
-After create Client ID and obtain `Client ID` and `Client Secrets`
+After creating Client ID and obtain `Client ID` and `Client Secrets`
 
 ![Client](/img/providers/OAuth/googleclient.png)
 

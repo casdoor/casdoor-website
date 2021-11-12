@@ -2,12 +2,12 @@
 sidebar_position: 4
 title: Linkedin
 ---
-To set up Gitee OAuth provider, please go to [Linkedin developer](https://www.linkedin.com/developers/apps/new) to create a new app.
+To set up Linkedin OAuth provider, please go to [Linkedin developer](https://www.linkedin.com/developers/apps/new) to create a new app.
 
 ![Linkedin](/img/providers/OAuth/linkedin.png)
 
 
-After fill in the form above and create your app, you'll need to verify the Linkedin page associated with the app
+After filling in the form above and create your app, you'll need to verify the Linkedin page associated with the app
 
 ![Linkedin Verify](/img/providers/OAuth/linkedin-verify.png)
 

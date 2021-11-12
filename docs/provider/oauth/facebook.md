@@ -9,7 +9,7 @@ Select what kind of app you are going to create.
 
 ![Facebook select](/img/providers/OAuth/facebookselect.png)
 
-After fill name and contact email, you can enter facebook developer dashboard.
+After filling name and contact email, you can enter facebook developer dashboard.
 
 ![Dashboard](/img/providers/OAuth/dashboard.png)
 
@@ -21,7 +21,7 @@ Choose Web platform for this app:
 
 ![Facebook web](/img/providers/OAuth/facebookweb.png)
 
-After fill the website url, you can go to **Facebook Login > Settings**, and fill valid OAuth Redirect URIs
+After filling the website url, you can go to **Facebook Login > Settings**, and fill valid OAuth Redirect URIs
 
 ![Redirecturis](/img/providers/OAuth/facebookredirecturl.png)
 
