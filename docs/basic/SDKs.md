@@ -20,7 +20,7 @@ Roughly like this:
 | endpoint         | Yes  | Casdoor Server Url, such as `http://localhost:8000` |
 | clientId         | Yes  | Application.client_id                               |
 | clientSecret     | Yes  | Application.client_secret                           |
-| jwtSecret        | Yes  | Same as Casdoor JWT secret.                         |
+| jwtSecret        | Yes  | read from token_jwt_key.pem file                   |
 | organizationName | Yes  | Application.organization                            |
 
 The function signature in Go is as follows, similar to other languages:
