@@ -45,7 +45,14 @@ module.exports = {
           'provider/oauth/google'
         ]
       },
-      'provider/email', 'provider/sms', 'provider/storage'],
+      'provider/email', 'provider/sms', 'provider/storage',
+      {
+        SAML: [
+          'provider/saml/overview',
+          'provider/saml/aliyun'
+        ]
+      },
+    ],
 
     },
     {
