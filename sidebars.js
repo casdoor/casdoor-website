@@ -49,7 +49,8 @@ module.exports = {
       {
         SAML: [
           'provider/saml/overview',
-          'provider/saml/aliyun'
+          'provider/saml/aliyun',
+          'provider/saml/keycloak'
         ]
       },
     ],
