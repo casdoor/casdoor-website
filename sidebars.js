@@ -84,7 +84,7 @@ module.exports = {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/spring-boot']
+      items: ['integration/spring-boot','integration/jenkins']
     },
     'internationalization'  
   ],
