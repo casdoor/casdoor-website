@@ -4,33 +4,24 @@ title: Install Guide
 
 ---
 
-## Requirement
+## Requirements
 
-* [Golang](https://golang.org/dl/)
-* [Node.js](https://nodejs.org/en/download/)
-* [Yarn](https://yarnpkg.com/en/)
+* [Go 1.6+](https://go.dev)
+* [Node.js LTS (16 or 14)](https://nodejs.org)
+* [Yarn 1.x](https://yarnpkg.com)
 
-:::caution
+## Download
 
-We strongly suggest you use **Yarn** to install Casdoor, using npm might cause wrong position of widgets, for more details, please see [casdoor#294](https://github.com/casbin/casdoor/issues/294)
+The source code of Casdoor is hosted at GitHub: https://github.com/casbin/casdoor . Both the Go backend code and React frontend code are inside the single repository.
 
-:::
-
-## Installation
-
-It is very simple to install Casdoor, you can use `go get`
+Casdoor supports `Go Modules`. To download the code, you can just clone the code into any directory:
 
 ```shell
-go get github.com/casbin/casdoor
-```
-
-or use `git clone`
-
-```shell
+cd path/to/folder
 git clone https://github.com/casbin/casdoor
 ```
 
-## Config
+## Configure
 
 All configures are placed in `conf/`, including `app.conf` and `oss.conf`. The former stores application-related information, while the latter only stores OSS-related configuration. You can modify two files to set all configures.
 
@@ -78,110 +69,63 @@ After completing the above simple configuration steps, you can run Casdoor. Casd
 
 ##### Backend
 
-You can start the backend server with this command,
+Casdoor's Go backend runs at port 8000 by default. You can start the Go backend with the following command:
 
 ```bash
 go run main.go
 ```
 
-After the server is successfully running on the specific port, then we can start the frontend part.
+After the server is successfully running, we can start the frontend part.
 
 ##### Frontend
 
-Casdoor's package management tool uses npm and yarn, so you can choose any. Open a new terminal and run:
-
-````mdx-code-block
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs
-  defaultValue="yarn"
-  groupId="yarn-npm"
-  values={[
-    { label: 'Yarn', value: 'yarn', },
-    { label: 'npm', value: 'npm', },
-  ]
-}>
-
-<TabItem value="yarn">
+Casdoor's React frontend runs at port 7001 by default. Casdoor uses [Yarn 1.x](https://classic.yarnpkg.com/lang/en/docs/install) as the official package manager. Open a new terminal and run:
 
 ```bash
+cd web
 yarn install
-yarn run start
+yarn start
 ```
 
-</TabItem>
+:::caution
 
-<TabItem value="npm">
+We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/lang/en/docs/install) to install Casdoor, using NPM might cause UI styling issues, see more details at: [casdoor#294](https://github.com/casbin/casdoor/issues/294)
 
-```bash
-npm install
-npm run start
-```
-
-</TabItem>
-
-</Tabs>
-
-````
+:::
 
 Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
 
 Input `admin` and `123` to test login functionality is working fine.
 
-#### Produnction Environment
+## Production Deployment
 
-##### Frontend
+### Frontend
 
 Build static pages:
 
-````mdx-code-block
-<Tabs
-  defaultValue="yarn"
-  groupId="yarn-npm"
-  values={[
-    { label: 'Yarn', value: 'yarn', },
-    { label: 'npm', value: 'npm', },
-  ]
-}>
-<TabItem value="yarn">
-
 ```bash
-yarn run build
+yarn build
 ```
 
-</TabItem>
+### Backend
 
-<TabItem value="npm">
-
-```bash
-npm run build
-```
-
-</TabItem>
-</Tabs>
-
-````
-
-##### Backend
-
-We build the project and there will be an executable file **casdoor**, then we start the service:
+We build the Go backend code into an executable: **casdoor** and then start it:
 
 ```bash
 go build && ./casdoor
 ```
 
-Well done, next visit **http://SERVER_IP:8000** in your favorite browser, if you can see login page of Casdoor, and you can login using `admin` and `123` as user and password, it means everything is ok!
+Next, go to: **[http://localhost:8000](http://localhost:8000)** in your browser, if you can see login page of Casdoor, and you can login using `admin` and `123` as username and password, then everything is OK!
 
 :::tip
-To customize the port, please edit the ```conf/app.conf``` file to set another port to set up Casdoor.
+To use another port, please edit ```conf/app.conf``` and modify `httpport`, then restart the Go backend.
 :::
 
 :::info casdoor port details
 
-In **dev** environment, the frontend is run by ```npm run``` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **http://localhost:7001**.
+In **dev** environment, the frontend is run by ```yarn run``` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **http://localhost:7001**.
 
-In **prod** environment, the frontend files is first built by ```npm build``` and served in port 8000, so if you want to go to Casdoor login page, you need to set Casdoor link as **http://SERVER_IP:8000** (If you are using reverse proxy, you need to set the link as **your domain**).
+In **prod** environment, the frontend files is first built by ```yarn build``` and served in port 8000, so if you want to go to Casdoor login page, you need to set Casdoor link as **http://SERVER_IP:8000** (If you are using reverse proxy, you need to set the link as **your domain**).
 
 #### Take our official forum Casnode as an example:
 
