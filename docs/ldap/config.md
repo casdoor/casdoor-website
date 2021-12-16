@@ -3,21 +3,9 @@ sidebar_position: 2
 title: Config
 ---
 
-You need to enter the following information of the LDAP user synchronization.
+Ldap configurations belong to a organization, which ldap users will be synchronized into.
 
-### Organization
-
-User information will be synchronized to the specified organization.
-
-> e.g:
-> `example-org`
-
-### ID
-
-A random string, automatically generated when creating the LDAP server configuration.
-
-> e.g:
-> `e00a633f-6fa7-49aa-aaf4-408f803e52fa`
+You are supposed to user a global admin user to modify the configuration. You need to enter the following information of the LDAP user synchronization in the "organization" page.
 
 ### Server Name
 
@@ -66,4 +54,3 @@ Admin account's password.
 
 Set `0` to disable auto sync, other value means **Sync every few minutes**.
 
-> This configuration is currently not implemented, so modification is disabled by default.
