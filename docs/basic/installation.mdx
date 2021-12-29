@@ -1,33 +1,76 @@
 ---
 sidebar_position: 1
-title: Install Guide
+title: Installation
 
 ---
 
 ## Requirements
 
-* [Go 1.6+](https://go.dev)
+### OS
+
+All OSes (Linux, Windows and macOS) are supported.
+
+### Software
+
+* [Go 1.6+](https://go.dev/dl/)
 * [Node.js LTS (16 or 14)](https://nodejs.org)
-* [Yarn 1.x](https://yarnpkg.com)
+* [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install)
+
+:::info
+
+We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install) to run & build Casdoor frontend, using NPM might cause UI styling issues, see more details at: [casdoor#294](https://github.com/casdoor/casdoor/issues/294)
+
+:::
 
 ## Download
 
-The source code of Casdoor is hosted at GitHub: https://github.com/casbin/casdoor . Both the Go backend code and React frontend code are inside the single repository.
+The source code of Casdoor is hosted at GitHub: https://github.com/casdoor/casdoor . Both the Go backend code and React frontend code are inside the single repository.
 
-Casdoor supports `Go Modules`. To download the code, you can just clone the code into any directory:
+Name | Description | Language | Source code
+----|------|----|----
+Frontend | Web frontend UI for Casdoor | JavaScript + React | https://github.com/casbin/casdoor/tree/master/web
+Backend | RESTful API backend for Casdoor | Golang + Beego + XORM | https://github.com/casbin/casdoor
+
+Casdoor supports `Go Modules`. To download the code, you can just simply clone the code via git:
 
 ```shell
 cd path/to/folder
 git clone https://github.com/casbin/casdoor
 ```
 
-## Configure
+## Configuration
 
-All configures are placed in `conf/`, including `app.conf` and `oss.conf`. The former stores application-related information, while the latter only stores OSS-related configuration. You can modify two files to set all configures.
+Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf), the content of which by default is:
 
-But for the first time of use, you don’t need to figure out everything, which will be introduced later. Now you just need a few simple configures to run casdoor on your personal computer.
+```ini
+appname = casdoor
+httpport = 8000
+runmode = dev
+SessionOn = true
+copyrequestbody = true
+driverName = mysql
+dataSourceName = root:123456@tcp(localhost:3306)/
+dbName = casdoor
+redisEndpoint =
+defaultStorageProvider =
+isCloudIntranet = false
+authState = "casdoor"
+httpProxy = "127.0.0.1:10808"
+verificationCodeTimeout = 10
+initScore = 2000
+logPostOnly = true
+origin = "https://door.casbin.com"
+```
 
-Nevertheless, the database info should be configured first (unless you choose to use the special image casbin/casdoor-all-in-one which is specially for new users to have a trial. See Chapter Run/Docker for details)
+  - `appname` is the application name, which currently has no practical use
+  - `httpport` is the port that your back-end application is listening on
+  - `runmode` is `dev` or `prod`
+  - `SessionOn` decides whether to enable session,used by default.
+  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
+  - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
+  - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
+
+Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
 
 Casdoor uses [XORM](https://xorm.io/) framework to connect to DB, so all DBs supported by XORM can also be used.
 
@@ -61,15 +104,9 @@ Casdoor uses [XORM](https://xorm.io/) framework to connect to DB, so all DBs sup
 
 There are currently two methods to start, you can choose one according to your own situation.
 
-### Manually
+### Development mode
 
-According to actual needs, it is divided into `dev` mode and `prod` mode
-
-#### Dev Environment
-
-After completing the above simple configuration steps, you can run Casdoor. Casdoor has a front-end back-end separation architecture. The frontend uses javascript and React, backend uses [beego](https://beego.me/) and xorm.
-
-##### Backend
+#### Backend
 
 Casdoor's Go backend runs at port 8000 by default. You can start the Go backend with the following command:
 
@@ -79,9 +116,9 @@ go run main.go
 
 After the server is successfully running, we can start the frontend part.
 
-##### Frontend
+#### Frontend
 
-Casdoor's React frontend runs at port 7001 by default. Casdoor uses [Yarn 1.x](https://classic.yarnpkg.com/lang/en/docs/install) as the official package manager. Open a new terminal and run:
+Casdoor's frontend is a very classic [**Create-React-App (CRA)**](https://create-react-app.dev/) project. It runs at port `7001` by default. Use the following commands to run the frontend:
 
 ```bash
 cd web
@@ -89,35 +126,49 @@ yarn install
 yarn start
 ```
 
-:::caution
-
-We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/lang/en/docs/install) to install Casdoor, using NPM might cause UI styling issues, see more details at: [casdoor#294](https://github.com/casbin/casdoor/issues/294)
-
-:::
-
-Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
-
-Input `admin` and `123` to test login functionality is working fine.
-
-#### Production Deployment
-
-### Frontend
-
-Build static pages:
+Visit: [**http://localhost:7001**](http://localhost:7001) in your browser. Log into Casdoor dashboard with the default global admin account: `built-in/admin`
 
 ```bash
+admin
+123
+```
+
+### Production mode
+
+#### Backend
+
+Build Casdoor Go backend code into executable and start it.
+
+For Linux:
+
+```bash
+go build
+./casdoor
+```
+
+For Windows:
+
+```bash
+go build
+casdoor.exe
+```
+
+#### Frontend
+
+Build Casdoor frontend code into static resources (.html, .js, .css files):
+
+```bash
+cd web
+yarn install
 yarn build
 ```
 
-### Backend
-
-We build the Go backend code into an executable: **casdoor** and then start it:
+Visit: [**http://localhost:8000**](http://localhost:8000) in your browser. Log into Casdoor dashboard with the default global admin account: `built-in/admin`
 
 ```bash
-go build && ./casdoor
+admin
+123
 ```
-
-Next, go to: **[http://localhost:8000](http://localhost:8000)** in your browser, if you can see login page of Casdoor, and you can login using `admin` and `123` as username and password, then everything is OK!
 
 :::tip
 To use another port, please edit ```conf/app.conf``` and modify `httpport`, then restart the Go backend.
@@ -139,113 +190,3 @@ And when we put Casnode to **prod** environment, we set the `serverUrl` as https
 
 ![Casnode Example](/img/casnodeexample.png)
 :::
-
-### Docker
-
-Casdoor provide 2 kinds of image: 
-- casbin/casdoor-all-in-one, in which casdoor binary, a mysql database and all necessary configurations are packed up. This image is for new user to have a trial on casdoor quickly. **With this image you can start a casdoor immediately with one single command (or two) without any complex configuration**. **Note: we DO NOT recommend you to use this image in productive environment**
-
-- casbin/casdoor: normal & graceful casdoor image with only casdoor and environment installed. 
-
-This method requires [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to be installed first.
-
-### Start casdoor with casbin/casdoor-all-in-one
-if the image is not pulled, pull it from dockerhub
-```shell
-docker pull casbin/casdoor-all-in-one
-```
-Start it with
-```shell
-docker run -p 8000:8000 casbin/casdoor-all-in-one
-```
-Now you can visit http://localhost:8000 and have a try. Default account and password is 'admin' and '123'. Go for it!
-
-### Start casdoor with casbin/casdoor
-#### modify the configurations
-For the convenience of your first attempt, docker-compose.yml contains commands to start a database via docker.
-
-Thus edit `conf/app.conf` to point out the location of database(db:3306), modify `dataSourceName` to the fixed content:
-
-```bash
-dataSourceName = root:123456@tcp(db:3306)/
-```
-
-> If you need to modify `conf/app.conf`, you need to re-run `docker-compose up`.
-
-#### Run
-
-```bash
-docker-compose up
-```
-That's it! Try to visit http://localhost:8000/. :small_airplane:
-
-:::tip
-  When you start casdoor with casbin/casdoor image
-  - `MySQL` and `Casdoor server` are in different docker containers.
-  - After modifying `conf/app.conf`, re-execute `docker-compose up`
-
-:::
-
-## Some details
-
-- Github corner
-
-  We added a Github icon in the upper right corner, linking to your Github repository address.
-  You could set `ShowGithubCorner` to hidden it.
-
-  Configuration:
-
-    ```javascript
-  export const ShowGithubCorner = true
-  
-  export const GithubRepo = "https://github.com/casbin/casdoor" //your github repository
-    ```
-
-- OSS conf
-
-  We use an OSS to store and provide user avatars. You must modify the file `conf/oss.conf` to tell the backend your OSS info. For OSS providers, we support Aliyun(`[aliyun]`), awss3(`[s3]`) now.
-
-  ```conf
-  [provider]
-  accessId = id
-  accessKey = key
-  bucket = bucket
-  endpoint = endpoint
-  ```
-
-  Please fill out this conf correctly, or the avatar server won't work!
-
-- App conf
-
-  `conf/app.conf` stores the important configuration of casdoor, which is very helpful for you to use Casdoor better.
-
-  ```json
-  appname = casdoor
-  httpport = 8000
-  runmode = dev
-  SessionOn = true
-  copyrequestbody = true
-  driverName = mysql
-  dataSourceName = root:123@tcp(localhost:3306)/
-  dbName = casdoor
-  authState = "casdoor"
-  useProxy = false
-  verificationCodeTimeout = 10
-  ```
-
-  - `appname` is the application name, which currently has no practical use
-  - `httpport` is the port that your back-end application is listening on
-  - `runmode` is `dev` or `prod`
-  - `SessionOn` decides whether to enable session,used by default.
-  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
-  - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
-  - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
-
-- If casdoor needs to be publicly accessible(possess public IP), also need to modify `web/src/auth/Auth.js`:
-
-  ```javascript
-  export let authConfig = {
-    serverUrl: "http://example.com", // your Casdoor URL, like the official one: https://door.casbin.com, or http:1.1.1.1:8000
-    ...
-  }
-  ```
