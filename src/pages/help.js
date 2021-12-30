@@ -30,7 +30,7 @@ function Help() {
               </div>
               <div className="col">
                 <h2>Github</h2>
-                <Translate>At our</Translate> <a href="https://github.com/casbin/casdoor"><Translate>GitHub repo</Translate></a><Translate>, browse and submit</Translate> <a href="https://github.com/casbin/casdoor/issues">issues</a> or <a href="https://github.com/casbin/casdoor/pulls">pull requests</a> <Translate>for bugs you find or any new features you may want implemented.</Translate>
+                <Translate>At our</Translate> <a href="https://github.com/casdoor/casdoor"><Translate>GitHub repo</Translate></a><Translate>, browse and submit</Translate> <a href="https://github.com/casdoor/casdoor/issues">issues</a> or <a href="https://github.com/casdoor/casdoor/pulls">pull requests</a> <Translate>for bugs you find or any new features you may want implemented.</Translate>
               </div>
               </div>
               </div>

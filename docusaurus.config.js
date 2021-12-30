@@ -62,7 +62,7 @@ module.exports = {
           ],
         },
         {
-          href: 'https://github.com/casbin/casdoor',
+          href: 'https://github.com/casdoor/casdoor',
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository',
@@ -81,7 +81,7 @@ module.exports = {
             },
             {
               label: 'Get Started',
-              to: '/docs/basic/installation'
+              to: '/docs/basic/server-installation'
             },
             {
               label: 'Casdoor API',
@@ -119,7 +119,7 @@ module.exports = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/casbin/casdoor',
+              href: 'https://github.com/casdoor/casdoor',
             },
             {
               html: `

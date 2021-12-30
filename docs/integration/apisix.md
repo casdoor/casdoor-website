@@ -11,7 +11,7 @@ The following are some of the names in the configuration:
 `APISIX_HOSTNAME`: Domain name or IP where APISIX is deployed.
 
 ## Step1. Deploy Casdoor and APISIX
-Firstly, the [Casdoor](https://casdoor.org/docs/basic/installation) and [APISIX](https://apisix.apache.org/docs/apisix/how-to-build/) should be deployed. 
+Firstly, the [Casdoor](/docs/basic/server-installation) and [APISIX](https://apisix.apache.org/docs/apisix/how-to-build/) should be deployed. 
 
 After a successful deployment, you need to ensure:
 1. Casdoor can be logged in and used normally.

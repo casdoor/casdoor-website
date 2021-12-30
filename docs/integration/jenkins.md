@@ -13,7 +13,7 @@ The following are some of the names in the configuration:
 
 
 ## Step1. Deploy Casdoor and Jenkins
-Firstly, the [Casdoor](https://casdoor.org/docs/basic/installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/) should be deployed. 
+Firstly, the [Casdoor](/docs/basic/server-installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/) should be deployed. 
 
 After a successful deployment, you need to ensure:
 1. Set Jenkins URL(Manage Jenkins -> Configure System -> Jenkins Location) to `JENKINS_HOSTNAME`.
