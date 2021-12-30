@@ -11,12 +11,11 @@
 
 module.exports = {
   tutorialSidebar: [
-    'overview',
     {
       type: 'category',
-      label: 'Get Started',
+      label: 'The Basics',
       collapsed: false,
-      items: ['basic/installation', 'basic/try-with-docker', 'basic/basic-concept-introduction', 'basic/SDKs'],
+      items: ['overview', 'basic/basic-concept-introduction', 'basic/server-installation', 'basic/try-with-docker', 'basic/public-api', 'basic/SDKs'],
     },
     {
       type: 'category',

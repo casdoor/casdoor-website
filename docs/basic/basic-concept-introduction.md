@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Basic Introduction
+title: Core Concepts
 ---
 
 This chapter is a brief introduction to concepts in Casdoor. Details of these concepts can be found in next chapters.

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Installation
+title: Server Installation
 
 ---
 
@@ -10,7 +10,7 @@ title: Installation
 
 All OSes (Linux, Windows and macOS) are supported.
 
-### Software
+### Environment
 
 * [Go 1.6+](https://go.dev/dl/)
 * [Node.js LTS (16 or 14)](https://nodejs.org)
@@ -22,20 +22,32 @@ We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/en/docs/insta
 
 :::
 
+### Database
+
+Casdoor uses [XORM](https://xorm.io/) to talk to the database. Based on [Xorm Drivers Support](https://gitea.com/xorm/xorm#drivers-support), The current supported databases are:
+
+- `MySQL`
+- `MariaDB`
+- `PostgreSQL`
+- `SQL Server`
+- `Oracle`
+- `SQLite 3`
+- `TiDB`
+
 ## Download
 
 The source code of Casdoor is hosted at GitHub: https://github.com/casdoor/casdoor . Both the Go backend code and React frontend code are inside the single repository.
 
 Name | Description | Language | Source code
 ----|------|----|----
-Frontend | Web frontend UI for Casdoor | JavaScript + React | https://github.com/casbin/casdoor/tree/master/web
-Backend | RESTful API backend for Casdoor | Golang + Beego + XORM | https://github.com/casbin/casdoor
+Frontend | Web frontend UI for Casdoor | JavaScript + React | https://github.com/casdoor/casdoor/tree/master/web
+Backend | RESTful API backend for Casdoor | Golang + Beego + XORM | https://github.com/casdoor/casdoor
 
 Casdoor supports `Go Modules`. To download the code, you can just simply clone the code via git:
 
 ```shell
 cd path/to/folder
-git clone https://github.com/casbin/casdoor
+git clone https://github.com/casdoor/casdoor
 ```
 
 ## Configuration
@@ -72,11 +84,9 @@ origin = "https://door.casbin.com"
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
 
-Casdoor uses [XORM](https://xorm.io/) framework to connect to DB, so all DBs supported by XORM can also be used.
-
 - Setup database (MySQL):
 
-  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`, will create it if not existed. The DB connection string can be specified at: https://github.com/casbin/casdoor/blob/master/conf/app.conf
+  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`, will create it if not existed. The DB connection string can be specified at: https://github.com/casdoor/casdoor/blob/master/conf/app.conf
 
   ```ini
   driverName = mysql

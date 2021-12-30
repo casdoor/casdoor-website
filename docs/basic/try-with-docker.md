@@ -9,7 +9,7 @@ title: (Optional) Try with Docker
 
 All OSes (Linux, Windows and macOS) are supported.
 
-### Software
+### Environment
 
 You can use **docker** in Linux and **Docker Desktop** in Windows and macOS.
 
