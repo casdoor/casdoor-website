@@ -28,31 +28,31 @@ module.exports = {
       label: 'Applications',
       collapsed: false,
       items: ['application/overview', 'application/config', 'application/terminology'],
-     },
+    },
     {
-    type: 'category',
-    label: 'Providers',
-    collapsed: false,
+      type: 'category',
+      label: 'Providers',
+      collapsed: false,
       items: ['provider/overview',
-      {
-        OAuth: [
-          'provider/oauth/overview',
-          'provider/oauth/github',
-          'provider/oauth/gitee',
-          'provider/oauth/linkedin',
-          'provider/oauth/facebook',
-          'provider/oauth/google'
-        ]
-      },
-      'provider/email', 'provider/sms', 'provider/storage',
-      {
-        SAML: [
-          'provider/saml/overview',
-          'provider/saml/aliyun',
-          'provider/saml/keycloak'
-        ]
-      },
-    ],
+        {
+          OAuth: [
+            'provider/oauth/overview',
+            'provider/oauth/github',
+            'provider/oauth/gitee',
+            'provider/oauth/linkedin',
+            'provider/oauth/facebook',
+            'provider/oauth/google'
+          ]
+        },
+        'provider/email', 'provider/sms', 'provider/storage',
+        {
+          SAML: [
+            'provider/saml/overview',
+            'provider/saml/aliyun',
+            'provider/saml/keycloak'
+          ]
+        },
+      ],
 
     },
     {
@@ -83,8 +83,8 @@ module.exports = {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/spring-boot','integration/jenkins','integration/apisix']
+      items: ['integration/spring-boot', 'integration/jenkins', 'integration/apisix', 'integration/spring-security']
     },
-    'internationalization'  
+    'internationalization'
   ],
 };
