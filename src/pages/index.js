@@ -15,7 +15,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title"><Translate>Casdoor</Translate></h1>
         <br />
-        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A UI-first centralized authentication / Single-Sign-On (SSO) platform based on OAuth 2.0 / OIDC</Translate></p>
+        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A UI-first centralized authentication / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC and SAML, integrated with Casbin RBAC and ABAC permission management</Translate></p>
         <br />
         <div className={styles.buttons}>
           <Link
@@ -130,8 +130,8 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`A UI-first centralized authentication / Single-Sign-On (SSO) platform based on OAuth 2.0 / OIDC`}
-      description="Description will go into a meta tag in <head />">
+      title={`A UI-first centralized authentication / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC and SAML`}
+      description="Casdoor is a UI-first centralized authentication / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC and SAML">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

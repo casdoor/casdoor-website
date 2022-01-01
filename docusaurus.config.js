@@ -4,7 +4,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Casdoor',
-  tagline: 'A UI-first centralized authentication / Single-Sign-On (SSO) platform based on OAuth 2.0 / OIDC',
+  tagline: 'A UI-first centralized authentication / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC and SAML',
   url: 'https://casdoor.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -47,8 +47,8 @@ module.exports = {
           position: 'left',
         },
         {
-          href: 'https://oa.casbin.com/',
-          label: 'OA',
+          href: 'https://door.casbin.com/',
+          label: 'Online Demo',
           position: 'left',
         },
         {
@@ -98,7 +98,7 @@ module.exports = {
             },
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/search?q=casbin',
+              href: 'https://stackoverflow.com/search?q=casdoor',
             },
             {
               label: 'Gitter',
@@ -123,7 +123,7 @@ module.exports = {
             },
             {
               html: `
-              <iframe src="https://ghbtns.com/github-btn.html?user=casbin&repo=casdoor&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub">Casdoor</iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=casdoor&repo=casdoor&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub">Casdoor</iframe>
               `
             },
             {

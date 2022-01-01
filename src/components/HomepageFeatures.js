@@ -36,7 +36,7 @@ const FeatureList = [
     Svg: require('../../static/img/language.svg').default,
     description: (
       <>
-      <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casbin/"><Translate>our community</Translate></a>.
+      <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
       </>
     ),
   },
