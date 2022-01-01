@@ -52,6 +52,16 @@ module.exports = {
           position: 'left',
         },
         {
+          href: 'https://gitter.im/casbin/casdoor',
+          label: 'Gitter',
+          position: 'left',
+        },
+        {
+          href: 'https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi',
+          label: 'QQ Group',
+          position: 'left',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
           dropdownItemsAfter: [
@@ -93,8 +103,8 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Casbin',
-              href: 'https://casbin.org/'
+              label: 'GitHub',
+              href: 'https://github.com/casdoor',
             },
             {
               label: 'Stack Overflow',
@@ -102,11 +112,11 @@ module.exports = {
             },
             {
               label: 'Gitter',
-              href: 'https://gitter.im/casbin/Lobby'
+              href: 'https://gitter.im/casbin/casdoor',
             },
             {
-              label: 'Twitter',
-              href: 'https://twitter.com/casbinHQ',
+              label: "QQ Group",
+              href: "https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi",
             },
           ],
         },

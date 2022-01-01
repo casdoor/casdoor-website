@@ -18,15 +18,15 @@ function Help() {
         <div className="row">
           <div className="col">
             <h2><Translate>Forum</Translate></h2>
-            <Translate>Discuss with maintainers or share your experience about Casbin on</Translate> <a href="https://forum.casbin.com"><Translate>Casbin Forum.</Translate></a>
+            <Translate>Discuss with maintainers or share your experience about Casdoor on</Translate> <a href="https://forum.casbin.com"><Translate>Casdoor Forum</Translate></a>.
               </div>
               <div className="col">
                 <h2><Translate>Gitter</Translate></h2>
-                <Translate>You can join the conversation on</Translate> <a hrerf="https://gitter.im/casbin/Lobby"><Translate>Gitter</Translate></a> <Translate>for contributing help.</Translate>
+                <Translate>You can join the conversation on</Translate> <a href="https://gitter.im/casbin/casdoor"><Translate>Gitter</Translate></a> <Translate>for contributing help.</Translate>
               </div>
               <div className="col">
                 <h2><Translate>Tencent QQ</Translate></h2>
-                <Translate>You can contact us by joining the QQ group: 555019739.</Translate>
+                <Translate>You can contact us by joining the QQ group:</Translate> <a href="https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi">645200447</a>.
               </div>
               <div className="col">
                 <h2>Github</h2>
