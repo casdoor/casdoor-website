@@ -19,6 +19,12 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Developer Guide',
+      collapsed: false,
+      items: ['developer-guide/frontend'],
+    },
+    {
+      type: 'category',
       label: 'Organizations',
       collapsed: false,
       items: ['organization/overview'],
