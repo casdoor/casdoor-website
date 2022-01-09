@@ -15,7 +15,7 @@ module.exports = {
       type: 'category',
       label: 'The Basics',
       collapsed: false,
-      items: ['overview', 'basic/core-concepts', 'basic/server-installation', 'basic/try-with-docker', 'basic/public-api', 'basic/SDKs'],
+      items: ['overview', 'basic/core-concepts', 'basic/server-installation', 'basic/try-with-docker', 'basic/public-api', 'basic/how-to-connect'],
     },
     {
       type: 'category',
