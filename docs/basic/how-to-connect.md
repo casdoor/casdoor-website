@@ -16,11 +16,11 @@ As Identity Provider (IdP), Casdoor supports one authentication protocol:
 
 - `OAuth 2.0 (OIDC)`
 
-Therefore, your application will talk to Casdoor via OAuth 2.0 (OIDC). Specifically, there are two ways for connecting to Casdoor:
+Therefore, your application will talk to Casdoor via OAuth 2.0 (OIDC). Specifically, there are three ways for connecting to Casdoor:
 
-1. **Use a standard OIDC client library**: an OIDC client implementation is widely provided in any programming language or framework.
-2. **Use Casdoor SDK**: Casdoor will provide easy-to-use SDK library on top of OIDC, with supporting extended functionality which are only available in Casdoor.
-3. **Use Casdoor plugin**: if your application is built on a platform and Casdoor (or a third-party) has already provided a plugin or middleware for it, then use it. It will be much easier to use than directly using Casdoor SDK because it's specially made for the platform.
+1. **Standard OIDC client library**: use a standard OIDC client implementation, which is usually widely provided in any programming language or framework.
+2. **Casdoor SDK**: For most programming languages, Casdoor will provide easy-to-use SDK library on top of OIDC, with supporting extended functionality which are only available in Casdoor.
+3. **Casdoor plugin**: if your application is built on top of a popular platform (like Spring Boot, WordPress, etc.) and Casdoor (or a third-party) has already provided a plugin or middleware for it, then use it. It will be much easier to use a plugin than manually invoking Casdoor SDK because the former is specially made for the platform.
 
 ## Standard OIDC client library
 
@@ -166,88 +166,226 @@ For a full list of the official Casdoor plugins, please see: https://github.com/
 
 ## How to use Casdoor SDK?
 
-### 1. Initialization
+### 1. Backend SDK configuration
 
-The first step is to get in touch with the casdoor server. You need to provide the address of the casdoor server, the
-credential ClientId and ClientSecret of the application, the jwt secret, and the name of the organization where the
-application is located, which are all string type.
-
-Roughly like this:
-
-| Parameter        | Must | Description                                         |
-|------------------|------|-----------------------------------------------------|
-| endpoint         | Yes  | Casdoor Server Url, such as `http://localhost:8000` |
-| clientId         | Yes  | Application.client_id                               |
-| clientSecret     | Yes  | Application.client_secret                           |
-| jwtSecret        | Yes  | Read from token_jwt_key.pem file                    |
-| organizationName | Yes  | Application.organization                            |
-
-The function signature in Go is as follows, similar to other languages:
+When your application starts up, you need to initialize the Casdoor SDK config by calling the `InitConfig()` function with required parameters. Take casdoor-go-sdk as example: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
 
 ```go
-func InitConfig(endpoint string, clientId string, clientSecret string, jwtSecret string, organizationName string)
-```
-
-You can refer to the [usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/account.go#L32),
-
-```go
-var CasdoorEndpoint = "http://localhost:8000"
+var CasdoorEndpoint = "https://door.casbin.com"
 var ClientId = "541738959670d221d59d"
 var ClientSecret = "66863369a64a5863827cf949bab70ed560ba24bf"
-var JwtSecret = "CasdoorSecret"
-var CasdoorOrganization = "casbin-forum"
+var CasdoorOrganization = "casbin"
+var CasdoorApplication = "app-casnode"
+
+//go:embed token_jwt_key.pem
+var JwtPublicKey string
 
 func init() {
-	auth.InitConfig(CasdoorEndpoint, ClientId, ClientSecret, JwtSecret, CasdoorOrganization)
+	auth.InitConfig(CasdoorEndpoint, ClientId, ClientSecret, JwtPublicKey, CasdoorOrganization, CasdoorApplication)
 }
 ```
 
-More specific behavior can refer to [the source codes of casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk).
+All the parameters for `InitConfig()` are explained as follows:
 
-### 2. SDK access Casdoor
+| Parameter        | Must | Description                                                                   |
+|------------------|------|-------------------------------------------------------------------------------|
+| endpoint         | Yes  | Casdoor Server URL, like `https://door.casbin.com` or `http://localhost:8000` |
+| clientId         | Yes  | Client ID for the Casdoor application                                         |
+| clientSecret     | Yes  | Client secret for the Casdoor application                                     |
+| jwtPublicKey     | Yes  | The public key for the Casdoor application's cert                             |
+| organizationName | Yes  | The name for the Casdoor organization                                         |
+| applicationName  | No   | The name for the Casdoor application                                          |
 
-With previous configured ```authConfig```, Casdoor SDK now can turn to casdoor server to verify users, note that SDK
-uses ```SetBasicAuth``` method in net/http library to get ```ClientId``` and ```ClientSecret``` from Casdoor server and
-verify users in your application.
+### 2. Frontend configuration
 
-More details please refer to https://github.com/casdoor/casdoor-go-sdk/blob/master/auth/base.go#L42
+First, install `casdoor-js-sdk` via NPM or Yarn:
 
-### 3. Get token and parse
+```json
+npm install casdoor-js-sdk
+```
 
-After casdoor verification passed, it will be redirected to your application with code and state,
-like `http://forum.casbin.org?code=xxx&state=yyyy`.
+Or:
 
-Your web application can get the `code`, `state` and call `GetOAuthToken(code, state)`, then parse out jwt token.
+```json
+yarn add casdoor-js-sdk
+```
 
-See [Usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/auth.go#L36) as a reference:
+Then define the following utility functions (better in a global JS file like `Setting.js`):
+
+```js
+import Sdk from "casdoor-js-sdk";
+
+export function initCasdoorSdk(config) {
+   CasdoorSdk = new Sdk(config);
+}
+
+export function getSignupUrl() {
+   return CasdoorSdk.getSignupUrl();
+}
+
+export function getSigninUrl() {
+   return CasdoorSdk.getSigninUrl();
+}
+
+export function getUserProfileUrl(userName, account) {
+   return CasdoorSdk.getUserProfileUrl(userName, account);
+}
+
+export function getMyProfileUrl(account) {
+   return CasdoorSdk.getMyProfileUrl(account);
+}
+
+export function getMyResourcesUrl(account) {
+   return CasdoorSdk.getMyProfileUrl(account).replace("/account?", "/resources?");
+}
+
+export function signin() {
+   return CasdoorSdk.signin(ServerUrl);
+}
+```
+
+In the entrance file of your frontend code (like `index.js` or `app.js` in React), you need to initialize the `casdoor-js-sdk` by calling the `InitConfig()` function with required parameters. The first 4 parameters should use the same value as the Casdoor backend SDK. The last parameter `redirectPath` is relative path for the redirected URL, returned from Casdoor's login page.
+
+```js
+const config = {
+  serverUrl: "https://door.casbin.com",
+  clientId: "014ae4bd048734ca2dea",
+  organizationName: "casbin",
+  appName: "app-casnode",
+  redirectPath: "/callback",
+};
+
+xxx.initCasdoorSdk(config);
+```
+
+**(Optional)** Because we are using React as example, so our `/callback` path is hitting the React route, we use the following React component to receive the `/callback` call and sends to the backend. You can ignore this step if you are redirecting to backend directly (like in JSP or PHP).
+
+```js
+import React from "react";
+import { Button, Result, Spin } from "antd";
+import { withRouter } from "react-router-dom";
+import * as Setting from "./Setting";
+
+class AuthCallback extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      classes: props,
+      msg: null,
+    };
+  }
+
+  componentWillMount() {
+    this.login();
+  }
+
+  login() {
+    Setting.signin().then((res) => {
+      if (res.status === "ok") {
+        Setting.showMessage("success", `Logged in successfully`);
+        Setting.goToLink("/");
+      } else {
+        this.setState({
+          msg: res.msg,
+        });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <div style={{ textAlign: "center" }}>
+        {this.state.msg === null ? (
+          <Spin
+            size="large"
+            tip="Signing in..."
+            style={{ paddingTop: "10%" }}
+          />
+        ) : (
+          <div style={{ display: "inline" }}>
+            <Result
+              status="error"
+              title="Login Error"
+              subTitle={this.state.msg}
+              extra={[
+                <Button type="primary" key="details">
+                  Details
+                </Button>,
+                <Button key="help">Help</Button>,
+              ]}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+export default withRouter(AuthCallback);
+```
+
+### 3. Get login URLs
+
+Next you can show the "Sign up" and "Sign in" buttons or links to your users. The URLs can either be retrieved in the frontend or backend. See more details at: **[/docs/basic/core-concepts#login-urls](/docs/basic/core-concepts#login-urls)**
+
+### 4. Get and verify access token
+
+Here are the steps:
+
+1. The user clicks the login URL and is redirected to Casdoor's login page, like: `https://door.casbin.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https%3A%2F%2Fforum.casbin.com%2Fcallback&scope=read&state=app-casnode`
+2. The user enters username & password and clicks `Sign In` (or just click the third-party login button like `Sign in with GitHub`).
+3. The user is redirected back to your application with the authorization code issued by Casdoor (like: `https://forum.casbin.com?code=xxx&state=yyy`), your application's backend needs to exchange the authorization code with the access token and verify that the access token is valid and issued by Casdoor. The functions `GetOAuthToken()` and `ParseJwtToken()` are provided by Casdoor backend SDK.
+
+The following code shows how to get and verify the access token. For a real example of Casnode (a forum website written in Go), see: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
 
 ```go
+// get code and state from the GET parameters of the redirected URL
 code := c.Input().Get("code")
 state := c.Input().Get("state")
 
+// exchange the access token with code and state
 token, err := auth.GetOAuthToken(code, state)
 if err != nil {
 	panic(err)
 }
 
+// verify the access token
 claims, err := auth.ParseJwtToken(token.AccessToken)
 if err != nil {
 	panic(err)
 }
 ```
 
-### 4. Set Session in your app
+If `ParseJwtToken()` finishes with no error, then the user has successfully logged into the application. The returned `claims` can be used to identity the user later.
 
-You need to verify the information parsed from the third step. After it is correct (it may be modified), it proves that
-the user verification has passed, and you can set up the session in your own application.
+### 4. Identify user with access token
 
-**At this point, the user login is actually completed**.
+:::info
+This part is actually your application's own business logic and not part of OIDC, OAuth or Casdoor. We just provide good practices as a lot of people don't know what to do for next step.
+:::
 
-The Method to set session varies greatly depending on the languages and frameworks, casnode uses
-the [beego framework](https://github.com/beego/beego/) and set session by encapsulation method `c.SetSessionUser()`
-, [source code](https://github.com/casbin/casnode/blob/master/controllers/base.go#L44).
 
-[Usage in Casnode](https://github.com/casbin/casnode/blob/master/controllers/auth.go#L47),
+In Casdoor, access token is usually identical as ID token. They are the same thing. So the access token contains all information for the logged-in user.
+
+The variable `claims` returned by `ParseJwtToken()` is defined as:
+
+```go
+type Claims struct {
+	User
+	AccessToken string `json:"accessToken"`
+	jwt.RegisteredClaims
+}
+```
+
+1. `User`: the User object, containing all information for the logged-in user, see definition at: **[/docs/basic/core-concepts#user](/docs/basic/core-concepts#user)**
+2. `AccessToken`: the access token string.
+3. `jwt.RegisteredClaims`: some other values required by JWT.
+
+At this moment, the application usually has two ways to remember the user session: `session` and `JWT`.
+
+#### Session
+
+The Method to set session varies greatly depending on the language and web framework. E.g., Casnode uses [Beego web framework](https://github.com/beego/beego/) and set session by calling: `c.SetSessionUser()`.
 
 ```go
 token, err := auth.GetOAuthToken(code, state)
@@ -261,18 +399,30 @@ if err != nil {
 }
 
 claims.AccessToken = token.AccessToken
-c.SetSessionUser(claims)				// see here
+c.SetSessionUser(claims) // set session
 ```
 
-That's it!
+#### JWT
 
-### 5. Interact with the users table
+The `accessToken` returned by Casdoor is actually a JWT. So if your application uses JWT to keep user session, just use the access token directly for it:
 
-You may not only need to log in, but you will also get user details, or update users information, etc.
+1. Send the access token to frontend, save it in places like localStorage of the browser.
+2. Let the browser sends the access token to backend for every request.
+3. Call `ParseJwtToken()` or your own function to verify the access token and get logged-in user information in your backend.
 
-The SDK provides several key functions, and you need to customize them in more detail, or report an issue!
+### 5. **(Optional)** Interact with the User table
 
-- `GetUser(name string)`, get one user by user name.
-- `GetUsers()`, get all users.
-- `UpdateUser(auth.User)/AddUser(auth.User)/DeleteUser(auth.User)`, write user to database.
-- `CheckUserPassword(auth.User)`, check user's password.
+:::info
+This part is provided by `Casdoor Public API` and not part of the OIDC or OAuth.
+:::
+
+Casdoor Backend SDK provides a lot of helper functions, not limited to:
+
+- `GetUser(name string)`: get a user by username.
+- `GetUsers()`: get all users.
+- `AddUser()`: add a user.
+- `UpdateUser()`: update a user.
+- `DeleteUser()`: delete a user.
+- `CheckUserPassword(auth.User)`: check user's password.
+
+These functions are implemented by making RESTful calls against `Casdoor Public API`. If a function is not provided in Casdoor Backend SDK, you can make RESTful calls by yourself.

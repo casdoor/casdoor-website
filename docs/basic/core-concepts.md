@@ -163,20 +163,22 @@ An application is a "portal" or "interface" for a user to log into Casdoor. A us
 | app-casnode   | https://door.casbin.com/signup/app-casnode   | https://door.casbin.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor |
 | app-casbin-oa | https://door.casbin.com/signup/app-casbin-oa | https://door.casbin.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor |
 
-it is very easy to access Casdoor's built-in application, just visiting: https://door.casbin.com and it will automatically redirect you to `/login`. But how to get these URLs for other applications in frontend and backend code? You can either concatenate strings by yourself or call Casdoor's client and server SDKs to get them:
+### Login URLs
 
-### 1. Via concatenating strings:
+It's very easy to log into Casdoor via Casdoor's built-in application, just visit Casdoor server's homepage (like: https://door.casbin.com for demo site) and it will automatically redirect you to `/login`. But how to get these URLs for other applications in frontend and backend code? You can either concatenate strings by yourself or call some utility functions provided by Casdoor SDKs to get the URLs:
+
+#### 1. By concatenating string manually:
 
 - Sign up page URL: `<your-casdoor-hostname>/signup/<your-application-name>`
 - Sign in page URL: `<your-casdoor-hostname>/login/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor `
 
-### 2. Via web frontend (like React, Vue, Angular):
+#### 2. Use frontend SDK (for frontend Javascript code using React, Vue or Angular):
 
-See `getSignupUrl()` and `getSigninUrl()`: https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63
+`getSignupUrl()` and `getSigninUrl()`: https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63
 
-### 3. Via backend (like Go, Java, etc.):
+#### 3. Use backend SDK (for backend code using Go, Java, etc.):
 
-See `GetSignupUrl()` and `GetSigninUrl()`: https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39
+`GetSignupUrl()` and `GetSigninUrl()`: https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39
 
 ## Provider
 
