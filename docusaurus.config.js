@@ -69,7 +69,7 @@ module.exports = {
           position: 'right',
           dropdownItemsAfter: [
             {
-              to: 'https://crowdin.com/project/casdoor',
+              to: 'https://crowdin.com/project/casdoor-website',
               label: 'Help translate',
             },
           ],

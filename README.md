@@ -110,7 +110,7 @@ If possible, test any visual changes in all latest versions of common browsers, 
 
 ## Translation
 
-[Crowdin](https://crowdin.com/project/casdoor) is used for Casdoor website's translation. For more technical details, please see how [Docusaurus using Crowdin](https://docusaurus.io/docs/i18n/crowdin).  You can contribute to the translation of your proficient languages on that. The Crowdin translation project is [Casdoor](https://crowdin.com/project/casdoor), welcome to add new translations and propose in our community to add more language supports.
+[Crowdin](https://crowdin.com/project/casdoor-website) is used for Casdoor website's translation. For more technical details, please see how [Docusaurus using Crowdin](https://docusaurus.io/docs/i18n/crowdin).  You can contribute to the translation of your proficient languages on that. The Crowdin translation project is [Casdoor](https://crowdin.com/project/casdoor), welcome to add new translations and propose in our community to add more language supports.
 
 ### Build the translation project locally
 
