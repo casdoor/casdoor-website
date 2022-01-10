@@ -15,7 +15,13 @@ module.exports = {
       type: 'category',
       label: 'The Basics',
       collapsed: false,
-      items: ['overview', 'basic/core-concepts', 'basic/server-installation', 'basic/try-with-docker', 'basic/public-api', 'basic/how-to-connect'],
+      items: ['overview', 'basic/core-concepts', 'basic/server-installation', 'basic/try-with-docker', 'basic/public-api'],
+    },
+    {
+      type: 'category',
+      label: 'How to Connect to Casdoor',
+      collapsed: false,
+      items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk', 'how-to-connect/plugin'],
     },
     {
       type: 'category',
