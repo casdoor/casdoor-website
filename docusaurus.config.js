@@ -21,6 +21,9 @@ module.exports = {
       apiKey: '41c481c691018c863b01f07f568163d0',
       indexName: 'casdoor',
     },
+    hotjar: {
+      applicationId: '1689986',
+    },
     navbar: {
       title: 'Casdoor',
       logo: {
@@ -199,5 +202,5 @@ module.exports = {
       },
     ],
   ],
-  plugins: ['docusaurus-plugin-sass'],
+  plugins: ['docusaurus-plugin-sass', 'docusaurus-plugin-hotjar'],
 };
