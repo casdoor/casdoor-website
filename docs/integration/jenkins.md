@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Jenkins (OIDC)
+title: Jenkins
 ---
 
 Casdoor can use OIDC protocol as IDP to connect various applications. Here we will use Jenkins as an example to show you how to use OIDC to connect to your applications.
