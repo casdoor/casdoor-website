@@ -9,7 +9,7 @@
  Create as many sidebars as you want.
  */
 
-module.exports = {
+ module.exports = {
   tutorialSidebar: [
     {
       type: 'category',
@@ -233,7 +233,14 @@ module.exports = {
         'integration/showdoc',
       ],
     },
+    {
+      type: 'category',
+      label: 'WebAuthn',
+      collapsed: false,
+      items: ['webauthn/overview'],
+    },
     'internationalization',
     'contributing',
   ],
+  
 };
