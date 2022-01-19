@@ -97,6 +97,12 @@ module.exports = {
       collapsed: false,
       items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins', 'integration/minio', 'integration/spring-boot', 'integration/spring-security']
     },
-    'internationalization'
+    'internationalization',
+    {
+      type: 'category',
+      label: 'WebAuthn',
+      collapsed: false,
+      items: ['webauthn/overview'],
+    },
   ],
 };
