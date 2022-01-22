@@ -10,7 +10,7 @@ The following are some of the names in the configuration:
 
 `GITLAB_HOSTNAME`: Domain name or IP where GitLab is deployed. e.g., `https://gitlab.com`.
 
-## Step1. Deploy Casdoor and APISIX
+## Step1. Deploy Casdoor and GitLab
 Firstly, the [Casdoor](/docs/basic/server-installation) and [GitLab](https://docs.gitlab.com/ee/install/) should be deployed. 
 
 After a successful deployment, you need to ensure:
