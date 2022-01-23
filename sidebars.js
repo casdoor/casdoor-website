@@ -53,7 +53,8 @@ module.exports = {
             'provider/oauth/gitee',
             'provider/oauth/linkedin',
             'provider/oauth/facebook',
-            'provider/oauth/google'
+            'provider/oauth/google',
+            'provider/oauth/baidu'
           ]
         },
         'provider/email', 'provider/sms', 'provider/storage',
