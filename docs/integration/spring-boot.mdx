@@ -3,7 +3,7 @@ sidebar_position: 1
 title: Spring Boot
 ---
 
-[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-java-sdk](https://github.com/casdoor/casdoor-java-sdk) in SpringBoot project. We will show you the steps below.
+[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. We will show you the steps below.
 
 ## Step1. Deploy Casdoor 
 
@@ -19,9 +19,9 @@ After a successful deployment, you need to ensure:
 
 Then you can quickly implement a casdoor based login page in your own app with the following steps.
 
-## Step2. Import casdoor-java-sdk
+## Step2. Import casdoor-spring-boot-starter
 
-You can import the casdoor-java-sdk with  maven or gradle.
+You can import the casdoor-spring-boot-starter with  maven or gradle.
 
 ````mdx-code-block
 import Tabs from '@theme/Tabs';
@@ -39,9 +39,10 @@ import TabItem from '@theme/TabItem';
 <TabItem value="maven">
 
 ```xml
+<!-- https://mvnrepository.com/artifact/org.casbin/casdoor-spring-boot-starter -->
 <dependency>
     <groupId>org.casbin</groupId>
-    <artifactId>casdoor-java-sdk</artifactId>
+    <artifactId>casdoor-spring-boot-starter</artifactId>
     <version>1.x.y</version>
 </dependency>
 ```
@@ -51,7 +52,8 @@ import TabItem from '@theme/TabItem';
 <TabItem value="gradle">
 
 ```xml
-implementation 'org.casbin:casdoor-java-sdk:1.x.y'
+// https://mvnrepository.com/artifact/org.casbin/casdoor-spring-boot-starter
+implementation group: 'org.casbin', name: 'casdoor-spring-boot-starter', version: '1.x.y'
 ```
 
 </TabItem>
@@ -123,49 +125,6 @@ You should replace the configuration with your own Casdoor instance especially t
 
 :::
 
-Then create `CasdoorSdkProperties` class, declare member variables corresponding to the configuration and provide getter and setter.
-
-```java
-@Data
-@Component
-@ConfigurationProperties(prefix = "casdoor")
-public class CasdoorSdkProperties {
-    private String endpoint;
-    private String clientId;
-    private String clientSecret;
-    private String jwtSecret;
-    private String organizationName;
-    private String applicationName;
-}
-```
-
-Create `CasdoorSdkConfig` class, init `CasdoorConfig` with the instance of CasdoorSdkProperties.
-
-```java
-@Configuration
-public class CasdoorSdkConfig {
-
-    @Resource
-    private CasdoorSdkProperties casdoorSdkProperties;
-
-    @Bean
-    public CasdoorConfig getCasdoorConfig() {
-        return new CasdoorConfig(
-                casdoorSdkProperties.getEndpoint(),
-                casdoorSdkProperties.getClientId(),
-                casdoorSdkProperties.getClientSecret(),
-                casdoorSdkProperties.getJwtSecret(),
-                casdoorSdkProperties.getOrganizationName(),
-                casdoorSdkProperties.getApplicationName()
-        );
-    }
-}
-```
-
-When SpringBoot Application starts, the configuration in Java properties or YAML is automatically injected into the member variables in `CasdoorSdkProperties` class. 
-
-So you can use `getCasdoorConfig` method in `CasdoorSdkConfig` class to get `CasdoorConfig` instance anywhere.
-
 ## Step4. Redirect to the login page
 
 When you need the authentication who access your app, you can send the target url and redirect to the login page provided by Casdoor.
@@ -173,13 +132,12 @@ When you need the authentication who access your app, you can send the target ur
 Please be sure that you have added the callback url (e.g. **http://localhost:8080/login**) in application configuration in advance.
 
 ```java
+@Resource
+private CasdoorAuthService casdoorAuthService;
+
 @RequestMapping("toLogin")
-public String toLogin() {
-    CasdoorConfig casdoorConfig = casdoorSdkConfig.getCasdoorConfig();
-    String targetUrl = String.format("%s/login/oauth/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=read&state=%s",
-            "http://localhost:7001", casdoorConfig.getClientId(),
-            "http://localhost:8080/login", casdoorConfig.getApplicationName());
-    return "redirect:" + targetUrl;
+public String toLogin() throws UnsupportedEncodingException {
+    return "redirect:" + casdoorAuthService.getSigninUrl("http://localhost:8080/login");
 }
 ```
 
@@ -194,13 +152,12 @@ You can get the code and call `getOAuthToken` method, then parse out jwt token.
 ```java
 @RequestMapping("login")
 public String login(String code, String state, HttpServletRequest request) {
-    CasdoorAuthService casdoorAuthService = new CasdoorAuthService(casdoorSdkConfig.getCasdoorConfig());
     String token = "";
     CasdoorUser user = null;
     try {
         token = casdoorAuthService.getOAuthToken(code, state);
         user = casdoorAuthService.parseJwtToken(token);
-    } catch (OAuthSystemException | OAuthProblemException | ParseException | InvocationTargetException | IllegalAccessException e) {
+    } catch (ParseException | InvocationTargetException | IllegalAccessException | OAuthSystemException | OAuthProblemException e) {
         e.printStackTrace();
     }
     HttpSession session = request.getSession();
