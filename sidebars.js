@@ -84,7 +84,7 @@ module.exports = {
       type: 'category',
       label: 'Deploy',
       collapsed: false,
-      items: ['deploy/nginx'],
+      items: ['deploy/nginx','deploy/k8s'],
     },
     {
       type: 'category',
