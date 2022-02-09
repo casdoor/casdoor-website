@@ -55,11 +55,6 @@ module.exports = {
           position: 'left',
         },
         {
-          href: 'https://gitter.im/casbin/casdoor',
-          label: 'Gitter',
-          position: 'left',
-        },
-        {
           type: 'localeDropdown',
           position: 'right',
           dropdownItemsAfter: [
@@ -74,6 +69,12 @@ module.exports = {
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository',
+        },
+        {
+          href: 'https://gophers.slack.com/archives/C0324FBNEPN',
+          position: 'right',
+          className: 'header-slack-link',
+          'aria-label': 'Slack channel',
         },
       ],
     },
@@ -109,8 +110,8 @@ module.exports = {
               href: 'https://stackoverflow.com/search?q=casdoor',
             },
             {
-              label: 'Gitter',
-              href: 'https://gitter.im/casbin/casdoor',
+              label: 'Slack',
+              href: 'https://gophers.slack.com/archives/C0324FBNEPN',
             },
           ],
         },
