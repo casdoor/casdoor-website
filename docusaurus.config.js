@@ -55,6 +55,11 @@ module.exports = {
           position: 'left',
         },
         {
+          href: 'https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi',
+          label: 'QQ Group',
+          position: 'left',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
           dropdownItemsAfter: [
