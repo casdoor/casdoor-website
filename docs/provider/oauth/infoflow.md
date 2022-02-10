@@ -16,7 +16,7 @@ Then you can get ```AgentID``` now.
 ![AgentID](/img/providers/OAuth/infoflowagentid.png)
 
 Then navigate to **Setting** tab, and create a new management group.
-![AgentID](/img/providers/OAuth/infoflowsetting.png)
+![Setting](/img/providers/OAuth/infoflowsetting.png)
 
 Add your structure to the address book permissions, and give it the permissions shown below. Also add the application you just created to the following location.
 ![Permission](/img/providers/OAuth/infoflowpermission1.png)
