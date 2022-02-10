@@ -55,11 +55,6 @@ module.exports = {
           position: 'left',
         },
         {
-          href: 'https://gitter.im/casbin/casdoor',
-          label: 'Gitter',
-          position: 'left',
-        },
-        {
           href: 'https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi',
           label: 'QQ Group',
           position: 'left',
@@ -79,6 +74,12 @@ module.exports = {
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository',
+        },
+        {
+          href: 'https://gophers.slack.com/archives/C0324FBNEPN',
+          position: 'right',
+          className: 'header-slack-link',
+          'aria-label': 'Slack channel',
         },
       ],
     },
@@ -114,12 +115,8 @@ module.exports = {
               href: 'https://stackoverflow.com/search?q=casdoor',
             },
             {
-              label: 'Gitter',
-              href: 'https://gitter.im/casbin/casdoor',
-            },
-            {
-              label: "QQ Group",
-              href: "https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi",
+              label: 'Slack',
+              href: 'https://gophers.slack.com/archives/C0324FBNEPN',
             },
           ],
         },
