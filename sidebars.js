@@ -54,7 +54,8 @@ module.exports = {
             'provider/oauth/linkedin',
             'provider/oauth/facebook',
             'provider/oauth/google',
-            'provider/oauth/baidu'
+            'provider/oauth/baidu',
+            'provider/oauth/infoflow'
           ]
         },
         'provider/email', 'provider/sms', 'provider/storage',
