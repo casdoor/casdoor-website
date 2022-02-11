@@ -97,7 +97,7 @@ module.exports = {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins', 'integration/minio', 'integration/spring-boot', 'integration/spring-security']
+      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins', 'integration/minio', 'integration/spring-boot', 'integration/spring-security','integration/elk']
     },
     'internationalization'
   ],
