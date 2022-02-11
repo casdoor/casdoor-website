@@ -27,7 +27,7 @@ module.exports = {
       type: 'category',
       label: 'Developer Guide',
       collapsed: false,
-      items: ['developer-guide/frontend'],
+      items: ['developer-guide/frontend','developer-guide/swagger'],
     },
     {
       type: 'category',

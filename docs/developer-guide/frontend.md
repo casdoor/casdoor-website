@@ -1,5 +1,6 @@
 ---
 title: Frontend
+sidebar_position: 1
 ---
 
 The source code for Casdoor's frontend is inside the `/web` folder: https://github.com/casdoor/casdoor/tree/master/web
