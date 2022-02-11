@@ -57,8 +57,10 @@ First you need to apply to [become a developer](https://wiki.connect.qq.com/%E6%
 
 Visit [DingTalk developer platform](https://open-dev.dingtalk.com/?spm=ding_open_doc.document.0.0.140a645fxfAUAE#/loginMan) and log in using your DingTalk account, after enter the platform, follow the instructions of the platform and you will get your Client Id and Client Secret.
 
-For more detailed information please visit [DingTalk developer docs](https://developers.dingtalk.com/document/app/obtain-identity-credentials).
+For more detailed information please visit [DingTalk developer docs](https://open.dingtalk.com/document/orgapp-server/tutorial-obtaining-user-personal-information).
 
+In addition, you need to add the following permissions to the dingtalk application:
+![DingTalk](/img/providers/OAuth/dingtalkpermission.png)
 
 ## Add an OAuth provider
 
