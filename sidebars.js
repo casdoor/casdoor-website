@@ -27,7 +27,7 @@ module.exports = {
       type: 'category',
       label: 'Developer Guide',
       collapsed: false,
-      items: ['developer-guide/frontend','developer-guide/swagger'],
+      items: ['developer-guide/frontend', 'developer-guide/swagger'],
     },
     {
       type: 'category',
@@ -85,7 +85,7 @@ module.exports = {
       type: 'category',
       label: 'Deploy',
       collapsed: false,
-      items: ['deploy/nginx','deploy/k8s'],
+      items: ['deploy/nginx', 'deploy/k8s'],
     },
     {
       type: 'category',
@@ -97,7 +97,7 @@ module.exports = {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins', 'integration/minio', 'integration/spring-boot', 'integration/spring-security','integration/elk']
+      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins plugin', 'integration/jenkins oidc', 'integration/minio', 'integration/spring-boot', 'integration/spring-security', 'integration/elk']
     },
     'internationalization'
   ],
