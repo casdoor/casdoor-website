@@ -6,7 +6,7 @@ title: Core Concepts
 As Casdoor's administrator, you should get familiar with at least 4 core concepts: `Organization`, `User`, `Application` and `Provider`.
 
 :::tip
-In the following parts, we will use the demo site: https://door.casbin.com as example.
+In the following parts, we will use the demo site: https://door.casdoor.com as example.
 :::
 
 ## Organization
@@ -153,19 +153,19 @@ type Application struct {
 }
 ```
 
-Each application can have its own customized sign up page, sign in page, etc. E.g., the root login page `/login` (like: https://door.casbin.com/login) is the sign in page only for Casdoor's built-in application: `app-built-in`.
+Each application can have its own customized sign up page, sign in page, etc. E.g., the root login page `/login` (like: https://door.casdoor.com/login) is the sign in page only for Casdoor's built-in application: `app-built-in`.
 
 An application is a "portal" or "interface" for a user to log into Casdoor. A user must go through one application's sign in page to log into Casdoor.
 
 | Application   | Sign up page URL                             | Sign in page URL                                                                                                                                                     |
 |---------------|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| app-built-in  | https://door.casbin.com/signup               | https://door.casbin.com/login                                                                                                                                        |
-| app-casnode   | https://door.casbin.com/signup/app-casnode   | https://door.casbin.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor |
-| app-casbin-oa | https://door.casbin.com/signup/app-casbin-oa | https://door.casbin.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor |
+| app-built-in  | https://door.casdoor.com/signup               | https://door.casdoor.com/login                                                                                                                                        |
+| app-casnode   | https://door.casdoor.com/signup/app-casnode   | https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor |
+| app-casbin-oa | https://door.casdoor.com/signup/app-casbin-oa | https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor |
 
 ### Login URLs
 
-It's very easy to log into Casdoor via Casdoor's built-in application, just visit Casdoor server's homepage (like: https://door.casbin.com for demo site) and it will automatically redirect you to `/login`. But how to get these URLs for other applications in frontend and backend code? You can either concatenate strings by yourself or call some utility functions provided by Casdoor SDKs to get the URLs:
+It's very easy to log into Casdoor via Casdoor's built-in application, just visit Casdoor server's homepage (like: https://door.casdoor.com for demo site) and it will automatically redirect you to `/login`. But how to get these URLs for other applications in frontend and backend code? You can either concatenate strings by yourself or call some utility functions provided by Casdoor SDKs to get the URLs:
 
 #### 1. By concatenating string manually:
 

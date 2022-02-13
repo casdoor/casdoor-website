@@ -45,12 +45,12 @@ module.exports = {
           position: 'left',
         },
         {
-          href: 'https://door.casbin.com/swagger/',
+          href: 'https://door.casdoor.com/swagger/',
           label: 'API',
           position: 'left',
         },
         {
-          href: 'https://door.casbin.com/',
+          href: 'https://door.casdoor.com/',
           label: 'Online Demo',
           position: 'left',
         },
@@ -99,7 +99,7 @@ module.exports = {
             },
             {
               label: 'Casdoor API',
-              href: 'https://door.casbin.com/swagger/'
+              href: 'https://door.casdoor.com/swagger/'
             },
           ],
         },

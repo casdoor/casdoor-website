@@ -10,15 +10,15 @@ Casdoor has fulfilled the OIDC protocol completely. If your application is alrea
 <your-casdoor-backend-host>/.well-known/openid-configuration
 ```
 
-E.g., the OIDC discovery URL for the demo site is: https://door.casbin.com/.well-known/openid-configuration , with the following content:
+E.g., the OIDC discovery URL for the demo site is: https://door.casdoor.com/.well-known/openid-configuration , with the following content:
 
 ```json
 {
-  "issuer": "https://door.casbin.com",
-  "authorization_endpoint": "https://door.casbin.com/login/oauth/authorize",
-  "token_endpoint": "https://door.casbin.com/api/login/oauth/access_token",
-  "userinfo_endpoint": "https://door.casbin.com/api/get-account",
-  "jwks_uri": "https://door.casbin.com/api/certs",
+  "issuer": "https://door.casdoor.com",
+  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  "token_endpoint": "https://door.casdoor.com/api/login/oauth/access_token",
+  "userinfo_endpoint": "https://door.casdoor.com/api/get-account",
+  "jwks_uri": "https://door.casdoor.com/api/certs",
   "response_types_supported": [
     "id_token"
   ],

@@ -71,7 +71,7 @@ httpProxy = "127.0.0.1:10808"
 verificationCodeTimeout = 10
 initScore = 2000
 logPostOnly = true
-origin = "https://door.casbin.com"
+origin = "https://door.casdoor.com"
 ```
 
   - `appname` is the application name, which currently has no practical use
@@ -196,7 +196,7 @@ In **prod** environment, the frontend files is first built by ```yarn build``` a
 
 When we are testing Casnode in **dev** environment, we set the `serverUrl` as http://localhost:7001, so when we test signin and signup functionality using Casdoor, it will go to localhost 7001 which is the Casdoor port.
 
-And when we put Casnode to **prod** environment, we set the `serverUrl` as https://door.casbin.com, so users can signin or signup using Casdoor.
+And when we put Casnode to **prod** environment, we set the `serverUrl` as https://door.casdoor.com, so users can signin or signup using Casdoor.
 
 ![Casnode Example](/img/casnodeexample.png)
 :::

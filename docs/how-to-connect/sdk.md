@@ -41,7 +41,7 @@ For a full list of the official Casdoor SDKs, please see: https://github.com/cas
 When your application starts up, you need to initialize the Casdoor SDK config by calling the `InitConfig()` function with required parameters. Take casdoor-go-sdk as example: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
 
 ```go
-var CasdoorEndpoint = "https://door.casbin.com"
+var CasdoorEndpoint = "https://door.casdoor.com"
 var ClientId = "541738959670d221d59d"
 var ClientSecret = "66863369a64a5863827cf949bab70ed560ba24bf"
 var CasdoorOrganization = "casbin"
@@ -59,7 +59,7 @@ All the parameters for `InitConfig()` are explained as follows:
 
 | Parameter        | Must | Description                                                                   |
 |------------------|------|-------------------------------------------------------------------------------|
-| endpoint         | Yes  | Casdoor Server URL, like `https://door.casbin.com` or `http://localhost:8000` |
+| endpoint         | Yes  | Casdoor Server URL, like `https://door.casdoor.com` or `http://localhost:8000` |
 | clientId         | Yes  | Client ID for the Casdoor application                                         |
 | clientSecret     | Yes  | Client secret for the Casdoor application                                     |
 | jwtPublicKey     | Yes  | The public key for the Casdoor application's cert                             |
@@ -118,7 +118,7 @@ In the entrance file of your frontend code (like `index.js` or `app.js` in React
 
 ```js
 const config = {
-  serverUrl: "https://door.casbin.com",
+  serverUrl: "https://door.casdoor.com",
   clientId: "014ae4bd048734ca2dea",
   organizationName: "casbin",
   appName: "app-casnode",
@@ -202,7 +202,7 @@ Next you can show the "Sign up" and "Sign in" buttons or links to your users. Th
 
 Here are the steps:
 
-1. The user clicks the login URL and is redirected to Casdoor's login page, like: `https://door.casbin.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https%3A%2F%2Fforum.casbin.com%2Fcallback&scope=read&state=app-casnode`
+1. The user clicks the login URL and is redirected to Casdoor's login page, like: `https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https%3A%2F%2Fforum.casbin.com%2Fcallback&scope=read&state=app-casnode`
 2. The user enters username & password and clicks `Sign In` (or just click the third-party login button like `Sign in with GitHub`).
 3. The user is redirected back to your application with the authorization code issued by Casdoor (like: `https://forum.casbin.com?code=xxx&state=yyy`), your application's backend needs to exchange the authorization code with the access token and verify that the access token is valid and issued by Casdoor. The functions `GetOAuthToken()` and `ParseJwtToken()` are provided by Casdoor backend SDK.
 
