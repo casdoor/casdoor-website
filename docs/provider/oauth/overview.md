@@ -7,10 +7,10 @@ Casdoor can uses other OAuth applications as a sign in method.
 
 Now, Casdoor supports many OAuth application providers. Icons of providers will be shown in login and signup pages after adding to Casdoor. Here are the providers Casdoor supporting:
 
-|Google|GitHub|Facebook| Twitter | LinkedIn | Weibo | WeChat | Tencent QQ | Dingtalk | Baidu | Infoflow | Gitee | Email | SMS |
-| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-|<img src="https://cdn.casbin.org/img/social_google.png" width="40"></img>|[<img src="https://cdn.casbin.org/img/social_github.png" width="40"></img>](/docs/provider/oauth/github)|<img src="https://cdn.casbin.org/img/social_facebook.png" width="40"></img>|<img src="https://cdn.casbin.org/img/social_twitter.png" width="40"></img> |<img src="https://cdn.casbin.org/img/social_linkedin.png" width="40"></img>| <img src="https://cdn.casbin.org/img/social_weibo.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_wechat.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_qq.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_baidu.png" width="40"></img>| <img src="https://cdn.casbin.org/img/social_infoflow.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_gitee.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_mail.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_msg.png" width="40"></img> |
-|✅|✅|✅|🚧|✅|✅|✅|✅|✅|✅|✅|✅|✅|✅|
+|Google|GitHub|Facebook| Twitter | LinkedIn | Weibo | WeChat | Tencent QQ | Dingtalk | Baidu | Infoflow | Gitee | Steam | Email | SMS |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+|<img src="https://cdn.casbin.org/img/social_google.png" width="40"></img>|[<img src="https://cdn.casbin.org/img/social_github.png" width="40"></img>](/docs/provider/oauth/github)|<img src="https://cdn.casbin.org/img/social_facebook.png" width="40"></img>|<img src="https://cdn.casbin.org/img/social_twitter.png" width="40"></img> |<img src="https://cdn.casbin.org/img/social_linkedin.png" width="40"></img>| <img src="https://cdn.casbin.org/img/social_weibo.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_wechat.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_qq.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_baidu.png" width="40"></img>| <img src="https://cdn.casbin.org/img/social_infoflow.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_gitee.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_steam.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_mail.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_msg.png" width="40"></img> |
+|✅|✅|✅|🚧|✅|✅|✅|✅|✅|✅|✅|✅|✅|✅|✅|
 
 We will show you how to apply for a third-party service and add it to casdoor.
 
@@ -61,6 +61,12 @@ For more detailed information please visit [DingTalk developer docs](https://ope
 
 In addition, you need to add the following permissions to the dingtalk application:
 ![DingTalk](/img/providers/OAuth/dingtalkpermission.png)
+
+### Steam:heavy_check_mark:
+
+Visit [Steam WebAPI platform](https://steamcommunity.com/dev/revokekey) and log in using your Steam account, then apply for an API Key for your casdoor domain or ip, and finally fill in your API Key as Client Secret into Casdoor. (ClientID does not need to be filled, and your steam  account needs to have games to apply for the API)
+
+For more detailed information, please visit [Steam WebAPI doc](https://steamcommunity.com/dev).
 
 ## Add an OAuth provider
 
