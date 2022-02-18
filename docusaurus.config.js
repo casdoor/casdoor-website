@@ -60,6 +60,16 @@ module.exports = {
           position: 'left',
         },
         {
+          label: 'Pricing & Sales',
+          to: 'mailto:sales@casbin.com',
+          position: 'left',
+        },
+        {
+          label: 'Contact',
+          to: 'mailto:contact@casbin.com',
+          position: 'left',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
           dropdownItemsAfter: [
