@@ -22,7 +22,7 @@ Then you can quickly implement a casdoor based login page in your own app with t
 
 ## Step2. Configure Casdoor application
 1. Create or use an existing Casdoor application.
-2. Add Your redirect url
+2. Add Your redirect url (You can see more detials about how to get redirect url in the next section)
 ![Casdoor Application Setting](/img/appsetting_spring_security.png)
 3. Add provider you want and supplement other settings.
 
@@ -97,6 +97,15 @@ spring.security.oauth2.client.provider.casdoor.user-name-attribute=name
 
 </Tabs>
 ````
+
+:::caution
+
+For default situation of Spring Security, the `<Redirect URL>` should be like `http://<You Spirng Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/custom`.
+For example, to the following demo, the redirect URL should be `http://localhost:8080/login/oauth2/code/custom`.
+
+You should also configure this in `casdoor` application.
+
+:::
 
 You can also customize the settings by `ClientRegistration` in your code. You can find the mapping [here](https://docs.spring.io/spring-security/site/docs/5.2.12.RELEASE/reference/html/oauth2.html#oauth2login-boot-property-mappings)
 
