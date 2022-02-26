@@ -34,14 +34,6 @@
     no-repeat;
 }
 
-.header-slack-link:before {
-  content: '';
-  width: 24px;
-  height: 24px;
-  display: flex;
-  background-image: url("/img/slack-logo.svg")
-}
-
 /* learn how */
 .learn-how {
   width: 100%;
@@ -67,9 +59,4 @@
 
 .learn-how .image {
   padding: 15px 40px 15px 15px;
-}
-
-.footer__link-item:hover{
-  opacity: 0.5;
-  color: white;
 }
