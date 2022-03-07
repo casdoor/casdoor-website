@@ -11,9 +11,13 @@ All OSes (Linux, Windows and macOS) are supported.
 
 ### Environment
 
-You can use **docker** in Linux and **Docker Desktop** in Windows and macOS.
+You can use **docker(docker engine version > 17.05)** in Linux or **Docker Desktop** in Windows and macOS.
 
 * [Docker](https://docs.docker.com/get-docker/)
+
+For Linux users, you also need to make sure that docker-compose is installed, considering that it is seperate from Docker.
+
+Users of all platforms must ensure that the **docker engine version > 17.05.** It is because that we used multi-stage build feature in docker-compose.yml, which was supported after 17.05. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
 
 ## Get the image
 
