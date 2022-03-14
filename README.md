@@ -2,7 +2,7 @@
 
 The site configuration and documentation powering Casdoor's website: https://casdoor.org
 
-## Getting started
+# Getting started 
 
 ### Prerequisites
 
