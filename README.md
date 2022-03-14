@@ -2,11 +2,11 @@
 
 The site configuration and documentation powering Casdoor's website: https://casdoor.org
 
-## Getting started
+# Getting started 
 
 ### Prerequisites
 
-1.  Git 
+1.  Git
 1.  Node: install version 6.2.2 or greater. Node v14 would be ideal.
 1.  Yarn: See [Yarn Installation](https://yarnpkg.com/lang/en/docs/install/)
 
