@@ -33,7 +33,7 @@ To edit the internals of how the site is built, you may want to get familiarized
 
 ## Directory structure
 
-The following is a high-level overview of relevant files and folders.
+The following is a high-level overview of relevant files and folders. 
 
 ```
 casdoor-website/
