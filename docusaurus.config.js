@@ -66,12 +66,12 @@ module.exports = {
         },
         {
           label: 'Pricing & Sales',
-          to: 'mailto:sales@casbin.com',
+          to: 'https://tawk.to/chat/623352fea34c2456412b8c51/1fuc7od6e',
           position: 'left',
         },
         {
           label: 'Contact',
-          to: 'mailto:contact@casbin.com',
+          to: 'https://tawk.to/chat/623352fea34c2456412b8c51/1fuc7od6e',
           position: 'left',
         },
         {
@@ -213,5 +213,5 @@ module.exports = {
     ],
   ],
   plugins: ['docusaurus-plugin-sass', 'docusaurus-plugin-hotjar'],
-  scripts: ['/js/gitter.js'],
+  scripts: ['/js/tawk.js'],
 };
