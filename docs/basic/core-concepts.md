@@ -5,63 +5,60 @@ title: Core Concepts
 
 As Casdoor's administrator, you should get familiar with at least 4 core concepts: `Organization`, `User`, `Application` and `Provider`.
 
-import { Mermaid } from 'mdx-mermaid/Mermaid';
-
-<Mermaid chart={`flowchart LR;
-	subgraph Organization-1
-	Applications-1
-	Users-1
-	end
+```mermaid
+	flowchart LR;
+	subgraph Organization-1;
+	Applications-1;
+	Users-1;
+	end;
 	
-	subgraph Organization-2
-	Applications-2
-	Users-2
-	end
+	subgraph Organization;
+	Applications;
+	Users;
+	end;
 	
-	
-	subgraph Users-1
-    Resources-1
-    Permissions-1
-    end
+	subgraph Users-1;
+    Resourse-1;
+    Permission-1;
+    end;
     
-   	subgraph Users-2
-    Resources-2
-    Permissions-2
-    end
+   	subgraph Users;
+    Resourse;
+    Permission;
+    end;
     
-    subgraph Providers
-    SMS
-    OAuth
-    SAML
-    Email
-    end
+    subgraph Providers;
+    SMS;
+    OAuth;
+    SAML;
+    Email;
+    end;
     
-    subgraph SMS
-    AWS\\nAliyunCloud
-    end
+    subgraph SMS;
+    AWS\nAliyunCloud;
+    end;
     
-    subgraph OAuth
-    Github\\nGoogle\\nFacebook\\nWeChat
-    end
+    subgraph OAuth;
+    Github\nGoogle\nFacebook\nWeChat;
+    end;
     
-    subgraph SAML
-    Keycloak\\nAliyunIDaaS
-    end
+    subgraph SAML;
+    Keycloak\nAliyunIDaaS;
+    end;
     
-    subgraph Applications-1
-    Forum
-    CMS
-    end
+    subgraph Applications-1;
+    Forum;
+    CMS;
+    end;
     
-    subgraph Applications-2
-    OA
-    end
+    subgraph Applications;
+    OA;
+    end;
     
-    
-    Organization-1 --> Applications-1
-    Applications-1<-->Providers
-    Applications-2<-->Providers
-`} />
+    Organization-1 --> Applications-1;
+    Applications-1<-->Providers;
+    Applications<-->Providers;
+```
 
 :::tip
 In the following parts, we will use the demo site: https://door.casdoor.com as example.
