@@ -26,6 +26,8 @@
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
+    "mdx-mermaid": "^1.2.2",
+    "mermaid": "^8.14.0",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
