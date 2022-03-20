@@ -51,6 +51,7 @@ git clone https://github.com/casdoor/casdoor
 ```
 
 ## Configuration
+### Via Ini file
 
 Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf), the content of which by default is:
 
@@ -134,6 +135,19 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
       - http_proxy = http://proxy.exaple.com
       - https_proxy = http://proxy.exaple.com
   ```
+
+### Via Environment Variables
+
+**All configuration items defined by Casdoor** in the ini file mentioned above can be chosen to configuration via environmental variables, so can **some of the beego configurations** items(httpport,appname).
+
+For example, when you try to start casdoor, you can use someting like this to pass the configuration via environmental variables.
+```shell
+appname=casbin go run main.go
+```
+Besides, `export` derivatives are also a possible method. The names of environmental variables should be exactly the same with the names you want to use in the ini file.
+
+*Note: configurations in environmental variables can **override** the configurations in ini file*.
+
 
 ## Run
 
