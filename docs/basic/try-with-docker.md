@@ -56,6 +56,8 @@ dataSourceName = root:123456@tcp(localhost:3306)/
 dbName = casdoor
 ```
 
+*Note: if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details*
+
 Then run:
 
 ```bash
