@@ -14,7 +14,7 @@ First, please visit [GitHub developer settings](https://github.com/settings/apps
 
 :::
 
-Then fill the **Github App name**, **Homepage URL**, **description** and **Callback URL**, and trun on **Request user authorization (OAuth) during installation**.
+Then fill the **Github App name**, **Homepage URL**, **description** and **Callback URL**.
 
 ![GitHub](/img/providers/OAuth/github.png)
 
