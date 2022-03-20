@@ -109,6 +109,31 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   **Please notice:** You can add Postgres parameters in `dataSourceName`, but please make sure that `dataSourceName` ends with `dbname=`. Or database adapter may crash when you launch Casdoor.
 
 - Other database...
+- Set Proxy:
+
+  In Docker Compose, the build command is supported to build the images needed to run the service. However, We have google-related services and some builds need to download foreign resources (such as golang builds), while the download fails due to network reasons,  so we can only resort to the proxy.
+
+  When building, you can specify parameters, or set environment variables.
+
+  The first method, by specifying build parameters:
+
+  ```ini
+    docker-compose build \
+        --build-arg http_proxy=http://proxy.exaple.com \
+        --build-arg https_proxy=http://proxy.exaple.com
+  ```
+  
+  The second method, by setting the environment variable:
+
+  ```ini
+  # docker-compose.yaml
+
+  build:
+    context: .
+    args:
+      - http_proxy = http://proxy.exaple.com
+      - https_proxy = http://proxy.exaple.com
+  ```
 
 ## Run
 
