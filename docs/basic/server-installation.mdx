@@ -68,7 +68,7 @@ redisEndpoint =
 defaultStorageProvider =
 isCloudIntranet = false
 authState = "casdoor"
-httpProxy = "127.0.0.1:10808"
+socks5Proxy = "127.0.0.1:10808"
 verificationCodeTimeout = 10
 initScore = 2000
 logPostOnly = true
@@ -110,6 +110,37 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   **Please notice:** You can add Postgres parameters in `dataSourceName`, but please make sure that `dataSourceName` ends with `dbname=`. Or database adapter may crash when you launch Casdoor.
 
 - Other database...
+- Set Proxy:
+
+  In Docker Compose, the build command is supported to build the images needed to run the service. However, We have google-related services and some builds need to download foreign resources (such as golang builds), while the download fails due to network reasons,  so we can only resort to the proxy.
+
+  
+  The first method, by configuring [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf):
+  
+  ```ini
+  socks5Proxy = "127.0.0.1:10808"
+  ```
+
+  The second method, When building, you can specify parameters：
+
+  ```ini
+    docker-compose build \
+        --build-arg http_proxy=http://proxy.exaple.com \
+        --build-arg https_proxy=http://proxy.exaple.com
+  ```
+  
+  Or you can set environment variables:
+
+  ```ini
+  # docker-compose.yaml
+
+  build:
+    context: .
+    args:
+      - http_proxy = http://proxy.exaple.com
+      - https_proxy = http://proxy.exaple.com
+  ```
+
 
 ### Via Environment Variables
 
