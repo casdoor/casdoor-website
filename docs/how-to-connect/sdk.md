@@ -126,6 +126,20 @@ export function getMyResourcesUrl(account) {
 export function signin() {
    return CasdoorSdk.signin(ServerUrl);
 }
+
+export function showMessage(type, text) {
+  if (type === "") {
+    return;
+  } else if (type === "success") {
+    message.success(text);
+  } else if (type === "error") {
+    message.error(text);
+  }
+}
+
+export function goToLink(link) {
+  window.location.href = link;
+}
 ```
 
 In the entrance file of your frontend code (like `index.js` or `app.js` in React), you need to initialize the `casdoor-js-sdk` by calling the `InitConfig()` function with required parameters. The first 4 parameters should use the same value as the Casdoor backend SDK. The last parameter `redirectPath` is relative path for the redirected URL, returned from Casdoor's login page.
