@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 title: Server Installation
-
 ---
 
 ## Requirements
@@ -12,9 +11,9 @@ All OSes (Linux, Windows and macOS) are supported.
 
 ### Environment
 
-* [Go 1.6+](https://go.dev/dl/)
-* [Node.js LTS (16 or 14)](https://nodejs.org)
-* [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install)
+- [Go 1.6+](https://go.dev/dl/)
+- [Node.js LTS (16 or 14)](https://nodejs.org)
+- [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install)
 
 :::info
 
@@ -38,10 +37,10 @@ Casdoor uses [XORM](https://xorm.io/) to talk to the database. Based on [Xorm Dr
 
 The source code of Casdoor is hosted at GitHub: https://github.com/casdoor/casdoor . Both the Go backend code and React frontend code are inside the single repository.
 
-Name | Description | Language | Source code
-----|------|----|----
-Frontend | Web frontend UI for Casdoor | JavaScript + React | https://github.com/casdoor/casdoor/tree/master/web
-Backend | RESTful API backend for Casdoor | Golang + Beego + XORM | https://github.com/casdoor/casdoor
+| Name     | Description                     | Language              | Source code                                        |
+| -------- | ------------------------------- | --------------------- | -------------------------------------------------- |
+| Frontend | Web frontend UI for Casdoor     | JavaScript + React    | https://github.com/casdoor/casdoor/tree/master/web |
+| Backend  | RESTful API backend for Casdoor | Golang + Beego + XORM | https://github.com/casdoor/casdoor                 |
 
 Casdoor supports `Go Modules`. To download the code, you can just simply clone the code via git:
 
@@ -51,6 +50,7 @@ git clone https://github.com/casdoor/casdoor
 ```
 
 ## Configuration
+
 ### Via Ini file
 
 Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf), the content of which by default is:
@@ -75,13 +75,13 @@ logPostOnly = true
 origin = "https://door.casdoor.com"
 ```
 
-  - `appname` is the application name, which currently has no practical use
-  - `httpport` is the port that your back-end application is listening on
-  - `runmode` is `dev` or `prod`
-  - `SessionOn` decides whether to enable session,used by default.
-  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
-  - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
-  - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
+- `appname` is the application name, which currently has no practical use
+- `httpport` is the port that your back-end application is listening on
+- `runmode` is `dev` or `prod`
+- `SessionOn` decides whether to enable session,used by default.
+- `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
+- `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
+- `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
 
@@ -97,7 +97,7 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
 
 - Setup database (Postgres):
 
-  Since we must choose a database when opening Postgres with xorm, you should prepare a database manually before running Casdoor. 
+  Since we must choose a database when opening Postgres with xorm, you should prepare a database manually before running Casdoor.
 
   Let's assume that you have already prepared a database called `casdoor`, then you should specify `app.conf` like this:
 
@@ -110,48 +110,20 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   **Please notice:** You can add Postgres parameters in `dataSourceName`, but please make sure that `dataSourceName` ends with `dbname=`. Or database adapter may crash when you launch Casdoor.
 
 - Other database...
-- Set Proxy:
-
-  In Docker Compose, the build command is supported to build the images needed to run the service. However, We have google-related services and some builds need to download foreign resources (such as golang builds), while the download fails due to network reasons,  so we can only resort to the proxy.
-
-
-  The first method, by configuring [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf):
-
-  ```ini
-  socks5Proxy = "127.0.0.1:10808"
-  ```
-
-  The second method, When building, you can specify parameters：
-
-  ```ini
-    docker-compose build \
-        --build-arg http_proxy=http://proxy.exaple.com \
-        --build-arg https_proxy=http://proxy.exaple.com
-  ```
-
-  Or you can set environment variables:
-
-  ```ini
-  # docker-compose.yaml
-  build:
-    context: .
-    args:
-      - http_proxy = http://proxy.exaple.com
-      - https_proxy = http://proxy.exaple.com
-  ```
 
 ### Via Environment Variables
 
 **All configuration items defined by Casdoor** in the ini file mentioned above can be chosen to configuration via environmental variables, so can **some of the beego configurations** items(httpport,appname).
 
 For example, when you try to start casdoor, you can use someting like this to pass the configuration via environmental variables.
+
 ```shell
 appname=casbin go run main.go
 ```
+
 Besides, `export` derivatives are also a possible method. The names of environmental variables should be exactly the same with the names you want to use in the ini file.
 
-*Note: configurations in environmental variables can **override** the configurations in ini file*.
-
+_Note: configurations in environmental variables can **override** the configurations in ini file_.
 
 ## Run
 
@@ -224,14 +196,14 @@ admin
 ```
 
 :::tip
-To use another port, please edit ```conf/app.conf``` and modify `httpport`, then restart the Go backend.
+To use another port, please edit `conf/app.conf` and modify `httpport`, then restart the Go backend.
 :::
 
 :::info casdoor port details
 
-In **dev** environment, the frontend is run by ```yarn run``` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **http://localhost:7001**.
+In **dev** environment, the frontend is run by `yarn run` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **http://localhost:7001**.
 
-In **prod** environment, the frontend files is first built by ```yarn build``` and served in port 8000, so if you want to go to Casdoor login page, you need to set Casdoor link as **http://SERVER_IP:8000** (If you are using reverse proxy, you need to set the link as **your domain**).
+In **prod** environment, the frontend files is first built by `yarn build` and served in port 8000, so if you want to go to Casdoor login page, you need to set Casdoor link as **http://SERVER_IP:8000** (If you are using reverse proxy, you need to set the link as **your domain**).
 
 #### Take our official forum Casnode as an example:
 
