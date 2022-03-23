@@ -81,7 +81,7 @@ dbName = casdoor
 
 Then run 
 ```
-docker run casbin/casdoor -p 8000:8000 -v <path to directory containing app.conf>:/conf
+docker run  -p 8000:8000 -v <path to directory containing app.conf>:/conf casbin/casdoor:latest
 ```
 
 Anyway just **mount the app.conf to /conf/app.conf** and start it.
