@@ -8,16 +8,19 @@ Compared to the standard OIDC protocol, Casdoor provides more functionalities in
 
 Casdoor SDKs can be divided into two categories:
 
-1. **Frontend SDKs**: Javascript SDK for websites, Android or iOS SDKs for Apps. Casdoor supports providing authentication for both websites and mobile Apps.
+1. **Frontend SDKs**: Javascript SDK and Vue SDK for websites, Android or iOS SDKs for Apps. Casdoor supports providing authentication for both websites and mobile Apps.
 2. **Backend SDK**: SDKs for backend languages like Go, Java, Node.js, Python, PHP, etc.
 
 :::tip
-If your website is developed in a frontend and backend separated manner, then you can use the Javascript SDK: `casdoor-js-sdk` to integrate Casdoor in frontend. If your web application is a traditional website developed by JSP or PHP, you can just use the backend SDKs only.
+If your website is developed in a frontend and backend separated manner, then you can use the Javascript SDK: `casdoor-js-sdk` or the Vue SDK: `casdoor-vue-sdk` to integrate Casdoor in frontend. If your web application is a traditional website developed by JSP or PHP, you can just use the backend SDKs only.
+
+a example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
 :::
 
 | Casdoor Frontend SDK | Description      | Source code                                    |
 |----------------------|------------------|------------------------------------------------|
 | Javascript SDK       | For websites     | https://github.com/casdoor/casdoor-js-sdk      |
+| Vue SDK              | For websites     | https://github.com/casdoor/casdoor-vue-sdk     |
 | Android SDK          | For Android apps | https://github.com/casdoor/casdoor-android-sdk |
 | iOS SDK              | For iOS apps     | https://github.com/casdoor/casdoor-ios-sdk     |
 
