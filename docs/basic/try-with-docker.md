@@ -46,17 +46,9 @@ admin
 123
 ```
 
-### **Option-2**: Bring your own database
+### **Option-2**: Try with docker-compose
 
-Configure your database by modifying the following items in `conf/app.conf` like a normal Casdoor installation:
-
-```bash
-driverName = mysql
-dataSourceName = root:123456@tcp(localhost:3306)/
-dbName = casdoor
-```
-
-Then run:
+Create a sepereate database by docker-compose 
 
 ```bash
 docker-compose up
@@ -70,3 +62,34 @@ Visit: [**http://localhost:8000**](http://localhost:8000) in your browser. Log i
 admin
 123
 ```
+
+*Note: if you dive deeper into the docker-compose.yml, you may be puzzled by the environment variable we created in it called "RUNNING_IN_DOCKER". When database 'db' is created via docker-compose, it is available on localhost of your pc but not localhost of the casdoor container. To prevent you from the troubles caused by modifying app.conf which are pretty difficult for a new user, we provided this environment variable and pre-assigned it in  docker-compose.yml. When this environment variable is true, localhost will be replaced with host.docker.internal so that you casdoor can visit the db.*
+
+### **Option-3** Try directly with standard image
+
+Modify the following items in `conf/app.conf` like a normal Casdoor installation:
+
+```bash
+driverName = mysql
+dataSourceName = root:123456@tcp(localhost:3306)/
+dbName = casdoor
+```
+**This is merely a sample and you need to modify them according to your own database**
+
+
+*Note: if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details*
+
+Then run 
+```
+docker run  -p 8000:8000 -v <path to directory containing app.conf>:/conf casbin/casdoor:latest
+```
+
+Anyway just **mount the app.conf to /conf/app.conf** and start it.
+
+Visit: [**http://localhost:8000**](http://localhost:8000) in your browser. Log into Casdoor dashboard with the default global admin account: `built-in/admin`
+
+```bash
+admin
+123
+```
+
