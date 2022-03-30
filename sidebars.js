@@ -21,7 +21,7 @@ module.exports = {
       type: 'category',
       label: 'How to Connect to Casdoor',
       collapsed: false,
-      items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk','how-to-connect/vue-sdk', 'how-to-connect/plugin', 'how-to-connect/access_token'],
+      items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk','how-to-connect/vue-sdk', 'how-to-connect/plugin', 'how-to-connect/access_token','how-to-connect/cas'],
     },
     {
       type: 'category',
