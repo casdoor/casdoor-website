@@ -93,4 +93,11 @@ export default {
 }
 </script>
 ```
+Auto Fix
 
+If the `postinstall` hook doesn't get triggered or you have updated the Vue version, try to run the following command to resolve the redirecting.
+```shell
+npx vue-demi-fix
+```
+
+More info about Vue version switch at: [vue-demi docs](https://github.com/vueuse/vue-demi) 
