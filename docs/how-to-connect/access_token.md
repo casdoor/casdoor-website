@@ -18,7 +18,7 @@ For security reasons, the Casdoor app has the authorization code mode turned on 
 
 ### Authorization Code Grant
 
-First redirect your users to `https://<CASDOOR_HOST>/api/login/oauth/code&client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=openid&state=STATE`. After your user has authenticated with casdoor, casdoor will redirect him to `https://REDIRECT_URI?code=CODE&state=STATE`. Now that you have obtained the authorization code, make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` in your backend application :
+First redirect your users to `https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=openid&state=STATE`. After your user has authenticated with casdoor, casdoor will redirect him to `https://REDIRECT_URI?code=CODE&state=STATE`. Now that you have obtained the authorization code, make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` in your backend application :
 ```json
 {
     "grant_type": "authorization_code",
