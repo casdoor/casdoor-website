@@ -49,6 +49,12 @@ module.exports = {
         {
           OAuth: [
             'provider/oauth/overview',
+	    'provider/oauth/Twitter',
+	    'provider/oauth/Weibo',
+	    'provider/oauth/Wechat',
+	    'provider/oauth/Tencent',
+	    'provider/oauth/DingTalk',
+	    'provider/oauth/Steam',
             'provider/oauth/github',
             'provider/oauth/gitee',
             'provider/oauth/linkedin',
