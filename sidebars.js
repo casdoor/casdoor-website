@@ -22,6 +22,7 @@ module.exports = {
       label: 'How to Connect to Casdoor',
       collapsed: false,
       items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk','how-to-connect/vue-sdk', 'how-to-connect/plugin', 'how-to-connect/access_token','how-to-connect/cas'],
+	    
     },
     {
       type: 'category',
@@ -49,6 +50,12 @@ module.exports = {
         {
           OAuth: [
             'provider/oauth/overview',
+	    'provider/oauth/Twitter',
+	    'provider/oauth/Weibo',
+	    'provider/oauth/Wechat',
+	    'provider/oauth/Tencent',
+	    'provider/oauth/DingTalk',
+	    'provider/oauth/Steam',
             'provider/oauth/github',
             'provider/oauth/gitee',
             'provider/oauth/linkedin',
