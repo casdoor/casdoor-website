@@ -21,6 +21,7 @@ module.exports = {
       appId: 'U9MEH3VSV1',
       apiKey: '9ef7ab8761a6480738185ecd6d1ecde7',
       indexName: 'casdoor',
+      contextualSearch: true,
     },
     hotjar: {
       applicationId: '1689986',
