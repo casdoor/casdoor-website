@@ -12,7 +12,7 @@ The following are some of the names in the configuration:
 `JENKINS_HOSTNAME`: Domain name or IP where Jenkins is deployed.
 
 
-## Step1. Deploy Casdoor and Jenkins
+## Step1. Deploy Casdoor and Jenkins 
 Firstly, the [Casdoor](/docs/basic/server-installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/) should be deployed. 
 
 After a successful deployment, you need to ensure:
