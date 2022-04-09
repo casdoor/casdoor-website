@@ -3,8 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Casdoor',
-  tagline: 'Casdoor - A UI-first centralized authentication / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC and SAML',
+  title: 'Casdoor · A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS',
   url: 'https://casdoor.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',

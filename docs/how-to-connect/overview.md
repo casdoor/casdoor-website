@@ -11,8 +11,10 @@ As Service Provider (SP), Casdoor supports two authentication protocols:
 
 As Identity Provider (IdP), Casdoor supports one authentication protocol:
 
-- `OAuth 2.0 (OIDC)`
-- `CAS 2.0`
+- `OAuth 2.0`
+- `OIDC`
+- `SAML`
+- `CAS 1.0, 2.0, 3.0`
 
 Therefore, your application will talk to Casdoor via OAuth 2.0 (OIDC). Specifically, there are three ways for connecting to Casdoor:
 
