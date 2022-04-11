@@ -157,7 +157,7 @@ spring:
         server-addr: 127.0.0.1:8848
 ```
 
-3. 在Application启动类加入注解@EnableDiscoveryClient
+3. Enable service discovery by adding the Spring Cloud native annotation of @EnableDiscoveryClient
    ![img.png](img.png)
    start server，view the list of services for the Nacos console
    ![img_1.png](img_1.png)
