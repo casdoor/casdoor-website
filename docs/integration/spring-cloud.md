@@ -92,7 +92,7 @@ The registry addresses service discovery issues. In the absence of a registry, i
 
   Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications.
 
-###Download&Build from Release
+### Download&Build from Release
 **Download** 
 
 **1) Download source code from Github**
@@ -134,7 +134,7 @@ startup.cmd -m standalone
 
 Nacosprovides a visual operating platform，Start the server，Open your favorite browser and visit http://localhost:8848/nacos ，the default user name and password are `nacos`.
 
-###How to use
+### How to use
 
 1. Add the dependency
 
@@ -177,7 +177,7 @@ you can also use nacos config, Put these casdoor configurations in the configura
 - Nacos Config center
 
   is alibaba's open source platform for dynamic service discovery, configuration management and service management, which is easier to build cloud native applications.
-###How to use
+### How to use
 1. Add the dependency
 ```
 <dependency>
