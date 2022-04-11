@@ -49,7 +49,8 @@ function LearnHowTo() {
           </div>
           <div className="col">
           <div className={styles.explaintext}>
-          <Translate>As an authentication platform, </Translate><br /><Translate>Casdoor implements the authentication by communicating with providers and users.</Translate>
+            <br />
+            <Translate>As an authentication platform, </Translate><br /><Translate>Casdoor implements the authentication by communicating with providers and users.</Translate>
           </div>
           </div>
         </div>
@@ -65,19 +66,23 @@ function ContentLogin() {
       <div className="container text--center">
         <div className="row">
           <div className="col">
-          <Translate>Casdoor is a powerful authentication platform.</Translate>
-          <br />
-          <Translate>With supporting for</Translate>
-          <br />
-          <img src="https://cdn.casbin.org/img/social_google.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_github.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_facebook.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_twitter.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_linkedin.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_weibo.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_wechat.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_qq.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_gitee.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_wecom.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_mail.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_msg.png" width="30"></img>
-          <br />
-          <Translate>third-party application login, You can choose your favorite social network to login.</Translate>
-          <br />
-          <Translate>And Casdoor support the extension of third-party login with plugins.</Translate>
-          <br />
-          <Translate>For more details about third-party login, please visit</Translate> <Link to="/docs/provider/overview"><Translate>provider</Translate></Link>
-          <br />
-          <Translate>And if your want more providers, please propose it in</Translate> <Link href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
+            <br />
+            <br />
+            <br />
+            <br />
+            <Translate>Casdoor is a powerful authentication platform.</Translate>
+            <br />
+            <Translate>With supporting for</Translate>
+            <br />
+            <img src="https://cdn.casbin.org/img/social_google.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_github.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_facebook.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_twitter.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_linkedin.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_weibo.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_wechat.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_qq.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_gitee.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_wecom.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_mail.png" width="30"></img> <img src="https://cdn.casbin.org/img/social_msg.png" width="30"></img>
+            <br />
+            <Translate>third-party application login, You can choose your favorite social network to login.</Translate>
+            <br />
+            <Translate>And Casdoor support the extension of third-party login with plugins.</Translate>
+            <br />
+            <Translate>For more details about third-party login, please visit</Translate> <Link to="/docs/provider/overview"><Translate>provider</Translate></Link>
+            <br />
+            <Translate>And if your want more providers, please propose it in</Translate> <Link href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
           <div className={styles.signingradientborder}>
             <iframe src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "750" frameborder="0" scrolling="no"></iframe>
@@ -97,7 +102,12 @@ function ContentSignup() {
             <iframe src="https://door.casdoor.com/signup" width="600" height= "700" frameborder="0" scrolling="no"></iframe>
           </div>
           <div className="col">
-          <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
           </div>
         </div>
       </div>
@@ -111,6 +121,10 @@ function ContentForget() {
       <div className="container text--center">
         <div className="row">
           <div className="col">
+            <br />
+            <br />
+            <br />
+            <br />
             <p className="padding-horiz--md">
             <Translate>Casdoor support forget and retrieve password feature.</Translate>
             <br />
