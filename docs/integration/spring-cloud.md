@@ -159,9 +159,9 @@ spring:
 
 3. 在Application启动类加入注解@EnableDiscoveryClient
    ![img.png](img.png)
-4. start server，view the list of services for the Nacos console
+   start server，view the list of services for the Nacos console
    ![img_1.png](img_1.png)
-
+   
 ## Step5. config center
 you can also use nacos config, Put these casdoor configurations in the configuration center
 ### introduction
@@ -199,20 +199,20 @@ you can also use nacos config, Put these casdoor configurations in the configura
 ```
 Configuration file loading priority (from highest to lowest)
 `bootstrap.properties ->bootstrap.yml -> application.properties -> application.yml`
-3.  Enable service discovery by adding the Spring Cloud native annotation of @EnableDiscoveryClient
+3. Enable service discovery by adding the Spring Cloud native annotation of @EnableDiscoveryClient
    ![img.png](img.png)
-4. Add a configuration to the configuration center （Data Id）
-![img_2.png](img_2.png)
+   Add a configuration to the configuration center （Data Id）
+   ![img_2.png](img_2.png)
+   ![img_3.png](img_3.png)
 
-![img_3.png](img_3.png)
-   in Nacos Spring Cloud, the format of `dataId` is as follows:
-  ` ${prefix}-${spring.profiles.active}.${file-extension}`
+      in Nacos Spring Cloud, the format of `dataId` is as follows:
+     ` ${prefix}-${spring.profiles.active}.${file-extension}`
 
 - The value of `prefix` is the value of `spring.application.name` by default. You can also configure this value in `spring.cloud.nacos.config.prefix`.
 - `spring.profiles.active` is the profile of the current environment.  
 - `file-exetension` is the data format of the configuration content, and can be configured in `spring.cloud.nacos.config.file-extension` . 
 
-We can match our **dataId** as  `casdoor-service-dev.properties` ，The configuration format is `properties`，
+We can match our `dataId` as  `casdoor-service-dev.properties` ，The configuration format is `properties`，
 
 The configuration content is the configuration in [step 3](#3), so that the contents of the [step 3](#3) configuration file can be placed in the nacos configuration center.
 
