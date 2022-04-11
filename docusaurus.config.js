@@ -155,22 +155,19 @@ module.exports = {
             },
             {
               html: `
-              <head>
-              <script>
-              var _hmt = _hmt || [];
-              </script>
-              </head>
-              <body>
-              <script type="text/javascript">
-              (function() {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?2da024e456a28e98936a8ea6a049b295";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-                })();
-                </script>
-                </body>
-              `
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2da024e456a28e98936a8ea6a049b295";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+`
+            },
+            {
+              html: `<div class="placeholderads"></div>`
             }
           ],
         },
@@ -218,5 +215,10 @@ module.exports = {
     ],
   ],
   plugins: ['docusaurus-plugin-sass', 'docusaurus-plugin-hotjar', 'docusaurus-plugin-google-adsense'],
-  scripts: ['/js/gitter.js', '/js/tawk.js'],
+  scripts: [
+    '/js/gitter.js',
+    'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
+    '/js/wwads2.js',
+    '/js/tawk.js'
+  ],
 };
