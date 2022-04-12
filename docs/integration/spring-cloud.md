@@ -3,7 +3,7 @@ sidebar_position: 1
 title: Spring cloud
 ---
 
-[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. We will show you the steps below.
+[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. This is similar in springcloud.  We will show you the steps below.
 
 ## Step1. Deploy Casdoor
 
@@ -79,7 +79,7 @@ You should replace the configuration with your own Casdoor instance especially t
 
 :::
 
-## Step4. service discovery
+## Step3. service discovery
 
 - What is a registry
 
@@ -109,7 +109,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 **2)Download run package**
 
-download nacos-server-$version.zip form https://github.com/alibaba/nacos/releases.
+Download nacos-server-$version.zip form https://github.com/alibaba/nacos/releases.
 ```
 unzip nacos-server-$version.zip or tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
@@ -132,7 +132,7 @@ startup.cmd -m standalone
 ```
 
 
-Nacosprovides a visual operating platform，Start the server，Open your favorite browser and visit http://localhost:8848/nacos ，the default user name and password are `nacos`.
+Nacosprovides a visual operating platform，Start the server，Open your favorite browser and visit http://localhost:8848/nacos , the default user name and password are `nacos`.
 
 ### How to use
 
@@ -145,7 +145,7 @@ Nacosprovides a visual operating platform，Start the server，Open your favorit
 </dependency>
 ```
 
-2. add Nacos config
+2. Add Nacos config
 
 ```
 spring:
@@ -162,8 +162,8 @@ spring:
    start server，view the list of services for the Nacos console
    ![img_1.png](img_1.png)
    
-## Step5. config center
-you can also use nacos config, Put these casdoor configurations in the configuration center
+## Step4. config center
+You can also use nacos config, put these casdoor configurations in the configuration center
 ### introduction
 - What is a configuration center?
 
@@ -176,7 +176,7 @@ you can also use nacos config, Put these casdoor configurations in the configura
 
 - Nacos Config center
 
-  is alibaba's open source platform for dynamic service discovery, configuration management and service management, which is easier to build cloud native applications.
+  Nacos is alibaba's open source platform for dynamic service discovery, configuration management and service management, which is easier to build cloud native applications.
 ### How to use
 1. Add the dependency
 ```
@@ -205,7 +205,7 @@ Configuration file loading priority (from highest to lowest)
    ![img_2.png](img_2.png)
    ![img_3.png](img_3.png)
 
-      in Nacos Spring Cloud, the format of `dataId` is as follows:
+      In Nacos Spring Cloud, the format of `dataId` is as follows:
      ` ${prefix}-${spring.profiles.active}.${file-extension}`
 
 - The value of `prefix` is the value of `spring.application.name` by default. You can also configure this value in `spring.cloud.nacos.config.prefix`.
