@@ -4,7 +4,7 @@ title: CAS
 
 ## Using Casdoor as CAS server
 
-Casdoor now can be used as CAS server. Up to now the casdoor have supported the feature of CAS2.0 .
+Casdoor now can be used as CAS server. Up to now the casdoor have supported the feature of CAS3.0 .
 
 ### Overview
 
@@ -17,6 +17,9 @@ Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an
 - `/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/proxyValidate`
 - `/proxy` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/proxy`
 - `/validate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/validate`
+- `/p3/serviceValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/serviceValidate`
+- `/p3/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/proxyValidate`
+- `/samlValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/samlValidate`
 
 See <https://apereo.github.io/cas/6.0.x/protocol/CAS-Protocol-Specification.html> for more information about CAS and its different versions, as well as parameters for these endpoints.
 
@@ -26,21 +29,29 @@ Here is an offical example <https://github.com/apereo/cas-sample-java-webapp>, w
 
 
 :::note
-Note: Currently Casdoor only support CAS 1.0 & 2.0. CAS 3.0 will be supported in a future release but now it is not implemented. So we have to change the configuration of this demo app to use CAS 2.0 or 1.0.
+Note: Currently Casdoor only support all three versions of CAS: CAS 1.0 & 2.0 & CAS 3.0 .
 :::
 
-The cas configuration is located in `src/main/webapp/WEB-INF`.
+The cas configuration is located in `src/main/webapp/WEB-INF/web.yml`.
 
-Suppose you want to protect this web app via CAS 1.0, you are supposed to change CAS Validation Filter to the following content.
+By default, this app use CAS 3.0, which is specified by the following configurations.
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
-<filter-class>org.jasig.cas.client.validation.Cas10TicketValidationFilter</filter-class>
+<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
 ```
 
-If you want to use CAS 2.0, use
+
+Suppose you want to protect this web app via CAS 2.0, you are supposed to change CAS Validation Filter to the following content.
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+```
+
+
+If you want to use CAS 1.0, use
+```xml
+<filter-name>CAS Validation Filter</filter-name>
+<filter-class>org.jasig.cas.client.validation.Cas10TicketValidationFilter</filter-class>
 ```
 
 For all the apperances of parameter 'casServerUrlPrefix', change them to
