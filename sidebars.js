@@ -73,13 +73,18 @@ module.exports = {
           ]
         },
       ],
-
     },
     {
       type: 'category',
       label: 'Users',
       collapsed: false,
       items: ['user/overview', 'user/manipulation'],
+    },
+    {
+      type: 'category',
+      label: 'Syncer',
+      collapsed: false,
+      items: ['syncer/Database', 'syncer/Keycloak'],
     },
     {
       type: 'category',
