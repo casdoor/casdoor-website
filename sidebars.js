@@ -49,6 +49,7 @@ module.exports = {
         {
           OAuth: [
             'provider/oauth/overview',
+            'provider/oauth/CustomProvider',
 	    'provider/oauth/Twitter',
 	    'provider/oauth/Weibo',
 	    'provider/oauth/Wechat',
