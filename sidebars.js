@@ -33,7 +33,7 @@ module.exports = {
       type: 'category',
       label: 'Organizations',
       collapsed: false,
-      items: ['organization/overview'],
+      items: ['organization/overview','organization/password-types'],
     },
     {
       type: 'category',
