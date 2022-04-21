@@ -104,11 +104,11 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
 
   ```ini
   driverName = postgres
-  dataSourceName = "user=postgres password=xxx sslmode=disable dbname="
-  dbName = casdoor
+  dataSourceName = "user=postgres password=xxx host=xx.xx.xxx.xxx port=xxxx sslmode=disable dbname=casdoor"
+  dbName =
   ```
 
-  **Please notice:** You can add Postgres parameters in `dataSourceName`, but please make sure that `dataSourceName` ends with `dbname=`. Or database adapter may crash when you launch Casdoor.
+  **Please notice:** Postgres parameters are input in `app.conf`'s `dataSourceName` field. Ensure `dataSourceName` ends with `dbname=casdoor` and `app.conf`'s `dbName` field is empty or the database adapter may crash when you launch Casdoor.
 
 - Other database...
 
