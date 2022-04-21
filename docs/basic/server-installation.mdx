@@ -108,7 +108,11 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   dbName =
   ```
 
-  **Please notice:** Postgres parameters are input in `app.conf`'s `dataSourceName` field. Ensure `dataSourceName` ends with `dbname=casdoor` and `app.conf`'s `dbName` field is empty or the database adapter may crash when you launch Casdoor.
+:::info
+Ensure `dataSourceName` has non-empty `dbName` and leave `app.conf`'s `dbName` empty.
+:::
+
+  **Please notice:** 
 
 - Other database...
 
