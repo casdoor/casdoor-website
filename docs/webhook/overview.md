@@ -3,24 +3,28 @@ sidebar_position: 1
 title: Overview
 ---
 
- This section we  -----continue this----<br />
-
- 1) What is a webhook <br />
- 2) How to set it in and out of  casdoor<br />
- 3) what is it used for in casdoor<br />
+ In this section, we discuss about wehooks and how to set it up in casdoor.
+ 
 
 Webhooks are user-defined HTTP callbacks. They are triggered by some event in a web application and can facilitate integrating different applications or third-party APIs.  
 
 A webhook provides a way for an application to message other devices or applications with real time information when a certain event occurs.
 
-In casdoor a Webhook is sent each time one or more of the following event occurs.
+When configuring a webhook, you can use the UI or API to choose which events will send you payloads. Only subscribing to the specific events you plan on handling limits the number of HTTP requests to your server. 
+
+In casdoor a Webhook is sent each time an event occurs.
+A few of the events on casdoor are;
 - `signup`
 - `login`
 - `logout`
-- `update-user`
+- `update-user` <br />
+etc
 
 
-
+The actions that can be carried out on webhooks in casdoor are
+- `Add`
+- `Edit`
+- `Delete`
 
 
 
