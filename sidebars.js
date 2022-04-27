@@ -21,7 +21,7 @@ module.exports = {
       type: 'category',
       label: 'How to Connect to Casdoor',
       collapsed: false,
-      items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk','how-to-connect/vue-sdk', 'how-to-connect/plugin', 'how-to-connect/access_token','how-to-connect/cas'],
+      items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk', 'how-to-connect/vue-sdk', 'how-to-connect/plugin', 'how-to-connect/access_token', 'how-to-connect/cas'],
     },
     {
       type: 'category',
@@ -50,12 +50,12 @@ module.exports = {
           OAuth: [
             'provider/oauth/overview',
             'provider/oauth/CustomProvider',
-	    'provider/oauth/Twitter',
-	    'provider/oauth/Weibo',
-	    'provider/oauth/Wechat',
-	    'provider/oauth/Tencent',
-	    'provider/oauth/DingTalk',
-	    'provider/oauth/Steam',
+            'provider/oauth/Twitter',
+            'provider/oauth/Weibo',
+            'provider/oauth/Wechat',
+            'provider/oauth/Tencent',
+            'provider/oauth/DingTalk',
+            'provider/oauth/Steam',
             'provider/oauth/github',
             'provider/oauth/gitee',
             'provider/oauth/linkedin',
@@ -109,7 +109,13 @@ module.exports = {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins plugin', 'integration/jenkins oidc', 'integration/minio', 'integration/spring-boot', 'integration/spring-cloud','integration/spring-security', 'integration/elk']
+      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins plugin', 'integration/jenkins oidc', 'integration/minio', 'integration/spring-boot', 'integration/spring-cloud', 'integration/spring-security', 'integration/elk']
+    },
+    {
+      type: 'category',
+      label: 'Webhooks',
+      collapsed: false,
+      items: ['webhook/overview','webhook/Add a webhook']
     },
     'internationalization'
   ],
