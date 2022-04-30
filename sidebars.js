@@ -62,6 +62,7 @@ module.exports = {
             'provider/oauth/facebook',
             'provider/oauth/google',
             'provider/oauth/baidu',
+            'provider/oauth/adfs',
             'provider/oauth/infoflow'
           ]
         },
