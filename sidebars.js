@@ -111,7 +111,7 @@ module.exports = {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins plugin', 'integration/jenkins oidc', 'integration/minio', 'integration/spring-boot', 'integration/spring-cloud', 'integration/spring-security', 'integration/elk']
+      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins plugin', 'integration/jenkins oidc', 'integration/minio', 'integration/spring-boot', 'integration/spring-cloud', 'integration/spring-security', 'integration/wechat_miniprogram', 'integration/elk']
     },
     'internationalization'
   ],
