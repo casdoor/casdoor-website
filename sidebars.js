@@ -67,7 +67,12 @@ module.exports = {
             'provider/oauth/okta'
           ]
         },
-        'provider/email', 'provider/sms', 'provider/storage',
+        'provider/email', 'provider/sms', 
+        {
+          Storage: [
+          'provider/storage/storage',
+          'provider/storage/azure'
+        ]},
         {
           SAML: [
             'provider/saml/overview',
