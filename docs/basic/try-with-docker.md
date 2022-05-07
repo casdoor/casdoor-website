@@ -21,9 +21,9 @@ You can use **docker (docker-engine version >= 17.05)** in Linux or **Docker Des
 
 * [Docker](https://docs.docker.com/get-docker/)
 
-Users of all OSes must ensure that the **docker-engine version >= 17.05**. It is because that we use multi-stage build feature in docker-compose.yml, which was supported in 17.05 and later versions. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
+Users of all OSes must ensure that the **docker-engine version >= 17.05**. It is because that we use multi-stage build feature in docker-compose.yml, which was supported in 17.05 and above versions. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
 
-If you also use docker-compose, please ensure that **docker-compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, considering that it is seperated from Docker.
+If you also use docker-compose, please ensure that **docker-compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, given that it is seperated from docker-engine.
 
 ## Get the image
 
