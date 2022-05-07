@@ -5,19 +5,24 @@ title: (Optional) Try with Docker
 
 ## Requirements
 
+### Machine requirements
+If you want to build the image by yourself, please ensure that your machine have at least **2GB** memory. Memory less that requiurement may lead to build failure in build stage.
+
+If you just need to run the pre-built image,  please ensure that your machine have at least **1GB** memory.
+
 ### OS
 
 All OSes (Linux, Windows and macOS) are supported.
 
 ### Environment
 
-You can use **docker(docker engine version > 17.05)** in Linux or **Docker Desktop** in Windows and macOS.
+You can use **docker(docker engine version >= 17.05)** in Linux or **Docker Desktop** in Windows and macOS.
 
 * [Docker](https://docs.docker.com/get-docker/)
 
-For Linux users, you also need to make sure that docker-compose is installed, considering that it is seperate from Docker.
+Users of all platforms must ensure that the **docker engine version >= 17.05.** It is because that we used multi-stage build feature in docker-compose.yml, which was supported after 17.05. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
 
-Users of all platforms must ensure that the **docker engine version > 17.05.** It is because that we used multi-stage build feature in docker-compose.yml, which was supported after 17.05. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
+If you also use docker-compose, please ensure that **docker compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, considering that it is seperate from Docker.
 
 ## Get the image
 
