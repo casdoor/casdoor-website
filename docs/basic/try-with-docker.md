@@ -9,7 +9,7 @@ title: (Optional) Try with Docker
 
 If you want to build the Docker image by yourself, please ensure that your machine has at least **2GB** memory. Casdoor's frontend is a NPM project of React. Building the frontend requires at least **2GB** memory. Less than **2GB** memory may lead to frontend build failure.
 
-If you just need to run the pre-built image,  please ensure that your machine has at least **1GB** memory.
+If you just need to run the pre-built image,  please ensure that your machine has at least **100MB** memory.
 
 ### OS
 
