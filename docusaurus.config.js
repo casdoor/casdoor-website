@@ -194,15 +194,13 @@ var _hmt = _hmt || [];
 	  remarkPlugins: [require('mdx-mermaid')],
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/casdoor/casdoor-website/tree/master/',
+          editUrl: 'https://github.com/casdoor/casdoor-website/tree/master/',
           sidebarCollapsed: false,
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/casdoor/casdoor-website/tree/master/',
+          editUrl: 'https://github.com/casdoor/casdoor-website/tree/master/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
