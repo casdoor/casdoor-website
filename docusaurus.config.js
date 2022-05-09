@@ -196,6 +196,7 @@ var _hmt = _hmt || [];
           // Please change this to your repo.
           editUrl:
             'https://github.com/casdoor/casdoor-website/tree/master/',
+          sidebarCollapsed: false,
         },
         blog: {
           showReadingTime: true,
