@@ -5,19 +5,25 @@ title: (Optional) Try with Docker
 
 ## Requirements
 
+### Hardware
+
+If you want to build the Docker image by yourself, please ensure that your machine has at least **2GB** memory. Casdoor's frontend is a NPM project of React. Building the frontend requires at least **2GB** memory. Less than **2GB** memory may lead to frontend build failure.
+
+If you just need to run the pre-built image,  please ensure that your machine has at least **100MB** memory.
+
 ### OS
 
 All OSes (Linux, Windows and macOS) are supported.
 
-### Environment
+### Docker
 
-You can use **docker(docker engine version > 17.05)** in Linux or **Docker Desktop** in Windows and macOS.
+You can use **docker (docker-engine version >= 17.05)** in Linux or **Docker Desktop** in Windows and macOS.
 
 * [Docker](https://docs.docker.com/get-docker/)
 
-For Linux users, you also need to make sure that docker-compose is installed, considering that it is seperate from Docker.
+Users of all OSes must ensure that the **docker-engine version >= 17.05**. It is because that we use multi-stage build feature in docker-compose.yml, which was supported in 17.05 and above versions. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
 
-Users of all platforms must ensure that the **docker engine version > 17.05.** It is because that we used multi-stage build feature in docker-compose.yml, which was supported after 17.05. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
+If you also use docker-compose, please ensure that **docker-compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, given that it is seperated from docker-engine.
 
 ## Get the image
 
@@ -92,4 +98,3 @@ Visit: [**http://localhost:8000**](http://localhost:8000) in your browser. Log i
 admin
 123
 ```
-
