@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+title: Signup Items Table
+---
+On the application configuration page, we can configure the signup items table to create a custom registration page. And we can add or delete any signup item on this signup items table.
+
+![Signup Items Table](/img/signup-items-table.png)
+
+For a detailed explanation of each signup item, please see the table below.
+
+|    Column Name    |                                      Selectable Value                                      | Description                                                                                                                                                                                                                                                                                |
+| :---------: | :----------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|    Name    |                                          -                                          | Signup item name.                                                                                                                                                                                                                     |
+|    visible    |      `True` / `False`      | Select whether this signup item is visible on the registration page.                                                                  |
+|  required  |       `True` / `False`       | Select whether this signup item is mandatory required.                                                          |
+|   prompted   |         `True` / `False`         | Select whether to give a prompt when user forget to fill in this signup item.                                                                             |
+| rule | `Rule Items ` | Select a rule to use with this signup item. The rule is to add some customization to this signup item. The detailed rules are described in the table below. |
+| Action | - | User can take some action here, such as move this signup item up, move this signup item down, or delete this signup item. |
+
+So far, the signup items that support configuration rules include `ID`, ` Display name` and `Email`.
+
+|  Item Name   |           Selectable Rules           | Description                                                  |
+| :----------: | :----------------------------------: | ------------------------------------------------------------ |
+|      ID      |       `Random` / `Incremental`       | Select whether the user ID is randomly generated or incremented. |
+| Display name | `None `/ `Real name` / `First, last` | Choose the presentation of the display name. Choose `None` will show `Display name`. Choose `Real name` will show `Real name`. Choose `First, last` will show `First name` and `last name`. |
+|    Email     |     `Normal `/ `No verification`     | Select whether to verify the verification code of the mailbox.Choose `Normal` will verify the email code. Choose No verification will not verify the email code. |
+
+:::note
+
+Here, for example, I want to setup my own registration page bring a mailbox but do not require a mail verification code.
+
+:::
+
+Firstly, I added some signup items necessary for registration, such as ID, Username, Password, Email.
+
+![Signup Items Table](/img/signup-items-table-demo-config.png)
+
+And I selected the email row's rule item to `No verification`. As a result, the generated preview registration page can get the expected effect.
+
+![Signup Items Table](/img/signup-items-table-demo-page.png)
+
