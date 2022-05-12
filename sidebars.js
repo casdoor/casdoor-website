@@ -39,7 +39,7 @@ module.exports = {
       type: 'category',
       label: 'Applications',
       collapsed: false,
-      items: ['application/overview', 'application/config', 'application/terminology'],
+      items: ['application/overview', 'application/config', 'application/signup-items-tabel', 'application/terminology'],
     },
     {
       type: 'category',

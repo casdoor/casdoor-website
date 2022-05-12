@@ -1,13 +1,12 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Terminology reference
 ---
-
 - `Name` The name of the created app
 - `CreatedTime` The time when the application is created
 - `DisplayName` The name which the application display to public
 - `Logo` Application logos will display in login and sign up page
-- `HomepageUrl` The url of the application homepage 
+- `HomepageUrl` The url of the application homepage
 - `Description` Describe the application
 - `Organization` The organization that the APP belongs to
 - `EnablePassword` If users can login via password
