@@ -8,7 +8,9 @@ Casdoor now can be used as SAML IdP. Up to now the Casdoor have supported the ma
 
 ### Overview
 
-The metadata of SAML endpoint in Casdoor is `<Endpoint of casdoor>/api/saml/metadata?application=<organization name>/<application name>`,which means:
+The metadata of SAML endpoint in Casdoor is `<Endpoint of casdoor>/api/saml/metadata?application=<organization name>/<application name>`. And you can also find the metadata in the application edit page.
+
+![](/img/saml_metadata.png)
 
 Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an application called `app-built-in` which belongs to an organization called `built-in`.
 
