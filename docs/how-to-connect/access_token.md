@@ -6,7 +6,7 @@ title: Access Token
 
 Casdoor supports AccessToken to authenticate clients. In this section, we will show you how to get AccessToken, how to verify AccessToken and how to use AccessToken.
 
-## How to get AceessToken
+## How to get AccessToken
 
 You have two ways to get the AccessToken: you can use the [Casdoor SDK](/docs/how-to-connect/sdk), for details please refer to the SDK documentation, here we will mainly show you how to use the API to get the AccessToken.
 
@@ -168,7 +168,7 @@ You will get the following response like:
 
 ## How to use AccessToken
 
-You can use AccessToken to access Casdoor APIs that require authentication, here is `/api/userinfo` for example.
+You can use AccessToken to access Casdoor APIs that require authentication, here is `/api/userinfo` for example. This one is when we only use "openid" scope to get userinfo endpoint.
 
 1. Query parameter
     
@@ -184,5 +184,30 @@ You will get the same response like:
     "sub": "7a6b4a8a-b731-48da-bc44-36ae27338817",
     "iss": "http://localhost:8000",
     "aud": "c58c..."
+}
+```
+
+You can also use AccessToken to access Casdoor APIs that require authentication, here is `/api/userinfo` for example. This one is when we use "openid profile address phone email" scope to get userinfo endpoint.
+
+1. Query parameter
+    
+    Access `https://<CASDOOR_HOST>/api/userinfo?accessToken=ACCESSTOKEN`
+2. HTTP Bearer token
+    
+    Access `https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer ACCESSTOKEN"
+
+You will get the same response like:
+
+```json
+{
+    "sub": "2f80c349-4beb-407f-b1f0-528aac0f1acd",
+    "iss": "https://door.casbin.com",
+    "aud": "7a11****0fa2172",
+    "name": "admin",
+    "preferred_username": "Admin",
+    "email": "admin@example.com",
+    "picture": "https://casbin.org/img/casbin.svg",
+    "address": "Guangdong",
+    "phone": "12345678910"
 }
 ```
