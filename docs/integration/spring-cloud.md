@@ -158,9 +158,9 @@ spring:
 ```
 
 3. Enable service discovery by adding the Spring Cloud native annotation of @EnableDiscoveryClient
-   ![img.png](img.png)
+   ![springcloud.png](/img/integration/springcloud/springcloud.png)
    start server，view the list of services for the Nacos console
-   ![img_1.png](img_1.png)
+   ![springcloud_1.png](/img/integration/springcloud/springcloud_1.png)
    
 ## Step4. config center
 You can also use nacos config, put these casdoor configurations in the configuration center
@@ -200,10 +200,10 @@ You can also use nacos config, put these casdoor configurations in the configura
 Configuration file loading priority (from highest to lowest)
 `bootstrap.properties ->bootstrap.yml -> application.properties -> application.yml`
 3. Enable service discovery by adding the Spring Cloud native annotation of @EnableDiscoveryClient
-   ![img.png](img.png)
+   ![springcloud.png](/img/integration/springcloud/springcloud.png)
    Add a configuration to the configuration center （Data Id）
-   ![img_2.png](img_2.png)
-   ![img_3.png](img_3.png)
+   ![springcloud_2.png](/img/integration/springcloud/springcloud_2.png)
+   ![springcloud_3.png](/img/integration/springcloud/springcloud_3.png)
 
       In Nacos Spring Cloud, the format of `dataId` is as follows:
      ` ${prefix}-${spring.profiles.active}.${file-extension}`
