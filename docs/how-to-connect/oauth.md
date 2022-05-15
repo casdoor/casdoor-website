@@ -1,5 +1,5 @@
 ---
-title: Access Token
+title: OAuth 2.0
 ---
 
 ## Introduction
