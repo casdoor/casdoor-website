@@ -38,6 +38,11 @@ Name | Description | Suggestion
 1. casbin/casdoor-all-in-one, in which casdoor binary, a mysql database and all necessary configurations are packed up. This image is for new user to have a trial on casdoor quickly. **With this image you can start a casdoor immediately with one single command (or two) without any complex configuration**. **Note: we DO NOT recommend you to use this image in productive environment**
 
 ### **Option-1**: Use the toy database
+:::danger
+For users in China mainland, please DO NOT use Ali Cloud mirror accelerator! Please pull this image directly from Dockerhub. Images on Ali Cloud mirror accelerator cannot be guaranteed to be up-to-date!
+
+You can use this command to get the latest image:`docker pull casbin/casdoor-all-in-one:$( curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor-all-in-one/tags/?page_size=1&page=2" | sed 's/,/,\n/g'| grep '"name"'|awk -F '"' '{print $4}')`
+:::
 
 Run the container with port `8000` exposed to host. It will automatically pull the image if it doesn't exist in the local host.
 
@@ -53,6 +58,11 @@ admin
 ```
 
 ### **Option-2**: Try with docker-compose
+:::danger
+For users in China mainland, please DO NOT use Ali Cloud mirror accelerator! Please pull this image directly from Dockerhub. Images on Ali Cloud mirror accelerator cannot be guaranteed to be up-to-date!
+
+You can execute this command in advance to get the latest image:`docker pull casbin/casdoor:$( curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g'| grep '"name"'|awk -F '"' '{print $4}')`
+:::
 
 Create a sepereate database by docker-compose 
 
@@ -72,6 +82,11 @@ admin
 *Note: if you dive deeper into the docker-compose.yml, you may be puzzled by the environment variable we created in it called "RUNNING_IN_DOCKER". When database 'db' is created via docker-compose, it is available on localhost of your pc but not localhost of the casdoor container. To prevent you from the troubles caused by modifying app.conf which are pretty difficult for a new user, we provided this environment variable and pre-assigned it in  docker-compose.yml. When this environment variable is true, localhost will be replaced with host.docker.internal so that you casdoor can visit the db.*
 
 ### **Option-3** Try directly with standard image
+:::danger
+For users in China mainland, please DO NOT use Ali Cloud mirror accelerator! Please pull this image directly from Dockerhub. Images on Ali Cloud mirror accelerator cannot be guaranteed to be up-to-date!
+
+You can use this command to get the latest image:`docker pull casbin/casdoor:$( curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g'| grep '"name"'|awk -F '"' '{print $4}')`
+:::
 
 Modify the following items in `conf/app.conf` like a normal Casdoor installation:
 
