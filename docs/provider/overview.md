@@ -7,7 +7,7 @@ Casdoor uses providers to provide third-party services for the platform. In this
 
 Casdoor will only use providers added by the organization owner when it receives a request from a user in the organization.
 
-Now, we have 4 kinds of providers:
+Now, we have 5 kinds of providers:
 
 - **OAuth providers**
 
@@ -24,3 +24,9 @@ Now, we have 4 kinds of providers:
 - **Storage Providers**
 
   Casdoor allows users to store files using local file system or cloud oss services.
+
+- **Payment Provider**
+
+  Casdoor can add payment providers, which will be used to add payment methods to products on the product page.
+Currently, the supported payment providers include Alipay, WeChat Pay, PayPal and GC. 
+  

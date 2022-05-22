@@ -80,7 +80,24 @@ module.exports = {
             'provider/saml/keycloak'
           ]
         },
+        {
+          Payment: [
+              'provider/payment/Alipay'
+          ]
+        }
       ],
+    },
+    {
+      type: 'category',
+      label: 'Resources',
+      collapsed: false,
+      items: ['resources/overview'],
+    },
+    {
+      type: 'category',
+      label: 'Products',
+      collapsed: false,
+      items: ['products/product','products/payment'],
     },
     {
       type: 'category',
