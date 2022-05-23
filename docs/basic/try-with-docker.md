@@ -38,17 +38,24 @@ Name | Description | Suggestion
 1. casbin/casdoor-all-in-one, in which casdoor binary, a mysql database and all necessary configurations are packed up. This image is for new user to have a trial on casdoor quickly. **With this image you can start a casdoor immediately with one single command (or two) without any complex configuration**. **Note: we DO NOT recommend you to use this image in productive environment**
 
 ### **Option-1**: Use the toy database
-:::danger
-For users in China mainland, please DO NOT use Ali Cloud mirror accelerator! Please pull this image directly from Dockerhub. Images on Ali Cloud mirror accelerator cannot be guaranteed to be up-to-date!
-
-You can use this command to get the latest image:`docker pull casbin/casdoor-all-in-one:$( curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor-all-in-one/tags/?page_size=1&page=2" | sed 's/,/,\n/g'| grep '"name"'|awk -F '"' '{print $4}')`
-:::
 
 Run the container with port `8000` exposed to host. It will automatically pull the image if it doesn't exist in the local host.
 
 ```shell
 docker run -p 8000:8000 casbin/casdoor-all-in-one
 ```
+
+:::caution
+
+Some users in areas like China usually use Docker image mirror services like [Alibaba Cloud Image Booster](https://help.aliyun.com/document_detail/60750.html) ([English](https://www.alibabacloud.com/help/en/container-registry/latest/accelerate-the-download-of-docker-official-images)) to achieve higher download speed compared to DockerHub. However, it has a known issue that the `latest` tag provided by those services is not up-to-date. It probably results in a very old image by fetching the `latest` tag. To mitigate this issue, you can specify the image version number explicitly by using the following command:
+
+```shell
+docker pull casbin/casdoor-all-in-one:$(curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor-all-in-one/tags/?page_size=1&page=2" | sed 's/,/,\n/g' | grep '"name"' |awk -F '"' '{print $4}')
+```
+
+Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. If you are using Windows, make sure you run it in a Linux-style shell like `Git Shell` or `Cygwin`. `CMD` or `PowerShell` won't work.
+
+:::
 
 Visit: [**http://localhost:8000**](http://localhost:8000) in your browser. Log into Casdoor dashboard with the default global admin account: `built-in/admin`
 
@@ -58,13 +65,20 @@ admin
 ```
 
 ### **Option-2**: Try with docker-compose
-:::danger
-For users in China mainland, please DO NOT use Ali Cloud mirror accelerator! Please pull this image directly from Dockerhub. Images on Ali Cloud mirror accelerator cannot be guaranteed to be up-to-date!
 
-You can execute this command in advance to get the latest image:`docker pull casbin/casdoor:$( curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g'| grep '"name"'|awk -F '"' '{print $4}')`
+:::caution
+
+Some users in areas like China usually use Docker image mirror services like [Alibaba Cloud Image Booster](https://help.aliyun.com/document_detail/60750.html) ([English](https://www.alibabacloud.com/help/en/container-registry/latest/accelerate-the-download-of-docker-official-images)) to achieve higher download speed compared to DockerHub. However, it has a known issue that the `latest` tag provided by those services is not up-to-date. It probably results in a very old image by fetching the `latest` tag. To mitigate this issue, you can specify the image version number explicitly by using the following command:
+
+```shell
+docker pull casbin/casdoor:$(curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g' | grep '"name"' |awk -F '"' '{print $4}')
+```
+
+Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. If you are using Windows, make sure you run it in a Linux-style shell like `Git Shell` or `Cygwin`. `CMD` or `PowerShell` won't work.
+
 :::
 
-Create a sepereate database by docker-compose 
+Create a separate database by docker-compose:
 
 ```bash
 docker-compose up
@@ -81,11 +95,18 @@ admin
 
 *Note: if you dive deeper into the docker-compose.yml, you may be puzzled by the environment variable we created in it called "RUNNING_IN_DOCKER". When database 'db' is created via docker-compose, it is available on localhost of your pc but not localhost of the casdoor container. To prevent you from the troubles caused by modifying app.conf which are pretty difficult for a new user, we provided this environment variable and pre-assigned it in  docker-compose.yml. When this environment variable is true, localhost will be replaced with host.docker.internal so that you casdoor can visit the db.*
 
-### **Option-3** Try directly with standard image
-:::danger
-For users in China mainland, please DO NOT use Ali Cloud mirror accelerator! Please pull this image directly from Dockerhub. Images on Ali Cloud mirror accelerator cannot be guaranteed to be up-to-date!
+### **Option-3** Try directly with standard image'
 
-You can use this command to get the latest image:`docker pull casbin/casdoor:$( curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g'| grep '"name"'|awk -F '"' '{print $4}')`
+:::caution
+
+Some users in areas like China usually use Docker image mirror services like [Alibaba Cloud Image Booster](https://help.aliyun.com/document_detail/60750.html) ([English](https://www.alibabacloud.com/help/en/container-registry/latest/accelerate-the-download-of-docker-official-images)) to achieve higher download speed compared to DockerHub. However, it has a known issue that the `latest` tag provided by those services is not up-to-date. It probably results in a very old image by fetching the `latest` tag. To mitigate this issue, you can specify the image version number explicitly by using the following command:
+
+```shell
+docker pull casbin/casdoor:$(curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g' | grep '"name"' |awk -F '"' '{print $4}')
+```
+
+Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. If you are using Windows, make sure you run it in a Linux-style shell like `Git Shell` or `Cygwin`. `CMD` or `PowerShell` won't work.
+
 :::
 
 Modify the following items in `conf/app.conf` like a normal Casdoor installation:
@@ -101,8 +122,9 @@ dbName = casdoor
 *Note: if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details*
 
 Then run 
+
 ```
-docker run  -p 8000:8000 -v <path to directory containing app.conf>:/conf casbin/casdoor:latest
+docker run  -p 8000:8000 -v /path/to/app.conf:/conf casbin/casdoor:latest
 ```
 
 Anyway just **mount the app.conf to /conf/app.conf** and start it.
