@@ -85,6 +85,13 @@ origin = "https://door.casdoor.com"
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
+  - `defaultStorageProvider` is the default file storage service name. If you need to use file storage services such as avatar upload, you need to set up a storage provider and apply it in your application. See [**storage**](https://casdoor.org/docs/provider/storage/storage) for details.
+  - `isCloudIntranet` is used to identify whether your provider endpoint is intranet endpoint.
+  - `authState` is the authorization application name. This parameter will be checked when logging in.
+  - `socks5Proxy` is the SOCKS proxy server IP address.
+  - `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in casdoor. 
+  - `logPostOnly` is used to identify whether only use post method to add a record.
+  - `origin` is the origin backend domain name.
 
 - Setup database (MySQL):
 
