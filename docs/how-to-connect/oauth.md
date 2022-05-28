@@ -16,7 +16,7 @@ For security reasons, the Casdoor app has the authorization code mode turned on 
 
 ![Grant Types](/img/accesstoken_grant_types.png)
 
-### Authorization Code Grant
+### Authorization Code Grant <span id="1"></span>
 
 First redirect your users to `https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=openid&state=STATE`. After your user has authenticated with casdoor, casdoor will redirect him to `https://REDIRECT_URI?code=CODE&state=STATE`. Now that you have obtained the authorization code, make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` in your backend application :
 ```json
@@ -211,3 +211,27 @@ You will get the same response like:
     "phone": "12345678910"
 }
 ```
+## Different between `userinfo` and `get-account` APIs
+- `/api/userinfo` return user information according to OIDC standards.
+Less information is returned, including only the basic information in OIDC standards.
+
+You can return more information on request by adding `scope`. This step should be done before you get the `code`,
+i.e. before redirecting to Casdoor for [Authorization Code Grant ](#1)
+
+:::info
+**scope**
+
+The following is a non-normative example of an unencoded scope request:
+
+`scope=openid profile email phone`
+
+In addition to these OpenID-specific scopes, your scope argument can also include other scope values. All scope values must be space-separated.
+
+For more details, please see [OIDC standard](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse)
+:::
+
+- `/api/get-account` get the details of the current account
+
+It is in casdoor's own format API to obtain all the information of the [user](/docs/basic/core-concepts#user) in Casdoor.
+
+
