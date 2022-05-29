@@ -16,7 +16,7 @@ For security reasons, the Casdoor app has the authorization code mode turned on 
 
 ![Grant Types](/img/accesstoken_grant_types.png)
 
-### Authorization Code Grant
+### Authorization Code Grant <span id="1"></span>
 
 First redirect your users to `https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=openid&state=STATE`. After your user has authenticated with casdoor, casdoor will redirect him to `https://REDIRECT_URI?code=CODE&state=STATE`. Now that you have obtained the authorization code, make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` in your backend application :
 ```json
@@ -166,16 +166,17 @@ You will get the following response like:
 }
 ```
 
-## How to use AccessToken
+## How to use `AccessToken`
 
 You can use AccessToken to access Casdoor APIs that require authentication, here is `/api/userinfo` for example. This one is when we only use "openid" scope to get userinfo endpoint.
 
 1. Query parameter
     
-    Access `https://<CASDOOR_HOST>/api/userinfo?accessToken=ACCESSTOKEN`
+`https://<CASDOOR_HOST>/api/userinfo?accessToken=<your_access_token>`
+
 2. HTTP Bearer token
     
-    Access `https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer ACCESSTOKEN"
+`https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer <your_access_token>"
 
 You will get the same response like:
 
@@ -187,16 +188,7 @@ You will get the same response like:
 }
 ```
 
-You can also use AccessToken to access Casdoor APIs that require authentication, here is `/api/userinfo` for example. This one is when we use "openid profile address phone email" scope to get userinfo endpoint.
-
-1. Query parameter
-    
-    Access `https://<CASDOOR_HOST>/api/userinfo?accessToken=ACCESSTOKEN`
-2. HTTP Bearer token
-    
-    Access `https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer ACCESSTOKEN"
-
-You will get the same response like:
+When we use "openid profile address phone email" as the scope, we can get more detailed response:
 
 ```json
 {
@@ -211,3 +203,22 @@ You will get the same response like:
     "phone": "12345678910"
 }
 ```
+
+## Differences between `userinfo` and `get-account` APIs
+
+- `/api/userinfo`: returns user information as part of OIDC protocol. Less information is returned, including only the basic information in OIDC standards. You can return more information on request by adding `scope`. This step should be done before you get the `code`,
+i.e. before redirecting to Casdoor for [Authorization Code Grant ](#1)
+
+:::info
+**scope**
+
+The following is a non-normative example of an unencoded scope request:
+
+`scope=openid profile email phone`
+
+In addition to these OpenID-specific scopes, your scope argument can also include other scope values. All scope values must be space-separated.
+
+For more details, please see [OIDC standard](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse)
+:::
+
+- `/api/get-account`: gets the user object for the currently logged-in account. It is a Casdoor-only API to obtain all information of the [user](/docs/basic/core-concepts#user) in Casdoor.
