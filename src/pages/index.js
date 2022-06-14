@@ -9,7 +9,7 @@ import Translate, {translate} from '@docusaurus/Translate';
 
 function FrameMask(props){
   const [mouseState, setMouseState] = useState({state:false});
-  const maskStyle = {position: 'absolute', top: '0px', left: '0px', zIndex: 10, height: '100%', width: '100%', background: 'rgba(0,0,0,0.4)'};
+  const maskStyle = {position: 'absolute', top: '0px', left: '0px', zIndex: 10, height: '100%', width: '100%', background: 'rgba(0,0,0,0.4)', cursor:'pointer'};
   const handleMouseEnter = () => {
     setMouseState({
       ...mouseState,
@@ -26,7 +26,7 @@ function FrameMask(props){
   return(
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
     <iframe src={props.src} width={props.width} height= {props.height} frameborder="0" scrolling="no"></iframe>
-    <div style={maskStyle}  hidden={!mouseState.state}>
+    <div style={maskStyle}  hidden={!mouseState.state}  onClick={()=>{window.open(props.src)}}>
         <Link
           className="button button--secondary button--lg"
           style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}
