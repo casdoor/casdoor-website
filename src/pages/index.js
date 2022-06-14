@@ -5,7 +5,6 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.scss';
 import HomepageFeatures from '../components/HomepageFeatures';
-
 import Translate, {translate} from '@docusaurus/Translate';
 
 function FrameMask(props){
@@ -63,17 +62,6 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      {/* <div className={styles.headerborder} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <iframe src="https://door.casdoor.com/login" width="550" height= "680" frameborder="0" scrolling="no"></iframe>
-      <div style={maskStyle}  hidden={!mouseState.state}>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}
-            to="https://door.casdoor.com/">
-            <Translate>Online Demo</Translate>
-          </Link>
-      </div>
-      </div> */}
       <FrameMask styles={styles.headerborder} src="https://door.casdoor.com/login" width="550" height= "680"></FrameMask>
     </header>
   );
@@ -99,7 +87,6 @@ function LearnHowTo() {
   );
 }
 
-
 function ContentLogin() {
   return (
     <div className={styles.contentlogin}>
@@ -124,9 +111,6 @@ function ContentLogin() {
             <br />
             <Translate>And if your want more providers, please propose it in</Translate> <Link href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
-          {/* <div className={styles.signingradientborder}>
-            <iframe src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "750" frameborder="0" scrolling="no"></iframe>
-          </div> */}
           <FrameMask styles={styles.signingradientborder} src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "750"></FrameMask>
         </div>
       </div>
@@ -139,9 +123,6 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-        {/* <div className={styles.gradientborder}>
-            <iframe src="https://door.casdoor.com/signup" width="600" height= "700" frameborder="0" scrolling="no"></iframe>
-          </div> */}
           <FrameMask styles={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height= "700"></FrameMask>
           <div className="col">
             <br />
@@ -173,9 +154,6 @@ function ContentForget() {
             <Translate>To retrieve your password, you can enter your username, email or phone linked to your account and enter the verification code sent to your email or your phone, enter your new password and confirm to reset your new password.</Translate>
             </p>
           </div>
-          {/* <div className={styles.gradientborder}>
-            <iframe src="https://door.casdoor.com/forget" width="600" height= "620" frameborder="0" scrolling="no"></iframe>
-          </div> */}
           <FrameMask styles={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height= "620"></FrameMask>
         </div>
       </div>
