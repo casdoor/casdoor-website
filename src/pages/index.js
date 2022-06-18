@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.scss';
 import HomepageFeatures from '../components/HomepageFeatures';
-
 import Translate, {translate} from '@docusaurus/Translate';
+
+function FrameMask(props){
+  const [mouseState, setMouseState] = useState({state:false});
+  const maskStyle = {position: 'absolute', top: '0px', left: '0px', zIndex: 10, height: '100%', width: '100%', background: 'rgba(0,0,0,0.4)', cursor:'pointer'};
+  const handleMouseEnter = () => {
+    setMouseState({
+      ...mouseState,
+      state: true
+    })
+
+  }
+  const handleMouseLeave = () => {
+    setMouseState({
+      ...mouseState,
+      state: false
+    })
+  }
+  return(
+    <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <iframe src={props.src} width={props.width} height= {props.height} frameborder="0" scrolling="no"></iframe>
+    <div style={maskStyle}  hidden={!mouseState.state}  onClick={()=>{window.open(props.src)}}>
+        <Link
+          className="button button--secondary button--lg"
+          style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}
+          to={props.src}>
+          <Translate>Online Demo</Translate>
+        </Link>
+    </div>
+    </div>
+  )
+}
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -32,9 +62,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <div className={styles.headerborder}>
-      <iframe src="https://door.casdoor.com/login" width="550" height= "680" frameborder="0" scrolling="no"></iframe>
-      </div>
+      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height= "680"></FrameMask>
     </header>
   );
 }
@@ -58,7 +86,6 @@ function LearnHowTo() {
     </div>
   );
 }
-
 
 function ContentLogin() {
   return (
@@ -84,9 +111,7 @@ function ContentLogin() {
             <br />
             <Translate>And if your want more providers, please propose it in</Translate> <Link href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
-          <div className={styles.signingradientborder}>
-            <iframe src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "750" frameborder="0" scrolling="no"></iframe>
-          </div>
+          <FrameMask className={styles.signingradientborder} src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "750"></FrameMask>
         </div>
       </div>
     </div>
@@ -98,9 +123,7 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-        <div className={styles.gradientborder}>
-            <iframe src="https://door.casdoor.com/signup" width="600" height= "700" frameborder="0" scrolling="no"></iframe>
-          </div>
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height= "700"></FrameMask>
           <div className="col">
             <br />
             <br />
@@ -131,9 +154,7 @@ function ContentForget() {
             <Translate>To retrieve your password, you can enter your username, email or phone linked to your account and enter the verification code sent to your email or your phone, enter your new password and confirm to reset your new password.</Translate>
             </p>
           </div>
-          <div className={styles.gradientborder}>
-            <iframe src="https://door.casdoor.com/forget" width="600" height= "620" frameborder="0" scrolling="no"></iframe>
-          </div>
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height= "620"></FrameMask>
         </div>
       </div>
     </div>
