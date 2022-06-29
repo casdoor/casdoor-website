@@ -65,6 +65,8 @@ copyrequestbody = true
 driverName = mysql
 dataSourceName = root:123456@tcp(localhost:3306)/
 dbName = casdoor
+tableNamePrefix =
+showSql = false
 redisEndpoint =
 defaultStorageProvider =
 isCloudIntranet = false
@@ -81,15 +83,17 @@ origin = "https://door.casdoor.com"
   - `runmode` is `dev` or `prod`
   - `SessionOn` decides whether to enable session,used by default.
   - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
-  - `useProxy` set the proxy port, because we have google-related services, which will be restricted by the network in some areas
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
+  - `tableNamePrefix` is prefix of the table when using adapter.
+  - `showSql` : show SQL statement or not on logger if log level is great than INFO.
+  - `redisEndpoint` is the session storage endpoint. If this parameter is not specified, it will be stored locally.
   - `defaultStorageProvider` is the default file storage service name. If you need to use file storage services such as avatar upload, you need to set up a storage provider and apply it in your application. See [**storage**](https://casdoor.org/docs/provider/storage/storage) for details.
   - `isCloudIntranet` is used to identify whether your provider endpoint is intranet endpoint.
   - `authState` is the authorization application name. This parameter will be checked when logging in.
-  - `socks5Proxy` is the SOCKS proxy server IP address.
-  - `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in casdoor. 
+  - `socks5Proxy` is the SOCKS proxy server IP address. **Set the proxy port**, because we have google-related services or use `Google` `GitHub` `Facebook` `LinkedIn` `Steam` as OAuth Provider which will be restricted by the network in some areas.
+  - `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in Casdoor.
   - `logPostOnly` is used to identify whether only use post method to add a record.
   - `origin` is the origin backend domain name.
 
