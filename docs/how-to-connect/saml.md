@@ -203,3 +203,7 @@ Open the Keycloak login page and you can find the additional button that allows 
 Click on the button and you will be redirected to the Casdoor SAML provider for the authentication. After the successful authentication you will be redirected back to Keycloak. Then you need to assign users to the application.
 
 ![](/img/saml_keycloak_success.png)
+
+We also provide a demo video to demonstrate the entire process, which we hope will be helpful to you.
+
+<video src="/video/saml_keycloak.mp4" controls="controls" width="100%"></video>
