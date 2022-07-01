@@ -84,6 +84,15 @@ module.exports = {
           Payment: [
               'provider/payment/Alipay'
           ]
+        },
+        {
+          Captcha: [
+              'provider/captcha/overview',
+              'provider/captcha/default',
+              'provider/captcha/recaptcha',
+              'provider/captcha/hcaptcha',
+              'provider/captcha/aliyunCaptcha',
+          ]
         }
       ],
     },
