@@ -210,6 +210,7 @@ When we use "openid profile address phone email" as the scope, we can get more d
 i.e. before redirecting to Casdoor for [Authorization Code Grant ](#1)
 
 :::info
+
 **scope**
 
 The following is a non-normative example of an unencoded scope request:
@@ -219,6 +220,7 @@ The following is a non-normative example of an unencoded scope request:
 In addition to these OpenID-specific scopes, your scope argument can also include other scope values. All scope values must be space-separated.
 
 For more details, please see [OIDC standard](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse)
+
 :::
 
 - `/api/get-account`: gets the user object for the currently logged-in account. It is a Casdoor-only API to obtain all information of the [user](/docs/basic/core-concepts#user) in Casdoor.

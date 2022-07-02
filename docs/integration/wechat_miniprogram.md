@@ -4,7 +4,9 @@ title: WeChat MiniProgram
 ---
 
 :::info 
+
 Casdoor supports WeChat Mini Program after version 1.41.0
+
 :::
 
 Since WeChat Mini Program do not support standardized OAuth, it cannot jump to the self-host Casdoor webpage for login. Therefore, the process of using Casdoor for WeChat Mini Program is different from that of ordinary programs. This document will talk about how to access Casdoor to WeChat Mini Program, and more detailed information can be found in the WeChat Mini Program [login document](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html).
@@ -28,9 +30,11 @@ After a successful deployment, you need to ensure:
 3. Add the idp added above to the application you want to use.
 
 :::info Tips
+
 For convenience, casdoor will read the first WeChat type idp in the application as the WeChat Mini Program idp by default.
 
 So if you want to use the WeChat Mini Program in this app, don't add multiple WeChat type idp in one app.
+
 :::
 
 ## Step3. Write WeChat MiniProgram code
@@ -104,5 +108,7 @@ The above code passes in the username and avatar uri of the WeChat Mini Program 
 Also, you can use accessToken as a bearer token for any Casdoor operation you want.
 
 :::info Tips
+
 Currently Casdoor is unable to bind existing accounts to the WeChat Mini Program users. After Casdoor gets the openID from WeChat if this id does not exist, a new user will be created, and if it exists, the old one will be used.
+
 :::
