@@ -179,7 +179,9 @@ Open Keycloak admin page, click **Identity Providers** and select **SAML v2.0** 
 ![](/img/saml_keycloak_idp_create.png)
 
 :::info
+
 You can visit Keycloak SAML Identity Providers [documentation](https://www.keycloak.org/docs/latest/server_admin/#saml-v2-0-identity-providers) to get more detailed information.
+
 :::
 
 Enter the **Alias** and the **Import from URL** in Keycloak IdP edit page. The content of **Import from URL** can be found in the Casdoor application edit page. Click **Import** and the SAML config will be filled automatically. 

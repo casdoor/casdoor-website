@@ -63,7 +63,9 @@ flowchart LR;
 ```
 
 :::tip
+
 In the following parts, we will use the demo site: https://door.casdoor.com as example.
+
 :::
 
 ## Organization
@@ -98,7 +100,9 @@ A user in Casdoor can log into an application. One user can only belong to one o
 In Casdoor API, a user is usually identified as `<organization_name>/<username>`, e.g., the default administrator of Casdoor is denoted as `built-in/admin`. There is also a property in user called `id`, which is a UUID like `d835a48f-2e88-4c1f-b907-60ac6b6c1b40`, it can also be chosen as a ID for a user by an application.
 
 :::tip
+
 If your application is only for one organization, you can just use `<username>` instead of `<organization_name>/<username>` as user ID across your application for simplicity.
+
 :::
 
 The User class definition is shown as follows:
@@ -293,5 +297,7 @@ When you run Casdoor for the first time, Casdoor will create some built-in objec
 All the users under `built-in` organization, including `admin` will have the full administrator power on the Casdoor platform by default. So if you have multiple administrators, then create new accounts under `built-in` organization. Otherwise, remember to close the sign up channel for the `app-built-in` application.
 
 :::caution
+
 The built-in objects are already forbidden to rename or delete in both web UI or RESTful API. Casdoor has hard-coded these reserved names in many places. Do not try to rename or delete them in any way like modifying the DB, otherwise the whole system may crash.
+
 :::

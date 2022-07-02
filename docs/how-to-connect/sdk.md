@@ -15,9 +15,11 @@ Casdoor SDKs can be divided into two categories:
 2. **Backend SDK**: SDKs for backend languages like Go, Java, Node.js, Python, PHP, etc.
 
 :::tip
+
 If your website is developed in a frontend and backend separated manner, then you can use the Javascript
 SDK: `casdoor-js-sdk` or the Vue SDK: `casdoor-vue-sdk` to integrate Casdoor in frontend. If your web application is a
 traditional website developed by JSP or PHP, you can just use the backend SDKs only. See an example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
+
 :::
 
 | Frontend SDK   | Description                   | SDK code                                                              | Example code                                                                                                                                 |
@@ -79,6 +81,7 @@ All the parameters for `InitConfig()` are explained as follows:
 | applicationName  | No   | The name for the Casdoor application                                          |
 
 :::tip
+
 The `jwtPublicKey` can be managed in the `Certs` page as below.
 
 ![Certs Management](/img/howto_cert_list.png)
@@ -90,6 +93,7 @@ You can find the public key in the cert edit page, copy it or download it for th
 Then you can select the cert in the application edit page.
 
 ![Certs Select](/img/howto_cert_select.png)
+
 :::
 
 ### 2. Frontend configuration
@@ -286,8 +290,10 @@ returned `claims` can be used to identity the user later.
 ### 4. Identify user with access token
 
 :::info
+
 This part is actually your application's own business logic and not part of OIDC, OAuth or Casdoor. We just provide good
 practices as a lot of people don't know what to do for next step.
+
 :::
 
 In Casdoor, access token is usually identical as ID token. They are the same thing. So the access token contains all
@@ -343,7 +349,9 @@ the access token directly for it:
 ### 5. **(Optional)** Interact with the User table
 
 :::info
+
 This part is provided by `Casdoor Public API` and not part of the OIDC or OAuth.
+
 :::
 
 Casdoor Backend SDK provides a lot of helper functions, not limited to:

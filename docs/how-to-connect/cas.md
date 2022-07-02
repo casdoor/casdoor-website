@@ -29,7 +29,9 @@ Here is an offical example <https://github.com/apereo/cas-sample-java-webapp>, w
 
 
 :::note
+
 Note: Currently Casdoor only support all three versions of CAS: CAS 1.0 & 2.0 & CAS 3.0 .
+
 :::
 
 The cas configuration is located in `src/main/webapp/WEB-INF/web.yml`.
@@ -71,5 +73,7 @@ For all the apperances of parameter 'casServerLoginUrl' change them to
 If you need to customize more configurations, see <https://github.com/apereo/java-cas-client> for detailed information. 
 
 :::note
+
 Actually we have already have this demo app run on <https://cas-java-app.casdoor.com>. You can visit here to experience using Casdoor via CAS.
+
 :::

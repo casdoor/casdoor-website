@@ -21,6 +21,7 @@ All major operating systems including Windows, Linux and macOS are supported.
 We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install) to run & build Casdoor frontend, using NPM might cause UI styling issues, see more details at: [casdoor#294](https://github.com/casdoor/casdoor/issues/294)
 
 For Chinese users, we strongly recommend that you update your [proxy server](https://goproxy.cn/).
+
 :::
 
 ### Database
@@ -120,7 +121,9 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   ```
 
 :::info
+
 For PostgreSQL, make sure `dataSourceName` has non-empty `dbName` and leave the standalone `dbName` field empty like the above example.
+
 :::
 
   **Please notice:** 
@@ -211,7 +214,9 @@ admin
 ```
 
 :::tip
+
 To use another port, please edit ```conf/app.conf``` and modify `httpport`, then restart the Go backend.
+
 :::
 
 :::info casdoor port details
@@ -229,4 +234,5 @@ When we are testing Casnode in **dev** environment, we set the `serverUrl` as ht
 And when we put Casnode to **prod** environment, we set the `serverUrl` as https://door.casdoor.com, so users can signin or signup using Casdoor.
 
 ![Casnode Example](/img/casnodeexample.png)
+
 :::
