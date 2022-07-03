@@ -10,8 +10,8 @@ provide the best flexibility and the most powerful API.
 
 Casdoor SDKs can be divided into two categories:
 
-1. **Frontend SDK**: Like Javascript SDK, Vue SDK for websites, Android or iOS SDKs for Apps, etc. Casdoor supports providing
-   authentication for both websites and mobile Apps.
+1. **Frontend SDK**: Like Javascript SDK, Vue SDK for websites, Android or iOS SDKs for Apps, etc. Casdoor supports
+   providing authentication for both websites and mobile Apps.
 2. **Backend SDK**: SDKs for backend languages like Go, Java, Node.js, Python, PHP, etc.
 
 :::tip
@@ -22,27 +22,29 @@ traditional website developed by JSP or PHP, you can just use the backend SDKs o
 
 :::
 
-| Frontend SDK   | Description                   | SDK code                                                              | Example code                                                                                                                                 |
-|----------------|-------------------------------|-----------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| Javascript SDK | For websites                  | [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk)           | [Casnode](https://github.com/casbin/casnode), [Casbin-OA](https://github.com/casbin/casbin-oa), [Confita](https://github.com/casbin/confita) |
-| Android SDK    | For Android apps              | [casdoor-android-sdk](https://github.com/casdoor/casdoor-android-sdk) |                                                                                                                                              |
-| iOS SDK        | For iOS apps                  | [casdoor-ios-sdk](https://github.com/casdoor/casdoor-ios-sdk)         |                                                                                                                                              |
-| React SDK      | For React websites            | [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk)           | [Casnode](https://github.com/casbin/casnode), [Casbin-OA](https://github.com/casbin/casbin-oa), [Confita](https://github.com/casbin/confita) |
-| Vue SDK        | For Vue websites              | [casdoor-vue-sdk](https://github.com/casdoor/casdoor-vue-sdk)         | [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)                                                  |
-| Angular SDK    | For angular 1.0, 2.0 websites | [casdoor-angular-sdk](https://github.com/casdoor/casdoor-angular-sdk) |                                                                                                                                              |
-| uni-app SDK    | For uni-app apps              | [casdoor-uniapp-sdk](https://github.com/casdoor/casdoor-uniapp-sdk)   | [casdoor-uniapp-example](https://github.com/casdoor/casdoor-uniapp-example)                                                                  |
+| Frontend SDK   | Description                   | SDK code                                                               | Example code                                                                                                                                 |
+|----------------|-------------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| Javascript SDK | For websites                  | [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk)            | [Casnode](https://github.com/casbin/casnode), [Casbin-OA](https://github.com/casbin/casbin-oa), [Confita](https://github.com/casbin/confita) |
+| Android SDK    | For Android apps              | [casdoor-android-sdk](https://github.com/casdoor/casdoor-android-sdk)  |                                                                                                                                              |
+| iOS SDK        | For iOS apps                  | [casdoor-ios-sdk](https://github.com/casdoor/casdoor-ios-sdk)          |                                                                                                                                              |
+| React SDK      | For React websites            | [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk)            | [Casnode](https://github.com/casbin/casnode), [Casbin-OA](https://github.com/casbin/casbin-oa), [Confita](https://github.com/casbin/confita) |
+| Vue SDK        | For Vue websites              | [casdoor-vue-sdk](https://github.com/casdoor/casdoor-vue-sdk)          | [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)                                                  |
+| Angular SDK    | For angular 1.0, 2.0 websites | [casdoor-angular-sdk](https://github.com/casdoor/casdoor-angular-sdk)  |                                                                                                                                              |
+| Flutter SDK    | For Flutter apps              | [casdoor-flutter-sdk](https://github.com/casdoor/casdoor-flutter-sdk)  | [casdoor-flutter-example](https://github.com/casdoor/casdoor-flutter-example)                                                                |
+| uni-app SDK    | For uni-app apps              | [casdoor-uniapp-sdk](https://github.com/casdoor/casdoor-uniapp-sdk)    | [casdoor-uniapp-example](https://github.com/casdoor/casdoor-uniapp-example)                                                                  |
 
 Next, use one of the following backend SDKs based on the language of your backend:
 
-| Backend SDK | Description          | Sdk code                                                            | Example code                                                                                                                                                                 |
-|-------------|----------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Go SDK      | For Go backends      | [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk)         | [Casnode](https://github.com/casbin/casnode), [Casbin-OA](https://github.com/casbin/casbin-oa), [Confita](https://github.com/casbin/confita)                                 |
-| Java SDK    | For Java backends    | [casdoor-java-sdk](https://github.com/casdoor/casdoor-java-sdk)     | [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter), [casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) |
-| Node.js SDK | For Node.js backends | [casdoor-nodejs-sdk](https://github.com/casdoor/casdoor-nodejs-sdk) |                                                                                                                                                                              |
-| Python SDK  | For Python backends  | [casdoor-python-sdk](https://github.com/casdoor/casdoor-python-sdk) | [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)                                                                                  |
-| PHP SDK     | For PHP backends     | [casdoor-php-sdk](https://github.com/casdoor/casdoor-php-sdk)       | [wordpress-casdoor-plugin](https://github.com/casdoor/wordpress-casdoor-plugin)                                                                                              |
-| .NET SDK    | For ASP.NET backends | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk) | [casdoor-dotnet-sdk-example](https://github.com/casdoor/casdoor-dotnet-sdk-example)                                                                                          |
-| Dart SDK    | For Dart backends    | [casdoor-dart-sdk](https://github.com/casdoor/casdoor-dart-sdk)     |                                                                                                                                                                              |
+| Backend SDK | Description          | Sdk code                                                            | Example code                                                                                                                                                                   |
+|-------------|----------------------|---------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Go SDK      | For Go backends      | [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk)         | [Casnode](https://github.com/casbin/casnode), [Casbin-OA](https://github.com/casbin/casbin-oa), [Confita](https://github.com/casbin/confita)                                   |
+| Java SDK    | For Java backends    | [casdoor-java-sdk](https://github.com/casdoor/casdoor-java-sdk)     | [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter), [casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example)   |
+| Node.js SDK | For Node.js backends | [casdoor-nodejs-sdk](https://github.com/casdoor/casdoor-nodejs-sdk) |                                                                                                                                                                                |
+| Python SDK  | For Python backends  | [casdoor-python-sdk](https://github.com/casdoor/casdoor-python-sdk) | [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)                                                                                    |
+| PHP SDK     | For PHP backends     | [casdoor-php-sdk](https://github.com/casdoor/casdoor-php-sdk)       | [wordpress-casdoor-plugin](https://github.com/casdoor/wordpress-casdoor-plugin)                                                                                                |
+| .NET SDK    | For ASP.NET backends | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk) | [casdoor-dotnet-sdk-example](https://github.com/casdoor/casdoor-dotnet-sdk-example)                                                                                            |
+| Rust SDK    | For Rust backends    | [casdoor-rust-sdk](https://github.com/casdoor/casdoor-rust-sdk)     | [casdoor-rust-example](https://github.com/casdoor/casdoor-rust-example)                                                                                                        |
+| Dart SDK    | For Dart backends    | [casdoor-dart-sdk](https://github.com/casdoor/casdoor-dart-sdk)     |                                                                                                                                                                                |
 
 For a full list of the official Casdoor SDKs, please see: https://github.com/casdoor?q=sdk&type=all&language=&sort=
 
