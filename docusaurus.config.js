@@ -217,7 +217,6 @@ var _hmt = _hmt || [];
   scripts: [
     '/js/gitter.js',
     'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
-    '/js/wwads2.js',
     '/js/tawk.js'
   ],
 };
