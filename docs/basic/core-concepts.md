@@ -74,19 +74,23 @@ In Casdoor, an organization is a container for users and applications. E.g., all
 
 ```go
 type Organization struct {
-	Owner       string `xorm:"varchar(100) notnull pk" json:"owner"`
+    Owner       string `xorm:"varchar(100) notnull pk" json:"owner"`
 	Name        string `xorm:"varchar(100) notnull pk" json:"name"`
 	CreatedTime string `xorm:"varchar(100)" json:"createdTime"`
 
-	DisplayName        string `xorm:"varchar(100)" json:"displayName"`
-	WebsiteUrl         string `xorm:"varchar(100)" json:"websiteUrl"`
-	Favicon            string `xorm:"varchar(100)" json:"favicon"`
-	PasswordType       string `xorm:"varchar(100)" json:"passwordType"`
-	PasswordSalt       string `xorm:"varchar(100)" json:"passwordSalt"`
-	PhonePrefix        string `xorm:"varchar(10)"  json:"phonePrefix"`
-	DefaultAvatar      string `xorm:"varchar(100)" json:"defaultAvatar"`
-	MasterPassword     string `xorm:"varchar(100)" json:"masterPassword"`
-	EnableSoftDeletion bool   `json:"enableSoftDeletion"`
+	DisplayName        string   `xorm:"varchar(100)" json:"displayName"`
+	WebsiteUrl         string   `xorm:"varchar(100)" json:"websiteUrl"`
+	Favicon            string   `xorm:"varchar(100)" json:"favicon"`
+	PasswordType       string   `xorm:"varchar(100)" json:"passwordType"`
+	PasswordSalt       string   `xorm:"varchar(100)" json:"passwordSalt"`
+	PhonePrefix        string   `xorm:"varchar(10)"  json:"phonePrefix"`
+	DefaultAvatar      string   `xorm:"varchar(100)" json:"defaultAvatar"`
+	Tags               []string `xorm:"mediumtext" json:"tags"`
+	MasterPassword     string   `xorm:"varchar(100)" json:"masterPassword"`
+	EnableSoftDeletion bool     `json:"enableSoftDeletion"`
+	IsProfilePublic    bool     `json:"isProfilePublic"`
+
+	AccountItems []*AccountItem `xorm:"varchar(2000)" json:"accountItems"`
 }
 ```
 
