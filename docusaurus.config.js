@@ -11,6 +11,7 @@ module.exports = {
   favicon: 'img/favicon.png',
   organizationName: 'casdoor', // Usually your GitHub org/user name.
   projectName: 'casdoor-website', // Usually your repo name.
+  trailingSlash: false,
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'ja']
@@ -184,7 +185,9 @@ var _hmt = _hmt || [];
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
-    hideableSidebar: true,
+    docs: {
+      sidebar: {hideable: true,},
+    }
   },
   presets: [
     [
@@ -208,7 +211,6 @@ var _hmt = _hmt || [];
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
-          trailingSlash: false,
         },
       },
     ],
