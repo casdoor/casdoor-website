@@ -2,4 +2,4 @@
     ignore = "/bin/false"
     base = "./"
     publish = "build/"
-    command = "yarn build"
+    command = "yarn build --locale en"
