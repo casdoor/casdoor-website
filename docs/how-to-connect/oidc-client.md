@@ -14,74 +14,82 @@ E.g., the OIDC discovery URL for the demo site is: https://door.casdoor.com/.wel
 
 ```json
 {
-  "issuer": "https://door.casdoor.com",
-  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
-  "token_endpoint": "https://door.casdoor.com/api/login/oauth/access_token",
-  "userinfo_endpoint": "https://door.casdoor.com/api/get-account",
-  "jwks_uri": "https://door.casdoor.com/api/certs",
-  "response_types_supported": [
-    "id_token"
-  ],
-  "response_modes_supported": [
-    "login",
-    "code",
-    "link"
-  ],
-  "grant_types_supported": [
-    "password",
-    "authorization_code"
-  ],
-  "subject_types_supported": [
-    "public"
-  ],
-  "id_token_signing_alg_values_supported": [
-    "RS256"
-  ],
-  "scopes_supported": [
-    "openid",
-    "email",
-    "profile",
-    "address",
-    "phone",
-    "offline_access"
-  ],
-  "claims_supported": [
-    "iss",
-    "ver",
-    "sub",
-    "aud",
-    "iat",
-    "exp",
-    "id",
-    "type",
-    "displayName",
-    "avatar",
-    "permanentAvatar",
-    "email",
-    "phone",
-    "location",
-    "affiliation",
-    "title",
-    "homepage",
-    "bio",
-    "tag",
-    "region",
-    "language",
-    "score",
-    "ranking",
-    "isOnline",
-    "isAdmin",
-    "isGlobalAdmin",
-    "isForbidden",
-    "signupApplication",
-    "ldap"
-  ],
-  "request_parameter_supported": true,
-  "request_object_signing_alg_values_supported": [
-    "HS256",
-    "HS384",
-    "HS512"
-  ]
+   "issuer": "https://door.casdoor.com",
+   "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+   "token_endpoint": "https://door.casdoor.com/api/login/oauth/access_token",
+   "userinfo_endpoint": "https://door.casdoor.com/api/userinfo",
+   "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
+   "introspection_endpoint": "https://door.casdoor.com/api/login/oauth/introspect",
+   "response_types_supported": [
+      "code",
+      "token",
+      "id_token",
+      "code token",
+      "code id_token",
+      "token id_token",
+      "code token id_token",
+      "none"
+   ],
+   "response_modes_supported": [
+      "login",
+      "code",
+      "link"
+   ],
+   "grant_types_supported": [
+      "password",
+      "authorization_code"
+   ],
+   "subject_types_supported": [
+      "public"
+   ],
+   "id_token_signing_alg_values_supported": [
+      "RS256"
+   ],
+   "scopes_supported": [
+      "openid",
+      "email",
+      "profile",
+      "address",
+      "phone",
+      "offline_access"
+   ],
+   "claims_supported": [
+      "iss",
+      "ver",
+      "sub",
+      "aud",
+      "iat",
+      "exp",
+      "id",
+      "type",
+      "displayName",
+      "avatar",
+      "permanentAvatar",
+      "email",
+      "phone",
+      "location",
+      "affiliation",
+      "title",
+      "homepage",
+      "bio",
+      "tag",
+      "region",
+      "language",
+      "score",
+      "ranking",
+      "isOnline",
+      "isAdmin",
+      "isGlobalAdmin",
+      "isForbidden",
+      "signupApplication",
+      "ldap"
+   ],
+   "request_parameter_supported": true,
+   "request_object_signing_alg_values_supported": [
+      "HS256",
+      "HS384",
+      "HS512"
+   ]
 }
 ```
 
