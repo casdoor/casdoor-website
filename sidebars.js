@@ -63,6 +63,7 @@ module.exports = {
             'provider/oauth/google',
             'provider/oauth/baidu',
             'provider/oauth/adfs',
+            'provider/oauth/azureAD',
             'provider/oauth/infoflow',
             'provider/oauth/okta'
           ]
