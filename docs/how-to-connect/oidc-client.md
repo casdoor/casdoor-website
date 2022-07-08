@@ -17,10 +17,18 @@ E.g., the OIDC discovery URL for the demo site is: https://door.casdoor.com/.wel
   "issuer": "https://door.casdoor.com",
   "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
   "token_endpoint": "https://door.casdoor.com/api/login/oauth/access_token",
-  "userinfo_endpoint": "https://door.casdoor.com/api/get-account",
-  "jwks_uri": "https://door.casdoor.com/api/certs",
+  "userinfo_endpoint": "https://door.casdoor.com/api/userinfo",
+  "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
+  "introspection_endpoint": "https://door.casdoor.com/api/login/oauth/introspect",
   "response_types_supported": [
-    "id_token"
+    "code",
+    "token",
+    "id_token",
+    "code token",
+    "code id_token",
+    "token id_token",
+    "code token id_token",
+    "none"
   ],
   "response_modes_supported": [
     "login",
