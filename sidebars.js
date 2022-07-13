@@ -53,6 +53,7 @@ module.exports = {
             'provider/oauth/Twitter',
             'provider/oauth/Weibo',
             'provider/oauth/Wechat',
+            'provider/oauth/weCom',
             'provider/oauth/Tencent',
             'provider/oauth/DingTalk',
             'provider/oauth/Steam',
