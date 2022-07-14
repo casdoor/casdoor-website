@@ -43,6 +43,12 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Permissions',
+      collapsed: false,
+      items: ['permission/overview'],
+    },
+    {
+      type: 'category',
       label: 'Providers',
       collapsed: false,
       items: ['provider/overview',
