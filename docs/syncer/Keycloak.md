@@ -1,3 +1,8 @@
+---
+title: Keycloak
+description: Using Keycloak Syncer to synchronize Keycloak
+keywords: [Keycloak, Syncer]
+---
 ## Keycloak Syncer
 
 The Keycloak syncer is basically the same as the [database syncer](#database-syncer), except that the `Table` and `Table columns` can be configured automatically for Keycloak. 

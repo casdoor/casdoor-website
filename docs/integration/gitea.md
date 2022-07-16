@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: Gitea
+description: Using Casdoor for authentication in Gitea
+keywords: [Gitea]
 ---
 ## Using Casdoor for authentication in Gitea
 [Gitea](https://gitea.io/en-us/) is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.

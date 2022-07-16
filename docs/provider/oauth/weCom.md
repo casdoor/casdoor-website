@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
 title: WeCom
+description: Add WeCom OAuth provider to your application
+keywords: [WeCom, OAuth]
 ---
 
 ## Introduction

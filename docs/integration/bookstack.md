@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: BookStack
+description: Using Casdoor for authentication in BookStack
+keywords: [BookStack]
 ---
 ## Using Casdoor for authentication in BookStack
 **[BookStack](https://www.bookstack.cn)**  is an open source book and document sharing site,

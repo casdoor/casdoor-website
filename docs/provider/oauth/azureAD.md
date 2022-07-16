@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: AzureAD
+description: Add AzureAD as a third party service to complete authentication
+keywords: [AzureAD]
 ---
 
 ## Introduction

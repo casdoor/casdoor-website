@@ -1,7 +1,10 @@
 ---
 sidebar_position: 3
 title: Signup Items Table
+description: configure the signup items table to create a custom registration page
+keywords: [signup, items, table]
 ---
+
 On the application configuration page, we can configure the signup items table to create a custom registration page. And we can add or delete any signup item on this signup items table.
 
 ![Signup Items Table](/img/signup-items-table.png)

@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: Aliyun IDaaS
+description: Using Aliyun IDaaS to authenticate users
+keywords: [Aliyun IDaaS]
 ---
 
 ## Create SAML application in Aliyun IDaaS

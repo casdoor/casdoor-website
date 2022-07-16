@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: Users Manipulation
+description: Manipulate users in Casdoor
+keywords: [users, manipulation]
 ---
 
 As an authentication platform, Casdoor can easily manipulate users stored in databases.

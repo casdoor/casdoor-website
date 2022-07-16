@@ -1,7 +1,10 @@
 ---
 sidebar_position: 4
 title: Terminology reference
+description: Terminology reference
+keywords: [terminology]
 ---
+
 - `Name` The name of the created app
 - `CreatedTime` The time when the application is created
 - `DisplayName` The name which the application display to public

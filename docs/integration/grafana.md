@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: Grafana
+description: Using Casdoor for authentication in Grafana
+keywords: [Grafana]
 ---
 ## Using Casdoor for authentication in Grafana
 

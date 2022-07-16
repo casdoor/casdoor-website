@@ -1,6 +1,8 @@
 ---
 title: Generating Swagger Files
 sidebar_position: 2
+description: Generating Swagger Files
+keywords: [bee, swagger]
 ---
 ## Overview
 

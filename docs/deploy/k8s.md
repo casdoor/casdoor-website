@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: k8s
+description: Deploy Casdoor in k8s
+keywords: [k8s, kubernetes]
 ---
 
 ## Deploy Casdoor in k8s

@@ -1,5 +1,7 @@
 ---
 title: OAuth 2.0
+description: Using AccessToken to authenticate clients
+keywords: [OAuth2.0, accessToken, refreshToken]
 ---
 
 ## Introduction

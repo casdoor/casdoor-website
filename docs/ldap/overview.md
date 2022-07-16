@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 title: Overview
+description: Casdoor cooperates with a ldap server
+keywords: [idap]
 ---
 
-## Ldap
-## Overview
 Support for ldap server currenty has been introduced into Casdoor. Casdoor is able to synchronize users from ldap servers to Casdoor to use them as user accounts to log in, and authenticate them using the ldap servers. Casdoor also support setting up cron job to synchronize users automatically in a regular basis.
 ## Detail about Casdoor-Ldap synchroniztion mechanism
 How Casdoor cooperates with a ldap server is described as follow:

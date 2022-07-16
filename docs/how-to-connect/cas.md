@@ -1,5 +1,7 @@
 ---
 title: CAS
+description: Using Casdoor as CAS server
+keywords: [CAS, server]
 ---
 
 ## Using Casdoor as CAS server

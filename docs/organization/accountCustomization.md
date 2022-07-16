@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: Account Customization
+description: Customizing users' account items
+keywords: [account customization]
 ---
 ## Introduction
 

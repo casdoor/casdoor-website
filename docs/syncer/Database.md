@@ -1,3 +1,8 @@
+---
+title: Database
+description: Using Databse Syncer to synchronize database
+keywords: [syncer, database]
+---
 ## Database Syncer
 
 The users table we created as a demo are imported from the [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx). 

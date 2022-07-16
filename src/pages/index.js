@@ -73,7 +73,7 @@ function LearnHowTo() {
       <div className="container text--center">
         <div className="row">
         <div className={styles.explaingif}>
-            <img src="/img/principles.gif" height="90%" width="90%"></img>
+            <img src="/img/principles.gif" alt="Casdoor work principle" height="90%" width="90%"></img>
           </div>
           <div className="col">
           <div className={styles.explaintext}>

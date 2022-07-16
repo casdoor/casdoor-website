@@ -1,5 +1,7 @@
 ---
 title: SAML
+description: Using Casdoor as SAML IdP
+keywords: [SAML, IdP]
 ---
 
 ## Using Casdoor as SAML IdP

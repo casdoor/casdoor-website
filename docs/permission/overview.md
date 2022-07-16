@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: Overview
+description: Using Casbin to manage users' access rights in organization
+keywords: [permission, Casbin]
 ---
 
 ## Introduction

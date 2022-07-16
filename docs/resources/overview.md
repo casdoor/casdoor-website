@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: Overview
+description: Upload resources in Casdoor
+keywords: [resource, upload, file]
 ---
 
 You can upload resources in casdoor. Before upload resources, you need to configure a storage provider.

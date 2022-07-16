@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 title: Email
+description: Using email to complete authentication
+keywords: [email]
 ---
 
 ## Add an Email provider

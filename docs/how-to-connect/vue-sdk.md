@@ -1,5 +1,7 @@
 ---
 title: Vue SDK
+description: Casdoor Vue SDK
+keywords: [vue, sdk]
 ---
 
 

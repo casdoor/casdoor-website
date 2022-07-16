@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: Overview
+description: Add OAuth providers to your application
+keywords: [OAuth]
 ---
 
 Casdoor can uses other OAuth applications as a sign in method.

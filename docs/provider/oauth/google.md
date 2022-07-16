@@ -1,6 +1,8 @@
 ---
 sidebar_position: 6
 title: Google
+description: Add Google OAuth provider to your application
+keywords: [Google, OAuth]
 ---
 
 To set up Google OAuth provider, please go to [Google API console](https://console.developers.google.com) and log in using your Google account.

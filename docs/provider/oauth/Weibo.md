@@ -1,3 +1,8 @@
+---
+title: Weibo
+description: Add Weibo OAuth provider to your application
+keywords: [Weibo, OAuth]
+---
 ### Weibo:heavy_check_mark:
 
 Weibo's developer account application is not difficult, but the speed is relatively slow, it takes about 2-3 days.

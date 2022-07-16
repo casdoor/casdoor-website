@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: Azure Blob
+description: Using Azure Blob as a storage provider for Casdoor
+keywords: [Azure Blob, storage, provider]
 ---
 
 :::note

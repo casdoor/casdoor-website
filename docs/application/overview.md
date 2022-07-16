@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: Overview
+description: Casdoor application overview
+keywords: [application]
 ---
 
 Every application in Casdoor is called an `application`, and they are not related and do not affect each other, which means you can deploy or stop any application separately, as long as you like.
