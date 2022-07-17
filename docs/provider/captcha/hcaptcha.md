@@ -1,5 +1,4 @@
 ---
-sidebar_position: 4
 title: hCaptcha
 description: Add hCaptcha to your application
 keywords: [hCaptcha]

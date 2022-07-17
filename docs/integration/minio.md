@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: MinIO
 description: Configuring Casdoor as identity provider to support with MinIO
 keywords: [MinIO]

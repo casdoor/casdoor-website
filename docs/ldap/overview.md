@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Overview
 description: Casdoor cooperates with a ldap server
 keywords: [idap]

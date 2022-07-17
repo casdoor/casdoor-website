@@ -1,5 +1,4 @@
 ---
-sidebar_position: 2
 title: Core Concepts
 description: Casdoor core concepts
 keywords: [core concepts, organization, user,application, provider]

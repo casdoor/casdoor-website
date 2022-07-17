@@ -20,7 +20,7 @@ module.exports = {
         'basic/core-concepts',
         'basic/server-installation',
         'basic/try-with-docker',
-        'basic/public-api'
+        'basic/public-api',
       ],
     },
     {
@@ -35,7 +35,7 @@ module.exports = {
         'how-to-connect/plugin',
         'how-to-connect/oauth',
         'how-to-connect/cas',
-        'how-to-connect/saml'
+        'how-to-connect/saml',
       ],
     },
     {
@@ -44,7 +44,7 @@ module.exports = {
       collapsed: false,
       items: [
         'developer-guide/frontend',
-        'developer-guide/swagger'
+        'developer-guide/swagger',
       ],
     },
     {
@@ -53,7 +53,7 @@ module.exports = {
       collapsed: false,
       items: [
         'organization/overview',
-        'organization/accountCustomization'
+        'organization/accountCustomization',
       ],
     },
     {
@@ -64,7 +64,15 @@ module.exports = {
         'application/overview',
         'application/config',
         'application/signup-items-tabel',
-        'application/terminology'
+        'application/terminology',
+      ],
+    },
+    {
+      type: 'category',
+      label: "Permissions",
+      collapsed: false,
+      items: [
+        'permission/overview',
       ],
     },
     {
@@ -93,7 +101,7 @@ module.exports = {
             'provider/oauth/adfs',
             'provider/oauth/azureAD',
             'provider/oauth/infoflow',
-            'provider/oauth/okta'
+            'provider/oauth/okta',
           ]
         },
         'provider/email',
@@ -101,19 +109,19 @@ module.exports = {
         {
           Storage: [
             'provider/storage/storage',
-            'provider/storage/azure'
+            'provider/storage/azure',
           ]
         },
         {
           SAML: [
             'provider/saml/overview',
             'provider/saml/aliyun',
-            'provider/saml/keycloak'
+            'provider/saml/keycloak',
           ]
         },
         {
           Payment: [
-            'provider/payment/Alipay'
+            'provider/payment/Alipay',
           ]
         },
         {
@@ -132,7 +140,7 @@ module.exports = {
       label: 'Resources',
       collapsed: false,
       items: [
-        'resources/overview'
+        'resources/overview',
       ],
     },
     {
@@ -141,7 +149,7 @@ module.exports = {
       collapsed: false,
       items: [
         'products/product',
-        'products/payment'
+        'products/payment',
       ],
     },
     {
@@ -150,7 +158,7 @@ module.exports = {
       collapsed: false,
       items: [
         'user/overview',
-        'user/manipulation'
+        'user/manipulation',
       ],
     },
     {
@@ -159,7 +167,7 @@ module.exports = {
       collapsed: false,
       items: [
         'syncer/Database',
-        'syncer/Keycloak'
+        'syncer/Keycloak',
       ],
     },
     {
@@ -167,7 +175,7 @@ module.exports = {
       label: 'Tokens',
       collapsed: false,
       items: [
-        'token/overview'
+        'token/overview',
       ],
     },
     {
@@ -175,7 +183,7 @@ module.exports = {
       label: 'Webhooks',
       collapsed: false,
       items: [
-        'webhooks/overview'
+        'webhooks/overview',
       ],
     },
     {
@@ -184,7 +192,7 @@ module.exports = {
       collapsed: false,
       items: [
         'deploy/nginx',
-        'deploy/k8s'
+        'deploy/k8s',
       ],
     },
     {
@@ -193,7 +201,7 @@ module.exports = {
       collapsed: false,
       items: [
         'ldap/overview',
-        'ldap/config'
+        'ldap/config',
       ],
     },
     {
@@ -214,9 +222,9 @@ module.exports = {
         'integration/zentao',
         'integration/grafana',
         'integration/gitea',
-        'integration/bookstack'
-      ]
+        'integration/bookstack',
+      ],
     },
-    'internationalization'
+    'internationalization',
   ],
 };

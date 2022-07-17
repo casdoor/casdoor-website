@@ -1,5 +1,4 @@
 ---
-sidebar_position: 2
 title: Casdoor Public API
 description: Casdoor Public API
 keywords: [Casdoor Public API]

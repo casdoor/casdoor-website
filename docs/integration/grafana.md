@@ -1,9 +1,9 @@
 ---
-sidebar_position: 1
 title: Grafana
 description: Using Casdoor for authentication in Grafana
 keywords: [Grafana]
 ---
+
 ## Using Casdoor for authentication in Grafana
 
 [Grafana](https://grafana.com/oss/grafana/) supports authentication via Oauth. Therefore it is extremely easy for uses to use casdoor to log in in Grafana. Only several steps and simple configurations can achieve that.

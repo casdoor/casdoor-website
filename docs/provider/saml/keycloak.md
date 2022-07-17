@@ -1,5 +1,4 @@
 ---
-sidebar_position: 3
 title: Keycloak
 description: Using Keycloak to authenticate users
 keywords: [Keycloak]

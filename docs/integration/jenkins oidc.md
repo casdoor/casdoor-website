@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Jenkins OIDC
 description:  Using OIDC protocol as IDP to connect various applications, like Jenkins
 keywords: [OIDC, Jenkins, IDP]

@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Spring cloud
 description: Using Casdoor in Spring cloud
 keywords: [Sping cloud]

@@ -1,5 +1,4 @@
 ---
-sidebar_position: 2
 title: Zentao
 description: Using Casdoor for authentication in Zentao
 keywords: [Zentao, zentao-oidc]

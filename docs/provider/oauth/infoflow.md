@@ -1,5 +1,4 @@
 ---
-sidebar_position: 7
 title: Infoflow
 description: Add Infoflow OAuth provider to your application
 keywords: [Infoflow, OAuth]

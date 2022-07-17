@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Overview
 description: Upload resources in Casdoor
 keywords: [resource, upload, file]

@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Overview
 description: Introduction to tokens in Casdoor
 keywords: [token, OAuth]

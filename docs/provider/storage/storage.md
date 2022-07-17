@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Storage
 description: Set up a storage provider for upload files in Casdoor
 keywords: [storage, provider]

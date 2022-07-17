@@ -1,5 +1,4 @@
 ---
-sidebar_position: 2
 title: Payment
 description: View the transaction information of the products in Payment
 keywords: [payment, invoice]

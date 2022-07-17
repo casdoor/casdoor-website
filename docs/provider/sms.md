@@ -1,5 +1,4 @@
 ---
-sidebar_position: 4
 title: SMS
 description: Using SMS to complete authentication
 keywords: [SMS]

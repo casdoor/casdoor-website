@@ -1,5 +1,4 @@
 ---
-sidebar_position: 3
 title: AD FS
 description: Add AD FS as a third party service to complete authentication
 keywords: [AD FS, ADFS, Active Directory Federation Services]

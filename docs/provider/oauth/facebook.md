@@ -1,5 +1,4 @@
 ---
-sidebar_position: 5
 title: Facebook
 description: Add Facebook OAuth provider to your application
 keywords: [Facebook, OAuth]

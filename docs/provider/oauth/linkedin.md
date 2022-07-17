@@ -1,9 +1,9 @@
 ---
-sidebar_position: 4
 title: Linkedin
 description: Add Linkedin OAuth provider to your application
 keywords: [Linkedin, OAuth]
 ---
+
 To set up Linkedin OAuth provider, please go to [Linkedin developer](https://www.linkedin.com/developers/apps/new) to create a new app.
 
 ![Linkedin](/img/providers/OAuth/linkedin.png)

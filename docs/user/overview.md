@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Overview
 description: Manage users in Casdoor
 keywords: [user, properties, import]

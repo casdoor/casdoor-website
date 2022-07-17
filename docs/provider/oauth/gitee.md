@@ -1,5 +1,4 @@
 ---
-sidebar_position: 3
 title: Gitee
 description: Add Gitee OAuth provider to your application
 keywords: [Gitee, OAuth]

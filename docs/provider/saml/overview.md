@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Overview
 description: Using identities from external identity providers that support SAML 2.0
 keywords: [SAML, Keycloak, Aliyun IDaas]

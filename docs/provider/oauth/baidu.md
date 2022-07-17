@@ -1,5 +1,4 @@
 ---
-sidebar_position: 3
 title: Baidu
 description: Add Baidu OAuth provider to your application
 keywords: [Baidu, Baidu OAuth]

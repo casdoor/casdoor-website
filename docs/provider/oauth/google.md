@@ -1,5 +1,4 @@
 ---
-sidebar_position: 6
 title: Google
 description: Add Google OAuth provider to your application
 keywords: [Google, OAuth]

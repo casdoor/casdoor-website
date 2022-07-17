@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Overview
 description: Add OAuth providers to your application
 keywords: [OAuth]

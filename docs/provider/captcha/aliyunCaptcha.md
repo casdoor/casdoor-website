@@ -1,5 +1,4 @@
 ---
-sidebar_position: 5
 title: Aliyun Captcha
 description: Add Aliyun Captcha to your application
 keywords: [Aliyun Captcha]

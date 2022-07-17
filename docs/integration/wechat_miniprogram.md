@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: WeChat MiniProgram
 description: Using Casdoor in WeChat MiniProgram
 keywords: [WeChat, MiniProgram]

@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Products
 description: Add products that you want to sell
 keywords: [products]

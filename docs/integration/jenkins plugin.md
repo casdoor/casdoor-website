@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 title: Jenkins Plugin
 description: Using Casdoor plugin for your Jenkins security
 keywords: [plugin, Jenkins]

@@ -1,5 +1,4 @@
 ---
-sidebar_position: 2
 title: Config
 description: LDAP configuration in Casdoor
 keywords: [ldap, config]

@@ -1,5 +1,4 @@
 ---
-sidebar_position: 2
 title: Internationalization
 description: Help Casdoor to support different languages
 keywords: [i18n, translation, internationalization]

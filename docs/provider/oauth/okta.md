@@ -1,5 +1,4 @@
 ---
-sidebar_position: 8
 title: Okta
 description: Add Okta OAuth provider to your application
 keywords: [Okta, OAuth]

@@ -1,6 +1,5 @@
 ---
 title: Frontend
-sidebar_position: 1
 description: Casdoor frontend development guide
 keywords: [frontend, guide]
 ---

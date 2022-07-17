@@ -1,9 +1,9 @@
 ---
-sidebar_position: 2
 title: Account Customization
 description: Customizing users' account items
 keywords: [account customization]
 ---
+
 ## Introduction
 
 In an organization, you can customize users' **account items**. This includes whether each item is **visible**. If visible, 

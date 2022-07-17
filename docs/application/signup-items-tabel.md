@@ -1,5 +1,4 @@
 ---
-sidebar_position: 3
 title: Signup Items Table
 description: configure the signup items table to create a custom registration page
 keywords: [signup, items, table]
