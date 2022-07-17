@@ -186,6 +186,12 @@ var _hmt = _hmt || [];
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    announcementBar: {
+      id: 'announcement', // ID of the announcement bar
+      content:
+          '💖 An authorization library that supports access control models like ACL, RBAC, ABAC. Learn more about: <a href="https://casbin.io/">Casbin</a> 💖',
+      isCloseable: true,
+    },
     docs: {
       sidebar: {hideable: true,},
     }
