@@ -1,6 +1,7 @@
 ---
-sidebar_position: 2
 title: (Optional) Try with Docker
+description: Try Casdoor with Docker
+keywords: [Casdoor, Docker]
 ---
 
 ## Requirements

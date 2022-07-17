@@ -1,6 +1,7 @@
 ---
-sidebar_position: 2
 title: Application Config
+description: Configure your applications authentication
+keywords: [config, application]
 ---
 
 ```mdx-code-block

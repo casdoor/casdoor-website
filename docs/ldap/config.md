@@ -1,11 +1,12 @@
 ---
-sidebar_position: 2
 title: Config
+description: LDAP configuration in Casdoor
+keywords: [ldap, config]
 ---
 
 Ldap configurations belong to a organization, which ldap users will be synchronized into.
 
-You are supposed to user a global admin user to modify the configuration. You need to enter the following information of the LDAP user synchronization in the "organization" page.
+You are supposed to use a global admin user to modify the configuration. You need to enter the following information of the LDAP user synchronization in the "organization" page.
 
 ### Server Name
 

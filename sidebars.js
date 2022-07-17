@@ -15,43 +15,72 @@ module.exports = {
       type: 'category',
       label: 'The Basics',
       collapsed: false,
-      items: ['overview', 'basic/core-concepts', 'basic/server-installation', 'basic/try-with-docker', 'basic/public-api'],
+      items: [
+        'overview',
+        'basic/core-concepts',
+        'basic/server-installation',
+        'basic/try-with-docker',
+        'basic/public-api',
+      ],
     },
     {
       type: 'category',
       label: 'How to Connect to Casdoor',
       collapsed: false,
-      items: ['how-to-connect/overview', 'how-to-connect/oidc-client', 'how-to-connect/sdk', 'how-to-connect/vue-sdk', 'how-to-connect/plugin', 'how-to-connect/oauth', 'how-to-connect/cas', 'how-to-connect/saml'],
+      items: [
+        'how-to-connect/overview',
+        'how-to-connect/oidc-client',
+        'how-to-connect/sdk',
+        'how-to-connect/vue-sdk',
+        'how-to-connect/plugin',
+        'how-to-connect/oauth',
+        'how-to-connect/cas',
+        'how-to-connect/saml',
+      ],
     },
     {
       type: 'category',
       label: 'Developer Guide',
       collapsed: false,
-      items: ['developer-guide/frontend', 'developer-guide/swagger'],
+      items: [
+        'developer-guide/frontend',
+        'developer-guide/swagger',
+      ],
     },
     {
       type: 'category',
       label: 'Organizations',
       collapsed: false,
-      items: ['organization/overview', 'organization/accountCustomization'],
+      items: [
+        'organization/overview',
+        'organization/accountCustomization',
+      ],
     },
     {
       type: 'category',
       label: 'Applications',
       collapsed: false,
-      items: ['application/overview', 'application/config', 'application/signup-items-tabel', 'application/terminology'],
+      items: [
+        'application/overview',
+        'application/config',
+        'application/signup-items-tabel',
+        'application/terminology',
+      ],
     },
     {
       type: 'category',
-      label: 'Permissions',
+      label: "Permissions",
       collapsed: false,
-      items: ['permission/overview'],
+      items: [
+        'permission/overview',
+      ],
     },
     {
       type: 'category',
       label: 'Providers',
       collapsed: false,
-      items: ['provider/overview',
+      items: [
+        'provider/overview',
         {
           OAuth: [
             'provider/oauth/overview',
@@ -72,34 +101,36 @@ module.exports = {
             'provider/oauth/adfs',
             'provider/oauth/azureAD',
             'provider/oauth/infoflow',
-            'provider/oauth/okta'
+            'provider/oauth/okta',
           ]
         },
-        'provider/email', 'provider/sms', 
+        'provider/email',
+        'provider/sms',
         {
           Storage: [
-          'provider/storage/storage',
-          'provider/storage/azure'
-        ]},
+            'provider/storage/storage',
+            'provider/storage/azure',
+          ]
+        },
         {
           SAML: [
             'provider/saml/overview',
             'provider/saml/aliyun',
-            'provider/saml/keycloak'
+            'provider/saml/keycloak',
           ]
         },
         {
           Payment: [
-              'provider/payment/Alipay'
+            'provider/payment/Alipay',
           ]
         },
         {
           Captcha: [
-              'provider/captcha/overview',
-              'provider/captcha/default',
-              'provider/captcha/recaptcha',
-              'provider/captcha/hcaptcha',
-              'provider/captcha/aliyunCaptcha',
+            'provider/captcha/overview',
+            'provider/captcha/default',
+            'provider/captcha/recaptcha',
+            'provider/captcha/hcaptcha',
+            'provider/captcha/aliyunCaptcha',
           ]
         }
       ],
@@ -108,50 +139,92 @@ module.exports = {
       type: 'category',
       label: 'Resources',
       collapsed: false,
-      items: ['resources/overview'],
+      items: [
+        'resources/overview',
+      ],
     },
     {
       type: 'category',
       label: 'Products',
       collapsed: false,
-      items: ['products/product','products/payment'],
+      items: [
+        'products/product',
+        'products/payment',
+      ],
     },
     {
       type: 'category',
       label: 'Users',
       collapsed: false,
-      items: ['user/overview', 'user/manipulation'],
+      items: [
+        'user/overview',
+        'user/manipulation',
+      ],
     },
     {
       type: 'category',
       label: 'Syncer',
       collapsed: false,
-      items: ['syncer/Database', 'syncer/Keycloak'],
+      items: [
+        'syncer/Database',
+        'syncer/Keycloak',
+      ],
     },
     {
       type: 'category',
       label: 'Tokens',
       collapsed: false,
-      items: ['token/overview'],
+      items: [
+        'token/overview',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Webhooks',
+      collapsed: false,
+      items: [
+        'webhooks/overview',
+      ],
     },
     {
       type: 'category',
       label: 'Deploy',
       collapsed: false,
-      items: ['deploy/nginx', 'deploy/k8s'],
+      items: [
+        'deploy/nginx',
+        'deploy/k8s',
+      ],
     },
     {
       type: 'category',
       label: 'LDAP',
       collapsed: false,
-      items: ['ldap/overview', 'ldap/config'],
+      items: [
+        'ldap/overview',
+        'ldap/config',
+      ],
     },
     {
       type: 'category',
       label: 'Integrations',
       collapsed: false,
-      items: ['integration/apisix', 'integration/gitlab', 'integration/jenkins plugin', 'integration/jenkins oidc', 'integration/minio', 'integration/spring-boot', 'integration/spring-cloud', 'integration/spring-security', 'integration/wechat_miniprogram', 'integration/elk','integration/zentao','integration/grafana','integration/gitea','integration/bookstack']
+      items: [
+        'integration/apisix',
+        'integration/gitlab',
+        'integration/jenkins plugin',
+        'integration/jenkins oidc',
+        'integration/minio',
+        'integration/spring-boot',
+        'integration/spring-cloud',
+        'integration/spring-security',
+        'integration/wechat_miniprogram',
+        'integration/elk',
+        'integration/zentao',
+        'integration/grafana',
+        'integration/gitea',
+        'integration/bookstack',
+      ],
     },
-    'internationalization'
+    'internationalization',
   ],
 };

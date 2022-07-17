@@ -1,7 +1,9 @@
 ---
-sidebar_position: 2
-title: Github
+title: GitHub
+description: Add Github OAuth provider to your application
+keywords: [GitHub, OAuth]
 ---
+
 GitHub OAuth support both web application flow and device flow, please continue reading to obtain OAuth credential.
 
 First, please visit [GitHub developer settings](https://github.com/settings/apps/new) to register a new GitHub App.

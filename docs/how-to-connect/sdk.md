@@ -1,5 +1,7 @@
 ---
 title: Casdoor SDK
+description: Using Casdoor SDK instead of standard OIDC protocol
+keywords: [SDK, Frontend, Backend]
 ---
 
 ## Introduction

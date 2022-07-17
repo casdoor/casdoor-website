@@ -1,7 +1,9 @@
 ---
-sidebar_position: 1
 title: Overview
+description: Add a captcha to your application
+keywords: [captcha]
 ---
+
 Casdoor can be configured to support diffrent captcha to check whether the operation is by human. If you add a captcha provider and applied it in the application, when the user login, register or forget password and need send a code, then a captcha check dialog will appear to check whether the operation is by human.
 
 Now, Casdoor supports many captcha providers. Here are the providers Casdoor supporting:

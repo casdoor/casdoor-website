@@ -1,3 +1,9 @@
+---
+title: Wechat
+description: Add Wechat OAuth provider to your application
+keywords: [Wechat, OAuth]
+---
+
 ### WeChat:heavy_check_mark:
 
 Visit [WeChat developer platform](https://open.weixin.qq.com/), register as a developer, after your web application or your mobile application is approved, then you get you App Id and App Secret.

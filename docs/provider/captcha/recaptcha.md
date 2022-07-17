@@ -1,7 +1,9 @@
 ---
-sidebar_position: 3
 title: reCAPTCHA
+description: Add reCAPTCHA to your application
+keywords: [reCAPTCHA]
 ---
+
 reCAPTCHA is provided by Google. And we use reCAPTCHA v2 Checkbox . You can see more details from this [link](https://developers.google.com/recaptcha).
 
 ## Create an API key pair

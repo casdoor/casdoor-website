@@ -1,6 +1,7 @@
 ---
-sidebar_position: 4
 title: hCaptcha
+description: Add hCaptcha to your application
+keywords: [hCaptcha]
 ---
 
 hCaptcha is a captcha service provider which is similar with reCAPTCHA. You can see more details from this [link](https://www.hcaptcha.com/).

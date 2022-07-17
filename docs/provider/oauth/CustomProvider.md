@@ -1,5 +1,7 @@
 ---
 title: Custom Provider
+description: Add your own custom OAuth provider
+keywords: [Custom Provider]
 ---
 
 :::note

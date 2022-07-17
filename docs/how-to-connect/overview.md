@@ -1,5 +1,7 @@
 ---
 title: Overview
+description: Connect your app to Casdoor
+keywords: [OAuth, OAuth2.0, OIDC, SAML, CAS]
 ---
 
 In this section, we will show how to connect your application to Casdoor. 

@@ -1,6 +1,7 @@
 ---
-sidebar_position: 3
 title: AD FS
+description: Add AD FS as a third party service to complete authentication
+keywords: [AD FS, ADFS, Active Directory Federation Services]
 ---
 
 To set up Active Directory Federation Service, please read the [ADFS](https://docs.microsoft.com/en-us/windows-server/identity/active-directory-federation-services) for the basic knowledge about the ADFS and 

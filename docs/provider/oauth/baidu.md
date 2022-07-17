@@ -1,6 +1,7 @@
 ---
-sidebar_position: 3
 title: Baidu
+description: Add Baidu OAuth provider to your application
+keywords: [Baidu, Baidu OAuth]
 ---
 
 To set up Baidu OAuth provider, please read the [Baidu documentation](https://openauth.baidu.com/doc/regdevelopers.html?qq-pf-to=pcqq.c2c) and follow their steps to complete the [application creation](http://developer.baidu.com/console#app/create).

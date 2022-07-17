@@ -1,5 +1,7 @@
 ---
 title: Casdoor Plugin
+description: Using Casdoor plugins or middlewares in other frameworks like Spring Boot, WordPress, Odoo, etc.
+keywords: [plugin, middleware, Spring Boot, WordPress, Odoo]
 ---
 
 Casdoor also provides plugins or middlewares for some very popular platforms, like Java's SpringBoot, PHP's WordPress, Python's Odoo etc.

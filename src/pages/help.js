@@ -4,7 +4,7 @@ import Translate, {translate} from '@docusaurus/Translate';
 
 function Help() {
   return (
-    <Layout title="Help" styles={{padding: '19px',}}>
+    <Layout title="Help" description="Help Page" styles={{padding: '19px',}}>
 
       <div className="container text--center">
       <br />

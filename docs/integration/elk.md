@@ -1,7 +1,9 @@
 ---
-sidebar_position: 1
 title: ELK
+description: Overview of casdoor/elk-auth-casdoor
+keywords: [ELK]
 ---
+
 ### Overview of casdoor/elk-auth-casdoor
 One of the biggest dificiency of ELK (Elasticsearch, Logstash and Kibana) is that originally, these products have no authentication mechanism, so that everyone can visit the kibana dashboard as long as he have the url of kibana, or ES urls. Later ELK integrated an embedded authentication system "Xpack", whose all advanced functions  **are not free** (eg. Oauth, OIDC, LDAP, SAML), and only plain authentication (setting a set of accounts and passwords) is free of charge, which is quite incovenient. We cannot just provide a unique account for everyone in a corporation.
 

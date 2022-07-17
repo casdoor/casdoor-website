@@ -1,6 +1,7 @@
 ---
-sidebar_position: 5
 title: Aliyun Captcha
+description: Add Aliyun Captcha to your application
+keywords: [Aliyun Captcha]
 ---
 
 Aliyun Captcha is a captcha service provided by Aliyun. It includes  two way to verify captcha:  `Sliding Validation` and `Intelligent Validation`. You can see more details from this [link](https://help.aliyun.com/product/28308.html).

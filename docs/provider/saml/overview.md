@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
 title: Overview
+description: Using identities from external identity providers that support SAML 2.0
+keywords: [SAML, Keycloak, Aliyun IDaas]
 ---
 
 Casdoor can be configured to support user login to UI using identities from external identity providers that support SAML 2.0. In such a configuraion, Casdoor can never store any credentials for the users.
