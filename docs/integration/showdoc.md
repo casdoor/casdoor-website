@@ -20,7 +20,9 @@ Go to your Casdoor and add your new application **Showdoc**. Here is an **exampl
 Please remember the `client ID` and `client Secret` for next step.
 
 :::info
+
 Please don't fill in the **callback url** in this step. The url depends on the configurations on showdoc in next step. Later we will come back to set a correct callback url.
+
 :::
 
 ### step2. Configure Showdoc
