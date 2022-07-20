@@ -223,6 +223,7 @@ module.exports = {
         'integration/grafana',
         'integration/gitea',
         'integration/bookstack',
+        'integration/showdoc',
       ],
     },
     'internationalization',
