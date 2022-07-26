@@ -235,8 +235,13 @@ It's very easy to log into Casdoor via Casdoor's built-in application, just visi
 
 #### 1. By concatenating string manually:
 
-- Sign up page URL: `<your-casdoor-hostname>/signup/<your-application-name>`
-- Sign in page URL: `<your-casdoor-hostname>/login/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor `
+- Sign up page URL
+	- Signup for the specified application: `<your-casdoor-hostname>/signup/<your-application-name>`
+	- Signup by oauth: `<your-casdoor-hostname>/signup/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
+	- Signup automatically: `<your-casdoor-hostname>/auto-signup/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
+- Sign in page URL
+	- Signin for the specified organization: `<your-casdoor-hostname>/login/<your-organization-name>`
+	- Signin by oauth: `<your-casdoor-hostname>/login/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
 
 #### 2. Use frontend SDK (for frontend Javascript code using React, Vue or Angular):
 
