@@ -79,6 +79,9 @@ Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. 
 
 :::
 
+Create a `conf/app.conf` directory in the same level directory of the `docker-compose.yml` file, then copy [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) from Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
+
+
 Create a separate database by docker-compose:
 
 ```bash
@@ -110,15 +113,7 @@ Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. 
 
 :::
 
-Modify the following items in `conf/app.conf` like a normal Casdoor installation:
-
-```bash
-driverName = mysql
-dataSourceName = root:123456@tcp(localhost:3306)/
-dbName = casdoor
-```
-**This is merely a sample and you need to modify them according to your own database**
-
+Create `conf/app.conf`, you can copy it from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) in Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
 
 *Note: if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details*
 
