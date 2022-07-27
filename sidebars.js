@@ -32,6 +32,11 @@ module.exports = {
         'how-to-connect/oidc-client',
         'how-to-connect/sdk',
         'how-to-connect/vue-sdk',
+        {
+          "Desktop SDKs": [
+            'how-to-connect/desktop-sdks/electron-app',
+          ]
+        },
         'how-to-connect/plugin',
         'how-to-connect/oauth',
         'how-to-connect/cas',
