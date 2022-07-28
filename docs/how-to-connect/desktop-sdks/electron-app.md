@@ -3,13 +3,14 @@ title: Electron App
 description: An Electron app example for Casdoor
 keywords: [electron, sdk]
 ---
+
 An [Electron app example](https://github.com/casdoor/casdoor-electron-example) for Casdoor.
 
 # How to run example
 
 ## Init the example
 
-You need to init requires 6 parameters, which are all string type:
+You need to init 6 parameters, which are all string type:
 
 | Name                 | Description                                                                                      | Path                   |
 | -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------- |
@@ -33,25 +34,30 @@ Builds the electron app and run this app.
 ### `npm run make` or `yarn make`
 
 Package and distribute your application. It will create the `out` folder where your package will be located:
-`// Example for macOS out/  
+
+```
+// Example for macOS out/  
 ├── out/make/zip/darwin/x64/casdoor-electron-example-darwin-x64-1.0.0.zip  
 ├── ...  
-└── out/casdoor-electron-example-darwin-x64/casdoor-electron-example.app/Contents/MacOS/casdoor-electron-example`
+└── out/casdoor-electron-example-darwin-x64/casdoor-electron-example.app/Contents/MacOS/casdoor-electron-example
+```
 
 ## Prview the example
 
 After you run this electron application, a new window will be showed on your desktop.
-![electron login](/img/howto-desktop-electron-login.png "Image not found: /img/howto-desktop-electron-login.png")
+![electron login](/img/howto-desktop-electron-login.png)
 If you click `Login with Casdoor` botton, your default browser will be opened automatically and show the login page.
 ![browser](/img/howto-desktop-electron-browser.png)
 After you login successfully, your electron application will be opened and your user name will be showed on your application.
 ![electron logout](/img/howto-desktop-electron-logout.png)
+You can preview the whole process by the gif image below.
+![electron gif](/img/howto-desktop-electron-app-preview.gif)
 
 # How to integrate
 
-## Set the custom protocal
+## Set the custom protocol
 
-Firstly, you need to set the custum protocal called `casdoor`.
+Firstly, you need to set the custom protocol called `casdoor`.
 
 ```javascript
 const protocol = "casdoor";
@@ -161,4 +167,5 @@ ipcMain.handle("getUserInfo", async (event, clientId, clientSecret) => {
   return userInfo;
 });
 ```
-Finally, you can parse the code and get the user info just followed the[ Casdoor docs](http://localhost:3000/docs/how-to-connect/oauth).
+
+Finally, you can parse the code and get the user info just followed the[ Casdoor docs](/docs/how-to-connect/oauth).
