@@ -168,4 +168,4 @@ ipcMain.handle("getUserInfo", async (event, clientId, clientSecret) => {
 });
 ```
 
-Finally, you can parse the code and get the user info just followed the[ Casdoor docs](/docs/how-to-connect/oauth).
+Finally, you can parse the code and get the user info just followed the [OAuth docs page](/docs/how-to-connect/oauth).
