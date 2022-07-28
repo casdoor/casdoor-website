@@ -8,9 +8,9 @@ An [Electron app example](https://github.com/casdoor/casdoor-electron-example) f
 
 # How to run example
 
-## Init the example
+## Initialization
 
-You need to init 6 parameters, which are all string type:
+You need to initialize 6 parameters, which are all string type:
 
 | Name                 | Description                                                                                      | Path                   |
 | -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------- |
@@ -23,7 +23,7 @@ You need to init 6 parameters, which are all string type:
 
 If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com/) as the defult Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
 
-## Available Scripts
+## Available commands
 
 In the project directory, you can run:
 
@@ -42,7 +42,7 @@ Package and distribute your application. It will create the `out` folder where y
 └── out/casdoor-electron-example-darwin-x64/casdoor-electron-example.app/Contents/MacOS/casdoor-electron-example
 ```
 
-## Prview the example
+## Prview
 
 After you run this electron application, a new window will be showed on your desktop.
 ![electron login](/img/howto-desktop-electron-login.png)
