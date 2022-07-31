@@ -163,7 +163,6 @@ module.exports = {
       collapsed: false,
       items: [
         'user/overview',
-        'user/manipulation',
       ],
     },
     {
@@ -171,6 +170,7 @@ module.exports = {
       label: 'Syncer',
       collapsed: false,
       items: [
+        'syncer/overview',
         'syncer/Database',
         'syncer/Keycloak',
       ],
