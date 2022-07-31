@@ -14,6 +14,13 @@ Click the **Syncers** tab and create a new syncer. Fill in all the required info
 
 ![](/img/syncer_database_edit.png)
 
+:::tip
+
+In general, you need to fill in at least the `ID` and `Name` in Casdoor Columns. And others important fields like 
+`createdTime`, `Password`, `DisplayName`.
+
+:::
+
 The following are the required information.
 
 - `Organization`: the organization that the user will import
@@ -23,7 +30,7 @@ The following are the required information.
 - `Port`: the original database port
 - `User`: the original database username
 - `Password`: the original database password
-- `Database type`: MySQL, PostgreSQL, SQL Server, Oracle, Sqlite 3 available
+- `Database type`: all Xorm supported databases, like: MySQL, PostgreSQL, SQL Server, Oracle, Sqlite
 - `Database`: the original database name 
 - `Table`: the original user table name
 - `Table columns`
