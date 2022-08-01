@@ -58,7 +58,7 @@ git clone https://github.com/casdoor/casdoor
 
 ## Configuration
 
-### Database
+### Configure Database
 
 Casdoor support mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default. If you use another database, please
 modify the import package in [object/adapter](https://github.com/casdoor/casdoor/blob/afa9c530adac39fdea329dbfd8a55775badb7d09/object/adapter.go#L24-L27).
@@ -145,7 +145,7 @@ origin = "https://door.casdoor.com"
   - `httpport` is the port that your back-end application is listening on
   - `runmode` is `dev` or `prod`
   - `SessionOn` decides whether to enable session,used by default.
-  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config Database](#config-database).
+  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Configure Database](#configure-database).
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
