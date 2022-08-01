@@ -57,6 +57,68 @@ git clone https://github.com/casdoor/casdoor
 ```
 
 ## Configuration
+### Config Database
+
+Casdoor support mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default. If you use another database, please
+modify the import package in [object/adapter](https://github.com/casdoor/casdoor/blob/afa9c530adac39fdea329dbfd8a55775badb7d09/object/adapter.go#L24-L27).
+
+#### MySQL:
+
+  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`. If the database does not exist, it needs to be created manually. The DB connection string can be specified at: https://github.com/casdoor/casdoor/blob/master/conf/app.conf
+
+  ```ini
+  driverName = mysql
+  dataSourceName = root:123456@tcp(localhost:3306)/
+  dbName = casdoor
+  ```
+
+#### Postgres:
+
+ First you should comment out the mysql package import and uncomment the **postgres** package import in `object/adapter.go`. Like this:
+
+```go
+	//_ "github.com/go-sql-driver/mysql" // db = mysql
+	_ "github.com/lib/pq" // db = postgres
+```
+
+  Since we must choose a database when opening Postgres with xorm, you should prepare a database manually before running Casdoor.
+
+  Let's assume that you have already prepared a database called `casdoor`, then you should specify `app.conf` like this:
+
+  ```ini
+  driverName = postgres
+  dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor"
+  dbName =
+  ```
+
+:::info
+
+For PostgreSQL, make sure `dataSourceName` has non-empty `dbName` and leave the standalone `dbName` field empty like the above example.
+
+:::
+
+#### sqlite3
+
+ First you should comment out the mysql package import and uncomment the **sqlite3** package import in `object/adapter.go`. Like this:
+
+```go
+	//_ "github.com/go-sql-driver/mysql" // db = mysql
+	_ "github.com/mattn/go-sqlite3" // db = sqlite3
+```
+
+Then you should specify `app.conf` like this:
+
+```ini
+driverName = sqlite3
+dataSourceName = "file:casdoor.db?cache=shared&mode=memory"
+dbName =
+```
+
+
+  **Please notice:**
+
+- Other database...
+
 ### Via Ini file
 
 Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf), the content of which by default is:
@@ -87,7 +149,7 @@ origin = "https://door.casdoor.com"
   - `httpport` is the port that your back-end application is listening on
   - `runmode` is `dev` or `prod`
   - `SessionOn` decides whether to enable session,used by default.
-  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config](#config).
+  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Config Database](#config-database).
   - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
@@ -101,38 +163,6 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   - `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in Casdoor.
   - `logPostOnly` is used to identify whether only use post method to add a record.
   - `origin` is the origin backend domain name.
-
-- Setup database (MySQL):
-
-  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`. If the database does not exist, it needs to be created manually. The DB connection string can be specified at: https://github.com/casdoor/casdoor/blob/master/conf/app.conf
-
-  ```ini
-  driverName = mysql
-  dataSourceName = root:123456@tcp(localhost:3306)/
-  dbName = casdoor
-  ```
-
-- Setup database (Postgres):
-
-  Since we must choose a database when opening Postgres with xorm, you should prepare a database manually before running Casdoor. 
-
-  Let's assume that you have already prepared a database called `casdoor`, then you should specify `app.conf` like this:
-
-  ```ini
-  driverName = postgres
-  dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor"
-  dbName =
-  ```
-
-:::info
-
-For PostgreSQL, make sure `dataSourceName` has non-empty `dbName` and leave the standalone `dbName` field empty like the above example.
-
-:::
-
-  **Please notice:** 
-
-- Other database...
 
 ### Via Environment Variables
 
