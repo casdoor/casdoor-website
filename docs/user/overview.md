@@ -52,16 +52,18 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `CreatedIp`
 - `LastSigninTime`
 - `LastSigninIp`
+- `Roles` Array of the user's roles
+- `Permissions` Array of the user's permissions
 
 unique Id of the platform:
 
 - `Github`
-- `Google`   
-- `QQ`       
-- `WeChat`   
-- `Facebook` 
-- `DingTalk` 
-- `Weibo`    
+- `Google`
+- `QQ`
+- `WeChat`
+- `Facebook`
+- `DingTalk`
+- `Weibo`
 - `Gitee`
 - `LinkedIn`
 - `Wecom`
@@ -80,13 +82,13 @@ unique Id of the platform:
 
 ## Import users from XLSX file
 
-You can add new users or update existing Casdoor users by uploading a XLSX file of user information. 
+You can add new users or update existing Casdoor users by uploading a XLSX file of user information.
 
 In the Admin Console, go to Users and click **Upload(.xlsx)** button.
 
 ![](/img/import_users.png)
 
-Select your XLSX file and click Open, the users will be imported. 
+Select your XLSX file and click Open, the users will be imported.
 
 We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder. The template includes 5 users for test and headers for some required user properties.
 

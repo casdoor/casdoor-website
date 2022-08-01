@@ -163,6 +163,8 @@ module.exports = {
       collapsed: false,
       items: [
         'user/overview',
+        'user/roles',
+        'user/permissions',
       ],
     },
     {
