@@ -234,5 +234,6 @@ module.exports = {
       ],
     },
     'internationalization',
+    'contributing',
   ],
 };
