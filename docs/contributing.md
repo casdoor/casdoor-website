@@ -45,7 +45,7 @@ Now, if you are ready to create PR, here is the workflow for contributors:
 
 6. Push your commits to your forked repository
 
-7. Create a pull request to **master** branch.
+7. Create a pull request from your branch to our **master** branch.
 
 ## Pull Requests
 
