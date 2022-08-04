@@ -148,7 +148,7 @@ cd i18n && go test
 ```
 
 All languages are filled in English by default. You are encouraged to help translate the newly added 
-strings in the `web/src/locales/zh/data.json` after development. 
+strings in the `web/src/locales/zh/data.json` by [Crowdin](https://crowdin.com/project/casdoor-site) after your PR has been merged. 
 
 :::caution
 
