@@ -151,7 +151,9 @@ All languages are filled in English by default. You are encouraged to help trans
 strings in the `web/src/locales/zh/data.json` after development. 
 
 :::caution
+
 If you are not familiar with other language, please don't translate it. Keep the file as it is.
+
 :::
 
 ## License
