@@ -85,7 +85,9 @@ Your pull requests should follow the Conventional Commits spec. The basic requir
 least one commit message. For example, three commonly used PR title are given below:
 
 :::caution
+
 The PR title must be in lower case.
+
 :::
 
 1. **fix**: a commit of the _type_ `fix` patches a bug in your codebase.
