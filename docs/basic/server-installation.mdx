@@ -151,7 +151,7 @@ origin = "https://door.casdoor.com"
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
   - `tableNamePrefix` is prefix of the table when using adapter.
   - `showSql` : show SQL statement or not on logger if log level is great than INFO.
-  - `redisEndpoint` is the session storage endpoint. If this parameter is not specified, it will be stored locally.
+  - `redisEndpoint` is the Redis endpoint used by Beego session storage. If this parameter is empty, the session data will be stored locally as files in `./tmp` folder. For using Redis as Beego session storage, an example for this value would be: `redis.example.com:6379`
   - `defaultStorageProvider` is the default file storage service name. If you need to use file storage services such as avatar upload, you need to set up a storage provider and apply it in your application. See [**storage**](/docs/provider/storage) for details.
   - `isCloudIntranet` is used to identify whether your provider endpoint is intranet endpoint.
   - `authState` is the authorization application name. This parameter will be checked when logging in.
