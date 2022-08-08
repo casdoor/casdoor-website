@@ -1,0 +1,49 @@
+name: PDF build
+
+on:
+  push:
+    branches: [ "master" ]
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+    
+    - name: Install noto fonts
+      run: sudo apt install fonts-noto -y
+    
+    - name: Install Prince
+      run: |
+        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
+        tar zxf prince-14.2-linux-generic-x86_64.tar.gz
+        cd prince-14.2-linux-generic-x86_64
+        yes "" | sudo ./install.sh
+        
+    - name: Build PDF
+      run: |
+        npx docusaurus-prince-pdf --include-index -u https://casdoor.org/docs/overview --output pdf/Casdoor_Docs.pdf
+        npx docusaurus-prince-pdf --include-index -u https://casdoor.org/zh/docs/overview --list-only
+        wget https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
+        prince --no-warn-css --style=print.css --input-list=./pdf/casdoor.org-zh-docs-overview.txt -o pdf/Casdoor_Docs_zh.pdf
+    
+    - name: Delete Old Release
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true # default: false
+        tag_name: pdf # tag name to delete
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Casdoor Docs in PDF format
+        tag_name: pdf
+        files: pdf/*.pdf
+        body: Casdoor Docs in PDF format
