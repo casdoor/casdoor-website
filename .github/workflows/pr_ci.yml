@@ -21,4 +21,4 @@ jobs:
 
       - name: Init Website
         run: |
-          yarn install && yarn build
+          yarn install && yarn build --locale en
