@@ -44,6 +44,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         name: Casdoor Docs in PDF format
+        draft: false
         tag_name: pdf
         files: pdf/*.pdf
         body: Casdoor Docs in PDF format
+        token: ${{ github.token }}  # equivalent to the ${{ secrets.GITHUB_TOKEN }}
