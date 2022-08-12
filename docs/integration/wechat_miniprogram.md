@@ -26,7 +26,7 @@ After a successful deployment, you need to ensure:
 
 ## Step2. Configure Casdoor application
 1. Create a wechat idp in casdoor and fill your `APPID` and `APPSECRET` given to you by WeChat MiniP Program develop platform:
-![Casdoor idp](/img/casdoor_mp.png)
+![WeChat_MiniProgram.png](/img/integration/WeChat_MiniProgram.png)
 2. Create or use an existing Casdoor application.
 3. Add the idp added above to the application you want to use.
 
