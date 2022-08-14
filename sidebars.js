@@ -35,6 +35,7 @@
         {
           "Desktop SDKs": [
             'how-to-connect/desktop-sdks/electron-app',
+            'how-to-connect/desktop-sdks/dotnet-app'
           ]
         },
         'how-to-connect/plugin',
