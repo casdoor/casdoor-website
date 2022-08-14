@@ -44,10 +44,13 @@ If you don't set these parameters, this project will use the [Casdoor online dem
 
 After you run this dotnet desktop application, a new window will be showed on your desktop.
 ![index](/img/howto-desktop-dotnet-app-index.png)
+
 If you click `Casdoor Login` botton, a login window will be showed on your desktop.
 ![login](/img/howto-desktop-dotnet-app-login.png)
+
 After you login successfully, a user profile window will be showed on your desktop, it dispaly your user name.
 ![user profile](/img/howto-desktop-dotnet-app-userprofile.png)
+
 You can preview the whole process by the gif image below.
 ![preview gif](/img/howto-desktop-dotnet-app-preview.gif)
 
