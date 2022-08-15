@@ -20,6 +20,7 @@
         'basic/core-concepts',
         'basic/server-installation',
         'basic/try-with-docker',
+        'basic/deployment',
         'basic/public-api',
       ],
     },

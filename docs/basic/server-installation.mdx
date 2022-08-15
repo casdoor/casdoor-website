@@ -139,6 +139,7 @@ verificationCodeTimeout = 10
 initScore = 2000
 logPostOnly = true
 origin = "https://door.casdoor.com"
+staticBaseUrl = "https://cdn.casbin.org"
 ```
 
   - `appname` is the application name, which currently has no practical use
@@ -159,6 +160,7 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   - `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in Casdoor.
   - `logPostOnly` is used to identify whether only use post method to add a record.
   - `origin` is the origin backend domain name.
+  - `staticBaseUrl` is address of the static image when the system initializes the database.
 
 ### Via Environment Variables
 
