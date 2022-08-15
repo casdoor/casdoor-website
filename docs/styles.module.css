@@ -1,13 +1,13 @@
 .gradientborder {
+  margin: 0 auto;
   transform: scale(0.85);
-  height: 620px;
   width: 600px;
   box-shadow: 0 0 50px grey;
 }
 
 .signingradientborder {
+  margin: 0 auto;
   transform: scale(0.85);
-  height: 680px;
   width: 600px;
   box-shadow: 0 0 50px grey;
 }

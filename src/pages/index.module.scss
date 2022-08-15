@@ -13,11 +13,11 @@
 }
 
 @media only screen and (max-width: 996px) {
-    .heroBanner {
-      display: flex;
-      flex-direction: column;
-    }
-  
+  .heroBanner {
+    display: flex;
+    flex-direction: column;
+  }
+
   .headerborder {
     margin-right: 7vw;
     margin-left: 7vw;
@@ -61,23 +61,22 @@
 }
 
 .headerborder {
+  display: flex;
   transform: scale(0.85);
-  height: 680px;
   margin-right: 14vw;
   box-shadow: 0 0 50px black;
 }
 
 .gradientborder {
-  margin: auto;
+  display: flex;
   transform: scale(0.85);
-  height: 700px;
   box-shadow: 0 0 50px grey;
 }
 
 /*Due to the height of sign iframe, a new style is created here*/
 .signingradientborder {
+  display: flex;
   transform: scale(0.85);
-  height: 750px;
   box-shadow: 0 0 50px grey;
 }
 

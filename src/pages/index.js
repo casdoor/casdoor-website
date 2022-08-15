@@ -26,7 +26,7 @@ function FrameMask(props){
   return(
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
     <iframe src={props.src} width={props.width} height= {props.height} frameborder="0" scrolling="no"></iframe>
-    <div style={maskStyle}  hidden={!mouseState.state}  onClick={()=>{window.open(props.src)}}>
+    <div style={maskStyle}  hidden={!mouseState.state}>
         <Link
           className="button button--secondary button--lg"
           style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}
@@ -62,7 +62,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height= "680"></FrameMask>
+      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height= "700"></FrameMask>
     </header>
   );
 }
@@ -111,7 +111,7 @@ function ContentLogin() {
             <br />
             <Translate>And if your want more providers, please propose it in</Translate> <Link href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
-          <FrameMask className={styles.signingradientborder} src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "750"></FrameMask>
+          <FrameMask className={styles.signingradientborder} src="https://door.casdoor.com/login" width="600" height= "700"></FrameMask>
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height= "700"></FrameMask>
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height= "730"></FrameMask>
           <div className="col">
             <br />
             <br />
@@ -154,7 +154,7 @@ function ContentForget() {
             <Translate>To retrieve your password, you can enter your username, email or phone linked to your account and enter the verification code sent to your email or your phone, enter your new password and confirm to reset your new password.</Translate>
             </p>
           </div>
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height= "620"></FrameMask>
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height= "540"></FrameMask>
         </div>
       </div>
     </div>
