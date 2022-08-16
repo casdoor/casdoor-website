@@ -26,11 +26,10 @@ function FrameMask(props){
   return(
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
     <iframe src={props.src} width={props.width} height= {props.height} frameborder="0" scrolling="no"></iframe>
-    <div style={maskStyle}  hidden={!mouseState.state}>
+    <div style={maskStyle} hidden={!mouseState.state} onClick={() => { window.open(props.src) }}>
         <Link
           className="button button--secondary button--lg"
-          style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}
-          to={props.src}>
+          style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}>
           <Translate>Online Demo</Translate>
         </Link>
     </div>
@@ -123,7 +122,7 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height= "730"></FrameMask>
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height= "795"></FrameMask>
           <div className="col">
             <br />
             <br />
@@ -154,7 +153,7 @@ function ContentForget() {
             <Translate>To retrieve your password, you can enter your username, email or phone linked to your account and enter the verification code sent to your email or your phone, enter your new password and confirm to reset your new password.</Translate>
             </p>
           </div>
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height= "540"></FrameMask>
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height= "620"></FrameMask>
         </div>
       </div>
     </div>
