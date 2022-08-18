@@ -229,6 +229,5 @@ var _hmt = _hmt || [];
       src: '/js/tawk.js',
       async: true,
     },
-    'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
   ],
 };
