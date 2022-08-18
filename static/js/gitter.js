@@ -2,7 +2,11 @@
   room: 'casbin/casdoor',
 };
 
-document.write("<script src=\"https://sidecar.gitter.im/dist/sidecar.v1.js\" async defer></script>")
+(function () {
+  var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+  s1.src = 'https://sidecar.gitter.im/dist/sidecar.v1.js';
+  s0.parentNode.insertBefore(s1, s0);
+})();
 
 const id = setInterval(function(){
   const gitterCollapseButton = document.getElementsByClassName('gitter-open-chat-button');

@@ -25,7 +25,7 @@ function FrameMask(props){
   }
   return(
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    <iframe src={props.src} width={props.width} height= {props.height} frameborder="0" scrolling="no"></iframe>
+    <iframe src={props.src} width={props.width} height= {props.height} frameBorder="0" scrolling="no"></iframe>
     <div style={maskStyle} hidden={!mouseState.state} onClick={() => { window.open(props.src) }}>
         <Link
           className="button button--secondary button--lg"
