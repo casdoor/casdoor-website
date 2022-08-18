@@ -4,7 +4,7 @@ description: Using Casdoor in Spring cloud
 keywords: [Sping cloud]
 ---
 
-[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-spring-boot-starter](https://github.c  om/casdoor/casdoor-spring-boot-starter) in SpringBoot project. This is similar in springcloud.  We will show you the steps below.
+[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. This is similar in springcloud.  We will show you the steps below.
 
 ## Step1. Deploy Casdoor
 
