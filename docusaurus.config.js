@@ -17,7 +17,7 @@ module.exports = {
     locales: ['en', 'zh', 'fr', 'de', 'ko', 'ru', 'ja']
   },
   themeConfig: {
-    metadata: [{name: 'Casdoor', content: 'A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS'}],
+    metadata: [{ name: 'Casdoor', content: 'A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS' }],
     algolia: {
       appId: 'U9MEH3VSV1',
       apiKey: '9ef7ab8761a6480738185ecd6d1ecde7',
@@ -41,7 +41,7 @@ module.exports = {
           position: 'left',
           label: 'Docs',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           label: 'Help',
           to: '/help',
@@ -186,11 +186,11 @@ var _hmt = _hmt || [];
     announcementBar: {
       id: 'announcement', // ID of the announcement bar
       content:
-          '💖 An authorization library that supports access control models like ACL, RBAC, ABAC. Learn more about: <a href="https://casbin.io/">Casbin</a> 💖',
+        '💖 An authorization library that supports access control models like ACL, RBAC, ABAC. Learn more about: <a href="https://casbin.io/">Casbin</a> 💖',
       isCloseable: true,
     },
     docs: {
-      sidebar: {hideable: true,},
+      sidebar: { hideable: true, },
     }
   },
   presets: [
@@ -198,7 +198,7 @@ var _hmt = _hmt || [];
       '@docusaurus/preset-classic',
       {
         docs: {
-	  remarkPlugins: [require('mdx-mermaid')],
+          remarkPlugins: [require('mdx-mermaid')],
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl: 'https://github.com/casdoor/casdoor-website/tree/master/',
@@ -221,8 +221,14 @@ var _hmt = _hmt || [];
   ],
   plugins: ['docusaurus-plugin-sass', 'docusaurus-plugin-hotjar'],
   scripts: [
-    '/js/gitter.js',
+    {
+      src: '/js/gitter.js',
+      async: true,
+    },
+    {
+      src: '/js/tawk.js',
+      async: true,
+    },
     'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js',
-    '/js/tawk.js'
   ],
 };
