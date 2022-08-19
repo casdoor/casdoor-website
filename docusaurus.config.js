@@ -179,7 +179,7 @@ var _hmt = _hmt || [];
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
     },
     prism: {
-      additionalLanguages: ['nginx'],
+      additionalLanguages: ['nginx', 'java'],
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
