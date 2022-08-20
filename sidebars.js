@@ -227,6 +227,7 @@
         'integration/spring-cloud',
         'integration/spring-security',
         'integration/RuoYi',
+        'integration/spring-cloud-gateway',
         'integration/wechat_miniprogram',
         'integration/elk',
         'integration/zentao',
