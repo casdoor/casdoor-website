@@ -225,6 +225,7 @@
         'integration/minio',
         'integration/spring-boot',
         'integration/spring-cloud',
+        'integration/spring-cloud-gateway',
         'integration/spring-security',
         'integration/RuoYi',
         'integration/wechat_miniprogram',
