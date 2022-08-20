@@ -82,6 +82,10 @@ module.exports = {
           position: 'right',
           dropdownItemsAfter: [
             {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
               to: 'https://crowdin.com/project/casdoor-website',
               label: 'Help translate',
             },
@@ -200,14 +204,28 @@ var _hmt = _hmt || [];
         docs: {
           remarkPlugins: [require('mdx-mermaid')],
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/casdoor/casdoor-website/tree/master/',
           sidebarCollapsed: false,
+          editUrl: ({ locale, docPath }) => {
+            if (locale === 'en') {
+              return `https://github.com/casdoor/casdoor-website/edit/master/docs/${docPath}`;
+            }
+            if (locale == 'zh') {
+              return `https://crowdin.com/project/casdoor-website/zh-CN`;
+            }
+            return `https://crowdin.com/project/casdoor-website/${locale}`;
+          },
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl: 'https://github.com/casdoor/casdoor-website/tree/master/',
+          editUrl: ({ locale, blogDirPath, blogPath }) => {
+            if (locale === 'en') {
+              return `https://github.com/casdoor/casdoor-website/edit/master/${blogDirPath}/${blogPath}`;
+            }
+            if (locale == 'zh') {
+              return `https://crowdin.com/project/casdoor-website/zh-CN`;
+            }
+            return `https://crowdin.com/project/casdoor-website/${locale}`;
+          },
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
