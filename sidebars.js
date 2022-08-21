@@ -9,7 +9,7 @@
  Create as many sidebars as you want.
  */
 
- module.exports = {
+module.exports = {
   tutorialSidebar: [
     {
       type: 'category',
@@ -20,7 +20,8 @@
         'basic/core-concepts',
         'basic/server-installation',
         'basic/try-with-docker',
-        'basic/deployment',
+        'basic/static-resource',
+        'basic/data-initialization',
         'basic/public-api',
       ],
     },
@@ -246,5 +247,5 @@
     'internationalization',
     'contributing',
   ],
-  
+
 };

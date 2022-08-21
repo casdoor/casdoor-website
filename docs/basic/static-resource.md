@@ -1,5 +1,5 @@
 ---
-title: Deployment
+title: Static Resource
 description: How to deploy Casdoor static resource
 keywords: [static resource, deployment, Intranet]
 ---
