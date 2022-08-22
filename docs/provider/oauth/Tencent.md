@@ -4,7 +4,7 @@ description: Add Tencent QQ OAuth provider to your application
 keywords: [Tencent QQ, OAuth]
 ---
 
-### Tencent QQ:heavy_check_mark:
+## Tencent QQ:heavy_check_mark:
 
 Visit authentication platform of QQ - [Connect QQ](https://connect.qq.com/manage.html#/).
 
