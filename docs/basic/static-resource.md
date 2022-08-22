@@ -15,15 +15,9 @@ All static resources in Casdoor, including images, logo, css, etc., are stored i
 
 ## Modify in Casdoor
 
-1. Go to [conf/app.conf](https://github.com/casdoor/casdoor/blob/c92d34e27c707287545519202463632fb4deacc9/conf/app.conf#L19), modify `staticBaseUrl`.
+You can simply modify the configuration file to set the static resource address to where you deployed it. Go to 
+[conf/app.conf](https://github.com/casdoor/casdoor/blob/c92d34e27c707287545519202463632fb4deacc9/conf/app.conf#L19), set `staticBaseUrl` to your deployed address. 
+
 ```ini
 staticBaseUrl = "https://cdn.casbin.org"
-```
-2. Go to [web/src/Setting.js](https://github.com/casdoor/casdoor/blob/ca1324757259c2a15aea60572adba50446e0cdbe/web/src/Setting.js#L29), modify `StaticBaseUrl`
-```javascript
-export const StaticBaseUrl = "https://cdn.casbin.org";
-```
-3. Go to [web/src/app.less](https://github.com/casdoor/casdoor/blob/c92d34e27c707287545519202463632fb4deacc9/web/src/App.less#L3), modify `@StaticBaseUrl`
-```less
-@StaticBaseUrl:"https://cdn.casbin.org";
 ```

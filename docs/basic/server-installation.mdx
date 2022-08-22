@@ -75,13 +75,6 @@ modify the import package in [object/adapter](https://github.com/casdoor/casdoor
 
 #### PostgreSQL:
 
- First you should comment out the mysql package import and uncomment the **postgres** package import in `object/adapter.go`. Like this:
-
-```go
-	//_ "github.com/go-sql-driver/mysql" // db = mysql
-	_ "github.com/lib/pq" // db = postgres
-```
-
   Since we must choose a database when opening Postgres with xorm, you should prepare a database manually before running Casdoor.
 
   Let's assume that you have already prepared a database called `casdoor`, then you should specify `app.conf` like this:
