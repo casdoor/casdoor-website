@@ -8,7 +8,9 @@ Frontend static resource (.js, .css files) are in `web/build/static/`. If you wa
 in a **CDN** service of a public cloud, Casdoor provides a script for you to deploy frontend static files easily. Please follow the steps below.
 
 :::note
+
 We assume you have already built the frontend code of Casdoor. If not yet, please follow: [document](/docs/basic/server-installation#frontend-1).
+
 :::
 
 ## Preparation
@@ -16,8 +18,10 @@ We assume you have already built the frontend code of Casdoor. If not yet, pleas
 First, you need to create a valid [Storage Provider](/docs/provider/storage) in Casdoor UI. you can refer to the [example](/docs/provider/storage#example).
 
 :::caution
+
 When you fill in the field `Domain`, please end with '/'
 ![storage_domian](/img/basic/storage_domian.png)
+
 :::
 
 ## Usage
