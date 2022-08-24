@@ -1,5 +1,5 @@
 ---
-title: Hosting static files in CDN
+title: Hosting Static Files in CDN
 description: Hosting frontend static files in the CDN
 keywords: [deployment, cdn, frontend]
 ---
