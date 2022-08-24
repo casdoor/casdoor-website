@@ -39,8 +39,10 @@ Click the `Permissions` tab and add a new permission. In the edit page, you need
 ![](/img/permission_edit.png)
 
 :::info
+
 The `Adapter` field supports specifying the table name where the policies are stored. If this field is empty, the policies are storing in the `permission_rule` table. We strongly recommend **specifying different Adapter for different models**, becaues it's likely to cause conflicts for storing all policies in the same table. 
 :::
+
 
 After saving, the user `test`, `seriouszyx` and `admin` can login to the application `app-built-in`. The other users such as `casdoortest` cannot. 
 
