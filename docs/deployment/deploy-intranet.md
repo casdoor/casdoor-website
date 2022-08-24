@@ -1,5 +1,5 @@
 ---
-title: Static Resource
+title: Hosting Static Files in Intranet
 description: How to deploy Casdoor static resource
 keywords: [static resource, deployment, Intranet]
 ---

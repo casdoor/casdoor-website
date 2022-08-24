@@ -52,6 +52,6 @@ Then create OSS service:
 
 Fill the necessary information in Casdoor and save:
 
-![OSS](/img/providers/oss.png)
+![OSS](/img/providers/storage/oss.png)
 
 Then you can use Aliyun cloud storage services in your application.
