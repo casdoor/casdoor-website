@@ -89,6 +89,7 @@ module.exports = {
       collapsed: false,
       items: [
         'permission/overview',
+        'permission/casbin-enforcement',
       ],
     },
     {
