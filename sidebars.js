@@ -20,9 +20,17 @@ module.exports = {
         'basic/core-concepts',
         'basic/server-installation',
         'basic/try-with-docker',
-        'basic/static-resource',
-        'basic/data-initialization',
         'basic/public-api',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Deployment',
+      collapsed: false,
+      items: [
+        'deployment/data-initialization',
+        'deployment/deploy-cdn',
+        'deployment/deploy-intranet',
       ],
     },
     {
