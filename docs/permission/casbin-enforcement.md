@@ -13,7 +13,9 @@ We will show some examples of using these APIs, the permission is shown below.
 ![](/img/permission_edit.png)
 
 :::tip
+
 You should log in to the Casdoor and get `casdoor_session_id` from cookies.
+
 :::
 
 ### Enforce
