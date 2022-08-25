@@ -71,7 +71,7 @@ Initialization requires 6 parameters, which are all string type.
 | endpoint         | Yes  | Casdoor Server Url, such as `http://localhost:8000` |
 | clientId         | Yes  | Application.client_id                               |
 | clientSecret     | Yes  | Application.client_secret                           |
-| jwtPublicKey     | Yes  | The public key for the Casdoor application's cert   |
+| certificate      | Yes  | Application.certificate                             |
 | organizationName | Yes  | Application.organization                            |
 | applicationName  | No   | Application.name                                    |
 
@@ -94,7 +94,7 @@ You can use Java properties or YAML files to init as below.
 casdoor.endpoint = http://localhost:8000
 casdoor.clientId = <client-id>
 casdoor.clientSecret = <client-secret>
-casdoor.jwtSecret = <jwt-public-key>
+casdoor.certificate = <certificate>
 casdoor.organizationName = built-in
 casdoor.applicationName = app-built-in
 ```
@@ -108,7 +108,7 @@ casdoor:
   endpoint: http://localhost:8000
   client-id: <client-id>
   client-secret: <client-secret>
-  jwt-public-key: <jwt-public-key>
+  certificate: <certificate>
   organization-name: built-in
   application-name: app-built-in
 ```
