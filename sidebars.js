@@ -238,6 +238,7 @@ module.exports = {
         'integration/spring-cloud-gateway',
         'integration/spring-security',
         'integration/RuoYi',
+        'integration/Pulsar-manager',
         'integration/wechat_miniprogram',
         'integration/elk',
         'integration/zentao',
