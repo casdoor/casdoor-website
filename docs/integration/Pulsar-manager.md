@@ -42,7 +42,7 @@ This switch in the Line 80 of pulsar-manager/front-end/src/router/index.js
 ![frontSwitch](/img/Pulsar-manager_frontSwitch.png)
 
 ## Step4. Configure back-end code
-You should configure casdoor's Configuration.
+You should configure casdoor's Configuration in the Line 154 of pulsar-manager/src/main/resources/application.properties
 ```ini
 casdoor.endpoint = http://localhost:8000
 casdoor.clientId = <client id in previous step>
