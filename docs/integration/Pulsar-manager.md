@@ -4,7 +4,9 @@ description: Using Casdoor in Pulsar-manager
 keywords: [Pulsar-manager]
 ---
 
-Casdoor can connect to RuoYi-cloud simplely
+Casdoor can connect to Pulsar-manager simplely.
+
+Because the code for connecting casdoor have been add in Pulsar-manager,so we just need configure application.yml in back-end and open front switch.
 
 ## Step1. Deploy Casdoor
 
@@ -25,22 +27,27 @@ Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configu
 
 You also should configure organization, application, you also can refer to [casdoor](https://door.casdoor.com/login).
 
-![casdoor](/img/Pulsar-manager_casdoor.png)
+### step2.1 you should create a organization
+![organization](/img/Pulsar-manager_editOrganization.png)
+
+### step2.2 you should create a application
+![application](/img/Pulsar-manager_editApplication.png)
 
 
-
-### 3 Open front-end switch.
+## Step3. Open Pulsar-manager front-end switch.
 Open this switch to make code and state send to back-end.
+
+This switch in the Line 80 of pulsar-manager/front-end/src/router/index.js
 
 ![frontSwitch](/img/Pulsar-manager_frontSwitch.png)
 
-### 4 Configure back-end code
+## Step4. Configure back-end code
 You should configure casdoor's Configuration.
 ```ini
 casdoor.endpoint = http://localhost:8000
 casdoor.clientId = <client id in previous step>
 casdoor.clientSecret = <client Secret in previous step>
 casdoor.certificate=<client certificate in previous step>
-casdoor.organizationName=<client organizationName in previous step>
-casdoor.applicationName=<client application in previous step>
+casdoor.organizationName=pulsar
+casdoor.applicationName=app-pulsar
 ```
