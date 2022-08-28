@@ -25,7 +25,7 @@ After a successful deployment, you need to ensure:
 ![Casdoor conf](/img/casdoor_origin.png)
 
 ## Step2. Configure Casdoor application
-1. Create a wechat idp in casdoor and fill your `APPID` and `APPSECRET` given to you by WeChat MiniP Program develop platform:
+1. Create a wechat idp in casdoor and fill your `APPID` and `APPSECRET` given to you by WeChat Mini Program develop platform:
 ![WeChat_MiniProgram.png](/img/integration/WeChat_MiniProgram.png)
 2. Create or use an existing Casdoor application.
 3. Add the idp added above to the application you want to use.
@@ -46,64 +46,63 @@ The following code shows how to accomplish the above process:
 
 ```js
 // login in mini program
-    wx.login({
+wx.login({
+  success: res => {
+    // this is your login code you need to send to casdoor
+    console.log(res.code)
+    
+    wx.request({
+      url: `${CASDOOR_HOSTNAME}/api/login/oauth/access_token`,
+      method: "POST",
+      data: {
+        "tag": "wechat_miniprogram", // required
+        "client_id": "6825f4f0af45554c8952",
+        "code": res.code,
+        "username": this.data.userInfo.nickName, // update user profile, when you login.
+        "avatar": this.data.userInfo.avatarUrl,
+      },
+      header:{
+        "content-type": "application/x-www-form-urlencoded",
+      },
       success: res => {
-        // this is your login code you need to send to casdoor
-        console.log(res.code)
-        
-        wx.request({
-          url: 'http://localhost:8000/api/login/oauth/access_token',
-          method: "POST",
-          data: {
-            "tag":"wechat_miniprogram", //required
-            "client_id":"6825f4f0af45554c8952",
-            "client_secret": "2d0f463...",
-            "code": res.code,
-            "username": this.data.userInfo.nickName, //update user profile, when you login.
-            "avatar": this.data.userInfo.avatarUrl,
-          },
-          header:{
-            "content-type":"application/x-www-form-urlencoded",
-          },
-          success: res => {
-            console.log(res)
-            this.globalData.accessToken = res.data.access_token // get casdoor's accessToken
-          }
-        })
+        console.log(res)
+        this.globalData.accessToken = res.data.access_token // get casdoor's accessToken
       }
     })
+  }
+})
 ```
 It is worth mentioning that the `tag` parameter is mandatory and you need to make casdoor understand that this is a request from the WeChat Mini Program.
 
 The above code passes in the username and avatar uri of the WeChat Mini Program user while logging in. You can also pass these two parameters without passing them first, and then pass them to casdoor after the login is successful and accessToken is obtained:
 ```js
-    wx.getUserProfile({
-      desc: 'share your info to casdoor', 
+wx.getUserProfile({
+  desc: 'share your info to casdoor', 
+  success: (res) => {
+    this.setData({
+      userInfo: res.userInfo,
+      hasUserInfo: true
+    })
+    console.log(app.globalData.accessToken)
+    wx.request({
+      url: `${CASDOOR_HOSTNAME}/api/update-user`, // casdoor uri
+      method: "POST",
+      data: {
+        "owner": "test",
+        "name": "wechat-oGk3T5tIiMFo3SazCO75f0HEiE7Q",
+        "displayName": this.data.userInfo.nickName,
+        "avatar": this.data.userInfo.avatarUrl
+      },
+      header: {
+        "Authorization": "Bearer " + app.globalData.accessToken, // Bearer token
+        "content-type": "application/json"
+      },
       success: (res) => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-        console.log(app.globalData.accessToken)
-        wx.request({
-          url: 'http://`CASDOOR_HOSTNAME`:7001/api/update-user', // casdoor uri
-          method: "POST",
-          data: {
-            "owner": "test",
-            "name": "wechat-oGk3T5tIiMFo3SazCO75f0HEiE7Q",
-            "displayName": this.data.userInfo.nickName,
-            "avatar": this.data.userInfo.avatarUrl
-          },
-          header:{
-            "Authorization":"Bearer "+app.globalData.accessToken, //Bearer token
-            "content-type": "application/json"
-          },
-          success: (res)=>{
-            console.log(res)
-          }
-        })
+        console.log(res)
       }
     })
+  }
+})
 ```
 
 Also, you can use accessToken as a bearer token for any Casdoor operation you want.
