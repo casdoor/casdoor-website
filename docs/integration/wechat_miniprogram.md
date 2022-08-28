@@ -17,14 +17,17 @@ The following are some of the names in the configuration:
 `CASDOOR_HOSTNAME`: Domain name or IP where Casdoor server is deployed. e.g., `https://door.casbin.com`.
 
 ## Step1. Deploy Casdoor
+
 Firstly, the [Casdoor](/docs/basic/server-installation) should be deployed. 
 
 After a successful deployment, you need to ensure:
+
 1. Casdoor can be logged in and used normally.
 2. Set Casdoor's `origin` value (conf/app.conf) to `CASDOOR_HOSTNAME`.
 ![Casdoor conf](/img/casdoor_origin.png)
 
 ## Step2. Configure Casdoor application
+
 1. Create a wechat idp in casdoor and fill your `APPID` and `APPSECRET` given to you by WeChat Mini Program develop platform:
 ![WeChat_MiniProgram.png](/img/integration/WeChat_MiniProgram.png)
 2. Create or use an existing Casdoor application.
@@ -39,6 +42,7 @@ So if you want to use the WeChat Mini Program in this app, don't add multiple We
 :::
 
 ## Step3. Write WeChat MiniProgram code
+
 WeChat Mini Program provides an API to login internally and get the Code, all you need to do is to send this Code to Casdoor,
 Casdoor will use this Code to get some information from WeChat server (such as OpenID, SessionKey, etc.).
 
@@ -72,9 +76,11 @@ wx.login({
   }
 })
 ```
+
 It is worth mentioning that the `tag` parameter is mandatory and you need to make casdoor understand that this is a request from the WeChat Mini Program.
 
 The above code passes in the username and avatar uri of the WeChat Mini Program user while logging in. You can also pass these two parameters without passing them first, and then pass them to casdoor after the login is successful and accessToken is obtained:
+
 ```js
 wx.getUserProfile({
   desc: 'share your info to casdoor', 
