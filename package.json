@@ -1,6 +1,7 @@
 {
   "name": "casdoor-website",
   "version": "0.0.1",
+  "license": "Apache 2.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -15,26 +16,20 @@
     "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download"
   },
   "dependencies": {
-    "@crowdin/cli": "3.6.4",
+    "@crowdin/cli": "^3.7.10",
     "@docusaurus/core": "2.0.1",
     "@docusaurus/preset-classic": "2.0.1",
     "@mdx-js/react": "^1.6.21",
-    "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-sass": "^0.2.1",
-    "file-loader": "^6.2.0",
     "mdx-mermaid": "^1.2.2",
     "mermaid": "^8.14.0",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "sass": "^1.37.5",
-    "url-loader": "^4.1.1"
-  },
-  "devDependencies": {
-    "@giscus/react": "^2.2.0",
-    "docusaurus-plugin-google-adsense": "^0.3.1"
+    "@giscus/react": "^2.2.0"
   },
   "browserslist": {
     "production": [
