@@ -21,7 +21,6 @@
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
-    "disqus-react": "^1.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
@@ -34,6 +33,7 @@
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
+    "@giscus/react": "^2.2.0",
     "docusaurus-plugin-google-adsense": "^0.3.1"
   },
   "browserslist": {
