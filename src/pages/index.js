@@ -9,7 +9,7 @@ import Translate, {translate} from '@docusaurus/Translate';
 
 function FrameMask(props){
   const [mouseState, setMouseState] = useState({state:false});
-  const maskStyle = {position: 'absolute', top: '0px', left: '0px', zIndex: 10, height: '100%', width: '100%', background: 'rgba(0,0,0,0.4)', cursor:'pointer'};
+  const maskStyle = {position: 'absolute', top: '0px', left: '0px', zIndex: 10, height: '100%', width: '100%', background: 'rgba(0,0,0,0.4)', cursor:'pointer', borderRadius: "20px"};
   const handleMouseEnter = () => {
     setMouseState({
       ...mouseState,
@@ -25,7 +25,7 @@ function FrameMask(props){
   }
   return(
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-    <iframe src={props.src} width={props.width} height= {props.height} frameBorder="0" scrolling="no"></iframe>
+    <iframe src={props.src} width={props.width} height= {props.height} style={{borderRadius: "20px"}} frameBorder="0" scrolling="no"></iframe>
     <div style={maskStyle} hidden={!mouseState.state} onClick={() => { window.open(props.src) }}>
         <Link
           className="button button--secondary button--lg"
@@ -61,7 +61,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height= "700"></FrameMask>
+      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height= "720"></FrameMask>
     </header>
   );
 }
@@ -110,7 +110,7 @@ function ContentLogin() {
             <br />
             <Translate>And if your want more providers, please propose it in</Translate> <Link href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
-          <FrameMask className={styles.signingradientborder} src="https://door.casdoor.com/login" width="600" height= "700"></FrameMask>
+          <FrameMask className={styles.signingradientborder} src="https://door.casdoor.com/login" width="600" height= "730"></FrameMask>
         </div>
       </div>
     </div>

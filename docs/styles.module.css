@@ -3,6 +3,7 @@
   transform: scale(0.85);
   width: 600px;
   box-shadow: 0 0 50px grey;
+  border-radius: 20px;
 }
 
 .signingradientborder {
@@ -10,4 +11,5 @@
   transform: scale(0.85);
   width: 600px;
   box-shadow: 0 0 50px grey;
+  border-radius: 20px;
 }
