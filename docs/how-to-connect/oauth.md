@@ -89,6 +89,7 @@ You will get the following response:
 ```
 
 :::note
+
 Casdoor also supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature, when getting the authorization code, you can add two parameters to enable PKCE:
 
 ```
