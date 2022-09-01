@@ -40,6 +40,7 @@ state=STATE
 | phone |  user's phone number  |
 
 :::info
+
 Your OAuth Application can request the scopes in the initial redirection. You can specify multiple scopes by separating them with a space using %20:
 ```text
 https://<CASDOOR_HOST>/login/oauth/authorize?
