@@ -115,13 +115,18 @@ Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. 
 
 Create `conf/app.conf`, you can copy it from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) in Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
 
-*Note: if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details*
+:::tip
+
+if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details
+
+:::
 
 Then run 
 
 ```
 docker run  -p 8000:8000 -v /path/to/app.conf:/conf casbin/casdoor:latest
 ```
+The `/path/to/app.conf` refers to the path to the **folder** containing app.conf.
 
 Anyway just **mount the app.conf to /conf/app.conf** and start it.
 
