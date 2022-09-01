@@ -20,7 +20,52 @@ For security reasons, the Casdoor app has the authorization code mode turned on 
 
 ### Authorization Code Grant <span id="1"></span>
 
-First redirect your users to `https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=openid&state=STATE`. After your user has authenticated with casdoor, casdoor will redirect him to `https://REDIRECT_URI?code=CODE&state=STATE`. Now that you have obtained the authorization code, make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` in your backend application :
+First redirect your users to:
+
+```
+https://<CASDOOR_HOST>/login/oauth/authorize?
+client_id=CLIENT_ID&
+redirect_uri=REDIRECT_URI&
+response_type=code&
+scope=openid&
+state=STATE
+```
+#### Available scopes
+|  Name |  Description  |
+|---|---|
+| openid (no scope)  | sub (user's id), iss (issuer) and aud (audience)   |
+| profile  | user profile info, include name, displayName, avatar   |
+| email  | user's email address   |
+| address  |  user's address  |
+| phone |  user's phone number  |
+
+:::info
+
+Your OAuth Application can request the scopes in the initial redirection. You can specify multiple scopes by separating them with a space using %20:
+```text
+https://<CASDOOR_HOST>/login/oauth/authorize?
+client_id=...&
+scope=openid%20email
+```
+
+For more details, please see [OIDC standard](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse)
+
+:::
+
+After your user has authenticated with casdoor, casdoor will redirect him to: 
+
+```
+https://REDIRECT_URI?code=CODE&state=STATE
+```
+
+Now that you have obtained the authorization code, make a POST request to:
+
+```
+https://<CASDOOR_HOST>/api/login/oauth/access_token
+```
+
+in your backend application:
+
 ```json
 {
     "grant_type": "authorization_code",
@@ -43,18 +88,44 @@ You will get the following response:
 }
 ```
 
-Casdoor also supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature, when getting the authorization code, you can add two parameters:`&code_challenge_method=S256&code_challenge=YOUR_CHANLLENGE`, to enable PKCE. Also when getting the token you need to pass `code_verifier` parameter to verify PKCE. It is worth mentioning that with PKCE enabled, Client_Secret is not required, but if you pass it, it must be the correct value.
+:::note
+
+Casdoor also supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature, when getting the authorization code, you can add two parameters to enable PKCE:
+
+```
+&code_challenge_method=S256&code_challenge=YOUR_CHANLLENGE
+```
+
+When getting the token you need to pass `code_verifier` parameter to verify PKCE. It is worth mentioning that with PKCE enabled, Client_Secret is not required, but if you pass it, it must be the correct value.
+
+:::
+
 
 ### Implicit Grant
 
-Maybe your application doesn't have a backend, and you need to use Implicit Grant. First you need to make sure you have Implicit Grant enabled, then redirect your users to:`https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE`. After your user has authenticated with casdoor, casdoor will redirect him to `https://REDIRECT_URI/#token=ACCESS_TOKEN`
+Maybe your application doesn't have a backend, and you need to use Implicit Grant. First you need to make sure you have Implicit Grant enabled, then redirect your users to:
+
+```
+https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE
+```
+
+After your user has authenticated with casdoor, casdoor will redirect him to:
+
+```
+https://REDIRECT_URI/#token=ACCESS_TOKEN
+```
 
 Casdoor also supports [id_token](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`, which is a feature of OpenID.
 
 ### Resource Owner Password Credentials Grant
 If your application doesn't have a frontend that redirects users to Casdoor, then you may need this.
 
-First you need to make sure you have Password Credentials Grant enabled, and send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+First you need to make sure you have Password Credentials Grant enabled, and send a POST request to:
+
+```
+https://<CASDOOR_HOST>/api/login/oauth/access_token
+```
+
 ```json
 {
     "grant_type": "password",
@@ -170,16 +241,19 @@ You will get the following response like:
 
 ## How to use `AccessToken`
 
-You can use AccessToken to access Casdoor APIs that require authentication, here is `/api/userinfo` for example. This one is when we only use "openid" scope to get userinfo endpoint.
+You can use AccessToken to access Casdoor APIs that require authentication.
 
-1. Query parameter
+For example, two different ways to request `/api/userinfo`.
+
+Type 1. Query parameter
     
 `https://<CASDOOR_HOST>/api/userinfo?accessToken=<your_access_token>`
 
-2. HTTP Bearer token
+Type 2. HTTP Bearer token
     
 `https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer <your_access_token>"
 
+Casdoor will parse the access_token, returning corresponding user information according to the `scope`.
 You will get the same response like:
 
 ```json
@@ -190,39 +264,11 @@ You will get the same response like:
 }
 ```
 
-When we use "openid profile address phone email" as the scope, we can get more detailed response:
-
-```json
-{
-    "sub": "2f80c349-4beb-407f-b1f0-528aac0f1acd",
-    "iss": "https://door.casbin.com",
-    "aud": "7a11****0fa2172",
-    "name": "admin",
-    "preferred_username": "Admin",
-    "email": "admin@example.com",
-    "picture": "https://casbin.org/img/casbin.svg",
-    "address": "Guangdong",
-    "phone": "12345678910"
-}
-```
+If you expect more user's information,  adding `scope` when getting AccessToken in step [Authorization Code Grant](#1).
 
 ## Differences between `userinfo` and `get-account` APIs
 
-- `/api/userinfo`: returns user information as part of OIDC protocol. Less information is returned, including only the basic information in OIDC standards. You can return more information on request by adding `scope`. This step should be done before you get the `code`,
-i.e. before redirecting to Casdoor for [Authorization Code Grant ](#1)
-
-:::info
-
-**scope**
-
-The following is a non-normative example of an unencoded scope request:
-
-`scope=openid profile email phone`
-
-In addition to these OpenID-specific scopes, your scope argument can also include other scope values. All scope values must be space-separated.
-
-For more details, please see [OIDC standard](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse)
-
-:::
+- `/api/userinfo`: returns user information as part of OIDC protocol. Less information is returned, including only the 
+basic information in OIDC standards. Please see [available scopes](#available-scopes) that Casdoor supports.
 
 - `/api/get-account`: gets the user object for the currently logged-in account. It is a Casdoor-only API to obtain all information of the [user](/docs/basic/core-concepts#user) in Casdoor.
