@@ -99,7 +99,7 @@ admin
 
 *Note: if you dive deeper into the docker-compose.yml, you may be puzzled by the environment variable we created in it called "RUNNING_IN_DOCKER". When database 'db' is created via docker-compose, it is available on localhost of your pc but not localhost of the casdoor container. To prevent you from the troubles caused by modifying app.conf which are pretty difficult for a new user, we provided this environment variable and pre-assigned it in  docker-compose.yml. When this environment variable is true, localhost will be replaced with host.docker.internal so that you casdoor can visit the db.*
 
-### **Option-3** Try directly with standard image'
+### **Option-3** Try directly with standard image
 
 :::caution
 
@@ -115,12 +115,16 @@ Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. 
 
 Create `conf/app.conf`, you can copy it from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) in Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
 
-*Note: if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details*
+:::tip
+
+if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details
+
+:::
 
 Then run 
 
 ```
-docker run  -p 8000:8000 -v /path/to/app.conf:/conf casbin/casdoor:latest
+docker run  -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
 ```
 
 Anyway just **mount the app.conf to /conf/app.conf** and start it.
