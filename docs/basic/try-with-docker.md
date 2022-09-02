@@ -124,10 +124,8 @@ if it is not convenient to mount the configuration file to a container, using en
 Then run 
 
 ```
-docker run  -p 8000:8000 -v /path/to/conf/:/conf/ casbin/casdoor:latest
+docker run  -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
 ```
-
-The `/path/to/conf/` refers to the path to the **folder** containing `app.conf`.
 
 Anyway just **mount the app.conf to /conf/app.conf** and start it.
 
