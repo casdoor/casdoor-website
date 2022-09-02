@@ -1,16 +1,17 @@
-import React from 'react';
-import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
-import Translate, {translate} from '@docusaurus/Translate';
+import React from "react";
+import clsx from "clsx";
+import styles from "./HomepageFeatures.module.css";
+import Translate, {translate} from "@docusaurus/Translate";
+
 const FeatureList = [
   {
     title: translate({
-          message: 'Easy to Use',
+      message: "Easy to Use",
     }),
-    Svg: require('../../static/img/model.svg').default,
+    Svg: require("../../static/img/model.svg").default,
     description: (
       <>
-      <Translate>
+        <Translate>
         Within a few steps, we can setup a Casdoor app and realize our authorization management.
         </Translate>
       </>
@@ -18,12 +19,12 @@ const FeatureList = [
   },
   {
     title: translate({
-          message: 'Frontend Backend Separation',
+      message: "Frontend Backend Separation",
     }),
-    Svg: require('../../static/img/storage.svg').default,
+    Svg: require("../../static/img/storage.svg").default,
     description: (
       <>
-      <Translate>
+        <Translate>
         Casdoor has a front-end back-end separation architecture, with maneuverable web UI and supporting high concurrency.
         </Translate>
       </>
@@ -31,12 +32,12 @@ const FeatureList = [
   },
   {
     title: translate({
-          message: 'Supporting Multi-Language',
+      message: "Supporting Multi-Language",
     }),
-    Svg: require('../../static/img/language.svg').default,
+    Svg: require("../../static/img/language.svg").default,
     description: (
       <>
-      <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
+        <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
       </>
     ),
   },
@@ -44,7 +45,7 @@ const FeatureList = [
 
 function Feature({Svg, title, description}) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx("col col--4")}>
       <div className="text--center">
         <Svg className={styles.featureSvg} alt={title} />
       </div>

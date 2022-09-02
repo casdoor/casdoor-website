@@ -54,6 +54,7 @@
 
 .contentsignup {
   @include content;
+
   background-color: var(--ifm-color-emphasis-100);
 }
 
@@ -76,7 +77,7 @@
   border-radius: 20px;
 }
 
-/*Due to the height of sign iframe, a new style is created here*/
+/* Due to the height of sign iframe, a new style is created here */
 .signingradientborder {
   display: flex;
   transform: scale(0.85);
@@ -84,9 +85,9 @@
   border-radius: 20px;
 }
 
-/*Workflow explain gif layout here*/
+/* Workflow explain gif layout here */
 .explain {
-  padding: 20px 20px 0 20px;
+  padding: 20px 20px 0;
   font-size: 1.3rem;
   justify-content: center;
   line-height: 40px;
@@ -94,12 +95,12 @@
 }
 
 .explaingif {
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   font-size: 1.3rem;
   justify-content: center;
   line-height: 20px;
 }
 
 .explaintext {
-  padding: 60px 0 60px 0;
+  padding: 60px 0;
 }
