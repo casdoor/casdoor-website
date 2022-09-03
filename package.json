@@ -11,7 +11,8 @@
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
-    "lint": "eslint --fix --ext .js src&&eslint --fix --ext .js static/js&&stylelint  src/**/*.{scss,css} --fix",
+    "lint": "eslint --fix . --ext .js",
+    "lint:css": "stylelint \"src/**/*.{css,scss}\" --fix",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download",
@@ -33,18 +34,6 @@
     "react-dom": "^17.0.1",
     "sass": "^1.37.5"
   },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@babel/eslint-parser": "^7.18.9",
@@ -60,7 +49,18 @@
   },
   "lint-staged": {
     "*.js": "eslint --fix",
-    "*.css": "stylelint --fix",
-    "*.scss": "stylelint --syntax=scss --fix"
+    "*.{css, scss}": "stylelint --fix"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

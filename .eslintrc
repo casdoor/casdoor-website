@@ -101,6 +101,13 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    //iframe scrolling
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": ["scrolling"]
+      }
+    ]
   }
 }
