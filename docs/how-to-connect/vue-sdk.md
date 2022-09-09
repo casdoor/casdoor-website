@@ -16,6 +16,7 @@ We will show you the steps below.
  for more details.
 > 
 > The example' front-end is built with casdoor-vue-sdk,and the back-end is built with casdoor-python-sdk,you can see the source code in the example.
+
 ## Installation
 
 ~~~shell script
@@ -76,7 +77,7 @@ new Vue({
 }).$mount('#app')
 ```
 
-example:
+## example
 
 ```vue
 // in app.vue
