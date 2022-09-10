@@ -236,7 +236,12 @@ module.exports = {
         "integration/spring-boot",
         "integration/spring-cloud",
         "integration/spring-cloud-gateway",
-        "integration/spring-security",
+        {
+          "Spring Security": [
+            "integration/spring-security/spring-security-oauth",
+            "integration/spring-security/spring-security-filter",
+          ],
+        },
         "integration/RuoYi",
         "integration/Pulsar-manager",
         "integration/wechat_miniprogram",
