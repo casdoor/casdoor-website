@@ -4,11 +4,11 @@ import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 import styles from "./index.module.scss";
 import HomepageFeatures from "../components/HomepageFeatures";
-// eslint-disable-next-line unused-imports/no-unused-imports
-import Translate, {translate} from "@docusaurus/Translate";
+import Translate from "@docusaurus/Translate";
 import CasdoorCard from "../components/CasdoorCard";
 
 function FrameMask(props) {
+  const link = "https://door.casdoor.com/";
   const [mouseState, setMouseState] = useState({state: false});
   const maskStyle = {
     position: "absolute",
@@ -36,8 +36,8 @@ function FrameMask(props) {
   };
   return (
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <CasdoorCard src={props.src} width={props.width} height={props.height}></CasdoorCard>
-      <div style={maskStyle} hidden={!mouseState.state} onClick={() => {window.open(props.src);}}>
+      <CasdoorCard src={props.src} width={props.width} height={props.height} />
+      <div style={maskStyle} hidden={!mouseState.state} onClick={() => {window.open(link + props.src);}}>
         <Link
           className="button button--secondary button--lg"
           style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}>
@@ -73,7 +73,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <FrameMask className={styles.headerborder} src="login" width="550" height="720"></FrameMask>
+      <FrameMask className={styles.headerborder} src="login" width="550" height="720" />
     </header>
   );
 }
@@ -84,7 +84,7 @@ function LearnHowTo() {
       <div className="container text--center">
         <div className="row">
           <div className={styles.explaingif}>
-            <img src="/img/principles.gif" alt="Casdoor work principle" height="90%" width="90%"></img>
+            <img src="/img/principles.gif" alt="Casdoor work principle" height="90%" width="90%" />
           </div>
           <div className="col">
             <div className={styles.explaintext}>
@@ -135,7 +135,7 @@ function ContentLogin() {
             <Translate>And if your want more providers, please propose it in</Translate> <Link
               href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
-          <FrameMask className={styles.gradientborder} src="login" width="600" height="730"></FrameMask>
+          <FrameMask className={styles.gradientborder} src="login" width="600" height="730" />
         </div>
       </div>
     </div>
@@ -147,7 +147,7 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="signup" width="600" height="795"></FrameMask>
+          <FrameMask className={styles.gradientborder} src="signup" width="600" height="795" />
           <div className="col">
             <br /><br /><br /><br /><br />
             <Translate>Casdoor also support sign up directly. By filling your</Translate>

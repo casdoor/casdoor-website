@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function CasdoorCard(props) {
   const [link, setLink] = useState(null);
-
+  const isIframe = "?isIframe=true";
   useEffect(() => {
     axios.get("https://oa.casbin.com/api/is-mainland-ip").then((response) => {
       if (response.data === true) {
@@ -16,13 +16,13 @@ export default function CasdoorCard(props) {
 
   return (
     <iframe
-      src={link + props.src}
+      src={link + props.src + isIframe}
       width={props.width}
       height={props.height}
       style={{borderRadius: "20px"}}
       frameBorder="0"
       scrolling="no"
-    ></iframe>
+    />
   );
 }
 
