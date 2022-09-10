@@ -6,6 +6,7 @@ keywords: [config, application]
 
 ```mdx-code-block
 import styles from '../styles.module.css';
+import CasdoorCard from "../../src/components/CasdoorCard"
 ```
 
 After you deploy your casdoor on your server, and setup your organization, you can deploy your applications now!
@@ -50,7 +51,7 @@ Then you can add which third party app can sign up by adding providers and set i
 
 ```mdx-code-block
 <div className={styles.signingradientborder}>
-<iframe src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" width="600" height= "680" frameborder="0" scrolling="no"></iframe>
+  <CasdoorCard src="login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" height= "680" />
 </div>
 ```
 
