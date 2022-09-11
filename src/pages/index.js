@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import axios from "axios";
+import React, {useEffect, useState} from "react";
 import clsx from "clsx";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
@@ -8,7 +9,7 @@ import Translate from "@docusaurus/Translate";
 import CasdoorCard from "../components/CasdoorCard";
 
 function FrameMask(props) {
-  const link = "https://door.casdoor.com/";
+  const [link, setLink] = useState();
   const [mouseState, setMouseState] = useState({state: false});
   const maskStyle = {
     position: "absolute",
@@ -21,6 +22,17 @@ function FrameMask(props) {
     cursor: "pointer",
     borderRadius: "20px",
   };
+
+  useEffect(() => {
+    axios.get("https://oa.casbin.com/api/is-mainland-ip").then((response) => {
+      if (response.data === true) {
+        setLink("https://door.casdoor.com/");
+      } else {
+        setLink("https://door.casdoor.org/");
+      }
+    });
+  }, []);
+
   const handleMouseEnter = () => {
     setMouseState({
       ...mouseState,

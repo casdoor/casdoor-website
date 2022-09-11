@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
 import axios from "axios";
+import React, {useEffect, useState} from "react";
 
 export default function CasdoorCard(props) {
-  const [link, setLink] = useState(null);
-  const isIframe = "?isIframe=true";
+
+  const [link, setLink] = useState();
+
   useEffect(() => {
     axios.get("https://oa.casbin.com/api/is-mainland-ip").then((response) => {
       if (response.data === true) {
@@ -16,7 +17,7 @@ export default function CasdoorCard(props) {
 
   return (
     <iframe
-      src={link + props.src + isIframe}
+      src={link + props.src}
       width={props.width}
       height={props.height}
       style={{borderRadius: "20px"}}
