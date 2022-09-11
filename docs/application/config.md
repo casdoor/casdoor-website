@@ -6,7 +6,7 @@ keywords: [config, application]
 
 ```mdx-code-block
 import styles from '../styles.module.css';
-import CasdoorCard from "../../src/components/CasdoorCard"
+import CasdoorCard from "@site/src/components/CasdoorCard"
 ```
 
 After you deploy your casdoor on your server, and setup your organization, you can deploy your applications now!
