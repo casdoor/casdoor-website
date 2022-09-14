@@ -82,7 +82,15 @@ html[data-theme="dark"] {
 }
 
 html[data-theme="dark"] .header-github-link::before {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' aria-hidden='true' focusable='false' fill='%23b4b4b4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' aria-hidden='true' focusable='false' fill='%23b4b4b4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.header-github-link {
+  opacity: 0.6;
+}
+
+.header-github-link:hover {
+  opacity: 1;
 }
 
 /* background: https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=33 */
@@ -97,7 +105,15 @@ html[data-theme="dark"] .header-github-link::before {
 }
 
 html[data-theme="dark"] .header-community-link::before {
-  background-image: url("data:image/svg+xml,%3Csvg class='icon' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32h9.6c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704z' fill='%23bfbfbf'/%3E%3Cpath d='M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8V787.2c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z' fill='%23bfbfbf'/%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg class='icon' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32h9.6c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704z' fill='%23bfbfbf'/%3E%3Cpath d='M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8V787.2c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z' fill='%23bfbfbf'/%3E%3C/svg%3E");
+}
+
+.header-community-link {
+  opacity: 0.6;
+}
+
+.header-community-link:hover {
+  opacity: 1;
 }
 
 div[class^="announcementBar_"] {
@@ -134,18 +150,18 @@ div[class^="announcementBar_"] {
   margin-bottom: 0.2rem;
 }
 
-.casdoor-login {
+.casdoor-signup {
   color: #fff;
 
   --ifm-link-hover-color: #fff;
   --ifm-navbar-link-hover-color: #fff;
 }
 
-.casdoor-login:hover {
+.casdoor-signup:hover {
   background-color: #0f51f8;
 }
 
-.casdoor-signup {
+.casdoor-login {
   --ifm-navbar-link-hover-color: #1a90ff;
 
   background-color: transparent;
@@ -158,7 +174,7 @@ div[class^="announcementBar_"] {
 
 /* navbar items */
 .navbar__item {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* doc sidebar */
@@ -175,15 +191,6 @@ div[class^="announcementBar_"] {
 
 ul.menu__list > li > a.menu__link--active {
   border-right: 1px solid var(--ifm-color-primary);
-}
-
-.navbar-sidebar__item {
-  padding-right: 0;
-}
-
-.navbar-sidebar__back {
-  background: none;
-  font-size: 14px;
 }
 
 /* Custom design for sidebar hide and expand buttons */
