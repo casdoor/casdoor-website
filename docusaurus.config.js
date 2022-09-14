@@ -33,7 +33,7 @@ module.exports = {
         alt: "My Site Logo",
         src: "img/casbin.svg",
       },
-      hideOnScroll: true,
+      // hideOnScroll: true,
       items: [
         {
           type: "doc",
@@ -50,21 +50,6 @@ module.exports = {
         {
           href: "https://door.casdoor.com/swagger/",
           label: "API",
-          position: "left",
-        },
-        {
-          href: "https://door.casdoor.com/",
-          label: "Online Demo",
-          position: "left",
-        },
-        {
-          href: "https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi",
-          label: "QQ Group",
-          position: "left",
-        },
-        {
-          href: "https://gitter.im/casbin/casdoor",
-          label: "Gitter",
           position: "left",
         },
         {
@@ -92,10 +77,34 @@ module.exports = {
           ],
         },
         {
+          type: "custom-casdoor",
+          src: "",
+          position: "right",
+          className: "navbar__item navbar__link header-community-link",
+        },
+        {
           href: "https://github.com/casdoor/casdoor",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
+        },
+        {
+          type: "search",
+          position: "right",
+        },
+        {
+          type: "custom-casdoor",
+          label: "Login",
+          src: "login",
+          position: "right",
+          className: "navbar__item navbar__link casdoor-login casdoor-link",
+        },
+        {
+          type: "custom-casdoor",
+          label: "Sign Up",
+          src: "signup",
+          position: "right",
+          className: "navbar__item navbar__link casdoor-signup casdoor-link",
         },
       ],
     },
@@ -205,6 +214,8 @@ var _hmt = _hmt || [];
           remarkPlugins: [require("mdx-mermaid")],
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsed: false,
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
           editUrl: ({locale, docPath}) => {
             if (locale === "en") {
               return `https://github.com/casdoor/casdoor-website/edit/master/docs/${docPath}`;
@@ -239,6 +250,10 @@ var _hmt = _hmt || [];
   ],
   plugins: ["docusaurus-plugin-sass", "docusaurus-plugin-hotjar"],
   scripts: [
+    {
+      src: "/js/CasdoorLink.js",
+      async: false,
+    },
     {
       src: "/js/gitter.js",
       async: true,
