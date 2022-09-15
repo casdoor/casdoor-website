@@ -2,13 +2,14 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 import Translate, {translate} from "@docusaurus/Translate";
+import {useColorMode} from "@docusaurus/theme-common";
 
 const FeatureList = [
   {
     title: translate({
       message: "Easy to Use",
     }),
-    Svg: require("@site/static/img/model.svg").default,
+    path: "/img/model",
     description: (
       <>
         <Translate>
@@ -21,7 +22,7 @@ const FeatureList = [
     title: translate({
       message: "Frontend Backend Separation",
     }),
-    Svg: require("@site/static/img/storage.svg").default,
+    path: "/img/storage",
     description: (
       <>
         <Translate>
@@ -34,7 +35,7 @@ const FeatureList = [
     title: translate({
       message: "Supporting Multi-Language",
     }),
-    Svg: require("@site/static/img/language.svg").default,
+    path: "/img/language",
     description: (
       <>
         <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
@@ -43,11 +44,12 @@ const FeatureList = [
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({title, path, description}) {
+  const {colorMode} = useColorMode();
   return (
     <div className={clsx("col col--4")}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} alt={title} />
+        <img src={colorMode === "light" ? path + ".png" : path + "-dark.png"} className={styles.featureSvg} alt={title} />
       </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>

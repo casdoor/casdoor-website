@@ -77,16 +77,16 @@ module.exports = {
           ],
         },
         {
-          type: "custom-casdoor",
-          src: "",
-          position: "right",
-          className: "navbar__item navbar__link header-community-link",
-        },
-        {
           href: "https://github.com/casdoor/casdoor",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
+        },
+        {
+          type: "custom-casdoor",
+          src: "",
+          position: "right",
+          className: "navbar__item navbar__link header-community-link",
         },
         {
           type: "search",
