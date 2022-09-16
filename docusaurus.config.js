@@ -41,24 +41,28 @@ module.exports = {
           position: "left",
           label: "Docs",
         },
-        {to: "/blog", label: "Blog", position: "left"},
+        {
+          href: "https://door.casdoor.com/swagger/",
+          label: "API Reference",
+          position: "left",
+        },
+        {
+          label: "Blog",
+          to: "/blog",
+          position: "left",
+        },
         {
           label: "Help",
           to: "/help",
           position: "left",
         },
         {
-          href: "https://door.casdoor.com/swagger/",
-          label: "API",
+          label: "Pricing",
+          to: "https://casdoor.com/#pricing",
           position: "left",
         },
         {
-          label: "Pricing & Sales",
-          to: "https://tawk.to/chat/623352fea34c2456412b8c51/1fuc7od6e",
-          position: "left",
-        },
-        {
-          label: "Contact",
+          label: "Contact Sales",
           to: "https://tawk.to/chat/623352fea34c2456412b8c51/1fuc7od6e",
           position: "left",
         },
@@ -199,7 +203,7 @@ var _hmt = _hmt || [];
     announcementBar: {
       id: "announcement", // ID of the announcement bar
       content:
-        "💖 An authorization library that supports access control models like ACL, RBAC, ABAC. Learn more about: <a href=\"https://casbin.io/\">Casbin</a> 💖",
+        "<a target=\"_blank\" rel=\"noreferrer\" href=\"https://casbin.io/\">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>",
       isCloseable: true,
     },
     docs: {
