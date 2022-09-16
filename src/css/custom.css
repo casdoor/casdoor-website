@@ -36,13 +36,13 @@
   --site-primary-hue-saturation: 210 68%; /* announcementBar */
 
   /* https://docusaurus.io/docs/styling-layout#styling-your-site-with-infima */
-  --ifm-color-primary: #413b7d;
-  --ifm-color-primary-dark: #3b3571;
-  --ifm-color-primary-darker: #37326a;
-  --ifm-color-primary-darkest: #2e2958;
-  --ifm-color-primary-light: #48418a;
-  --ifm-color-primary-lighter: #4b4490;
-  --ifm-color-primary-lightest: #554da3;
+  --ifm-color-primary: #4c00ff;
+  --ifm-color-primary-dark: #4400e6;
+  --ifm-color-primary-darker: #4100d9;
+  --ifm-color-primary-darkest: #3500b3;
+  --ifm-color-primary-light: #5e1aff;
+  --ifm-color-primary-lighter: #6726ff;
+  --ifm-color-primary-lightest: #5108ff;
 
   /* diy */
   --docs-color: #dadde1;
@@ -57,6 +57,10 @@ html[data-theme="dark"] {
   --ifm-color-primary-lighter: #d8c3ff;
   --ifm-color-primary-lightest: #fefdff;
   --docs-color: #2e2e2e;
+}
+
+html .hero--primary {
+  --ifm-hero-background-color: #413b7d;
 }
 
 html[data-theme="dark"] .hero--primary {
@@ -138,7 +142,7 @@ div[class^="announcementBar_"] {
 }
 
 .casdoor-link {
-  background-color: #2160fd;
+  background-color: rgb(89 81 173);
   border-radius: 4px;
   margin-right: 12px;
   transition-property: all;
@@ -158,11 +162,11 @@ div[class^="announcementBar_"] {
 }
 
 .casdoor-signup:hover {
-  background-color: #0f51f8;
+  background-color: rgb(108 99 211);
 }
 
 .casdoor-login {
-  --ifm-navbar-link-hover-color: #1a90ff;
+  --ifm-navbar-link-hover-color: rgb(108 99 211);
 
   background-color: transparent;
 }
@@ -182,7 +186,7 @@ div[class^="announcementBar_"] {
   font-size: 14px;
   border-radius: 4px 0 0 4px;
 
-  --ifm-menu-color-background-active: var(rgb(33 96 253 / 16%));
+  --ifm-menu-color-background-active: rgb(113 102 222 / 33%);
 }
 
 .menu__list-item-collapsible:hover {
