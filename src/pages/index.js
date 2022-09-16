@@ -187,8 +187,8 @@ function ContentForget() {
 export default function Home() {
   return (
     <Layout
-      title={"Casdoor · A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS"}
-      description="Casdoor is a UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS">
+      title={"Casdoor · An Open Source UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS"}
+      description="Casdoor is an Open Source UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
