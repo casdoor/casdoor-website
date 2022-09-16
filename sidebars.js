@@ -14,7 +14,7 @@ module.exports = {
     {
       type: "category",
       label: "The Basics",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "overview",
         "basic/core-concepts",
@@ -26,7 +26,7 @@ module.exports = {
     {
       type: "category",
       label: "Deployment",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "deployment/data-initialization",
         "deployment/deploy-cdn",
@@ -36,14 +36,17 @@ module.exports = {
     {
       type: "category",
       label: "How to Connect to Casdoor",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "how-to-connect/overview",
         "how-to-connect/oidc-client",
         "how-to-connect/sdk",
         "how-to-connect/vue-sdk",
         {
-          "Desktop SDKs": [
+          type: "category",
+          label: "Desktop SDKs",
+          link: {type: "generated-index"},
+          items: [
             "how-to-connect/desktop-sdks/electron-app",
             "how-to-connect/desktop-sdks/dotnet-app",
           ],
@@ -57,7 +60,7 @@ module.exports = {
     {
       type: "category",
       label: "Developer Guide",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "developer-guide/frontend",
         "developer-guide/swagger",
@@ -66,7 +69,7 @@ module.exports = {
     {
       type: "category",
       label: "Organizations",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "organization/overview",
         "organization/accountCustomization",
@@ -75,7 +78,7 @@ module.exports = {
     {
       type: "category",
       label: "Applications",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "application/overview",
         "application/config",
@@ -86,7 +89,7 @@ module.exports = {
     {
       type: "category",
       label: "Permissions",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "permission/overview",
         "permission/casbin-enforcement",
@@ -95,11 +98,14 @@ module.exports = {
     {
       type: "category",
       label: "Providers",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "provider/overview",
         {
-          OAuth: [
+          type: "category",
+          label: "OAuth",
+          link: {type: "generated-index"},
+          items: [
             "provider/oauth/overview",
             "provider/oauth/CustomProvider",
             "provider/oauth/Twitter",
@@ -124,25 +130,37 @@ module.exports = {
         "provider/email",
         "provider/sms",
         {
-          Storage: [
+          type: "category",
+          label: "Storage",
+          link: {type: "generated-index"},
+          items: [
             "provider/storage/storage",
             "provider/storage/azure",
           ],
         },
         {
-          SAML: [
+          type: "category",
+          label: "SAML",
+          link: {type: "generated-index"},
+          items: [
             "provider/saml/overview",
             "provider/saml/aliyun",
             "provider/saml/keycloak",
           ],
         },
         {
-          Payment: [
+          type: "category",
+          label: "Payment",
+          link: {type: "generated-index"},
+          items: [
             "provider/payment/Alipay",
           ],
         },
         {
-          Captcha: [
+          type: "category",
+          label: "Captcha",
+          link: {type: "generated-index"},
+          items: [
             "provider/captcha/overview",
             "provider/captcha/default",
             "provider/captcha/recaptcha",
@@ -155,7 +173,7 @@ module.exports = {
     {
       type: "category",
       label: "Resources",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "resources/overview",
       ],
@@ -163,7 +181,7 @@ module.exports = {
     {
       type: "category",
       label: "Products",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "products/product",
         "products/payment",
@@ -172,7 +190,7 @@ module.exports = {
     {
       type: "category",
       label: "Users",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "user/overview",
         "user/roles",
@@ -182,7 +200,7 @@ module.exports = {
     {
       type: "category",
       label: "Syncer",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "syncer/overview",
         "syncer/Database",
@@ -192,7 +210,7 @@ module.exports = {
     {
       type: "category",
       label: "Tokens",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "token/overview",
       ],
@@ -200,7 +218,7 @@ module.exports = {
     {
       type: "category",
       label: "Webhooks",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "webhooks/overview",
       ],
@@ -208,7 +226,7 @@ module.exports = {
     {
       type: "category",
       label: "Deploy",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "deploy/nginx",
         "deploy/k8s",
@@ -217,7 +235,7 @@ module.exports = {
     {
       type: "category",
       label: "LDAP",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "ldap/overview",
         "ldap/config",
@@ -226,7 +244,7 @@ module.exports = {
     {
       type: "category",
       label: "Integrations",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: [
         "integration/apisix",
         "integration/gitlab",
@@ -237,7 +255,10 @@ module.exports = {
         "integration/spring-cloud",
         "integration/spring-cloud-gateway",
         {
-          "Spring Security": [
+          type: "category",
+          label: "Spring Security",
+          link: {type: "generated-index"},
+          items: [
             "integration/spring-security/spring-security-oauth",
             "integration/spring-security/spring-security-filter",
           ],
@@ -256,11 +277,10 @@ module.exports = {
     {
       type: "category",
       label: "WebAuthn",
-      collapsed: false,
+      link: {type: "generated-index"},
       items: ["webauthn/overview"],
     },
     "internationalization",
     "contributing",
   ],
-
 };
