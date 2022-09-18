@@ -196,7 +196,7 @@ var _hmt = _hmt || [];
       copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
     },
     prism: {
-      additionalLanguages: ["nginx", "java", "properties", "groovy"],
+      additionalLanguages: ["nginx", "java", "properties", "groovy", "ruby"],
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },

@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
 title: Overview
+description: Use webauthn in Casdoor
+keywords: [webauthn]
 ---
 
 ## Overview
@@ -51,6 +52,3 @@ Go to the log in page, choose the wenauthn login method, enter your username and
 ![Webauthn2](/img/webauthn/login_webauthn.png)
 
 Then you will see that you have already logged in.
-
-
-

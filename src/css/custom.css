@@ -44,7 +44,7 @@
   --ifm-color-primary-lighter: #6726ff;
   --ifm-color-primary-lightest: #5108ff;
 
-  /* diy */
+  /* Docs sidebar Collapse&Expand button */
   --docs-color: #dadde1;
 }
 
@@ -65,10 +65,6 @@ html .hero--primary {
 
 html[data-theme="dark"] .hero--primary {
   --ifm-hero-background-color: #2b3137;
-}
-
-html[data-theme="dark"] iframe body {
-  background-color: #2b3137;
 }
 
 .header-github-link::before {
