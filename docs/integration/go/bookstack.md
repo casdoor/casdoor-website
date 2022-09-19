@@ -39,6 +39,5 @@ Make sure the `Redirect URL` is the same as the `redirectUrl` in the file `oauth
 
 **Now that you've done all the configuration for Casdoor!**
 
-You can go back to your BookStack and experience using Casdoor 
-for login authentication once the BookStack has been successfully deployed.
+ go back to your BookStack and experience using casdoor for login authentication once the BookStack has been successfully deployed.
 
