@@ -60,7 +60,7 @@ git clone https://github.com/casdoor/casdoor
 
 ### Configure Database
 
-Casdoor support mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default. If you use another database, please
+Casdoor supports mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default. If you use another database, please
 modify the import package in [object/adapter](https://github.com/casdoor/casdoor/blob/afa9c530adac39fdea329dbfd8a55775badb7d09/object/adapter.go#L24-L27).
 
 #### MySQL:
@@ -159,7 +159,7 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
 
 **All configuration items defined by Casdoor** in the ini file mentioned above can be chosen to configuration via environmental variables, so can **some of the beego configurations** items(httpport,appname).
 
-For example, when you try to start casdoor, you can use someting like this to pass the configuration via environmental variables.
+For example, when you try to start casdoor, you can use something like this to pass the configuration via environmental variables.
 ```shell
 appname=casbin go run main.go
 ```
