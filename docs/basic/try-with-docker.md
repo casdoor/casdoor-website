@@ -113,17 +113,27 @@ Note: the above command utilizes Linux tools like `curl`, `sed`, `grep`, `awk`. 
 
 :::
 
-Create `conf/app.conf`, you can copy it from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) in Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
-
 :::tip
 
-if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution see [Via Environment Variables](/docs/basic/server-installation#via-environment-variables) for details
+if it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution.
+
+```bash title="example"
+
+docker run \
+  -e driverName=mysql \
+  -e dataSourceName='user:password@tcp(x.x.x.x:3306)/' \
+  -p 8000:8000 \
+  casbin/casdoor:latest
+
+```
 
 :::
 
+Create `conf/app.conf`, you can copy it from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) in Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
+
 Then run 
 
-```
+```bash
 docker run  -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
 ```
 
