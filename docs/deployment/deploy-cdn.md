@@ -55,7 +55,6 @@ ok      github.com/casdoor/casdoor/deployment   2.951s
 The script will:
 
 - It will upload all the files in folders: `css/` and `js/` to the CDN service pointed by the storage provider. 
-- Replace all the URLs of `.css` and `.js` files in the `web/build/index.html` to the URLs hosted in the CDN.
+- Replace all the URLs of `.css` and `.js` files in the `web/build/index.html` with the URLs hosted in the CDN.
 
-You still need to keep the `index.html`. After the static files are uploaded to CDN, `index.html` will still be 
-requested by users through Casdoor Go backend, and those static files in the CDN are then requested through the URLs in `index.html`.
+You still need to keep the `index.html`. After the static files are uploaded to CDN, `index.html` will still be requested by users through Casdoor Go backend, and those static files in the CDN are then requested through the URLs in `index.html`.

@@ -5,7 +5,7 @@ keywords: [k8s, kubernetes]
 ---
 
 ## Deploy Casdoor in k8s
-We have given out a basic example of deploying Casdoor into k8s. In the root folder of casdoor, there exist a file named "k8s.yaml", which include a example minimum configuration to be used in deploying casdoor in k8s, a deployment and a service.
+We have given a basic example of deploying Casdoor into k8s. In the root folder of casdoor, there exists a file named "k8s.yaml", which includes an example minimum configuration to be used in deploying casdoor in k8s, a deployment and a service.
 
 
 First, make sure that you have modified the conf/app.conf so that the casdoor can successfully connect to the database, and the database is running. Second, make sure k8s is able to pull the necessary images. 
