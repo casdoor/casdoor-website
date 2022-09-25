@@ -26,7 +26,7 @@ You need to init requires 5 parameters, which are all string type:
 | CallbackUrl  | The path of the callback URL for your Casdoor application, will be `casdoor://callback` if not provided | `CasdoorVariables.cs` |
 | ClientSecret | The Client Secret of your Casdoor application                                                           | `CasdoorVariables.cs` |
 
-If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com) as the defult Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
+If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com) as the default Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
 
 ## Running
 
@@ -45,10 +45,10 @@ If you don't set these parameters, this project will use the [Casdoor online dem
 After you run this dotnet desktop application, a new window will be showed on your desktop.
 ![index](/img/howto-desktop-dotnet-app-index.png)
 
-If you click `Casdoor Login` botton, a login window will be showed on your desktop.
+If you click `Casdoor Login` button, a login window will be showed on your desktop.
 ![login](/img/howto-desktop-dotnet-app-login.png)
 
-After you login successfully, a user profile window will be showed on your desktop, it dispaly your user name.
+After you login successfully, a user profile window will be showed on your desktop. It displays your user name.
 ![user profile](/img/howto-desktop-dotnet-app-userprofile.png)
 
 You can preview the whole process by the gif image below.

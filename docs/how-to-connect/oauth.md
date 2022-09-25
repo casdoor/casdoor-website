@@ -14,7 +14,7 @@ You have two ways to get the AccessToken: you can use the [Casdoor SDK](/docs/ho
 
 Casdoor supports four OAuth grant types: [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), and [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4). 
 
-For security reasons, the Casdoor app has the authorization code mode turned on by default, if you need to use other modes, please go to the appropriate app to set it.
+For security reasons, the Casdoor app has the authorization code mode turned on by default. If you need to use other modes, please go to the appropriate app to set it.
 
 ![Grant Types](/img/accesstoken_grant_types.png)
 
