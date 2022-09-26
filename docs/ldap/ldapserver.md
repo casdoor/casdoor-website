@@ -22,7 +22,11 @@ If it is a bind operation, the server will use Casdoor to verify the username an
 
 If it is a search operation, the server will check whether the Search operation is legal according to the permissions given to the client by the bind operation and return a response.
 
-> **We only support `Simple Authentication`**.
+:::info
+
+We only support **`Simple Authentication`.**
+
+:::
 
 ### How to bind
 
