@@ -239,6 +239,7 @@ module.exports = {
       items: [
         "ldap/overview",
         "ldap/config",
+        "ldap/ldapserver",
       ],
     },
     {
