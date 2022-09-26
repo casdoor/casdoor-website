@@ -6,21 +6,17 @@ keywords: [SDK, Frontend, Backend]
 
 ## Introduction
 
-Compared to the standard OIDC protocol, Casdoor provides more functionalities in its SDK, like user management, resource
-uploading, etc. Connecting to Casdoor via Casdoor SDK costs more time than using a standard OIDC client library but will
-provide the best flexibility and the most powerful API.
+Compared to the standard OIDC protocol, Casdoor provides more functionalities in its SDK, like user management, resource uploading, etc. Connecting to Casdoor via Casdoor SDK costs more time than using a standard OIDC client library but will provide the best flexibility and the most powerful API.
 
 Casdoor SDKs can be divided into two categories:
 
-1. **Frontend SDK**: Like Javascript SDK, Vue SDK for websites, Android or iOS SDKs for Apps, etc. Casdoor supports
-   providing authentication for both websites and mobile Apps.
+1. **Frontend SDK**: Like Javascript SDK, Vue SDK for websites, Android or iOS SDKs for Apps, etc. Casdoor supports providing authentication for both websites and mobile Apps.
 2. **Backend SDK**: SDKs for backend languages like Go, Java, Node.js, Python, PHP, etc.
 
 :::tip
 
 If your website is developed in a frontend and backend separated manner, then you can use the Javascript
-SDK: `casdoor-js-sdk` or React SDK: `casdoor-react-sdk` or Vue SDK: `casdoor-vue-sdk` to integrate Casdoor in frontend. If your web application is a
-traditional website developed by JSP or PHP, you can just use the backend SDKs only. See an example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
+SDK: `casdoor-js-sdk` or React SDK: `casdoor-react-sdk` or Vue SDK: `casdoor-vue-sdk` to integrate Casdoor in frontend. If your web application is a traditional website developed by JSP or PHP, you can just use the backend SDKs only. See an example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
 
 :::
 
@@ -56,8 +52,7 @@ For a full list of the official Casdoor SDKs, please see: https://github.com/cas
 
 ### 1. Backend SDK configuration
 
-When your application starts up, you need to initialize the Casdoor SDK config by calling the `InitConfig()` function
-with required parameters. Take casdoor-go-sdk as
+When your application starts up, you need to initialize the Casdoor SDK config by calling the `InitConfig()` function with required parameters. Take casdoor-go-sdk as
 example: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
 
 ```go
@@ -165,9 +160,7 @@ export function goToLink(link) {
 ```
 
 In the entrance file of your frontend code (like `index.js` or `app.js` in React), you need to initialize
-the `casdoor-js-sdk` by calling the `InitConfig()` function with required parameters. The first 4 parameters should use
-the same value as the Casdoor backend SDK. The last parameter `redirectPath` is relative path for the redirected URL,
-returned from Casdoor's login page.
+the `casdoor-js-sdk` by calling the `InitConfig()` function with required parameters. The first 4 parameters should use the same value as the Casdoor backend SDK. The last parameter `redirectPath` is relative path for the redirected URL, returned from Casdoor's login page.
 
 ```js
 const config = {
@@ -181,9 +174,7 @@ const config = {
 xxx.initCasdoorSdk(config);
 ```
 
-**(Optional)** Because we are using React as example, so our `/callback` path is hitting the React route, we use the
-following React component to receive the `/callback` call and sends to the backend. You can ignore this step if you are
-redirecting to backend directly (like in JSP or PHP).
+**(Optional)** Because we are using React as example, our `/callback` path is hitting the React route. We use the following React component to receive the `/callback` call and send to the backend. You can ignore this step if you are redirecting to backend directly (like in JSP or PHP).
 
 ```js
 import React from "react";
@@ -251,9 +242,7 @@ export default withRouter(AuthCallback);
 
 ### 3. Get login URLs
 
-Next you can show the "Sign up" and "Sign in" buttons or links to your users. The URLs can either be retrieved in the
-frontend or backend. See more details
-at: **[/docs/basic/core-concepts#login-urls](/docs/basic/core-concepts#login-urls)**
+Next you can show the "Sign up" and "Sign in" buttons or links to your users. The URLs can either be retrieved in the frontend or backend. See more details at: **[/docs/basic/core-concepts#login-urls](/docs/basic/core-concepts#login-urls)**
 
 ### 4. Get and verify access token
 
@@ -264,13 +253,9 @@ Here are the steps:
 2. The user enters username & password and clicks `Sign In` (or just click the third-party login button
    like `Sign in with GitHub`).
 3. The user is redirected back to your application with the authorization code issued by Casdoor (
-   like: `https://forum.casbin.com?code=xxx&state=yyy`), your application's backend needs to exchange the authorization
-   code with the access token and verify that the access token is valid and issued by Casdoor. The
-   functions `GetOAuthToken()` and `ParseJwtToken()` are provided by Casdoor backend SDK.
+   like: `https://forum.casbin.com?code=xxx&state=yyy`), your application's backend needs to exchange the authorization code with the access token and verify that the access token is valid and issued by Casdoor. The functions `GetOAuthToken()` and `ParseJwtToken()` are provided by Casdoor backend SDK.
 
-The following code shows how to get and verify the access token. For a real example of Casnode (a forum website written
-in Go),
-see: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
+The following code shows how to get and verify the access token. For a real example of Casnode (a forum website written in Go), see: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
 
 ```go
 // get code and state from the GET parameters of the redirected URL
@@ -297,13 +282,11 @@ returned `claims` can be used to identity the user later.
 
 :::info
 
-This part is actually your application's own business logic and not part of OIDC, OAuth or Casdoor. We just provide good
-practices as a lot of people don't know what to do for next step.
+This part is actually your application's own business logic and not part of OIDC, OAuth or Casdoor. We just provide good practices as a lot of people don't know what to do for the next step.
 
 :::
 
-In Casdoor, access token is usually identical as ID token. They are the same thing. So the access token contains all
-information for the logged-in user.
+In Casdoor, access token is usually identical as ID token. They are the same thing. So the access token contains all information for the logged-in user.
 
 The variable `claims` returned by `ParseJwtToken()` is defined as:
 
@@ -344,13 +327,11 @@ c.SetSessionUser(claims) // set session
 
 #### JWT
 
-The `accessToken` returned by Casdoor is actually a JWT. So if your application uses JWT to keep user session, just use
-the access token directly for it:
+The `accessToken` returned by Casdoor is actually a JWT. So if your application uses JWT to keep user session, just use the access token directly for it:
 
 1. Send the access token to frontend, save it in places like localStorage of the browser.
-2. Let the browser sends the access token to backend for every request.
-3. Call `ParseJwtToken()` or your own function to verify the access token and get logged-in user information in your
-   backend.
+2. Let the browser send the access token to backend for every request.
+3. Call `ParseJwtToken()` or your own function to verify the access token and get logged-in user information in your backend.
 
 ### 5. **(Optional)** Interact with the User table
 
@@ -369,5 +350,4 @@ Casdoor Backend SDK provides a lot of helper functions, not limited to:
 - `DeleteUser()`: delete a user.
 - `CheckUserPassword(auth.User)`: check user's password.
 
-These functions are implemented by making RESTful calls against `Casdoor Public API`. If a function is not provided in
-Casdoor Backend SDK, you can make RESTful calls by yourself.
+These functions are implemented by making RESTful calls against `Casdoor Public API`. If a function is not provided in Casdoor Backend SDK, you can make RESTful calls by yourself.
