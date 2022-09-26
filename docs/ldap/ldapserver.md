@@ -10,7 +10,7 @@ The following describes how to connect to the ldap server in Casdoor and impleme
 
 ### LDAP Server Port
 
-The LDAP server listens on port `389` by default, you can change the default port by changing `ldapServerPort` in `conf/app.conf`.
+The LDAP server listens on port `389` by default, you can change the default port by changing `ldapServerPort` in [conf/app.conf](https://github.com/casdoor/casdoor/blob/28b381e01eebac66e39e20179ed95282695ecd75/conf/app.conf#L22).
 
 ### How it works
 
