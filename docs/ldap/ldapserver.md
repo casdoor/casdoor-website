@@ -1,5 +1,5 @@
 ---
-title: Ldapserver
+title: LDAP Server
 description: How to connect ldap client in Casdoor
 keywords: [ldapserver]
 ---
