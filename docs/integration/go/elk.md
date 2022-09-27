@@ -5,12 +5,12 @@ keywords: [ELK]
 ---
 
 ## Overview of casdoor/elk-auth-casdoor
-One of the biggest dificiency of ELK (Elasticsearch, Logstash and Kibana) is that originally, these products have no authentication mechanism, so that everyone can visit the kibana dashboard as long as he have the url of kibana, or ES urls. Later ELK integrated an embedded authentication system "Xpack", whose all advanced functions  **are not free** (eg. Oauth, OIDC, LDAP, SAML), and only plain authentication (setting a set of accounts and passwords) is free of charge, which is quite incovenient. We cannot just provide a unique account for everyone in a corporation.
+One of the biggest deficiencies of ELK (Elasticsearch, Logstash and Kibana) is that originally, these products have no authentication mechanism, so that everyone can visit the kibana dashboard as long as he has the url of kibana, or ES urls. Later ELK integrated an embedded authentication system "Xpack", whose all advanced functions  **are not free** (eg. Oauth, OIDC, LDAP, SAML), and only plain authentication (setting a set of accounts and passwords) is free of charge, which is quite inconvenient. We cannot just provide a unique account for everyone in a corporation.
 
 
-Therefore, we have developed a elk authentication solution based on Casdoor, **free of charge, open source and under maintenance, supporting lots of advanced features**. Casdoor is a centeralized authentication/ Single-Sign-On platform based on Oauth2.0/OIDC, and casdoor/elk-auth-casdoor is actually a reverse proxy, which is designed to intercept all http data flow toward the elk/kibana, and guides the users who haven't logged in to log in. This reverse proxy is completely transparent as long as the user has logged in.
+Therefore, we have developed a elk authentication solution based on Casdoor, **free of charge, open source and under maintenance, supporting lots of advanced features**. Casdoor is a centralized authentication/ Single-Sign-On platform based on Oauth2.0/OIDC, and casdoor/elk-auth-casdoor is actually a reverse proxy, which is designed to intercept all http data flow toward the elk/kibana, and guides the users who haven't logged in to log in. This reverse proxy is completely transparent as long as the user has logged in.
 
-If this user hasn't been correctly authenticated, request will be temporarly cached, and the user will be redirect to Casdoor login page. After user correctly logs in through casdoor, the cached request will be restored and sent to kibana. So it's ok if a POST request (or something other than GET) is intercepted, and user won't need to refill the form and resend the request. The reverse proxy will remember it for you.
+If this user hasn't been correctly authenticated, the request will be temporally  cached, and the user will be redirected to Casdoor login page. After user logs in through casdoor, the cached request will be restored and sent to kibana. So it's ok if a POST request (or something other than GET) is intercepted, and user won't need to refill the form and resend the request. The reverse proxy will remember it for you.
 
 Location of casdoor/elk-auth-casdoor repository <https://github.com/casdoor/elk-auth-casdoor>
 
@@ -24,7 +24,7 @@ Location of casdoor/elk-auth-casdoor repository <https://github.com/casdoor/elk-
 
 3. modify the configuration
 
-The configuration file locates in "conf/app.conf". Here is an example, and you should customized changes according to your real demand.
+The configuration file locates in "conf/app.conf". Here is an example, and you should customize changes according to your real demands.
 
 ```ini
 appname = .
@@ -49,4 +49,4 @@ organization=built-in
 
 4. visit <http://localhost:8080> (in the example above), and log in following the guidance of redirection, and you shall see kibana protected and authenticated by casdoor.
 
-5. If everything works well, don't forget to block the visits of original kibana's port comming from outside by configurating your firewall(or something else), so that outsiders can only visit kibana via this reverse proxy.
+5. If everything works well, don't forget to block the visits of original kibana's port coming from outside by configurating your firewall(or something else), so that outsiders can only visit kibana via this reverse proxy.
