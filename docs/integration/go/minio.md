@@ -57,7 +57,7 @@ Then you can add a service alias by MinIO client `mc`.
 mc alias set myminio <You console address> minio minio123
 ```
 
-Now, you can configure OpenID connect of MinIO. For Casdoor, the command is like following:
+Now, you can configure OpenID connect of MinIO. For Casdoor, the command is like the following:
 
 ```
 mc admin config set myminio identity_openid config_url="http://CASDOOR_HOSTNAME/.well-known/openid-configuration" client_id=<client id> client_secret=<client secret> claim_name="tag"
@@ -65,7 +65,7 @@ mc admin config set myminio identity_openid config_url="http://CASDOOR_HOSTNAME/
 
 You can refer to [offical document](https://docs.min.io/minio/baremetal/reference/minio-server/minio-server.html#openid-identity-management) for more detailed parameters.
 
-Once successfully set restart the MinIO instance.
+Once successfully set, restart the MinIO instance.
 
 ```
 mc admin service restart myminio
@@ -73,14 +73,13 @@ mc admin service restart myminio
 
 ## Step4. Try the demo!
 
-Now, you can open your MinIO console on the browser and click on `Login with SSO`. 
+Now, you can open your MinIO console in the browser and click on `Login with SSO`. 
 
-You will be redirected to the casdoor user login page, upon successful login you will be redirected to MinIO page and logged in automatically, you should see now the buckets and objects they have access to.
+You will be redirected to the casdoor user login page. Upon successful login you will be redirected to MinIO page and logged in automatically and you should see now the buckets and objects they have access to.
 
 :::caution
 
 If you deploy frontend and backend of casdoor in different ports, the login page you are redirected to will be backend port and it will display `404 not found`. You can modify the port to the frontend one. Then you can access to casdoor login page successfully.
 
 :::
-
 

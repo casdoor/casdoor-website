@@ -6,7 +6,7 @@ keywords: [Grafana]
 
 ## Using Casdoor for authentication in Grafana
 
-[Grafana](https://grafana.com/oss/grafana/) supports authentication via Oauth. Therefore it is extremely easy for uses to use casdoor to log in in Grafana. Only several steps and simple configurations can achieve that.
+[Grafana](https://grafana.com/oss/grafana/) supports authentication via Oauth. Therefore it is extremely easy for users to use casdoor to log in in Grafana. Only several steps and simple configurations can achieve that.
 
 Here is a tutorial to use Casdoor for authentication in Grafana. Before you proceed, please ensure that you have grafana installed and running.
 
@@ -14,7 +14,7 @@ Here is a tutorial to use Casdoor for authentication in Grafana. Before you proc
 Here is an example of creating an app in Casdoor
 ![](/img/grafana_1.png)
 
-Please copy the client secret and client id for next step.
+Please copy the client secret and client id for the next step.
 
 Please add the callback url of grafana. By default, grafana's oauth callback is `/login/generic_oauth`. So please concatenate this url correctly.
 
@@ -35,7 +35,7 @@ token_url = <endpoint of casdoor>/api/login/oauth/access_token
 
 ```
 
-If you don want https enabled for casdoor, please also set `tls_skip_verify_insecure = true`
+If you don't want https enabled for casdoor, please also set `tls_skip_verify_insecure = true`
 
 
 ## Step3: See whether it works.
