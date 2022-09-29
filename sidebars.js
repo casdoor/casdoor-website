@@ -280,6 +280,7 @@ module.exports = {
             "integration/java/jenkins oidc",
             "integration/java/RuoYi",
             "integration/java/Pulsar-manager",
+            "integration/java/shenyu",
 
           ],
         },
