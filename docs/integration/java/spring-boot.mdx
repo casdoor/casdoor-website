@@ -4,7 +4,7 @@ description: Using Casdoor in Spring Boot project
 keywords: [SpringBoot, Spring Boot]
 ---
 
-[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example on how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. We will show you the steps below.
+[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example of how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. We will show you the steps below.
 
 ## Step1. Deploy Casdoor
 
@@ -17,7 +17,7 @@ After a successful deployment, you need to ensure:
 - Open your favorite browser and visit **http://localhost:8000**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
-Then you can quickly implement a casdoor based login page in your own app with the following steps.
+Then you can quickly implement a casdoor-based login page in your own app with the following steps.
 
 ## Step2. Import casdoor-spring-boot-starter
 
@@ -121,7 +121,7 @@ casdoor:
 
 :::caution
 
-You should replace the configuration with your own Casdoor instance especially the `clientId`, `clientSecret` and the `jwtPublicKey`.
+You should replace the configuration with your own Casdoor instance, especially the `clientId`, `clientSecret` and the `jwtPublicKey`.
 
 :::
 
@@ -147,7 +147,7 @@ After Casdoor verification passed, it will be redirected to your application wit
 
 You can get the code and call `getOAuthToken` method, then parse out jwt token.
 
-`CasdoorUser` contains the basic information about the user provided by Casdoor, you can use it as a keyword to set the session in your application.
+`CasdoorUser` contains the basic information about the user provided by Casdoor. You can use it as a keyword to set the session in your application.
 
 ```java
 @RequestMapping("login")

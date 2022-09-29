@@ -4,9 +4,9 @@ description: Using Casdoor in RuoYi-Cloud
 keywords: [RuoYi]
 ---
 
-Casdoor can connect to RuoYi-cloud simplely
+Casdoor can connect to RuoYi-cloud simply.
 
-## Step1. Deploy Casdoor
+## Step 1. Deploy Casdoor
 
 Firstly, the Casdoor should be deployed. 
 
@@ -18,13 +18,13 @@ After a successful deployment, you need to ensure:
 - Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
-Then you can quickly implement a casdoor based login page in your own app with the following steps.
+Then you can quickly implement a casdoor-based login page in your own app with the following steps.
 
 
-## Step2. Configure Casdoor 
-Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser with your develop browser).
+## Step 2. Configure Casdoor 
+Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser as  your develop browser).
 
-You also should configure organization, application, Synchronizer, you also can refer to [casdoor](https://door.casdoor.com/login).
+You also should configure an organization, an application and the Synchronizer. You also can refer to [casdoor](https://door.casdoor.com/login).
 
 Some points needing attention:
 
@@ -35,13 +35,13 @@ Some points needing attention:
 ![passwordType](/img/RuoYi-Cloud_passwordType.png)
 
 3. You also should open soft deletion.
-## Step3. Reform your front-end
+## Step 3. Reform your front-end
 ### 3.1 jump to casdoor's login page
-We can use front-end sdk, take vue-sdk as a exmaple here. After you init vue-sdk, you can get casdoor login page url by getSigninUrl().
+We can use front-end sdk, take vue-sdk as an example here. After you init vue-sdk, you can get casdoor login page url by getSigninUrl().
 
-You can link it with the way you like and you can delete some ruoyi-cloud original code which you have no further use such as original account and password el-input.
+You can link it with the way you like and you can delete some ruoyi-cloud original code which you have no further use, such as original account and password el-input.
 ### 3.2 Accept the code and state which return by casdoor
-After we login in by casdoor successful,casdoor send cade and state to the page which we set up. We can get code and state with function create.
+After we login in successfully by casdoor, casdoor sends the code and state to the page that we set up. We can get the code and state with function create.
 ```javascript
 created() {
     let url = window.document.location.href//get url
@@ -53,9 +53,9 @@ created() {
     }  
 }
 ```
-For RuoYi-Cloud, we just change its original method which send account and password to send code and state. So it relative to original login, it just change the thing which will send to back-end.
+For RuoYi-Cloud, we just change its original method which sends account and password to send code and state. Therefore, it just changes what is sent to the back end, relative to the original login.
 
-## Step4. Reform your back-end
+## Step 4. Reform your back-end
 ### 4.1 Accept the code and state which return by front-end
 ```java
 @PostMapping("login")
@@ -75,33 +75,31 @@ public R<?> callback(@RequestBody CodeBody code) {//we should define a CodeBody 
 ```
 In this method, we use casdoor-SpringBoot-sdk method and slightly modified RuoYi-Cloud Method.
 
-For exmaple RuoYi-Cloud original register with account and password, i change the register with account like casdoorRegister.
+For example, RuoYi-Cloud original register with account and password, I change the register with account like casdoorRegister.
 
 I also add a method to execute whether this account exists like getUserByCasdoorName and change execute userinfo with account and password to with account.
 
-It's eazy, because we only need delete the part of checking password.
-## Step5. Summary
+It's easy, because we only need to delete the part of checking password.
+## Step 5. Summary
 ### 5.1 front-end 
-- We need delete original login and register.
-- We also need accept code and state and send them to back-end.
+- We need to delete original login and register.
+- We also need to accept code and state and send them to back-end.
 ### 5.2 back-end
-RuoYi back-end have perfect login and register function. We just need change a little, so it is very convenient.
-## Step6. Detailed steps
-1. Deploy and configure casdoor.We must take care of organization's password type which should choose bcrypt because
-RuoYi-Cloud's password type is bcrypt.
-2. We should use casdoor syncers to copy database user to your casdoor organization. This step can make the original account
-import to casdoor.
+RuoYi back-end has perfect login and registration function. We just need to change a little, so it is very convenient.
+## Step 6. Detailed steps
+1. Deploy and configure casdoor. We must take care of the organization's password type which should choose bcrypt because RuoYi-Cloud's password type is bcrypt.
+2. We should use casdoor syncers to copy database users to your casdoor organization. This step can make the original account import to casdoor.
 3. After we deployed casdoor, we should change front-end. We should close RuoYi check code 
 ![checkcode Switch](/img/RuoYi-Cloud_loginSwitch.png)
 
  Note that RuoYi-Cloud checkcode needs close in nacos again.
- Note that RuoYi-Cloud open register function need change sys.account.registerUser to true. 
+ Note that if you want to register RuoYi-Cloud, you need to ensure the authenticity of your account and user name.
 
 4. We should add button jump to casdoor and change data's loginForm
 ![login button](/img/RuoYi-Cloud_loginButton.png)
 ![data loginForm](/img/RuoYi-Cloud_loginForm.png)
- Here i write url, you can get url by casdoor-vue-sdk or casdoor-SpringBoot-sdk.
-5. Because we don't use original login, we should delete the method about cookie and checkcode method.
+ Here I write url, you can get url by casdoor-vue-sdk or casdoor-SpringBoot-sdk.
+5. Because we don't use the original login, we should delete the method about cookie and checkcode method.
 
  So the new create function:
 ```javascript
@@ -115,7 +113,7 @@ created() {
     }  
 }
 ```
-6. In fact we just need change the parameter we send to back-end and delete the function we don't need, we don't change else.
+6. In fact, we just need to change the parameter we send to back-end and delete the function we don't need, we don't need to change anything else.
 ![handleLogin](/img/RuoYi-Cloud_handleLogin.png)
 ![Login](/img/RuoYi-Cloud_Login.png)
 ![login](/img/RuoYi-Cloud_login2.png)
@@ -127,8 +125,8 @@ created() {
     <version>1.2.0</version>
 </dependency>
 ```
-You also need configure casdoor in resource.
-8. Callback function is defined as redirect function. I change some method in sysLoginService a little. I delete the check password step because we don't need it.
+You also need to configure casdoor in resource.
+8. Callback function is defined as the redirect function. I change some methods in sysLoginService slightly. I delete the check password step because we don't need it.
 ```java
 @PostMapping("login")
 public R<?> callback(@RequestBody CodeBody code) {//we should define a CodeBody entity which have code and state

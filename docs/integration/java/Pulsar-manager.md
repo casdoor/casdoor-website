@@ -4,9 +4,9 @@ description: Using Casdoor in Pulsar-manager
 keywords: [Pulsar-manager]
 ---
 
-Casdoor can connect to Pulsar-manager simplely.
+Casdoor can connect to Pulsar-manager simply.
 
-Because the code for connecting casdoor have been add in Pulsar-manager,so we just need configure application.yml in back-end and open front switch.
+Because the code for connecting casdoor has been added in Pulsar-manager, we just need to configure application.yml in back-end and open front switch.
 
 ## Step1. Deploy Casdoor
 
@@ -20,21 +20,21 @@ After a successful deployment, you need to ensure:
 - Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
-Then you can quickly implement a casdoor based login page in your own app with the following steps.
+Then you can quickly implement a casdoor-based login page in your own app with the following steps.
 
 ## Step2. Configure Casdoor 
-Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser with your develop browser).
+Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser as your develop browser).
 
-You also should configure organization, application, you also can refer to [casdoor](https://door.casdoor.com/login).
+You also should configure an organization and an application. You also can refer to [casdoor](https://door.casdoor.com/login).
 
-### step2.1 you should create a organization
+### step2.1 you should create an  organization
 ![organization](/img/Pulsar-manager_editOrganization.png)
 
-### step2.2 you should create a application
+### step2.2 you should create an application
 ![application](/img/Pulsar-manager_editApplication.png)
 
 
-## Step3. Open Pulsar-manager front-end switch.
+## Step3. Open Pulsar-manager front-end switch
 Open this switch to make code and state send to back-end.
 
 This switch in the Line 80 of pulsar-manager/front-end/src/router/index.js
