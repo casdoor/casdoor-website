@@ -4,7 +4,7 @@ description: Using Casdoor in ShenYu
 keywords: [ShenYu]
 ---
 
-ShenYu have casdoor plugin to ues casdoor
+ShenYu has casdoor plugin to use casdoor
 
 ## Step1. Deploy Casdoor
 
