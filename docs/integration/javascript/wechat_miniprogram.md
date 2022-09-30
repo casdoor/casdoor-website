@@ -12,10 +12,10 @@ Casdoor supports WeChat Mini Program after version 1.41.0
 
 ## Introduction
 
-Since WeChat Mini Program do not support standardized OAuth, it cannot jump to the self-host Casdoor webpage for login. 
+Since WeChat Mini Program does not support standardized OAuth, it cannot jump to the self-host Casdoor webpage for login. 
 Therefore, the process of using Casdoor for WeChat Mini Program is different from that of ordinary programs. 
 
-This document will talk about how to access Casdoor to WeChat Mini Program, You can find the example on GitHub here: [casdoor-wechat-miniprogram-example](https://github.com/casdoor/casdoor-wechat-miniprogram-example).
+This document will talk about how to access Casdoor to WeChat Mini Program. You can find the example on GitHub here: [casdoor-wechat-miniprogram-example](https://github.com/casdoor/casdoor-wechat-miniprogram-example).
 More detailed information can be found in the WeChat Mini Program [login document](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html).
 
 >The following are some of the names in the configuration:
@@ -49,7 +49,7 @@ So if you want to use the WeChat Mini Program in this app, don't add multiple We
 
 ## Step3. Write WeChat MiniProgram code
 
-WeChat Mini Program provides an API to login internally and get the Code, all you need to do is to send this Code to Casdoor,
+WeChat Mini Program provides an API to login internally and gets the Code. All you need to do is to send this Code to Casdoor.
 Casdoor will use this Code to get some information from WeChat server (such as OpenID, SessionKey, etc.).
 
 The following code shows how to accomplish the above process:

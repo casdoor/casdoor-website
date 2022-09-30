@@ -8,7 +8,7 @@ Under the Spring Cloud microservice system, general authentication occurs at the
 
 If you want to use Casdoor in a single service, you can refer to [casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example).
 
-No matter in the gateway layer or in the single service, both uses [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter).
+No matter in the gateway layer or in the single service, both use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter).
 
 ## What's more
 

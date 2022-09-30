@@ -26,7 +26,7 @@ After a successful deployment, you need to ensure:
 3. Add provider you want and supplement other settings.
 
 ![Application Setting](/img/appsetting_gitlab.png)
-Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in next step.
+Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, and we will use them in next step.
 
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
