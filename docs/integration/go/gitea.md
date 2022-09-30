@@ -47,7 +47,7 @@ Please choose the `OpenID Connect` Oauth2 Provider.
 
 Fill in the client ID and client secret remembered in the previous step.
 
-Fill in the open id connect auto discovery url, which is supposed to be `<your endpoint of casdoor>/.well-known/openid-configuration`.
+Fill in the openid connect auto discovery url, which is supposed to be `<your endpoint of casdoor>/.well-known/openid-configuration`.
 
 Fill in the other optional configuration items as you wish. And then submit it.
 

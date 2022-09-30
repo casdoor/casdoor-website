@@ -92,8 +92,8 @@ RuoYi back-end has perfect login and registration function. We just need to chan
 3. After we deployed casdoor, we should change front-end. We should close RuoYi check code 
 ![checkcode Switch](/img/RuoYi-Cloud_loginSwitch.png)
 
- Note that RuoYi-Cloud checkcode needs close in nacos again.
- Note that if you want to register RuoYi-Cloud, you need to ensure the authenticity of your account and user name.
+ Note that RuoYi-Cloud captcha needs to be close in nacos again.
+ Note that RuoYi-Cloud open registration function requires changing sys.account.registerUser to true. 
 
 4. We should add button jump to casdoor and change data's loginForm
 ![login button](/img/RuoYi-Cloud_loginButton.png)
