@@ -41,6 +41,7 @@ module.exports = {
         "how-to-connect/overview",
         "how-to-connect/oidc-client",
         "how-to-connect/sdk",
+        "how-to-connect/single-sign-on",
         "how-to-connect/vue-sdk",
         {
           type: "category",
