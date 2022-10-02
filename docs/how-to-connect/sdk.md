@@ -49,6 +49,7 @@ Next, use one of the following backend SDKs based on the language of your backen
 | .NET SDK    | For ASP.NET backends | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk) | [casdoor-dotnet-sdk-example](https://github.com/casdoor/casdoor-dotnet-sdk-example)                                                                                            |
 | Rust SDK    | For Rust backends    | [casdoor-rust-sdk](https://github.com/casdoor/casdoor-rust-sdk)     | [casdoor-rust-example](https://github.com/casdoor/casdoor-rust-example)                                                                                                        |
 | Dart SDK    | For Dart backends    | [casdoor-dart-sdk](https://github.com/casdoor/casdoor-dart-sdk)     |                                                                                                                                                                                |
+| Cpp SDK  | For Cpp backends  | [casdoor-cpp-sdk](https://github.com/casdoor/casdoor-cpp-sdk) | [casdoor-cpp-qt-example](https://github.com/casdoor/casdoor-cpp-qt-example)                                                                                    |
 
 For a full list of the official Casdoor SDKs, please see: https://github.com/casdoor?q=sdk&type=all&language=&sort=
 
