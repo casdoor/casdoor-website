@@ -28,8 +28,8 @@ Enter the Organization Edit page, you will find the following:
 ![account_customize.png](/img/organization/account_customize.png)
 
 Casdoor provides very simple operations to configure:
- 
-- Set the item to visible or invisible
+
+- Set the item to be visible or invisible
 
 ![account_visible.png](/img/organization/account_visible.png)
 

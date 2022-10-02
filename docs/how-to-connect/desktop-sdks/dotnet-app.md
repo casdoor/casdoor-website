@@ -16,7 +16,7 @@ An [Dotnet desktop app example](https://github.com/casdoor/casdoor-dotnet-deskto
 
 ## Initialization
 
-You need to init requires 5 parameters, which are all string type:
+The initialization requires 5 parameters, which are all string type:
 
 | Name         | Description                                                                                             | File                  |
 | ------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
