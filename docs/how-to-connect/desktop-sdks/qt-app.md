@@ -28,7 +28,7 @@ You need to initialize 7 parameters, which are all string type:
 | app_name      | The name of your Casdoor application                                                                    | `mainwindow.h` |
 | redirect_url  | The path of the callback URL for your Casdoor application, will be `http://localhost:8080/callback` if not provided | `mainwindow.h` |
 
-If you don't set the parameter `endpoint`, this project will use the [Casdoor localhost demo](http://localhost:8080) as the defult Casdoor server.
+If you don't set the parameter `endpoint`, this project will use the [http://localhost:8000](http://localhost:8000) as the defult Casdoor server.
 
 ### Running
 
