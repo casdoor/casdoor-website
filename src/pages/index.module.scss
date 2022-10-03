@@ -52,16 +52,24 @@
 
 .contentlogin {
   @include content;
-}
-
-.contentsignup {
-  @include content;
 
   background-color: var(--ifm-color-emphasis-100);
 }
 
+.contentinterface {
+  @include content;
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+.contentsignup {
+  @include content;
+}
+
 .contentforget {
   @include content;
+
+  background-color: var(--ifm-color-emphasis-100);
 }
 
 .headerborder {

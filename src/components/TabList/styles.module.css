@@ -1,0 +1,40 @@
+.card {
+  background: rgb(246 247 248);
+  border-radius: 20px;
+  text-align: left;
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+html[data-theme="dark"] .card {
+  background: #2a2734;
+}
+
+.tabItem {
+  margin-top: 0 !important;
+  border-bottom-color: transparent;
+  padding: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.tabItem:hover {
+  background-color: transparent;
+}
+
+.buttons {
+  white-space: nowrap;
+
+  /* padding: var(--ifm-tabs-padding-vertical) var(--ifm-tabs-padding-horizontal); */
+  padding-top: 10px;
+  padding-left: 15px;
+}
+
+.dot {
+  margin-right: 6px;
+  margin-top: 10px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
