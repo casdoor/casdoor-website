@@ -22,12 +22,12 @@ Inside `/src`, there are several important files or folders as follows:
 | File/Directory          | Description                                                  |
 | ----------------------- | ------------------------------------------------------------ |
 | account                 | the "My profile" page for logged-in users                    |
-| auth                    | all codes related to authentication, like OAuth, SAML, sign up page, sign in page, forget password page, etc. |
+| auth                    | all code related to authentication, like OAuth, SAML, sign up page, sign in page, forget password page, etc. |
 | backend                 | the SDK for calling Go backend API, contains all the `fetch()` calls |
 | basic                   | the homepage (dashboard page) for Casdoor, it contains several card widgets |
 | common                  | shared UI widgets                                            |
 | locales                 | i18n translation files in JSON, synced with our Crowdin project: https://crowdin.com/project/casdoor-site |
 | App.js                  | the entrance JS file, containing all routes                  |
-| Setting.js              | the utility functions used by other codes                    |
+| Setting.js              | the utility functions used by other code                     |
 | OrganizationListPage.js | the page for the organization list, similar to all other XXXListPage.js |
 | OrganizationEditPage.js | the page for editing one organization, similar to all other XXXEditPage.js |

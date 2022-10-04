@@ -4,7 +4,7 @@ description: Using Casdoor in RuoYi-Cloud
 keywords: [RuoYi]
 ---
 
-Casdoor can connect to RuoYi-cloud simply.
+Casdoor can simply connect to RuoYi-cloud.
 
 ## Step 1. Deploy Casdoor
 
@@ -20,8 +20,8 @@ After a successful deployment, you need to ensure:
 
 Then you can quickly implement a casdoor-based login page in your own app with the following steps.
 
-
 ## Step 2. Configure Casdoor 
+
 Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser as  your develop browser).
 
 You also should configure an organization, an application and the Synchronizer. You also can refer to [casdoor](https://door.casdoor.com/login).
@@ -29,13 +29,13 @@ You also should configure an organization, an application and the Synchronizer. 
 Some points needing attention:
 
 1. The table columns in edit syncer:
-![table colums](/img/RuoYi-Cloud_tableColumns.png)
-
+     ![table colums](/img/RuoYi-Cloud_tableColumns.png)
 2. The password type in edit organization:
-![passwordType](/img/RuoYi-Cloud_passwordType.png)
-
+     ![passwordType](/img/RuoYi-Cloud_passwordType.png)
 3. You also should open soft deletion.
+
 ## Step 3. Reform your front-end
+
 ### 3.1 jump to casdoor's login page
 We can use front-end sdk, take vue-sdk as an example here. After you init vue-sdk, you can get casdoor login page url by getSigninUrl().
 
@@ -56,6 +56,7 @@ created() {
 For RuoYi-Cloud, we just change its original method which sends account and password to send code and state. Therefore, it just changes what is sent to the back end, relative to the original login.
 
 ## Step 4. Reform your back-end
+
 ### 4.1 Accept the code and state which return by front-end
 ```java
 @PostMapping("login")
@@ -80,13 +81,17 @@ For example, RuoYi-Cloud original register with account and password, I change t
 I also add a method to execute whether this account exists like getUserByCasdoorName and change execute userinfo with account and password to with account.
 
 It's easy, because we only need to delete the part of checking password.
+
 ## Step 5. Summary
+
 ### 5.1 front-end 
 - We need to delete original login and register.
 - We also need to accept code and state and send them to back-end.
 ### 5.2 back-end
 RuoYi back-end has perfect login and registration function. We just need to change a little, so it is very convenient.
+
 ## Step 6. Detailed steps
+
 1. Deploy and configure casdoor. We must take care of the organization's password type which should choose bcrypt because RuoYi-Cloud's password type is bcrypt.
 2. We should use casdoor syncers to copy database users to your casdoor organization. This step can make the original account import to casdoor.
 3. After we deployed casdoor, we should change front-end. We should close RuoYi check code 
