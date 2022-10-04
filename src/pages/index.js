@@ -7,6 +7,9 @@ import HomepageFeatures from "../components/HomepageFeatures";
 // eslint-disable-next-line unused-imports/no-unused-imports
 import Translate, {translate} from "@docusaurus/Translate";
 import CasdoorCard from "../components/CasdoorCard";
+import TabList from "../components/TabList";
+import TabItem from "@theme/TabItem";
+import CodeCard from "../components/CodeCard";
 
 function FrameMask(props) {
   const [mouseState, setMouseState] = useState({state: false});
@@ -99,11 +102,52 @@ function LearnHowTo() {
   );
 }
 
+function ContentInterface() {
+  return (
+    <div className={styles.contentinterface}>
+      <div className="container text--center">
+        <div className="row">
+          <div className="col" style={{margin: "auto"}}>
+            <Translate description="Help page forum" values={{
+              docLink: (
+                <Link href="/docs/category/how-to-connect-to-casdoor">
+                  <Translate>How to Connect to Casdoor</Translate>
+                </Link>
+              ),
+            }}>
+              {"Casdoor SDK provides many functions, such as identity authentication, user management, resource upload, etc. Access to Casdoor is very convenient, please visit {docLink} for details."}
+            </Translate>
+          </div>
+          <TabList>
+            <TabItem value="login.js">
+              <CodeCard language="javascript">
+                {`login() {
+  Setting.signin().then((res) => {
+    if (res.status === "ok") {
+      Setting.showMessage("success", "Logged in successfully");
+      Setting.goToLink("/");
+    } else {
+      this.setState({
+        msg: res.msg,
+      });
+    }
+  });
+}`}
+              </CodeCard>
+            </TabItem>
+          </TabList>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ContentLogin() {
   return (
     <div className={styles.contentlogin}>
       <div className="container text--center">
         <div className="row">
+          <FrameMask className={styles.gradientborder} src="login" width="600" height="730" />
           <div className="col">
             <br /><br /><br /><br />
             <Translate>Casdoor is a powerful authentication platform.</Translate>
@@ -135,7 +179,6 @@ function ContentLogin() {
             <Translate>And if your want more providers, please propose it in</Translate> <Link
               href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
           </div>
-          <FrameMask className={styles.gradientborder} src="login" width="600" height="730" />
         </div>
       </div>
     </div>
@@ -147,15 +190,11 @@ function ContentSignup() {
     <div className={styles.contentsignup}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="signup" width="600" height="795" />
           <div className="col">
             <br /><br /><br /><br /><br />
-            <Translate>Casdoor also support sign up directly. By filling your</Translate>
-            <b><Translate>Username</Translate></b>, <b><Translate>Display
-              name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate>
-            <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate>
-            <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
+            <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
           </div>
+          <FrameMask className={styles.gradientborder} src="signup" width="600" height="795" />
         </div>
       </div>
     </div>
@@ -167,6 +206,7 @@ function ContentForget() {
     <div className={styles.contentforget}>
       <div className="container text--center">
         <div className="row">
+          <FrameMask className={styles.gradientborder} src="forget" width="600" height="620" />
           <div className="col">
             <br /><br /><br /><br />
             <p className="padding-horiz--md">
@@ -177,7 +217,6 @@ function ContentForget() {
                 your new password and confirm to reset your new password.</Translate>
             </p>
           </div>
-          <FrameMask className={styles.gradientborder} src="forget" width="600" height="620" />
         </div>
       </div>
     </div>
@@ -193,6 +232,7 @@ export default function Home() {
       <main>
         <HomepageFeatures />
         <LearnHowTo />
+        <ContentInterface />
         <ContentLogin />
         <ContentSignup />
         <ContentForget />
