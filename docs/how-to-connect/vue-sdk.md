@@ -4,18 +4,17 @@ description: Casdoor Vue SDK
 keywords: [vue, sdk]
 ---
 
-Casdoor Vue SDK is designed for Vue2 and Vue3 which is  very conveniently to use. 
+Casdoor Vue SDK is designed for Vue2 and Vue3 which is very convenient to use. 
 
 The Vue SDK is based on casdoor-js-sdk,you can also use the casdoor-js-sdk directly which will be more customizable. 
 
-This plugin is still in development, if you have any questions and suggestions, please contact us at [issue](https://github.com/casdoor/casdoor-vue-sdk/issues)
+This plugin is still in development. If you have any questions and suggestions, please contact us at [issue](https://github.com/casdoor/casdoor-vue-sdk/issues)
 
 We will show you the steps below.
 
-> if you still don’t know how to use it after reading README.md, you can go to the a example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
- for more details.
-> 
-> The example' front-end is built with casdoor-vue-sdk,and the back-end is built with casdoor-python-sdk,you can see the source code in the example.
+> if you still don’t know how to use it after reading README.md, you can go to the example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example) for more details.
+
+> The example' front-end is built with casdoor-vue-sdk, and the back-end is built with casdoor-python-sdk, you can see the source code in the example.
 
 ## Installation
 

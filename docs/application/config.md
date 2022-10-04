@@ -37,15 +37,15 @@ So here, we need to remember the `callback URL` in provider application is **Cas
 
 #### Further understanding
 
-If I want the authentication progress working, the detailed progress should be like this:
+If I want the authentication progress to work, the detailed progress should be like this:
 
-Users send request to Casdoor, Casdoor use the `Client ID` and `Client Secret` to get authentication from GitHub, Google or other providers.
+Users send a request to Casdoor, Casdoor use the `Client ID` and `Client Secret` to get authentication from GitHub, Google or other providers.
 
-If the authentication success, GitHub callback to Casdoor to tell Casdoor authentication success, so the GitHub authorization callback URL should be my Casdoor callback URL which is **http://your-casdoor-url.com/callback**, then Casdoor tell the application authentication success which means the Casdoor callback URL should be my application callback URL, that is **http://your-site-url.com/callback**.
+If the authentication success, GitHub callback to Casdoor to tell Casdoor authentication success, so the GitHub authorization callback URL should be my Casdoor callback URL which is **http://your-casdoor-url.com/callback**, then Casdoor tells the application authentication success which means the Casdoor callback URL should be my application callback URL, that is **http://your-site-url.com/callback**.
 
 :::
 
-Then you can add which third party app can sign up by adding providers and set its properties.
+Then you can add which third party apps can sign up by adding providers and setting its properties.
 
 ![Select providers](/img/selectproviders.png)
 
@@ -57,7 +57,7 @@ Then you can add which third party app can sign up by adding providers and set i
 
 :::tip
 
-Note that if you don't want users to access your app using **username/password**, you can switch off the ```Password On``` button, so users can only access app using third party services:
+Note that if you don't want users to access your app using a **username/password**, you can switch off the ```Password On``` button, so users can only access app using third party services:
 
 ![Password On](/img/PasswordOn.png)
 

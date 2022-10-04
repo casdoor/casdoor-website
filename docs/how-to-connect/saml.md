@@ -6,7 +6,7 @@ keywords: [SAML, IdP]
 
 ## Using Casdoor as SAML IdP
 
-Casdoor now can be used as SAML IdP. Up to now the Casdoor have supported the main feature of SAML 2.0 .
+Casdoor now can be used as SAML IdP. Up to now the Casdoor has supported the main feature of SAML 2.0 .
 
 ### Overview
 
@@ -20,7 +20,7 @@ See <https://en.wikipedia.org/wiki/SAML_2.0> for more information about SAML and
 
 ### An example
 
-The [gosaml2](https://github.com/russellhaering/gosaml2) is a SAML 2.0 implemementation for Service Providers based on etree and goxmldsig, a pure Go implementation of XML digital signatures. And we use this library to test the SAML 2.0 in Casdoor as below.
+The [gosaml2](https://github.com/russellhaering/gosaml2) is a SAML 2.0 implementation for Service Providers based on etree and goxmldsig, a pure Go implementation of XML digital signatures. And we use this library to test the SAML 2.0 in Casdoor as below.
 
 Suppose you can access Casdoor through `http://localhost:7001/`, and your Casdoor contains an application called `app-built-in` which belongs to an organization called `built-in`. The URLs, `http://localhost:6900/acs/example` and `http://localhost:6900/saml/acs/example`, should be added to the Redirect URLs in `app-built-in`.
 
@@ -190,7 +190,7 @@ Enter the **Alias** and the **Import from URL** in Keycloak IdP edit page. The c
 
 ![](/img/saml_keycloak_idp_edit.png)
 
-You should remenber the **Service Provider Entity ID** and then save the configuration.
+You should remember the **Service Provider Entity ID** and then save the configuration.
 
 #### Configure SAML application in Casdoor
 
@@ -204,7 +204,7 @@ Open the Keycloak login page and you can find the additional button that allows 
 
 ![](/img/saml_keycloak_login.png)
 
-Click on the button and you will be redirected to the Casdoor SAML provider for the authentication. After the successful authentication you will be redirected back to Keycloak. Then you need to assign users to the application.
+Click on the button and you will be redirected to the Casdoor SAML provider for the authentication. After the successful authentication, you will be redirected back to Keycloak. Then you need to assign users to the application.
 
 ![](/img/saml_keycloak_success.png)
 

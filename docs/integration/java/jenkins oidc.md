@@ -28,7 +28,7 @@ After a successful deployment, you need to ensure:
 ![Casdoor Application Setting](/img/appseeting_jenkins.png)
 3. Add provider you want and supplement other settings.
 
-Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in next step.
+Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in the next step.
 
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
@@ -42,7 +42,7 @@ After completing the installation, go to Manage Jenkins -> Configure Global Secu
 1. In Access Control, Security Realm select "Login with Openid Connect".
 2. In Client ID, specify the `Client ID` noted above.
 3. In Client secret, specify the `Client secret` noted above.
-4. In Configuration mode, select `Automatic configuration` and fill in **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** into Well-known configuration endpoint.![Jenkins' Setting](/img/jenkins_auto.png)If your casdoor is deployed locally, you may need select `Manual configuration` and input some infomation:
+4. In Configuration mode, select `Automatic configuration` and fill in **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** into Well-known configuration endpoint.![Jenkins' Setting](/img/jenkins_auto.png)If your casdoor is deployed locally, you may need to select `Manual configuration` and input some information:
     - `Token server url`: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
     - `Authorization server url`: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
     - `UserInfo server url`: **http://`CASDOOR_HOSTNAME`/api/get-account**
@@ -50,7 +50,7 @@ After completing the installation, go to Manage Jenkins -> Configure Global Secu
     ![Manual configuration](/img/jenkins_manual.png)
 5. Click Advanced setting, fill in the following:
     - In User name field, specify `data.name`
-    - In Full name feild, specify `data.displayName`
+    - In Full name field, specify `data.displayName`
     - In Email field, specify `data.email`
     ![Userinfo Field Setting](/img/jenkins_field.png)
 6. In the Authorization section, check “Logged-in users can do anything”. Disable “Allow anonymous read access”. You can configure more complex authorization later, for now check if OpenID actually works.

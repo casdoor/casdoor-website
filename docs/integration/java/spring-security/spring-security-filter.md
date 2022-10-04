@@ -34,7 +34,7 @@ Not surprisingly, you can get these values on the application settings page: `Ap
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
 ## Step3. Configure Spring Security
-You can customize the settings of spring security filter to process tokens:
+You can customize the settings of spring security filters to process tokens:
 
 :::caution
 
@@ -59,7 +59,7 @@ casdoor:
 
 For frontend applications, the default value of `<FRONTEND_HOSTNAME>` is `localhost:3000`.
 
-For example, to the following demo, the redirect URL should be `http://localhost:3000/callback`.
+For example, in the following demo, the redirect URL should be `http://localhost:3000/callback`.
 
 You should also configure this in `casdoor` application.
 
@@ -248,5 +248,4 @@ Click the `Casdoor Login` button and the page will redirect to casdoor's login p
 
 After you log in, the page will redirect to `/`.
 ![resource](/img/integration/spring_security/spring_security_filter_resource.png)
-
 

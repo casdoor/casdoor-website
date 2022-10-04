@@ -23,28 +23,28 @@ Casdoor serves both the web UI and the login requests from the application users
 
 1. Front-end and back-end separate architecture, developed by Golang, Casdoor supports high concurrency, provides web-based managing UI and supports multiple languages(Chinese, English).
 
-2. Casdoor supports Github, Google, QQ, WeChat third-party applications login, and support the extension of third-party login with plugins.
+2. Casdoor supports third-party applications login, such as GitHub, Google, QQ, WeChat, etc.,and supports the extension of third-party login with plugins.
 
 3. With [Casbin](https://casbin.org/) based authorization management, Casdoor supports ACL, RBAC, ABAC, RESTful accessing control models.
 
-4. Phone verification code, email verification code and forget password features.
+4. Phone verification code, email verification code and password retrieval functions.
 
 5. Accessing logs auditing and recording.
 
 6. Alibaba Cloud, Tencent Cloud, Qiniu Cloud image CDN cloud storage.
 
-7. Customizable register, login, and forget password pages.
+7. Customizable registration, login, and  password retrieval pages.
 
-8. Casdoor supports integration with existing systems using db sync method, users can transition to Casdoor smoothly.
+8. Casdoor supports integration with existing systems by db sync , users can transition to Casdoor smoothly.
 
-9. Casdoor supports mainstream databases: MySQL, PostgreSQL, SQL Server etc,  and support the extension of new database with plugins.
+9. Casdoor supports mainstream databases: MySQL, PostgreSQL, SQL Server , etc.,  and supports the extension of new databases with plugins.
 
 ## How it works:
 
 ![Principle](/img/principles.gif)
 
 ### Step 0 (Pre-knowledge)
-1. Casdoor's authorization process is built upon the OAuth 2.0 protocol, therefore it's highly recommended to take a brief look at how indeed does OAuth 2.0 works. An [introduction](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) of OAuth 2.0.
+1. Casdoor's authorization process is built upon the OAuth 2.0 protocol, therefore it's highly recommended to take a brief look at how indeed does OAuth 2.0 works. An [introduction](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) to OAuth 2.0.
 
 ![image](https://user-images.githubusercontent.com/46557895/132336955-e25ab988-64b3-4087-b332-d9e724322acd.png)
 
@@ -64,43 +64,43 @@ How to fill out the `xxx` parts?
 
 :::
 
-The Application will speak to the user: *"Hey, now I need some resources and I need your permission to take these resources, you mind go to this URL and fill out your username and password for me?"*
+The Application will speak to the user: *"Hey, now I need some resources and I need your permission to take these resources, Do you mind going to this URL and filling out your username and password for me?"*
 
 With the correctly composed URL, your Application will make a user launch a request to this URL, and the `Authorization Request` is done.
 
 ### Step 2 (Authorization Grant)
 
-This step is straightforward: the user is redirected to the URL composed above, and the user should see the login page from Casdoor.
-By typing the correct username and credential into the login form, Casdoor now knows the identity of the user, and is about to send two keywords: `code` and `state` back to the callback URL set in Step 1.
+This step is straightforward: the user is redirected to the URL composed above, and the user will see the login page from Casdoor.
+By typing the correct username and credential into the login page, Casdoor now knows the identity of the user, and is about to send two keywords: `code` and `state` back to the callback URL set in Step 1.
 
 The user opens the URL and provides the credentials to Casdoor. Casdoor will say: *"Looking good ~ this is the user (who is authorizing the Application to get the `code` and `state`) I know in my database, and I will send the `code` and `state` back to the Application using the callback URL (`redirect_uri`)"*
 
-With these two keywords send back to your Application, the authrization is now granted to the app, and thus `Authorization Grant` is completed.
+With these two keywords sent back to your Application, the authorization is now granted to the app, and thus `Authorization Grant` is completed.
 
 :::tip
 
-Casdoor also provides third-party login, in this case, you will not see the credentials enter page but a list of third-party providers. You can login to your app using these providers, with Casdoor as a middle layer (middleware).
+Casdoor also provides third-party logins, in this case, you will not see the credentials entry page but a list of third-party providers. You can login to your app using these providers, with Casdoor as a middle layer (middleware).
 
 :::
 
 ### Step 3 (Authorization Grant)
 
-In this step, your Application already has the code in hand from Step 2, and it will speak to Casdoor: *"Hey, now the user agreed to give me the `code`, you wanna check this `code` out and give me the `access_token`?"*
+In this step, your Application already has the code in hand from Step 2, and it will speak to Casdoor: *"Hey, now the user agreed to give me the `code`, do you wanna check this `code` out and give me the `access_token`?"*
 
 ### Step 4 (Access Token)
 
-In this step, Casdoor speaks back to the Application: *"You know what, this `code` seems legit, you must be the right Application. Come, here's the `access_token`."*
-With this `code`, that Casdoor knows that it is an authorized Application (authorization given by the correct user in Step 2) trying to get the `access_token` (will be used later to get more useful things).
+In this step, Casdoor speaks back to the Application: *"You know what, this `code` seems legit, you must be the right Application. Come here, it's the `access_token`."*
+With this `code`,  Casdoor knows that it is an authorized Application (authorization given by the correct user in Step 2) trying to get the `access_token` (, which will be used later to get more useful things).
 
 ### Step 5 (Access Token)
 
 In this step, your Application says: *"Nice one, just got the fresh-and-tasty `access_token`, I can now use it to get something more valuable from the `Resource Server`!"*
 
-And your Application turns to the `Resource Server`: *"Hey buddy, wanna check this `access_token` out? I got this from Casdoor and you want to see if this is the correct one you had with Casdoor?"*
+And your Application turns to the `Resource Server`: *"Hey buddy, wanna check this `access_token` out? I got this from Casdoor and do you want to see if this is the correct one you had with Casdoor?"*
 
 ### Step 6 (Protected Resource)
 
-The `Resource Server` speaks back to your Application: *"Not bad ~ it seems just like the one I had with Casdoor, and Casdoor says whoever hold this `access_token` can have these `Protected Resource`. Now, you take it!"*
+The `Resource Server` speaks back to your Application: *"Not bad ~ it seems just like the one I had with Casdoor, and Casdoor says whoever holds this `access_token` can have these `Protected Resources`. Now, you take it!"*
 
 And this is basically how Casdoor works with your Application.
 

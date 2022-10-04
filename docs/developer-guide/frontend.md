@@ -6,8 +6,7 @@ keywords: [frontend, guide]
 
 The source code for Casdoor's frontend is inside the `/web` folder: https://github.com/casdoor/casdoor/tree/master/web
 
-It is a [**Create-React-App (CRA)**](https://create-react-app.dev/) project, which has a classic CRA folder structure as
-follows:
+It is a [**Create-React-App (CRA)**](https://create-react-app.dev/) project, which has a classic CRA folder structure as follows:
 
 | File/Directory  | Description                                                              |
 |-----------------|--------------------------------------------------------------------------|
@@ -20,15 +19,15 @@ follows:
 
 Inside `/src`, there are several important files or folders as follows:
 
-| File/Directory          | Description                                                                                                  |
-|-------------------------|--------------------------------------------------------------------------------------------------------------|
-| account                 | the "My profile" page for logged-in user                                                                     |
+| File/Directory          | Description                                                  |
+| ----------------------- | ------------------------------------------------------------ |
+| account                 | the "My profile" page for logged-in users                    |
 | auth                    | all code related to authentication, like OAuth, SAML, sign up page, sign in page, forget password page, etc. |
-| backend                 | the SDK for calling Go backend API, contains all the `fetch()` calls                                         |
-| basic                   | the homepage (dashboard page) for Casdoor, it contains several card widgets                                  |
-| common                  | shared UI widgets                                                                                            |
-| locales                 | i18n translation files in JSON, synced with our Crowdin project: https://crowdin.com/project/casdoor-site    |
-| App.js                  | the entrance JS file, containing all routes                                                                  |
-| Setting.js              | the utility functions used by other code                                                                     |
-| OrganizationListPage.js | the page for the organization list, similar for all other XXXListPage.js                                     |
-| OrganizationEditPage.js | the page for editing one organization, similar for all other XXXEditPage.js                                  |
+| backend                 | the SDK for calling Go backend API, contains all the `fetch()` calls |
+| basic                   | the homepage (dashboard page) for Casdoor, it contains several card widgets |
+| common                  | shared UI widgets                                            |
+| locales                 | i18n translation files in JSON, synced with our Crowdin project: https://crowdin.com/project/casdoor-site |
+| App.js                  | the entrance JS file, containing all routes                  |
+| Setting.js              | the utility functions used by other code                     |
+| OrganizationListPage.js | the page for the organization list, similar to all other XXXListPage.js |
+| OrganizationEditPage.js | the page for editing one organization, similar to all other XXXEditPage.js |

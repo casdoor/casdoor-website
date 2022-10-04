@@ -4,7 +4,7 @@ description: Add Aliyun Captcha to your application
 keywords: [Aliyun Captcha]
 ---
 
-Aliyun Captcha is a captcha service provided by Aliyun. It includes  two way to verify captcha:  `Sliding Validation` and `Intelligent Validation`. You can see more details from this [link](https://help.aliyun.com/product/28308.html).
+Aliyun Captcha is a captcha service provided by Aliyun. It includes  two ways to verify captcha:  `Sliding Validation` and `Intelligent Validation`. You can see more details from this [link](https://help.aliyun.com/product/28308.html).
 
 ## Add Captcha configuration in Aliyun
 
@@ -30,11 +30,11 @@ And  `Access key`, `Secret access key` is in your profile.
 
 Create a new provider in Casdoor.
 
-Select category as  **Captcha** , type as  **hCaptcha** . Then select sub type: `Sliding Validation` or `Intelligent Validation`. And you need to fulfill the `Access key`, `Secret access key`, `Scene` and `App key` which is created by last step.
+Select category as  **Captcha** , type as  **hCaptcha** . Then select sub type: `Sliding Validation` or `Intelligent Validation`. And you need to fulfill the `Access key`, `Secret access key`, `Scene` and `App key` which are created by last step.
 
 ![Recaptcha provider](/img/providers/captcha/aliyunCaptcha_provider.png)
 
-And you can click **Preview** botton to preview the style of this captcha. 
+And you can click **Preview** button to preview the style of this captcha. 
 
 The following image is `Sliding Validation` preview:
 
@@ -46,7 +46,7 @@ The following image is `Intelligent Validation` preview:
 
 ## Applied in application
 
-Edit the application you want to configure in Casdoor. Sele d ddct the provider just added and click the button **Save**.
+Edit the application you want to configure in Casdoor. Select the provider just added and click the button **Save**.
 
 ![Recaptcha provider app](/img/providers/captcha/aliyunCaptcha_provider_app.png)
 

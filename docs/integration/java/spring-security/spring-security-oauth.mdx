@@ -23,11 +23,11 @@ Then you can quickly implement a casdoor based login page in your own app with t
 
 ## Step2. Configure Casdoor application
 1. Create or use an existing Casdoor application.
-2. Add Your redirect url (You can see more detials about how to get redirect url in the next section)
+2. Add Your redirect url (You can see more details about how to get redirect url in the next section)
 ![Casdoor Application Setting](/img/appsetting_spring_security.png)
 3. Add provider you want and supplement other settings.
 
-Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in next step.
+Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above. We will use them in next step.
 
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
@@ -38,7 +38,7 @@ You can customize the settings of Spring Security OAuth2 Client:
 
 :::caution
 
-You should replace the configuration with your own Casdoor instance especially the `<Client ID>` and others.
+You should replace the configuration with your own Casdoor instance, especially the `<Client ID>` and others.
 
 :::
 
@@ -102,7 +102,7 @@ spring.security.oauth2.client.provider.casdoor.user-name-attribute=name
 :::caution
 
 For default situation of Spring Security, the `<Redirect URL>` should be like `http://<You Spirng Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/custom`.
-For example, to the following demo, the redirect URL should be `http://localhost:8080/login/oauth2/code/custom`.
+For example, in the following demo, the redirect URL should be `http://localhost:8080/login/oauth2/code/custom`.
 
 You should also configure this in `casdoor` application.
 
@@ -156,7 +156,7 @@ public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
 
 When user clicks the `login` button, he will be redirected to `casdoor`.
 
-4. Next, we can define our protected resource. We can export an endpoint called `/foos` and a web page for display.
+4. Next, we can define our protected resources. We can export an endpoint called `/foos` and a web page for display.
 
 Data Model
 ```java
@@ -262,5 +262,4 @@ Click the `login` button and the page will redirect to casdoor's login page.
 
 After you log in, the page will redirect to `/foos`.
 ![Casdoor Application Setting](/img/spring_security_resource.png)
-
 

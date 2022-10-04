@@ -22,9 +22,9 @@ You can use **docker (docker-engine version >= 17.05)** in Linux or **Docker Des
 
 * [Docker](https://docs.docker.com/get-docker/)
 
-Users of all OSes must ensure that the **docker-engine version >= 17.05**. It is because that we use multi-stage build feature in docker-compose.yml, which was supported in 17.05 and above versions. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
+Users of all OSes must ensure that the **docker-engine version >= 17.05**. It is because we use multi-stage build feature in docker-compose.yml, which was supported in 17.05 and above versions. See <https://docs.docker.com/develop/develop-images/multistage-build/> for more information.
 
-If you also use docker-compose, please ensure that **docker-compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, given that it is seperated from docker-engine.
+If you also use docker-compose, please ensure that **docker-compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, given that it is separated from docker-engine.
 
 ## Get the image
 
@@ -36,7 +36,7 @@ Name | Description | Suggestion
 [casdoor](https://hub.docker.com/r/casbin/casdoor) | Only Casdoor is inside the image | Can be connected to your own database and used in production
 
 
-1. casbin/casdoor-all-in-one, in which casdoor binary, a mysql database and all necessary configurations are packed up. This image is for new user to have a trial on casdoor quickly. **With this image you can start a casdoor immediately with one single command (or two) without any complex configuration**. **Note: we DO NOT recommend you to use this image in productive environment**
+1. casbin/casdoor-all-in-one, in which casdoor binary, a mysql database and all necessary configurations are packed up. This image is for new users to have a trial on casdoor quickly. **With this image you can start a casdoor immediately with one single command (or two) without any complex configuration**. **Note: we DO NOT recommend you to use this image in productive environment**
 
 ### **Option-1**: Use the toy database
 

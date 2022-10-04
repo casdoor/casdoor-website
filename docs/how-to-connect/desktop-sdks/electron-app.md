@@ -21,7 +21,7 @@ You need to initialize 6 parameters, which are all string type:
 | clientSecret         | the Client Secret of your Casdoor application                                                   | `src/App.js`         |
 | casdoorServiceDomain | your Casdoor server URL                                                                          | `public/electron.js` |
 
-If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com/) as the defult Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
+If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com/) as the default Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
 
 ## Available commands
 
@@ -46,7 +46,7 @@ Package and distribute your application. It will create the `out` folder where y
 
 After you run this electron application, a new window will be showed on your desktop.
 ![electron login](/img/howto-desktop-electron-login.png)
-If you click `Login with Casdoor` botton, your default browser will be opened automatically and show the login page.
+If you click `Login with Casdoor` button, your default browser will be opened automatically and show the login page.
 ![browser](/img/howto-desktop-electron-browser.png)
 After you login successfully, your electron application will be opened and your user name will be showed on your application.
 ![electron logout](/img/howto-desktop-electron-logout.png)
@@ -134,7 +134,7 @@ if (!gotTheLock) {
 }
 ```
 
-You can get the code from the broswer, which is `casdoor_code` or `params.code`.
+You can get the code from the browser, which is `casdoor_code` or `params.code`.
 
 ## Parse the code and get the user info
 
@@ -168,4 +168,4 @@ ipcMain.handle("getUserInfo", async (event, clientId, clientSecret) => {
 });
 ```
 
-Finally, you can parse the code and get the user info just followed the [OAuth docs page](/docs/how-to-connect/oauth).
+Finally, you can parse the code and get the user info just by following the [OAuth docs page](/docs/how-to-connect/oauth).

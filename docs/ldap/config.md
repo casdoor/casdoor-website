@@ -4,13 +4,13 @@ description: LDAP configuration in Casdoor
 keywords: [ldap, config]
 ---
 
-Ldap configurations belong to a organization, which ldap users will be synchronized into.
+Ldap configurations belong to an organization, which ldap users will be synchronized into.
 
 You are supposed to use a global admin user to modify the configuration. You need to enter the following information of the LDAP user synchronization in the "organization" page.
 
 ### Server Name
 
-A friendly name is used for managers to identify different servers.
+A friendly name is used by managers to identify different servers.
 
 > e.g:
 > `Example LDAP Server`

@@ -9,7 +9,7 @@ keywords: [ShowDoc]
 [ShowDoc](https://www.showdoc.com.cn/) is an online API documentation, technical documentation tool perfect for IT 
 teams. Showdoc makes it easy to use Markdown syntax to write beautiful API documents, data dictionary documents, technical documents, online Excel documents, and more.
 
-Showdoc supports 3rd-party authentication including Oauth. Here is the tutorial about achieving this.
+Showdoc supports 3rd-party authentication including Oauth. Here is the tutorial for achieving this.
 
 ### step1. Create an Casdoor application
 
@@ -31,7 +31,7 @@ First, start the oAuth2 login button. Then fill in the `callback url` as shown i
 Fill in the `client ID` and `client secret` remembered in previous step.
 ![showdoc_oauth2.png](/img/integration/showdoc_oauth2.png)
 
-`Authorize path`, `AccessToken path`, `User info path` is required. You can fill as shown below.
+`Authorize path`, `AccessToken path`, `User info path` are required. You can fill as shown below.
 
 ```ini
 Authorize path:   /login/oauth/authorize
