@@ -14,7 +14,7 @@ Select category as  **Captcha** , type as  **Default** .
 
 ![Default provider](/img/providers/captcha/default_provider.png)
 
-And you can click **Preview** botton to preview the style of this captcha.
+And you can click **Preview** button to preview the style of this captcha.
 
 ![Default preview](/img/providers/captcha/default_preview.png)
 

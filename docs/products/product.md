@@ -23,7 +23,7 @@ and multiple payment providers can be added to a product.
 To learn how to configure a payment provider, see [Payment Provider](/docs/provider/payment/Alipay)
 ![product_provider.png](/img/products/product_provider.png)
 
-Finally, fill in the **Return URL**. This is the url to jump to from the payment provider page when the payment
+Finally, fill in the **Return URL**. This is the url to jump from the payment provider page when the payment
 is completed.
 
 ## Preview the Product

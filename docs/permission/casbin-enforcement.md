@@ -6,7 +6,7 @@ keywords: [permission, Casbin]
 
 ## Exposed Casbin APIs
 
-At the underlying of casdoor, each permission corresponds to a casbin enforcer, we provide some APIs to call these enforcers directly. You can use them to achieve more flexible permission management functions.
+At the underlying of casdoor, each permission corresponds to a casbin enforcer. We provide some APIs to call these enforcers directly. You can use them to achieve more flexible permission management functions.
 
 We will show some examples of using these APIs, the permission is shown below.
 

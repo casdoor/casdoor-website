@@ -8,7 +8,7 @@ keywords: [permission, Casbin]
 
 All users associated with a single Casdoor organization are shared between the organization's applications and therefore have access to the applications. To restrict users' access to certain applications, you can use `Permission` implemented by [Casbin](https://casbin.io/). 
 
-Inside a permission, the `Sub users` and `Resources` attributes are availabel to check which application the user is using for login. Also, it supports to config custom model to meet the diverse needs of users. 
+Inside a permission, the `Sub users` and `Resources` attributes are available to check which application the user is using for login. Also, it supports to config customized models to meet the diverse needs of users. 
 
 See the following example to get a clearer picture of Casdoor's permission control for application. 
 
@@ -40,7 +40,7 @@ Click the `Permissions` tab and add a new permission. In the edit page, you need
 
 :::info
 
-The `Adapter` field supports specifying the table name where the policies are stored. If this field is empty, the policies are storing in the `permission_rule` table. We strongly recommend **specifying different Adapter for different models**, becaues it's likely to cause conflicts for storing all policies in the same table. 
+The `Adapter` field supports specifying the table name where the policies are stored. If this field is empty, the policies are stored in the `permission_rule` table. We strongly recommend **specifying different Adapter for different models**, because it's likely to cause conflicts for storing all policies in the same table. 
 :::
 
 
