@@ -35,7 +35,7 @@ token_url = <endpoint of casdoor>/api/login/oauth/access_token
 
 ```
 
-If you don't want HTTPs enabled for casdoor, please also set `tls_skip_verify_insecure = true`
+If you don't want HTTPS enabled for casdoor, please also set `tls_skip_verify_insecure = true`
 
 
 ## Step3: See whether it works.
