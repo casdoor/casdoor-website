@@ -2,7 +2,7 @@
 
 The configuration and documentation of Casdoor website: <https://casdoor.org/>.
 
-Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get the PDF at [Release](https://github.com/casdoor/casdoor-website/releases/tag/pdf).
+Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get the PDF at [casdoor.org/pdf](https://casdoor.org/pdf/) or [GitHub Action](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml).
 
 ## Get Started
 
