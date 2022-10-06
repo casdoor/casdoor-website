@@ -12,7 +12,7 @@ After creating your app, the redirect url is set in the following position:
 
 ![Baidu URL Setting](/img/providers/OAuth/baidusetting.png)
 
-Add your casdoor domain in the following position:
+Add your Casdoor domain in the following position:
 
 ![Redirect URL Setting](/img/providers/OAuth/baidudomain.png)
 

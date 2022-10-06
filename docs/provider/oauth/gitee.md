@@ -18,7 +18,7 @@ Fill in the **name**, **description**, **homepage** and **callback URL** and car
 
 In Gitee OAuth config, the `authorization callback URL` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**
 
-More details please read [App config](/docs/application/config#further-understanding)
+For more details, please read [App config](/docs/application/config#further-understanding)
 
 :::
 

@@ -4,7 +4,7 @@ description: Add Github OAuth provider to your application
 keywords: [GitHub, OAuth]
 ---
 
-GitHub OAuth support both web application flow and device flow, please continue reading to obtain OAuth credential.
+GitHub OAuth supports both web application flow and device flow. Please continue reading to obtain OAuth credential.
 
 First, please visit [GitHub developer settings](https://github.com/settings/apps/new) to register a new GitHub App.
 
@@ -25,7 +25,7 @@ Then fill the **Github App name**, **Homepage URL**, **description** and **Callb
 
 In GitHub App config, the `Callback URL` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**
 
-More details please read [App config](/docs/application/config#further-understanding)
+For more details, please read [App config](/docs/application/config#further-understanding)
 
 :::
 

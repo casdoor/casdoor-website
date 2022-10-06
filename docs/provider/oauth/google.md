@@ -12,7 +12,7 @@ Then navigate to **OAuth consent screen** tab to configure OAuth consent screen.
 
 ![Configure consent](/img/providers/OAuth/oauthconsentscreen.png)
 
-And register you Google app.
+And register your Google app.
 
 ![Register app](/img/providers/OAuth/appregistration.png)
 
@@ -20,7 +20,7 @@ Then navigate to **Credential** tab.
 
 ![Credential](/img/providers/OAuth/credential.png)
 
-And create Credential for you app:
+And create Credential for your app:
 
 ![Create Credentail](/img/providers/OAuth/createcredential.png)
 
@@ -28,7 +28,7 @@ And create Credential for you app:
 
 In Google OAuth config, the `Authorized redirect URIs` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**
 
-More details please read [App config](/docs/application/config#further-understanding)
+For more details, please read [App config](/docs/application/config#further-understanding)
 
 :::
 
