@@ -10,7 +10,7 @@ Select what kind of app you are going to create.
 
 ![Facebook select](/img/providers/OAuth/facebookselect.png)
 
-After fill name and contact email, you can enter facebook developer dashboard.
+After filling in your name and contact email, you can enter facebook developer dashboard.
 
 ![Dashboard](/img/providers/OAuth/dashboard.png)
 
@@ -31,7 +31,7 @@ After fill the website url, you can go to **Facebook Login > Settings**, and fil
 
 In Facebook OAuth config, the `Valid OAuth Redirect URIs` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**
 
-More details please read [App config](/docs/application/config#further-understanding)
+ For more details, please read [App config](/docs/application/config#further-understanding)
 
 :::
 

@@ -26,7 +26,7 @@ Create a `client secret` and save the value, it will be used later.
 
 ### step3. Add redirect URIs
 
-Follow the example in the picture to add the redirect URIs for casdoor.
+Follow the example in the picture to add the redirect URIs for Casdoor.
 ![azuread_uri.png](/img/providers/OAuth/azuread_uri.png)
 
 ### step4. Grant admin consent
