@@ -4,10 +4,10 @@ description: Add products that you want to sell
 keywords: [products]
 ---
 
-You can add the product (or service) you want to sell. The following will tell you how to add a product.
+You can add the product (or service) you want to sell. The following will tell you how to add a product
 
 ## Configuring Products Attributes
-First, you need to understand the basic properties of the product:
+First, you need to understand the basic properties of the product
 `Tag`
 `Detail`
 `Currency`
@@ -27,7 +27,7 @@ Finally, fill in the **Return URL**. This is the url to jump from the payment pr
 is completed.
 
 ## Preview the Product
-You're done. See the review and save:
+You're done. see the review and save:
 ![product_preview](/img/products/product_preview.png)
 
 

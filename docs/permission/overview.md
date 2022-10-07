@@ -16,7 +16,7 @@ See the following example to get a clearer picture of Casdoor's permission contr
 
 Before using `Permission`, you need to create a `Model` which is abstracted into a CONF file based on the PERM metamodel. You can visit the [Casbin documentation](https://casbin.io/docs/syntax-for-models) for more information. We recommend using the [Casbin Online Editor](https://casbin.org/casbin-editor/) to design the model and check the grammar. 
 
-Click the `Models` tab and add a new model. In the edit page, you can config customized models such as ACL model in the `Model text`.
+Click the `Models` tab and add a new model. In the edit page, you can config custom model such as ACL model in the `Model text`.
 
 ```ini
 [request_definition]

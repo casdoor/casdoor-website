@@ -4,7 +4,7 @@ description: Add a captcha to your application
 keywords: [captcha]
 ---
 
-Casdoor can be configured to support different captchas to check whether the operation is made by human. If you add a captcha provider and applied it in the application, when the user logins, registers or forgets password and needs to send a code, then a captcha check dialog will appear to check whether the operation is made by human.
+Casdoor can be configured to support diffrent captcha to check whether the operation is by human. If you add a captcha provider and applied it in the application, when the user login, register or forget password and need send a code, then a captcha check dialog will appear to check whether the operation is by human.
 
 Now, Casdoor supports many captcha providers. Here are the providers Casdoor supporting:
 
@@ -13,7 +13,7 @@ Now, Casdoor supports many captcha providers. Here are the providers Casdoor sup
 | <img src="https://cdn.casbin.org/img/social_default.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_recaptcha.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_hcaptcha.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_aliyun.png" width="40"></img> |
 |                            **✅**                             |                            **✅**                             |                            **✅**                             |                            **✅**                             |
 
-We will show you how to apply a captcha and add it to Casdoor.
+We will show you how to apply for a captcha and add it to casdoor.
 
 ## Add a captcha provider
 
@@ -23,10 +23,10 @@ We will show you how to apply a captcha and add it to Casdoor.
 4. Click the new provider to modify it
 5. Select `Captcha` in  `Category`
 6. Choose the Captcha provider you need in `Type`
-7. Fill the most important information, different captcha providers have different information that needs to be filled in
+7. Fill the most import information, diffent captcha provider has different information that need be filled
 
 ## Applied in application
 
-1. Click `Applicaton` in the top bar and choose one application to edit.
-2. Click provider add button, and select the provider you just added.
+1. Click `Applicaton` in the top bar and choose one application, edit
+2. click provider add button, select the provider you just added
 3. Done!

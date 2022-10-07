@@ -10,7 +10,7 @@ reCAPTCHA is provided by Google. And we use reCAPTCHA v2 Checkbox . You can see 
 
 To start using reCAPTCHA, you need to [sign up for an API key pair](http://www.google.com/recaptcha/admin) for your site. The key pair consists of a site key and secret key. The site key is used to invoke reCAPTCHA service on your site or mobile application. The secret key authorizes communication between your application backend and the reCAPTCHA server to [verify the user's response](https://developers.google.com/recaptcha/docs/verify).
 
-First, choose the [type of reCAPTCHA](https://developers.google.com/recaptcha/docs/versions) and then fill in authorized domains or [package names.](https://developer.android.com/guide/topics/manifest/manifest-element.html#package) After you have accepted the terms of service, click **Register** to get a new API key pair.
+First, choose the [type of reCAPTCHA](https://developers.google.com/recaptcha/docs/versions) and then fill in authorized domains or [package names.](https://developer.android.com/guide/topics/manifest/manifest-element.html#package) After you have accepted the terms of service, click **Register** to get new API key pair.
 
 ![recaptcha create apiKey](/img/providers/captcha/recaptcha_create_apiKey.png)
 
@@ -26,7 +26,7 @@ Select category as  **Captcha** , type as  **reCAPTCHA** . And you need to fulfi
 
 ![Recaptcha provider](/img/providers/captcha/recaptcha_provider.png)
 
-And you can click **Preview** button to preview the style of this captcha.
+And you can click **Preview** botton to preview the style of this captcha.
 
 ![Recaptcha preview](/img/providers/captcha/recaptcha_preview.png)
 
