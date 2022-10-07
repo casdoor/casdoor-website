@@ -6,7 +6,7 @@ keywords: [Wechat, OAuth]
 
 ## WeChat:heavy_check_mark:
 
-Visit [WeChat developer platform](https://open.weixin.qq.com/), register as a developer, after your web application or your mobile application is approved, then you get you App Id and App Secret.
+Visit [WeChat developer platform](https://open.weixin.qq.com/), and register as a developer. After your web application or your mobile application is approved, then you get your App Id and App Secret.
 
 ![wechat](/img/providers/OAuth/wechat.png)
 
@@ -18,13 +18,13 @@ The WeChat provider offers two different sets of keys:
 
 :::tip
 
-We recommend setting the two key sets at the same time, and link your `WeChat Open Platform (微信开放平台)` account and `WeChat Media Platform (微信公众平台)` account together inside `WeChat Open Platform (微信开放平台)`. So a WeChat user logged-in through PC and mobile can be recognized as the same user in Casdoor.
+We recommend setting the two key sets at the same time, and linking your `WeChat Open Platform (微信开放平台)` account and `WeChat Media Platform (微信公众平台)` account together inside `WeChat Open Platform (微信开放平台)`. So a WeChat user logged-in through PC and mobile can be recognized as the same user in Casdoor.
 
 :::
 
 :::note
 
-Due to the limitation of WeChat OAuth, there is currently no way to log in via WeChat in a 3rd-party mobile APP or in a mobile browser other than WeChat APP. The mobile login must happen inside WeChat APP for now.
+Due to the limitations of WeChat OAuth, there is currently no way to log in via WeChat in a 3rd-party mobile APP or in a mobile browser other than WeChat APP. The mobile login must happen inside WeChat APP for now.
 
 :::
 

@@ -34,10 +34,10 @@ Select the added SigningKey.
 
 ![Select added Signing Key](/img/providers/SAML/aliyun_saml_signingkey_select.png)
 
-Fill in all the required information as below and submit.
+Fill in all the required information below and submit.
 
 - IDP IdentityId: Keep the same as Issuer URL in Casdoor.
-- SP Entity ID & SP ACS URL(SSO Location): Now fill in whatever you want. After completing the configuration of casdoor, you need to come to modify.
+- SP Entity ID & SP ACS URL(SSO Location): Now fill in whatever you want. After completing the configuration of Casdoor, you need to come to modify.
 - Assertion Attribute: Directly fill in as username.
 - Account Association Mode: Account Association
 
@@ -45,7 +45,7 @@ Fill in all the required information as below and submit.
 
 ## Account authorization & association
 
-After the appplication is successfully added, an authorization prompt will pop up. Do not authorize it now, add an account and then authorize it.
+After the application is successfully added, an authorization prompt will pop up. Do not authorize it now, add an account and then authorize it.
 
 Go to **Organizations and Groups** and click on **New Account**.
 
@@ -59,7 +59,7 @@ Go to **Application Authorization**, select the accounts you want to authorize a
 
 ![Account authorizationn](/img/providers/SAML/aliyun_account_authorization.png)
 
-Go to the **Application List**, click **View appplication sub-accounts**, and then click **Add account association**.
+Go to the **Application List**, click **View application sub-accounts**, and then click **Add account association**.
 
 ![View sub-account](/img/providers/SAML/aliyun_subaccount_view.png)
 ![Add sub-account](/img/providers/SAML/aliyun_subaccount_add.png)

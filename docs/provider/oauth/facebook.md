@@ -10,7 +10,7 @@ Select what kind of app you are going to create.
 
 ![Facebook select](/img/providers/OAuth/facebookselect.png)
 
-After filling in your name and contacting email, you can enter facebook developer dashboard.
+After filling in your name and contact email, you can enter facebook developer dashboard.
 
 ![Dashboard](/img/providers/OAuth/dashboard.png)
 
