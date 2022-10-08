@@ -12,7 +12,7 @@ Now, we have 5 kinds of providers:
 
 - **OAuth providers**
 
-  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ and many other OAuth applications to Casdoor, for more details, please see [OAuth](/docs/provider/oauth/overview).
+  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ and many other OAuth applications to Casdoor. For more details, please see [OAuth](/docs/provider/oauth/overview).
 - **SMS Providers**
 
   Casdoor sends SMS to users when they want to verify their phone numbers. SMS providers are used to send SMS in Casdoor.
@@ -28,4 +28,4 @@ Now, we have 5 kinds of providers:
   Currently, the supported payment providers include Alipay, WeChat Pay, PayPal and GC.
 - **Captcha Provider**
 
-  Casdoor support configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha and Aliyun Captcha.
+  Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha and Aliyun Captcha.
