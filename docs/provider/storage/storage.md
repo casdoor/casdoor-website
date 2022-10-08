@@ -10,9 +10,9 @@ Casdoor supports two types of storage, `Local` and `Cloud`. In this chapter you 
 
 ## Local
 
-With `Local` type, the `Client ID`, `Client secret`, `Endpoint` and `Bucket` field is no longer needed, you can **fill in it at will**, and it **cannot be empty**.
+With `Local` type, the `Client ID`, `Client secret`, `Endpoint` and `Bucket` field are no longer needed, you can **fill in it at will**, and it **cannot be empty**.
 
-The only item that you need to configure is `Domain` field, please follow the format:
+The only item that you need to configure is `Domain` field. Please follow the format:
 
 ```
 Domain/images

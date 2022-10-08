@@ -15,4 +15,4 @@ keywords: [email]
 
 ![Email Config](/img/providers/emailconfig.png)
 
-4. Fill customize `Email Title` and `Email Content` and save.
+4. Fill customized `Email Title` and `Email Content` and save.
