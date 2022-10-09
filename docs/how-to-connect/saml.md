@@ -112,7 +112,18 @@ func main() {
 			rw.WriteHeader(http.StatusForbidden)
 			return
 		}
-![
+
+		if assertionInfo.WarningInfo.NotInAudience {
+			fmt.Println(assertionInfo)
+			fmt.Println("here13:", assertionInfo.WarningInfo.NotInAudience)
+			rw.WriteHeader(http.StatusForbidden)
+			return
+		}
+
+		fmt.Fprintf(rw, "NameID: %s\n", assertionInfo.NameID)
+
+		fmt.Fprintf(rw, "Assertions:\n")
+
 		for key, val := range assertionInfo.Values {
 			fmt.Fprintf(rw, "  %s: %+v\n", key, val)
 		}

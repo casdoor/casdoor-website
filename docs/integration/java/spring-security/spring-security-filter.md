@@ -176,7 +176,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
-Implementation of Dreambooth (https://arxiv.org/abs/2208.12242) with Stable Diffusion
+
         // get jwt token and validate
         final String token = header.split(" ")[1].trim();
 
@@ -191,7 +191,9 @@ Implementation of Dreambooth (https://arxiv.org/abs/2208.12242) with Stable Diff
             return;
         }
 
-        UsernamePasswordAImplementation of Dreambooth (https://arxiv.org/abs/2208.12242) with Stable Diffusion
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
                 AuthorityUtils.createAuthorityList("ROLE_casdoor")
         );
 
