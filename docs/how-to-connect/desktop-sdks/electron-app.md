@@ -6,9 +6,9 @@ keywords: [electron, sdk]
 
 An [Electron app example](https://github.com/casdoor/casdoor-electron-example) for Casdoor.
 
-# How to run example
+## How to run example
 
-## Initialization
+### Initialization
 
 You need to initialize 6 parameters, which are all string type:
 
@@ -23,15 +23,15 @@ You need to initialize 6 parameters, which are all string type:
 
 If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com/) as the default Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
 
-## Available commands
+### Available commands
 
 In the project directory, you can run:
 
-### `npm run dev` or `yarn dev`
+#### `npm run dev` or `yarn dev`
 
 Builds the electron app and run this app.
 
-### `npm run make` or `yarn make`
+#### `npm run make` or `yarn make`
 
 Package and distribute your application. It will create the `out` folder where your package will be located:
 
@@ -42,20 +42,20 @@ Package and distribute your application. It will create the `out` folder where y
 └── out/casdoor-electron-example-darwin-x64/casdoor-electron-example.app/Contents/MacOS/casdoor-electron-example
 ```
 
-## Prview
+### Prview
 
 After you run this electron application, a new window will be showed on your desktop.
-![electron login](/img/howto-desktop-electron-login.png)
+![electron login](/img/how-to-connect/desktop-sdks/electron-app/login.png)
 If you click `Login with Casdoor` button, your default browser will be opened automatically and show the login page.
-![browser](/img/howto-desktop-electron-browser.png)
+![browser](/img/how-to-connect/desktop-sdks/electron-app/browser.png)
 After you login successfully, your electron application will be opened and your user name will be showed on your application.
-![electron logout](/img/howto-desktop-electron-logout.png)
+![electron logout](/img/how-to-connect/desktop-sdks/electron-app/logout.png)
 You can preview the whole process by the gif image below.
-![electron gif](/img/howto-desktop-electron-app-preview.gif)
+![electron gif](/img/how-to-connect/desktop-sdks/electron-app/preview.gif)
 
-# How to integrate
+## How to integrate
 
-## Set the custom protocol
+### Set the custom protocol
 
 Firstly, you need to set the custom protocol called `casdoor`.
 
@@ -75,7 +75,7 @@ if (process.defaultApp) {
 
 This will help the browser to open your electron application and send the login info to the electron application.
 
-## Open the login url by the browser
+### Open the login url by the browser
 
 ```javascript
 const serverUrl = "https://door.casdoor.com";
@@ -93,7 +93,7 @@ shell.openExternal(signinUrl); //Open the login url by the browser
 
 You can change the first 5 parameters.
 
-## Listen to the open application event
+### Listen to the open application event
 
 After you login successfully in the browser, the browser will open your electron application. You need to listen to the open application event.
 
@@ -136,7 +136,7 @@ if (!gotTheLock) {
 
 You can get the code from the browser, which is `casdoor_code` or `params.code`.
 
-## Parse the code and get the user info
+### Parse the code and get the user info
 
 ```javascript
 async function getUserInfo(clientId, clientSecret, code) {

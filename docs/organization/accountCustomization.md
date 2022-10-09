@@ -20,8 +20,8 @@ Account item has four attributes:
 | :---------: | :------------------------------: | -----------|
 |    Name    |    -    | Account item name.                                                  |
 |    Visible    |      `True` / `False`      | Select whether this account item is visible on the user home page.                                                    |
-| ViewRule | `Rule Items ` | Select a rule to use with view the account item. |
-| ModifyRule | `Rule Items ` | Select a rule to use with modify the account item. |
+| ViewRule | `Rule Items` | Select a rule to use with view the account item. |
+| ModifyRule | `Rule Items` | Select a rule to use with modify the account item. |
 
 Enter the Organization Edit page, you will find the following:
 
@@ -50,23 +50,23 @@ The following are all the fields in account item. For a description, you can see
 - `Organization`
 - `ID`
 - `Name`
-- `Display name` 
+- `Display name`
 - `Avatar`
 - `User type`
 - `Password`
 - `Email`
 - `Phone`
 - `Country/Region`
-- `Location` 
-- `Affiliation` 
-- `Title` 
-- `Homepage` 
-- `Bio` 
-- `Tag` 
-- `Signup application` 
-- `3rd-party logins` 
-- `Properties` 
-- `Is admin` 
+- `Location`
+- `Affiliation`
+- `Title`
+- `Homepage`
+- `Bio`
+- `Tag`
+- `Signup application`
+- `3rd-party logins`
+- `Properties`
+- `Is admin`
 - `Is global admin`
-- `Is forbidden` 
+- `Is forbidden`
 - `Is deleted`

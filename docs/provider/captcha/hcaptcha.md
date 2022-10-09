@@ -29,4 +29,3 @@ And you can click **Preview** botton to preview the style of this captcha.
 Edit the application you want to configure in Casdoor. Select the provider just added and click the button **Save**.
 
 ![Recaptcha provider app](/img/providers/captcha/hcaptcha_provider_app.png)
-

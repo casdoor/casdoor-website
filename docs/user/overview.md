@@ -86,10 +86,10 @@ You can add new users or update existing Casdoor users by uploading a XLSX file 
 
 In the Admin Console, go to Users and click **Upload(.xlsx)** button.
 
-![](/img/import_users.png)
+![import users](/img/user/import_users.png)
 
 Select your XLSX file and click Open, the users will be imported.
 
 We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder. The template includes 5 users for test and headers for some required user properties.
 
-![](/img/import_success.png)
+![import successfully](/img/user/import_success.png)

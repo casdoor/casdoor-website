@@ -68,9 +68,9 @@ If you want to sign authn request, you need to enable the **Client Signature Req
 
 :::
 
-Click **Installation** tab. 
+Click **Installation** tab.
 
-For the Keycloak <= 5.0.0, select Format Option - **SAML Metadata IDPSSODescriptor** and copy the metadata. 
+For the Keycloak <= 5.0.0, select Format Option - **SAML Metadata IDPSSODescriptor** and copy the metadata.
 
 For Keycloak 6.0.0+, select Format Option - **Mod Auth Mellon files** and click **Download**. Unzip the downloaded .zip, locate `idp-metadata.xml` and copy the metadata.
 
@@ -98,7 +98,7 @@ Edit the application you want to configure in Casdoor. Select the provider just 
 
 ## Validate the effect
 
-Go to the application you just configured and you can find that there is an Keycloak icon in the login page. 
+Go to the application you just configured and you can find that there is an Keycloak icon in the login page.
 
 Click the icon and jump to the Keycloak login page, and then successfully login to the Casdoor after authentication.
 

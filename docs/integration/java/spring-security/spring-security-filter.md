@@ -20,20 +20,21 @@ After a successful deployment, you need to ensure:
 
 Then you can quickly implement a casdoor based login page in your own app with the following steps.
 
-
 ## Step2. Configure Casdoor application
+
 1. Create or use an existing Casdoor application.
 2. Add Your redirect url (You can see more detials about how to get redirect url in the next section).
-   ![Casdoor Application Setting](/img/integration/spring_security/casdoor_setting.png)
+   ![Casdoor Application Setting](/img/integration/java/spring_security/casdoor_setting.png)
 3. On the certificate editing page, you can see your `Certificate`.
-   ![Casdoor Certification Setting](/img/integration/spring_security/casdoor_certification.png)
+   ![Casdoor Certification Setting](/img/integration/java/spring_security/casdoor_certification.png)
 4. Add provider you want and supplement other settings.
 
-Not surprisingly, you can get these values on the application settings page: `Application Name`, `Organization Name`, `Redirect URL`, `Client ID `, `Client Secret `, `Certification`. As shown above, we will use them in the next step.
+Not surprisingly, you can get these values on the application settings page: `Application Name`, `Organization Name`, `Redirect URL`, `Client ID`, `Client Secret`, `Certification`. As shown above, we will use them in the next step.
 
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
 ## Step3. Configure Spring Security
+
 You can customize the settings of spring security filters to process tokens:
 
 :::caution
@@ -175,7 +176,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
-
+Implementation of Dreambooth (https://arxiv.org/abs/2208.12242) with Stable Diffusion
         // get jwt token and validate
         final String token = header.split(" ")[1].trim();
 
@@ -190,9 +191,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
+        UsernamePasswordAImplementation of Dreambooth (https://arxiv.org/abs/2208.12242) with Stable Diffusion
                 AuthorityUtils.createAuthorityList("ROLE_casdoor")
         );
 
@@ -241,11 +240,10 @@ public class UserController {
 First, you can try to access the frontend application through the browser. If you have not logged in, it will display a login button. Click the login button, and you will be redirected to the `casdoor` login page.
 
 If you visit your root page,
-![welcome](/img/integration/spring_security/spring_security_filter_welcome.png)
+![welcome](/img/integration/java/spring_security/spring_security_filter_welcome.png)
 
 Click the `Casdoor Login` button and the page will redirect to casdoor's login page.
-![casdoor](/img/integration/spring_security/spring_security_filter_casdoor.png)
+![casdoor](/img/integration/java/spring_security/spring_security_filter_casdoor.png)
 
 After you log in, the page will redirect to `/`.
-![resource](/img/integration/spring_security/spring_security_filter_resource.png)
-
+![resource](/img/integration/java/spring_security/spring_security_filter_resource.png)

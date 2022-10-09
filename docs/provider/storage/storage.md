@@ -14,7 +14,7 @@ With `Local` type, the `Client ID`, `Client secret`, `Endpoint` and `Bucket` fie
 
 The only item that you need to configure is `Domain` field, please follow the format:
 
-```
+```text
 Domain/images
 ```
 

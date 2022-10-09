@@ -7,10 +7,13 @@ keywords: [APISIX]
 Currently there are 2 methods to use Casdoor to connect to APISIX via APISIX plugins and protect the apis behind the APISIX: using APISIX's Casdoor plugin or using APISIX's OIDC plugin.
 
 ## Connect Casdoor via APISIX's Casdoor plugin
-This plugin, authz-casdoor, can protect apis behind APISIX, forcing every single request to get authenticated, without modifying codes of api. 
+
+This plugin, authz-casdoor, can protect apis behind APISIX, forcing every single request to get authenticated, without modifying codes of api.
 
 ### How to enable it
+
 You need to specify this plugin when creating the route, and give out all required fields. Here is an example.
+
 ```shell
 curl "http://127.0.0.1:9080/apisix/admin/routes/1" -H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -X PUT -d '
 {
@@ -32,6 +35,7 @@ curl "http://127.0.0.1:9080/apisix/admin/routes/1" -H "X-API-KEY: edd1c9f034335f
   }
 }'
 ```
+
 In this example, using apisix's admin API we created a route "/anything/*" pointed to "httpbin.org:80", and with "authz-casdoor" enabled. This route is now under authentication protection of Casdoor.
 
 ### Attributes
@@ -70,25 +74,29 @@ The following are some of the names in the configuration:
 `APISIX_HOSTNAME`: Domain name or IP where APISIX is deployed.
 
 ### Step1. Deploy Casdoor and APISIX
+
 Firstly, the [Casdoor](/docs/basic/server-installation) and [APISIX](https://apisix.apache.org/docs/apisix/how-to-build/) should be deployed. 
 
 After a successful deployment, you need to ensure:
+
 1. Casdoor can be logged in and used normally.
 2. Set Casdoor's `origin` value (conf/app.conf) to `CASDOOR_HOSTNAME`.
-![Casdoor conf](/img/casdoor_origin.png)
+![Casdoor conf](/img/integration/casdoor_origin.png)
 
 ### Step2. Configure Casdoor application
+
 1. Create or use an existing Casdoor application.
 2. Add a redirect url: `http://APISIX_HOSTNAME/REDIRECTWHATYOUWANT`,and change `REDIRECTWHATYOUWANT` to the redirect url you need.
 3. Select "JWT-Empty" for the Token format option
 4. Add provider you want and supplement other settings.
 
-![Application Setting](/img/casdoor_jwtempty.png)
+![Application Setting](/img/integration/lua/apisix/casdoor_jwtempty.png)
 Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, and we will use them in the next step.
 
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
 ### Step3. Configure APISIX
+
 APISIX has official [OIDC](https://apisix.apache.org/docs/apisix/plugins/openid-connect/) support, which is implemented using [lua-resty-openidc](https://github.com/zmartzone/lua-resty-openidc).
 
 You can customize the settings according to the APISIX OIDC documentation, in which the following routing settings will be used:
@@ -123,5 +131,6 @@ $ curl  -XPOST APISIX_HOSTNAME/apisix/admin/routes -H "X-Api-Key: edd1c9f034335f
   }
 }'
 ```
+
 Now, visit `http://APISIX_HOSTNAME/get`, the browser will redirect you to the casdoor login page, and after successfully logging in, you will, not surprisingly, see that we have sent a request to httpbin.org. 
-![APISIX_Result](/img/apisix_result.png)
+![APISIX_Result](/img/integration/lua/apisix/apisix_result.png)

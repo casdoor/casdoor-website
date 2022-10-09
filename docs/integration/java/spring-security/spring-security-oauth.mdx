@@ -24,7 +24,7 @@ Then you can quickly implement a casdoor based login page in your own app with t
 ## Step2. Configure Casdoor application
 1. Create or use an existing Casdoor application.
 2. Add Your redirect url (You can see more details about how to get redirect url in the next section)
-![Casdoor Application Setting](/img/appsetting_spring_security.png)
+![Casdoor Application Setting](/img/integration/appsetting_spring_security.png)
 3. Add provider you want and supplement other settings.
 
 Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above. We will use them in next step.
@@ -255,11 +255,11 @@ All the web page template should be put under `resources/templates`.
 Firstly, you can try to open your favorite browser and directly visit `/foos`. It will automatically redirect to casdoor's login page. You can log in here or from the root page.
 
 If you visit your root page,
-![Casdoor Application Setting](/img/spring_security_welcome.png)
+![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_welcome.png)
 
 Click the `login` button and the page will redirect to casdoor's login page.
-![Casdoor Application Setting](/img/spring_security_casdoor.png)
+![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_casdoor.png)
 
 After you log in, the page will redirect to `/foos`.
-![Casdoor Application Setting](/img/spring_security_resource.png)
+![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_resource.png)
 

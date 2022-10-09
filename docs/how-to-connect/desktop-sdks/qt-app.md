@@ -41,16 +41,16 @@ If you don't set the parameter `endpoint`, this project will use the [http://loc
 ### Preview
 
 After you run this Qt desktop application, a new window will be showed on your desktop.
-![index](/img/howto-desktop-qt-app-index.png)
+![index](/img/how-to-connect/desktop-sdks/qt-app/index.png)
 
 If you click `Sign In` botton, a login window will be showed on your desktop.
-![login](/img/howto-desktop-qt-app-login.png)
+![login](/img/how-to-connect/desktop-sdks/qt-app/login.png)
 
 After you login successfully, a user profile window will be showed on your desktop, it dispaly your user information.
-![user profile](/img/howto-desktop-qt-app-userprofile.png)
+![user profile](/img/how-to-connect/desktop-sdks/qt-app/userprofile.png)
 
 You can preview the whole process by the gif image below.
-![preview gif](/img/howto-desktop-qt-app-preview.gif)
+![preview gif](/img/how-to-connect/desktop-sdks/qt-app/preview.gif)
 
 ## How to integrate
 

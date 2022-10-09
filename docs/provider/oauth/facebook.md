@@ -26,7 +26,6 @@ After fill the website url, you can go to **Facebook Login > Settings**, and fil
 
 ![Redirecturis](/img/providers/OAuth/facebookredirecturl.png)
 
-
 :::info Set authorized redirect URLs correctly
 
 In Facebook OAuth config, the `Valid OAuth Redirect URIs` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**

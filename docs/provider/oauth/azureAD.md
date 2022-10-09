@@ -31,7 +31,7 @@ Follow the example in the picture to add the redirect URIs for Casdoor.
 
 ### step4. Grant admin consent
 
-The `user.read` API is open by default. You can add more scope according to your needs. Finally, remember to **grant admin consent**. 
+The `user.read` API is open by default. You can add more scope according to your needs. Finally, remember to **grant admin consent**.
 ![azuread_permission.png](/img/providers/OAuth/azuread_permission.png)
 
 ### step5. Create AzureAD provider in casdoor

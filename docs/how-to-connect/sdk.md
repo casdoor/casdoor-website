@@ -86,15 +86,15 @@ All the parameters for `InitConfig()` are explained as follows:
 
 The `jwtPublicKey` can be managed in the `Certs` page as below.
 
-![Certs Management](/img/howto_cert_list.png)
+![Certs Management](/img/how-to-connect/sdk/howto_cert_list.png)
 
 You can find the public key in the cert edit page, copy it or download it for the sdk.
 
-![Certs Edit](/img/howto_cert_edit.png)
+![Certs Edit](/img/how-to-connect/sdk/howto_cert_edit.png)
 
 Then you can select the cert in the application edit page.
 
-![Certs Select](/img/howto_cert_select.png)
+![Certs Select](/img/how-to-connect/sdk/howto_cert_select.png)
 
 :::
 

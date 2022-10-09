@@ -211,19 +211,19 @@ Examples of APIs are shown below.
 
 After start, open your favorite browser and visit **http://localhost:9090**, then click any button which can request resources from `casdoor-api`.
 
-![index](/img/integration/spring_cloud_gateway/index.png)
+![index](/img/integration/java/spring_cloud_gateway/index.png)
 
 The gateway authentication logic will be triggered. Since you are not logged in, you will jump to the login interface. Click Login Button.
 
-![toLogin](/img/integration/spring_cloud_gateway/toLogin.png)
+![toLogin](/img/integration/java/spring_cloud_gateway/toLogin.png)
 
 You can see the unified login platform of Casdoor.
 
-![login](/img/integration/spring_cloud_gateway/login.png)
+![login](/img/integration/java/spring_cloud_gateway/login.png)
 
 After successful login, it will jump to the main interface. Then you can click any button.
 
-![index-ok](/img/integration/spring_cloud_gateway/index-ok.png)
+![index-ok](/img/integration/java/spring_cloud_gateway/index-ok.png)
 
 ## What's more
 
