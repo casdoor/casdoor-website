@@ -7,7 +7,7 @@ keywords: [user, permissions]
 Each user may have multiple permissions.
 You can see the user's permissions on the user's profile.
 
-![permissions](/img/users_permissions.png)
+![permissions](/img/user/users_permissions.png)
 
 ## Permission properties
 

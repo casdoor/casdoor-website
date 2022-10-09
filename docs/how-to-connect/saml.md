@@ -12,7 +12,7 @@ Casdoor now can be used as SAML IdP. Up to now the Casdoor has supported the mai
 
 The metadata of SAML endpoint in Casdoor is `<Endpoint of casdoor>/api/saml/metadata?application=<organization name>/<application name>`. And you can also find the metadata in the application edit page.
 
-![](/img/saml_metadata.png)
+![metadata](/img/how-to-connect/saml/saml_metadata.png)
 
 Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an application called `app-built-in` which belongs to an organization called `built-in`.
 
@@ -163,22 +163,21 @@ Supply:
 
 Click the URL to authenticate, the login page of Casdoor will display.
 
-![](/img/saml_login.png)
+![login](/img/how-to-connect/saml/saml_login.png)
 
 You will get the response messages as below after authenticating.
 
-![](/img/saml_response.png)
+![response](/img/how-to-connect/saml/saml_response.png)
 
 ### Casdoor as a SAML IdP in keycloak
 
-This guide will show you how to configure Casdoor and Keycloak to add Casdoor as a SAML IdP in Keycloak. 
-
+This guide will show you how to configure Casdoor and Keycloak to add Casdoor as a SAML IdP in Keycloak.
 
 #### Add SAML IdP in Keycloak
 
 Open Keycloak admin page, click **Identity Providers** and select **SAML v2.0** from the list of providers.
 
-![](/img/saml_keycloak_idp_create.png)
+![saml_keycloak_idp_create](/img/how-to-connect/saml/saml_keycloak_idp_create.png)
 
 :::info
 
@@ -188,7 +187,7 @@ You can visit Keycloak SAML Identity Providers [documentation](https://www.keycl
 
 Enter the **Alias** and the **Import from URL** in Keycloak IdP edit page. The content of **Import from URL** can be found in the Casdoor application edit page. Click **Import** and the SAML config will be filled automatically. 
 
-![](/img/saml_keycloak_idp_edit.png)
+![saml_keycloak_idp_edit](/img/how-to-connect/saml/saml_keycloak_idp_edit.png)
 
 You should remember the **Service Provider Entity ID** and then save the configuration.
 
@@ -196,17 +195,17 @@ You should remember the **Service Provider Entity ID** and then save the configu
 
 In the application edit page, add a redirect URL which the content of it is **Service Provider Entity ID** in Keycloak. And you should enable SAML compress for Keycloak.
 
-![](/img/saml_keycloak_compress.png)
+![saml_keycloak_compress](/img/how-to-connect/saml/saml_keycloak_compress.png)
 
 #### Login using Casdoor SAML
 
 Open the Keycloak login page and you can find the additional button that allows you to login to Keycloak using the Casdoor SAML provider. 
 
-![](/img/saml_keycloak_login.png)
+![saml_keycloak_login](/img/how-to-connect/saml/saml_keycloak_login.png)
 
 Click on the button and you will be redirected to the Casdoor SAML provider for the authentication. After the successful authentication, you will be redirected back to Keycloak. Then you need to assign users to the application.
 
-![](/img/saml_keycloak_success.png)
+![saml_keycloak_success](/img/how-to-connect/saml/saml_keycloak_success.png)
 
 We also provide a demo video to demonstrate the entire process, which we hope will be helpful to you.
 

@@ -16,7 +16,7 @@ Casdoor supports four OAuth grant types: [Authorization Code Grant](https://data
 
 For security reasons, the Casdoor app has the authorization code mode turned on by default. If you need to use other modes, please go to the appropriate app to set it.
 
-![Grant Types](/img/accesstoken_grant_types.png)
+![Grant Types](/img/how-to-connect/oauth/accesstoken_grant_types.png)
 
 ### Authorization Code Grant <span id="1"></span>
 

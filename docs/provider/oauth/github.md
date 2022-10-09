@@ -20,7 +20,6 @@ Then fill the **Github App name**, **Homepage URL**, **description** and **Callb
 
 ![GitHub](/img/providers/OAuth/github.png)
 
-
 :::info Set authorization callback URL correctly
 
 In GitHub App config, the `Callback URL` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**

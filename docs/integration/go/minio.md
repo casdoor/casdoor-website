@@ -26,16 +26,16 @@ You can refer to [here](https://github.com/minio/minio#minio-quickstart-guide) t
 
 1. Create or use an existing Casdoor application.
 2. Add Your redirect url
-![Casdoor Application Setting](/img/appsetting_spring_security.png)
+![Casdoor Application Setting](/img/integration/appsetting_spring_security.png)
 3. Add provider you want and supplement other settings.
 
 Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in next step.
 
 Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
-4. This step is necessary for MinIO. As MinIO needs to use a claim attribute in JWT for its policy, you should configure it in casdoor as well. Currently, casdoor uses `tag` as a workaround for configuring MinIO's policy. 
+4. This step is necessary for MinIO. As MinIO needs to use a claim attribute in JWT for its policy, you should configure it in casdoor as well. Currently, casdoor uses `tag` as a workaround for configuring MinIO's policy.
 
-![MinIO Policy Setting](/img/minio_policy.png)
+![MinIO Policy Setting](/img/integration/go/minio/minio_policy.png)
 
 You can find all supported policies [here](https://docs.min.io/minio/baremetal/security/minio-identity-management/policy-based-access-control.html#minio-policy).
 
@@ -82,4 +82,3 @@ You will be redirected to the casdoor user login page. Upon successful login you
 If you deploy frontend and backend of casdoor in different ports, the login page you are redirected to will be backend port and it will display `404 not found`. You can modify the port to the frontend one. Then you can access to casdoor login page successfully.
 
 :::
-

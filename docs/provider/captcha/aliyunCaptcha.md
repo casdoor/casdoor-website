@@ -49,4 +49,3 @@ The following image is `Intelligent Validation` preview:
 Edit the application you want to configure in Casdoor. Select the provider just added and click the button **Save**.
 
 ![Recaptcha provider app](/img/providers/captcha/aliyunCaptcha_provider_app.png)
-

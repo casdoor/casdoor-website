@@ -8,7 +8,6 @@ To set up Linkedin OAuth provider, please go to [Linkedin developer](https://www
 
 ![Linkedin](/img/providers/OAuth/linkedin.png)
 
-
 After filling in the form above and creating your app, you'll need to verify the Linkedin page associated with the app
 
 ![Linkedin Verify](/img/providers/OAuth/linkedin-verify.png)
@@ -38,7 +37,6 @@ For more details, please read [App config](/docs/application/config#further-unde
 Then you can obtain your ```Client ID``` and ```Client Secret```
 
 ![Linkedin Client](/img/providers/OAuth/linkedinclient.png)
-
 
 Add a Linkedin OAuth provider and fill the ```Client ID``` and ```Client Secret``` in your Casdoor.
 

@@ -10,6 +10,7 @@ You have connected Casdoor and configured more than one application in an organi
 to any app in the organization, and then be able to sign in when they go to another app, without any extra clicks. 
 
 We offer this single sign-on, you just need to:
+
 - Enable Auto signin button.
 - Fill in the URL for home page.
 - Add a **Silent Signin** function to the application home page.
@@ -27,10 +28,10 @@ After enable the auto signin, the selection box will not display, the logged use
 
 1. Fill the field **home**. It can be the application's home page or the login page.
 
-![sso_home.png](/img/connect/sso_home.png)
+![sso_home.png](/img/how-to-connect/single-sign-on/sso_home.png)
 2. Enable Auto signin button.
 
-![sso_signin.png](/img/connect/sso_signin.png)
+![sso_signin.png](/img/how-to-connect/single-sign-on/sso_signin.png)
 
 ## Add Silent Signin
 
@@ -41,6 +42,7 @@ to quickly implement the feature. You can see details in [use-in-react](https://
 :::info
 
 How it works
+
 1. In the URL to the application home page, we will carry the `silentSignin` parameter.
 2. In your HomePage to determine whether you need to log in silently(automatically) by the parameter `silentSignin`. If
    silentSignin === 1, the function returns the SilentSignin component, it will help you initiate a login request. And since you have
@@ -61,7 +63,6 @@ is provided in our SDK for each language.
 
 Open the profile page and go to the home page. You will see other apps in the organization.
 
-![sso_homepage.png](/img/connect/sso_homepage.png)
+![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
 
 Click the application panel, will jump to the url you set in configuration and automatically log in to the application.
-

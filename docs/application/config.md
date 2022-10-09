@@ -23,11 +23,11 @@ I create my application and fill some necessary configures.
 
 Select organization I created to make users in this organization can use this application.
 
-![Organization](/img/organization.png)
+![Organization](/img/application/config/organization.png)
 
 While this organization is named ```my_organization```, so I choose it in drop-down menu.
 
-![Select Organization](/img/selectorganization.png)
+![Select Organization](/img/application/config/selectorganization.png)
 
 Then I want my users can use Casdoor to complete authentication when they are signing up, so I fill the redirect url here as **https://my-site-url.com/callback**
 
@@ -47,7 +47,7 @@ If the authentication success, GitHub callback to Casdoor to tell Casdoor authen
 
 Then you can add which third party apps can sign up by adding providers and setting its properties.
 
-![Select providers](/img/selectproviders.png)
+![Select providers](/img/application/config/selectproviders.png)
 
 ```mdx-code-block
 <div className={styles.signingradientborder}>
@@ -59,6 +59,6 @@ Then you can add which third party apps can sign up by adding providers and sett
 
 Note that if you don't want users to access your app using a **username/password**, you can switch off the ```Password On``` button, so users can only access app using third party services:
 
-![Password On](/img/PasswordOn.png)
+![Password On](/img/application/config/PasswordOn.png)
 
 :::

@@ -9,6 +9,7 @@ For integrating Zentao with Casdoor SSO, we should via 3rd-party OIDC module
 [zentao-oidc](https://github.com/casdoor/zentao-oidc), and this document will show you how to do it.
 
 ## Step1. Deploy Casdoor and Zentao
+
 Firstly, the [Casdoor](/docs/basic/server-installation) and 
 [Zentao](https://www.zentao.pm/download/zentao-community-edition-release-164-1100.html) should be deployed.
 After a successful deployment, you need to ensure:
@@ -17,10 +18,13 @@ After a successful deployment, you need to ensure:
 2. You can successfully log in and use Zentao
 
 ## Step2. Integrated Zentao OIDC third party module
-install [zentao-oidc](https://github.com/casdoor/zentao-oidc) 
+
+install [zentao-oidc](https://github.com/casdoor/zentao-oidc)
+
 ```java
 git clone https://github.com/casdoor/zentao-oidc.git
 ```
+
 or you can download the ZIP and unzip it.
 
 This module is used for Zentao integrating with SSO for OpenId. The usage is as follows:
@@ -30,7 +34,7 @@ Rename the downloaded package to "oidc"
 
 2. Configure the filter
 
-   Because the framework of Zentao filters the parameters in URL and does not allow Spaces. 
+   Because the framework of Zentao filters the parameters in URL and does not allow Spaces.
 So you need to put the following code at the end of `/config/my.php`.
 
  ```php
@@ -42,14 +46,16 @@ So you need to put the following code at the end of `/config/my.php`.
 3. Modify `/module/commom/model.php`
 
    Put 'oidc' on the anonymous access list and add a line to the `isOpenMethod` method of `model.php`.
+
 ```php
 public function isOpenMethod($module, $method){        
    if($module == 'oidc' and $method == 'index')  return true; 
 }
 ```
 
-4. If you do not want the Zentao login screen to appear, go directly to the Casdoor login screen. 
-   Modify the last line of code at `public function checkPriv()` in `/module/common/model.php`. 
+4. If you do not want the Zentao login screen to appear, go directly to the Casdoor login screen.
+   Modify the last line of code at `public function checkPriv()` in `/module/common/model.php`.
+
 ```php
 //return print(js::locate(helper::createLink('user', 'login', "referer=$referer")));
 return print(js::locate(helper::createLink('oidc', 'index', "referer=$referer")));
@@ -57,19 +63,23 @@ return print(js::locate(helper::createLink('oidc', 'index', "referer=$referer"))
 
 5. Modify `setSuperVars()` method inside of `framework/base/router.class.php`, 
 comment out the following statements.
+
 ```php
     public function setSuperVars()
 //  unset($_REQUEST);
 ```
 
 ## Step3. Configure Casdoor Application
+
 1. Create or use an existing Casdoor application.
 2. Add Your redirect url
-   ![Casdoor Application Setting](/img/integration/clientId.png)
+   ![Casdoor Application Setting](/img/integration/php/zentao/clientId.png)
 3. Add provider you want and supplement other settings.
 
 ## Step4. Configure Zentao
+
 Configure `config.php` in the oidc
+
 ```php
 $config->oidc->clientId="<Your ClientId>";
 $config->oidc->clientSecret="<Your ClientSecrect>";
@@ -77,6 +87,7 @@ $config->oidc->issuer="http://localhost:8000";
 ```
 
 set your reditrect Url in module/oidc `public function index()`
+
 ```php
 $oidc->setRedirectURL($path."/zentao/oidc-index.html");
 ```

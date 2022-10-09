@@ -10,7 +10,7 @@ At the underlying of casdoor, each permission corresponds to a casbin enforcer. 
 
 We will show some examples of using these APIs, the permission is shown below.
 
-![](/img/permission_edit.png)
+![permission_edit](/img/permission/permission_edit.png)
 
 :::tip
 

@@ -5,6 +5,7 @@ keywords: [webauthn]
 ---
 
 ## Overview
+
 We are delighted to inform the Casdoor's customers that Casdoor now supports logging in with Webauthn, which means, you may be able to log in with your biological identifications like fingerprints or facial recognition even U-disks, provided that your device support these cool authorization method and WebAuthn.
 
 ### What is WebAuthn?
@@ -22,10 +23,13 @@ For more detailed information about the WebAuthn Technology, you can visit <http
 In the login page, you must have already seen the choice of using WebAuthn to login in. But considering that you haven't got a Webauthn credential (webauth password, if this inaccurate explanation can make you understand better) yet, so in this tutorial, we are going to show you how to create and manage a credential first and then, how to log in with the credential.
 
 #### Step0: modify the configurations and turn on the webauthn authentication
+
 In conf/app.conf you can see
+
 ```ini
 origin = "http://localhost:8000"
 ```
+
 Please ensure this configuration is EXACTLY the url of your website
 
 **Only https is supported for webauthn unless you are using localhost**
@@ -42,7 +46,8 @@ Press the button and then follow the instructions of your device to register a n
 
 You can remove any credentials via the "delete" button in the list.
 
-#### Step 2: log in via webauthn 
+#### Step 2: log in via webauthn
+
 Before this step starts, make sure you have logged out the casdoor.
 
 Go to the log in page, choose the wenauthn login method, enter your username and press the login button, and follow the instructions of your device.

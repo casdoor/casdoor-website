@@ -20,7 +20,7 @@ First, you need to create a valid [Storage Provider](/docs/provider/storage) in 
 :::caution
 
 When you fill in the field `Domain`, please end with '/'
-![storage_domian](/img/basic/storage_domian.png)
+![storage_domian](/img/deployment/deploy-cdn/storage_domian.png)
 
 :::
 

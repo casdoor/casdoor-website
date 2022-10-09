@@ -30,12 +30,12 @@ After a successful deployment, you need to ensure:
 
 1. Casdoor can be logged in and used normally.
 2. Set Casdoor's `origin` value (conf/app.conf) to `CASDOOR_HOSTNAME`.
-![Casdoor conf](/img/casdoor_origin.png)
+![Casdoor conf](/img/integration/casdoor_origin.png)
 
 ## Step2. Configure Casdoor application
 
 1. Create a wechat idp in casdoor and fill your `APPID` and `APPSECRET` given to you by WeChat Mini Program develop platform:
-![WeChat_MiniProgram.png](/img/integration/WeChat_MiniProgram.png)
+![WeChat_MiniProgram.png](/img/integration/javascript/wechat_miniprogram/WeChat_MiniProgram.png)
 2. Create or use an existing Casdoor application.
 3. Add the idp added above to the application you want to use.
 

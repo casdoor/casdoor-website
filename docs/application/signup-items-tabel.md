@@ -6,7 +6,7 @@ keywords: [signup, items, table]
 
 On the application configuration page, we can configure the signup items table to create a customized registration page. And we can add or delete any signup item on this signup items table.
 
-![Signup Items Table](/img/signup-items-table.png)
+![Signup Items Table](/img/application/signup-items-tabel/signup-items-table.png)
 
 For a detailed explanation of each signup item, please see the table below.
 
@@ -35,9 +35,8 @@ Here, for example, I want to setup my own registration page bring a mailbox but 
 
 Firstly, I added some signup items necessary for registration, such as ID, Username, Password, Email.
 
-![Signup Items Table](/img/signup-items-table-demo-config.png)
+![Signup Items Table](/img/application/signup-items-tabel/signup-items-table-demo-config.png)
 
 And I selected the email row's rule item to `No verification`. As a result, the generated preview registration page can get the expected effect.
 
-![Signup Items Table](/img/signup-items-table-demo-page.png)
-
+![Signup Items Table](/img/application/signup-items-tabel/signup-items-table-demo-page.png)

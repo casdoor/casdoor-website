@@ -15,7 +15,7 @@ Showdoc supports 3rd-party authentication including Oauth. Here is the tutorial 
 
 Go to your Casdoor and add your new application **Showdoc**. Here is an **example** of creating the Showdoc application in Casdoor.
 
-![create_application.png](/img/integration/create_application.png)
+![create_application.png](/img/integration/php/showdoc/create_application.png)
 
 Please remember the `client ID` and `client Secret` for next step.
 
@@ -29,7 +29,7 @@ Please don't fill in the **callback url** in this step. The url depends on the c
 
 First, start the oAuth2 login button. Then fill in the `callback url` as shown in the example.
 Fill in the `client ID` and `client secret` remembered in previous step.
-![showdoc_oauth2.png](/img/integration/showdoc_oauth2.png)
+![showdoc_oauth2.png](/img/integration/php/showdoc/showdoc_oauth2.png)
 
 `Authorize path`, `AccessToken path`, `User info path` are required. You can fill as shown below.
 
@@ -42,13 +42,12 @@ User info path:   /api/get-account
 ### step3. Configure the callback url in casdoor
 
 Go back to the application edit page in step 1, and add the `callback url` you filled in showdoc.
-![showdoc_callbackurl.png](/img/integration/showdoc_callbackurl.png)
+![showdoc_callbackurl.png](/img/integration/php/showdoc/showdoc_callbackurl.png)
 
 ### step4. Have a try on showdoc
 
 You are supposed to see this in login page:
 
-![showdoc_login.png](/img/integration/showdoc_login.png)
+![showdoc_login.png](/img/integration/php/showdoc/showdoc_login.png)
 
 Congratulations! You have completed all the steps. Press the **'casdoor sso'** button and you will be redirected to casdoor login page.
-
