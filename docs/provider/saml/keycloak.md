@@ -43,7 +43,7 @@ Click **Save**. This action creates the client and brings you to the **Settings*
 
 The following list part of settings:
 
-1. **Name** - `Casdoor`. This is only used to display a friendly name to Keycloak users in the KeyCloak UI. Can use any name you like.
+1. **Name** - `Casdoor`. This is only used to display a friendly name to Keycloak users in the KeyCloak UI. You can use any name you like.
 2. **Enabled** - Select on.
 3. **Include Authn Statement** - Select on. 
 4. **Sign Documents** - Select on.
@@ -72,7 +72,7 @@ Click **Installation** tab.
 
 For the Keycloak <= 5.0.0, select Format Option - **SAML Metadata IDPSSODescriptor** and copy the metadata.
 
-For Keycloak 6.0.0+, select Format Option - **Mod Auth Mellon files** and click **Download**. Unzip the downloaded .zip, locate `idp-metadata.xml` and copy the metadata.
+For Keycloak 6.0.0+, select Format Option - **Mod Auth Mellon files** and click **Download**. Unzip the downloaded.zip, locate `idp-metadata.xml` and copy the metadata.
 
 ![Download metadata](/img/providers/SAML/keycloak_client_install.png)
 
@@ -98,7 +98,7 @@ Edit the application you want to configure in Casdoor. Select the provider just 
 
 ## Validate the effect
 
-Go to the application you just configured and you can find that there is an Keycloak icon in the login page.
+Go to the application you just configured and you can find that there is a Keycloak icon in the login page. 
 
 Click the icon and jump to the Keycloak login page, and then successfully login to the Casdoor after authentication.
 

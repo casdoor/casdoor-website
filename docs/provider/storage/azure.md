@@ -45,7 +45,7 @@ You can obtain your account key from the Azure Portal under the "Access Keys" se
 
 - ContainerName
 
-  You first need to create a container, there is a default container called 'default'.
+  You first need to create a container. There is a default container called 'default'.
 ![azureContainer.png](/img/providers/storage/azureContainer.png)
 
 - Domain
