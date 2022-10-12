@@ -256,7 +256,11 @@ var _hmt = _hmt || [];
   scripts: [
     {
       src: "/js/CasdoorLink.js",
-      async: false,
+      async: true,
+    },
+    {
+      src: "/js/autoRedirect.js",
+      async: true,
     },
     {
       src: "/js/gitter.js",
