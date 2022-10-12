@@ -259,10 +259,6 @@ var _hmt = _hmt || [];
       async: true,
     },
     {
-      src: "/js/autoRedirect.js",
-      async: true,
-    },
-    {
       src: "/js/gitter.js",
       async: true,
     },
