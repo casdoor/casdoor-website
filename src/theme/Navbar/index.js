@@ -1,12 +1,12 @@
 import React from "react";
-import Footer from "@theme-original/Footer";
+import Navbar from "@theme-original/Navbar";
 import {useEffect} from "react";
 
-export default function FooterWrapper(props) {
+export default function NavbarWrapper(props) {
   useEffect(autoRedirect, []);
   return (
     <>
-      <Footer {...props} />
+      <Navbar {...props} />
     </>
   );
 }
