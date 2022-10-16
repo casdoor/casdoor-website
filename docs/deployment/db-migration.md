@@ -2,14 +2,13 @@
 title: DB Migration
 description: Handle DB Migration in Casdoor
 keywords: [deployment, Database, Migration]
-
 ---
 
 When the database is upgraded, it is easy to have a data crash, for example, we need to delete an old field.  Fortunately, the [xorm](https://xorm.io/) used by Casdoor will help us with a lot of database migration problems. But we still need to handle some schema and data migrations ourselves, such as a **field name changed**
 
 :::note
 
-You can understand xorm Schema operation in [docs](https://xorm.io/docs/chapter-03/readme/)
+You can understand xorm Schema operation in [xorm docs](https://xorm.io/docs/chapter-03/readme/)
 
 :::
 
