@@ -12,22 +12,20 @@ If you find something incorrect or missing, please leave comments / suggestions.
 
 ## Get involved
 
-There are many ways to contribute to Casdoor, here are some ideas to get started:
+There are many ways to contribute to Casdoor. Here are some ideas to get started:
 
-Use Casdoor and report issues! When using Casdoor, report issues to promote development of Casdoor, no matter bugs or
-proposal. Before file an issue on GitHub, it would be better to discuss first on [Gitter](https://gitter.im/casbin/casdoor),
+Use Casdoor and report issues! When using Casdoor, report issues to promote development of Casdoor, no matter bugs or proposal. Before filing an issue on GitHub, it would be better to discuss first on [Gitter](https://gitter.im/casbin/casdoor),
 [Casbin Forum](https://forum.casbin.com/) or QQ group: [645200447](https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi)
 
 :::info
 
-When reporting an issue, please use English to describe the details of you problem.
+When reporting an issue, please use English to describe the details of your problem.
 
 :::
 
-Help with docs! Contributing start from docs are a good choice to start your contribution.
+Help with docs! Contributing start from docs is a good choice to start your contribution.
 
-Help solve issues! We prepare a table containing easy tasks suitable for beginner, with different level of challenges
-labeled with different tags, check the table here [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1).
+Help solve issues! We prepare a table containing easy tasks suitable for beginners, with different levels of challenges labeled with different tags, check the table here [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1).
 
 ## Contributing
 
@@ -81,8 +79,7 @@ There are something you need to know before you open a pull request:
 
 ### Semantic PRs
 
-Your pull requests should follow the Conventional Commits spec. The basic requirement is that only the PR title or at
-least one commit message. For example, three commonly used PR title are given below:
+Your pull requests should follow the Conventional Commits spec. The basic requirement is that only the PR title or at least one commit message. For example, three commonly used PR titles are given below:
 
 :::caution
 
@@ -114,8 +111,7 @@ pull request is merged.
 
 #### Linking a pull request to an issue using a keyword
 
-You can link a pull request to an issue by using a supported keyword in the pull request's description or in a commit
-message. The pull request **must be** on the default branch.
+You can link a pull request to an issue by using a supported keyword in the pull request's description or in a commit message. The pull request **must be** on the default branch.
 - close
 - fix
 - resolve
@@ -130,8 +126,7 @@ For more details, please see [Link PR to issue](https://docs.github.com/en/issue
 
 ### Modify PRs
 
-Inevitably, your PR may need to be revised. Please **re-use** the same PR when the code needs changes. Don't close 
-the PR and open a new one.
+Inevitably, your PR may need to be revised. Please **re-use** the same PR when the code needs changes. Don't close the PR and open a new one.
 
 Here is a possible example:
 - Modify the code in your local.
@@ -144,7 +139,7 @@ git commit --amend
 git push --force
 ```
 
-Then the PR has been modified successfully! You can check it in casdoor repository.
+Then the PR has been modified successfully! You can check it in Casdoor repository.
 
 
 
@@ -161,8 +156,7 @@ e.g.,`signupUrl`for var names,`Signup URL`for UI
 #### How to update i18n data?
 
 Please note that we use [Crowdin](https://crowdin.com/project/casdoor-site) as translating platform and i18next as
-translating tool. When you add some words using i18next in the `web/` directory, you can run the `i18n/generate_test.go`
-to auto-generate the `web/src/locales/**/data.json`.
+translating tool. When you add some words using i18next in the `web/` directory, you can run the `i18n/generate_test.go`to auto-generate the `web/src/locales/**/data.json`.
 
 Run `i18n/generate_test.go`:
 ```shell
