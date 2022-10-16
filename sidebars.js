@@ -31,6 +31,7 @@ module.exports = {
         "deployment/data-initialization",
         "deployment/deploy-cdn",
         "deployment/deploy-intranet",
+        "deployment/db-migration",
       ],
     },
     {
