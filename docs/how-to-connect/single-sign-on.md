@@ -36,7 +36,7 @@ After enable the auto signin, the selection box will not display, the logged use
 ## Add Silent Signin
 
 In fact, we implement auto login by carrying parameters on the URL. So your applications need to have a method to trigger
-the login after jumping to the URL. We support [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk) for you
+the login after jumping to the URL. We provide [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk) for you
 to quickly implement the feature. You can see details in [use-in-react](https://github.com/casdoor/casdoor-react-sdk#use-in-react).
 
 :::info
