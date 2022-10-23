@@ -9,7 +9,7 @@ function Help() {
       <div className="container text--center">
         <br /><br />
         <h1><Translate>Need help?</Translate></h1>
-        <Translate>If you need help with Casnode, you can try one of the mechanisms below.</Translate>
+        <Translate>If you need help with Casdoor, you can try one of the mechanisms below.</Translate>
         <br /><br /><br /><br />
         <div className="row">
           <div className="col">
@@ -21,8 +21,23 @@ function Help() {
             <Translate>You can join the conversation on</Translate> <a href="https://gitter.im/casbin/casdoor"><Translate>Gitter</Translate></a> <Translate>for contributing help.</Translate>
           </div>
           <div className="col">
-            <h2><Translate>Tencent QQ</Translate></h2>
-            <Translate>You can contact us by joining the QQ group:</Translate> <a href="https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi">645200447</a>.
+            <h2><Translate>Tencent QQ and Wechat</Translate></h2>
+            <Translate
+              values={{
+                645200447: (
+                  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi">
+                    645200447
+                  </a>
+                ),
+                Wechat_group: (
+                  <a href="/img/wechat.jpg" target="_blank">
+                    Wechat group
+                  </a>
+                ),
+              }}
+            >
+              {"You can contact us by joining the QQ group: {645200447} or {Wechat_group}"}
+            </Translate>
           </div>
           <div className="col">
             <h2>Github</h2>

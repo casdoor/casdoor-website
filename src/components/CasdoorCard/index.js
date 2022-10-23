@@ -4,7 +4,9 @@ import {useEffect, useState} from "react";
 export default function CasdoorCard(props) {
   const [link, setLink] = useState("https://door.casdoor.org/");
   useEffect(() => {
-    setLink(localStorage.getItem("CasdoorLink"));
+    if (localStorage.getItem("mainland") === "true") {
+      setLink("https://door.casdoor.com/");
+    }
   }, []);
   return (
     <iframe

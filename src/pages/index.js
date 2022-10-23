@@ -37,10 +37,19 @@ function FrameMask(props) {
       state: false,
     });
   };
+
+  const handleClick = ({src}) => {
+    if(localStorage.getItem("mainland") === "true") {
+      window.open("https://dooc.casdoor.com" + src);
+    }else{
+      window.open("https://door.casdoor.org" + src);
+    }
+  };
+
   return (
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <CasdoorCard src={props.src} width={props.width} height={props.height} />
-      <div style={maskStyle} hidden={!mouseState.state} onClick={() => {window.open(localStorage.getItem("CasdoorLink") + props.src);}}>
+      <div style={maskStyle} hidden={!mouseState.state} onClick={() => {handleClick(props.src);}}>
         <Link
           className="button button--secondary button--lg"
           style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}>
