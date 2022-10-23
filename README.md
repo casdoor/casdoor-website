@@ -70,33 +70,46 @@ Title is optional
 
 You can use JSX in documents, such as the [Tabs](https://docusaurus.io/docs/markdown-features/tabs) component provided by Docusaurus, but to prevent Crowdin from breaking the code ([mdx-solutions](https://docusaurus.io/docs/i18n/crowdin#mdx-solutions)), please wrap the JSX code:
 
-`````md
-
-````mdx-code-block
+````md
+```mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+```
 
+```mdx-code-block
 <Tabs>
-  <TabItem value="go" label="Go">
+<TabItem value="go" label="Go">
+```
 
-  content
+content
 
-  </TabItem>
-  <TabItem value="java" label="Java">
+```mdx-code-block
+</TabItem>
+<TabItem value="java" label="Java">
+```
 
-  content
+content
 
-  </TabItem>
+```mdx-code-block
+</TabItem>
 </Tabs>
-````
+```
 
-`````
+````
 
 ### Translation
 
 [Crowdin](https://crowdin.com/project/casdoor-website) and [Docusaurus i18n](https://docusaurus.io/docs/i18n/introduction) is used for Casdoor website's translation.
 
 Note: Please do not translate strings like `:::note`, `:::tip`, wrong translation may cause typographical error([casdoor-website#305](https://github.com/casdoor/casdoor-website/issues/305)).
+
+You may see some sentences containing `{}`, like:
+
+```text
+At our {repoLink}, browse and submit {issueLink} or {prLink} for bugs you find or any new features you may want implemented.
+```
+
+Please do not translate `{repoLink}` or `{issueLink}` or any similar words, they are [interpolation placeholders](https://docusaurus.io/docs/docusaurus-core#translate-props).
 
 ### Website Development
 
