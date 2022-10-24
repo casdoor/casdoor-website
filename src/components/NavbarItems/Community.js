@@ -1,7 +1,41 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
+import clsx from "clsx";
 import NavbarNavLink from "@theme/NavbarItem/NavbarNavLink";
+import {useEffect, useState} from "react";
 
-export default function Community(props) {
+function DefaultNavbarItemDesktop({
+  className,
+  isDropdownItem = false,
+  ...props
+}) {
+  const element = (
+    <NavbarNavLink
+      className={clsx(
+        isDropdownItem ? "dropdown__link" : "navbar__item navbar__link",
+        className
+      )}
+      isDropdownLink={isDropdownItem}
+      {...props}
+    />
+  );
+  if (isDropdownItem) {
+    return <li>{element}</li>;
+  }
+  return element;
+}
+function DefaultNavbarItemMobile({className, isDropdownItem, ...props}) {
+  return (
+    <li className="menu__list-item">
+      <NavbarNavLink className={clsx("menu__link", className)} {...props} />
+    </li>
+  );
+}
+export default function DefaultNavbarItem({
+  mobile = false,
+  position, // Need to destructure position from props so that it doesn't get passed on.
+  ...props
+}) {
+  const Comp = mobile ? DefaultNavbarItemMobile : DefaultNavbarItemDesktop;
   const [mainland, setMainland] = useState(false);
 
   useEffect(() => {
@@ -9,30 +43,42 @@ export default function Community(props) {
       setMainland(true);
     }
   }, []);
-
   if (mainland) {
     return (
       <>
-        <NavbarNavLink
+        <Comp
           href="https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi"
-          className="navbar__item navbar__link header-community-qq"
+          className="header-community-qq"
           {...props}
+          activeClassName={
+            props.activeClassName ??
+            (mobile ? "menu__link--active" : "navbar__link--active")
+          }
         />
-        <NavbarNavLink
+        <Comp
           href="/img/wechat.jpg"
           target="_blank"
-          className="navbar__item navbar__link header-community-wechat"
+          className="header-community-wechat"
           {...props}
+          activeClassName={
+            props.activeClassName ??
+            (mobile ? "menu__link--active" : "navbar__link--active")
+          }
         />
       </>
     );
   } else {
     return (
-      <NavbarNavLink
+      <Comp
         href="https://gitter.im/casbin/casdoor"
-        className="navbar__item navbar__link header-community-gitter"
+        className="header-community-gitter"
         {...props}
+        activeClassName={
+          props.activeClassName ??
+          (mobile ? "menu__link--active" : "navbar__link--active")
+        }
       />
     );
   }
+
 }

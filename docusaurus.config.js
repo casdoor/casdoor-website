@@ -100,7 +100,7 @@ module.exports = {
           int: "https://door.casdoor.org/signup",
           cn: "https://door.casdoor.com/signup",
           position: "right",
-          className: "navbar__item navbar__link casdoor-signup casdoor-link",
+          className: "casdoor-signup casdoor-link",
         },
         {
           type: "custom-casdoor",
@@ -108,7 +108,7 @@ module.exports = {
           int: "https://door.casdoor.org/login",
           cn: "https://door.casdoor.com/login",
           position: "right",
-          className: "navbar__item navbar__link casdoor-login casdoor-link",
+          className: "casdoor-login casdoor-link",
         },
       ],
     },

@@ -85,6 +85,7 @@ html[data-theme="dark"] .header-github-link::before {
 
 .header-github-link {
   opacity: 0.6;
+  float: left;
 }
 
 .header-github-link:hover {
@@ -133,6 +134,7 @@ html[data-theme="dark"] .header-community-qq::before {
 
 .header-community-qq {
   opacity: 0.6;
+  float: left;
 }
 
 .header-community-qq:hover {
@@ -188,7 +190,8 @@ div[class^="announcementBar_"] {
 
 .casdoor-link {
   background-color: rgb(89 81 173);
-  border-radius: 4px;
+  justify-content: center;
+  border-radius: 4px !important;
   margin-right: 12px;
   transition-property: all;
 }
