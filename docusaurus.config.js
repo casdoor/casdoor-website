@@ -87,10 +87,8 @@ module.exports = {
           "aria-label": "GitHub repository",
         },
         {
-          type: "custom-casdoor",
-          src: "",
+          type: "custom-community",
           position: "right",
-          className: "navbar__item navbar__link header-community-link",
         },
         {
           type: "search",
@@ -99,16 +97,18 @@ module.exports = {
         {
           type: "custom-casdoor",
           label: "Sign Up",
-          src: "signup",
+          int: "https://door.casdoor.org/signup",
+          cn: "https://door.casdoor.com/signup",
           position: "right",
-          className: "navbar__item navbar__link casdoor-signup casdoor-link",
+          className: "casdoor-signup casdoor-link",
         },
         {
           type: "custom-casdoor",
           label: "Login",
-          src: "login",
+          int: "https://door.casdoor.org/login",
+          cn: "https://door.casdoor.com/login",
           position: "right",
-          className: "navbar__item navbar__link casdoor-login casdoor-link",
+          className: "casdoor-login casdoor-link",
         },
       ],
     },
@@ -255,7 +255,7 @@ var _hmt = _hmt || [];
   plugins: ["docusaurus-plugin-sass", "docusaurus-plugin-hotjar"],
   scripts: [
     {
-      src: "/js/CasdoorLink.js",
+      src: "/js/isMainland.js",
       async: false,
     },
     {
