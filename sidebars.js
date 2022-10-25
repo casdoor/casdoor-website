@@ -84,9 +84,10 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "application/overview",
+        "application/terminology",
         "application/config",
         "application/signup-items-tabel",
-        "application/terminology",
+        "application/ui-customization",
       ],
     },
     {
