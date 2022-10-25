@@ -16,13 +16,13 @@ First, let's add a background image. The default background is white. It looks v
 
 ![step1_start.png](/img/application/ui-customization/step1_start.png)
 
-- `Background URL` The background image url. 
+- `Background URL` The background image url.
 
 Choose the background image you like and fill the `Background URL`. The preview area will display the image, if you fill the valid url.
 
 ![step1_backgroune_url.gif](/img/application/ui-customization/step1_backgroune_url.gif)
 
-## Part2: Custom login panel 
+## Part2: Custom login panel
 
 Here's where you were at the end of the 1st part:
 
@@ -55,7 +55,7 @@ After fill the `form CSS`, don't forget to save the config at the bottom. Ok, le
 
 ## Part3: Panel position
 
-Now the login page is much prettier than the beginning.  We also provider three buttons for you to decide the position of the panel.
+Now the login page is much prettier than the beginning. We also provide three buttons for you to decide the position of the panel.
 
 ![step3_position.png](/img/application/ui-customization/step3_position.png)
 
@@ -65,14 +65,14 @@ For example, select the **Right** button:
 
 ## Part4: Enable the side panel
 
-You will see now how you can enable a side panel and custom the style. 
+You will see now how you can enable a side panel and custom the style.
 
 First, select the button. In **enable side panel** mode, the panel will in center.
 
 ![enable_side_panel.png](/img/application/ui-customization/step4_enable_side_panel.png)
 
 Then edit the `Side panel HTML`, it decides what content will show in the side panel. Same as the `Form CSS`, we provide a default template.
-Just copy and paste. 
+Just copy and paste.
 
 ```html
 <style>
@@ -111,7 +111,8 @@ Just copy and paste.
   </div>
 </div>
 ```
-Let's see the effect. The side panel with a logo and image is shown, but the result didn't see well. 
+
+Let's see the effect. The side panel with a logo and image is shown, but the result didn't see well.
 
 ![step4_result1.png](/img/application/ui-customization/step4_result1.png)
 
@@ -119,7 +120,7 @@ You need to modify and add some css in `form CSS`.
 
 ![step4_modify_CSS.gif](/img/application/ui-customization/step4_modify_CSS.gif)
 
-The final code is as follows. 
+The final code is as follows.
 
 ```html
 <style>
@@ -155,7 +156,3 @@ More introduction about application in Casdoor:
 - [Application Config](/docs/application/config)
 
 Thanks for reading!
-
-
-
-

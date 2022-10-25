@@ -16,16 +16,16 @@ For a detailed explanation of each signup item, please see the table below.
 |   visible   | `True` / `False` | Select whether this signup item is visible on the registration page.                                                                                        |
 |  required   | `True` / `False` | Select whether this signup item is mandatorily required.                                                                                                    |
 |  prompted   | `True` / `False` | Select whether to give a prompt when user forget to fill in this signup item.                                                                               |
-|    rule     |  `Rule Items `   | Select a rule to use with this signup item. The rule is to add some customization to this signup item. The detailed rules are described in the table below. |
+|    rule     |  `Rule Items`   | Select a rule to use with this signup item. The rule is to add some customization to this signup item. The detailed rules are described in the table below. |
 |   Action    |        -         | Users can take some action here, such as moving this signup item up, moving this signup item down, or deleting this signup item.                            |
 
-So far, the signup items that support configuration rules include `ID`, ` Display name` and `Email`.
+So far, the signup items that support configuration rules include `ID`, `Display name` and `Email`.
 
 |  Item Name   |           Selectable Rules           | Description                                                                                                                                                                                 |
 |:------------:|:------------------------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |      ID      |       `Random` / `Incremental`       | Select whether the user ID is randomly generated or incremented.                                                                                                                            |
-| Display name | `None `/ `Real name` / `First, last` | Choose the presentation of the display name. Choose `None` will show `Display name`. Choose `Real name` will show `Real name`. Choose `First, last` will show `First name` and `last name`. |
-|    Email     |     `Normal `/ `No verification`     | Select whether to verify the verification code of the mailbox. Choose `Normal` will verify the email code. Choose No verification will not verify the email code.                           |
+| Display name | `None`/ `Real name` / `First, last` | Choose the presentation of the display name. Choose `None` will show `Display name`. Choose `Real name` will show `Real name`. Choose `First, last` will show `First name` and `last name`. |
+|    Email     |     `Normal`/ `No verification`     | Select whether to verify the verification code of the mailbox. Choose `Normal` will verify the email code. Choose No verification will not verify the email code.                           |
 
 :::note
 
