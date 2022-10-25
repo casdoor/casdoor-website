@@ -21,6 +21,7 @@ module.exports = {
         "basic/server-installation",
         "basic/try-with-docker",
         "basic/public-api",
+        "basic/tutorials",
       ],
     },
     {
