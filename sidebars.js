@@ -58,6 +58,7 @@ module.exports = {
         "how-to-connect/oauth",
         "how-to-connect/cas",
         "how-to-connect/saml",
+        "how-to-connect/webauthn",
       ],
     },
     {
@@ -321,14 +322,6 @@ module.exports = {
             "integration/ruby/gitlab",
           ],
         },
-      ],
-    },
-    {
-      type: "category",
-      label: "WebAuthn",
-      link: {type: "generated-index"},
-      items: [
-        "webauthn/overview",
       ],
     },
     "internationalization",
