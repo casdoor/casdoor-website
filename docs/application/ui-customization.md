@@ -1,16 +1,16 @@
 ---
 title: Login UI Customization
-description: Custom the login page UI for your application 
+description: Customize the login page UI for your application
 keywords: [UI, login, application]
 ---
 
-You have created applications. Here will show you how to customization the login page UI of the applications. In this guide we will create the following application login page:
+You have created the application. Here will show you how to customize the login page UI of the application. In this guide we will create the following application login page:
 
 ![step4_result2.png](/img/application/ui-customization/step4_result2.png)
 
 Let's start!
 
-## Part1: Background image
+## Part1: Add a background image
 
 First, let's add a background image. The default background is white. It looks very simple.
 
@@ -22,7 +22,7 @@ Choose the background image you like and fill the `Background URL`. The preview 
 
 ![step1_backgroune_url.gif](/img/application/ui-customization/step1_backgroune_url.gif)
 
-## Part2: Custom login panel
+## Part2: Customize the login panel
 
 Here's where you were at the end of the 1st part:
 
@@ -45,17 +45,17 @@ Now you need to add some css to make the panel look nice. You can copy the code 
 
 :::tip
 
-When you edit the `form CSS`, if value is empty, the editor will show the default value. But it is not fill in the field. You need to copy the content and paste.
+When you edit the `form CSS`, if the value is empty, the editor will show the default value. But it is not fill in the field. You need to copy the content and paste.
 
 :::
 
-After fill the `form CSS`, don't forget to save the config at the bottom. Ok, let's see the effect.
+After filling the `form CSS`, don't forget to save the config at the bottom. Ok, let's see the effect.
 
 ![step2_end.png](/img/application/ui-customization/step2_end.png)
 
-## Part3: Panel position
+## Part3: Select the Panel position
 
-Now the login page is much prettier than the beginning. We also provide three buttons for you to decide the position of the panel.
+Now the login page is much prettier than it did at the beginning. We also provide three buttons for you to decide the position of the panel.
 
 ![step3_position.png](/img/application/ui-customization/step3_position.png)
 
@@ -65,9 +65,9 @@ For example, select the **Right** button:
 
 ## Part4: Enable the side panel
 
-You will see now how you can enable a side panel and custom the style.
+You will see now how you can enable a side panel and customize the style.
 
-First, select the button. In **enable side panel** mode, the panel will in center.
+First, select the button. In **enable side panel** mode, the panel will be in center.
 
 ![enable_side_panel.png](/img/application/ui-customization/step4_enable_side_panel.png)
 
@@ -112,7 +112,7 @@ Just copy and paste.
 </div>
 ```
 
-Let's see the effect. The side panel with a logo and image is shown, but the result didn't see well.
+Let's see the effect. The side panel with a logo and image is shown, but the result was not satisfactory.
 
 ![step4_result1.png](/img/application/ui-customization/step4_result1.png)
 
@@ -137,8 +137,8 @@ The final code is as follows.
 
 :::info
 
-`.login-panel`, `.login-form` are the class name of div. They correspond to different areas of the page. For more details, you can check them through developer tools.
-After make sure the class name, you can customize the login page more flexible by writing CSS here.
+`.login-panel`, `.login-form` are the class names of div. They correspond to different areas of the page. For more details, you can check them through developer tools.
+After making sure the class names, you can customize the login page more flexibly by writing CSS here.
 
 :::
 
@@ -148,7 +148,7 @@ Finally, we get a beautiful login page.
 
 ## Review
 
-OK, so let's sum it up: we have added a background image, custom the login panel style and enable the side panel.
+OK, so let's sum it up: we have added a background image, customized the login panel style and enabled the side panel.
 
 More introduction about application in Casdoor:
 
