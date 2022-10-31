@@ -210,12 +210,16 @@ var _hmt = _hmt || [];
       sidebar: {hideable: true},
     },
   },
+  // https://docusaurus.io/docs/markdown-features/diagrams#configuration
+  markdown: {
+    mermaid: true,
+  },
+  themes: ["@docusaurus/theme-mermaid"],
   presets: [
     [
       "@docusaurus/preset-classic",
       {
         docs: {
-          remarkPlugins: [require("mdx-mermaid")],
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsed: false,
           showLastUpdateAuthor: true,
