@@ -44,7 +44,7 @@
     {
         "caption": "Alibaba",
         "image": "users/alibaba.png",
-        "infoLink": "https://github.com/dragonflyoss/Dragonfly2/search?q=casbin&type=code",
+        "infolink": "https://github.com/dragonflyoss/Dragonfly2/search?q=casbin&type=code",
         "pinned": true
     },
     {
@@ -104,25 +104,25 @@
     {
         "caption": "Honeywell",
         "image": "users/honeywell.png",
-        "infoLink": "https://www.linkedin.com/search/results/people/?keywords=casbin%20honeywell",
+        "infolink": "https://www.linkedin.com/search/results/people/?keywords=casbin%20honeywell",
         "pinned": true
     },
     {
         "caption": "HPE",
         "image": "users/hpe.jpg",
-        "infoLink": "https://www.linkedin.com/in/raghavbabu",
+        "infolink": "https://www.linkedin.com/in/raghavbabu",
         "pinned": true
     },
     {
         "caption": "Schneider Electric",
         "image": "users/se.png",
-        "infoLink": "https://www.linkedin.com/in/peterjotoole",
+        "infolink": "https://www.linkedin.com/in/peterjotoole",
         "pinned": true
     },
     {
         "caption": "SIEMENS",
         "image": "users/siemens.svg",
-        "infoLink": "https://www.linkedin.com/in/kshitij-rastogi19",
+        "infolink": "https://www.linkedin.com/in/kshitij-rastogi19",
         "pinned": true
     },
     {
@@ -158,13 +158,13 @@
     {
         "caption": "Ontario Government",
         "image": "users/ontario.jpg",
-        "infoLink": "https://www.linkedin.com/in/nihalpandit",
+        "infolink": "https://www.linkedin.com/in/nihalpandit",
         "pinned": true
     },
     {
         "caption": "Apache Pulsar",
         "image": "users/pulsar.svg",
-        "infoLink": "https://apachecon.com/acasia2021/sessions/1049.html",
+        "infolink": "https://apachecon.com/acasia2021/sessions/1049.html",
         "pinned": true
     }
 ]
