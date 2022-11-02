@@ -10,6 +10,8 @@ import CasdoorCard from "../components/CasdoorCard";
 import TabList from "../components/TabList";
 import TabItem from "@theme/TabItem";
 import CodeCard from "../components/CodeCard";
+import {UserList} from "@site/src/components/UserList";
+import {useWindowSize} from "@docusaurus/theme-common";
 
 function FrameMask(props) {
   const [mouseState, setMouseState] = useState({state: false});
@@ -232,6 +234,46 @@ function ContentForget() {
   );
 }
 
+function Showcase() {
+  return (
+    <div className="hero text--center showcase">
+      <div className="container">
+        <div className="product-showcase-section">
+          <h1><Translate>Who&apos;s using Casbin?</Translate></h1>
+        </div>
+        <p style={{
+          width: "50vw",
+          margin: "auto",
+        }}>
+          <Translate values={{
+            UsersPage: (
+              <Link to="/users">
+                <Translate>check out these apps</Translate>
+              </Link>
+            ),
+          }}>
+            {"Hundreds of projects are using Casbin, from established Fortune 500 companies to hot new startups.If you're curious to see what can be accomplished Casbin, {UsersPage}!"}
+          </Translate>
+        </p>
+        <br /><br />
+        <UserList />
+      </div>
+    </div>
+  );
+}
+
+function OpenCollective() {
+  if (useWindowSize() === "mobile") {
+    return (
+      <iframe title="Sponsors" src="https://opencollective.com/casbin/banner.html" style={{width: "100%", height: "1100px", display: "block"}}></iframe>
+    );
+  } else {
+    return (
+      <iframe title="Sponsors" src="https://opencollective.com/casbin/banner.html" style={{width: "100%", height: "650px", display: "block"}}></iframe>
+    );
+  }
+}
+
 export default function Home() {
   return (
     <Layout
@@ -245,6 +287,8 @@ export default function Home() {
         <ContentLogin />
         <ContentSignup />
         <ContentForget />
+        <Showcase />
+        <OpenCollective />
       </main>
     </Layout>
   );
