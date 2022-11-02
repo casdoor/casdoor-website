@@ -143,7 +143,7 @@ html[data-theme="dark"] .header-community-qq::before {
 }
 
 /*
-* Navbar Wechat icon begin
+* Navbar Wechat icon
 * background-image: https://www.iconfont.cn/collections/detail?spm=a313x.7781069.1998910419.d9df05512&cid=9402
 */
 .header-community-wechat::before {
@@ -166,7 +166,21 @@ html[data-theme="dark"] .header-community-wechat::before {
   opacity: 1;
 }
 
-/* Navbar Wechat icon end */
+.showcaseLogos {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.showcaseLogo {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  justify-content: center;
+}
 
 div[class^="announcementBar_"] {
   --site-announcement-bar-stripe-color1:
