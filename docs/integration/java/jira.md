@@ -1,5 +1,5 @@
 ---
-title: Jira OIDC
+title: Jira
 description:  Using OIDC protocol as IDP to connect various applications, like Jira
 keywords: [OIDC, Jira, IDP]
 ---
@@ -21,7 +21,7 @@ After a successful deployment, you need to ensure:
 1. Set Jira URL(Plans -> Administration -> System -> General configuration) to `Jira_HOSTNAME`.
 ![Jira URL](/img/integration/java/jira-oidc/Jira_HOSTNAME.png)
 2. Casdoor can be logged in and used normally.
-3. My use default pord so my CASDOOR_HOSTNAME = 'http://localhost:8000'
+3. I use default prod so my CASDOOR_HOSTNAME = 'http://localhost:8000'.When deploy Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
 
 ## Step2. Configure Casdoor application
 
@@ -38,7 +38,7 @@ Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/op
 
 1. You should install a app to support OAuth ![Jira App](/img/integration/java/jira-oidc/Jira_install.png)
 2. You should config this app ![Jira Config](/img/integration/java/jira-oidc/Jira_Config.png)
-   - Application you should select Custom OpenId
+   - Set `Selected Application` to Custom OpenId
    - You can find Client Id and Client Secret in Casdoor application page.
      - `Token server url`: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
      - `Authorization server url`: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
