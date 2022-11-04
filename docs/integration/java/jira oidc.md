@@ -37,7 +37,7 @@ Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/op
 ## Step3. Configure Jira
 
 1. You should install a app to support OAuth ![Jira App](/img/integration/java/jira-oidc/Jira_install.png)
-2. You should config this app ![Jira Config](/img/integration/java/jira-oidc/Jira_config.png)
+2. You should config this app ![Jira Config](/img/integration/java/jira-oidc/Jira_Config.png)
    - Application you should select Custom OpenId
    - You can find Client Id and Client Secret in Casdoor application page.
      - `Token server url`: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
