@@ -284,6 +284,7 @@ module.exports = {
             },
             "integration/java/jenkins plugin",
             "integration/java/jenkins oidc",
+            "integration/java/jira",
             "integration/java/RuoYi",
             "integration/java/Pulsar-manager",
             "integration/java/shenyu",
