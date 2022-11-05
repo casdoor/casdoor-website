@@ -8,10 +8,10 @@ Casdoor can be configured to support different captchas to check whether the ope
 
 Now, Casdoor supports many captcha providers. Here are the providers Casdoor supporting:
 
-|                         **Default**                          |                        **reCAPTCHA**                         |                         **hCaptcha**                         |                      **Aliyun Captcha**                      |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                                **Default**                                 |                                **reCAPTCHA**                                 |                                **hCaptcha**                                 |                            **Aliyun Captcha**                             |
+|:--------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|:-------------------------------------------------------------------------:|
 | <img src="https://cdn.casbin.org/img/social_default.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_recaptcha.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_hcaptcha.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_aliyun.png" width="40"></img> |
-|                            **✅**                             |                            **✅**                             |                            **✅**                             |                            **✅**                             |
+|                                   **✅**                                    |                                    **✅**                                     |                                    **✅**                                    |                                   **✅**                                   |
 
 We will show you how to apply  a captcha and add it to Casdoor.
 

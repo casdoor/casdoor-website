@@ -20,6 +20,9 @@ And you can click **Preview** button to preview the style of this captcha.
 
 ## Applied in application
 
-Edit the application you want to configure in Casdoor. Select the provider just added and click the button **Save**.
+Edit the application you want to configure in Casdoor. Select the provider just added. There are two kinds of rules:
+
+- `Always` Always turned on when login, send verification code.
+- `None`
 
 ![Default provider app](/img/providers/captcha/default_provider_app.png)

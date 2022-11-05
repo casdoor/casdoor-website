@@ -15,7 +15,7 @@ We assume you have already built the frontend code of Casdoor. If not yet, pleas
 
 ## Preparation
 
-First, you need to create a valid [Storage Provider](/docs/provider/storage) in Casdoor UI. you can refer to the [example](/docs/provider/storage#example).
+First, you need to create a valid [Storage Provider](/docs/provider/storage/overview) in Casdoor UI. you can refer to the [example](/docs/provider/storage/aliyun-oss).
 
 :::caution
 

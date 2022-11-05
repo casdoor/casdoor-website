@@ -140,8 +140,9 @@ module.exports = {
           label: "Storage",
           link: {type: "generated-index"},
           items: [
-            "provider/storage/storage",
+            "provider/storage/overview",
             "provider/storage/azure",
+            "provider/storage/aliyun-oss",
           ],
         },
         {
