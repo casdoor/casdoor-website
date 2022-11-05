@@ -21,7 +21,7 @@ After a successful deployment, you need to ensure:
 1. Set Jira URL(Plans -> Administration -> System -> General configuration) to `Jira_HOSTNAME`.
 ![Jira URL](/img/integration/java/jira/Jira_HOSTNAME.png)
 2. Casdoor can be logged in and used normally.
-3. I use default prod so my CASDOOR_HOSTNAME = 'http://localhost:8000'.When deploy Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+3. You can set CASDOOR_HOSTNAME = `http://localhost:8000`. When deploy Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
 
 ## Step2. Configure Casdoor application
 
