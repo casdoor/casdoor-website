@@ -42,7 +42,7 @@ function FrameMask(props) {
 
   const handleClick = (src) => {
     if (localStorage.getItem("mainland") === "true") {
-      window.open("https://dooc.casdoor.com/" + src);
+      window.open("https://door.casdoor.com/" + src);
     } else {
       window.open("https://door.casdoor.org/" + src);
     }
