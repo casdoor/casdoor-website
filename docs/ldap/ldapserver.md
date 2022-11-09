@@ -2,6 +2,7 @@
 title: LDAP Server
 description: How to connect ldap client in Casdoor
 keywords: [ldapserver]
+author: forestmgy
 ---
 
 Many systems like `Nexus` support `ldap` authentication. A simple ldap server is also implemented in Casdoor, which supports bind and search operations. 

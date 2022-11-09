@@ -2,6 +2,7 @@
 title: APISIX
 description: Using Casdoor in APISIX
 keywords: [APISIX]
+author: Steve0x2a
 ---
 
 Currently there are 2 methods to use Casdoor to connect to APISIX via APISIX plugins and protect the apis behind the APISIX: using APISIX's Casdoor plugin or using APISIX's OIDC plugin.

@@ -2,6 +2,7 @@
 title: Wechat
 description: Add Wechat OAuth provider to your application
 keywords: [Wechat, OAuth]
+author: Marvelousp4
 ---
 
 ## WeChat:heavy_check_mark:

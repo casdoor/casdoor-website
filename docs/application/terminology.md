@@ -2,6 +2,7 @@
 title: Terminology reference
 description: Terminology reference
 keywords: [terminology]
+author: ErikQQY
 ---
 
 - `Name` The name of the created app

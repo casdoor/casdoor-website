@@ -2,6 +2,7 @@
 title: Electron App
 description: An Electron app example for Casdoor
 keywords: [electron, sdk]
+author: Resulte
 ---
 
 An [Electron app example](https://github.com/casdoor/casdoor-electron-example) for Casdoor.

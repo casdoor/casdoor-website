@@ -2,6 +2,7 @@
 title: Steam
 description: Add Steam OAuth provider to your application
 keywords: [Steam, OAuth]
+author: Marvelousp4
 ---
 
 ## Steam:heavy_check_mark:

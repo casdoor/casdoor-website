@@ -2,6 +2,7 @@
 title: Overview
 description: Set up a storage provider for upload files in Casdoor
 keywords: [storage, provider]
+author: leo220yuyaodog
 ---
 
 If you need to use file storage services such as `avatar upload`, you need to set up a storage provider and apply it in your `application`.

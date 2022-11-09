@@ -2,6 +2,7 @@
 title: Aliyun IDaaS
 description: Using Aliyun IDaaS to authenticate users
 keywords: [Aliyun IDaaS]
+author: seriouszyx
 ---
 
 ## Create SAML application in Aliyun IDaaS

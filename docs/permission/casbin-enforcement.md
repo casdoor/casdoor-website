@@ -2,6 +2,7 @@
 title: Casbin Enforcement
 description: Using exposed Casbin APIs to manage users' access rights in organization
 keywords: [permission, Casbin]
+author: seriouszyx
 ---
 
 ## Exposed Casbin APIs

@@ -2,6 +2,7 @@
 title: Permissions
 description: the user's permissions
 keywords: [user, permissions]
+author: Resulte
 ---
 
 Each user may have multiple permissions.

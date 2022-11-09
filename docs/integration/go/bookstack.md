@@ -2,6 +2,7 @@
 title: BookStack
 description: Using Casdoor for authentication in BookStack
 keywords: [BookStack]
+author: leo220yuyaodog
 ---
 
 ## Using Casdoor for authentication in BookStack

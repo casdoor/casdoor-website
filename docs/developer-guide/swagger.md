@@ -2,6 +2,7 @@
 title: Generating Swagger Files
 description: Generating Swagger Files
 keywords: [bee, swagger]
+author: ComradeProgrammer
 ---
 
 ## Overview

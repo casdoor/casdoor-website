@@ -2,6 +2,7 @@
 title: RuoYi
 description: Using Casdoor in RuoYi-Cloud
 keywords: [RuoYi]
+author: jakiuncle
 ---
 
 Casdoor can simply connect to RuoYi-cloud.

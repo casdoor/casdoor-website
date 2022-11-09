@@ -2,9 +2,10 @@
 title: WeChat MiniProgram
 description: Using Casdoor in WeChat MiniProgram
 keywords: [WeChat, MiniProgram]
+author: Steve0x2a
 ---
 
-:::info 
+:::info
 
 Casdoor supports WeChat Mini Program after version 1.41.0
 

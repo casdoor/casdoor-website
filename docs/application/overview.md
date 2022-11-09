@@ -2,6 +2,7 @@
 title: Overview
 description: Casdoor application overview
 keywords: [application]
+author: sh1luo
 ---
 
 Every application in Casdoor is called an `application`, and they are not related and do not affect each other, which means you can deploy or stop any application separately, as long as you like.
@@ -15,4 +16,3 @@ The application configuration is very flexible and simple. You can set whether t
 In this chapter you will learn how to start an application of your own, everything from scratch.
 
 Let's explore together!
-

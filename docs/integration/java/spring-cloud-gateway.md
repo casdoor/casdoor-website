@@ -2,6 +2,7 @@
 title: Spring Cloud Gateway
 description: Using Casdoor in Spring Cloud Gateway
 keywords: [Sping Cloud Gateway]
+author: conghuhu
 ---
 
 [casdoor-springcloud-gateway-example](https://github.com/casdoor/casdoor-springcloud-gateway-example) is an example on how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) as a OAuth2 plugin in Spring Cloud Gateway. We will show you the steps below.

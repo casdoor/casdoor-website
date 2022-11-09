@@ -2,6 +2,7 @@
 title: Roles
 description: the user's roles
 keywords: [user, roles]
+author: Resulte
 ---
 
 Each user may have multiple roles.

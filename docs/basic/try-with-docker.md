@@ -2,6 +2,7 @@
 title: (Optional) Try with Docker
 description: Try Casdoor with Docker
 keywords: [Casdoor, Docker]
+author: hsluoyz
 ---
 
 ## Requirements

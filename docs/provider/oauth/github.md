@@ -2,6 +2,7 @@
 title: GitHub
 description: Add Github OAuth provider to your application
 keywords: [GitHub, OAuth]
+author: ErikQQY
 ---
 
 GitHub OAuth supports both web application flow and device flow. Please continue reading to obtain OAuth credential.

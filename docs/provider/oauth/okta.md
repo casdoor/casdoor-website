@@ -2,6 +2,7 @@
 title: Okta
 description: Add Okta OAuth provider to your application
 keywords: [Okta, OAuth]
+author: greenhandatsjtu
 ---
 
 To set up Okta OIDC provider, first visit [Okta Developer](https://developer.okta.com/signup/) and sign up to get a developer account.

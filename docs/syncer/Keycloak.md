@@ -2,6 +2,7 @@
 title: Keycloak
 description: Using Keycloak Syncer to synchronize Keycloak
 keywords: [Keycloak, Syncer]
+author: Marvelousp4
 ---
 
 ## Keycloak Syncer

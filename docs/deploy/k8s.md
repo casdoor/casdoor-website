@@ -2,6 +2,7 @@
 title: k8s
 description: Deploy Casdoor in k8s
 keywords: [k8s, kubernetes]
+author: ComradeProgrammer
 ---
 
 ## Deploy Casdoor in k8s

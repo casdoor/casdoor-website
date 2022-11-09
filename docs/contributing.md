@@ -2,6 +2,7 @@
 title: Contributor guide
 description: Contributor guide
 keywords: [Contributor, guide]
+author: leo220yuyaodog
 ---
 
 # Contributing to Casdoor
