@@ -36,6 +36,7 @@ A standard document should look like this:
 title: Title
 description: description
 keywords: [keyword1, keyword2]
+author: Your GitHub username
 ---
 
 ## Headers
@@ -101,15 +102,19 @@ content
 
 [Crowdin](https://crowdin.com/project/casdoor-website) and [Docusaurus i18n](https://docusaurus.io/docs/i18n/introduction) is used for Casdoor website's translation.
 
-Note: Please do not translate strings like `:::note`, `:::tip`, wrong translation may cause typographical error([casdoor-website#305](https://github.com/casdoor/casdoor-website/issues/305)).
+Please note that some sentences do not require translation or need to be translated according to our regulations:
 
-You may see some sentences containing `{}`, like:
+- Please do not translate strings like `:::note`, `:::tip`, wrong translation may cause typographical error([casdoor-website#305](https://github.com/casdoor/casdoor-website/issues/305)).
+
+- You may see some sentences containing `{}`, like:
 
 ```text
 At our {repoLink}, browse and submit {issueLink} or {prLink} for bugs you find or any new features you may want implemented.
 ```
 
 Please do not translate `{repoLink}` or `{issueLink}` or any similar words, they are [interpolation placeholders](https://docusaurus.io/docs/docusaurus-core#translate-props).
+
+- Please don't translate sentences like `author: casdoor`.
 
 ### Website Development
 
