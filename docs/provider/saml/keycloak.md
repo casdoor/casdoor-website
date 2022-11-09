@@ -2,6 +2,7 @@
 title: Keycloak
 description: Using Keycloak to authenticate users
 keywords: [Keycloak]
+author: seriouszyx
 ---
 
 The JBoss [KeyCloak](https://www.keycloak.org/) system is a widely used and open-source identity management system that supports integration with applications via SAML and OpenID Connect. It also can operate as an identity broker between other providers such as LDAP or other SAML providers and applications that support SAML or OpenID Connect.

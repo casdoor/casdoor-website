@@ -2,6 +2,7 @@
 title: ShowDoc
 description: Using Casdoor as oAuth2 server in ShowDoc
 keywords: [ShowDoc]
+author: leo220yuyaodog
 ---
 
 ## Using Casdoor for authentication in ShowDoc

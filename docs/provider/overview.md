@@ -2,6 +2,7 @@
 title: Overview
 description: Add third-party services to your application
 keywords: [provider, OAuth, SMS, Storage, Email, Payment, Captcha]
+author: kininaru
 ---
 
 Casdoor uses providers to provide third-party services for the platform. In this chapter you will learn how to add providers for Casdoor.

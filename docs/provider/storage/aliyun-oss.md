@@ -2,6 +2,7 @@
 title: Aliyun OSS
 description: Using Aliyun OSS as a storage provider for Casdoor
 keywords: [Aliyun OSS, storage, provider]
+author: leo220yuyaodog
 ---
 
 :::note

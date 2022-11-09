@@ -222,8 +222,6 @@ var _hmt = _hmt || [];
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsed: false,
-          showLastUpdateAuthor: true,
-          showLastUpdateTime: true,
           editUrl: ({locale, docPath}) => {
             if (locale === "en") {
               return `https://github.com/casdoor/casdoor-website/edit/master/docs/${docPath}`;

@@ -2,6 +2,7 @@
 title: Vue SDK
 description: Casdoor Vue SDK
 keywords: [vue, sdk]
+author: Nekotoxin
 ---
 
 Casdoor Vue SDK is designed for Vue2 and Vue3 which is very convenient to use. 

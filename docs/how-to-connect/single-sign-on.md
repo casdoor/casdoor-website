@@ -2,12 +2,13 @@
 title: How to Enable Single Sign-On
 description: Enable Single Sign-On 
 keywords: [SSO, Single Sign-On]
+author: leo220yuyaodog
 ---
 
 ## Introduction
 
 You have connected Casdoor and configured more than one application in an organization. You want users to sign in once 
-to any app in the organization, and then be able to sign in when they go to another app, without any extra clicks. 
+to any app in nomeguythe organization, and then be able to sign in when they go to another app, without any extra clicks. 
 
 We offer this single sign-on, you just need to:
 

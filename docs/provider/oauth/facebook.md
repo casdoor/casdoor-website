@@ -2,6 +2,7 @@
 title: Facebook
 description: Add Facebook OAuth provider to your application
 keywords: [Facebook, OAuth]
+author: ErikQQY
 ---
 
 To set up Facebook OAuth provider, please go to [Facebok developer](https://developers.facebook.com/apps/) to create a new app.

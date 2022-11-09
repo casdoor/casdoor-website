@@ -2,6 +2,7 @@
 title: Frontend
 description: Casdoor frontend development guide
 keywords: [frontend, guide]
+author: hsluoyz
 ---
 
 The source code for Casdoor's frontend is inside the `/web` folder: https://github.com/casdoor/casdoor/tree/master/web

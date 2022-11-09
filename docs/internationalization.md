@@ -2,6 +2,7 @@
 title: Internationalization
 description: Help Casdoor to support different languages
 keywords: [i18n, translation, internationalization]
+author: ErikQQY
 ---
 
 Casdoor supports multi-languages. By deploying the translations to [Crowdin](https://crowdin.com/project/casdoor-web), we support Chinese, French, German, Russian, Japanese and Korean.

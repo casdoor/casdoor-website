@@ -2,6 +2,7 @@
 title: Hosting Static Files in CDN
 description: Hosting frontend static files in the CDN
 keywords: [deployment, cdn, frontend]
+author: leo220yuyaodog
 ---
 
 Frontend static resource (.js, .css files) are in `web/build/static/`. If you want to deploy it

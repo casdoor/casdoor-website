@@ -2,6 +2,7 @@
 title: Aliyun Captcha
 description: Add Aliyun Captcha to your application
 keywords: [Aliyun Captcha]
+author: Resulte
 ---
 
 Aliyun Captcha is a captcha service provided by Aliyun. It includes  two ways to verify captcha:  `Sliding Validation` and `Intelligent Validation`. You can see more details from this [link](https://help.aliyun.com/product/28308.html).

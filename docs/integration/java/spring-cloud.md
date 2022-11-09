@@ -2,6 +2,7 @@
 title: Spring Cloud
 description: Using Casdoor in Spring Cloud
 keywords: [Spring Cloud]
+author: leo220yuyaodog
 ---
 
 Under the Spring Cloud microservice system, general authentication occurs at the gateway. Please refer to [casdoor-springcloud-gateway-example](/docs/integration/java/spring-cloud-gateway).

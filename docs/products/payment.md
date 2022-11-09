@@ -2,6 +2,7 @@
 title: Payment
 description: View the transaction information of the products in Payment
 keywords: [payment, invoice]
+author: leo220yuyaodog
 ---
 
 After the payment is successful, you can see the transaction information of the products in **Payment**,

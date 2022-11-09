@@ -2,6 +2,7 @@
 title: Tutorials
 description: Tutorials about Casdoor
 keywords: [Tutorial]
+author: nomeguy
 ---
 
 ## Product documentation

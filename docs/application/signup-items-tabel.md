@@ -2,6 +2,7 @@
 title: Signup Items Table
 description: configure the signup items table to create a custom registration page
 keywords: [signup, items, table]
+author: Resulte
 ---
 
 On the application configuration page, we can configure the signup items table to create a customized registration page. And we can add or delete any signup item on this signup items table.
@@ -29,7 +30,7 @@ So far, the signup items that support configuration rules include `ID`, `Display
 
 :::note
 
-Here, for example, I want to setup my own registration page bring a mailbox but do not require a mail verification code.
+Here, for example, I want to setup my registration page bring a mailbox but do not require a mail verification code.
 
 :::
 

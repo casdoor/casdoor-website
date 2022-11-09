@@ -2,6 +2,7 @@
 title: Dotnet Desktop App
 description: An Dotnet desktop app example for Casdoor
 keywords: [dotnet, sdk]
+author: zh6335901
 ---
 
 An [Dotnet desktop app example](https://github.com/casdoor/casdoor-dotnet-desktop-example) for Casdoor.

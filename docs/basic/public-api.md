@@ -2,6 +2,7 @@
 title: Casdoor Public API
 description: Casdoor Public API
 keywords: [Casdoor Public API]
+author: hsluoyz
 ---
 
 Casdoor is developed in a frontend and backend separated manner (in contrast to JSP or PHP). The Go backend only exposes its functionality via RESTful API. The React frontend code consumes the RESTful API to render the web UI and perform actions. We call the RESTful API as `Casdoor Public API`. The API can usually be used by:

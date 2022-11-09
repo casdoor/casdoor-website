@@ -2,6 +2,7 @@
 title: DingTalk
 description: Add DingTalk OAuth provider to your application
 keywords: [DingTalk, OAuth]
+author: Marvelousp4
 ---
 
 ## DingTalk:heavy_check_mark:

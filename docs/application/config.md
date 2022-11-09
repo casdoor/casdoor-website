@@ -2,6 +2,7 @@
 title: Application Config
 description: Configure your applications authentication
 keywords: [config, application]
+author: ErikQQY
 ---
 
 ```mdx-code-block
