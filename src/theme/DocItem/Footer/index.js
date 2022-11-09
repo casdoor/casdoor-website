@@ -10,11 +10,9 @@ import styles from "./styles.module.css";
 
 function CreatedByUser({author}) {
   return (
-    <>
-      <a href={`https://github.com/${author}`} target="_blank" rel="noreferrer" >
-        Created by <img alt={`${author}`} src={`https://avatars.githubusercontent.com/${author}`} width="20px" style={{borderRadius: "10px", verticalAlign: "sub"}} />  {author}
-      </a>
-    </>
+    <a href={`https://github.com/${author}`} target="_blank" rel="noreferrer" >
+      Created by <img alt={`${author}`} src={`https://avatars.githubusercontent.com/${author}`} width="20px" style={{borderRadius: "10px", verticalAlign: "sub"}} />  {author}
+    </a>
   );
 }
 
@@ -32,20 +30,13 @@ function TagsRow(props) {
   );
 }
 
-function EditMetaRow({
-  editUrl,
-  author,
-}) {
+function EditMetaRow({editUrl, author}) {
   return (
     <div className={clsx(ThemeClassNames.docs.docFooterEditMetaRow, "row")}>
       <div className="col">{editUrl && <EditThisPage editUrl={editUrl} />}</div>
 
       <div className={clsx("col", styles.lastUpdated)}>
-        {(author) && (
-          <CreatedByUser
-            author={author}
-          />
-        )}
+        <CreatedByUser author={author} />
       </div>
     </div>
   );
