@@ -17,7 +17,7 @@ The WeChat provider offers two different sets of keys:
 
 - The second key set is for `WeChat Media Platform (微信公众平台)`, it's only for the mobile scenario. It allows the user to log in with WeChat inside WeChat mobile APP, it will jump to your `WeChat Official Account (微信公众号)` to log in.
 
-If you fill in Client ID 2 and Client Secret 2 and check `Enable QR code`, this makes when the user clicks on WeChat to log in, **we will first guide the user to follow the WeChat official account**, and then proceed to the OAuth process.
+If you fill in `Client ID 2`, `Client Secret 2 ` and check `Enable QR code`, this makes when the user clicks on WeChat to log in, **we will first guide the user to follow the WeChat official account**, and then proceed to the OAuth process.
 
 :::tip
 
