@@ -2,48 +2,25 @@
 title: Overview
 description: Using Casbin to manage users' access rights in organization
 keywords: [permission, Casbin]
-author: seriouszyx
+author: MagicalSheep
 ---
 
 ## Introduction
 
-All users associated with a single Casdoor organization are shared between the organization's applications and therefore have access to the applications. To restrict users' access to certain applications, you can use `Permission` implemented by [Casbin](https://casbin.io/).
+All users associated with a single Casdoor organization are shared between the organization's applications and therefore have access to the applications. Sometimes you may want to restrict users' access to certain applications, or certain resources in a certain application. In this case, you can use `Permission` implemented by [Casbin](https://casbin.io/). 
 
-Inside a permission, the `Sub users` and `Resources` attributes are available to check which application the user is using for login. Also, it supports to config customized models to meet the diverse needs of users. 
+Before going further, you should have an understanding of how Casbin works and its related concepts, such as Model, Policy, and Adapter. In short, Model defines your permission policy structure, and how requests should match these permission policies and their effects. Policy is the description of your specific permission rules. After Casbin obtains Model and Policy information, it can enforce permission control on incoming requests. As an abstraction layer, Adapter shields the source of Policy for Casbin's executor, so that Policy can be stored everywhere, such as files or databases. 
 
-See the following example to get a clearer picture of Casdoor's permission control for application.
+Back to the topic of permission configuration in Casdoor. In the Casdoor Web UI, you can add a Model for your organization in the `Model` configuration item, and a Policy for your organization in the `Permission` configuration item. With [Casbin Online Editor](https://casbin.org/casbin-editor/), you can get Model and Policy files suitable for your usage scenarios. You can easily import the Model file into Casdoor through the Casdoor Web UI for use by the built-in Casbin. But for Policy (that is, the `Permission` configuration item in the Casdoor Web UI), some additional instructions are required here. Let us continue to mention later. 
 
-## Permission for applications
+Just as your application needs to enforce permission control through the built-in Casbin of Casdoor, as a built-in application, Casdoor also uses its own Model and Policy to control the calling permissions of the API interface through Casbin. However, Casdoor can call Casbin from internal code, but external applications cannot. Therefore, Casdoor exposes an API for calling the built-in Casbin to external applications. We will show you the definitions of these API interfaces and how to use them later.
 
-Before using `Permission`, you need to create a `Model` which is abstracted into a CONF file based on the PERM metamodel. You can visit the [Casbin documentation](https://casbin.io/docs/syntax-for-models) for more information. We recommend using the [Casbin Online Editor](https://casbin.org/casbin-editor/) to design the model and check the grammar.
+End of the chapter, we will use a practical example to show you how Casdoor cooperates with external applications for permission control. 
 
-Click the `Models` tab and add a new model. In the edit page, you can config customized models such as ACL model in the `Model text`.
+Let's start!
 
-```ini
-[request_definition]
-r = sub, obj, act
+## Other tips
 
-[policy_definition]
-p = sub, obj, act
+The current Casdoor Web UI provides very limited support for permission policy configuration, and the API interface provided is far less flexible than using Casbin directly. But if you have fewer permission policies and a simpler model (such as RBAC models), it is quite convenient to directly use Casdoor as the authentication service. 
 
-[policy_effect]
-e = some(where (p.eft == allow))
-
-[matchers]
-m = r.sub == p.sub && r.obj == p.obj && r.act == p.act
-```
-
-![model_edit](/img/permission/overview/model_edit.png)
-
-Click the `Permissions` tab and add a new permission. In the edit page, you need to select the model, adapter, sub users, resources and actions as below.  
-
-![permission_edit](/img/permission/permission_edit.png)
-
-:::info
-
-The `Adapter` field supports specifying the table name where the policies are stored. If this field is empty, the policies are stored in the `permission_rule` table. We strongly recommend **specifying different Adapter for different models**, because it's likely to cause conflicts for storing all policies in the same table. 
-:::
-
-After saving, the user `test`, `seriouszyx` and `admin` can login to the application `app-built-in`. The other users such as `casdoortest` cannot. 
-
-![permission_fail_to_login](/img/permission/overview/permission_fail_to_login.png)
+Casdoor's permission management features are still under development and should be used with caution in production environments. 
