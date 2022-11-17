@@ -289,7 +289,7 @@ module.exports = {
             "integration/java/RuoYi",
             "integration/java/Pulsar-manager",
             "integration/java/shenyu",
-
+            "integration/java/ShardingSphere",
           ],
         },
         {
