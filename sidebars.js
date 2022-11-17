@@ -98,7 +98,8 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "permission/overview",
-        "permission/casbin-enforcement",
+        "permission/permission-configuration",
+        "permission/exposed-casbin-apis",
       ],
     },
     {
