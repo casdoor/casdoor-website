@@ -33,9 +33,7 @@ For example, the Configid in the FireZone Provider is TEST, so the redirect URL 
 
 Open your favorite browser and visit: `http://[CASDOOR_HOSTNAME]/.well-known/openid-configuration`, you will see the OIDC configure of Casdoor.
 
-## Step 3. Configure FireZone
-
-1. Security -> Add OpenID Connect Provider
+3. Configure FireZone, Security -> Add OpenID Connect Provider
 
 ![OIDC_CONFIG](/img/integration/java/firezone/Fire_OIDCCONFIG.jpg)
 
