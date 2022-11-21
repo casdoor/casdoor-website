@@ -5,7 +5,7 @@ import Translate from "@docusaurus/Translate";
 function PDF() {
   return (
     <Layout title="PDF" description="PDF download page">
-      <div className="hero hero--primary" style={{height: "25rem", color: "#E3E3E3"}}>
+      <div className="hero hero--primary" style={{height: "60vh", color: "#E3E3E3"}}>
         <div className="container">
           <h1 className="hero__title">
             <Translate>
@@ -22,7 +22,7 @@ function PDF() {
               className="button button--secondary button--lg"
               style={{marginRight: "2rem"}}
               target="_blank"
-              href="Casdoor_Docs.pdf"
+              href="/pdf/Casdoor_Docs.pdf"
             >
               <Translate>
                 English
@@ -31,7 +31,7 @@ function PDF() {
             <a
               className="button button--secondary button--lg"
               target="_blank"
-              href="Casdoor_Docs_zh.pdf"
+              href="/pdf/Casdoor_Docs_zh.pdf"
             >
               <Translate>
                 Chinese

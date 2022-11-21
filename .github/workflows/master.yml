@@ -36,17 +36,14 @@ jobs:
           wget https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
           prince --no-warn-css --style=print.css --input-list=./pdf/localhost-zh-docs-overview.txt -o pdf/Casdoor_Docs_zh.pdf
           rm pdf/*.txt
-          mv pdf/* static/pdf/ -f
+          mv pdf/* build/pdf/ -f
 
       - name: Upload results 📤
         uses: actions/upload-artifact@v3
         with:
           name: PDFs
-          path: static/pdf/
+          path: build/pdf/
           if-no-files-found: error
-
-      - name: Rebuild 🔧
-        run: yarn build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
