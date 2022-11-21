@@ -7,7 +7,7 @@ author: dingchenzy
 
 [Casdoor](/docs/basic/server-installation) can use OIDC protocol as IDP to connect various applications. Here we will use [FireZone](https://docs.firezone.dev/deploy/) as an example to show you how to use OIDC to connect to your applications.
 
-# Step 1. Deploy Casdoor and FireZone
+## Step 1. Deploy Casdoor and FireZone
 
 Firstly, the Casdoor and FireZone should be deployed.
 
@@ -21,7 +21,7 @@ After a successful deployment, you need to ensure:
 
 3. You can set CASDOOR_HOSTNAME = http://localhost:8000. When deploy Casdoor in prod mode. See production mode.
 
-# Step 2. Configure Casdoor application
+## Step 2. Configure Casdoor application
 
 1. Create or use an existing Casdoor application.
 
@@ -33,7 +33,7 @@ For example, the Configid in the FireZone Provider is TEST, so the redirect URL 
 
 Open your favorite browser and visit: `http://[CASDOOR_HOSTNAME]/.well-known/openid-configuration`, you will see the OIDC configure of Casdoor.
 
-# Step 3. Configure FireZone
+## Step 3. Configure FireZone
 
 1. Security -> Add OpenID Connect Provider
 
@@ -47,6 +47,6 @@ Open your favorite browser and visit: `http://[CASDOOR_HOSTNAME]/.well-known/ope
 
 - `Auto create users`: Successful login will automatically create a user
 
-# Log out of FireZone, and test SSO.
+## Log out of FireZone, and test SSO.
 
 ![FIREZONELOGIN](/img/integration/java/firezone/Fire_LOGINFIREZONE.gif)
