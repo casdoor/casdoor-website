@@ -291,6 +291,7 @@ module.exports = {
             "integration/java/Pulsar-manager",
             "integration/java/shenyu",
             "integration/java/ShardingSphere",
+            "integration/java/firezone",
           ],
         },
         {
