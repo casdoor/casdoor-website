@@ -19,7 +19,7 @@ After a successful deployment, you need to ensure:
 
 2. Casdoor can be logged in and used normally.
 
-3. You can set CASDOOR_HOSTNAME = http://localhost:8000. When deploy Casdoor in prod mode. See production mode.
+3. `CASDOOR_HOSTNAME`: http://localhost:8000. If you deploy Casdoor using default `app.conf `. 
 
 ## Step 2. Configure Casdoor application
 
