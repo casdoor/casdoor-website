@@ -22,6 +22,11 @@ module.exports = {
         "basic/try-with-docker",
         "basic/public-api",
         "basic/tutorials",
+        {
+          type: "link",
+          label: "PDF Download",
+          href: "/pdf",
+        },
       ],
     },
     {
