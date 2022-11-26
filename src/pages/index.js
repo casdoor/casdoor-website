@@ -238,9 +238,7 @@ function Showcase() {
   return (
     <div className="hero text--center showcase">
       <div className="container">
-        <div className="product-showcase-section">
-          <h1><Translate>Who&apos;s using Casbin?</Translate></h1>
-        </div>
+        <h1><Translate>Who&apos;s using Casbin?</Translate></h1>
         <p style={{
           width: "50vw",
           margin: "auto",
