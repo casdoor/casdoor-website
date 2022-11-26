@@ -258,7 +258,7 @@ var _hmt = _hmt || [];
   scripts: [
     {
       src: "/js/isMainland.js",
-      async: false,
+      async: true,
     },
     {
       src: "/js/gitter.js",
