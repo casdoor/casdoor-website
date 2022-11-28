@@ -105,6 +105,7 @@ module.exports = {
         "permission/overview",
         "permission/permission-configuration",
         "permission/exposed-casbin-apis",
+        "permission/adapter",
       ],
     },
     {
