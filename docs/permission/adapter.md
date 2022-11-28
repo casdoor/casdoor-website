@@ -5,7 +5,7 @@ keywords: [permission, Casbin, adapter, policy]
 author: leo220yuyaodog
 ---
 
-Casdoor supports using the UI to connect the adapter and manager the policy rules. In Casbin, the policy storage is implemented
+Casdoor supports using the UI to connect the adapter and manage the policy rules. In Casbin, the policy storage is implemented
 as an adapter (aka middleware for Casbin). A Casbin user can use an adapter to load policy rules from a storage, or save
 policy rules to it.
 
@@ -16,17 +16,17 @@ policy rules to it.
 - `Port`
 - `User`
 - `Password`
-- `Database type` : Now support Mysql, postgreSQL, SQL server, Oracle, Sqlite 3.
+- `Database type` : Now support MySQL, PostgreSQL, SQL server, Oracle, SQLite 3.
 - `Database` : The database name.
-- `Table` : The table name. If the table is not exist, it will be created.
-- `model` : You can select one model belong to the organization of the adapter.
+- `Table` : The table name. If the table does not exist, it will be created.
+- `model` : You can select one model belonging to the organization of the adapter.
 
 ![adapter_config](/img/permission/adapter/adapter_config.png)
 
 :::info
 
 After fill all the fields, please don't forget to **save** the config. Then click the **sync** button to load the policy rules.
-The policy rules will be show in below table.
+The policy rules will be shown in the below table.
 
 :::
 
@@ -42,8 +42,8 @@ If you connect the adapter successfully, you can make basic CURD to the policy r
 
 :::tip
 
-You can only add one policy in one time. New added policy is in the first row in the table, but actually it will
-be saved at the last row. So next time you sync the policies, it will appear in the last row of the table.
+You can only add one policy at one time. The newly added policy is in the first row in the table, but actually, it will
+be saved in the last row. So next time you sync the policies, they will appear in the last row of the table.
 
 :::
 
