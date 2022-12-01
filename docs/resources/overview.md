@@ -2,7 +2,7 @@
 title: Overview
 description: Upload resources in Casdoor
 keywords: [resource, upload, file]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 You can upload resources in casdoor. Before upload resources, you need to configure a storage provider.

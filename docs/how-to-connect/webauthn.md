@@ -2,7 +2,7 @@
 title: WebAuthn
 description: Use WebAuthn in Casdoor
 keywords: [webauthn]
-author: ComradeProgrammer
+authors: [ComradeProgrammer]
 ---
 
 ## Overview

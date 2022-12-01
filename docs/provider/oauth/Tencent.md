@@ -2,7 +2,7 @@
 title: Tencent QQ
 description: Add Tencent QQ OAuth provider to your application
 keywords: [Tencent QQ, OAuth]
-author: Marvelousp4
+authors: [Marvelousp4]
 ---
 
 ## Tencent QQ:heavy_check_mark:

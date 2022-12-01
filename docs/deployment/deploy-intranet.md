@@ -2,7 +2,7 @@
 title: Hosting Static Files in Intranet
 description: How to deploy Casdoor static resource
 keywords: [static resource, deployment, Intranet]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 If you are deploying Casdoor on an **Intranet**, you may not be able to access the static resource directly over the

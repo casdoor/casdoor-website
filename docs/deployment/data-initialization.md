@@ -2,7 +2,7 @@
 title: Data Initialization
 description: How to initialize Casdoor data from files
 keywords: [data initialization, deployment, Intranet]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 If you are deploying Casdoor with other services as a whole application, you may want to provide an **out-of-box** feature for users (User can directly use the application without any configuration). 

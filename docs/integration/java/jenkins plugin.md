@@ -2,7 +2,7 @@
 title: Jenkins Plugin
 description: Using Casdoor plugin for your Jenkins security
 keywords: [plugin, Jenkins]
-author: Abingcbc
+authors: [Abingcbc]
 ---
 
 Casdoor provides a plugin for users to login Jenkins. Here we will show you how to use Casdoor plugin for your Jenkins security.

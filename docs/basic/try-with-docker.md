@@ -2,7 +2,7 @@
 title: (Optional) Try with Docker
 description: Try Casdoor with Docker
 keywords: [Casdoor, Docker]
-author: hsluoyz
+authors: [hsluoyz]
 ---
 
 ## Requirements
@@ -31,7 +31,7 @@ If you also use docker-compose, please ensure that **docker-compose version >= 2
 
 We have provided two DockerHub images:
 
-Name | Description | Suggestion
+Name | Description | Suggestion]
 ----|------|----
 [casdoor-all-in-one](https://hub.docker.com/r/casbin/casdoor-all-in-one) | Both Casdoor and a MySQL database are inside the image | Already includes a toy database and only for test purpose
 [casdoor](https://hub.docker.com/r/casbin/casdoor) | Only Casdoor is inside the image | Can be connected to your own database and used in production

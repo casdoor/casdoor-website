@@ -2,7 +2,7 @@
 title: CAS
 description: Using Casdoor as CAS server
 keywords: [CAS, server]
-author: ComradeProgrammer
+authors: [ComradeProgrammer]
 ---
 
 ## Using Casdoor as CAS server

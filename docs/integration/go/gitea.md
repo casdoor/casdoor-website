@@ -2,7 +2,7 @@
 title: Gitea
 description: Using Casdoor for authentication in Gitea
 keywords: [Gitea]
-author: ComradeProgrammer
+authors: [ComradeProgrammer]
 ---
 
 ## Using Casdoor for authentication in Gitea

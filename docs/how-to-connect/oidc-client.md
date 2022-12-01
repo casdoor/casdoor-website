@@ -2,7 +2,7 @@
 title: Standard OIDC Client
 description: Using OIDC discovery to migrate to Casdoor
 keywords: [OIDC, discovery, client]
-author: nomeguy
+authors: [nomeguy]
 ---
 
 ## OIDC discovery

@@ -2,7 +2,7 @@
 title: Overview
 description: Synchronize users in Casdoor
 keywords: [users, sync, syncer]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 As an authentication platform, Casdoor can easily manipulate users stored in databases.

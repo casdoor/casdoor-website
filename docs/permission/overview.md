@@ -2,7 +2,7 @@
 title: Overview
 description: Using Casbin to manage users' access rights in organization
 keywords: [permission, Casbin]
-author: MagicalSheep
+authors: [seriouszyx, MagicalSheep]
 ---
 
 ## Introduction

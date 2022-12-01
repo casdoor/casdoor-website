@@ -2,7 +2,7 @@
 title: WeChat MiniProgram
 description: Using Casdoor in WeChat MiniProgram
 keywords: [WeChat, MiniProgram]
-author: Steve0x2a
+authors: [Steve0x2a]
 ---
 
 :::info

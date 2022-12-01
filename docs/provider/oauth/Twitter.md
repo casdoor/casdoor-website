@@ -2,7 +2,7 @@
 title: Twitter
 description: Add Twitter OAuth provider to your application
 keywords: [Twitter, OAuth]
-author: Marvelousp4
+authors: [Marvelousp4]
 ---
 
 ##  Twitter(still working🚧)

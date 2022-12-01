@@ -2,7 +2,7 @@
 title: Products
 description: Add products that you want to sell
 keywords: [products]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 You can add the product (or service) you want to sell. The following will tell you how to add a product.

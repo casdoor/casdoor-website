@@ -2,7 +2,7 @@
 title: Weibo
 description: Add Weibo OAuth provider to your application
 keywords: [Weibo, OAuth]
-author: Marvelousp4
+authors: [Marvelousp4]
 ---
 
 ## Weibo:heavy_check_mark:

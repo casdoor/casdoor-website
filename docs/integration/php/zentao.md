@@ -2,7 +2,7 @@
 title: Zentao
 description: Using Casdoor for authentication in Zentao
 keywords: [Zentao, zentao-oidc]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 [Zentao](https://www.zentao.pm/) is an agile(scrum) project management system/tool, but it does not support OIDC itself. 

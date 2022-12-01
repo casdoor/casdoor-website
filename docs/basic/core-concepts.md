@@ -2,7 +2,7 @@
 title: Core Concepts
 description: Casdoor core concepts
 keywords: [core concepts, organization, user,application, provider]
-author: hsluoyz
+authors: [hsluoyz]
 ---
 
 As Casdoor's administrator, you should get familiar with at least 4 core concepts: `Organization`, `User`, `Application` and `Provider`.

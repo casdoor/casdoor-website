@@ -2,7 +2,7 @@
 title: Overview
 description: Add OAuth providers to your application
 keywords: [OAuth]
-author: ErikQQY
+authors: [ErikQQY]
 ---
 
 Casdoor can use other OAuth applications as a signin method.

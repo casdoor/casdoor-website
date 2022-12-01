@@ -2,7 +2,7 @@
 title: ShenYu
 description: Using Casdoor in ShenYu
 keywords: [ShenYu]
-author: jakiuncle
+authors: [jakiuncle]
 ---
 
 ShenYu has casdoor plugin to use casdoor

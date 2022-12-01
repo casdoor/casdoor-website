@@ -2,7 +2,7 @@
 title: ShardingSphere
 description: Using Casdoor in ShardingSphere
 keywords: [ShardingSphere]
-author: jakiuncle
+authors: [jakiuncle]
 ---
 
 [shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui) have integrated Casdoor. We can use it after config it.

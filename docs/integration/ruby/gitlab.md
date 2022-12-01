@@ -2,7 +2,7 @@
 title: GitLab
 description: Using Casdoor for authentication in self-developed GitLab server
 keywords: [GitLab]
-author: Steve0x2a
+authors: [Steve0x2a]
 ---
 
 Casdoor can use the OIDC protocol to link to self-deployed GitLab server, and this document will show you how to do it.

@@ -2,7 +2,7 @@
 title: Email
 description: Using email to complete authentication
 keywords: [email]
-author: kininaru
+authors: [kininaru]
 ---
 
 ## Add an Email provider

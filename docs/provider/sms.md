@@ -2,7 +2,7 @@
 title: SMS
 description: Using SMS to complete authentication
 keywords: [SMS]
-author: kininaru
+authors: [kininaru]
 ---
 
 We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send SMS for Casdoor. Now, `go-sms-sender` supports Aliyun, Tencent Cloud and Volc SMS APIs. You can raise an issue, or make a pull request if you want to support other SMS providers.

@@ -8,12 +8,44 @@ import styles from "./styles.module.css";
 
 // Eject DocItem/Footer
 
-function CreatedByUser({author}) {
-  return (
-    <a href={`https://github.com/${author}`} target="_blank" rel="noreferrer" >
-      Created by <img alt={`${author}`} src={`https://avatars.githubusercontent.com/${author}`} width="20px" style={{borderRadius: "10px", verticalAlign: "sub"}} />  {author}
-    </a>
-  );
+function CreatedByUser({authors}) {
+  if (authors.length <= 1) {
+    return (
+      <a href={`https://github.com/${authors[0]}`} target="_blank" rel="noreferrer" >
+        Created by <img alt={`${authors[0]}`} src={`https://avatars.githubusercontent.com/${authors[0]}`} width="24px" style={{borderRadius: "12px", verticalAlign: "sub", marginLeft: "4px"}} />  {authors[0]}
+      </a>
+    );
+  } else if(authors.length <= 3) {
+    return (
+      <div>
+        <span>
+          Modified by
+        </span>
+        {authors.map((author) => {
+          return (
+            <a key={author} href={`https://github.com/${author}`} target="_blank" rel="noreferrer" >
+              <img alt={`${author}`} src={`https://avatars.githubusercontent.com/${author}`} width="24px" style={{borderRadius: "12px", verticalAlign: "sub", marginLeft: "4px"}} /> {author}
+            </a>
+          );
+        })}
+      </div>
+    );
+  }else {
+    return (
+      <div>
+        <span>
+          Modified by
+        </span>
+        {authors.map((author) => {
+          return (
+            <a key={author} href={`https://github.com/${author}`} target="_blank" rel="noreferrer" >
+              <img alt={`${author}`} src={`https://avatars.githubusercontent.com/${author}`} width="24px" style={{borderRadius: "12px", verticalAlign: "sub", marginLeft: "4px"}} />
+            </a>
+          );
+        })}
+      </div>
+    );
+  }
 }
 
 function TagsRow(props) {
@@ -30,13 +62,13 @@ function TagsRow(props) {
   );
 }
 
-function EditMetaRow({editUrl, author}) {
+function EditMetaRow({editUrl, authors}) {
   return (
     <div className={clsx(ThemeClassNames.docs.docFooterEditMetaRow, "row")}>
       <div className="col">{editUrl && <EditThisPage editUrl={editUrl} />}</div>
 
       <div className={clsx("col", styles.lastUpdated)}>
-        <CreatedByUser author={author} />
+        <CreatedByUser authors={authors} />
       </div>
     </div>
   );
@@ -45,7 +77,7 @@ function EditMetaRow({editUrl, author}) {
 export default function DocItemFooter() {
   const {metadata} = useDoc();
   const {editUrl, tags} = metadata;
-  const author = metadata.frontMatter.author || "casdoor";
+  const authors = metadata.frontMatter.authors || ["casdoor"];
   const canDisplayTagsRow = tags.length > 0;
   const canDisplayEditMetaRow = !!(editUrl);
   const canDisplayFooter = canDisplayTagsRow || canDisplayEditMetaRow;
@@ -59,7 +91,7 @@ export default function DocItemFooter() {
       {canDisplayEditMetaRow && (
         <EditMetaRow
           editUrl={editUrl}
-          author={author}
+          authors={authors}
         />
       )}
     </footer>
