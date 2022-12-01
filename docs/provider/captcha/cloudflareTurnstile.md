@@ -2,7 +2,7 @@
 title: Cloudflare Turnstile
 description: Add Cloudflare Turnstile to your application
 keywords: [Cloudflare Turnstile]
-author: YiNNx
+authors: [YiNNx]
 ---
 
 Cloudflare Turnstile is a captcha service provided by Cloudflare, which is a user-friendly, privacy preserving alternative to captcha. You can see more details from [Turnstile Docs](https://developers.cloudflare.com/turnstile/).
