@@ -5,21 +5,31 @@ import {useDoc} from "@docusaurus/theme-common/internal";
 import EditThisPage from "@theme/EditThisPage";
 import TagsListInline from "@theme/TagsListInline";
 import styles from "./styles.module.css";
+import Translate from "@docusaurus/Translate";
 
 // Eject DocItem/Footer
 
-function CreatedByUser({authors}) {
+function ContributedBy({authors}) {
   if (authors.length <= 1) {
     return (
-      <a href={`https://github.com/${authors[0]}`} target="_blank" rel="noreferrer" >
-        Created by <img alt={`${authors[0]}`} src={`https://avatars.githubusercontent.com/${authors[0]}`} width="24px" style={{borderRadius: "12px", verticalAlign: "sub", marginLeft: "4px"}} />  {authors[0]}
-      </a>
-    );
-  } else if(authors.length <= 3) {
-    return (
-      <div>
+      <>
         <span>
-          Modified by
+          <Translate>
+            Created by
+          </Translate>
+        </span>
+        <a href={`https://github.com/${authors[0]}`} target="_blank" rel="noreferrer" >
+          <img alt={`${authors[0]}`} src={`https://avatars.githubusercontent.com/${authors[0]}`} width="24px" style={{borderRadius: "12px", verticalAlign: "sub", marginLeft: "4px"}} />  {authors[0]}
+        </a>
+      </>
+    );
+  } else if (authors.length <= 3) {
+    return (
+      <>
+        <span>
+          <Translate>
+            Modified by
+          </Translate>
         </span>
         {authors.map((author) => {
           return (
@@ -28,13 +38,15 @@ function CreatedByUser({authors}) {
             </a>
           );
         })}
-      </div>
+      </>
     );
-  }else {
+  } else {
     return (
-      <div>
+      <>
         <span>
-          Modified by
+          <Translate>
+            Modified by
+          </Translate>
         </span>
         {authors.map((author) => {
           return (
@@ -43,7 +55,7 @@ function CreatedByUser({authors}) {
             </a>
           );
         })}
-      </div>
+      </>
     );
   }
 }
@@ -68,7 +80,7 @@ function EditMetaRow({editUrl, authors}) {
       <div className="col">{editUrl && <EditThisPage editUrl={editUrl} />}</div>
 
       <div className={clsx("col", styles.lastUpdated)}>
-        <CreatedByUser authors={authors} />
+        <ContributedBy authors={authors} />
       </div>
     </div>
   );
