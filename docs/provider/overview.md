@@ -29,7 +29,7 @@ Now, we have 6 kinds of providers:
   Currently, the supported payment providers include Alipay, WeChat Pay, PayPal and GC.
 - **Captcha Provider**
 
-  Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha and Aliyun Captcha.
+  Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha, Aliyun Captcha and Cloudflare Turnstile.
 
 ## How to config and use
 

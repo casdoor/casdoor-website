@@ -180,6 +180,7 @@ module.exports = {
             "provider/captcha/recaptcha",
             "provider/captcha/hcaptcha",
             "provider/captcha/aliyunCaptcha",
+            "provider/captcha/cloudflareTurnstile",
           ],
         },
       ],
