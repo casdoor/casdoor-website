@@ -37,7 +37,7 @@ spec:
   ports:
     - port: 8000
   selector:
-    app: casdoor]
+    app: casdoor
 ---
 apiVersion: apps/v1
 kind: Deployment
