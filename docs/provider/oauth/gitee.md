@@ -2,7 +2,7 @@
 title: Gitee
 description: Add Gitee OAuth provider to your application
 keywords: [Gitee, OAuth]
-author: ErikQQY
+authors: [ErikQQY]
 ---
 
 To set up Gitee OAuth provider, please go to [Gitee developer](https://gitee.com/oauth/applications), if you have not created applications before, the gitee workbench would like this:

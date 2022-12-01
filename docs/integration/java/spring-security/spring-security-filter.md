@@ -2,7 +2,7 @@
 title: Spring Security Filter
 description: Based on Spring Security Filter, how to use OIDC to connect your application.
 keywords: [OIDC, Spirng Security, Spring Security Filter, Filter]
-author: wenxuan70
+authors: [wenxuan70]
 ---
 
 Casdoor can use OIDC protocol as IDP to connect various applications. Here, we will use the filter in spring security to integrate casdoor and show you how to connect to the application using oidc.

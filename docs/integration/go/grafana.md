@@ -2,7 +2,7 @@
 title: Grafana
 description: Using Casdoor for authentication in Grafana
 keywords: [Grafana]
-author: ComradeProgrammer
+authors: [ComradeProgrammer]
 ---
 
 ## Using Casdoor for authentication in Grafana

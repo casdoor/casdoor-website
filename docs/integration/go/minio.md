@@ -2,7 +2,7 @@
 title: MinIO
 description: Configuring Casdoor as identity provider to support with MinIO
 keywords: [MinIO]
-author: Abingcbc
+authors: [Abingcbc]
 ---
 
 [MinIO](https://github.com/minio/minio) supports external identity management using an OpenID Connect (OIDC) -compatible provider. This document covers configuring Casdoor as identity provider to support with MinIO.

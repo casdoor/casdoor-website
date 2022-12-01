@@ -2,7 +2,7 @@
 title: Permission Configuration
 description: Using exposed Casbin APIs to manage users' access rights in organization
 keywords: [permission, Casbin]
-author: MagicalSheep
+authors: [MagicalSheep]
 ---
 
 Let's explain each item in the Permission configuration page in turn. 

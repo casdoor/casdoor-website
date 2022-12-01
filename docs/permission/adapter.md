@@ -2,7 +2,7 @@
 title: Adapter
 description: Config adapter and basic CRUD to policy
 keywords: [permission, Casbin, adapter, policy]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 Casdoor supports using the UI to connect the adapter and manage the policy rules. In Casbin, the policy storage is implemented

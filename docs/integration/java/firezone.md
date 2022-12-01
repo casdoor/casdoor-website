@@ -2,7 +2,7 @@
 title: FireZone
 description:  Using OIDC protocol as IDP to connect various applications, like FireZone
 keywords: [OIDC, FireZone, IDP]
-author: dingchenzy
+authors: [dingchenzy]
 ---
 
 [Casdoor](/docs/basic/server-installation) can use OIDC protocol as IDP to connect various applications. Here we will use [FireZone](https://docs.firezone.dev/deploy/) as an example to show you how to use OIDC to connect to your applications.

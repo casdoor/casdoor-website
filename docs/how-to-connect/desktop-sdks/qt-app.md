@@ -2,7 +2,7 @@
 title: Qt Desktop App
 description: An Qt desktop app example for Casdoor
 keywords: [qt, sdk]
-author: cs1137195420
+authors: [cs1137195420]
 ---
 
 A [Qt desktop app example](https://github.com/casdoor/casdoor-cpp-qt-example) for Casdoor.

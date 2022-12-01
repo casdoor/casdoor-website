@@ -2,7 +2,7 @@
 title: Overview
 description: Manage users in Casdoor
 keywords: [user, properties, import]
-author: sh1luo
+authors: [sh1luo]
 ---
 
 ## User properties

@@ -2,7 +2,7 @@
 title: Overview
 description: Introduction to tokens in Casdoor
 keywords: [token, OAuth]
-author: sh1luo
+authors: [sh1luo]
 ---
 
 Casdoor is based on OAuth. Tokens are users' OAuth token.

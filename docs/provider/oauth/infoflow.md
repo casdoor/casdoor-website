@@ -2,7 +2,7 @@
 title: Infoflow
 description: Add Infoflow OAuth provider to your application
 keywords: [Infoflow, OAuth]
-author: Steve0x2a
+authors: [Steve0x2a]
 ---
 
 To set up Infoflow OAuth provider, please go to [Infoflow](http://id.qy.baidu.com/static/ge/login.html#/) and log in using your Infoflow account.

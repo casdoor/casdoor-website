@@ -2,7 +2,7 @@
 title: Config
 description: LDAP configuration in Casdoor
 keywords: [ldap, config]
-author: WindSpiritSR
+authors: [WindSpiritSR]
 ---
 
 Ldap configurations belong to an organization, which ldap users will be synchronized into.

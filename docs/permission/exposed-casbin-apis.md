@@ -2,7 +2,7 @@
 title: Exposed Casbin APIs
 description: Using exposed Casbin APIs to manage users' access rights in organization
 keywords: [permission, Casbin]
-author: MagicalSheep
+authors: [MagicalSheep]
 ---
 
 ## Introduction

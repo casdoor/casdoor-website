@@ -2,7 +2,7 @@
 title: ELK
 description: Overview of casdoor/elk-auth-casdoor
 keywords: [ELK]
-author: ComradeProgrammer
+authors: [ComradeProgrammer]
 ---
 
 ## Overview of casdoor/elk-auth-casdoor

@@ -2,7 +2,7 @@
 title: Overview
 description: Casdoor basic unit — organization
 keywords: [organization]
-author: sh1luo
+authors: [sh1luo]
 ---
 
 Organization is the basic unit of Casdoor, which manages users and applications. If a user signed in to an organization, then he can access all applications belonging to the organization without signing in again.

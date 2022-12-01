@@ -2,7 +2,7 @@
 title: How to Enable Single Sign-On
 description: Enable Single Sign-On 
 keywords: [SSO, Single Sign-On]
-author: leo220yuyaodog
+authors: [leo220yuyaodog]
 ---
 
 ## Introduction

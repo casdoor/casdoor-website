@@ -2,7 +2,7 @@
 title: Default
 description: Using Casdoor default captcha in your application
 keywords: [captcha]
-author: Resulte
+authors: [Resulte]
 ---
 
 Default captcha implements generation and verification of image. A default captcha image is the sequence of digits 0-9 with the defined length(5).

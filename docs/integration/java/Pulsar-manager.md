@@ -2,7 +2,7 @@
 title: Pulsar-manager
 description: Using Casdoor in Pulsar-manager
 keywords: [Pulsar-manager]
-author: jakiuncle
+authors: [jakiuncle]
 ---
 
 Casdoor can simply connect to Pulsar-manager.
