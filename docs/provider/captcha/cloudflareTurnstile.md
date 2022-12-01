@@ -5,11 +5,11 @@ keywords: [Cloudflare Turnstile]
 author: YiNNx
 ---
 
-Cloudflare Turnstile is a captcha service provided by Cloudflare, which is a user-friendly, privacy preserving alternative to captcha. You can see more details from this [link](https://developers.cloudflare.com/turnstile/).
+Cloudflare Turnstile is a captcha service provided by Cloudflare, which is a user-friendly, privacy preserving alternative to captcha. You can see more details from [Turnstile Docs](https://developers.cloudflare.com/turnstile/).
 
 ## Create an API key pair
 
-To start using Cloudflare Turnstile, you need to [Create a Cloudflare account](https://dash.cloudflare.com/?to=/:account/turnstile), navigate to the `Turnstile` tab on the navigation bar, and get a sitekey and secret key.
+To start using Cloudflare Turnstile, you need to [Create a Cloudflare account](https://dash.cloudflare.com/?to=/:account/turnstile), navigate to the `Turnstile` tab on the navigation bar, and get the Site Key and Secret Key.
 
 First, add a name for the widget to identify it in the future and enter your website's hostname. Then choose the widget type. `Managed` is recommended. Click **Create**.
 
@@ -27,7 +27,7 @@ Select category as  **Captcha** , type as  **Cloudflare Turnstile** . And you ne
 
 ![Cloudflare Turnstile provider](/img/providers/captcha/captcha_cloudflare3.png)
 
-And you can click **Preview** button to preview the style of this captcha.
+And you can click the **Preview** button to preview the style of this captcha.
 
 ![Cloudflare Turnstile preview](/img/providers/captcha/captcha_cloudflare4.png)
 
