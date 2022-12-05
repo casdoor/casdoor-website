@@ -19,6 +19,7 @@ authors: [ErikQQY]
 - `ClientId` OAuth client id
 - `ClientSecret` OAuth client secret
 - `RedirectUris` Casdoor will navigate to one of the uris if user logged in successfully
+- `TokenFormat`: The format of the generated token. It can be either `JWT` (containing all `User` fields) or `JWT-Empty` containing all non-empty values
 - `ExpireInHours` Login will expire after hours
 - `SigninUrl`
 - `SignupUrl` If you provide a sign up service independently out of Casdoor, please fill the url here
