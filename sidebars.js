@@ -63,7 +63,15 @@ module.exports = {
         "how-to-connect/plugin",
         "how-to-connect/oauth",
         "how-to-connect/cas",
-        "how-to-connect/saml",
+        {
+          type: "category",
+          label: "SAML",
+          link: {type: "generated-index"},
+          items: [
+            "how-to-connect/saml/keycloak",
+            "how-to-connect/saml/appgate",
+          ],
+        },
         "how-to-connect/webauthn",
       ],
     },

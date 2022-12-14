@@ -1,5 +1,5 @@
 ---
-title: SAML
+title: Keycloak
 description: Using Casdoor as SAML IdP
 keywords: [SAML, IdP]
 authors: [seriouszyx]
