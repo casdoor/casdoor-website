@@ -48,7 +48,7 @@ Next, use one of the following backend SDKs based on the language of your backen
 | Dart SDK    | For Dart backends    | [casdoor-dart-sdk](https://github.com/casdoor/casdoor-dart-sdk)     |                                                                                                                                                                                |
 | Cpp SDK  | For Cpp backends  | [casdoor-cpp-sdk](https://github.com/casdoor/casdoor-cpp-sdk) | [casdoor-cpp-qt-example](https://github.com/casdoor/casdoor-cpp-qt-example)                                                                                    |
 
-For a full list of the official Casdoor SDKs, please see: https://github.com/casdoor?q=sdk&type=all&language=&sort=
+For a full list of the official Casdoor SDKs, please see: https://github.com/orgs/casdoor/repositories?q=sdk&type=all&language=&sort=
 
 ## How to use Casdoor SDK?
 
