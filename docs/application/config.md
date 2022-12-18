@@ -52,7 +52,7 @@ Then you can add which third party apps can sign up by adding providers and sett
 
 ```mdx-code-block
 <div className={styles.signingradientborder}>
-  <CasdoorCard src="login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" height= "680" />
+  <CasdoorCard src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" height= "680" />
 </div>
 ```
 

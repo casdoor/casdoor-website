@@ -40,25 +40,17 @@ function FrameMask(props) {
     });
   };
 
-  const handleClick = (src) => {
-    if (localStorage.getItem("mainland") === "true") {
-      window.open("https://door.casdoor.com/" + src);
-    } else {
-      window.open("https://door.casdoor.org/" + src);
-    }
-  };
-
   return (
     <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <CasdoorCard src={props.src} width={props.width} height={props.height} />
-      <div style={maskStyle} hidden={!mouseState.state} onClick={() => {handleClick(props.src);}}>
+      <div style={maskStyle} hidden={!mouseState.state} onClick={() => {window.open(props.src);}}>
         <Link
           className="button button--secondary button--lg"
           style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}>
           <Translate>Online Demo</Translate>
         </Link>
       </div>
-    </div>
+    </div >
   );
 }
 
@@ -87,7 +79,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-      <FrameMask className={styles.headerborder} src="login" width="550" height="720" />
+      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height="720" />
     </header>
   );
 }
@@ -158,7 +150,7 @@ function ContentLogin() {
     <div className={styles.contentlogin}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="login" width="600" height="730" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/login" width="600" height="730" />
           <div className="col">
             <br /><br /><br /><br />
             <Translate>Casdoor is a powerful authentication platform.</Translate>
@@ -205,7 +197,7 @@ function ContentSignup() {
             <br /><br /><br /><br /><br />
             <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
           </div>
-          <FrameMask className={styles.gradientborder} src="signup" width="600" height="795" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height="795" />
         </div>
       </div>
     </div>
@@ -217,7 +209,7 @@ function ContentForget() {
     <div className={styles.contentforget}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="forget" width="600" height="620" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height="620" />
           <div className="col">
             <br /><br /><br /><br />
             <p className="padding-horiz--md">

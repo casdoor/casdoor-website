@@ -97,16 +97,14 @@ module.exports = {
         {
           type: "custom-casdoor",
           label: "Sign Up",
-          int: "https://door.casdoor.org/signup",
-          cn: "https://door.casdoor.com/signup",
+          src: "https://door.casdoor.com/signup",
           position: "right",
           className: "casdoor-signup casdoor-link",
         },
         {
           type: "custom-casdoor",
           label: "Login",
-          int: "https://door.casdoor.org/login",
-          cn: "https://door.casdoor.com/login",
+          src: "https://door.casdoor.com/login",
           position: "right",
           className: "casdoor-login casdoor-link",
         },
