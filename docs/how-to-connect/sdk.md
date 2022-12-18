@@ -103,13 +103,13 @@ Then you can select the cert in the application edit page.
 
 First, install `casdoor-js-sdk` via NPM or Yarn:
 
-```json
+```shell
 npm install casdoor-js-sdk
 ```
 
 Or:
 
-```json
+```shell
 yarn add casdoor-js-sdk
 ```
 
