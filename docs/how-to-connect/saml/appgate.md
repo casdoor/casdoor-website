@@ -1,5 +1,5 @@
 ---
-title: Appgate
+title: Appgate (POST)
 description: How to use Casdoor as SAML IdP for Appgate
 keywords: [SAML, IdP, Appgate]
 authors: [leo220yuyaodog]
@@ -7,23 +7,30 @@ authors: [leo220yuyaodog]
 
 ## Casdoor as a SAML IdP in Appgate
 
+Appgate accepts the `SAMLResponse` sent by POST Request. If you use other SP that also supports POST request, you can refer to this document.
+
 ### Casdoor configuration
 
 Go to your Casdoor and add a new application.
 
 **Enter basic SAML configuration in the application**:
 
-- Redirect URLs – Type in a unique name, see the table below
+- Redirect URLs – Type in a unique name. This may be called `Audience` or `Entity ID` in your SP. See the table below.
+
+  ![Entity ID](/img/how-to-connect/saml/saml_entityId.png)
+
 - Reply URL – type in the URL of the ACS verifying the SAML response, refer to the table below
 
-| Administrator Authentication                                   | User Authentication                                        |
-|:-------------------------------------------------------------- | ---------------------------------------------------------- |
-| Redirect URL = “AppGate”                                       | Redirect URL = “AppGate Client”                            |
-| SAML Reply URL = https://mycontroller.mycompany.com/admin/saml | SAML Reply URL = https://redirectserver.mycompany.com/saml |
+  ![Reply URL](/img/how-to-connect/saml/saml_replyURL.png)
+
+| Administrator Authentication                                     | User Authentication                                          |
+|:-----------------------------------------------------------------|--------------------------------------------------------------|
+| Redirect URL = “AppGate”                                         | Redirect URL = “AppGate Client”                              |
+| SAML Reply URL = <https://mycontroller.mycompany.com/admin/saml> | SAML Reply URL = <https://redirectserver.mycompany.com/saml> |
 
 **Download the XML metadata file**
 
-You can copy the URl of metadata and download the file from your browser.
+You can copy the URL of metadata and download the file from your browser.
 
 ![metadata](/img/how-to-connect/saml/saml_matedata_url.png)
 
@@ -40,11 +47,11 @@ You can copy the URl of metadata and download the file from your browser.
 - Start configuring your identity provider following the details in the tables below
 
 |                    | Administrator Authentication                              |
-|:------------------:| --------------------------------------------------------- |
-| Name               | Enter a unique name eg: "Casdoor SAML Admin"              |
+|:------------------:|-----------------------------------------------------------|
+|        Name        | Enter a unique name eg: "Casdoor SAML Admin"              |
 | Single Sign-on URL | See below                                                 |
-| Issuer             | See below                                                 |
-| Audience           | Type in the **Redirect URL** from the Casdoor application |
+|       Issuer       | See below                                                 |
+|      Audience      | Type in the **Redirect URL** from the Casdoor application |
 | Public Certificate | See below                                                 |
 
 - Upload the XML Metadata file to autocomplete **Single Sign-On**, **Issuer** and **Public Certificate fields**

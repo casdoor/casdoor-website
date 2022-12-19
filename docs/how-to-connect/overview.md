@@ -85,7 +85,7 @@ SAML transactions use Extensible Markup Language (XML) for standardized communic
 
 </details>
 
-Casdoor can be used as **SAML IdP**. Up to now the Casdoor has supported the main features of **SAML 2.0**. More details see **[SAML](/docs/how-to-connect/saml/keycloak)**.
+Casdoor can be used as **SAML IdP**. Up to now the Casdoor has supported the main features of **SAML 2.0**. More details see **[SAML](/docs/how-to-connect/saml/overview)**.
 
 **Example:**
 
