@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
     announcementBar: {
       id: "announcement", // ID of the announcement bar
       content:
-        "<a target=\"_blank\" rel=\"noreferrer\" href=\"https://casbin.io/\">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>",
+        "<a target=\"_blank\" rel=\"noreferrer\" href=\"https://casbin.org/\">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>",
       isCloseable: true,
     },
     docs: {
