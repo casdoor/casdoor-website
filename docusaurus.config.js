@@ -48,7 +48,7 @@ module.exports = {
         },
         {
           href: "https://door.casdoor.com/swagger/",
-          label: "API Reference",
+          label: "RESTful API",
           position: "left",
         },
         {
@@ -62,13 +62,13 @@ module.exports = {
           position: "left",
         },
         {
-          label: "Pricing",
-          to: "https://casdoor.com/#pricing",
+          href: "https://casbin.com",
+          label: "For Enterprise",
           position: "left",
         },
         {
-          label: "Contact Sales",
-          to: "https://tawk.to/chat/623352fea34c2456412b8c51/1fuc7od6e",
+          href: "https://casdoor.com",
+          label: "Hosting Plan (SaaS)",
           position: "left",
         },
         {
@@ -102,14 +102,14 @@ module.exports = {
         {
           type: "custom-casdoor",
           label: "Sign Up",
-          src: "https://door.casdoor.com/signup",
+          src: "https://casdoor.com",
           position: "right",
           className: "casdoor-signup casdoor-link",
         },
         {
           type: "custom-casdoor",
           label: "Login",
-          src: "https://door.casdoor.com/login",
+          src: "https://casdoor.com",
           position: "right",
           className: "casdoor-login casdoor-link",
         },
