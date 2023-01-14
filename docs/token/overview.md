@@ -19,3 +19,8 @@ Casdoor is based on OAuth. Tokens are users' OAuth token.
 - `Scope` Scope of authorization
 - `TokenType` E.g. type `Bear` 
 
+There are two options to generate a JWT Token after logging into the application:
+  - `JWT`
+  - `JWT-Empty`
+
+The JWT option will create a token with all `User` fields. The `JWT-Empty` will create a token with all non-empty values for the user.
