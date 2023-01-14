@@ -94,17 +94,10 @@ For PostgreSQL, make sure `dataSourceName` has non-empty `dbName` and leave the 
 
 #### Sqlite3
 
- First you should comment out the mysql package import and uncomment the **sqlite3** package import in `object/adapter.go`. Like this:
-
-```go
-	//_ "github.com/go-sql-driver/mysql" // db = mysql
-	_ "github.com/mattn/go-sqlite3" // db = sqlite3
-```
-
-Then you should specify `app.conf` like this:
+  You should specify `app.conf` like this:
 
 ```ini
-driverName = sqlite3
+driverName = sqlite
 dataSourceName = "file:casdoor.db?cache=shared&mode=memory"
 dbName =
 ```
