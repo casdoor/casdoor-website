@@ -17,8 +17,8 @@ function Help() {
             <Translate>Discuss with maintainers or share your experience about Casdoor on</Translate> <a href="https://forum.casbin.com"><Translate>Casdoor Forum</Translate></a>.
           </div>
           <div className="col">
-            <h2><Translate>Gitter</Translate></h2>
-            <Translate>You can join the conversation on</Translate> <a href="https://gitter.im/casbin/casdoor"><Translate>Gitter</Translate></a> <Translate>for contributing help.</Translate>
+            <h2><Translate>Discord</Translate></h2>
+            <Translate>You can join the conversation on</Translate> <a href="https://discord.gg/4eZa7dMurk"><Translate>Discord</Translate></a> <Translate>for contributing help.</Translate>
           </div>
           <div className="col">
             <h2><Translate>Tencent QQ and Wechat</Translate></h2>

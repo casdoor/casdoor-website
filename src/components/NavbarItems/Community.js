@@ -70,8 +70,8 @@ export default function DefaultNavbarItem({
   } else {
     return (
       <Comp
-        href="https://gitter.im/casbin/casdoor"
-        className="header-community-gitter"
+        href="https://discord.gg/4eZa7dMurk"
+        className="header-community-discord"
         {...props}
         activeClassName={
           props.activeClassName ??

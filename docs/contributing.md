@@ -15,8 +15,7 @@ If you find something incorrect or missing, please leave comments / suggestions.
 
 There are many ways to contribute to Casdoor. Here are some ideas to get started:
 
-Use Casdoor and report issues! When using Casdoor, report issues to promote development of Casdoor, no matter bugs or proposal. Before filing an issue on GitHub, it would be better to discuss first on [Gitter](https://gitter.im/casbin/casdoor),
-[Casbin Forum](https://forum.casbin.com/) or QQ group: [645200447](https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi)
+Use Casdoor and report issues! When using Casdoor, report issues to promote development of Casdoor, no matter bugs or proposal. Before filing an issue on GitHub, it would be better to discuss first on [Discord](https://discord.gg/4eZa7dMurk) or [GitHub Discussions](https://github.com/casdoor/casdoor/discussions)
 
 :::info
 
