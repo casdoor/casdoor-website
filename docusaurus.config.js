@@ -62,7 +62,7 @@ module.exports = {
           position: "left",
         },
         {
-          href: "https://casbin.com",
+          href: "https://casdoor.com",
           label: "For Enterprise",
           position: "left",
         },
