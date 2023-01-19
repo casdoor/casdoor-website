@@ -148,7 +148,7 @@ module.exports = {
             },
             {
               label: "Discord",
-              href: "https://discord.gg/4eZa7dMurk",
+              href: "https://discord.gg/qteNGWt8UY",
             },
             {
               label: "QQ Group",
