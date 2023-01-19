@@ -70,7 +70,7 @@ export default function DefaultNavbarItem({
   } else {
     return (
       <Comp
-        href="https://discord.gg/qteNGWt8UY"
+        href="https://discord.com/invite/qteNGWt8UY"
         className="header-community-discord"
         {...props}
         activeClassName={
