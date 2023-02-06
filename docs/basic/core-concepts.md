@@ -246,17 +246,17 @@ It's very easy to log into Casdoor via Casdoor's built-in application, just visi
 
 #### 2. Use frontend SDK (for frontend Javascript code using React, Vue or Angular):
 
-`getSignupUrl()` and `getSigninUrl()`: https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63
+`getSignupUrl()` and `getSigninUrl()`: [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63)
 
 #### 3. Use backend SDK (for backend code using Go, Java, etc.):
 
-`GetSignupUrl()` and `GetSigninUrl()`: https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39
+`GetSignupUrl()` and `GetSigninUrl()`: [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39)
 
 ## Provider
 
 Casdoor is a federated single-sign-on system, which supports multiple identity providers via OIDC, OAuth and SAML. Casdoor can also send verification code or other notifications to users via Email or SMS (Short Message Service). Casdoor uses the concept: `Provider` to manage all these third-party connectors.
 
-Currently, All providers supported by Casdoor can be found here: **[/docs/provider/overview](/docs/provider/overview)**
+Currently, All providers supported by Casdoor can be found here: **[provider/overview](/docs/provider/overview)**
 
 ```go
 type Provider struct {
