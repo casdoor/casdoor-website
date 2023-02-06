@@ -153,6 +153,7 @@ OK, so let's sum it up: we have added a background image, customized the login p
 
 More introduction about application in Casdoor:
 
+- [Customize theme](/docs/organization/customize-theme) Customize the theme, including primary color, border radius.
 - [Signup Items Table](/docs/application/signup-items-tabel)
 - [Application Config](/docs/application/config)
 

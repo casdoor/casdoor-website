@@ -92,6 +92,7 @@ module.exports = {
       items: [
         "organization/overview",
         "organization/accountCustomization",
+        "organization/customize-theme",
       ],
     },
     {
