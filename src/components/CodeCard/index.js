@@ -11,7 +11,7 @@ export default function CodeCard(props) {
   return (
     <Highlight {...defaultProps} theme={colorMode === "light" ? github : dracula} code={props.children} language={props.language}>
       {({className, tokens, getLineProps, getTokenProps}) => (
-        <pre className={className} style={{backgroundColor: "transparent", fontSize: "15px"}}>
+        <pre className={className} style={{backgroundColor: "transparent", fontSize: "11.5px"}}>
           {tokens.map((line, i) => (
             <div {...getLineProps({line, key: i})}>
               {line.map((token, key) => (

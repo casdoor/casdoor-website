@@ -150,7 +150,7 @@ function ContentLogin() {
     <div className={styles.contentlogin}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/login" width="600" height="730" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/login" width="450" height="730" />
           <div className="col">
             <br /><br /><br /><br />
             <Translate>Casdoor is a powerful authentication platform.</Translate>
@@ -197,7 +197,7 @@ function ContentSignup() {
             <br /><br /><br /><br /><br />
             <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
           </div>
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height="795" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="450" height="850" />
         </div>
       </div>
     </div>
@@ -209,7 +209,7 @@ function ContentForget() {
     <div className={styles.contentforget}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height="620" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="450" height="690" />
           <div className="col">
             <br /><br /><br /><br />
             <p className="padding-horiz--md">
