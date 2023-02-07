@@ -13,7 +13,7 @@ html[data-theme="dark"] .card {
 .tabItem {
   margin-top: 0 !important;
   border-bottom-color: transparent;
-  padding: 1px;
+  padding: 0;
   padding-top: 10px;
   padding-left: 10px;
 }
