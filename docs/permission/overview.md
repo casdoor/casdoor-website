@@ -18,9 +18,3 @@ Just as your application needs to enforce permission control through the built-i
 End of the chapter, we will use a practical example to show you how Casdoor cooperates with external applications for permission control. 
 
 Let's start!
-
-## Other tips
-
-The current Casdoor Web UI provides very limited support for permission policy configuration, and the API interface provided is far less flexible than using Casbin directly. But if you have fewer permission policies and a simpler model (such as RBAC models), it is quite convenient to directly use Casdoor as the authentication service. 
-
-Casdoor's permission management features are still under development and should be used with caution in production environments. 
