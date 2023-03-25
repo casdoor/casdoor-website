@@ -51,6 +51,22 @@ How it works
 
 :::
 
+## Add Popup Signin
+
+`popup signin` will pop up a small window. After logging in to Casdoor in the child window, it will send authentication information to the main window and then close automatically. We implement it by carrying parameters on the URL.
+
+:::info
+
+How to use
+
+Use the method `popupSignin()` in sdk [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk) to quickly implement the feature. You can see a demo in [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example).
+
+How it works
+
+1. In the URL to the application home page, we will carry the `popup` parameter.
+2. When `popup=1` in login params, Casdoor will send `code` and `state` as a message to main window and finish get `token` in main window by SDK.
+:::
+
 ## Using SSO
 
 The configuration is complete, below will show you how to use auto login. 
