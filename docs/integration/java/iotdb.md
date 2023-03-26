@@ -29,7 +29,7 @@ Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configu
 
 You also should configure an organization and an application. You also can refer to [casdoor](https://door.casdoor.com/login).
 
-### step2.1 you should create an organization
+### 2.1 you should create an organization
 
 ![organization](/img/integration/java/iotdb-web-website/editOrganization.png)
 
