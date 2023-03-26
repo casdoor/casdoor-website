@@ -23,6 +23,6 @@ Casdoor provides multiple password storage algorithms that can be selected in th
 
 :::tip
 
-You can login to an organization in `/login/<organization>` page or login to an application in that organization.  
+A Casdoor user can directly log into Casdoor via the organization's login page: `/login/<organization>` page or login to an application in that organization.  
 
 :::
