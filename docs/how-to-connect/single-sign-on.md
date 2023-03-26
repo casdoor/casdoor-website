@@ -78,10 +78,9 @@ is provided in our SDK for each language.
 
 :::
 
-Just login and go to the home page. You will see other apps in the organization ONLY IF you are not a global admin. That is to say you can see app list if you are an org admin or normal user.
-
+Open the profile page and go to the "Home" page (`/` URL path). You will see the application list provided by the organization. It's notable that only users in organizations other that `built-in` can see the application list in the "Home" page. All the global administrators (aka in the `built-in` organization) cannot see it.
 
 
 ![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
 
-Click the application panel, will jump to the url you set in configuration and automatically log in to the application.
+Click on a tile in the application list, it will jump to the homepage URL of that application with GET parameter: `?silentSignin=1` and automatically log into the application if the application has integrated with Casdoor SSO (so it will recognize the `?silentSignin=1` parameter and perform silent login in the background).
