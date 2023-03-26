@@ -11,18 +11,18 @@ authors: [ComradeProgrammer]
 
 Here is a tutorial to use Casdoor for authentication in Grafana. Before you proceed, please ensure that you have grafana installed and running.
 
-## Step 1 Create an app for grafana in Casdoor
+## Step 1 Create an app for Grafana in Casdoor
 
 Here is an example of creating an app in Casdoor
 ![](/img/integration/go/grafana/grafana_1.png)
 
 Please copy the client secret and client id for the next step.
 
-Please add the callback url of grafana. By default, grafana's oauth callback is `/login/generic_oauth`. So please concatenate this url correctly.
+Please add the callback url of Grafana. By default, Grafana's oauth callback is `/login/generic_oauth`. So please concatenate this url correctly.
 
-## Step 2: Modify the configuration of grafana
+## Step 2: Modify the configuration of Grafana
 
-By default the configuration file for oauth locates at `conf/defaults.ini` in the workdir of grafana.
+By default the configuration file for oauth locates at `conf/defaults.ini` in the workdir of Grafana.
 
 Please find the section `auth.generic_oauth` and modify the following field:
 
@@ -39,7 +39,47 @@ token_url = <endpoint of casdoor>/api/login/oauth/access_token
 
 ```
 
-If you don't want HTTPS enabled for casdoor, please also set `tls_skip_verify_insecure = true`
+### About HTTPS 
+
+If you don't want HTTPS enabled for casdoor or if you deploy grafana without HTTPS enabled, please also set `tls_skip_verify_insecure = true`  
+
+
+### About redirectURI after Sign In With Casdoor  
+
+If the redirect uri is not right after Sign In with Casdoor in Grafana, you may want to configure [root_url](https://stackoverflow.com/a/69814805)  
+
+
+```ini
+[server]
+http_port = 3000
+# The public facing domain name used to access grafana from a browser
+domain = <your ip here>
+# The full public facing url
+root_url = %(protocol)s://%(domain)s:%(http_port)s/
+```
+
+related links:  
+
+1. [Grafana doc](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#root_url)  
+
+2. [Grafana defaults.ini](https://github.com/grafana/grafana/blob/main/conf/defaults.ini)  
+
+
+###  About Role Mappping:  
+
+You may want to configure role_attribute_path to map your user's role to Grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#role-mapping)  
+
+
+```ini
+[auth.generic_oauth]
+role_attribute_path = contains(roles[*].name, 'admin') && 'Admin' || contains(roles[*].name, 'editor') && 'Editor' || 'Viewer'
+role_attribute_strict = true
+allow_assign_grafana_admin = true
+``` 
+
+
+the JMESPath expression after role_attribute_path is very important here. read grafana doc please  
+
 
 ## Step3: See whether it works
 
