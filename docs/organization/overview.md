@@ -21,8 +21,9 @@ Casdoor provides multiple password storage algorithms that can be selected in th
 |bcrypt|[bcrypt](https://github.com/casdoor/casdoor/blob/master/cred/bcrypt.go)|[bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is a password-hashing function and is used to hash and salt passwords securely.|[Spring Boot](https://spring.io/projects/spring-boot), [WordPress](https://stackoverflow.com/questions/1045988/what-type-of-hash-does-wordpress-use)|
 |pbkdf2-salt|[SHA256 and PBKDF2](https://github.com/casdoor/casdoor/blob/master/cred/pbkdf2-salt.go)|[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is a simple cryptographic key derivation function, which is resistant to dictionary attacks and rainbow table attacks. It's originally implemented in Casdoor for Keycloak syncer.  Select this option if you import users by Keycloak syncer.|[Keycloak](http://keycloak.org/)|
 
+
 :::tip
 
-A Casdoor user can directly log into Casdoor via the organization's login page: `/login/<organization>` page or login to an application in that organization.  
+Besides logging into Casdoor via an application (which redirects to Casdoor for SSO), a Casdoor user can also choose to directly log into Casdoor via the organization's login page: `/login/<organization_name>`, e.g., https://door.casdoor.com/login/casbin in the demo site.
 
 :::
