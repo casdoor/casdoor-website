@@ -11,18 +11,18 @@ authors: [ComradeProgrammer]
 
 Here is a tutorial to use Casdoor for authentication in Grafana. Before you proceed, please ensure that you have grafana installed and running.
 
-## Step 1 Create an app for grafana in Casdoor
+## Step 1 Create an app for Grafana in Casdoor
 
 Here is an example of creating an app in Casdoor
 ![](/img/integration/go/grafana/grafana_1.png)
 
 Please copy the client secret and client id for the next step.
 
-Please add the callback url of grafana. By default, grafana's oauth callback is `/login/generic_oauth`. So please concatenate this url correctly.
+Please add the callback url of Grafana. By default, Grafana's oauth callback is `/login/generic_oauth`. So please concatenate this url correctly.
 
-## Step 2: Modify the configuration of grafana
+## Step 2: Modify the configuration of Grafana
 
-By default the configuration file for oauth locates at `conf/defaults.ini` in the workdir of grafana.
+By default the configuration file for oauth locates at `conf/defaults.ini` in the workdir of Grafana.
 
 Please find the section `auth.generic_oauth` and modify the following field:
 
@@ -39,14 +39,14 @@ token_url = <endpoint of casdoor>/api/login/oauth/access_token
 
 ```
 
-### About https 
+### About HTTPS 
 
 If you don't want HTTPS enabled for casdoor or if you deploy grafana without HTTPS enabled, please also set `tls_skip_verify_insecure = true`  
 
 
-### About redirectURI after sign in with casdoor  
+### About redirectURI after Sign In With Casdoor  
 
-If the redirect uri is not right after sign in with casdoor in grafana, you may want to configure [root_url](https://stackoverflow.com/a/69814805)  
+If the redirect uri is not right after Sign In with Casdoor in Grafana, you may want to configure [root_url](https://stackoverflow.com/a/69814805)  
 
 
 ```ini
@@ -60,14 +60,14 @@ root_url = %(protocol)s://%(domain)s:%(http_port)s/
 
 related links:  
 
-1. [grafana doc](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#root_url)  
+1. [Grafana doc](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#root_url)  
 
-2. [grafana defaults.ini](https://github.com/grafana/grafana/blob/main/conf/defaults.ini)  
+2. [Grafana defaults.ini](https://github.com/grafana/grafana/blob/main/conf/defaults.ini)  
 
 
 ###  About Role Mappping:  
 
-you may want to configure role_attribute_path to map your user's role to grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#role-mapping)  
+You may want to configure role_attribute_path to map your user's role to Grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#role-mapping)  
 
 
 ```ini
