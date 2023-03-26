@@ -39,8 +39,12 @@ token_url = <endpoint of casdoor>/api/login/oauth/access_token
 
 ```
 
-If you don't want HTTPS enabled for casdoor, please also set `tls_skip_verify_insecure = true`  
+### About https 
 
+If you don't want HTTPS enabled for casdoor or if you deploy grafana without HTTPS enabled, please also set `tls_skip_verify_insecure = true`  
+
+
+### About redirectURI after sign in with casdoor  
 
 If the redirect uri is not right after sign in with casdoor in grafana, you may want to configure [root_url](https://stackoverflow.com/a/69814805)  
 
@@ -61,7 +65,7 @@ related links:
 2. [grafana defaults.ini](https://github.com/grafana/grafana/blob/main/conf/defaults.ini)  
 
 
-Role Mappping:  
+###  About Role Mappping:  
 
 you may want to configure role_attribute_path to map your user's role to grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#role-mapping)  
 
