@@ -78,7 +78,9 @@ is provided in our SDK for each language.
 
 :::
 
-Open the profile page and go to the home page. You will see other apps in the organization.
+Just login and go to the home page. You will see other apps in the organization ONLY IF you are not a global admin. That is to say you can see app list if you are an org admin or normal user.
+
+
 
 ![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
 
