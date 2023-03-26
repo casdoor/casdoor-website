@@ -49,7 +49,7 @@ If you don't want HTTPS enabled for casdoor or if you deploy grafana without HTT
 If the redirect uri is not right after sign in with casdoor in grafana, you may want to configure [root_url](https://stackoverflow.com/a/69814805)  
 
 
-```
+```ini
 [server]
 http_port = 3000
 # The public facing domain name used to access grafana from a browser
@@ -70,7 +70,7 @@ related links:
 you may want to configure role_attribute_path to map your user's role to grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#role-mapping)  
 
 
-``` sample config
+```ini
 [auth.generic_oauth]
 role_attribute_path = contains(roles[*].name, 'admin') && 'Admin' || contains(roles[*].name, 'editor') && 'Editor' || 'Viewer'
 role_attribute_strict = true
