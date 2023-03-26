@@ -33,7 +33,7 @@ You also should configure an organization and an application. You also can refer
 
 ![organization](/img/integration/java/iotdb-web-website/editOrganization.png)
 
-### step2.2 you should create an application
+### 2.2 you should create an application
 
 ![application](/img/integration/java/iotdb-web-website/editApplication.png)
 
