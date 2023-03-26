@@ -7,6 +7,12 @@ authors: [Steve0x2a]
 
 Casdoor can use the OIDC protocol to link to self-deployed GitLab server, and this document will show you how to do it.
 
+:::caution
+
+As [GitLab docs](https://docs.gitlab.com/ee/administration/auth/oidc.html#configure-keycloak) said, GitLab only works with OpenID providers that use HTTPS, so you need to deploy Casdoor with HTTPS, like putting Casdoor behind a NGINX reverse proxy with SSL certificate setup. Casdoor itself only listens to 8000 port by default via HTTP and has no HTTPS related functionality.
+
+:::
+
 The following are some of the names in the configuration:
 
 `CASDOOR_HOSTNAME`: Domain name or IP where Casdoor server is deployed. e.g., `https://door.casbin.com`.
