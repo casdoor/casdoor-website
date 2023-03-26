@@ -1,13 +1,13 @@
 ---
-title: Apache iotdb
-description: Using Casdoor apache iotdb
-keywords: [iotdb-web-website]
+title: Apache IoTDB
+description: Using Casdoor Apache IoTDB
+keywords: [Apache IoTDB]
 authors: [jakiuncle]
 ---
 
-Casdoor can simply connect to iotdb-web-website.
+Casdoor can simply connect to [Apache IoTDB](https://github.com/apache/iotdb).
 
-Because the code for connecting casdoor has been added in iotdb-web-website, we just need to configure application.yml in back-end and open front switch.
+Because the code for connecting casdoor has been added in [Apache IoTDB Web Workbench](https://github.com/apache/iotdb-web-workbench), we just need to configure application.yml in back-end and open front switch.
 
 ## Step1. Deploy Casdoor
 
@@ -31,33 +31,33 @@ You also should configure an organization and an application. You also can refer
 
 ### 2.1 you should create an organization
 
-![organization](/img/integration/java/iotdb-web-website/editOrganization.png)
+![organization](/img/integration/java/IoTDB/editOrganization.png)
 
 ### 2.2 you should create an application
 
-![application](/img/integration/java/iotdb-web-website/editApplication.png)
+![application](/img/integration/java/IoTDB/editApplication.png)
 
-## Step3. Open iotdb-web-website front-end switch
+## Step3. Open Apache IoTDB Web Workbench front-end switch
 
 Open this switch to make code and state send to back-end.
 
-This switch in the iotdb-web-website/fronted/.env
+This switch in the iotdb-web-workbench/fronted/.env
 
-![frontSwitch](/img/integration/java/iotdb-web-website/frontSwitch.png)
+![frontSwitch](/img/integration/java/IoTDB/frontSwitch.png)
 
 ## Step4. Configure back-end code
 
-You should configure casdoor's Configuration in the iotdb-web-website/backend/src/main/resources/application.properties
+You should configure casdoor's Configuration in the iotdb-web-workbench/backend/src/main/resources/application.properties
 
 ```ini
 casdoor.endpoint = http://localhost:8000
 casdoor.clientId = <client id in previous step>
 casdoor.clientSecret = <client Secret in previous step>
 casdoor.certificate=<client certificate in previous step>
-casdoor.organizationName=iotdb-web-website
-casdoor.applicationName=app-iotdb-web-website
+casdoor.organizationName=IoTDB
+casdoor.applicationName=app-IoTDB
 ```
 
 ## Result
 
-![result](/img/integration/java/iotdb-web-website/iotdb.gif)
+![result](/img/integration/java/IoTDB/iotdb.gif)
