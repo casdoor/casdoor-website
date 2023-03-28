@@ -11,7 +11,7 @@ Casdoor supports AccessToken to authenticate clients. In this section, we will s
 
 ## How to get AccessToken
 
-You have two ways to get the AccessToken: you can use the [Casdoor SDK](/docs/how-to-connect/sdk), for details please refer to the SDK documentation, here we will mainly show you how to use the API to get the AccessToken.
+You have two ways to get the AccessToken: you can use the [Casdoor SDKs](/docs/how-to-connect/sdk), for details please refer to the SDK documentation, here we will mainly show you how to use the API to get the AccessToken.
 
 Casdoor supports four OAuth grant types: [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), and [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4). 
 

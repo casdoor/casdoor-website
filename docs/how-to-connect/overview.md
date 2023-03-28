@@ -54,9 +54,9 @@ Therefore, your application will talk to Casdoor via OAuth 2.0 (OIDC). Specifica
 Casdoor has fulfilled the OIDC protocol completely. If your application is already running against another OAuth 2.0 (OIDC)
 identity provider via a **standard OIDC client library**, and you want to migrate to Casdoor, using OIDC discovery will be very **easy** for you to switch to Casdoor.
 
-### Casdoor SDK
+### Casdoor SDKs
 
-**[Casdoor SDK](/docs/how-to-connect/sdk)**: For most programming languages, Casdoor will provide easy-to-use SDK library on top of OIDC, with supporting extended functionality which are only available in Casdoor.
+**[Casdoor SDKs](/docs/how-to-connect/sdk)**: For most programming languages, Casdoor will provide easy-to-use SDK library on top of OIDC, with supporting extended functionality which are only available in Casdoor.
 
 Compared to the standard OIDC protocol, Casdoor provides more functionalities in its SDK, like user management, resource
 uploading, etc. Connecting to Casdoor via Casdoor SDK costs more time than using a standard OIDC client library but will
