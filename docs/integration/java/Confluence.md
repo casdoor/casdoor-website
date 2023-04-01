@@ -37,7 +37,7 @@ Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/op
 
 ## Step3. Configure Confluence
 
-1. You should install a [miniOrange](https://www.miniorange.com) app to support OAuth.You can find this app in ![Confluence App](/img/integration/java/confluence/confluence_App.png)
+1. You should install a [miniOrange](https://www.miniorange.com) app to support OAuth.You can find this app in ![Confluence App](/img/integration/java/confluence/Confluence_App.png)
 2. You should config this app ![Confluence Config](/img/integration/java/confluence/Confluence_Config2.png)
 3. Set `Selected Application` to Custom OpenId
 4. You can find Client Id and Client Secret in Casdoor application page.
