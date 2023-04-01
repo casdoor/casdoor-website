@@ -28,7 +28,7 @@ After a successful deployment, you need to ensure:
 
 1. Create or use an existing Casdoor application.
 2. Find a redirect url: ![Confluence Callback](/img/integration/java/confluence/Confluence_CallbackURL.png)
-3. Add a redirect url: ![Confluence Application](/img/integration/java/confluence/confluence_Config.png)
+3. Add a redirect url: ![Confluence Application](/img/integration/java/confluence/Confluence_Config.png)
 4. Add provider you want and supplement other settings.
 
 Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in the next step.
