@@ -178,6 +178,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/payment/Alipay",
+            "provider/payment/WeChatPay",
           ],
         },
         {
