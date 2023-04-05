@@ -26,7 +26,7 @@ After a successful deployment, you need to ensure:
 ## Step2. Configure Casdoor application
 
 1. Create or use an existing Casdoor application.
-2. Find a redirect url: `<your flarum install>/auth/passport`
+2. Find a redirect url: `<CASDOOR_HOSTNAME>/auth/passport`
 3. Add your redirect url to casdoor application: ![Redirect](/img/integration/php/Flarum/RedirectURL.png)
 
 Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in the next step.
