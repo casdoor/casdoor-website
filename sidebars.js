@@ -337,6 +337,7 @@ module.exports = {
           items: [
             "integration/php/zentao",
             "integration/php/showdoc",
+            "integration/php/Flarum",
           ],
         },
         {
