@@ -311,7 +311,6 @@ module.exports = {
             "integration/java/ShardingSphere",
             "integration/java/iotdb",
             "integration/java/firezone",
-            "integration/java/Flarum",
           ],
         },
         {
@@ -337,6 +336,7 @@ module.exports = {
           items: [
             "integration/php/zentao",
             "integration/php/showdoc",
+            "integration/php/Flarum",
           ],
         },
         {
