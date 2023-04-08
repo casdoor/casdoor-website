@@ -279,6 +279,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/go/bookstack",
+            "integration/go/Bytebase",
             "integration/go/elk",
             "integration/go/gitea",
             "integration/go/grafana",
