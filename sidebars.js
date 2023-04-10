@@ -279,6 +279,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/go/bookstack",
+            "integration/go/Bytebase",
             "integration/go/elk",
             "integration/go/gitea",
             "integration/go/grafana",
@@ -305,6 +306,7 @@ module.exports = {
             "integration/java/jenkins plugin",
             "integration/java/jenkins oidc",
             "integration/java/jira",
+            "integration/java/Confluence",
             "integration/java/RuoYi",
             "integration/java/Pulsar-manager",
             "integration/java/shenyu",
@@ -336,6 +338,7 @@ module.exports = {
           items: [
             "integration/php/zentao",
             "integration/php/showdoc",
+            "integration/php/Flarum",
           ],
         },
         {
