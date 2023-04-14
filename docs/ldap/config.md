@@ -53,6 +53,8 @@ Casdoor uses search filter to query ldap users.
 Filter fields are the identifier of the user in LDAP server, When you log in to Casdoor as an LDAP user. Casdoor regards the entered login
 username as the `uid` of LDAP user. You can also config other filed, such as `mail`, `mobile`.
 
+![LDAP_field](/img/ldap/ldap_field.gif)
+
 #### Admin
 
 An account that can log in to the specified LDAP server.
