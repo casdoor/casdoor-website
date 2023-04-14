@@ -20,7 +20,7 @@ A friendly name is used by managers to identify different servers.
 
 #### Server Host
 
-LDAP server's host or IP address
+LDAP server's host or IP address.
 
 > e.g:
 > `example.com`
@@ -40,6 +40,20 @@ The admin account configured in casdoor should have at least read-only permissio
 
 > e.g:
 > `ou=Example,dc=example,dc=com`
+
+#### Search filter
+
+Casdoor uses search filter to query ldap users.
+
+> e.g:
+> `(objectClass=posixAccount)`
+
+#### Filter fields
+
+Filter fields are the identifier of the user in LDAP server, When you log in to Casdoor as an LDAP user. Casdoor regards the entered login
+username as the `uid` of LDAP user. You can also config other filed, such as `mail`, `mobile`.
+
+![LDAP_field](/img/ldap/ldap_field.gif)
 
 #### Admin
 
