@@ -132,4 +132,3 @@ Copy the Access Token.
 Now you can use the access token to make the authenticated request. Hasura returned the appropriate user rather than returning all the users from the database.
 
 ![Picture showing the access token from Keycloak being used in Hasura](https://github.com/RanTao123/image/blob/main/hasura.png?raw=truehttps://github.com/RanTao123/image/blob/main/hasura.png?raw=true)
-
