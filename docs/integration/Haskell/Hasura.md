@@ -1,47 +1,17 @@
 ---
-title: "hasura"
+title: "Hasura"
 metaTitle: "Hasura | Hasura Authentication Tutorial"
 metaDescription: "Learn how to integrate Casdoor with Hasura to secure your applications using JWT"
 ---
+Before the integration, we need to deploy Casdoor locally.
 
-## What is Casdoor?
-
-Casdoor is a UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform based on OAuth 2.0, OIDC, SAML and CAS.
-
-Casdoor serves both the web UI and the login requests from the application users.
-
-Casdoor comes with features such as:
-* Front-end and back-end separate architecture, developed by Golang, Casdoor supports high concurrency, provides web-based managing UI and supports multiple languages(Chinese, English).
-* Casdoor supports third-party applications login, such as GitHub, Google, QQ, WeChat, etc., and supports the extension of third-party login with plugins.
-* With Casbin based authorization management, Casdoor supports ACL, RBAC, ABAC, RESTful accessing control models.
-* Phone verification code, email verification code and password retrieval functions.
-* Accessing logs auditing and recording.
-* Alibaba Cloud, Tencent Cloud, Qiniu Cloud image CDN cloud storage.
-* Customizable registration, login, and password retrieval pages.
-* Casdoor supports integration with existing systems by db sync, so users can transition to Casdoor smoothly.
-* Casdoor supports mainstream databases: MySQL, PostgreSQL, SQL Server, etc., and supports the extension of new databases with plugins.
-
-In this section, you will learn how to integrate Casdoor with Hasura.
-
-## Deploy Casdoor
-
-Firstly, the Casdoor should be deployed.
-
-You can refer to the Casdoor official documentation for the [Server Installation](https://casdoor.org/docs/basic/server-installation).
-
-After a successful deployment, you need to ensure:
-
-- The Casdoor server is successfully running on **http://localhost:8000**.
-- Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
-
-Then you can quickly implement a casdoor-based login page in your own app with the following steps.
+Then we can quickly implement a Casdoor-based login page in our own app with the following steps.
 
 ## Configure Casdoor application
 
 1. Create or use an existing Casdoor application.
 2. Add a redirect url: `http://CASDOOR_HOSTNAME/login`
-   ![Casdoor Application Setting](https://github.com/RanTao123/image/blob/main/Casdoor%20Application%20Setting.png?raw=true)
+   ![Casdoor Application Setting](/img/integration/Haskell/Hasura/cas.png)
 3. Copy the client ID, we will need it in the following steps.
 
 ## Add user in Casdoor
@@ -50,7 +20,7 @@ Now you have the application, but not a user. That means you need to create a us
 
 Go to the “Users” page and click on “Add user” in the top right corner. That opens a new page where you can add the new user.
 
-![Pic showing the users page](https://github.com/RanTao123/image/blob/main/user.png?raw=true)
+![Pic showing the users page](/img/integration/Haskell/Hasura/user.png)
 
 Save the user after adding a username and adding the organisation Hasura(other details are optional).
 
@@ -102,7 +72,7 @@ HASURA_GRAPHQL_JWT_SECRET: '{"claims_map": {
 
 Save the change, and reload the docker.
 
-![Add Clerk JWT URL to Hasura](https://github.com/RanTao123/image/blob/main/MD$GWN%5BBET2O538TG~LNZIM.png?raw=true)
+![Add Clerk JWT URL to Hasura](/img/integration/Haskell/Hasura/JWT.png)
 
 ## Retrieve JWT Token
 
@@ -117,18 +87,18 @@ Then input the username and password you create for Hasura before.
 
 Click Sign in.
 
-![Retrieve JWT Token](https://github.com/RanTao123/image/blob/main/login.png?raw=true)
+![Retrieve JWT Token](/img/integration/Haskell/Hasura/login.png)
 
 Go back to Casdoor/Token page
 
-![Token Page](https://github.com/RanTao123/image/blob/main/asd.png?raw=true)
+![Token Page](/img/integration/Haskell/Hasura/tokens.png)
 
 Find the Username you input before then click edit
 
 Copy the Access Token.
 
-![Access Token](https://github.com/RanTao123/image/blob/main/access.png?raw=true)
+![Access Token](/img/integration/Haskell/Hasura/access.png)
 
 Now you can use the access token to make the authenticated request. Hasura returned the appropriate user rather than returning all the users from the database.
 
-![Picture showing the access token from Keycloak being used in Hasura](https://github.com/RanTao123/image/blob/main/hasura.png?raw=truehttps://github.com/RanTao123/image/blob/main/hasura.png?raw=true)
+![Picture showing the access token from Keycloak being used in Hasura](/img/integration/Haskell/Hasura/hasura.png)

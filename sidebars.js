@@ -351,10 +351,10 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Hasura",
+          label: "Haskell",
           link: {type: "generated-index"},
           items: [
-            "integration/hasura/hasura",
+            "integration/Haskell/Hasura",
           ],
         },
       ],
