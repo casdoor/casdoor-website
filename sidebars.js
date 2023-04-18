@@ -349,6 +349,14 @@ module.exports = {
             "integration/ruby/gitlab",
           ],
         },
+        {
+          type: "category",
+          label: "Haskell",
+          link: {type: "generated-index"},
+          items: [
+            "integration/Haskell/Hasura",
+          ],
+        },
       ],
     },
     "internationalization",
