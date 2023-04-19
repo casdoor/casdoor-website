@@ -13,7 +13,7 @@ The following is an example of how to configure a new client entry in KeyCloak a
 
 Some config choices and assumptions specifically for this example:
 
-- Let’s assume that you are running Casdoor as dev mode locally. Casoor UI is available at: `http://localhost:7001` and server is available at `http://localhost:8000`. Replace with the appropriate url as needed.
+- Let’s assume that you are running Casdoor as dev mode locally. Casdoor UI is available at: `http://localhost:7001` and server is available at `http://localhost:8000`. Replace with the appropriate url as needed.
 - Let's assume that you are running Keycloak locally. Keycloak UI is available at: `http://localhost:8080/auth`.
 - Based on that, the SP ACS URL for this deployment will be: `http://localhost:8000/api/acs`.
 - Our SP Entity ID will use the same url: `http://localhost:8000/api/acs`.
