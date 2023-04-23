@@ -209,7 +209,7 @@ You will get the response like:
 
 ## How to verify AccessToken
 
-Casdoor currently has support for [token introspection](https://datatracker.ietf.org/doc/html/rfc7662) endpoint. Currently the endpoind is protected by Basic Authoritarian(ClientId:ClientSecret):
+Casdoor currently has support for [token introspection](https://datatracker.ietf.org/doc/html/rfc7662) endpoint. Currently the endpoint is protected by Basic Authoritarian(ClientId:ClientSecret):
 
 ```
 POST /api/login/oauth/introspect HTTP/1.1
