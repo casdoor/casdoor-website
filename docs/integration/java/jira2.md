@@ -37,7 +37,7 @@ Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/op
 
 ## Step3. Configure Jira
 
-1. We need continue to config our Configure in jira ![Config](/img/integration/java/jira2/config.png) ![Config2](/img/integration/java/jira2/config2.png)
+1. We need continue to config our Configure in jira ![Config](/img/integration/java/jira2/Config.png) ![Config2](/img/integration/java/jira2/Config2.png)
 
 2. You can configure more complex authorization later, for now check if OpenID actually works.
 ![Jira Login](/img/integration/java/jira2/login.gif)
