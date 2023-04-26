@@ -29,7 +29,7 @@ After a successful deployment, you need to ensure:
 2. Find Authentication methods: ![Jira Callback](/img/integration/java/jira2/System.png)
 3. Add a Configure and choose OpenId Connection signle sign-on in Authenication method ![Jira Method](/img/integration/java/jira2/method.png)
 4. Find the redirect url: ![redirect](/img/integration/java/jira2/redirect.png)
-5. Add a redirect url: ![Jira Application](/img/integration/java/jira2/Jira_application.png)
+5. Add a redirect url: ![Jira Application](/img/integration/java/jira2/jira_application.png)
 
 Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in the next step.
 
