@@ -305,7 +305,15 @@ module.exports = {
             },
             "integration/java/jenkins plugin",
             "integration/java/jenkins oidc",
-            "integration/java/jira",
+            {
+              type: "category",
+              label: "Jira",
+              link: {type: "generated-index"},
+              items: [
+                "integration/java/jira",
+                "integration/java/jira2",
+              ],
+            },
             "integration/java/Confluence",
             "integration/java/RuoYi",
             "integration/java/Pulsar-manager",
