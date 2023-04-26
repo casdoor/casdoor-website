@@ -1,5 +1,5 @@
 ---
-title: Jira
+title: Jira(chargeable)
 description:  Using OIDC protocol as IDP to connect various applications, like Jira
 keywords: [OIDC, Jira, IDP]
 authors: [jakiuncle]
