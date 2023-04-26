@@ -1,12 +1,12 @@
 ---
-title: Jira(free)
+title: Via Built-in SSO
 description:  Using OIDC protocol as IDP to connect various applications, like Jira
 keywords: [OIDC, Jira, IDP]
 authors: [jakiuncle]
 ---
 This is a free method to connect casdoor, but your website must use https;
 
-[Casdoor](/docs/basic/server-installation) can use OIDC protocol as IDP to connect various applications. Here we will use [Jira](https://www.atlassian.com/software/jira/guides/getting-started/overview) as an example to show you how to use OIDC to connect to your applications.
+[Casdoor](/docs/basic/server-installation) can use OIDC protocol as IDP to connect various applications. Here is a [Jira](https://www.atlassian.com/software/jira/guides/getting-started/overview) tutorial.
 
 The following are some of the names in the configuration:
 

@@ -310,8 +310,8 @@ module.exports = {
               label: "Jira",
               link: {type: "generated-index"},
               items: [
-                "integration/java/jira",
                 "integration/java/jira2",
+                "integration/java/jira",
               ],
             },
             "integration/java/Confluence",
