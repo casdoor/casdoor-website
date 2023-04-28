@@ -367,6 +367,15 @@ module.exports = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Monitoring",
+      link: {type: "generated-index"},
+      items: [
+        "monitoring/Web UI",
+        "monitoring/Prometheus",
+      ],
+    },
     "internationalization",
     "contributing",
   ],
