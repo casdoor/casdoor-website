@@ -113,7 +113,7 @@ https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=RE
 After your user has authenticated with casdoor, casdoor will redirect him to:
 
 ```
-https://REDIRECT_URI/#token=ACCESS_TOKEN
+https://REDIRECT_URI/#access_token=ACCESS_TOKEN
 ```
 
 Casdoor also supports [id_token](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`, which is a feature of OpenID.
