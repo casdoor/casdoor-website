@@ -219,6 +219,7 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "user/overview",
+        "user/multi-factor-authentication",
         "user/roles",
         "user/permissions",
       ],
