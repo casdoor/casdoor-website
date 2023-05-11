@@ -279,6 +279,7 @@ module.exports = {
           label: "Go",
           link: {type: "generated-index"},
           items: [
+            "integration/go/kubernetes",
             "integration/go/bookstack",
             "integration/go/Bytebase",
             "integration/go/elk",
