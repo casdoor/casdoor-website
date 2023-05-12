@@ -323,6 +323,7 @@ module.exports = {
             "integration/java/shenyu",
             "integration/java/ShardingSphere",
             "integration/java/iotdb",
+            "integration/java/dolphinscheduler",
             "integration/java/firezone",
           ],
         },
