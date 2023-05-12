@@ -37,4 +37,4 @@ Configure OIDC, note following points.
 ## Step3. Test OIDC Authentication
 Access the Openshift console in the browser. You will see casdoor (The Name you configured in the previous step). Click on the casdoor login option. You will get redirected to the Casdoor login page. 
 
-![](/img/integration/go/openshift/openshift_6.png)
+![](/img/integration/go/openshift/login.gif)
