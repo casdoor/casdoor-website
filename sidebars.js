@@ -325,6 +325,7 @@ module.exports = {
             "integration/java/iotdb",
             "integration/java/dolphinscheduler",
             "integration/java/firezone",
+            "integration/java/CloudFoundry",
           ],
         },
         {
