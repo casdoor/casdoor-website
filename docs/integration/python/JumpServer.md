@@ -40,7 +40,7 @@ More infomation for [CAS](https://casdoor.org/docs/how-to-connect/cas)
 - `/serviceValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/serviceValidate`
 - `/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/proxyValidate`
 
-More infomation for [CAS](https://casdoor.org/zh/docs/how-to-connect/cas) and [JumpServer](https://docs.jumpserver.org/zh/master/admin-guide/authentication/cas/)
+More infomation for [CAS](https://casdoor.org/docs/how-to-connect/cas) and [JumpServer](https://docs.jumpserver.org/zh/master/admin-guide/authentication/cas/)
 
 Log out of JumpServer, and test SSO.
 ![Login](/img/integration/python/login.gif)
