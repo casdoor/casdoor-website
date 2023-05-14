@@ -28,7 +28,7 @@ After a successful deployment, you need to ensure:
 2. Find a redirect url: `CASDOOR_HOSTNAME`/cas/`your orgnazition`/`your application`/login
 3. Add your redirect url to casdoor application: `JumpServer_HOSTNAME`
 
-More infomation for [CAS](https://casdoor.org/zh/docs/how-to-connect/cas)
+More infomation for [CAS](https://casdoor.org/docs/how-to-connect/cas)
 
 ## Step3. Configure JumpServer
 
