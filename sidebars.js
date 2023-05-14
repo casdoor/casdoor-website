@@ -369,6 +369,14 @@ module.exports = {
             "integration/Haskell/Hasura",
           ],
         },
+        {
+          type: "category",
+          label: "Python",
+          link: {type: "generated-index"},
+          items: [
+            "integration/python/JumpServer",
+          ],
+        },
       ],
     },
     {
