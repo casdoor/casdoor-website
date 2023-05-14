@@ -48,3 +48,5 @@ we have already got the client_id and redirect_uri before, we input these parame
 
 execute the command, we can get the result below, which means that we have integrated Casdoor with CloudFoundry successfully.
 ![Casdoor Application Setting](/img/integration/java/CloudFoundry/result.png)
+
+![Casdoor Application Setting](/img/integration/java/CloudFoundry/login.png)
