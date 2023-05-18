@@ -93,6 +93,7 @@ module.exports = {
         "organization/overview",
         "organization/accountCustomization",
         "organization/customize-theme",
+        "organization/mfa-items",
       ],
     },
     {
