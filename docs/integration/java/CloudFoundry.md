@@ -2,7 +2,7 @@
 title: CloudFoundry
 description:  Learn how to integrate Casdoor with CloudFoundry to secure your applications
 keywords: [oauth, CloudFoundry, integration]
-authors: [tr10086]
+authors: [RanTao123]
 ---
 
 Before the integration, we need to deploy Casdoor locally.
