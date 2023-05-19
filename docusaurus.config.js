@@ -222,6 +222,9 @@ var _hmt = _hmt || [];
     [
       "@docusaurus/preset-classic",
       {
+        gtag: {
+          trackingID: "G-ZQ8VRBLGS9",
+        },
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsed: false,
