@@ -124,7 +124,7 @@ The following is the corresponding table for fields and casdoor properties
 | DisplayName         | name                |
 | Email               | email               |
 | Avatar              | picture             |
-| Locatio             | adress              |
+| Location            | adress              |
 | Phone               | phone               |
 
 More infomation in [here](https://github.com/casdoor/casdoor/blob/master/object/user.go)
