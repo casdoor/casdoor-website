@@ -111,3 +111,19 @@ The above table is far from being complete. For a full list of OIDC client libra
 2. https://openid.net/
     1. [Certified OpenID Connect Implementations](https://openid.net/developers/certified/)
     1. [Uncertified OpenID Connect Implementations](https://openid.net/developers/uncertified/)
+
+## Field mapping
+The following is the corresponding table for fields and casdoor properties
+
+| Casdoor properties  | Field               |
+|---------------------|---------------------|
+| Sub                 | sub                 |
+| Iss                 | iss                 |
+| Aud                 | aud                 |
+| Name                | perferred_username  |
+| DisplayName         | name                |
+| Email               | email               |
+| Avatar              | picture             |
+| Address             | adress              |
+| Phone               | phone               |
+
