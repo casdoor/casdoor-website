@@ -117,14 +117,14 @@ The following is the corresponding table for fields and casdoor properties
 
 | Casdoor properties  | Field               |
 |---------------------|---------------------|
-| Sub                 | sub                 |
-| Iss                 | iss                 |
+| user.id             | sub                 |
+| originBackend       | iss                 |
 | Aud                 | aud                 |
 | Name                | perferred_username  |
 | DisplayName         | name                |
 | Email               | email               |
 | Avatar              | picture             |
-| Address             | adress              |
+| Locatio             | adress              |
 | Phone               | phone               |
 
 More infomation in [here](https://github.com/casdoor/casdoor/blob/master/object/user.go)
