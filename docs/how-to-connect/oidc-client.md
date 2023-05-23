@@ -127,3 +127,4 @@ The following is the corresponding table for fields and casdoor properties
 | Address             | adress              |
 | Phone               | phone               |
 
+More infomation in [here](https://github.com/casdoor/casdoor/blob/master/object/user.go)
