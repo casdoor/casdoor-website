@@ -216,6 +216,17 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Pricing",
+      link: {type: "generated-index"},
+      items: [
+        "pricing/overview",
+        "pricing/plan",
+        "pricing/pricing",
+        "pricing/subscription",
+      ],
+    },
+    {
+      type: "category",
       label: "Users",
       link: {type: "generated-index"},
       items: [
