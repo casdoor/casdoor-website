@@ -32,8 +32,8 @@ More infomation for [CAS](https://casdoor.org/docs/how-to-connect/cas)
 
 ## Step3. Configure JumpServer
 
-1. You should find Auth ![Find_Auth](/img/integration/python/Auth.png)
-2. You should config this app ![configure](/img/integration/python/jumpServer.png)
+1. You should find Auth ![Find_Auth](/img/integration/python/jumpServer/Auth.png)
+2. You should config this app ![configure](/img/integration/python/jumpServer/jumpServer.png)
 
 - `/login` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/login`
 - `/logout` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/logout`
@@ -43,4 +43,4 @@ More infomation for [CAS](https://casdoor.org/docs/how-to-connect/cas)
 More infomation for [CAS](https://casdoor.org/docs/how-to-connect/cas) and [JumpServer](https://docs.jumpserver.org/zh/master/admin-guide/authentication/cas/)
 
 Log out of JumpServer, and test SSO.
-![Login](/img/integration/python/login.gif)
+![Login](/img/integration/python/jumpServer/login.gif)
