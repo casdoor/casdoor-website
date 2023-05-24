@@ -113,18 +113,19 @@ The above table is far from being complete. For a full list of OIDC client libra
     1. [Uncertified OpenID Connect Implementations](https://openid.net/developers/uncertified/)
 
 ## Field mapping
-The following is the corresponding table for fields and casdoor properties
 
-| Casdoor properties  | Field               |
-|---------------------|---------------------|
-| user.id             | sub                 |
-| originBackend       | iss                 |
-| Aud                 | aud                 |
-| Name                | perferred_username  |
-| DisplayName         | name                |
-| Email               | email               |
-| Avatar              | picture             |
-| Location            | adress              |
-| Phone               | phone               |
+The following table shows how OIDC UserInfo fields (via `/api/userinfo` API) are mapped from properties of Casdoor's User table:
+
+| Casdoor User Field | OIDC UserInfo Field |
+|--------------------|---------------------|
+| Id                 | sub                 |
+| originBackend      | iss                 |
+| Aud                | aud                 |
+| Name               | preferred_username  |
+| DisplayName        | name                |
+| Email              | email               |
+| Avatar             | picture             |
+| Location           | address             |
+| Phone              | phone               |
 
 More infomation in [here](https://github.com/casdoor/casdoor/blob/master/object/user.go)
