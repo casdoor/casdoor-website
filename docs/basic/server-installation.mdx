@@ -144,6 +144,7 @@ initScore = 2000
 logPostOnly = true
 origin = "https://door.casdoor.com"
 staticBaseUrl = "https://cdn.casbin.org"
+enableGzip = true
 ```
 
   - `appname` is the application name, which currently has no practical use
@@ -165,6 +166,7 @@ Despite all the configurable fields, as a beginner, you only need to modify two 
   - `logPostOnly` is used to identify whether only use post method to add a record.
   - `origin` is the origin backend domain name.
   - `staticBaseUrl` is address of the static image when the system initializes the database.
+  - `enableGzip` will accept and response with gzip encoding when the request header including `Accept-Encoding=gzip`.
 
 ### Via Environment Variables
 
