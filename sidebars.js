@@ -364,6 +364,7 @@ module.exports = {
             "integration/php/zentao",
             "integration/php/showdoc",
             "integration/php/Flarum",
+            "integration/php/Moodle",
           ],
         },
         {
