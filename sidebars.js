@@ -106,6 +106,7 @@ module.exports = {
         "application/config",
         "application/signup-items-tabel",
         "application/ui-customization",
+        "application/specify-login-organization",
       ],
     },
     {
