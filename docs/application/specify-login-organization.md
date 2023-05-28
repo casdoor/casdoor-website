@@ -13,7 +13,7 @@ For example, endpoint `/login` is default sign in to accounts belonging to the *
 
 ## Config
 
-In the application edit page, you can see the `orgSelectMode` config. You can select the mode in the dropdown list.
+In the application edit page, you can see the `Org celect mode` config. You can select the mode in the dropdown list.
 
 ![mode_config](/img/application/specify-login-organization/mode_config.png)
 
@@ -24,3 +24,7 @@ In the application edit page, you can see the `orgSelectMode` config. You can se
 ![mode_input](/img/application/specify-login-organization/mode_input.png)
 
 ![mode_select](/img/application/specify-login-organization/mode_select.png)
+
+:::info
+The organization select page only shows when the route is `/login`, `<organization>/login`. That means the application should be set as **default application** in the organization or the app-built-in.
+:::
