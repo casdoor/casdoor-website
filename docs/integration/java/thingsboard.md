@@ -41,7 +41,7 @@ Start the thingsboard by follow.(Take Windows system as example)
 * $Download and extract the package. [Download the package](https://github.com/thingsboard/thingsboard/releases/download/v3.5/thingsboard-windows-3.5.zip)
 * $We can configure thingsboard in \thingsboard\conf\thingsboard.yml as you like, configure the Kafka、PostgreSQL and others.
 * $Run “install.bat –loadDemo” in command line in thingsboard folder to install and add demo data
-  ![Casdoor Application Setting](/img/integration/java/thingsboard/install.png)
+  ![Casdoor Application Setting](/img/integration/java/thingsboard/img_5.png)
 * $Input "net start thingsboard" in command line, we will get
   ![Casdoor Application Setting](/img/integration/java/thingsboard/img_4.png)
 
