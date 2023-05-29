@@ -339,6 +339,7 @@ module.exports = {
             "integration/java/dolphinscheduler",
             "integration/java/firezone",
             "integration/java/CloudFoundry",
+            "integration/java/thingsboard",
           ],
         },
         {
