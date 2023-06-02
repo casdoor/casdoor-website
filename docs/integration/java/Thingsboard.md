@@ -65,6 +65,4 @@ We can get these values in this link:
 
 After filling these blanks, we successfully integrate Casdoor with Thingsboard, when we login http://localhost:8080/, we can get this:
 
-![Casdoor Application Setting](/img/integration/java/Thingsboard/img.png)
-
 ![Casdoor Application Setting](/img/integration/java/Thingsboard/integrate.gif)
