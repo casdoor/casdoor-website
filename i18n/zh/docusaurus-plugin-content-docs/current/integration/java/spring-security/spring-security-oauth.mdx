@@ -1,0 +1,256 @@
+---
+title: Spring Security OAuth
+description: 这里我们将使用Spring Security 作为示例，向您展示如何将 OIDC 链接到您的应用程序。
+keywords:
+  - OIDC
+  - Spring Security
+authors:
+  - wenxuan70
+---
+
+Casdoor 可以使用 OIDC 协议作为IDP 连接各种应用程序。 这里我们将使用Spring Security作为示例，向您展示如何使用 OIDC 链接到您的应用程序。
+
+## 步骤1. 部署Casdoor
+
+首先，部署Casdoor。
+
+您可以参考Casdoor 官方文档 [Server Installation](/docs/basic/server-installation) 。
+
+成功部署后，您需要确保：
+
+- Casdoor服务已成功运行，能通过**http://localhost:8000** 访问。
+- 打开您最喜欢的浏览器并访问 **http://localhost:7001**，您将看到Casdoor的登录页面。
+- 输入 `admin` 和 `123` 测试登录功能正常工作。
+
+然后您可以通过以下步骤在自己的应用程序中快速实现基于 Casdoor 的登录页面。
+
+
+## 第2步： 配置Casdoor应用程序
+1. 创建或使用现有的 Casdoor 应用程序。
+2. 添加您的重定向url (您可以在下一节中看到更多关于如何获取重定向url的细节) ![Casdoor 应用程序设置](/img/integration/appsetting_spring_security.png)
+3. 添加您想要的提供商并补充其他设置。
+
+不出意外的话，您会在应用程序设置页面看到： `Client ID` 和 `Client secret` 就像上面的图片一样。 我们将在下一步中使用它们。 您将在下一步中使用它们。
+
+打开你喜欢的浏览器，访问：**http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**，你会看到 Casdoor 的 OIDC 配置。
+
+## 步骤3. 配置Spring Security
+Spring Security 完全支持 OIDC。
+
+您可以自定义Spring Security OAuth2 客户端的设置：
+
+:::caution
+
+您应该用您自己的 Casdoor 实例替换配置，特别是 `<Client ID>` 等。
+
+:::
+
+````mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="yml"
+  groupId="import-sdk"
+  values={[
+    { label: 'application.yml', value: 'yml', },
+    { label: 'application.properties', value: 'properties', },
+  ]
+}>
+
+<TabItem value="yml">
+
+```yml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          casdoor:
+            client-id: <Client ID>
+            client-secret: <Client Secret>
+            scope: <Scope>
+            authorization-grant-type: authorization_code
+            redirect-uri: <Redirect URL>
+        provider:
+          casdoor:
+            authorization-uri: http://CASDOOR_HOSTNAME:7001/login/oauth/authorize
+            token-uri: http://CASDOOR_HOSTNAME:8000/api/login/oauth/access_token
+            user-info-uri: http://CASDOOR_HOSTNAME:8000/api/get-account
+            user-name-attribute: name
+```
+
+</TabItem>
+
+<TabItem value="properties">
+
+```properties
+spring.security.oauth2.client.registration.casdoor.client-id=<Client ID>
+spring.security.oauth2.client.registration.casdoor.client-secret=<Client Secret>
+spring.security.oauth2.client.registration.casdoor.scope=<Scope>
+spring.security.oauth2.client.registration.casdoor.authorization-grant-type=authorization_code
+spring.security.oauth2.client.registration.casdoor.redirect-uri=<Redirect URL>
+
+spring.security.oauth2.client.provider.casdoor.authorization-uri=http://CASDOOR_HOSTNAME:7001/login/oauth/authorize
+spring.security.oauth2.client.provider.casdoor.token-uri=http://CASDOOR_HOSTNAME:8000/api/login/oauth/access_token
+spring.security.oauth2.client.provider.casdoor.user-info-uri=http://CASDOOR_HOSTNAME:8000/api/get-account
+spring.security.oauth2.client.provider.casdoor.user-name-attribute=name
+```
+
+</TabItem>
+
+</Tabs>
+````
+:::caution
+对于Spring Security的默认情况， `<Redirect URL>` 应该等于 `http://<You Spirng Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/code`。 例如，对于下面的演示来说，重定向URL应该是 `http://localhost:8080/login/oauth2/code/code/custom`。
+您也应该在 `casdoor` 应用程序中配置它。
+:::
+您也可以通过 `ClientRegistration` 在您的代码中自定义设置。 您可以在这里找到映射 [](https://docs.spring.io/spring-security/site/docs/5.2.12.RELEASE/reference/html/oauth2.html#oauth2login-boot-property-mappings)
+## 步骤4. 从一个 Demo 开始
+1. 我们可以创建 Spring Boot 应用程序。
+2. 我们可以添加一个配置，保护所有端点，除了 `/` 和 `/login**` 用来给用户登录。
+
+```java
+@EnableWebSecurity
+public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/", "/login**").permitAll().anyRequest().authenticated().and()
+                .oauth2Login();
+
+    }
+}
+```
+
+3. 我们可以添加一个简单的页面供用户登录。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Spring OAuth Client Thymeleaf - 1</title>
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+</head>
+<body>
+    <nav
+        class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-5">
+        <a class="navbar-brand" th:href="@{/foos/}">Spring OAuth 客户端
+            Thymeleaf - 1</a>
+    </nav>
+    <div class="container">
+        <label>欢迎 ! </label> <br /> <a th:href="@{/foos/}"
+            class="btn btn-primary">登陆</a>
+    </div>
+</body>
+</html>
+```
+
+当用户点击 `登录` 按钮时，他将会被重定向到 `Casdoor`。
+
+4. 接下来，我们可以定义我们受保护的资源。 我们可以导出一个名为`/foos`的端点和一个用于显示的网页。
+
+Data Model
+```java
+public class FooModel {
+    private Long id;
+    private String name;
+
+    public FooModel(Long id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+Controller
+```java
+@Controller
+public class FooClientController {
+    @GetMapping("/foos")
+    public String getFoos(Model model) {
+        List<FooModel> foos = new ArrayList<>();
+        foos.add(new FooModel(1L, "a"));
+        foos.add(new FooModel(2L, "b"));
+        foos.add(new FooModel(3L, "c"));
+        model.addAttribute("foos", foos);
+        return "foos";
+    }
+}
+```
+
+Web page
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Spring OAuth Client Thymeleaf - 1</title>
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+</head>
+<body>
+    <nav
+        class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-5">
+        <a class="navbar-brand" th:href="@{/foos/}">Spring OAuth Client
+            Thymeleaf -1</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="navbar-text">Hi, <span sec:authentication="name">preferred_username</span>&nbsp;&nbsp;&nbsp;
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>All Foos:</h1>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${foos.empty}">
+                    <td colspan="4">No foos</td>
+                </tr>
+                <tr th:each="foo : ${foos}">
+                    <td><span th:text="${foo.id}"> ID </span></td>
+                    <td><span th:text="${foo.name}"> Name </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+```
+
+:::caution
+
+所有网页模板都应该放置在 `resources/templates` 下。
+
+:::
+
+## 步骤5. 试用一下demo！
+
+首先，您可以尝试打开您最喜欢的浏览器并直接访问 `/foos`。 它将自动重定向到 Casdoor 的登录页面。 您可以在这里或从根页面登录。
+
+如果您访问了您的根页面， ![Casdoor 应用程序设置](/img/integration/java/spring-security/spring_security_welcome.png)
+
+点击 `登录` 按钮，页面将重定向到下级登录页面。 ![Casdoor 应用程序设置](/img/integration/java/spring-security/spring_security_casdoor.png)
+
+登录后，页面将重定向到 `/foos`。 ![Casdoor 应用程序设置](/img/integration/java/spring-security/spring_security_resource.png)
+

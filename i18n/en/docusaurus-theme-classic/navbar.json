@@ -1,0 +1,42 @@
+{
+  "title": {
+    "message": "Casdoor",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "My Site Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Docs": {
+    "message": "Docs",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.RESTful API": {
+    "message": "RESTful API",
+    "description": "Navbar item with label RESTful API"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Help": {
+    "message": "Help",
+    "description": "Navbar item with label Help"
+  },
+  "item.label.For Enterprise": {
+    "message": "For Enterprise",
+    "description": "Navbar item with label For Enterprise"
+  },
+  "item.label.Hosting Plan (SaaS)": {
+    "message": "Hosting Plan (SaaS)",
+    "description": "Navbar item with label Hosting Plan (SaaS)"
+  },
+  "item.label.Sign Up": {
+    "message": "Sign Up",
+    "description": "Navbar item with label Sign Up"
+  },
+  "item.label.Login": {
+    "message": "Login",
+    "description": "Navbar item with label Login"
+  }
+}

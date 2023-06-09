@@ -15,7 +15,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           yarn install
-          yarn crowdin:sync
+          # yarn crowdin:sync
           yarn build
     
       - name: Build PDF prerequisites 🔨

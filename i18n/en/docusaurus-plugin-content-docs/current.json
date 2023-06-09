@@ -1,0 +1,150 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.The Basics": {
+    "message": "The Basics",
+    "description": "The label for category The Basics in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Deployment": {
+    "message": "Deployment",
+    "description": "The label for category Deployment in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.How to Connect to Casdoor": {
+    "message": "How to Connect to Casdoor",
+    "description": "The label for category How to Connect to Casdoor in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Desktop SDKs": {
+    "message": "Desktop SDKs",
+    "description": "The label for category Desktop SDKs in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.SAML": {
+    "message": "SAML",
+    "description": "The label for category SAML in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Developer Guide": {
+    "message": "Developer Guide",
+    "description": "The label for category Developer Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Organizations": {
+    "message": "Organizations",
+    "description": "The label for category Organizations in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Applications": {
+    "message": "Applications",
+    "description": "The label for category Applications in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Permissions": {
+    "message": "Permissions",
+    "description": "The label for category Permissions in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Providers": {
+    "message": "Providers",
+    "description": "The label for category Providers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.OAuth": {
+    "message": "OAuth",
+    "description": "The label for category OAuth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Storage": {
+    "message": "Storage",
+    "description": "The label for category Storage in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Payment": {
+    "message": "Payment",
+    "description": "The label for category Payment in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Captcha": {
+    "message": "Captcha",
+    "description": "The label for category Captcha in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Resources": {
+    "message": "Resources",
+    "description": "The label for category Resources in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Products": {
+    "message": "Products",
+    "description": "The label for category Products in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Pricing": {
+    "message": "Pricing",
+    "description": "The label for category Pricing in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Users": {
+    "message": "Users",
+    "description": "The label for category Users in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Syncer": {
+    "message": "Syncer",
+    "description": "The label for category Syncer in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Tokens": {
+    "message": "Tokens",
+    "description": "The label for category Tokens in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Webhooks": {
+    "message": "Webhooks",
+    "description": "The label for category Webhooks in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Deploy": {
+    "message": "Deploy",
+    "description": "The label for category Deploy in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.LDAP": {
+    "message": "LDAP",
+    "description": "The label for category LDAP in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integrations": {
+    "message": "Integrations",
+    "description": "The label for category Integrations in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Go": {
+    "message": "Go",
+    "description": "The label for category Go in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Java": {
+    "message": "Java",
+    "description": "The label for category Java in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Spring Security": {
+    "message": "Spring Security",
+    "description": "The label for category Spring Security in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Jira": {
+    "message": "Jira",
+    "description": "The label for category Jira in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.JavaScript": {
+    "message": "JavaScript",
+    "description": "The label for category JavaScript in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Lua": {
+    "message": "Lua",
+    "description": "The label for category Lua in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.PHP": {
+    "message": "PHP",
+    "description": "The label for category PHP in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Ruby": {
+    "message": "Ruby",
+    "description": "The label for category Ruby in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Haskell": {
+    "message": "Haskell",
+    "description": "The label for category Haskell in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Python": {
+    "message": "Python",
+    "description": "The label for category Python in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Monitoring": {
+    "message": "Monitoring",
+    "description": "The label for category Monitoring in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.link.PDF Download": {
+    "message": "PDF Download",
+    "description": "The label for link PDF Download in sidebar tutorialSidebar, linking to /pdf"
+  }
+}
