@@ -94,6 +94,7 @@ module.exports = {
         "organization/accountCustomization",
         "organization/customize-theme",
         "organization/mfa-items",
+        "organization/organization-tree",
       ],
     },
     {
@@ -235,7 +236,6 @@ module.exports = {
         "user/multi-factor-authentication",
         "user/roles",
         "user/permissions",
-        "user/groups",
       ],
     },
     {
