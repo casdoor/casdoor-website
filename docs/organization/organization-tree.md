@@ -1,7 +1,7 @@
 ---
-title: Oganzation Tree
+title: Organization Tree
 description: the user's groups
-keywords: [user, groups, organization]
+keywords: [user, group, organization, tree]
 authors: [leo220yuyaodog]
 ---
 
