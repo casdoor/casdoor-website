@@ -91,10 +91,10 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "organization/overview",
+        "organization/organization-tree",
         "organization/accountCustomization",
         "organization/customize-theme",
         "organization/mfa-items",
-        "organization/organization-tree",
       ],
     },
     {
