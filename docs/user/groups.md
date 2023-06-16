@@ -1,0 +1,38 @@
+---
+title: Groups
+description: the user's groups
+keywords: [user, groups, organization]
+authors: [leo220yuyaodog]
+---
+
+Groups is a collection of users under an organization. A user can be in multiple groups.
+
+## Group properties
+
+- `Owner` Owner organization of the group
+- `Name` Group name (unique)
+- `displayName`
+- `CreatedTime` 
+- `UpdatedTime`
+- `Type` Groups have two types: `Phsical` and `Vertual`, a use can only be in one `Phsical` group, but can be in multiple `Vertual` groups.
+- `ParentGroup` Parent group of the group (The parent group of top groups in the organization is the organization itself)
+
+## Manage groups
+
+There are two ways to manage groups:
+1. In the groups list pages
+![groups list](/img/user/groups/groups_list.png)
+2. Entry the organization groups page, you can see the tree structure of the groups in the organization.
+![groups tree](/img/user/groups/groups_tree.png)
+
+Here is a video show you how to manage groups:
+
+![groups tree page](/img/user/groups/groups_tree.gif)
+
+Groups can be also edit in user profile.
+
+![groups user](/img/user/groups/groups_user.png)
+
+
+
+
