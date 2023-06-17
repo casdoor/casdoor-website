@@ -17,6 +17,7 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `Type`
 - `Password`
 - `PasswordSalt`
+- `PasswordOptions` Password Complxitity Options
 - `DisplayName` Shown in UI
 - `FirstName`
 - `LastName`
