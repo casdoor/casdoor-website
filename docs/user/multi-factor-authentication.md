@@ -16,15 +16,15 @@ Casdoor generates an authentication code any time someone attempts to sign in yo
 ## Config MFA
 1. In the Use page, click the "add" button.
 
-![mfa_config](/img/user/mfa_config.png)
+![mfa_config](mfa_config.png)
 
 2. After added a new line, click the "setup" button.
 
-![mfa setup](/img/user/mfa_setup.png)
+![mfa setup](mfa_setup.png)
 
 3. Type your password and click "Next Step".
 
-![mfa check password](/img/user/mfa_check_password.png)
+![mfa check password](mfa_check_password.png)
 
 ### Configuring multi-factor authentication using text messages or email
 
@@ -33,11 +33,11 @@ Casdoor generates an authentication code any time someone attempts to sign in yo
 
 You'll receive a text message or email with a security code. On Casdoor, type the code into the field "Enter your code" and click "Next Step".
 
-![mfa verify](/img/user/mfa_verify.png)
+![mfa verify](mfa_verify.png)
 
 Above "Enable" button, copy your recovery codes and save to your device. Save them to a secure location because your recovery codes can help you get back into your account if you lose access.
 
-![mfa enable](/img/user/mfa_enable.png)
+![mfa enable](mfa_enable.png)
 
 ## Changing your preferred MFA method
 
@@ -45,6 +45,6 @@ You can add multiple MFA methods. Only the preferred method will be used when yo
 
 If you want to set a preferred MFA method, click the "Set preferred" button.
 
-![preferred mfa method](/img/user/mfa_preferred_method.png)
+![preferred mfa method](mfa_preferred_method.png)
 
 A "Preferred" label is displayed on your preferred method.
