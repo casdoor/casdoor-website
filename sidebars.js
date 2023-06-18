@@ -92,6 +92,7 @@ module.exports = {
       items: [
         "organization/overview",
         "organization/organization-tree",
+        "organization/passwordComplexity",
         "organization/accountCustomization",
         "organization/customize-theme",
         "organization/mfa-items",
