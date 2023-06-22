@@ -1,5 +1,5 @@
 ---
-title: Secure your account with MFA
+title: MFA / 2FA
 description: Config adapter and basic CRUD to policy
 keywords: [MFA, 2FA, Authentication, Security, SMS, TOTP, Email]
 authors: [leo220yuyaodog]
