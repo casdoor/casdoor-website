@@ -14,18 +14,21 @@ This guide will show you how to configure Casdoor and Google Workspace to add Ca
 ### Add Certificate 
 
 In Casdoor, add a certificate of type X.509 with RSA crypto algorithm and download it.
+
 ![](/img/how-to-connect/saml/saml_google-workspace_cert.png)
 
 ### Configure SAML Application
 
 In the application edit page, select the certificate you just created. Add the domain name of the Google application you will use in the **Redirect URLs**, such as google.com.
+
 ![](/img/how-to-connect/saml/saml_google-workspace_app.png)
 
-In the **SAML reply URL** field, enter`https://www.google.com/a/<your domain>/acs`, which is the ACS URL. You can find relevant information about ACS URL here: [SSO assertion requirements
-](https://support.google.com/a/answer/6330801)
+In the **SAML reply URL** field, enter`https://www.google.com/a/<your domain>/acs`, which is the ACS URL. You can find relevant information about ACS URL here: [SSO assertion requirements](https://support.google.com/a/answer/6330801)
+
 ![](/img/how-to-connect/saml/saml_google-workspace_acs.png)
 
 Copy the **sigin page URL**. This will be used in the next step.
+
 ![](/img/how-to-connect/saml/saml_google-workspace_login.png)
 
 ### Add Third-Party SAML IdP for Google Workspace
