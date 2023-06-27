@@ -70,6 +70,7 @@ module.exports = {
           items: [
             "how-to-connect/saml/overview",
             "how-to-connect/saml/keycloak",
+            "how-to-connect/saml/google-workspace",
             "how-to-connect/saml/appgate",
           ],
         },
