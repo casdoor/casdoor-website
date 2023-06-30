@@ -110,6 +110,7 @@ module.exports = {
         "application/signup-items-tabel",
         "application/ui-customization",
         "application/specify-login-organization",
+        "application/tags",
       ],
     },
     {

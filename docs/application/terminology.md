@@ -11,6 +11,7 @@ authors: [ErikQQY]
 - `Logo` Application logos will display on the login and sign up page
 - `HomepageUrl` The url of the application homepage
 - `Description` Describe the application
+- `Tags` Only users with tag listed in the application tags can login
 - `Organization` The organization that the APP belongs to
 - `EnablePassword` If users can login via password
 - `EnableSignUp` If users can sign up. If not, accounts of the application
