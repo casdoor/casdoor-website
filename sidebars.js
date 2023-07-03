@@ -164,6 +164,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/storage/overview",
+            "provider/storage/minio",
             "provider/storage/azure",
             "provider/storage/aliyun-oss",
           ],
