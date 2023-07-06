@@ -56,7 +56,7 @@ export default function DefaultNavbarItem({
           }
         />
         <Comp
-          href="/img/wechat.jpg"
+          href="https://cdn.casdoor.com/casdoor/resource/built-in/admin/wechat.jpg"
           target="_blank"
           className="header-community-wechat"
           {...props}
@@ -70,7 +70,7 @@ export default function DefaultNavbarItem({
   } else {
     return (
       <Comp
-        href="https://discord.com/invite/qteNGWt8UY"
+        href="https://discord.gg/5rPsrAzK7S"
         className="header-community-discord"
         {...props}
         activeClassName={

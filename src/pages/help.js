@@ -18,7 +18,7 @@ function Help() {
           </div>
           <div className="col">
             <h2><Translate>Discord</Translate></h2>
-            <Translate>You can join the conversation on</Translate> <a href="https://discord.com/invite/qteNGWt8UY"><Translate>Discord</Translate></a> <Translate>for contributing help.</Translate>
+            <Translate>You can join the conversation on</Translate> <a href="https://discord.gg/5rPsrAzK7S"><Translate>Discord</Translate></a> <Translate>for contributing help.</Translate>
           </div>
           <div className="col">
             <h2><Translate>Tencent QQ and Wechat</Translate></h2>
