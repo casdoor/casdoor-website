@@ -10,7 +10,7 @@ authors: [leo220yuyaodog]
 In organization, admin can add the Multi-factor authentication item in account items so that user can config the
 Multi-factor authentication in their owner profile page.
 
-![organization-items-mfa](/img/organization/organization-items-mfa.png)
+![organization-items-mfa](/img/organization/mfa/organization-items-mfa.png)
 
 ## Manage Multi-Factor authentication items
 
@@ -18,10 +18,15 @@ You can manage Multi-Factor authentication to determine which Multi-Factor authe
 
 There are two rules for managing Multi-Factor authentication items:
 - optional: Users can choose whether to enable this type Multi-Factor authentication.
-- required: Users must enable this type Multi-Factor authentication .
+- prompt: If the user does not enable this Multi-Factor authentication mode, the user will be prompted to enable it after logging in to Casdoor.
+- required: Users must enable this Multi-Factor authentication method.
 
-![organization-mfa-table](/img/organization/organization-mfa-table.png)
+![organization-mfa-table](/img/organization/mfa/organization-mfa-table.png)
 
-Here is a demo video to demonstrate the entire process, which we hope will be helpful to you.
+The image of the notification that prompts users to enable Multi-Factor authentication
+![mfa prompt](/img/organization/mfa/mfa-prompt.png)
 
-![mfa-demo](/img/organization/mfa-demo.gif)
+This video shows that after the Multi-Factor authentication method is set to required, the user needs to enable Multi-Factor
+authentication before they can complete the login process.
+![mfa prompt](/img/organization/mfa/mfa-required.gif)
+
