@@ -108,9 +108,7 @@ Here we list a few OIDC client libraries for some languages like Go and Java:
 The above table is far from being complete. For a full list of OIDC client libraries, please see more details at:
 
 1. https://oauth.net/code/
-2. https://openid.net/
-    1. [Certified OpenID Connect Implementations](https://openid.net/developers/certified/)
-    1. [Uncertified OpenID Connect Implementations](https://openid.net/developers/uncertified/)
+2. https://openid.net/certified-open-id-developer-tools/
 
 ## OIDC UserInfo fields
 

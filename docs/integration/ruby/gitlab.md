@@ -42,7 +42,7 @@ Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/op
 
 ## Step3. Configure GitLab
 
-You can follow the steps below to set this up, or make custom changes according to [this document](https://docs.gitlab.com/14.6/ee/administration/auth/oidc.html)(e.g., you are installing GitLab using source code rather than Omnibus).
+You can follow the steps below to set this up, or make custom changes according to [this document](https://archives.docs.gitlab.com/14.6/ee/administration/auth/oidc.html)(e.g., you are installing GitLab using source code rather than Omnibus).
 
 1. On your GitLab server, open the configuration file.
 

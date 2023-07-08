@@ -74,9 +74,3 @@ For all the appearances of parameter 'casServerLoginUrl' change them to
 ```
 
 If you need to customize more configurations, see <https://github.com/apereo/java-cas-client> for detailed information. 
-
-:::note
-
-Actually, we have already have this demo app run on <https://cas-java-app.casdoor.com>. You can visit here to experience using Casdoor via CAS.
-
-:::
