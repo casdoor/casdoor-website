@@ -1,0 +1,33 @@
+name: Check links for modified docs
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+
+jobs:
+  docs-links-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
+
+      - name: Check links for mdx files 🔎
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes' # only show errors in output.
+          # use-verbose-mode: 'yes' # show detailed HTTP status for checked links.
+          # refer to https://github.com/tcort/markdown-link-check#config-file-format
+          config-file: '.github/workflows/docs.links.check.config.json'
+          check-modified-files-only: 'yes'
+          file-extension: '.mdx'
+
+      - name: Check links for markdown files 🔎
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes' # only show errors in output.
+          # use-verbose-mode: 'yes' # show detailed HTTP status for checked links.
+          # refer to https://github.com/tcort/markdown-link-check#config-file-format
+          config-file: '.github/workflows/docs.links.check.config.json'
+          check-modified-files-only: 'yes'
+          file-extension: '.md'

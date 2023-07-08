@@ -76,7 +76,7 @@ The following are some of the names in the configuration:
 
 ### Step1. Deploy Casdoor and APISIX
 
-Firstly, the [Casdoor](/docs/basic/server-installation) and [APISIX](https://apisix.apache.org/docs/apisix/how-to-build/) should be deployed. 
+Firstly, the [Casdoor](/docs/basic/server-installation) and [APISIX](https://apisix.apache.org/docs/apisix/installation-guide/) should be deployed. 
 
 After a successful deployment, you need to ensure:
 
