@@ -405,7 +405,7 @@ module.exports = {
       label: "Monitoring",
       link: {type: "generated-index"},
       items: [
-        "monitoring/Web UI",
+        "monitoring/Web-UI",
         "monitoring/Prometheus",
       ],
     },
