@@ -14,6 +14,7 @@ Casdoor now can be used as CAS server. Up to now the casdoor has supported the f
 The prefix of CAS endpoint in Casdoor is `<Endpoint of casdoor>/cas/<organization name>/<application name>`,which means:
 
 Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an application called `cas-java-app` which belongs to an organization called `casbin`, and if we are trying to let user login in via CAS, then
+
 - `/login` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/login`
 - `/logout` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/logout`
 - `/serviceValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/serviceValidate`
@@ -30,7 +31,6 @@ See <https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol-Specification.html
 
 Here is an offical example <https://github.com/apereo/cas-sample-java-webapp>, which contains an example web app utilizing the offical CAS java client <https://github.com/apereo/java-cas-client>. By going through this example, we will illustrate how to connect to Casdoor via CAS.
 
-
 :::note
 
 Note: Currently Casdoor only support all three versions of CAS: CAS 1.0 & 2.0 & CAS 3.0 .
@@ -40,26 +40,28 @@ Note: Currently Casdoor only support all three versions of CAS: CAS 1.0 & 2.0 & 
 The cas configuration is located in `src/main/webapp/WEB-INF/web.yml`.
 
 By default, this app uses CAS 3.0, which is specified by the following configurations.
+
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
 ```
 
-
 Suppose you want to protect this web app via CAS 2.0, you are supposed to change CAS Validation Filter to the following content.
+
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
 ```
 
-
 If you want to use CAS 1.0, use
+
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas10TicketValidationFilter</filter-class>
 ```
 
 For all the appearances of parameter 'casServerUrlPrefix', change them to
+
 ```xml
 
 <param-name>casServerUrlPrefix</param-name>
@@ -68,9 +70,10 @@ For all the appearances of parameter 'casServerUrlPrefix', change them to
 ```
 
 For all the appearances of parameter 'casServerLoginUrl' change them to
+
 ```xml
 <param-name>casServerLoginUrl</param-name>
 <param-value>http://door.casdoor.com/cas/casbin/cas-java-app/login</param-value>
 ```
 
-If you need to customize more configurations, see <https://github.com/apereo/java-cas-client> for detailed information. 
+If you need to customize more configurations, see <https://github.com/apereo/java-cas-client> for detailed information.

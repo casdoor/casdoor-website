@@ -30,7 +30,7 @@ While this organization is named ```my_organization```, so I choose it in drop-d
 
 ![Select Organization](/img/application/config/selectorganization.png)
 
-Then I want my users can use Casdoor to complete authentication when they are signing up, so I fill the redirect url here as **https://my-site-url.com/callback**
+Then I want my users can use Casdoor to complete authentication when they are signing up, so I fill the redirect url here as **<https://my-site-url.com/callback>**
 
 :::caution
 
@@ -42,7 +42,7 @@ If I want the authentication progress to work, the detailed progress should be l
 
 Users send a request to Casdoor, Casdoor use the `Client ID` and `Client Secret` to get authentication from GitHub, Google or other providers.
 
-If the authentication success, GitHub callback to Casdoor to tell Casdoor authentication success, so the GitHub authorization callback URL should be my Casdoor callback URL which is **http://your-casdoor-url.com/callback**, then Casdoor tells the application authentication success which means the Casdoor callback URL should be my application callback URL, that is **http://your-site-url.com/callback**.
+If the authentication success, GitHub callback to Casdoor to tell Casdoor authentication success, so the GitHub authorization callback URL should be my Casdoor callback URL which is **<http://your-casdoor-url.com/callback>**, then Casdoor tells the application authentication success which means the Casdoor callback URL should be my application callback URL, that is **<http://your-site-url.com/callback>**.
 
 :::
 

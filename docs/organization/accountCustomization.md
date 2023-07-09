@@ -7,10 +7,10 @@ authors: [leo220yuyaodog]
 
 ## Introduction
 
-In an organization, you can customize users' **account items**. This includes whether each item is **visible**. If visible, 
-its **view rule** and **modify rule**. 
+In an organization, you can customize users' **account items**. This includes whether each item is **visible**. If visible,
+its **view rule** and **modify rule**.
 
-When you customize account items in an organization, this configuration 
+When you customize account items in an organization, this configuration
 takes effect on the home page of all members of that organization.
 
 ## How to customize?

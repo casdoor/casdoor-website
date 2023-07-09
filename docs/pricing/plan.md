@@ -5,12 +5,12 @@ keywords: [pricing]
 authors: [isulimanov]
 ---
 
-`Plan` - describe list of application's features with own name and price. 
+`Plan` - describe list of application's features with own name and price.
 
-Plan features depends on Casdoor `role` with set of `permissions`. 
+Plan features depends on Casdoor `role` with set of `permissions`.
 
-That allow to describe plan's features independ on naming and price. 
-For example: plan may has diffrent prices depends on county or date. 
+That allow to describe plan's features independ on naming and price.
+For example: plan may has diffrent prices depends on county or date.
 
 Picture below describes relation between Plan and role.
 
@@ -28,4 +28,3 @@ Every plan has these properties:
 * `PricePerMonth`
 * `PricePerYear`
 * `Role`
-

@@ -17,6 +17,7 @@ Multi-factor authentication in their owner profile page.
 You can manage Multi-Factor authentication to determine which Multi-Factor authentication method are available to users.
 
 There are two rules for managing Multi-Factor authentication items:
+
 - optional: Users can choose whether to enable this type Multi-Factor authentication.
 - prompt: If the user does not enable this Multi-Factor authentication mode, the user will be prompted to enable it after logging in to Casdoor.
 - required: Users must enable this Multi-Factor authentication method.
@@ -29,4 +30,3 @@ The image of the notification that prompts users to enable Multi-Factor authenti
 This video shows that after the Multi-Factor authentication method is set to required, the user needs to enable Multi-Factor
 authentication before they can complete the login process.
 ![mfa prompt](/img/organization/mfa/mfa-required.gif)
-

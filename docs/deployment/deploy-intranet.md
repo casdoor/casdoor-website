@@ -10,14 +10,15 @@ Internet. You need to deploy static resources where you can access them, and the
 3 places.
 
 ## Deploy static resource
+
 All static resources in Casdoor, including images, logo, css, etc., are stored in [casbin/static repository](https://github.com/casbin/static).
 
 **Clone** the repository and **deploy** it on a web servers. Make sure you can access the resource.
 
 ## Modify in Casdoor
 
-You can simply modify the configuration file to set the static resource address to where you deployed it. Go to 
-[conf/app.conf](https://github.com/casdoor/casdoor/blob/c92d34e27c707287545519202463632fb4deacc9/conf/app.conf#L19), set `staticBaseUrl` to your deployed address. 
+You can simply modify the configuration file to set the static resource address to where you deployed it. Go to
+[conf/app.conf](https://github.com/casdoor/casdoor/blob/c92d34e27c707287545519202463632fb4deacc9/conf/app.conf#L19), set `staticBaseUrl` to your deployed address.
 
 ```ini
 staticBaseUrl = "https://cdn.casbin.org"

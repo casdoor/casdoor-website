@@ -13,7 +13,7 @@ Casdoor supports AccessToken to authenticate clients. In this section, we will s
 
 You have two ways to get the AccessToken: you can use the [Casdoor SDKs](/docs/how-to-connect/sdk), for details please refer to the SDK documentation, here we will mainly show you how to use the API to get the AccessToken.
 
-Casdoor supports four OAuth grant types: [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), and [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4). 
+Casdoor supports four OAuth grant types: [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), and [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4).
 
 For security reasons, the Casdoor app has the authorization code mode turned on by default. If you need to use other modes, please go to the appropriate app to set it.
 
@@ -23,7 +23,7 @@ For security reasons, the Casdoor app has the authorization code mode turned on 
 
 First redirect your users to:
 
-```
+```url
 https://<CASDOOR_HOST>/login/oauth/authorize?
 client_id=CLIENT_ID&
 redirect_uri=REDIRECT_URI&
@@ -31,7 +31,9 @@ response_type=code&
 scope=openid&
 state=STATE
 ```
+
 #### Available scopes
+
 |  Name |  Description  |
 |---|---|
 | openid (no scope)  | sub (user's id), iss (issuer) and aud (audience)   |
@@ -43,6 +45,7 @@ state=STATE
 :::info
 
 Your OAuth Application can request the scopes in the initial redirection. You can specify multiple scopes by separating them with a space using %20:
+
 ```text
 https://<CASDOOR_HOST>/login/oauth/authorize?
 client_id=...&
@@ -53,15 +56,15 @@ For more details, please see [OIDC standard](https://openid.net/specs/openid-con
 
 :::
 
-After your user has authenticated with casdoor, casdoor will redirect him to: 
+After your user has authenticated with casdoor, casdoor will redirect him to:
 
-```
+```url
 https://REDIRECT_URI?code=CODE&state=STATE
 ```
 
 Now that you have obtained the authorization code, make a POST request to:
 
-```
+```url
 https://<CASDOOR_HOST>/api/login/oauth/access_token
 ```
 
@@ -93,7 +96,7 @@ You will get the following response:
 
 Casdoor also supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature, when getting the authorization code, you can add two parameters to enable PKCE:
 
-```
+```url
 &code_challenge_method=S256&code_challenge=YOUR_CHANLLENGE
 ```
 
@@ -101,29 +104,29 @@ When getting the token you need to pass `code_verifier` parameter to verify PKCE
 
 :::
 
-
 ### Implicit Grant
 
 Maybe your application doesn't have a backend, and you need to use Implicit Grant. First you need to make sure you have Implicit Grant enabled, then redirect your users to:
 
-```
+```url
 https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE
 ```
 
 After your user has authenticated with casdoor, casdoor will redirect him to:
 
-```
+```url
 https://REDIRECT_URI/#access_token=ACCESS_TOKEN
 ```
 
 Casdoor also supports [id_token](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`, which is a feature of OpenID.
 
 ### Resource Owner Password Credentials Grant
+
 If your application doesn't have a frontend that redirects users to Casdoor, then you may need this.
 
 First you need to make sure you have Password Credentials Grant enabled, and send a POST request to:
 
-```
+```url
 https://<CASDOOR_HOST>/api/login/oauth/access_token
 ```
 
@@ -196,6 +199,7 @@ First you need to set the expiration time of refreshToken in the application (de
 ```
 
 You will get the response like:
+
 ```json
 {
     "access_token": "eyJhb...",
@@ -211,7 +215,7 @@ You will get the response like:
 
 Casdoor currently has support for [token introspection](https://datatracker.ietf.org/doc/html/rfc7662) endpoint. Currently the endpoint is protected by Basic Authoritarian(ClientId:ClientSecret):
 
-```
+```http
 POST /api/login/oauth/introspect HTTP/1.1
 Host: CASDOOR_HOST
 Accept: application/json
@@ -247,11 +251,11 @@ You can use AccessToken to access Casdoor APIs that require authentication.
 For example, two different ways to request `/api/userinfo`.
 
 Type 1. Query parameter
-    
+
 `https://<CASDOOR_HOST>/api/userinfo?accessToken=<your_access_token>`
 
 Type 2. HTTP Bearer token
-    
+
 `https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer <your_access_token>"
 
 Casdoor will parse the access_token, returning corresponding user information according to the `scope`.
@@ -269,7 +273,7 @@ If you expect more user's information,  adding `scope` when getting AccessToken 
 
 ## Differences between `userinfo` and `get-account` APIs
 
-- `/api/userinfo`: returns user information as part of OIDC protocol. Less information is returned, including only the 
+- `/api/userinfo`: returns user information as part of OIDC protocol. Less information is returned, including only the
 basic information in OIDC standards. Please see [available scopes](#available-scopes) that Casdoor supports.
 
 - `/api/get-account`: gets the user object for the currently logged-in account. It is a Casdoor-only API to obtain all information of the [user](/docs/basic/core-concepts#user) in Casdoor.

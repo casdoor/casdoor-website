@@ -5,7 +5,7 @@ keywords: [frontend, guide]
 authors: [hsluoyz]
 ---
 
-The source code for Casdoor's frontend is inside the `/web` folder: https://github.com/casdoor/casdoor/tree/master/web
+The source code for Casdoor's frontend is inside the `/web` folder: <https://github.com/casdoor/casdoor/tree/master/web>
 
 It is a [**Create-React-App (CRA)**](https://create-react-app.dev/) project, which has a classic CRA folder structure as follows:
 
@@ -27,7 +27,7 @@ Inside `/src`, there are several important files or folders as follows:
 | backend                 | the SDK for calling Go backend API, contains all the `fetch()` calls |
 | basic                   | the homepage (dashboard page) for Casdoor, it contains several card widgets |
 | common                  | shared UI widgets                                            |
-| locales                 | i18n translation files in JSON, synced with our Crowdin project: https://crowdin.com/project/casdoor-site |
+| locales                 | i18n translation files in JSON, synced with our Crowdin project: <https://crowdin.com/project/casdoor-site> |
 | App.js                  | the entrance JS file, containing all routes                  |
 | Setting.js              | the utility functions used by other code                     |
 | OrganizationListPage.js | the page for the organization list, similar to all other XXXListPage.js |

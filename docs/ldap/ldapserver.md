@@ -5,7 +5,7 @@ keywords: [ldapserver]
 authors: [forestmgy]
 ---
 
-Many systems like `Nexus` support `ldap` authentication. A simple ldap server is also implemented in Casdoor, which supports bind and search operations. 
+Many systems like `Nexus` support `ldap` authentication. A simple ldap server is also implemented in Casdoor, which supports bind and search operations.
 
 The following describes how to connect to the ldap server in Casdoor and implement simple login authentication.
 
@@ -31,7 +31,7 @@ We only support **`Simple Authentication`.**
 
 ### How to bind
 
-In Casdoor ldapserver, we only recognize `DN` similar to this: `cn=admin,ou=built-in,dc=example,dc=com`. 
+In Casdoor ldapserver, we only recognize `DN` similar to this: `cn=admin,ou=built-in,dc=example,dc=com`.
 
 So please set the `DN` of the admin user to the above form. Then you can use this`DN` to bind to ldap server with the user's password to log in to casdoor for verification. If the server verification is passed, the user will be granted the authority in Casdoor.
 

@@ -5,7 +5,7 @@ keywords: [OAuth, OAuth2.0, OIDC, SAML, CAS]
 authors: [nomeguy]
 ---
 
-In this section, we will show how to connect your application to Casdoor. 
+In this section, we will show how to connect your application to Casdoor.
 
 As Service Provider (SP), Casdoor supports two authentication protocols:
 
@@ -67,12 +67,15 @@ provide the best **flexibility** and the most **powerful** API.
 **[Casdoor plugin](/docs/how-to-connect/plugin)**: if your application is built on top of a popular platform (like Spring Boot, WordPress, etc.) and Casdoor (or a third-party) has already provided a plugin or middleware for it, then use it. It will be much easier to use a plugin than manually invoking Casdoor SDK because the former is specially made for the platform.
 
 **plugin:**
+
 - [Jenkins plugin](/docs/integration/java/jenkins%20plugin)
 - [APISIX plugin](/docs/integration/lua/apisix#connect-casdoor-via-apisixs-casdoor-plugin)
 
 **Middleware:**
+
 - [Spring Boot plugin](https://github.com/casdoor/casdoor-spring-boot-starter)
 - [Django plugin](https://github.com/casdoor/django-casdoor-auth)
+
 ## SAML
 
 <details>

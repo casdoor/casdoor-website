@@ -12,11 +12,11 @@ We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send
 1. Click `Add` to add a new provider.
 2. Select `SMS` in `Category`
 
-![Select Category](/img/providers/selectcategory.png)
+    ![Select Category](/img/providers/selectcategory.png)
 
 3. Select your provider type (`Aliyun SMS`, `Tencent Cloud SMS` or `Volc Engine SMS`)
 
-![Select Type](/img/providers/selecttype.png)
+    ![Select Type](/img/providers/selecttype.png)
 
 4. Get your information from Aliyun, Tencent Cloud or Volc Engine and fill them out.
 

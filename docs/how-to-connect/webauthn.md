@@ -11,7 +11,7 @@ We are delighted to inform the Casdoor's customers that Casdoor now supports log
 
 ### What is WebAuthn?
 
-The Web Authentication API (also known as WebAuthn: https://webauthn.io/) is a specification written by the W3C and FIDO, with the participation of Google, Mozilla, Microsoft, Yubico, and others. The API allows servers to register and authenticate users using public key cryptography instead of a password. **It allows servers to integrate with the strong authenticators now built into devices, like Windows Hello or Apple’s Touch ID**. 
+The Web Authentication API (also known as WebAuthn: <https://webauthn.io/>) is a specification written by the W3C and FIDO, with the participation of Google, Mozilla, Microsoft, Yubico, and others. The API allows servers to register and authenticate users using public key cryptography instead of a password. **It allows servers to integrate with the strong authenticators now built into devices, like Windows Hello or Apple’s Touch ID**.
 
 To be concise, WebAuthn asks users to generate a public key - private key pair, and hand over the public key to the website. When a user wants to log in to a website, the web generates a random number and asks the user to encrypt it with its private key and send back the result. After receiving the result, the website will try to use the public key to decrypt, and if the decrypted number is the same as the random number generated before, the user will be regarded as a legal user and he will be allowed to log in. We call the public key combined with necessary information (like username or information about user's authorizer ) the Webauthn Credential, which is exactly what is stored by the website.
 

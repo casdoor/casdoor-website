@@ -7,8 +7,8 @@ authors: [leo220yuyaodog]
 
 ## Introduction
 
-You have connected Casdoor and configured more than one application in an organization. You want users to sign in once 
-to any app in nomeguythe organization, and then be able to sign in when they go to another app, without any extra clicks. 
+You have connected Casdoor and configured more than one application in an organization. You want users to sign in once
+to any app in nomeguythe organization, and then be able to sign in when they go to another app, without any extra clicks.
 
 We offer this single sign-on, you just need to:
 
@@ -18,8 +18,8 @@ We offer this single sign-on, you just need to:
 
 :::note
 
-The basic sign in process provided by Casdoor allows users to log in to other applications in the organization by 
-selecting the user who is currently logged in or using another account. 
+The basic sign in process provided by Casdoor allows users to log in to other applications in the organization by
+selecting the user who is currently logged in or using another account.
 
 After enable the auto signin, the selection box will not display, the logged user will log in directly.
 
@@ -69,17 +69,16 @@ How it works
 
 ## Using SSO
 
-The configuration is complete, below will show you how to use auto login. 
+The configuration is complete, below will show you how to use auto login.
 
 :::info
 
-Make sure in your application can redirect to user's profile page. The API [getMyProfileUrl(account, returnUrl)](https://github.com/casdoor/casdoor-js-sdk#get-my-profile-page-url) 
+Make sure in your application can redirect to user's profile page. The API [getMyProfileUrl(account, returnUrl)](https://github.com/casdoor/casdoor-js-sdk#get-my-profile-page-url)
 is provided in our SDK for each language.
 
 :::
 
 Open the profile page and go to the "Home" page (`/` URL path). You will see the application list provided by the organization. It's notable that only users in organizations other that `built-in` can see the application list in the "Home" page. All the global administrators (aka in the `built-in` organization) cannot see it.
-
 
 ![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
 

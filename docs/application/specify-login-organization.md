@@ -5,11 +5,10 @@ keywords: [UI, login, application, organization]
 authors: [leo220yuyaodog]
 ---
 
-Here will show you how to enable specify login organization page for the application. 
+Here will show you how to enable specify login organization page for the application.
 
 For example, endpoint `/login` is default sign in to accounts belonging to the **built-in** organization. You can enable the specify login organization page in
 **app-built-in** application that belong to **built-in** organization. So that the user can select an organization to login. After the user selects the organization, it will redirect to `/login/<organization>`.
-
 
 ## Config
 
