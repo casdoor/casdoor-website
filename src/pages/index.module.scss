@@ -10,8 +10,9 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+
   // color: var(--ifm-font-color-base);
-  color: #E3E3E3;
+  color: #e3e3e3;
 }
 
 @media only screen and (max-width: 996px) {
@@ -58,6 +59,7 @@
 
 .contentinterface {
   @include content;
+
   padding-top: 200px;
   padding-bottom: 200px;
 }

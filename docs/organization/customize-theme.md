@@ -5,10 +5,10 @@ keywords: [theme]
 authors: [leo220yuyaodog]
 ---
 
-Casdoor allows you to customize theme to satisfy UI diversity from business or brand requirements, 
+Casdoor allows you to customize theme to satisfy UI diversity from business or brand requirements,
 including primary color, border radius.
 
-In Casdoor, the scope of theme includes global, organization, and application. 
+In Casdoor, the scope of theme includes global, organization, and application.
 
 1. Global scope: this is the default theme of Casdoor and is applied to any organization that chooses to follow the global theme. It can only be modified in Casdoor source code, there is no way to modify it in web UI.
 
@@ -16,7 +16,7 @@ In Casdoor, the scope of theme includes global, organization, and application.
 
 3. Application scope: the theme for an application can be customized in the application edit page. The theme takes effect in the the entry pages (signup, signin, forget password, etc.) of the application.
 
-##  Customize organization theme
+## Customize organization theme
 
 We provide a demo to demonstrate how to config theme in organization:
 
@@ -31,9 +31,7 @@ But if they are different, you need to log in the organization to see the effect
 
 ## Customize application theme
 
-Applications customize theme use the same theme editor as the organization. But even more conveniently, you can preview the 
+Applications customize theme use the same theme editor as the organization. But even more conveniently, you can preview the
 theme in the preview panel.
 
 ![preview](/img/organization/application_preview.png)
-
-

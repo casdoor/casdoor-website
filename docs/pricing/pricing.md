@@ -22,10 +22,10 @@ Every Pricing has these properties:
 * `Description`
 * `Plans` - Array of plans
 * `IsEnabled`
-* `Has trial` - any payments will not be reqiured for sign up in case of true 
-* `TrialDuration` - impact on subscription end days 
+* `Has trial` - any payments will not be reqiured for sign up in case of true
+* `TrialDuration` - impact on subscription end days
 * `Application`
-* `Submitter` 
-* `Approver` 
+* `Submitter`
+* `Approver`
 * `ApproveTime`
 * `State`

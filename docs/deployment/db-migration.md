@@ -21,20 +21,20 @@ You can write code like this to handle field renaming:
 
 ```go
 migrations := []*migrate.Migration{
-		{
-			ID: "CasbinRule--fill ptype field with p",
-			Migrate: func(tx *xorm.Engine) error {
-				_, err := tx.Cols("ptype").Update(&xormadapter.CasbinRule{
-					Ptype: "p",
-				})
-				return err
-			},
-			Rollback: func(tx *xorm.Engine) error {
-				return tx.DropTables(&xormadapter.CasbinRule{})
-			},
-		},
-	}
-	m.Migrate()
+        {
+            ID: "CasbinRule--fill ptype field with p",
+            Migrate: func(tx *xorm.Engine) error {
+                _, err := tx.Cols("ptype").Update(&xormadapter.CasbinRule{
+                    Ptype: "p",
+                })
+                return err
+            },
+            Rollback: func(tx *xorm.Engine) error {
+                return tx.DropTables(&xormadapter.CasbinRule{})
+            },
+        },
+    }
+    m.Migrate()
 ```
 
 What we want to achieve is: **rename `p_type` to `ptype`**. But since xorm **does not support field renaming**, we can only use a more complicated way: assign the value of `p_type` to `ptype`, and then delete the `p_type` field.

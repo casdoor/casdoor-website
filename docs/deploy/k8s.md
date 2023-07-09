@@ -6,20 +6,21 @@ authors: [ComradeProgrammer]
 ---
 
 ## Deploy Casdoor in k8s
+
 We have given a basic example of deploying Casdoor into k8s. In the root folder of casdoor, there exists a file named "k8s.yaml", which includes an example minimum configuration to be used in deploying casdoor in k8s, a deployment and a service.
 
-
-First, make sure that you have modified the conf/app.conf so that the casdoor can successfully connect to the database, and the database is running. Second, make sure k8s is able to pull the necessary images. 
+First, make sure that you have modified the conf/app.conf so that the casdoor can successfully connect to the database, and the database is running. Second, make sure k8s is able to pull the necessary images.
 
 Run
+
 ```shell
 kubectl apply -f k8s.yaml
 ```
 
 And soon you can see the result via command `kubectl get pods`
 
-
 The content of k8s.yaml is as follow
+
 ```yaml
 # this is only an EXAMPLE of deploying casddor in kubernetes
 # please modify this file according to your requirements
@@ -80,5 +81,4 @@ spec:
 
 ```
 
-This file is merely an example. For example, you can choose to use a namespace other than default, use a service type instead of nodeport to expose the casdoor, or use a use config map in k8s to mount the configuration file, which is a more recommended way in k8s. 
-
+This file is merely an example. For example, you can choose to use a namespace other than default, use a service type instead of nodeport to expose the casdoor, or use a use config map in k8s to mount the configuration file, which is a more recommended way in k8s.

@@ -11,7 +11,7 @@ If you want to use Casdoor to provide login service for your web Web APPs, you c
 
 Users can access all applications in their organizations without login twice.
 
-The application configuration is very flexible and simple. You can set whether to allow password login or third-party login, configure the third-party applications you want users to log in, and you can even customize the signup items of the application, etc. 
+The application configuration is very flexible and simple. You can set whether to allow password login or third-party login, configure the third-party applications you want users to log in, and you can even customize the signup items of the application, etc.
 
 In this chapter you will learn how to start an application of your own, everything from scratch.
 

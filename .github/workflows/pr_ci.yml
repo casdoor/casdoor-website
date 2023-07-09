@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Init Website
-        run: |
-          yarn install && yarn build --locale en
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build website
+        run: yarn build --locale en

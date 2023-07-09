@@ -19,6 +19,7 @@ scrape_configs:
       - targets: ['localhost:8000'] #Back-end address of casdoor deployment
     metrics_path: '/api/metrics' #Path for collecting indicators
 ```
+
 After the configuration is successful, you will find the following information in Prometheus
 
-![](/img/monitoring/prometheus/info.png)
+![info](/img/monitoring/prometheus/info.png)

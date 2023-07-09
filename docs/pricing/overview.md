@@ -11,15 +11,11 @@ You can choose which plans to include in your price list like on pictures below:
 
 ![pricing.png](/img/pricing/pricing.png)
 
-Each `pricing list` belong to `application` and has own url that allow sign up new users with selected plan. 
+Each `pricing list` belong to `application` and has own url that allow sign up new users with selected plan.
 
-Getneral user flow looks like: 
--  Get `pricing` url
--  Choose `plan`
--  Signup to aplication
+Getneral user flow looks like:
+
+- Get `pricing` url
+- Choose `plan`
+- Signup to aplication
 - `Subscription` will be auto created  
-
-
-
-
-

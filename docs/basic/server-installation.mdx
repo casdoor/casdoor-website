@@ -13,9 +13,9 @@ All major operating systems including Windows, Linux and macOS are supported.
 
 ### Environment
 
-* [Go 1.17+](https://go.dev/dl/)
-* [Node.js LTS (16 or 14)](https://nodejs.org)
-* [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install)
+- [Go 1.17+](https://go.dev/dl/)
+- [Node.js LTS (16 or 14)](https://nodejs.org)
+- [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install)
 
 :::info
 
@@ -25,7 +25,7 @@ We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/en/docs/insta
 
 :::caution
 
-For **Chinese** users, in order to download the Go dependency packages successfully, you need to use a Go proxy by Configuring the GOPROXY environment variable. We strongly recommend: https://goproxy.cn/
+For **Chinese** users, in order to download the Go dependency packages successfully, you need to use a Go proxy by Configuring the GOPROXY environment variable. We strongly recommend: <https://goproxy.cn/>
 
 :::
 
@@ -44,12 +44,12 @@ Casdoor uses [XORM](https://xorm.io/) to talk to the database. Based on [Xorm Dr
 
 ## Download
 
-The source code of Casdoor is hosted at GitHub: https://github.com/casdoor/casdoor. Both the Go backend code and React frontend code are inside the single repository.
+The source code of Casdoor is hosted at GitHub: <https://github.com/casdoor/casdoor>. Both the Go backend code and React frontend code are inside the single repository.
 
 Name | Description | Language | Source code
 ----|------|----|----
-Frontend | Web frontend UI for Casdoor | JavaScript + React | https://github.com/casdoor/casdoor/tree/master/web
-Backend | RESTful API backend for Casdoor | Golang + Beego + XORM | https://github.com/casdoor/casdoor
+Frontend | Web frontend UI for Casdoor | JavaScript + React | <https://github.com/casdoor/casdoor/tree/master/web>
+Backend | RESTful API backend for Casdoor | Golang + Beego + XORM | <https://github.com/casdoor/casdoor>
 
 Casdoor supports `Go Modules`. To download the code, you can just simply clone the code via git:
 
@@ -65,9 +65,9 @@ git clone https://github.com/casdoor/casdoor
 Casdoor supports mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default. If you use another database, please
 modify the import package in [object/adapter](https://github.com/casdoor/casdoor/blob/afa9c530adac39fdea329dbfd8a55775badb7d09/object/adapter.go#L24-L27).
 
-#### MySQL:
+#### MySQL
 
-  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`. If the database does not exist, it needs to be created manually. The DB connection string can be specified at: https://github.com/casdoor/casdoor/blob/master/conf/app.conf
+  Casdoor will store its users, nodes and topics information in a MySQL database named: `casdoor`. If the database does not exist, it needs to be created manually. The DB connection string can be specified at: <https://github.com/casdoor/casdoor/blob/master/conf/app.conf>
 
   ```ini
   driverName = mysql
@@ -75,7 +75,7 @@ modify the import package in [object/adapter](https://github.com/casdoor/casdoor
   dbName = casdoor
   ```
 
-#### PostgreSQL:
+#### PostgreSQL
 
   Since we must choose a database when opening Postgres with xorm, you should prepare a database manually before running Casdoor.
 
@@ -93,7 +93,7 @@ For PostgreSQL, make sure `dataSourceName` has non-empty `dbName` and leave the 
 
 :::
 
-#### CockroachDB:
+#### CockroachDB
 
   You can also use cockroachdb with postgres driver. It has same configuration as postgreSQL.
 
@@ -147,39 +147,41 @@ staticBaseUrl = "https://cdn.casbin.org"
 enableGzip = true
 ```
 
-  - `appname` is the application name, which currently has no practical use
-  - `httpport` is the port that your back-end application is listening on
-  - `runmode` is `dev` or `prod`
-  - `SessionOn` decides whether to enable session,used by default.
-  - `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Configure Database](#configure-database).
-  - `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
+- `appname` is the application name, which currently has no practical use
+- `httpport` is the port that your back-end application is listening on
+- `runmode` is `dev` or `prod`
+- `SessionOn` decides whether to enable session,used by default.
+- `driverName`, `dataSourceName` and `dbName` are introduced before, please see [Configure Database](#configure-database).
+- `verificationCodeTimeout` set the expiration time of the verification code. After the expiration, the user needs to obtain it again
 
 Despite all the configurable fields, as a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, applications and so on.
-  - `tableNamePrefix` is prefix of the table when using adapter.
-  - `showSql` : show SQL statement or not on logger if log level is great than INFO.
-  - `redisEndpoint` is the Redis endpoint used by Beego session storage. If this parameter is empty, the session data will be stored locally as files in `./tmp` folder. For using Redis as Beego session storage, an example for this value would be: `redis.example.com:6379`. If Redis is deployed in the local machine, you can use `localhost:6379`. If Redis password is enabled, use `redis.example.com:6379,db,password`. See more details at: https://github.com/beego/beedoc/blob/master/en-US/module/session.md#saving-provider-config
-  - `defaultStorageProvider` is the default file storage service name. If you need to use file storage services such as avatar upload, you need to set up a storage provider and apply it in your application. See [**storage**](/docs/provider/storage/overview) for details.
-  - `isCloudIntranet` is used to identify whether your provider endpoint is intranet endpoint.
-  - `authState` is the authorization application name. This parameter will be checked when logging in.
-  - `socks5Proxy` is the SOCKS proxy server IP address. **Set the proxy port**, because we have google-related services or use `Google` `GitHub` `Facebook` `LinkedIn` `Steam` as OAuth Provider which will be restricted by the network in some areas.
-  - `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in Casdoor.
-  - `logPostOnly` is used to identify whether only use post method to add a record.
-  - `origin` is the origin backend domain name.
-  - `staticBaseUrl` is address of the static image when the system initializes the database.
-  - `enableGzip` will accept and response with gzip encoding when the request header including `Accept-Encoding=gzip`.
+
+- `tableNamePrefix` is prefix of the table when using adapter.
+- `showSql` : show SQL statement or not on logger if log level is great than INFO.
+- `redisEndpoint` is the Redis endpoint used by Beego session storage. If this parameter is empty, the session data will be stored locally as files in `./tmp` folder. For using Redis as Beego session storage, an example for this value would be: `redis.example.com:6379`. If Redis is deployed in the local machine, you can use `localhost:6379`. If Redis password is enabled, use `redis.example.com:6379,db,password`. See more details at: <https://github.com/beego/beedoc/blob/master/en-US/module/session.md#saving-provider-config>
+- `defaultStorageProvider` is the default file storage service name. If you need to use file storage services such as avatar upload, you need to set up a storage provider and apply it in your application. See [**storage**](/docs/provider/storage/overview) for details.
+- `isCloudIntranet` is used to identify whether your provider endpoint is intranet endpoint.
+- `authState` is the authorization application name. This parameter will be checked when logging in.
+- `socks5Proxy` is the SOCKS proxy server IP address. **Set the proxy port**, because we have google-related services or use `Google` `GitHub` `Facebook` `LinkedIn` `Steam` as OAuth Provider which will be restricted by the network in some areas.
+- `initScore` is the initial score of each user. Each user has a score attribute. Score is used by [**Casnode**](https://github.com/casbin/casnode). Score does not control anything in Casdoor.
+- `logPostOnly` is used to identify whether only use post method to add a record.
+- `origin` is the origin backend domain name.
+- `staticBaseUrl` is address of the static image when the system initializes the database.
+- `enableGzip` will accept and response with gzip encoding when the request header including `Accept-Encoding=gzip`.
 
 ### Via Environment Variables
 
 **All configuration items defined by Casdoor** in the ini file mentioned above can be chosen to configuration via environmental variables, so can **some of the beego configurations** items(httpport,appname).
 
 For example, when you try to start casdoor, you can use something like this to pass the configuration via environmental variables.
+
 ```shell
 appname=casbin go run main.go
 ```
+
 Besides, `export` derivatives are also a possible method. The names of environmental variables should be exactly the same with the names you want to use in the ini file.
 
 *Note: configurations in environmental variables can **override** the configurations in ini file*.
-
 
 ## Run
 
@@ -259,17 +261,17 @@ To use another port, please edit ```conf/app.conf``` and modify `httpport`, then
 
 :::info casdoor port details
 
-In **dev** environment, the frontend is run by ```yarn run``` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **http://localhost:7001**.
+In **dev** environment, the frontend is run by ```yarn run``` in port 7001, so if you want to go to Casdoor login page, you need set Casdoor link as **<http://localhost:7001>**.
 
 In **prod** environment, the frontend files is first built by ```yarn build``` and served in port 8000, so if you want to go to Casdoor login page, you need to set Casdoor link as **http://SERVER_IP:8000** (If you are using reverse proxy, you need to set the link as **your domain**).
 
-#### Take our official forum Casnode as an example:
+#### Take our official forum Casnode as an example
 
 [Casnode](https://casnode.org) uses Casdoor to handle authentication.
 
-When we are testing Casnode in **dev** environment, we set the `serverUrl` as http://localhost:7001, so when we test signin and signup functionality using Casdoor, it will go to localhost 7001 which is the Casdoor port.
+When we are testing Casnode in **dev** environment, we set the `serverUrl` as <http://localhost:7001>, so when we test signin and signup functionality using Casdoor, it will go to localhost 7001 which is the Casdoor port.
 
-And when we put Casnode to **prod** environment, we set the `serverUrl` as https://door.casdoor.com, so users can signin or signup using Casdoor.
+And when we put Casnode to **prod** environment, we set the `serverUrl` as <https://door.casdoor.com>, so users can signin or signup using Casdoor.
 
 ![Casnode Example](/img/basic/server-installation/casnodeexample.png)
 

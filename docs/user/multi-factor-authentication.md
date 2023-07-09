@@ -18,17 +18,18 @@ Casdoor generates an authentication code any time someone attempts to sign in yo
 1. In user profile page, you can see the configuration of multi-factor authentication. If you can't see it, make sure the organization has added
    multi-factor authentication item in the account items table.
 
-![mfa_config](/img/user/mfa/mfa_config.png)
+   ![mfa_config](/img/user/mfa/mfa_config.png)
 
 2. Click the "setup" button.
 
-![mfa setup](/img/user/mfa/mfa_setup.png)
+   ![mfa setup](/img/user/mfa/mfa_setup.png)
 
 3. Type your password and click "Next Step".
 
-![mfa check password](/img/user/mfa/mfa_check_password.png)
+   ![mfa check password](/img/user/mfa/mfa_check_password.png)
 
 ### Configuring multi-factor authentication using a TOTP mobile app
+
 A time-based one-time password (TOTP) application automatically generates an authentication code that changes after a
 certain period of time. We recommend using:
 
@@ -43,9 +44,10 @@ time. If 2FA is already enabled, and you want to add another device, you must re
 ![totp](/img/user/mfa/mfa_totp.png)
 
 1. In "Verify Code" step, do one of the following:
-- Scan the QR code with your mobile device's app. After scanning, the app displays a six-digit code that you can enter on
-  Casdoor.
-- If you can't scan the QR code, you can manually copy and enter the secret in your TOTP app instead.
+
+   - Scan the QR code with your mobile device's app. After scanning, the app displays a six-digit code that you can enter on
+     Casdoor.
+   - If you can't scan the QR code, you can manually copy and enter the secret in your TOTP app instead.
 
 2. The TOTP mobile application saves your account on Casdoor and generates a new authentication code every few seconds.
    On Casdoor, type the code into the field "Passcode" and click "Next Step".
@@ -53,7 +55,7 @@ time. If 2FA is already enabled, and you want to add another device, you must re
 3. Above "Enable" button, copy your recovery codes and save to your device. Save them to a secure location because your
    recovery codes can help you get back into your account if you lose access.
 
-![mfa enable](/img/user/mfa/mfa_enable.png)
+   ![mfa enable](/img/user/mfa/mfa_enable.png)
 
 :::caution
 One recovery code can only be used once. If you use a recovery code to sign in, it will be invalid.

@@ -7,25 +7,25 @@ authors: [MagicalSheep]
 
 ## Introduction
 
-Let's assume that your application front-end has obtained the `access_token` of the logged-in user, and now wants to 
-authenticate the user for some access. You cannot simply place the `access_token` to the HTTP request header to use 
-these APIs, because Casdoor uses the `Authorization` field to check the access permission. Like any other APIs provided 
-by Casdoor, the `Authorization` field consists of the application client id and secret, using the [Basic HTTP Authentication Scheme](https://datatracker.ietf.org/doc/html/rfc7617). 
-It looks like `Basic XXX`. For this reason, Casbin APIs should be called by the application backend server. Here are 
-steps about how to do it. 
+Let's assume that your application front-end has obtained the `access_token` of the logged-in user, and now wants to
+authenticate the user for some access. You cannot simply place the `access_token` to the HTTP request header to use
+these APIs, because Casdoor uses the `Authorization` field to check the access permission. Like any other APIs provided
+by Casdoor, the `Authorization` field consists of the application client id and secret, using the [Basic HTTP Authentication Scheme](https://datatracker.ietf.org/doc/html/rfc7617).
+It looks like `Basic XXX`. For this reason, Casbin APIs should be called by the application backend server. Here are
+steps about how to do it.
 
-1. The front end passes the `access_token` to the backend server through the HTTP request header. 
+1. The front end passes the `access_token` to the backend server through the HTTP request header.
 2. The backend server gets the user id from the `access_token`.
 
-As a note in advance, these interfaces are also pretty much designed (for now) for the `(sub, obj, act)` model. The 
-`permissionId` in the url parameters is the identity of the applied permission policy, which consists of the organization 
-name and the permission policy name (ie `organization name/permission name`). The body is the request format defined by the Casbin model of the permission, usually representing `sub`, `obj` and `act` respectively. 
+As a note in advance, these interfaces are also pretty much designed (for now) for the `(sub, obj, act)` model. The
+`permissionId` in the url parameters is the identity of the applied permission policy, which consists of the organization
+name and the permission policy name (ie `organization name/permission name`). The body is the request format defined by the Casbin model of the permission, usually representing `sub`, `obj` and `act` respectively.
 
-In addition to the API interface for requesting enforcement of permission control, Casdoor also provides other interfaces that help external applications obtain permission policy information, which is also listed here. 
+In addition to the API interface for requesting enforcement of permission control, Casdoor also provides other interfaces that help external applications obtain permission policy information, which is also listed here.
 
 ### Enforce
 
-Request: 
+Request:
 
 ```shell
 curl --location --request POST 'http://localhost:8000/api/enforce?permissionId=example-org/example-permission' \
@@ -36,7 +36,7 @@ curl --location --request POST 'http://localhost:8000/api/enforce?permissionId=e
 
 Response:
 
-```
+```json
 {
     "status": "ok",
     "msg": "",
@@ -62,7 +62,7 @@ curl --location --request POST 'http://localhost:8000/api/batch-enforce?permissi
 
 Response:
 
-```
+```json
 {
     "status": "ok",
     "msg": "",
@@ -90,7 +90,7 @@ curl --location --request GET 'http://localhost:8000/api/get-all-objects' \
 
 Response:
 
-```
+```json
 [
     "app-built-in"
 ]
@@ -107,7 +107,7 @@ curl --location --request GET 'http://localhost:8000/api/get-all-actions' \
 
 Response:
 
-```
+```json
 [
     "read",
     "write",
@@ -117,7 +117,7 @@ Response:
 
 ### GetAllRoles
 
-Request: 
+Request:
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-roles' \
@@ -126,7 +126,7 @@ curl --location --request GET 'http://localhost:8000/api/get-all-roles' \
 
 Response:
 
-```
+```json
 [
     "role_kcx66l"
 ]

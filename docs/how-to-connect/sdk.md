@@ -48,14 +48,14 @@ Next, use one of the following backend SDKs based on the language of your backen
 | C/C++ SDK   | For C/C++ backends   | [casdoor-cpp-sdk](https://github.com/casdoor/casdoor-cpp-sdk)       | [casdoor-cpp-qt-example](https://github.com/casdoor/casdoor-cpp-qt-example)                                                                                                                                                                                                             |
 | Dart SDK    | For Dart backends    | [casdoor-dart-sdk](https://github.com/casdoor/casdoor-dart-sdk)     |                                                                                                                                                                                                                                                                                         |
 
-For a full list of the official Casdoor SDKs, please see: https://github.com/orgs/casdoor/repositories?q=sdk&type=all&language=&sort=
+For a full list of the official Casdoor SDKs, please see: <https://github.com/orgs/casdoor/repositories?q=sdk&type=all&language=&sort=>
 
 ## How to use Casdoor SDK?
 
 ### 1. Backend SDK configuration
 
 When your application starts up, you need to initialize the Casdoor SDK config by calling the `InitConfig()` function with required parameters. Take casdoor-go-sdk as
-example: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
+example: <https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64>
 
 ```go
 var CasdoorEndpoint = "https://door.casdoor.com"
@@ -68,7 +68,7 @@ var CasdoorApplication = "app-casnode"
 var JwtPublicKey string
 
 func init() {
-	auth.InitConfig(CasdoorEndpoint, ClientId, ClientSecret, JwtPublicKey, CasdoorOrganization, CasdoorApplication)
+    auth.InitConfig(CasdoorEndpoint, ClientId, ClientSecret, JwtPublicKey, CasdoorOrganization, CasdoorApplication)
 }
 ```
 
@@ -257,7 +257,7 @@ Here are the steps:
 3. The user is redirected back to your application with the authorization code issued by Casdoor (
    like: `https://forum.casbin.com?code=xxx&state=yyy`), your application's backend needs to exchange the authorization code with the access token and verify that the access token is valid and issued by Casdoor. The functions `GetOAuthToken()` and `ParseJwtToken()` are provided by Casdoor backend SDK.
 
-The following code shows how to get and verify the access token. For a real example of Casnode (a forum website written in Go), see: https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64
+The following code shows how to get and verify the access token. For a real example of Casnode (a forum website written in Go), see: <https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64>
 
 ```go
 // get code and state from the GET parameters of the redirected URL
@@ -267,13 +267,13 @@ state := c.Input().Get("state")
 // exchange the access token with code and state
 token, err := auth.GetOAuthToken(code, state)
 if err != nil {
-	panic(err)
+    panic(err)
 }
 
 // verify the access token
 claims, err := auth.ParseJwtToken(token.AccessToken)
 if err != nil {
-	panic(err)
+    panic(err)
 }
 ```
 
@@ -294,9 +294,9 @@ The variable `claims` returned by `ParseJwtToken()` is defined as:
 
 ```go
 type Claims struct {
-	User
-	AccessToken string `json:"accessToken"`
-	jwt.RegisteredClaims
+    User
+    AccessToken string `json:"accessToken"`
+    jwt.RegisteredClaims
 }
 ```
 
@@ -315,12 +315,12 @@ uses [Beego web framework](https://github.com/beego/beego/) and set session by c
 ```go
 token, err := auth.GetOAuthToken(code, state)
 if err != nil {
-	panic(err)
+    panic(err)
 }
 
 claims, err := auth.ParseJwtToken(token.AccessToken)
 if err != nil {
-	panic(err)
+    panic(err)
 }
 
 claims.AccessToken = token.AccessToken
