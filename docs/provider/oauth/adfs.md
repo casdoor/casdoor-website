@@ -5,7 +5,7 @@ keywords: [AD FS, ADFS, Active Directory Federation Services]
 authors: [ComradeProgrammer]
 ---
 
-To set up Active Directory Federation Service, please read the [ADFS](https://docs.microsoft.com/en-us/windows-server/identity/active-directory-federation-services) for the basic knowledge about the ADFS and 
+To set up Active Directory Federation Service, please read the [ADFS](https://docs.microsoft.com/en-us/windows-server/identity/active-directory-federation-services) for the basic knowledge about the ADFS and
 [AD FS Deployment Guide](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/deployment/ad-fs-deployment-guide) for how to set up a AD FS server. Do ensure that you have a fully operational AD FS server before you move on to further steps.
 
 ### Step1 Enabling Oauth via AD FS

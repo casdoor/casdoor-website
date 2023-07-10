@@ -5,7 +5,7 @@ keywords: [Tencent QQ, OAuth]
 authors: [Marvelousp4]
 ---
 
-## Tencent QQ:heavy_check_mark:
+## Tencent QQ ✔️
 
 Visit authentication platform of QQ - [Connect QQ](https://connect.qq.com/manage.html#/).
 

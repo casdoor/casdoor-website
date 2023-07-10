@@ -37,14 +37,14 @@ The `Reply URL` will overwrites the `AssertionConsumerServiceURL` in `SAMLReques
   
   ![Reply URL](/img/how-to-connect/saml/saml_replyURL.png)
 
-- **Redirect URL** Type in a unique name. This may be called `Audience` or `Entity ID` in your SP. Make sure you fill the 
+- **Redirect URL** Type in a unique name. This may be called `Audience` or `Entity ID` in your SP. Make sure you fill the
   same `Redirect URL` here as in your SP.
   
   ![Entity ID](/img/how-to-connect/saml/saml_entityId.png)
 
 ### User profile
 
-After logged in successfully, the user profile in the `SAMLResponse` Casdoor returned has three fields. The attributes in 
+After logged in successfully, the user profile in the `SAMLResponse` Casdoor returned has three fields. The attributes in
 the xml and the attributes of the user in casdoor are mapped as follows:
 
 | XML Attribute Name |  User field   |
@@ -191,7 +191,7 @@ func main() {
 
 Run the above codes and the console will display the following message.
 
-```
+```text
 Visit this URL To Authenticate:
 http://localhost:7001/login/saml/authorize/admin/app-built-in?SAMLRequest=lFVbk6K8Fv0rFvNo2QR...
 Supply:

@@ -33,6 +33,7 @@ Choose a password for your user and confirm it.
 Start the Hasura by docker or Hasura Cloud.
 
 Now create a `users` table with the following columns:
+
 * `id` of type Text (Primary Key)
 * `username` of type Text
 
@@ -62,7 +63,7 @@ To do so, go to the Hasura docker-compose.yaml and then add the new `HASURA_GRAP
 
 The `HASURA_GRAPHQL_JWT_SECRET` should be in the following format:
 
-```
+```yaml
 HASURA_GRAPHQL_JWT_SECRET: '{"claims_map": {
       "x-hasura-allowed-roles": ["user","editor"],
       "x-hasura-default-role": "user",
@@ -77,7 +78,8 @@ Save the change, and reload the docker.
 ## Retrieve JWT Token
 
 Since there is no client implementation, you can get your access token by making a request by below URL:
-```
+
+```url
 http://localhost:8000/login/oauth/authorize?client_id=<client ID>>&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin&scope=read&state=app-built-in<public certificate>>
 ```
 

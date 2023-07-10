@@ -47,9 +47,9 @@ Start the Thingsboard by follow.(Take Windows system as example)
 
 ## Step4. Integrate Casdoor
 
-Now open http://localhost:8080/ and login in admin account:
+Now open <http://localhost:8080/> and login in admin account:
 
-account: sysadmin@thingsboard.org / password: sysadmin
+account: <sysadmin@thingsboard.org> / password: sysadmin
 
 After login in successfully, we click the oath2 button on the left bottom in the page.
 
@@ -63,6 +63,6 @@ We can get these values in this link:
 [OIDC discovery URL](https://casdoor.org/docs/how-to-connect/oidc-client#oidc-discovery/)
 ![Casdoor Application Setting](/img/integration/java/Thingsboard/img_1.png)
 
-After filling these blanks, we successfully integrate Casdoor with Thingsboard, when we login http://localhost:8080/, we can get this:
+After filling these blanks, we successfully integrate Casdoor with Thingsboard, when we login <http://localhost:8080/>, we can get this:
 
 ![Casdoor Application Setting](/img/integration/java/Thingsboard/integrate.gif)

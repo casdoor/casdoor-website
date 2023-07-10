@@ -5,8 +5,6 @@ keywords: [Contributor, guide]
 authors: [leo220yuyaodog]
 ---
 
-# Contributing to Casdoor
-
 Welcome to Casdoor! This document is a guideline about how to contribute to Casdoor.
 
 If you find something incorrect or missing, please leave comments / suggestions.
@@ -88,19 +86,22 @@ The PR title must be in lower case.
 :::
 
 1. **fix**: a commit of the _type_ `fix` patches a bug in your codebase.
-```text
-fix: prevent racing of requests
-```
+
+    ```text
+    fix: prevent racing of requests
+    ```
 
 2. **feat**: a commit of the _type_ `feat` introduces a new feature to the codebase.
-```text
-feat: allow provided config object to extend other configs
-```
+
+    ```text
+    feat: allow provided config object to extend other configs
+    ```
 
 3. **docs**: a commit of the _type_ `docs` add or improve a document.
-```text
-docs: correct spelling of CHANGELOG
-```
+
+    ```text
+    docs: correct spelling of CHANGELOG
+    ```
 
 For more details, please refer to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary).
 
@@ -112,6 +113,7 @@ pull request is merged.
 #### Linking a pull request to an issue using a keyword
 
 You can link a pull request to an issue by using a supported keyword in the pull request's description or in a commit message. The pull request **must be** on the default branch.
+
 - close
 - fix
 - resolve
@@ -129,19 +131,21 @@ For more details, please see [Link PR to issue](https://docs.github.com/en/issue
 Inevitably, your PR may need to be revised. Please **re-use** the same PR when the code needs changes. Don't close the PR and open a new one.
 
 Here is a possible example:
+
 - Modify the code in your local.
 - Modify this commit.  
+
 ```shell
 git commit --amend
 ```
+
 - Push to your remote repository.  
+
 ```shell
 git push --force
 ```
 
 Then the PR has been modified successfully! You can check it in Casdoor repository.
-
-
 
 ## Code Related
 
@@ -149,16 +153,17 @@ Some principles:
 
 Readability - Important code should be well-documented. Code style should be complied with the existing one.
 
-#### Naming convention
+### Naming convention
 
 e.g.,`signupUrl`for var names,`Signup URL`for UI
 
-#### How to update i18n data?
+### How to update i18n data?
 
 Please note that we use [Crowdin](https://crowdin.com/project/casdoor-site) as translating platform and i18next as
 translating tool. When you add some words using i18next in the `web/` directory, you can run the `i18n/generate_test.go`to auto-generate the `web/src/locales/**/data.json`.
 
 Run `i18n/generate_test.go`:
+
 ```shell
 cd i18n && go test
 ```

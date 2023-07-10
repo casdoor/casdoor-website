@@ -23,7 +23,7 @@ You can visit Keycloak SAML Identity Providers [documentation](https://www.keycl
 
 :::
 
-Enter the **Alias** and the **Import from URL** in Keycloak IdP edit page. The content of **Import from URL** can be found in the Casdoor application edit page. Click **Import** and the SAML config will be filled automatically. 
+Enter the **Alias** and the **Import from URL** in Keycloak IdP edit page. The content of **Import from URL** can be found in the Casdoor application edit page. Click **Import** and the SAML config will be filled automatically.
 
 ![saml_keycloak_idp_edit](/img/how-to-connect/saml/saml_keycloak_idp_edit.png)
 
@@ -37,7 +37,7 @@ In the application edit page, add a redirect URL which the content of it is **Se
 
 ### Login using Casdoor SAML
 
-Open the Keycloak login page and you can find the additional button that allows you to login to Keycloak using the Casdoor SAML provider. 
+Open the Keycloak login page and you can find the additional button that allows you to login to Keycloak using the Casdoor SAML provider.
 
 ![saml_keycloak_login](/img/how-to-connect/saml/saml_keycloak_login.png)
 

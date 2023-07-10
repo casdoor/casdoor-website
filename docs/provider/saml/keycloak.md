@@ -46,7 +46,7 @@ The following list part of settings:
 
 1. **Name** - `Casdoor`. This is only used to display a friendly name to Keycloak users in the KeyCloak UI. You can use any name you like.
 2. **Enabled** - Select on.
-3. **Include Authn Statement** - Select on. 
+3. **Include Authn Statement** - Select on.
 4. **Sign Documents** - Select on.
 5. **Sign Assertions** - Select off.
 6. **Encrypt Assertions** - Select off.
@@ -99,7 +99,7 @@ Edit the application you want to configure in Casdoor. Select the provider just 
 
 ## Validate the effect
 
-Go to the application you just configured and you can find that there is a Keycloak icon in the login page. 
+Go to the application you just configured and you can find that there is a Keycloak icon in the login page.
 
 Click the icon and jump to the Keycloak login page, and then successfully login to the Casdoor after authentication.
 

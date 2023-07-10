@@ -15,7 +15,7 @@ You can refer to the Casdoor official documentation for the [Server Installation
 
 After a successful deployment, you need to ensure:
 
-- Open your favorite browser and visit **http://localhost:8000**, you will see the login page of Casdoor.
+- Open your favorite browser and visit **<http://localhost:8000>**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
 Then you can quickly implement a casdoor based login page in your own app with the following steps.
@@ -150,7 +150,7 @@ private CasdoorAuthService casdoorAuthService;
 When you need the authentication who access your app, you can send the target url and redirect to the login page
 provided by Casdoor.
 
-Please be sure that you have added the callback url (e.g. http://localhost:9090/callback) in application configuration
+Please be sure that you have added the callback url (e.g. <http://localhost:9090/callback>) in application configuration
 in advance.
 
 ```java
@@ -210,7 +210,7 @@ Examples of APIs are shown below.
 
 ## Step7: Restart project
 
-After start, open your favorite browser and visit **http://localhost:9090**, then click any button which can request resources from `casdoor-api`.
+After start, open your favorite browser and visit **<http://localhost:9090>**, then click any button which can request resources from `casdoor-api`.
 
 ![index](/img/integration/java/spring_cloud_gateway/index.png)
 

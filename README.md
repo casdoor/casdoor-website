@@ -53,6 +53,14 @@ content
 
 ````
 
+We use [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) to lint the markdown and mdx files, you can use the following command to fix basic errors and get a list of document issues:
+
+```bash
+yarn lint:md
+```
+
+If you write docs using VSCode, Sublime, or Vim/Neovim, you can install the [extension](https://github.com/DavidAnson/markdownlint#related) to get better lint experience.
+
 #### Caution
 
 ##### Admonitions

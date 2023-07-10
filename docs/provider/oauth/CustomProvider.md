@@ -23,7 +23,7 @@ First, go to the provider page of Casdoor, and create a new provider. Select “
   https://door.casdoor.com/login/oauth/authorize?client_id={ClientID}&redirect_uri=https://{your-casdoor-hostname}/callback&state={State_generated_by_Casdoor}&response_type=code&scope={Scope}` 
   ```
 
-  After authorization is completed, the custom provider should redirect to 
+  After authorization is completed, the custom provider should redirect to
 
   ```url
   https://{your-casdoor-hostname}/callback?code={code}
@@ -74,6 +74,6 @@ First, go to the provider page of Casdoor, and create a new provider. Select “
   }
   ```
 
-- `Favicon` is the logo URL of a custom provider. 
+- `Favicon` is the logo URL of a custom provider.
 
   This logo will be displayed on Casdoor's login page along with other third-party login providers.

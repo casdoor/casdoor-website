@@ -65,7 +65,7 @@ Go to the **Application List**, click **View application sub-accounts**, and the
 ![View sub-account](/img/providers/SAML/aliyun_subaccount_view.png)
 ![Add sub-account](/img/providers/SAML/aliyun_subaccount_add.png)
 
-Fill in the primary and sub accounts that need to be associated and click **Save**. 
+Fill in the primary and sub accounts that need to be associated and click **Save**.
 
 The primary account exists in IDaaS, and the sub account is the ID of the user in Casdoor.
 
@@ -103,7 +103,7 @@ Fill in **SP Entity ID** and **SP ACS URL(SSO Location)** with the content copie
 
 ## Validate the effect
 
-Go to the application you just configured and you can find that there is an icon in the login page. 
+Go to the application you just configured and you can find that there is an icon in the login page.
 
 Click the icon and jump to the Aliyun IDaaS login page, and then successfully login to the Casdoor after authentication.
 

@@ -35,7 +35,7 @@ Select category as  **Captcha** , type as  **hCaptcha** . Then select sub type: 
 
 ![Recaptcha provider](/img/providers/captcha/aliyunCaptcha_provider.png)
 
-And you can click **Preview** button to preview the style of this captcha. 
+And you can click **Preview** button to preview the style of this captcha.
 
 The following image is `Sliding Validation` preview:
 

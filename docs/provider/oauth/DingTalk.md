@@ -5,7 +5,7 @@ keywords: [DingTalk, OAuth]
 authors: [Marvelousp4]
 ---
 
-## DingTalk:heavy_check_mark:
+## DingTalk ✔️
 
 Visit [DingTalk developer platform](https://open-dev.dingtalk.com/?spm=ding_open_doc.document.0.0.140a645fxfAUAE#/loginMan) and log in using your DingTalk account. After entering the platform, follow the instructions of the platform and you will get your Client Id and Client Secret.
 

@@ -5,7 +5,7 @@ keywords: [Wechat, OAuth]
 authors: [Marvelousp4]
 ---
 
-## WeChat:heavy_check_mark:
+## WeChat ✔️
 
 Visit [WeChat developer platform](https://open.weixin.qq.com/), and register as a developer. After your web application or your mobile application is approved, then you get your App Id and App Secret.
 
