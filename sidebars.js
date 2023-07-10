@@ -324,8 +324,8 @@ module.exports = {
                 "integration/java/spring-security/spring-security-filter",
               ],
             },
-            "integration/java/jenkins plugin",
-            "integration/java/jenkins oidc",
+            "integration/java/jenkins-plugin",
+            "integration/java/jenkins-oidc",
             {
               type: "category",
               label: "Jira",
