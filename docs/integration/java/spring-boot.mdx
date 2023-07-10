@@ -15,7 +15,7 @@ You can refer to the Casdoor official documentation for the [Server Installation
 
 After a successful deployment, you need to ensure:
 
-- Open your favorite browser and visit **http://localhost:8000**, you will see the login page of Casdoor.
+- Open your favorite browser and visit **<http://localhost:8000>**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
 Then you can quickly implement a casdoor-based login page in your own app with the following steps.
@@ -130,7 +130,7 @@ You should replace the configuration with your own Casdoor instance, especially 
 
 When you need the authentication who access your app, you can send the target url and redirect to the login page provided by Casdoor.
 
-Please be sure that you have added the callback url (e.g. **http://localhost:8080/login**) in application configuration in advance.
+Please be sure that you have added the callback url (e.g. **<http://localhost:8080/login>**) in application configuration in advance.
 
 ```java
 @Resource
@@ -172,24 +172,24 @@ public String login(String code, String state, HttpServletRequest request) {
 Examples of APIs are shown below.
 
 - CasdoorAuthService
-    - `String token = casdoorAuthService.getOAuthToken(code, "app-built-in");`
-    - `CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);`
+  - `String token = casdoorAuthService.getOAuthToken(code, "app-built-in");`
+  - `CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);`
 - CasdoorUserService
-    - `CasdoorUser casdoorUser = casdoorUserService.getUser("admin");`
-    - `CasdoorUser casdoorUser = casdoorUserService.getUserByEmail("admin@example.com");`
-    - `CasdoorUser[] casdoorUsers = casdoorUserService.getUsers();`
-    - `CasdoorUser[] casdoorUsers = casdoorUserService.getSortedUsers("created_time", 5);`
-    - `int count = casdoorUserService.getUserCount("0");`
-    - `CasdoorResponse response = casdoorUserService.addUser(user);`
-    - `CasdoorResponse response = casdoorUserService.updateUser(user);`
-    - `CasdoorResponse response = casdoorUserService.deleteUser(user);`
+  - `CasdoorUser casdoorUser = casdoorUserService.getUser("admin");`
+  - `CasdoorUser casdoorUser = casdoorUserService.getUserByEmail("admin@example.com");`
+  - `CasdoorUser[] casdoorUsers = casdoorUserService.getUsers();`
+  - `CasdoorUser[] casdoorUsers = casdoorUserService.getSortedUsers("created_time", 5);`
+  - `int count = casdoorUserService.getUserCount("0");`
+  - `CasdoorResponse response = casdoorUserService.addUser(user);`
+  - `CasdoorResponse response = casdoorUserService.updateUser(user);`
+  - `CasdoorResponse response = casdoorUserService.deleteUser(user);`
 - CasdoorEmailService
-    - `CasdoorResponse response = casdoorEmailService.sendEmail(title, content, sender, receiver);`
+  - `CasdoorResponse response = casdoorEmailService.sendEmail(title, content, sender, receiver);`
 - CasdoorSmsService
-    - `CasdoorResponse response = casdoorSmsService.sendSms(randomCode(), receiver);`
+  - `CasdoorResponse response = casdoorSmsService.sendSms(randomCode(), receiver);`
 - CasdoorResourceService
-    - `CasdoorResponse response = casdoorResourceService.uploadResource(user, tag, parent, fullFilePath, file);`
-    - `CasdoorResponse response = casdoorResourceService.deleteResource(file.getName());`
+  - `CasdoorResponse response = casdoorResourceService.uploadResource(user, tag, parent, fullFilePath, file);`
+  - `CasdoorResponse response = casdoorResourceService.deleteResource(file.getName());`
 
 ## What's more
 

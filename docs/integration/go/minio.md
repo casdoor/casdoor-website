@@ -9,14 +9,14 @@ authors: [Abingcbc]
 
 ## Step1. Deploy Casdoor & MinIO
 
-Firstly, the Casdoor should be deployed. 
+Firstly, the Casdoor should be deployed.
 
 You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
 
 After a successful deployment, you need to ensure:
 
-- The Casdoor server is successfully running on **http://localhost:8000**.
-- Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
+- The Casdoor server is successfully running on **<http://localhost:8000>**.
+- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
 Then you can quickly implement a casdoor based login page in your own app with the following steps.
@@ -30,15 +30,15 @@ You can refer to [here](https://github.com/minio/minio#minio-quickstart-guide) t
 ![Casdoor Application Setting](/img/integration/appsetting_spring_security.png)
 3. Add provider you want and supplement other settings.
 
-Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in next step.
+    Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
+    Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
 
 4. This step is necessary for MinIO. As MinIO needs to use a claim attribute in JWT for its policy, you should configure it in casdoor as well. Currently, casdoor uses `tag` as a workaround for configuring MinIO's policy.
 
-![MinIO Policy Setting](/img/integration/go/minio/minio_policy.png)
+    ![MinIO Policy Setting](/img/integration/go/minio/minio_policy.png)
 
-You can find all supported policies [here](https://docs.min.io/minio/baremetal/security/minio-identity-management/policy-based-access-control.html#minio-policy).
+    You can find all supported policies [here](https://docs.min.io/minio/baremetal/security/minio-identity-management/policy-based-access-control.html#minio-policy).
 
 ## Step3. Configure MinIO
 
@@ -54,13 +54,13 @@ You can use parameter `--console-address` to configure the address and port.
 
 Then you can add a service alias by MinIO client `mc`.
 
-```
+```bash
 mc alias set myminio <You console address> minio minio123
 ```
 
 Now, you can configure OpenID connect of MinIO. For Casdoor, the command is like the following:
 
-```
+```bash
 mc admin config set myminio identity_openid config_url="http://CASDOOR_HOSTNAME/.well-known/openid-configuration" client_id=<client id> client_secret=<client secret> claim_name="tag"
 ```
 
@@ -68,13 +68,13 @@ You can refer to [offical document](https://docs.min.io/minio/baremetal/referenc
 
 Once successfully set, restart the MinIO instance.
 
-```
+```bash
 mc admin service restart myminio
 ```
 
 ## Step4. Try the demo!
 
-Now, you can open your MinIO console in the browser and click on `Login with SSO`. 
+Now, you can open your MinIO console in the browser and click on `Login with SSO`.
 
 You will be redirected to the casdoor user login page. Upon successful login you will be redirected to MinIO page and logged in automatically and you should see now the buckets and objects they have access to.
 

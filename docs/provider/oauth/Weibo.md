@@ -5,7 +5,7 @@ keywords: [Weibo, OAuth]
 authors: [Marvelousp4]
 ---
 
-## Weibo:heavy_check_mark:
+## Weibo ✔️
 
 Weibo's developer account application is not difficult, but the speed is relatively slow. It takes about 2-3 days.
 

@@ -68,7 +68,7 @@ provide the best **flexibility** and the most **powerful** API.
 
 **plugin:**
 
-- [Jenkins plugin](/docs/integration/java/jenkins%20plugin)
+- [Jenkins plugin](/docs/integration/java/jenkins-plugin)
 - [APISIX plugin](/docs/integration/lua/apisix#connect-casdoor-via-apisixs-casdoor-plugin)
 
 **Middleware:**

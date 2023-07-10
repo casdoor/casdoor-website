@@ -36,7 +36,7 @@ Builds the electron app and run this app.
 
 Package and distribute your application. It will create the `out` folder where your package will be located:
 
-```
+```bash
 // Example for macOS out/  
 ├── out/make/zip/darwin/x64/casdoor-electron-example-darwin-x64-1.0.0.zip  
 ├── ...  

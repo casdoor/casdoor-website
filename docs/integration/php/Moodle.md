@@ -31,14 +31,13 @@ After a successful deployment, you need to ensure:
 More infomation for [OAuth](https://casdoor.org/docs/how-to-connect/oauth)
 
 ## Step3. Configure Moodle
- 
+
 1. You should find OAuth ![Find_OAuth](/img/integration/php/Moodle/OAuth2.png)
 2. You should config this app ![configure](/img/integration/php/Moodle/Configure.png)
 3. You should config this Mappling ![Mapping](/img/integration/php/Moodle/Mapping.png)
 4. Find OAuth2 plugin ![plugin](/img/integration/php/Moodle/Plugin.png)
 5. Enable OAuth2 plugin ![Enable](/img/integration/php/Moodle/Enable.png)
 6. if you want Casdoor's email can't be edited ![Fields](/img/integration/php/Moodle/Fields.png)
-
 
 More infomation for [Moodle](https://docs.moodle.org/402/en/OAuth_2_authentication) and [Fields mapping](https://casdoor.org/docs/how-to-connect/oidc-client)
 

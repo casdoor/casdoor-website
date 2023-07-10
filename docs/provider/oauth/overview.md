@@ -41,7 +41,6 @@ Before this, there are some general concepts you need to understand.
 - **Scope**, Permission granted to you by the user, such as basic profile, Email address and posts and others.
 - **ClientId/AppId**, **ClientKey/AppSecret**, This is the most important information, and it is what you need to get after you apply for a developer account. You **can not share** the key/secret with anyone.
 
-
 ## Add an OAuth provider
 
 1. Navigate to your Casdoor index page

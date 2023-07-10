@@ -20,9 +20,9 @@ Firstly, the [Casdoor](/docs/basic/server-installation) and [Confluence](https:/
 After a successful deployment, you need to ensure:
 
 1. Set Confluence URL to `Confluence_HOSTNAME`.
-![Confluence URL](/img/integration/java/confluence/Confluence_HOSTNAME.png)
-1. Casdoor can be logged in and used normally.
-2. You can set CASDOOR_HOSTNAME = `http://localhost:8000`. When deploy Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+    ![Confluence URL](/img/integration/java/confluence/Confluence_HOSTNAME.png)
+2. Casdoor can be logged in and used normally.
+3. You can set CASDOOR_HOSTNAME = `http://localhost:8000`. When deploy Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
 
 ## Step2. Configure Casdoor application
 

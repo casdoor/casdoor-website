@@ -19,7 +19,7 @@ Go to your Casdoor and add your new application **BookStack**. Here is an **exam
 ![bookstack_config.png](/img/integration/go/bookstack/config.png)
 Please remember the `Name`, `Organization`, `client ID`, and `client Secret`. You will use them in the next step.
 
-### Step2. Configure Casdoor Login 
+### Step2. Configure Casdoor Login
 
 Now, please move to the BookStack.  Find the file: `oauth.conf.example`.
 
@@ -46,4 +46,3 @@ Make sure the `Redirect URL` is the same as the `redirectUrl` in the file `oauth
 **Now that you've done all the configuration for Casdoor!**
 
 You can go back to your BookStack and experience using Casdoor for login authentication once the BookStack has been successfully deployed.
-

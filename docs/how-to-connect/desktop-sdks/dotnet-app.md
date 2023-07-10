@@ -7,15 +7,15 @@ authors: [zh6335901]
 
 An [Dotnet desktop app example](https://github.com/casdoor/casdoor-dotnet-desktop-example) for Casdoor.
 
-# How to run example
+## How to run example
 
-## Prerequisites
+### Prerequisites
 
 [dotnet6 sdk](https://dotnet.microsoft.com/en-us/download)
 
 [webview2 runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/#download-section) (It's already preinstalled in your windows generally)
 
-## Initialization
+### Initialization
 
 The initialization requires 5 parameters, which are all string type:
 
@@ -29,19 +29,19 @@ The initialization requires 5 parameters, which are all string type:
 
 If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com) as the default Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
 
-## Running
+### Running
 
-### Visual Studio
+#### Visual Studio
 
 1. Open casdoor-dotnet-desktop-example.sln
 2. Press Ctrl + F5 to start
 
-### Command line
+#### Command line
 
 1. cd src/DesktopApp
 2. dotnet run
 
-## Preview
+### Preview
 
 After you run this dotnet desktop application, a new window will be showed on your desktop.
 ![index](/img/how-to-connect/desktop-sdks/dotnet-app/index.png)
@@ -55,9 +55,9 @@ After you login successfully, a user profile window will be showed on your deskt
 You can preview the whole process by the gif image below.
 ![preview gif](/img/how-to-connect/desktop-sdks/dotnet-app/preview.gif)
 
-# How to integrate
+## How to integrate
 
-## Open the login window
+### Open the login window
 
 ```csharp
 var login = new Login();
@@ -66,7 +66,7 @@ login.CodeReceived += Login_CodeReceived;
 login.ShowDialog();
 ```
 
-## Use auth code to get the user info
+### Use auth code to get the user info
 
 ```csharp
 public async Task<string?> RequestToken(string clientId, string clientSecret, string code)

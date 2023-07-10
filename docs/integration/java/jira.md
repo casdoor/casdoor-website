@@ -9,7 +9,6 @@ This is a tutorial on using [miniOrange](https://marketplace.atlassian.com/apps/
 
 [Casdoor](/docs/basic/server-installation) can use OIDC protocol as IDP to connect various applications.  Here is a [Jira](https://www.atlassian.com/software/jira/guides/getting-started/overview) tutorial.
 
-
 The following are some of the names in the configuration:
 
 `CASDOOR_HOSTNAME`: Domain name or IP where Casdoor server is deployed.

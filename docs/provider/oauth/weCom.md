@@ -7,7 +7,7 @@ authors: [leo220yuyaodog]
 
 ## Introduction
 
-The WeCom provides the authorized login method of OAuth, which can obtain members' identity information from 
+The WeCom provides the authorized login method of OAuth, which can obtain members' identity information from
 the webpage opened by the WeCom terminal, eliminating the need for login.
 
 There are two different types of applications: **internal** applications and **third-party** applications.
@@ -32,7 +32,7 @@ WeCom has two authorization methods. **Silent** authorization and **normal** aut
 
 **Silent authorization**: After the user clicks the link, the page is `redirect_URI? code=CODE&state=STATE`
 
-**Normal authorization**: After the user clicks the link, a middle page is displayed for the user to choose whether to 
+**Normal authorization**: After the user clicks the link, a middle page is displayed for the user to choose whether to
 authorize or not. After the user confirms the authorization, go to `redirect_uri?code=CODE&state=STATE`
 
 For more details, please see [document](https://developer.work.weixin.qq.com/document/path/91119).

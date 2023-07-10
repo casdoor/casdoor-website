@@ -31,21 +31,21 @@ Third, create the `Bucket`.
 
 Now create a MinIO provider in Casdoor. Fill the necessary information.
 
-|    Name       |   Name in MinIO |   
+|    Name       |   Name in MinIO |
 |      ----     |   ----          |  
 |Category       |   choose `Storage`                   |
 |Type           |   choose `MinIO`                     |
-|Client ID      |   `Access Key` obtained from Step1   | 
-|Client secret  |   `Secret Key` obtained from Step1   | 
+|Client ID      |   `Access Key` obtained from Step1   |
+|Client secret  |   `Secret Key` obtained from Step1   |
 |Endpoint       |   `API address` obtained from Step1  |
-|Bucket         |   `Bucket` obtained from Step1       | 
-|Domain         |   `${API_address}>/${Bucket}`: for example, if your MinIO API address is ` https://10.28.169.183:9000` and bucket is `casdoor`, then the Domain would be `https://10.28.169.183:9000/casdoor`     |              
+|Bucket         |   `Bucket` obtained from Step1       |
+|Domain         |   `${API_address}>/${Bucket}`: for example, if your MinIO API address is `https://10.28.169.183:9000` and bucket is `casdoor`, then the Domain would be `https://10.28.169.183:9000/casdoor`     |
 |Region ID      |   Region in MinIO is used to label the location of the server, this field does not have any practical significance, just fill it with `_` is ok. |
 <!-- ![create a MinIO provider](/img/providers/storage/minio_provider_conf.png) -->
 
 ![create a MinIO provider](/img/providers/storage/minio_provider_conf_detail.png)
 
-### Step3. Use MinIO storage service in your application 
+### Step3. Use MinIO storage service in your application
 
 Now you can use MinIO storage service in your application.
 

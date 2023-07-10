@@ -2,7 +2,7 @@
 
 The configuration and documentation of Casdoor website: <https://casdoor.org/>.
 
-Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get the PDF at [casdoor.org/pdf](https://casdoor.org/pdf/) or [GitHub Action](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml).
+Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get the PDF at [casdoor.org/pdf](https://casdoor.org/pdf) or [GitHub Action](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml).
 
 ## Get Started
 
@@ -52,6 +52,14 @@ content
 content
 
 ````
+
+We use [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) to lint the markdown and mdx files, you can use the following command to fix basic errors and get a list of document issues:
+
+```bash
+yarn lint:md
+```
+
+If you write docs using VSCode, Sublime, or Vim/Neovim, you can install the [extension](https://github.com/DavidAnson/markdownlint#related) to get better lint experience.
 
 #### Caution
 

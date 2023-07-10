@@ -15,8 +15,8 @@ You can refer to the Casdoor official documentation for the [Server Installation
 
 After a successful deployment, you need to ensure:
 
-- The Casdoor server is successfully running on **http://localhost:8000**.
-- Open your favorite browser and visit **http://localhost:7001**, you will see the login page of Casdoor.
+- The Casdoor server is successfully running on **<http://localhost:8000>**.
+- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
 - Input `admin` and `123` to test login functionality is working fine.
 
 Then you can quickly implement a casdoor based login page in your own app with the following steps.
@@ -104,139 +104,139 @@ You need to install `casdoor-js-sdk` and configure `SDK`.
 
 2. We can add some configurations to handle JWT.
 
-```java
-@EnableWebSecurity
-public class SecurityConfig {
+    ```java
+    @EnableWebSecurity
+    public class SecurityConfig {
 
-    private final JwtTokenFilter jwtTokenFilter;
+        private final JwtTokenFilter jwtTokenFilter;
 
-    public SecurityConfig(JwtTokenFilter jwtTokenFilter) {
-        this.jwtTokenFilter = jwtTokenFilter;
+        public SecurityConfig(JwtTokenFilter jwtTokenFilter) {
+            this.jwtTokenFilter = jwtTokenFilter;
+        }
+
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            // enable CORS and disable CSRF
+            http = http.cors(corsConfig -> corsConfig
+                    .configurationSource(configurationSource())
+            ).csrf().disable();
+
+            // set session management to stateless
+            http = http
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and();
+
+            // set permissions on endpoints
+            http.authorizeHttpRequests(authorize -> authorize
+                    .mvcMatchers("/api/redirect-url", "/api/signin").permitAll()
+                    .mvcMatchers("/api/**").authenticated()
+            );
+
+            // set unauthorized requests exception handler
+            http = http
+                    .exceptionHandling()
+                    .authenticationEntryPoint(
+                            (request, response, ex) -> ResponseUtils.fail(response, "unauthorized")
+                    )
+                    .and();
+
+            // add JWT token filter
+            http.addFilterBefore(
+                    jwtTokenFilter,
+                    UsernamePasswordAuthenticationFilter.class
+            );
+            return http.build();
+        }
+
+        // ...
+
     }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // enable CORS and disable CSRF
-        http = http.cors(corsConfig -> corsConfig
-                .configurationSource(configurationSource())
-        ).csrf().disable();
-
-        // set session management to stateless
-        http = http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
-
-        // set permissions on endpoints
-        http.authorizeHttpRequests(authorize -> authorize
-                .mvcMatchers("/api/redirect-url", "/api/signin").permitAll()
-                .mvcMatchers("/api/**").authenticated()
-        );
-
-        // set unauthorized requests exception handler
-        http = http
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, ex) -> ResponseUtils.fail(response, "unauthorized")
-                )
-                .and();
-
-        // add JWT token filter
-        http.addFilterBefore(
-                jwtTokenFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
-        return http.build();
-    }
-    
-    // ...
-
-}
-```
+    ```
 
 3. We can add a simple JWT filter to intercept requests that need to verify tokens.
 
-```java
-@Component
-public class JwtTokenFilter extends OncePerRequestFilter {
+    ```java
+    @Component
+    public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private final CasdoorAuthService casdoorAuthService;
+        private final CasdoorAuthService casdoorAuthService;
 
-    public JwtTokenFilter(CasdoorAuthService casdoorAuthService) {
-        this.casdoorAuthService = casdoorAuthService;
-    }
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain)
-            throws ServletException, IOException {
-        // get authorization header and validate
-        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (!StringUtils.hasText(header) || !header.startsWith("Bearer ")) {
-            chain.doFilter(request, response);
-            return;
+        public JwtTokenFilter(CasdoorAuthService casdoorAuthService) {
+            this.casdoorAuthService = casdoorAuthService;
         }
 
-        // get jwt token and validate
-        final String token = header.split(" ")[1].trim();
+        @Override
+        protected void doFilterInternal(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        FilterChain chain)
+                throws ServletException, IOException {
+            // get authorization header and validate
+            final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if (!StringUtils.hasText(header) || !header.startsWith("Bearer ")) {
+                chain.doFilter(request, response);
+                return;
+            }
 
-        // get user identity and set it on the spring security context
-        UserDetails userDetails = null;
-        try {
-            CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);
-            userDetails = new CustomUserDetails(casdoorUser);
-        } catch (CasdoorAuthException exception) {
-            logger.error("casdoor auth exception", exception);
+            // get jwt token and validate
+            final String token = header.split(" ")[1].trim();
+
+            // get user identity and set it on the spring security context
+            UserDetails userDetails = null;
+            try {
+                CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);
+                userDetails = new CustomUserDetails(casdoorUser);
+            } catch (CasdoorAuthException exception) {
+                logger.error("casdoor auth exception", exception);
+                chain.doFilter(request, response);
+                return;
+            }
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    AuthorityUtils.createAuthorityList("ROLE_casdoor")
+            );
+
+            authentication.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
-            return;
         }
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
-                AuthorityUtils.createAuthorityList("ROLE_casdoor")
-        );
-
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(request, response);
     }
+    ```
 
-}
-```
-
-When the user accesses the interface requiring authentication, `JwtTokenFilter` will obtain the token from the request header `Authorization` and verify it.
+    When the user accesses the interface requiring authentication, `JwtTokenFilter` will obtain the token from the request header `Authorization` and verify it.
 
 4. Next, we need to define a `Controller` to handle that when the user login to the `casdoor`, it will be redirected to the server and carry the `code` and `state`. The server needs to verify the user's identity from the `casdoor` and obtain the `token` through these two parameters.
 
-```java
-@RestController
-public class UserController {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    private final CasdoorAuthService casdoorAuthService;
+    ```java
+    @RestController
+    public class UserController {
     
-    // ...
-
-    @PostMapping("/api/signin")
-    public Result signin(@RequestParam("code") String code, @RequestParam("state") String state) {
-        try {
-            String token = casdoorAuthService.getOAuthToken(code, state);
-            return Result.success(token);
-        } catch (CasdoorAuthException exception) {
-            logger.error("casdoor auth exception", exception);
-            return Result.failure(exception.getMessage());
+        private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    
+        private final CasdoorAuthService casdoorAuthService;
+        
+        // ...
+    
+        @PostMapping("/api/signin")
+        public Result signin(@RequestParam("code") String code, @RequestParam("state") String state) {
+            try {
+                String token = casdoorAuthService.getOAuthToken(code, state);
+                return Result.success(token);
+            } catch (CasdoorAuthException exception) {
+                logger.error("casdoor auth exception", exception);
+                return Result.failure(exception.getMessage());
+            }
         }
+        
+        // ...
     }
-    
-    // ...
-}
-```
+    ```
 
 ## Step6. Try the demo!
 

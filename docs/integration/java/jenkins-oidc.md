@@ -44,7 +44,9 @@ After completing the installation, go to **Manage Jenkins** -> **Configure Globa
 ![jenkins global security](/img/integration/java/jenkins-oidc/jenkins_global_security.png)
 
 :::tip
+
 Back up the Jenkins `config.xml` file, and use it to recover in case of setup errors.
+
 :::
 
 1. In Access Control, **Security Realm** select `Login with Openid Connect`.
@@ -52,19 +54,23 @@ Back up the Jenkins `config.xml` file, and use it to recover in case of setup er
 3. In Client secret, specify the `Client secret` noted above.
 4. In Configuration mode, select `Automatic configuration` and fill in **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** into Well-known configuration endpoint.![Jenkins' Setting](/img/integration/java/jenkins-oidc/jenkins_auto.png)
 
-If your casdoor is deployed locally, you may need to select `Manual configuration` and input some information:
-- Token server url: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
-- Authorization server url: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
-- UserInfo server url: **http://`CASDOOR_HOSTNAME`/api/get-account**
-- Scopes: `address phone openid profile offline_access email`
-![Manual configuration](/img/integration/java/jenkins-oidc/jenkins_manual.png)
+    If your casdoor is deployed locally, you may need to select `Manual configuration` and input some information:
+
+    - Token server url: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
+    - Authorization server url: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
+    - UserInfo server url: **http://`CASDOOR_HOSTNAME`/api/get-account**
+    - Scopes: `address phone openid profile offline_access email`
+    ![Manual configuration](/img/integration/java/jenkins-oidc/jenkins_manual.png)
+
 5. Click **Advanced setting**, fill in the following:
-- In User name field, specify `name`
-- In Full name field, specify `displayName`
-- In Email field, specify `email`
-![Userinfo Field Setting](/img/integration/java/jenkins-oidc/jenkins_field.png)
+
+    - In User name field, specify `name`
+    - In Full name field, specify `displayName`
+    - In Email field, specify `email`
+
+    ![Userinfo Field Setting](/img/integration/java/jenkins-oidc/jenkins_field.png)
 
 6. In the **Authorization** section, check “Logged-in users can do anything”. Disable “Allow anonymous read access”. You can configure more complex authorization later, for now check if OpenID actually works.
 
-Log out of Jenkins, it should now redirect you to Casdoor for authentication.
-![Jenkins Login Page](/img/integration/java/jenkins-oidc/jenkins_login.png)
+    Log out of Jenkins, it should now redirect you to Casdoor for authentication.
+    ![Jenkins Login Page](/img/integration/java/jenkins-oidc/jenkins_login.png)

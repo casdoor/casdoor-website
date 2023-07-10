@@ -22,7 +22,7 @@ You are supposed to create an administrator account during installation. If you 
 ### 1. Create an Casdoor application
 
 Like this
-![](/img/integration/go/gitea/gitea6.png)
+![Create an Casdoor application](/img/integration/go/gitea/gitea6.png)
 
 Please remember the client ID and client Secret for the next step.
 
@@ -32,13 +32,13 @@ Please remember the client ID and client Secret for the next step.
 
 Log in as administrator. Go to 'Site Administration' page via drop-down menu  in the upper right corner. Then Switch to "Authentication Source" Page.
 
-You are supposed to see something like this. 
+You are supposed to see something like this.
 
-![](/img/integration/go/gitea/gitea2.png)
+![Authentication source page](/img/integration/go/gitea/gitea2.png)
 
 Press the "Add Authentication Source" Button, and fill in the form like this.
 
-![](/img/integration/go/gitea/gitea3.png)
+![Add authentication source](/img/integration/go/gitea/gitea3.png)
 
 Please choose the authentication type as "oauth2".
 
@@ -68,13 +68,13 @@ Logout the current administrator account.
 
 You are supposed to see this in login page:
 
-![](/img/integration/go/gitea/gitea4.png)
+![Gitea login page](/img/integration/go/gitea/gitea4.png)
 
 Press the 'sign in with openid' button and you will be redirected to casdoor login page.
 
 After login you will see this:
-![](/img/integration/go/gitea/gitea5.png)
+![After login](/img/integration/go/gitea/gitea5.png)
 
 Follow the instructions and bind the casdoor account with a new gitea account or existing account.
 
-Then everything will be working correctly. 
+Then everything will be working correctly.

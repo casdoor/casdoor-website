@@ -7,7 +7,7 @@ authors: [leo220yuyaodog]
 
 ## Using Casdoor for authentication in ShowDoc
 
-[ShowDoc](https://www.showdoc.com.cn/) is an online API documentation, technical documentation tool perfect for IT 
+[ShowDoc](https://www.showdoc.com.cn/) is an online API documentation, technical documentation tool perfect for IT
 teams. Showdoc makes it easy to use Markdown syntax to write beautiful API documents, data dictionary documents, technical documents, online Excel documents, and more.
 
 Showdoc supports 3rd-party authentication including Oauth. Here is the tutorial for achieving this.

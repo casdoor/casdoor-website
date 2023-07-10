@@ -13,7 +13,7 @@
     "serve": "docusaurus serve",
     "lint:js": "eslint --fix . --ext .js",
     "lint:css": "stylelint \"src/**/*.{css,scss}\" --fix",
-    "lint:md": "markdownlint docs/**/*.md* --fix",
+    "lint:md": "markdownlint 'docs/**/*.{md,mdx}' --fix",
     "lint": "yarn lint:js && yarn lint:css && yarn lint:md",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
