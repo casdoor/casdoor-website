@@ -154,6 +154,7 @@ module.exports = {
             "provider/oauth/azureAD",
             "provider/oauth/infoflow",
             "provider/oauth/okta",
+            "provider/oauth/lark",
           ],
         },
         "provider/email",
