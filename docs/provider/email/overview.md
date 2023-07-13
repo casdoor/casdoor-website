@@ -1,6 +1,6 @@
 ---
-title: Email
-description: Using email to complete authentication
+title: Overview
+description: Using Email to complete authentication
 keywords: [email]
 authors: [kininaru]
 ---

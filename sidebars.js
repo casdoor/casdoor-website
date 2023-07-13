@@ -157,7 +157,15 @@ module.exports = {
             "provider/oauth/lark",
           ],
         },
-        "provider/email",
+        {
+          type: "category",
+          label: "Email",
+          link: {type: "generated-index"},
+          items: [
+            "provider/email/overview",
+            "provider/email/mailhog",
+          ],
+        },
         "provider/sms",
         {
           type: "category",
