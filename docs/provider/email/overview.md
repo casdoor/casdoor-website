@@ -1,11 +1,11 @@
 ---
 title: Overview
-description: Using email to complete authentication
+description: Using Email to complete authentication
 keywords: [email]
 authors: [kininaru]
 ---
 
-## Add an email provider
+## Add an Email provider
 
 1. Click `Add` to add a new provider.
 2. Select `Email` in `Category`
