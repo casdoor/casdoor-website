@@ -1,24 +1,9 @@
 ---
-title: Email
-description: Using email to complete authentication
-keywords: [email]
-authors: [kininaru]
+title: MailHog
+description: Using MailHog as the SMTP server
+keywords: [email,mailhog]
+authors: [Chinoholo0807]
 ---
-
-## Add an Email provider
-
-1. Click `Add` to add a new provider.
-2. Select `Email` in `Category`
-
-    ![Email provider](/img/providers/emailprovider.png)
-
-3. Fill `Username`, `Password`, `Host`, `Port` of your smtp service.
-
-    ![Email Config](/img/providers/emailconfig.png)
-
-4. Fill customized `Email Title` and `Email Content` and save.
-
-## Example
 
 Here we use MailHog as the SMTP server. [MailHog](https://github.com/mailhog/MailHog) is an email-testing tool with a fake SMTP server underneath.
 
@@ -28,13 +13,13 @@ Here the IP address for the MailHog service is `192.168.24.128`, and the SMTP se
 
 ![mailhog config](/img/providers/mailhog_conf.png)
 
-### Step2. Create a Email provider
+### Step2. Create an email provider
 
 Fill the necessary information and save.
 
 ![mailhog email provider](/img/providers/mailhog_email_provider_conf.png)
 
-### Step3. Sending Test Email
+### Step3. Send the test email
 
 First, click on the `Test SMTP Connection` button, if you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the MailHog service.
 
