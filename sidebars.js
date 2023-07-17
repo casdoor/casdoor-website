@@ -57,6 +57,7 @@ module.exports = {
           items: [
             "how-to-connect/desktop-sdks/electron-app",
             "how-to-connect/desktop-sdks/dotnet-app",
+            "how-to-connect/desktop-sdks/maui-app",
             "how-to-connect/desktop-sdks/qt-app",
           ],
         },
