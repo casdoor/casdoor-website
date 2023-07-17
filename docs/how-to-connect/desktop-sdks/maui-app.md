@@ -57,6 +57,7 @@ builder.Services.AddSingleton(new CasdoorClient(new()
 Add code to `MainPage` file.
 
 **MainPage.xaml**
+
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -127,6 +128,7 @@ Add code to `MainPage` file.
 ```
 
 **MainPage.cs**
+
 ```csharp
 namespace Casdoor.MauiOidcClient.Example
 {
@@ -195,7 +197,6 @@ namespace Casdoor.MauiOidcClient.Example
 }
 ```
 
-
 ### Step 5: Support Android platform
 
 Modify `AndroidManifest.xml` file.
@@ -203,10 +204,10 @@ Modify `AndroidManifest.xml` file.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<queries>
+    <application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <queries>
         <intent>
             <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
