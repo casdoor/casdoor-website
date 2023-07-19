@@ -53,6 +53,7 @@ module.exports = {
         {
           type: "category",
           label: "Desktop SDKs",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "how-to-connect/desktop-sdks/electron-app",
@@ -67,6 +68,7 @@ module.exports = {
         {
           type: "category",
           label: "SAML",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "how-to-connect/saml/overview",
@@ -134,6 +136,7 @@ module.exports = {
         {
           type: "category",
           label: "OAuth",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "provider/oauth/overview",
@@ -161,6 +164,7 @@ module.exports = {
         {
           type: "category",
           label: "Email",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "provider/email/overview",
@@ -171,6 +175,7 @@ module.exports = {
         {
           type: "category",
           label: "Storage",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "provider/storage/overview",
@@ -182,6 +187,7 @@ module.exports = {
         {
           type: "category",
           label: "SAML",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "provider/saml/overview",
@@ -192,6 +198,7 @@ module.exports = {
         {
           type: "category",
           label: "Payment",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "provider/payment/Alipay",
@@ -201,6 +208,7 @@ module.exports = {
         {
           type: "category",
           label: "Captcha",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "provider/captcha/overview",
@@ -305,6 +313,7 @@ module.exports = {
         {
           type: "category",
           label: "Go",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/go/kubernetes",
@@ -320,6 +329,7 @@ module.exports = {
         {
           type: "category",
           label: "Java",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/java/spring-boot",
@@ -328,6 +338,7 @@ module.exports = {
             {
               type: "category",
               label: "Spring Security",
+              collapsed: true,
               link: {type: "generated-index"},
               items: [
                 "integration/java/spring-security/spring-security-oauth",
@@ -339,6 +350,7 @@ module.exports = {
             {
               type: "category",
               label: "Jira",
+              collapsed: true,
               link: {type: "generated-index"},
               items: [
                 "integration/java/jira2",
@@ -360,6 +372,7 @@ module.exports = {
         {
           type: "category",
           label: "JavaScript",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/javascript/wechat_miniprogram",
@@ -368,6 +381,7 @@ module.exports = {
         {
           type: "category",
           label: "Lua",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/lua/apisix",
@@ -376,6 +390,7 @@ module.exports = {
         {
           type: "category",
           label: "PHP",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/php/zentao",
@@ -387,6 +402,7 @@ module.exports = {
         {
           type: "category",
           label: "Ruby",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/ruby/gitlab",
@@ -395,6 +411,7 @@ module.exports = {
         {
           type: "category",
           label: "Haskell",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/Haskell/Hasura",
@@ -403,6 +420,7 @@ module.exports = {
         {
           type: "category",
           label: "Python",
+          collapsed: true,
           link: {type: "generated-index"},
           items: [
             "integration/python/JumpServer",
