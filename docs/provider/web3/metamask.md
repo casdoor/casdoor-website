@@ -41,6 +41,8 @@ Now you can login with MetaMask. Here is a demo video.
 
 1. When login with MetaMask, please authorize only one Ethereum address. Casdoor will only bind one Ethereum address per user.
 
-2. If you want to switch to another Ethereum address for login, please disconnect the connection between current Ethereum address and Casdoor first. You can refer to this [document](https://support.metamask.io/hc/en-us/articles/360059535551-Disconnect-wallet-from-a-dapp).
+2. If you want to switch to another Ethereum address for login, please disconnect the connection between current Ethereum address and Casdoor first.
+
+![metamask disconnect](/img/providers/web3/metamask_disconnect.png)
 
 :::
