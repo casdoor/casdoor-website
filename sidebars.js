@@ -219,6 +219,15 @@ module.exports = {
             "provider/captcha/cloudflareTurnstile",
           ],
         },
+        {
+          type: "category",
+          label: "Web3",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/web3/metamask",
+          ],
+        },
       ],
     },
     {
