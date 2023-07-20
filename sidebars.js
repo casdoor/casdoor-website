@@ -312,6 +312,15 @@ module.exports = {
       items: [
         {
           type: "category",
+          label: "C++",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "integration/C++/NGINX Plus",
+          ],
+        },
+        {
+          type: "category",
           label: "Go",
           collapsed: true,
           link: {type: "generated-index"},
