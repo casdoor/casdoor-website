@@ -179,10 +179,10 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/storage/overview",
-            "provider/storage/minio",
-            "provider/storage/azure",
-            "provider/storage/aliyun-oss",
             "provider/storage/amazon-s3",
+            "provider/storage/azure",
+            "provider/storage/minio",
+            "provider/storage/aliyun-oss",
           ],
         },
         {
