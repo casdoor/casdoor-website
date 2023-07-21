@@ -21,7 +21,7 @@ In your bucket permissons options, uncheck the "block" then save changes.
 
 ![uncheck block](/img/providers/storage/amazonNoBlock.png)
 
-Edit the object ownership, check ACLs enabled
+Edit the object ownership, check ACLs enabled.
 
 ![check ACLs enabled](/img/providers/storage/amazonOwnership.png)
 
