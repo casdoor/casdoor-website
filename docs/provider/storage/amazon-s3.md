@@ -21,7 +21,7 @@ In your bucket permissons options, uncheck the "block" then save changes.
 
 ![uncheck block](/img/providers/storage/amazonNoBlock.png)
 
-Edit the object ownership, check ACLs enabled.
+Edit the object ownership, check **ACLs enabled**.
 
 ![check ACLs enabled](/img/providers/storage/amazonOwnership.png)
 
@@ -30,3 +30,11 @@ Edit the object ownership, check ACLs enabled.
 Fill the necessary information, includes the `Client ID` and `Client Secret` obtained from the `access key` and `secret access key` in the previous step. You can refer to this documentation for information on the formatting of the `endpoint`: [Website endpoints](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html)
 
 ![amazon s3 provider](/img/providers/storage/amazonProvider.png)
+
+### (Optional) Use CloudFront distribution
+
+Follow the document to config CloudFront: [config CloudFront](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.SimpleDistribution.html)
+
+In the domain field, enter your distribution domain name
+
+![domain](/img/providers/storage/amazonCloudFront.png)
