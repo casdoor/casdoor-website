@@ -182,6 +182,7 @@ module.exports = {
             "provider/storage/minio",
             "provider/storage/azure",
             "provider/storage/aliyun-oss",
+            "provider/storage/amazon-s3",
           ],
         },
         {
