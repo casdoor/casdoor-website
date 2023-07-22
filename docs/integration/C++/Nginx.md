@@ -41,7 +41,7 @@ The instructions assume you have the following:
 
 Create a Casdoor client for NGINX Plus in the Casdoor GUI:
 
-1. Log in to your Casdoor account **<http://casdoor*-server-address*:8000/login/>** .
+1. Log in to your Casdoor account **<http://your-casdoor-url.com/login/>** .
 2. In the top navigation column, click **Application**. On the **Application** page that opens, click the **Add** button in the upper left corner.
 
     ![addApp](/img/integration/C++/NGINX_Plus/addApp.png)
@@ -50,7 +50,7 @@ Create a Casdoor client for NGINX Plus in the Casdoor GUI:
 
     ![appName](/img/integration/C++/NGINX_Plus/appName.png)
 
-    In the **Redirect URLs** field, type the URL of the NGINX Plus instance including the port number, and ending in **/_codexch** (in this guide it is [https://my-nginx.example.com:443/_codexch](https://my-nginx.example.com/_codexch)).
+    In the **Redirect URLs** field, type the URL of the NGINX Plus instance including the port number, and ending in **/_codexch** (in this guide it is [https://your-site-url.com:443/_codexch](https://your-site-url.com/_codexch)).
 
     ![redirectURL](/img/integration/C++/NGINX_Plus/redirectURL.png)
 
