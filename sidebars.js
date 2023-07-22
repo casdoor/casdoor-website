@@ -218,6 +218,7 @@ module.exports = {
             "provider/captcha/hcaptcha",
             "provider/captcha/aliyunCaptcha",
             "provider/captcha/cloudflareTurnstile",
+            "provider/captcha/geetest",
           ],
         },
         {
