@@ -1,7 +1,7 @@
 ---
 title: Overview
-description: Add a geetest captcha to your application
-keywords: [geetest]
+description: Add a captcha to your application
+keywords: [captcha]
 authors: [Resulte]
 ---
 
