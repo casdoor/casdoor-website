@@ -7,19 +7,10 @@
             "pattern": "^http://localhost"
         },
         {
-            "pattern": "^http://your-casdoor-url.com"
+            "pattern": "^https?://your-casdoor-url.com"
         },
         {
-            "pattern": "^http://your-site-url.com"
-        },
-        {
-            "pattern": "^https://my-site-url.com"
-        },
-        {
-            "pattern": "^http://SERVER_IP"
-        },
-        {
-            "pattern": "^https://[a-z]*.mycompany.com/"
+            "pattern": "^https?://[a-z]*.?your-site-url.com"
         },
         {
             "pattern": "^https://flarum.org/"
