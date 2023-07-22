@@ -316,7 +316,7 @@ module.exports = {
           collapsed: true,
           link: {type: "generated-index"},
           items: [
-            "integration/C++/NGINX Plus",
+            "integration/C++/Nginx",
           ],
         },
         {
