@@ -30,7 +30,7 @@ While this organization is named ```my_organization```, so I choose it in drop-d
 
 ![Select Organization](/img/application/config/selectorganization.png)
 
-Then I want my users can use Casdoor to complete authentication when they are signing up, so I fill the redirect url here as **<https://my-site-url.com/callback>**
+Then I want my users can use Casdoor to complete authentication when they are signing up, so I fill the redirect url here as **<https://your-site-url.com/callback>**
 
 :::caution
 
