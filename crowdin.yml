@@ -1,8 +1,6 @@
 project_id: '493595'
 api_token_env: 'CROWDIN_PERSONAL_TOKEN'
 preserve_hierarchy: true
-project_id_env: CROWDIN_PROJECT_ID
-api_token_env: CROWDIN_PERSONAL_TOKEN
 files: [
     # JSON translation files
     {
@@ -19,5 +17,4 @@ files: [
       source: '/blog/**/*',
       translation: '/i18n/%two_letters_code%/docusaurus-plugin-content-blog/**/%original_file_name%',
     },
-    
   ]
