@@ -214,10 +214,10 @@ module.exports = {
           items: [
             "provider/captcha/overview",
             "provider/captcha/default",
+            "provider/captcha/cloudflareTurnstile",
             "provider/captcha/recaptcha",
             "provider/captcha/hcaptcha",
             "provider/captcha/aliyunCaptcha",
-            "provider/captcha/cloudflareTurnstile",
             "provider/captcha/geetest",
           ],
         },
