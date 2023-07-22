@@ -1,7 +1,7 @@
 ---
-title: NGINX Plus
-description:  Using Casdoor in NGINX Plus
-keywords: [NGINX Plus]
+title: Nginx
+description:  Using Casdoor in Nginx
+keywords: [nginx, plus, nginx-plus]
 authors: [SkipperQ]
 ---
 
