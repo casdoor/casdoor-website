@@ -5,7 +5,7 @@ keywords: [Geetest]
 authors: [leoil]
 ---
 
-## Confiure Geetest
+## Configure Geetest
 
 Configure Geetest and get the public and secret key
 
