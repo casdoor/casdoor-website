@@ -184,6 +184,7 @@ module.exports = {
             "provider/storage/azure",
             "provider/storage/minio",
             "provider/storage/aliyun-oss",
+            "provider/storage/tencentCloudCOS",
           ],
         },
         {

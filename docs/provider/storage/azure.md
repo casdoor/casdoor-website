@@ -19,7 +19,7 @@ Select the Azure Blob as the storage type. ![azureSelect.png](/img/providers/sto
 
 ### Step2. Fill the necessary information in Casdoor
 
-There are three required fields. `Client ID`, `Client secret`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
+There are four required fields. `Client ID`, `Client secret`, `Endpoint`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
 
 | Name                | Name in Azure   | is required |
 |---------------------|-----------------|-------------|
@@ -60,16 +60,19 @@ Azure Private Endpoint is a feature that allows connecting Azure services to Azu
 - ContainerName
 
 In my example, Create a default container called 'default'.
+
 ![azureContainer.png](/img/providers/storage/azureContainer.png)
 
 - (Optional) DomainName
 
 The custom domain name in your Azure CDN.
+
 ![azureCDN.png](/img/providers/storage/azureCDN.png)
 
 ### Step3. Save your configuration
 
 The final result is as follows:
+
 ![azureResult.png](/img/providers/storage/azureResult.png)
 
 Then you can use Azure Blob Storage services in your application.
