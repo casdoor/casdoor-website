@@ -15,6 +15,19 @@ For example, When your Casdoor is located in the `/home/user/casdoor` directory,
 
 ## Config the Casdoor provider
 
-`Path prefix` is the prefix of the location path for your files, you can fill it in as needed.
+![local file config](/img/providers/storage/localFileConfig.png)
 
-![local file config.png](/img/providers/storage/localFileConfig.png)
+`Path prefix` is the prefix of the location path for your files, you can fill it in as needed.
+In the following example, you can see the difference with or without prefix.
+
+### With prefix
+
+![with prefix config](/img/providers/storage/localFileWithPre.png)
+
+![with prefix](/img/providers/storage/localFileWithResult.png)
+
+### Without prefix
+
+![with prefix config](/img/providers/storage/localFileWithoutPre.png)
+
+![with prefix](/img/providers/storage/localFileWithoutResult.png)
