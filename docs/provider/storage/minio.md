@@ -39,8 +39,6 @@ Now create a MinIO provider in Casdoor. Fill the necessary information.
 |Client secret  |   `Secret Key` obtained from Step1   |
 |Endpoint       |   `API address` obtained from Step1  |
 |Bucket         |   `Bucket` obtained from Step1       |
-|Domain         |   `${API_address}>/${Bucket}`: for example, if your MinIO API address is `https://10.28.169.183:9000` and bucket is `casdoor`, then the Domain would be `https://10.28.169.183:9000/casdoor`     |
-|Region ID      |   Region in MinIO is used to label the location of the server, this field does not have any practical significance, just fill it with `_` is ok. |
 <!-- ![create a MinIO provider](/img/providers/storage/minio_provider_conf.png) -->
 
 ![create a MinIO provider](/img/providers/storage/minio_provider_conf_detail.png)
@@ -50,3 +48,9 @@ Now create a MinIO provider in Casdoor. Fill the necessary information.
 Now you can use MinIO storage service in your application.
 
 <video src="/video/provider/storage/use_minio_in_app.mp4" controls="controls" width="100%"></video>
+
+### (Optional) Use CDN service
+
+You can integrate other cloud CDN services with MinIO by simply filling in the CDN domain name in the `domain` field.
+
+![config minio domain](/img/providers/storage/minio_provider_domain.png)
