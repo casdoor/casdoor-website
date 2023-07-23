@@ -19,7 +19,7 @@ Select the Azure Blob as the storage type. ![azureSelect.png](/img/providers/sto
 
 ### Step2. Fill the necessary information in Casdoor
 
-There are three required fields. `Client ID`, `Client secret`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
+There are four required fields. `Client ID`, `Client secret`, `Endpoint`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
 
 | Name                | Name in Azure   | is required |
 |---------------------|-----------------|-------------|
