@@ -60,16 +60,19 @@ Azure Private Endpoint is a feature that allows connecting Azure services to Azu
 - ContainerName
 
 In my example, Create a default container called 'default'.
+
 ![azureContainer.png](/img/providers/storage/azureContainer.png)
 
 - (Optional) DomainName
 
 The custom domain name in your Azure CDN.
+
 ![azureCDN.png](/img/providers/storage/azureCDN.png)
 
 ### Step3. Save your configuration
 
 The final result is as follows:
+
 ![azureResult.png](/img/providers/storage/azureResult.png)
 
 Then you can use Azure Blob Storage services in your application.

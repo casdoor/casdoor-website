@@ -29,11 +29,11 @@ There are five required fields. `Client ID`, `Client secret`, `Endpoint`, `Bucke
 
 - SecretId and SecretKey
 
-![](/img/providers/storage/tencentKey.png)
+![tencentKey.png](/img/providers/storage/tencentKey.png)
 
 - Endpoint, BucketName and Region
 
-![](/img/providers/storage/tencentConfig.png)
+![tencentConfig.png](/img/providers/storage/tencentConfig.png)
 
 - (Optional) CDNDomain
 
@@ -41,4 +41,4 @@ You can refer to the official documentation for configuration: [config CDN](http
 
 #### Config Casdoor provider
 
-![](/img/providers/storage/tencentResult.png)
+![tencentResult.png](/img/providers/storage/tencentResult.png)
