@@ -48,9 +48,3 @@ Now create a MinIO provider in Casdoor. Fill the necessary information.
 Now you can use MinIO storage service in your application.
 
 <video src="/video/provider/storage/use_minio_in_app.mp4" controls="controls" width="100%"></video>
-
-### (Optional) Use CDN service
-
-You can integrate other cloud CDN services with MinIO by simply filling in the CDN domain name in the `domain` field.
-
-![config minio domain](/img/providers/storage/minio_provider_domain.png)
