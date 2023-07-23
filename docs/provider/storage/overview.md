@@ -43,4 +43,4 @@ We support uploading files to the local system.
 
 ## Cloud
 
-We support **AWS S3**, **Aliyun OSS**, **Tencent Cloud COS**, **MinIO** and **Azure Blob** cloud vendors, and are adding more Cloud storage services.
+We support **AWS S3**, **Azure Blob Storage**, **MinIO**, **Alibaba Cloud OSS**, **Tencent Cloud COS** and are adding more Cloud storage services.
