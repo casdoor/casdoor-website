@@ -37,17 +37,7 @@ https://cdn.casbin.com/abcd/xxxx/casdoor/avatar.png
 
 ## Local
 
-With **Local** type, the only item that you need to configure is `Domain` field. Please follow the format:
-
-```text
-Domain/images
-```
-
-For example, `http://127.0.0.1:7001/images`, `http://door.casbin.org/images` are all allowed.
-
-But `127.0.0.1:7001/images` is wrong.
-
-The `Client ID`, `Client secret`, `Endpoint` and `Bucket` field are no longer needed, you can **fill in it at will**, and it **cannot** be empty.
+We support uploading files to the local system.
 
 ## Cloud-Based
 
