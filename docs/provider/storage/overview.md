@@ -11,14 +11,15 @@ Casdoor supports two types of storage, **Local** and **Cloud**. In this chapter 
 
 ## Item
 
-- `Client ID`
-- `Client secret`
-- `Endpoint`
-- `Path perfix`: Path prefix for the file location.
+- `Client ID`: A unique identifier provided by the cloud storage provider.
+- `Client secret`: A secure value known only to Casdoor and the cloud storage service.
+- `Endpoint`: The public URL or domain of the cloud storage service.
+- `Endpoint (Intranet)`: The internal or private URL or domain of the cloud storage service.
+- `Path prefix`: Path prefix for the file location.
 
 :::info
 
-Default `Path perfix` is `/`. For example, when the `Path perfix` is empty, a default file path:
+Default `Path prefix` is `/`. For example, when the `Path prefix` is empty, a default file path:
 
 ```text
 https://cdn.casbin.com/casdoor/avatar.png
@@ -32,31 +33,14 @@ https://cdn.casbin.com/abcd/xxxx/casdoor/avatar.png
 
 :::
 
-- `Bucket`
+- `Bucket`: A container used for storing files and data.
 - `Domain`: The custom domain name of CDN for your cloud storage.
+- `Region ID`: An identifier used to specify the data center region where the cloud storage service is located
 
 ## Local
 
-With **Local** type, the only item that you need to configure is `Domain` field. Please follow the format:
+We support uploading files to the local system.
 
-```text
-Domain/images
-```
+## Cloud
 
-For example, `http://127.0.0.1:7001/images`, `http://door.casbin.org/images` are all allowed.
-
-But `127.0.0.1:7001/images` is wrong.
-
-The `Client ID`, `Client secret`, `Endpoint` and `Bucket` field are no longer needed, you can **fill in it at will**, and it **cannot** be empty.
-
-## Cloud-Based
-
-Currently, we support **AWS S3**, **Aliyun OSS**, **Tencent Cloud COS**, **MinIO** and **Azure Blob** cloud vendors, and are adding more Cloud storage services.
-
-Fill in the corresponding fields with `Client ID`, `Client secret`, `Endpoint` and `Bucket` obtained from your cloud vendor console.
-
-:::tip
-
-With `Non-local` type, you probably don’t need the `Domain` field, which is used for custom domain.
-
-:::
+We support **AWS S3**, **Azure Blob Storage**, **MinIO**, **Alibaba Cloud OSS**, **Tencent Cloud COS** and are adding more Cloud storage services.
