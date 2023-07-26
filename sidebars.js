@@ -153,6 +153,7 @@ module.exports = {
             "provider/oauth/linkedin",
             "provider/oauth/facebook",
             "provider/oauth/google",
+            "provider/oauth/googleonetap",
             "provider/oauth/baidu",
             "provider/oauth/adfs",
             "provider/oauth/azureAD",
