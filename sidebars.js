@@ -172,7 +172,17 @@ module.exports = {
             "provider/email/mailhog",
           ],
         },
-        "provider/sms",
+        {
+          type: "category",
+          label: "SMS",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/sms/overview",
+            "provider/sms/twilio",
+            "provider/sms/alibabaCloud",
+          ],
+        },
         {
           type: "category",
           label: "Storage",
