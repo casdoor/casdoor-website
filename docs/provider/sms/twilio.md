@@ -15,7 +15,6 @@ There are four required fields. `Client ID`, `Client secret`, `Sender number`, `
 | Client secret | Auth Token          | required   |
 | Sender number | Twilio phone number | required   |
 | Template code |                     | required   |
-| SMS Test      |                     |            |
 
 ### Twilio information
 
