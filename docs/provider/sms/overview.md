@@ -5,7 +5,7 @@ keywords: [SMS]
 authors: [kininaru]
 ---
 
-We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send SMS for Casdoor. Now, `go-sms-sender` supports **Aliyun, Huawei Cloud, SmsBao, Submail, Tencent Cloud, Twilio** and **Volc** SMS APIs. You can raise an issue, or make a pull request if you want to support other SMS providers.
+We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send SMS for Casdoor. Now, `go-sms-sender` supports **Twilio, Submail, SmsBao, Alibaba Cloud, Tencent Cloud, Huawei Cloud** and **Volc** SMS APIs. You can raise an issue, or make a pull request if you want to support other SMS providers.
 
 ## Add a SMS provider
 
@@ -14,7 +14,7 @@ We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send
 
    ![Select Category](/img/providers/sms/selectCategory.png)
 
-3. Select your provider type (`Aliyun SMS`, `Tencent Cloud SMS` or `Volc Engine SMS`)
+3. Select your provider type
 
    ![Select Type](/img/providers/sms/selecttype.png)
 
