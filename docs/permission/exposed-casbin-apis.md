@@ -57,7 +57,7 @@ Request:
 curl --location --request POST 'http://localhost:8000/api/batch-enforce?permissionId=example-org/example-permission' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Basic client_id_and_secret' \
---data-raw '[["example-org/example-user", "example-resource", "example-action"], {"example-org/example-user2", "example-resource", "example-action"}, {"example-org/example-user3", "example-resource", "example-action"}]'
+--data-raw '[["example-org/example-user", "example-resource", "example-action"], ["example-org/example-user2", "example-resource", "example-action"], ["example-org/example-user3", "example-resource", "example-action"]]'
 ```
 
 Response:
