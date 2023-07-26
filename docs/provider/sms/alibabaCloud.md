@@ -15,7 +15,6 @@ There are four required fields. `Client ID`, `Client secret`, `Sign Name`, `Temp
 | Client secret | AccessKey Secret | required   |
 | Sign Name     | Signature        | required   |
 | Template code | Template code    | required   |
-| SMS Test      |                  |            |
 
 ### Alibaba information
 
