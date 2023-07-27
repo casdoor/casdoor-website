@@ -25,7 +25,7 @@ function Help() {
             <Translate
               values={{
                 645200447: (
-                  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi" target="_blank" rel="noreferrer">
+                  <a href="https://cdn.casdoor.com/casdoor/resource/built-in/admin/qq_casdoor.png" target="_blank" rel="noreferrer">
                     645200447
                   </a>
                 ),

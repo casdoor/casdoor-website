@@ -152,7 +152,7 @@ module.exports = {
             },
             {
               label: "QQ Group",
-              href: "https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi",
+              href: "https://cdn.casdoor.com/casdoor/resource/built-in/admin/qq_casdoor.png",
             },
           ],
         },
