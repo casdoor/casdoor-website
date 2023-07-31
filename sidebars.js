@@ -215,6 +215,8 @@ module.exports = {
           collapsed: true,
           link: {type: "generated-index"},
           items: [
+            "provider/payment/overview",
+            "provider/payment/paypal",
             "provider/payment/Alipay",
             "provider/payment/WeChatPay",
           ],
