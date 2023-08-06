@@ -7,7 +7,7 @@ authors: [UsherFall]
 
 ## Obtain the necessary information in Azure
 
-There are four required fields. `Client secret`, `Sender number`, `Template code`, `Provider Url`. I will show you how to obtain these infomations from Amazon SNS.
+There are four required fields. `Client secret`, `Sender number`, `Template code`, `Provider Url`. I will show you how to obtain these infomations from Azure ACS.
 
 - `Client secret
 
@@ -22,6 +22,8 @@ In Communication Service, you can create User Access Token which is the `Client 
 ![azurePhone.png](/img/providers/sms/azurePhone.png)
 
 - Provider Url
+
+`Provider Url` is the endpoint in Communication Service
 
 ![azureUrl.png](/img/providers/sms/azureUrl.png)
 
