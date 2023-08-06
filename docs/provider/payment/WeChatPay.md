@@ -26,7 +26,7 @@ Before that, please log in to the WeChat Pay Merchant Platform. In order for Cas
 - Fill in the payment callback notification address of the Casdoor instance. For example:
 
 ```url
-https://your-casdoor-instance.com/api/wechat-payment-callback
+https://your-casdoor-url.com/api/wechat-payment-callback
 ```
 
 ## Step3. Configure API Security
