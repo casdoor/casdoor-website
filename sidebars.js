@@ -181,6 +181,8 @@ module.exports = {
             "provider/sms/overview",
             "provider/sms/twilio",
             "provider/sms/alibabaCloud",
+            "provider/sms/amazonSns",
+            "provider/sms/acs",
           ],
         },
         {
