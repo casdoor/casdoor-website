@@ -16,7 +16,7 @@ This plugin, authz-casdoor, can protect apis behind APISIX, forcing every single
 You need to specify this plugin when creating the route, and give out all required fields. Here is an example.
 
 ```shell
-curl "http://127.0.0.1:9080/apisix/admin/routes/1" -H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -X PUT -d '
+curl "http://127.0.0.1:9180/apisix/admin/routes/1" -H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -X PUT -d '
 {
   "methods": ["GET"],
   "uri": "/anything/*",
