@@ -26,7 +26,7 @@ Go to your Casdoor and add a new application.
 | Administrator Authentication                                     | User Authentication                                          |
 |:-----------------------------------------------------------------|--------------------------------------------------------------|
 | Redirect URL = “AppGate”                                         | Redirect URL = “AppGate Client”                              |
-| SAML Reply URL = <https://mycontroller.mycompany.com/admin/saml> | SAML Reply URL = <https://redirectserver.mycompany.com/saml> |
+| SAML Reply URL = <https://mycontroller.your-site-url.com/admin/saml> | SAML Reply URL = <https://redirectserver.your-site-url.com/saml> |
 
 **Download the XML metadata file**
 

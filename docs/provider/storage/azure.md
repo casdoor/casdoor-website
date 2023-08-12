@@ -19,14 +19,17 @@ Select the Azure Blob as the storage type. ![azureSelect.png](/img/providers/sto
 
 ### Step2. Fill the necessary information in Casdoor
 
-There are three required fields. `Client ID`, `Client secret`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
+There are four required fields. `Client ID`, `Client secret`, `Endpoint`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
 
-|    Name       |   Name in Azure |   is required |
-|      ----     |   ----          |  ----         |
-|Client ID      |   AccountName   | required     |
-|Client secret  |   AccountKey    | required      |
-|Bucket         |   ContainerName | required     |
-|Domain         |   DomainName    |               |
+| Name                | Name in Azure   | is required |
+|---------------------|-----------------|-------------|
+| Client ID           | AccountName     | required    |
+| Client secret       | AccountKey      | required    |
+| Endpoint            | ContainerUrl    | required    |
+| Endpoint (intranet) | PrivateEndpoint |             |
+| Bucket              | ContainerName   | required    |
+| Path prefix         |                 |             |
+| Domain              | DomainName      |             |
 
 - AccountName
 
@@ -44,19 +47,32 @@ You can obtain your account key from the Azure Portal under the "Access Keys" se
 
 ![azureKey.png](/img/providers/storage/azureKey.png)
 
+- ContainerUrl
+
+In your container properties, you can obtain ContainerUrl
+
+![azureUrl.png](/img/providers/storage/azureUrl.png)
+
+- (Optional) PrivateEndpoint
+
+Azure Private Endpoint is a feature that allows connecting Azure services to Azure Virtual Network (VNet) private subnets. You can refer to the official Azure documentation for configuration: [private endpoint config](https://learn.microsoft.com/zh-cn/azure/private-link/tutorial-private-endpoint-storage-portal)
+
 - ContainerName
 
-  You first need to create a container. There is a default container called 'default'.
+In my example, Create a default container called 'default'.
+
 ![azureContainer.png](/img/providers/storage/azureContainer.png)
 
-- Domain
+- (Optional) DomainName
 
 The custom domain name in your Azure CDN.
+
 ![azureCDN.png](/img/providers/storage/azureCDN.png)
 
 ### Step3. Save your configuration
 
 The final result is as follows:
+
 ![azureResult.png](/img/providers/storage/azureResult.png)
 
 Then you can use Azure Blob Storage services in your application.

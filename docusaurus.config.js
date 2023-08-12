@@ -11,7 +11,6 @@ module.exports = {
   favicon: "img/favicon.png",
   organizationName: "casdoor", // Usually your GitHub org/user name.
   projectName: "casdoor-website", // Usually your repo name.
-  trailingSlash: false,
   i18n: {
     defaultLocale: "en",
     locales: ["en", "zh", "fr", "de", "ko", "ru", "ja"],
@@ -152,7 +151,7 @@ module.exports = {
             },
             {
               label: "QQ Group",
-              href: "https://qm.qq.com/cgi-bin/qm/qr?k=SCBnKNj_1ljeXFT2dk8cwoGQwc5lFy8l&jump_from=webapi",
+              href: "https://cdn.casdoor.com/casdoor/resource/built-in/admin/qq_casdoor.png",
             },
           ],
         },
