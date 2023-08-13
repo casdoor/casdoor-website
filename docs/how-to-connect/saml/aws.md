@@ -10,12 +10,11 @@ authors: [UsherFall]
 
 This guide will show you how to configure Casdoor and AWS Client VPN to add Casdoor as a SAML IdP in AWS Client VPN.
 
-
 ## Prerequisites
 
 Here is what’s required to run thorough the setup:
 
-- AWS Account, you must have administrative rights to access configuration settings of the service provider. 
+- AWS Account, you must have administrative rights to access configuration settings of the service provider.
 
 - An Amazon VPC with an EC2 instance
   - [Setting up the VPC.](https://docs.aws.amazon.com/zh_cn/vpc/latest/userguide/vpc-getting-started.html)
@@ -26,7 +25,6 @@ Here is what’s required to run thorough the setup:
 
 - A Windows or Mac system running the latest AWS Client VPN software.
   - [Download the software](https://aws.amazon.com/cn/vpn/client-vpn-download/)
-
 
 ## Configure SAML Application
 
@@ -41,7 +39,6 @@ Here is what’s required to run thorough the setup:
 3. Save the content in `SAML metadata` as a xml file
 
 ![saml_aws_metadata.png](/img/how-to-connect/saml/saml_aws_metadata.png)
-
 
 ## Configure AWS
 
@@ -63,7 +60,7 @@ Here is what’s required to run thorough the setup:
 
 1. Open Amazon VPC console in an AWS Region of your choice
 
-2. One the left hand side nav, select **Client VPN Endpoints** under **Virtual Private Network (VPN)**. 
+2. One the left hand side nav, select **Client VPN Endpoints** under **Virtual Private Network (VPN)**.
 
 3. Press **Create Client VPN Endpoint**
 
@@ -73,13 +70,13 @@ Here is what’s required to run thorough the setup:
 
 5. For **Server Certificate ARN**, select the certificate you created
 
-6. For Authentication Options, select **Use user-based authentication**, then **Federated authentication**. 
+6. For Authentication Options, select **Use user-based authentication**, then **Federated authentication**.
 
 7. For **SAML provider ARN**, select the identity provider you created
 
 ![saml_aws_create_vpn.png](/img/how-to-connect/saml/saml_aws_create_vpn.png)
 
-8. Click **Create Client VPN Endpoint**. 
+8. Click **Create Client VPN Endpoint**.
 
 ### Associate a Client VPN with a Target VPC
 
