@@ -219,6 +219,7 @@ module.exports = {
           items: [
             "provider/payment/overview",
             "provider/payment/paypal",
+            "provider/payment/stripe",
             "provider/payment/Alipay",
             "provider/payment/WeChatPay",
           ],
