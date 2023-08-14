@@ -19,7 +19,6 @@ policy rules to it.
 - `Database type` : Now support MySQL, PostgreSQL, SQL server, Oracle, SQLite 3.
 - `Database` : The database name.
 - `Table` : The table name. If the table does not exist, it will be created.
-- `model` : You can select one model belonging to the organization of the adapter.
 
 ![adapter_config](/img/permission/adapter/adapter_config.png)
 
