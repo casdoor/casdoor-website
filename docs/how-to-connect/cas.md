@@ -23,6 +23,7 @@ Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an
 - `/validate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/validate`
 - `/p3/serviceValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/serviceValidate`
 - `/p3/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/proxyValidate`
+- `/samlValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/samlValidate`
 
 See <https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol-Specification.html> for more information about CAS and its different versions, as well as parameters for these endpoints.
 
