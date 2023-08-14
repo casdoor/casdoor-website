@@ -244,6 +244,7 @@ module.exports = {
           collapsed: true,
           link: {type: "generated-index"},
           items: [
+            "provider/web3/web3onboard",
             "provider/web3/metamask",
           ],
         },
