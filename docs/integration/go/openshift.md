@@ -13,7 +13,7 @@ The following steps demonstrate how to integrate Casdoor with OpenShift Local us
 Add a new application in Casdoor, note following points.
 
 - Remember the `Client ID` and `Client secret` for the next step.
-- The format of the Redirect URL is `https://oauth-openshift.apps.<cluster_name>.<cluster_domain/*`, Fill it in depending your situation
+- The format of the Redirect URL is `https://oauth-openshift.apps.<cluster_name>.<cluster_domain>/*`, Fill it in depending your situation
 
 ![Create an application in Casdoor](/img/integration/go/openshift/openshift_1.png)
 
