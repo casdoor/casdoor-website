@@ -26,7 +26,7 @@ First, you need to create a Web3-Onboard Web3 provider in Casdoor.
 
 ![create a web3-onboard web3 provider](/img/providers/web3/web3onboard_provider_conf.png)
 
-Currently, Casdoor only supports some wallets as shown in the above image. The `Injected` wallets represent browser injected wallets such as `MetaMask` or `Coinbase`.
+Currently, Casdoor only supports wallets shown in the above image. The `Injected` wallets represent browser injected wallets such as `MetaMask` or `Coinbase`.
 
 ### Step2. Add provider to your application
 
