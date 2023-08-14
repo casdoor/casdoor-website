@@ -14,6 +14,7 @@ This is an example of configure **Web3-Onboard** as Web3 provider.
 [Web3-Onboard](https://onboard.blocknative.com/) can support users to use different wallets for Web3 login.
 Casdoor allows using Web3-Onboard as an identity provider and enables Web3 login with Web3-Onboard.
 
+![web3-onboard](/img/providers/web3/web3onboard.png)
 ### Step1. Create a Web3-Onboard Web3 provider
 
 First, you need to create a Web3-Onboard Web3 provider in Casdoor.
