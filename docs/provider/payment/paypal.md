@@ -38,7 +38,7 @@ Then create a PayPal Payment provider in Casdoor. Fill the necessary information
 
 ## Step3. Add the PayPal Payment provider for your product
 
-Finally, Add the PayPal Payment provider for your product so that users can purchase the product using PayPal.
+Finally, add the PayPal Payment provider for your product so that users can purchase the product using PayPal.
 
 ![add paypal payment provider for product](/img/providers/payment/paypal_product.png)
 

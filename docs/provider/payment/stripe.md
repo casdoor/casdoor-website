@@ -33,8 +33,8 @@ Then create a PayPal Payment provider in Casdoor. Fill the necessary information
 
 ## Step3. Add the Stripe Payment provider for your product
 
-Finally, Add the Stripe Payment provider for your product so that users can purchase the product using Stripe.
+Finally, add the Stripe Payment provider for your product so that users can purchase the product using Stripe.
 
 ![add stripe payment provider for product](/img/providers/payment/stripe_product.png)
 
-<!-- <video src="/video/provider/payment/use_stripe_as_payment_provider.mp4" controls="controls" width="100%"></video> -->
+<video src="/video/provider/payment/use_stripe_buy_product.mp4" controls="controls" width="100%"></video>
