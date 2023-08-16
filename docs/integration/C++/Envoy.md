@@ -12,7 +12,7 @@ A running Casdoor server. See the Casdoor documentation for [Server Installatio
 ## Configuring Casdoor
 
 1. Add **Application** "Envoy". In the **Redirect URLs** field, type the URL of the Envoy instance including the port number, and ending in **/oauth2/callback** (in this sample, http://%REQ(:authority)%/oauth2/callback ), record the values in the Client ID and Client Secret.
-2. Add **Roles** "envoy-casdoor-role". 
+2. Add **Roles** "envoy-casdoor-role".
 3. Add **Users** "user1". Select **Envoy** in Signup application. In the **Managed accounts** field, select **Envoy** in Application and fill in the username and password. Go back to the **Roles** page and click Edit on the envoy-casdoor-role row. In the opened page, in the **Sub users** field, select the username you just created(here it is built-in/user1)
 
 ## Configure Envoy
