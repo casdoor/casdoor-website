@@ -16,6 +16,7 @@ This is an example of how to configure a **Stripe** Payment provider.
 First you need to have an account at [Stripe](https://www.stripe.com/).
 After you create a Stripe account, login the [Developer Dashboard](https://dashboard.stripe.com/test/apikeys) via the account.
 You can find the `Publishable key` and `Secret key` under `API keys` tab.
+
 ![stripe api keys](/img/providers/payment/stripe_api_keys.png)
 
 ## Step2. Create a Stripe Payment provider
