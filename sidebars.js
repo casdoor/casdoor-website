@@ -348,6 +348,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/C++/Nginx",
+            "integration/C++/Envoy",
           ],
         },
         {
