@@ -188,6 +188,17 @@ module.exports = {
         },
         {
           type: "category",
+          label: "Notification",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/notification/overview",
+            "provider/notification/telegram",
+            "provider/notification/customHttp",
+          ],
+        },
+        {
+          type: "category",
           label: "Storage",
           collapsed: true,
           link: {type: "generated-index"},

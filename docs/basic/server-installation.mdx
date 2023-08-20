@@ -25,7 +25,7 @@ We strongly suggest you use [Yarn 1.x](https://classic.yarnpkg.com/en/docs/insta
 
 :::caution
 
-For **Chinese** users, in order to download the Go dependency packages successfully, you need to use a Go proxy by Configuring the GOPROXY environment variable. We strongly recommend: <https://goproxy.cn/>
+If your network fails to directly sync the Go dependency packages successfully, you need to use a Go proxy by Configuring the GOPROXY environment variable. We strongly recommend: <https://goproxy.cn/>
 
 :::
 
@@ -62,8 +62,7 @@ git clone https://github.com/casdoor/casdoor
 
 ### Configure Database
 
-Casdoor supports mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default. If you use another database, please
-modify the import package in [object/adapter](https://github.com/casdoor/casdoor/blob/afa9c530adac39fdea329dbfd8a55775badb7d09/object/adapter.go#L24-L27).
+Casdoor supports mysql, mssql, sqlite3, postgres. Casdoor uses mysql by default.
 
 #### MySQL
 
