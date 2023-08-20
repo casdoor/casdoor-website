@@ -15,7 +15,7 @@ Casdoor supports Custom HTTP Notification Provider。 You can use it to send mes
 
 There are three required fields. `Method`, `Parameter name`, `Content`, `Chat ID`.
 
-| Name           | Description                                                         | 
+| Name           | Description                                                         |
 |----------------|---------------------------------------------------------------------|
 | Method         | Select `GET` or `POST` method                                       |
 | Parameter name | URL query parameter name or body parameter, depends on the `method` |

@@ -17,7 +17,7 @@ Your bot should have two attributes: a `name` and a `username`. Then you get the
 
 ## Step2. Get Chat ID
 
-To find your chat ID using [RawDataBot](https://t.me/raw_info_bot). 
+To find your chat ID using [RawDataBot](https://t.me/raw_info_bot).
 
 ![telegram_chat_id](/img/providers/notification/telegram_chat_id.png)
 
@@ -25,7 +25,7 @@ To find your chat ID using [RawDataBot](https://t.me/raw_info_bot).
 
 There are three required fields. `App Key`, `Content`, `Chat ID`. `Content` is the message you want to send，the relationship corresponding to the Telegram is as follows:
 
-| Name    | Name in Telegram | 
+| Name    | Name in Telegram |
 |---------|------------------|
 | App Key | API Token        |
 | Chat ID | ChatID           |
