@@ -49,8 +49,8 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY}}
-          git-config-name: ${{ secrets.GIT_NAME }}
-          git-config-email: ${{ secrets.GIT_EMAIL }}
+          git-config-name: ${{ secrets.GH_NAME }}
+          git-config-email: ${{ secrets.GH_EMAIL }}
           repository-name: casdoor/casdoor.github.io
           branch: master # The deploy branch.
           folder: build # The deploy folder.
