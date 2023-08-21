@@ -41,7 +41,7 @@ Learn how to use `Casdoor.Client` SDK for Unity 3D mobile development by looking
 - `git clone git@github.com:casdoor/casdoor-unity-example.git`
 - Open the newly downloaded code in `Unity Hub` and run it.
 
-### After running, you will see the following interfaces:
+### After running, you will see the following interfaces
 
 #### Login with username and password
 
