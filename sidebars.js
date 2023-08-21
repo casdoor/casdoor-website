@@ -364,11 +364,11 @@ module.exports = {
         },
         {
           type: "category",
-          label: "C-Sharp",
+          label: "C#",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
-            "integration/C-Sharp/Unity",
+            "integration/C%23/Unity",
           ],
         },
         {

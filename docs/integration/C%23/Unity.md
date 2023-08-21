@@ -17,7 +17,9 @@ After a successful deployment, you need to ensure:
 
 Alternatively, you can use the [official casdoor demo station](https://door.casdoor.com/) for a quick start.
 
-## Step2. Import [Casdoor.Client](https://github.com/casdoor/casdoor-dotnet-sdk/tree/master/src/Casdoor.Client) for `.NET` in [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk)
+## Step2. Import Casdoor.Client
+
+Import [Casdoor.Client](https://github.com/casdoor/casdoor-dotnet-sdk/tree/master/src/Casdoor.Client) for `.NET` in [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk).
 
 An optional method is as follows:
 
@@ -27,29 +29,21 @@ An optional method is as follows:
 
 Now you can import the `net462` folder into your Unity project through the method shown in the figure below. Of course, you can also choose folders of other versions.
 
-![import-sdk](/img/integration/C-Sharp/Unity/import-sdk.png)
+![import-sdk](/img/integration/C%23/Unity/import-sdk.png)
 
-## Step3. Use `Casdoor.Client` SDK for Unity development
+## Step3. Usage
 
 Learn how to use `Casdoor.Client` SDK for Unity 3D mobile development by looking at [casdoor-unity-example](https://github.com/casdoor/casdoor-unity-example).
 
-## [casdoor-unity-example](https://github.com/casdoor/casdoor-unity-example)
+After running casdoor-unity-example, you will see the following interfaces:
 
-### Quick Start
-
-- download the code
-- `git clone git@github.com:casdoor/casdoor-unity-example.git`
-- Open the newly downloaded code in `Unity Hub` and run it.
-
-### After running, you will see the following interfaces
-
-#### Login with username and password
+- Login with username and password:
 
 |                                                          **iOS**                                                          |                                                            **Android**                                                            |
 |:-------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------:|
 | <img src="https://github.com/casdoor/casdoor-unity-example/blob/master/iOS-gif.gif?raw=true" alt="iOS-gif" width="250" /> | <img src="https://github.com/casdoor/casdoor-unity-example/blob/master/Android-gif.gif?raw=true" alt="Android-gif" width="250" /> |
 
-#### Login with the casdoor web page
+- Login with the casdoor web page:
 
 |                                                              **iOS**                                                              |                                                                **Android**                                                                |
 |:---------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------:|
