@@ -364,6 +364,15 @@ module.exports = {
         },
         {
           type: "category",
+          label: "C-Sharp",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "integration/C-Sharp/Unity",
+          ],
+        },
+        {
+          type: "category",
           label: "Go",
           collapsed: true,
           link: {type: "generated-index"},
