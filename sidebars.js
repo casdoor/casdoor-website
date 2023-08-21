@@ -364,6 +364,15 @@ module.exports = {
         },
         {
           type: "category",
+          label: "C#",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "integration/C%23/Unity",
+          ],
+        },
+        {
+          type: "category",
           label: "Go",
           collapsed: true,
           link: {type: "generated-index"},
