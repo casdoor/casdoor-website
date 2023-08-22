@@ -356,7 +356,10 @@ module.exports = {
           type: "category",
           label: "C++",
           collapsed: true,
-          link: {type: "generated-index"},
+          link: {
+            type: "generated-index",
+            slug: "/category/cpp",
+          },
           items: [
             "integration/C++/Nginx",
             "integration/C++/Envoy",
@@ -366,9 +369,12 @@ module.exports = {
           type: "category",
           label: "C#",
           collapsed: true,
-          link: {type: "generated-index"},
+          link: {
+            type: "generated-index",
+            slug: "/category/csharp",
+          },
           items: [
-            "integration/C%23/Unity",
+            "integration/CSharp/Unity",
           ],
         },
         {
