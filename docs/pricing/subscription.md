@@ -37,13 +37,6 @@ Every Subscription has these properties:
 - `Plan` : Related Plan.
 - `Payment` : Related Payment.
 - `User` : The user who hold this Subscription.
-- `State` :
-    Currently, the Subscription has the following states:
-    - `Pending` : The Payment is still under processing.
-    - `Error`
-    - `Suspended` : Suspended by the admin.
-    - `Active`
-    - `Upcoming`
-    - `Expired`
+- `State` : Currently, the Subscription has the following states: `Pending`, `Error`, `Suspended`, `Active`, `Upcoming`, `Expired`.
 
 ![subscription edit](/img/pricing/sub_edit.png)
