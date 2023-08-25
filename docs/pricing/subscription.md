@@ -38,6 +38,7 @@ Every Subscription has these properties:
 - `Payment` : Related Payment.
 - `User` : The user who hold this Subscription.
 - `State` :
+    Currently, the Subscription has the following states:
     - `Pending` : The Payment is still under processing.
     - `Error`
     - `Suspended` : Suspended by the admin.
