@@ -1,30 +1,40 @@
 ---
 title: Plan
-description: Casdoor plan overview
-keywords: [pricing]
-authors: [isulimanov]
+description: Casdoor Plan overview
+keywords: [Plan]
+authors: [isulimanov, Chinoholo0807]
 ---
 
-`Plan` - describe list of application's features with own name and price.
+`Plan` describes list of application's features with own name and price.
 
-Plan features depends on Casdoor `role` with set of `permissions`.
+`Plan` features depends on Casdoor `Role` with set of `Permissions`.
 
-That allow to describe plan's features independ on naming and price.
-For example: plan may has diffrent prices depends on county or date.
+That allow to describe `Plan`'s features independ on naming and price.
+For example: `Plan` may has diffrent prices depends on county or date.
 
-Picture below describes relation between Plan and role.
+Picture below describes relation between `Plan` and `Role`.
 
-![pricing.png](/img/pricing/plan.png)
+![plan](/img/pricing/plan.png)
 
 ## Plan properties
 
-Every plan has these properties:
+Every `Plan` has these properties:
 
-* `Owner`
+* `Organization`
 * `Name`
 * `CreatedTime`
 * `DisplayName`
-* `IsEnabled`
-* `PricePerMonth`
-* `PricePerYear`
 * `Role`
+* `PricePerMonth`
+* `Currency`
+* `PaymentProviders` : User can buy the Plan through the Payment providers. To learn how to configure a Payment provider, see [Payment provider](/docs/provider/payment/overview).
+* `IsEnabled`
+
+![plan edit](/img/pricing/plan_edit.png)
+
+Whenever a `Plan` is created through Casdoor, an related `Product` is automatically created.
+
+The information configured on the `Plan` will be automatically synchronized to the `Product`.
+When users buy a `Plan`, they are essentially buying the related `Product` of the selected `Plan`.
+
+![related prodcut](/img/pricing/related_product.png)
