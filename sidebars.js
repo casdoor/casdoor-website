@@ -115,6 +115,7 @@ module.exports = {
         "application/ui-customization",
         "application/specify-login-organization",
         "application/tags",
+        "application/invitation-code",
       ],
     },
     {
