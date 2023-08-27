@@ -5,38 +5,38 @@ keywords: [Gitee, OAuth]
 authors: [ErikQQY]
 ---
 
-To set up Gitee OAuth provider, please go to [Gitee developer](https://gitee.com/oauth/applications), if you have not created applications before, the gitee workbench would like this:
+To set up the Gitee OAuth provider, please go to the [Gitee developer](https://gitee.com/oauth/applications) website. If you haven't created applications before, the Gitee workbench will look like this:
 
 ![Gitee Workbench](/img/providers/OAuth/giteebench.png)
 
-Then you can create your gitee app.
+You can then create your Gitee app.
 
 ![Gitee](/img/providers/OAuth/gitee.png)
 
-Fill in the **name**, **description**, **homepage** and **callback URL** and carefully choose the **permissions**.
+Enter the **name**, **description**, **homepage**, and **callback URL**, and carefully choose the **permissions**.
 
-:::info Set authorization callback URL correctly
+:::info Set the authorization callback URL correctly
 
-In Gitee OAuth config, the `authorization callback URL` must be **your Casdoor's callback url**, and the `Redirect URL` in Casdoor should be **your application callback url**
+In the Gitee OAuth config, the `authorization callback URL` must be **your Casdoor's callback URL**, and the `Redirect URL` in Casdoor should be **your application's callback URL**.
 
-For more details, please read [App config](/docs/application/config#further-understanding)
+For more details, please read the [App config](/docs/application/config#further-understanding) guide.
 
 :::
 
-Then you can create you gitee app and get ```Client ID``` and ```Client Secrets``` now!
+After creating the Gitee app, you can obtain the ```Client ID``` and ```Client Secrets```!
 
 ![Gitee Client](/img/providers/OAuth/giteeclient.png)
 
-Add a Gitee OAuth provider and fill the ```Client ID``` and ```Client Secrets``` in your Casdoor.
+Add a Gitee OAuth provider and enter the ```Client ID``` and ```Client Secrets``` in your Casdoor.
 
 ![Gitee Provider](/img/providers/OAuth/giteeprovider.png)
 
-Now you can use Gitee as third party service to complete authentication!
+Now you can use Gitee as a third-party service to complete authentication!
 
 :::caution
 
-Since Casdoor needs to obtain the user's email, the email option must be checked, otherwise it will cause scope authorization errors.
+Since Casdoor needs to obtain the user's email, the email option must be checked; otherwise, it will cause scope authorization errors.
 
-![gitee scope](/img/giteescope.jpg)
+![Gitee scope](/img/giteescope.jpg)
 
 :::

@@ -4,48 +4,43 @@ description: Using Casdoor as SAML IdP
 keywords: [SAML, IdP]
 ---
 
-Casdoor now can be used as SAML IdP. Up to now the Casdoor has supported the main feature of SAML 2.0 .
+Casdoor can now be used as a SAML IdP. Up to this point, Casdoor has supported the main features of SAML 2.0.
 
 ### Configuration in SP
 
-Generally, SP needs the `Single Sign-On`, `Issuer` and `Public Certificate` three required fields. Most of the SP can get these fields by uploading the XML Metadata file or the XML Metadata URL to autocomplete.
+In general, the SP requires three required fields: `Single Sign-On`, `Issuer`, and `Public Certificate`. Most SPs can obtain these fields by uploading the XML Metadata file or the XML Metadata URL for autocompletion.
 
-The metadata of SAML endpoint in Casdoor is `<Endpoint of casdoor>/api/saml/metadata?application=admin/<application name>`.
-Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an application called `app-built-in`. The XML Metadata endpoint will be:
+The metadata of the SAML endpoint in Casdoor is `<Endpoint of casdoor>/api/saml/metadata?application=admin/<application name>`. Suppose the endpoint of Casdoor is `https://door.casdoor.com`, and it contains an application called `app-built-in`. The XML Metadata endpoint will be:
 
 ```text
 https://door.casdoor.com/api/saml/metadata?application=admin/app-built-in
 ```
 
-And you can also find the metadata in the application edit page. Click the button to copy the URL and paste it in browser to download the XML Metadata.
+You can also find the metadata in the application edit page. Click the button to copy the URL and paste it into the browser to download the XML Metadata.
 
 ![metadata](/img/how-to-connect/saml/saml_metadata.png)
 
 ### Configuration in Casdoor IdP
 
-Casdoor supports both GET and POST `SAMLResponse`. Casdoor need to know what types of request the SP supports, when Casdoor sends the `SAMLResponse` to SP. You need to configure the application in casdoor based on the `SAMLResponse` type supported by your SP.
+Casdoor supports both GET and POST `SAMLResponse`. Casdoor needs to know what types of requests the SP supports when Casdoor sends the `SAMLResponse` to the SP. You need to configure the application in Casdoor based on the `SAMLResponse` type supported by your SP.
 
 :::info
-If you fill the `Reply URL`, Casdoor will send the `SAMLResponse` by **POST** Request. If the Reply URL is empty, Casdoor will use **GET** request.
-You might wonder how casdoor knows the `Reply URL` of the SP, if the `Reply URL` is empty. Actually, Casdoor can get the
-URL called `AssertionConsumerServiceURL` by parsing the `SAMLRequest`. And send the request with `SAMLResponse` to `AssertionConsumerServiceURL`.
 
-The `Reply URL` will overwrites the `AssertionConsumerServiceURL` in `SAMLRequest`.
+If you fill in the `Reply URL`, Casdoor will send the `SAMLResponse` by **POST** Request. If the Reply URL is empty, Casdoor will use **GET** request. You might wonder how Casdoor knows the `Reply URL` of the SP if the `Reply URL` is empty. Actually, Casdoor can get the URL called `AssertionConsumerServiceURL` by parsing the `SAMLRequest` and send the request with `SAMLResponse` to `AssertionConsumerServiceURL`. The `Reply URL` will overwrite the `AssertionConsumerServiceURL` in `SAMLRequest`.
+
 :::
 
-- **Reply URL** Type in the URL of the ACS verifying the SAML response.
+- **Reply URL**: Type in the URL of the ACS verifying the SAML response.
   
   ![Reply URL](/img/how-to-connect/saml/saml_replyURL.png)
 
-- **Redirect URL** Type in a unique name. This may be called `Audience` or `Entity ID` in your SP. Make sure you fill the
-  same `Redirect URL` here as in your SP.
+- **Redirect URL**: Type in a unique name. This may be called `Audience` or `Entity ID` in your SP. Make sure you fill the same `Redirect URL` here as in your SP.
   
   ![Entity ID](/img/how-to-connect/saml/saml_entityId.png)
 
 ### User profile
 
-After logged in successfully, the user profile in the `SAMLResponse` Casdoor returned has three fields. The attributes in
-the xml and the attributes of the user in casdoor are mapped as follows:
+After successfully logging in, the user profile in the returned `SAMLResponse` from Casdoor has three fields. The attributes in the XML and the attributes of the user in Casdoor are mapped as follows:
 
 | XML Attribute Name |  User field   |
 |:------------------:|:-------------:|
@@ -57,9 +52,9 @@ See <https://en.wikipedia.org/wiki/SAML_2.0> for more information about SAML and
 
 ### An example
 
-The [gosaml2](https://github.com/russellhaering/gosaml2) is a SAML 2.0 implementation for Service Providers based on etree and goxmldsig, a pure Go implementation of XML digital signatures. And we use this library to test the SAML 2.0 in Casdoor as below.
+[gosaml2](https://github.com/russellhaering/gosaml2) is a SAML 2.0 implementation for Service Providers based on etree and goxmldsig, a pure Go implementation of XML digital signatures. We use this library to test the SAML 2.0 in Casdoor as shown below.
 
-Suppose you can access Casdoor through `http://localhost:7001/`, and your Casdoor contains an application called `app-built-in` which belongs to an organization called `built-in`. The URLs, `http://localhost:6900/acs/example` and `http://localhost:6900/saml/acs/example`, should be added to the Redirect URLs in `app-built-in`.
+Suppose you can access Casdoor through `http://localhost:7001/`, and your Casdoor contains an application called `app-built-in`, which belongs to an organization called `built-in`. The URLs, `http://localhost:6900/acs/example` and `http://localhost:6900/saml/acs/example`, should be added to the Redirect URLs in `app-built-in`.
 
 ```go
 import (
@@ -189,7 +184,7 @@ func main() {
 }
 ```
 
-Run the above codes and the console will display the following message.
+Run the above code, and the console will display the following message.
 
 ```text
 Visit this URL To Authenticate:
@@ -198,10 +193,10 @@ Supply:
   SP ACS URL      : http://localhost:6900/v1/_saml_callback
 ```
 
-Click the URL to authenticate, the login page of Casdoor will display.
+Click the URL to authenticate, and the login page of Casdoor will be displayed.
 
 ![login](/img/how-to-connect/saml/saml_login.png)
 
-You will get the response messages as below after authenticating.
+After authenticating, you will receive the response messages as shown below.
 
 ![response](/img/how-to-connect/saml/saml_response.png)

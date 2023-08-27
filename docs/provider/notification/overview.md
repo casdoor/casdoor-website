@@ -5,9 +5,9 @@ keywords: [Notification]
 authors: [UsherFall]
 ---
 
-Casdoor can be configured to send notification message to Notification Provider
+Casdoor can be configured to send notification messages using various Notification providers.
 
-Now, Casdoor supports many Notification providers. Here are the providers Casdoor supports:
+Currently, Casdoor supports multiple Notification providers. Here are the providers that Casdoor supports:
 
 |  Provider   |                                  Logo                                   |
 |:-----------:|:-----------------------------------------------------------------------:|

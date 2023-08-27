@@ -1,27 +1,29 @@
 ---
-title: Pricing 
-description: Casdoor Pricing overview
+title: Pricing Overview
+description: An Overview of Casdoor Pricing
 keywords: [Pricing]
 authors: [isulimanov, Chinoholo0807]
 ---
 
-`Pricing` contains one or more `Plan` and provide ability to sign up to `Application` with selected `Plan`.
+The `Pricing` feature contains one or more `Plan` options, allowing users to sign up for `Applications` at different price-points.
 
-General flow might looks like on picture below:
+The general flow of pricing options is depicted in the image below:
 
-![pricing](/img/pricing/pricing_flow.png)
+![Pricing Flow](/img/pricing/pricing_flow.png)
 
-## Pricing properties
+## Pricing Properties
 
-Every `Pricing` has these properties:
+Every `Pricing` subscription has the following properties:
 
 * `Organization`
 * `Name`
 * `CreatedTime`
 * `DisplayName`
 * `Description`
-* `Plans` : Array of Plans.
+* `Plans`: An array of Plans.
 * `IsEnabled`
 * `Application`
 
-![pricing edit](/img/pricing/pricing_edit.png)
+To see an example of the pricing interface, refer to the image below:
+
+![Pricing Edit](/img/pricing/pricing_edit.png)

@@ -7,42 +7,40 @@ authors: [leo220yuyaodog]
 
 ## Using Casdoor for authentication in BookStack
 
-**[BookStack](https://www.bookstack.cn)**  is an open source book and document sharing site,
-as well as an open source application developed using the Go language to help you better achieve document reading management.
+**[BookStack](https://www.bookstack.cn)** is an open-source book and document sharing site, as well as an open-source application developed using the Go language to help you better manage document reading.
 
-Bookstack-casdoor has been integrated with **Casdoor**, and you can now start quickly with a simple configuration.
+BookStack-casdoor has been integrated with **Casdoor**, and you can now quickly get started with a simple configuration.
 
-### Step1. Create an Casdoor application
+### Step 1: Create a Casdoor application
 
-Go to your Casdoor and add your new application **BookStack**. Here is an **example** of creating the BookStack application in Casdoor.
+Go to your Casdoor and add a new application called **BookStack**. Here is an example of creating the BookStack application in Casdoor.
 
 ![bookstack_config.png](/img/integration/go/bookstack/config.png)
-Please remember the `Name`, `Organization`, `client ID`, and `client Secret`. You will use them in the next step.
 
-### Step2. Configure Casdoor Login
+Please remember the `Name`, `Organization`, `client ID`, and `client Secret`. You will need them in the next step.
 
-Now, please move to the BookStack.  Find the file: `oauth.conf.example`.
+### Step 2: Configure Casdoor Login
 
-Rename `oauth.conf.example` to `oauth.conf` and **modify** the configuration. The content of which by default is:
+Next, navigate to BookStack and find the file `oauth.conf.example`.
+
+Rename `oauth.conf.example` to `oauth.conf` and **modify** the configuration. By default, the content is as follows:
 
 ```ini
 [oauth]
-
-casdoorOrganization =  <"Organization">
-casdoorApplication = "bookstack"              
-casdoorEndpoint = http://localhost:8000 
-clientId =   <client ID>
-clientSecret =  <client Secret>
-redirectUrl = http://localhost:8181/login/callback 
-
+casdoorOrganization = "<Organization>"
+casdoorApplication = "bookstack"
+casdoorEndpoint = http://localhost:8000
+clientId = <client ID>
+clientSecret = <client Secret>
+redirectUrl = http://localhost:8181/login/callback
 ```
 
-### Step3. Fill in the `redirectUrl` in Casdoor
+### Step 3: Fill in the `redirectUrl` in Casdoor
 
-The last step, go back to the page where you added the **BookStack application**, and fill in the `Redirect URLs`.
-Make sure the `Redirect URL` is the same as the `redirectUrl` in the file `oauth.conf`.
+In the final step, go back to the page where you added the **BookStack application** and fill in the `Redirect URLs`. Make sure the `Redirect URL` is the same as the `redirectUrl` in the `oauth.conf` file.
+
 ![bookstack_callback](/img/integration/go/bookstack/callback.png)
 
-**Now that you've done all the configuration for Casdoor!**
+**Now that you have completed the Casdoor configuration!**
 
-You can go back to your BookStack and experience using Casdoor for login authentication once the BookStack has been successfully deployed.
+You can now go back to your BookStack and experience using Casdoor for login authentication once you have successfully deployed BookStack.

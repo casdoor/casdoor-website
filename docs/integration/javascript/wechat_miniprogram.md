@@ -7,69 +7,68 @@ authors: [Steve0x2a]
 
 :::info
 
-Casdoor supports WeChat Mini Program after version 1.41.0
+Casdoor now supports WeChat Mini Program starting from version 1.41.0.
 
 :::
 
 ## Introduction
 
-Since WeChat Mini Program does not support standardized OAuth, it cannot jump to the self-host Casdoor webpage for login.
-Therefore, the process of using Casdoor for WeChat Mini Program is different from that of ordinary programs.
+Since WeChat Mini Program does not support standardized OAuth, it cannot redirect to the self-hosted Casdoor webpage for login. Therefore, the process of using Casdoor for WeChat Mini Program is different from that of regular programs.
 
-This document will talk about how to access Casdoor to WeChat Mini Program. You can find the example on GitHub here: [casdoor-wechat-miniprogram-example](https://github.com/casdoor/casdoor-wechat-miniprogram-example).
-More detailed information can be found in the WeChat Mini Program [login document](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html).
+This document will explain how to integrate Casdoor into WeChat Mini Program. You can find an example for this integration on GitHub here: [casdoor-wechat-miniprogram-example](https://github.com/casdoor/casdoor-wechat-miniprogram-example).
+For more detailed information, please refer to the WeChat Mini Program [login document](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html).
 
->The following are some of the names in the configuration:
+>The configuration includes the following names:
 >
->`CASDOOR_HOSTNAME`: Domain name or IP where Casdoor server is deployed. e.g., `https://door.casbin.com`.
+>`CASDOOR_HOSTNAME`: The domain name or IP address where the Casdoor server is deployed, e.g., `https://door.casbin.com`.
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the [Casdoor](/docs/basic/server-installation) should be deployed.
+Firstly, the [Casdoor server](/docs/basic/server-installation) should be deployed.
 
-After a successful deployment, you need to ensure:
+After successfully deploying Casdoor, you need to ensure:
 
-1. Casdoor can be logged in and used normally.
+1. Casdoor can be accessed and used normally.
 2. Set Casdoor's `origin` value (conf/app.conf) to `CASDOOR_HOSTNAME`.
 ![Casdoor conf](/img/integration/casdoor_origin.png)
 
-## Step2. Configure Casdoor application
+## Step 2: Configure Casdoor Application
 
-1. Create a wechat idp in casdoor and fill your `APPID` and `APPSECRET` given to you by WeChat Mini Program develop platform:
-![WeChat_MiniProgram.png](/img/integration/javascript/wechat_miniprogram/WeChat_MiniProgram.png)
-2. Create or use an existing Casdoor application.
-3. Add the idp added above to the application you want to use.
+1. Create a WeChat IDP in Casdoor and provide the `APPID` and `APPSECRET` given to you by the WeChat Mini Program development platform.
+   ![WeChat_MiniProgram.png](/img/integration/javascript/wechat_miniprogram/WeChat_MiniProgram.png)
+2. Create a new Casdoor application or use an existing one.
+3. Add the IDP created in the previous step to the application you want to use.
 
 :::info Tips
 
-For convenience, casdoor will read the first WeChat type idp in the application as the WeChat Mini Program idp by default.
+For convenience, Casdoor will treat the first WeChat type IDP in the application as the WeChat Mini Program IDP by default.
 
-So if you want to use the WeChat Mini Program in this app, don't add multiple WeChat type idp in one app.
+Therefore, if you want to use WeChat Mini Program in this app, do not add multiple WeChat type IDPs in one app.
 
 :::
 
-## Step3. Write WeChat MiniProgram code
+## Step 3: Write WeChat MiniProgram Code
 
-WeChat Mini Program provides an API to login internally and gets the Code. All you need to do is to send this Code to Casdoor.
-Casdoor will use this Code to get some information from WeChat server (such as OpenID, SessionKey, etc.).
+WeChat Mini Program provides an API to internally log in and obtain the code. The code should then be sent to Casdoor.
+Casdoor will use this code to retrieve information (such as OpenID and SessionKey) from the WeChat server.
 
-The following code shows how to accomplish the above process:
+The following code demonstrates how to accomplish the above process:
 
 ```js
-// login in mini program
+// Login in mini program
 wx.login({
   success: res => {
-    // this is your login code you need to send to casdoor
+    // This is the login code that needs to be sent to Casdoor
     console.log(res.code)
     
     wx.request({
       url: `${CASDOOR_HOSTNAME}/api/login/oauth/access_token`,
       method: "POST",
       data: {
-        "tag": "wechat_miniprogram", // required
+        "tag": "wechat_miniprogram", // Required
         "client_id": "6825f4f0af45554c8952",
         "code": res.code,
-        "username": this.data.userInfo.nickName, // update user profile, when you login.
+        "username": this.data.userInfo.nickName, // Update user profile when you log in.
         "avatar": this.data.userInfo.avatarUrl,
       },
       header:{
@@ -77,20 +76,20 @@ wx.login({
       },
       success: res => {
         console.log(res)
-        this.globalData.accessToken = res.data.access_token // get casdoor's accessToken
+        this.globalData.accessToken = res.data.access_token // Get Casdoor's access token
       }
     })
   }
 })
 ```
 
-It is worth mentioning that the `tag` parameter is mandatory and you need to make casdoor understand that this is a request from the WeChat Mini Program.
+It is important to note that the `tag` parameter is mandatory to inform Casdoor that this is a request from the WeChat Mini Program.
 
-The above code passes in the username and avatar uri of the WeChat Mini Program user while logging in. You can also pass these two parameters without passing them first, and then pass them to casdoor after the login is successful and accessToken is obtained:
+The above code includes the username and avatar URI of the WeChat Mini Program user during login. You can choose to pass these two parameters separately and then pass them to Casdoor after a successful login and obtaining the access token:
 
 ```js
 wx.getUserProfile({
-  desc: 'share your info to casdoor', 
+  desc: 'share your info to Casdoor', 
   success: (res) => {
     this.setData({
       userInfo: res.userInfo,
@@ -98,7 +97,7 @@ wx.getUserProfile({
     })
     console.log(app.globalData.accessToken)
     wx.request({
-      url: `${CASDOOR_HOSTNAME}/api/update-user`, // casdoor uri
+      url: `${CASDOOR_HOSTNAME}/api/update-user`, // Casdoor URL
       method: "POST",
       data: {
         "owner": "test",
@@ -118,10 +117,10 @@ wx.getUserProfile({
 })
 ```
 
-Also, you can use accessToken as a bearer token for any Casdoor operation you want.
+Additionally, you can use the access token as a bearer token for any Casdoor operation you require.
 
 :::info Tips
 
-Currently Casdoor is unable to bind existing accounts to the WeChat Mini Program users. After Casdoor gets the openID from WeChat if this id does not exist, a new user will be created, and if it exists, the old one will be used.
+Currently, Casdoor is unable to bind existing accounts to WeChat Mini Program users. After Casdoor retrieves the OpenID from WeChat, it will either create a new user if the ID does not exist, or use the existing user if it does.
 
 :::

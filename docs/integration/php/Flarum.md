@@ -1,48 +1,48 @@
 ---
 title: Flarum
-description:  Using OAuth2 to connect various applications, like Flarum
+description: Using OAuth2 to connect various applications, like Flarum
 keywords: [OAuth2, Flarum, IDP]
 authors: [jakiuncle]
 ---
 
-[Casdoor](/docs/basic/server-installation) can use OAuth2 to connect various applications. Here we will use [Flarum](https://flarum.org/) as an example to show you how to use OAuth2 to connect to your applications.
+[Casdoor](/docs/basic/server-installation) can use OAuth2 to connect various applications. In this example, we will show you how to use OAuth2 to connect Flarum to your applications.
 
-The following are some of the names in the configuration:
+Here are some configuration names you will need:
 
-`CASDOOR_HOSTNAME`: Domain name or IP where Casdoor server is deployed.
+`CASDOOR_HOSTNAME`: The domain name or IP where the Casdoor server is deployed.
 
-`Flarum_HOSTNAME`: Domain name or IP where Flarum is deployed.
+`Flarum_HOSTNAME`: The domain name or IP where Flarum is deployed.
 
-## Step1. Deploy Casdoor and Flarum
+## Step 1: Deploy Casdoor and Flarum
 
-Firstly, the [Casdoor](/docs/basic/server-installation) and [Flarum](https://flarum.org/) should be deployed.
+First, deploy [Casdoor](/docs/basic/server-installation) and [Flarum](https://flarum.org/).
 
-After a successful deployment, you need to ensure:
+After a successful deployment, make sure:
 
-1. Download the Flarum plugin [FoF Passport](https://github.com/FriendsOfFlarum/passport)
+1. You have downloaded the Flarum plugin [FoF Passport](https://github.com/FriendsOfFlarum/passport).
 2. Casdoor can be logged in and used normally.
-3. You can set CASDOOR_HOSTNAME = `http://localhost:8000`. When deploy Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+3. You can set CASDOOR_HOSTNAME = `http://localhost:8000` when deploying Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
 
-## Step2. Configure Casdoor application
+## Step 2: Configure Casdoor application
 
-1. Create or use an existing Casdoor application.
-2. Find a redirect url: `<CASDOOR_HOSTNAME>/auth/passport`
-3. Add your redirect url to casdoor application: ![Redirect](/img/integration/php/Flarum/RedirectURL.png)
+1. Create a new Casdoor application or use an existing one.
+2. Find the redirect URL: `<CASDOOR_HOSTNAME>/auth/passport`.
+3. Add the redirect URL to the Casdoor application: ![Redirect](/img/integration/php/Flarum/RedirectURL.png)
 
-Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above, we will use them in the next step.
+On the application settings page, you will find two values: `Client ID` and `Client secret`. We will use these values in the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
+Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**. You will see the OIDC configuration of Casdoor.
 
-## Step3. Configure Flarum
+## Step 3: Configure Flarum
 
-1. You should install a plugin [FoF Passport](https://github.com/FriendsOfFlarum/passport)
-2. You should config this app ![configure](/img/integration/php/Flarum/ssoConfigure.png)
-3. You can find Client Id and Client Secret in Casdoor application page.
+1. Install the plugin [FoF Passport](https://github.com/FriendsOfFlarum/passport).
+2. Configure the app: ![configure](/img/integration/php/Flarum/ssoConfigure.png)
+3. Find the Client ID and Client Secret in the Casdoor application page.
 
-- `Token server url`: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
-- `Authorization server url`: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
-- `UserInfo server url`: **http://`CASDOOR_HOSTNAME`/api/get-account**
+- `Token server URL`: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
+- `Authorization server URL`: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
+- `UserInfo server URL`: **http://`CASDOOR_HOSTNAME`/api/get-account**
 - `Scopes`: `address phone openid profile offline_access email`
 
-Log out of Flarum, and test SSO.
+Log out of Flarum and test SSO.
 ![Flarum Login](/img/integration/php/Flarum/login.gif)

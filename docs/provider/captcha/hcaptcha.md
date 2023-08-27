@@ -5,28 +5,28 @@ keywords: [hCaptcha]
 authors: [Resulte]
 ---
 
-hCaptcha is a captcha service provider which is similar to reCAPTCHA. You can see more details from this [link](https://www.hcaptcha.com/).
+hCaptcha is a captcha service provider, similar to reCAPTCHA. You can find more details about hCaptcha [here](https://www.hcaptcha.com/).
 
 ## Create an API key pair
 
-To start using hCaptcha, you need to [sign up for an API key pair](https://www.hcaptcha.com/) for your site. You can find your site key on your [profile page](https://dashboard.hcaptcha.com/settings).
+To start using hCaptcha, you need to sign up for an API key pair for your site. You can obtain your site key on your [profile page](https://dashboard.hcaptcha.com/settings).
 
-Then you can get a site key and a secret key.
+Once you have signed up, you will receive a site key and a secret key.
 
 ## Configure in Casdoor
 
-Create a new provider in Casdoor.
+To configure hCaptcha in Casdoor, create a new provider.
 
-Select category as  **Captcha** , type as  **hCaptcha** . And you need to fulfill the site key and the secret key which is created by last step.
+Select the category as **Captcha** and the type as **hCaptcha**. Fill in the site key and secret key obtained in the previous step.
 
-![Recaptcha provider](/img/providers/captcha/hcaptcha_provider.png)
+![hCaptcha provider](/img/providers/captcha/hcaptcha_provider.png)
 
-And you can click **Preview** botton to preview the style of this captcha.
+You can click the **Preview** button to see how the captcha style will look.
 
-![Recaptcha preview](/img/providers/captcha/hcaptcha_preview.png)
+![hCaptcha preview](/img/providers/captcha/hcaptcha_preview.png)
 
-## Applied in application
+## Apply in your application
 
-Edit the application you want to configure in Casdoor. Select the provider just added and click the button **Save**.
+Go to the application you want to configure in Casdoor. Select the provider you just added and click the **Save** button.
 
-![Recaptcha provider app](/img/providers/captcha/hcaptcha_provider_app.png)
+![hCaptcha provider app](/img/providers/captcha/hcaptcha_provider_app.png)

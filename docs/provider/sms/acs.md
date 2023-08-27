@@ -1,33 +1,33 @@
 ---
 title: Azure ACS
-description: Using ACS as a SMS provider for Casdoor
+description: Using ACS as an SMS provider for Casdoor
 keywords: [ACS, SMS, provider]
 authors: [UsherFall]
 ---
 
-## Obtain the necessary information in Azure
+## Obtaining the necessary information in Azure
 
-There are four required fields. `Client secret`, `Sender number`, `Template code`, `Provider Url`. I will show you how to obtain these infomations from Azure ACS.
+There are four required fields: `Client secret`, `Sender number`, `Template code`, and `Provider Url`. I will show you how to obtain this information from Azure ACS.
 
-- `Client secret
+- `Client secret`
 
-In Communication Service, you can create User Access Token which is the `Client secret` in Casdoor.
+In Communication Service, you can create a User Access Token, which is the `Client secret` in Casdoor.
 
 ![azureToken.png](/img/providers/sms/azureToken.png)
 
 - Sender number
 
-`Sender number` is the phone number you create in Communication Service
+The `Sender number` is the phone number you create in Communication Service.
 
 ![azurePhone.png](/img/providers/sms/azurePhone.png)
 
 - Provider Url
 
-`Provider Url` is the endpoint in Communication Service
+The `Provider Url` is the endpoint in Communication Service.
 
 ![azureUrl.png](/img/providers/sms/azureUrl.png)
 
-### Config Casdoor provider
+### Configure Casdoor provider
 
 The `template code` is the message you want to send. Enter your phone number in `SMS Test` to test.
 

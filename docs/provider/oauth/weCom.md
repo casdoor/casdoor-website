@@ -7,40 +7,38 @@ authors: [leo220yuyaodog]
 
 ## Introduction
 
-The WeCom provides the authorized login method of OAuth, which can obtain members' identity information from
-the webpage opened by the WeCom terminal, eliminating the need for login.
+WeCom provides an authorized login method using OAuth, which allows you to obtain members' identity information directly from the webpage opened by the WeCom terminal, eliminating the need for a login process.
 
-There are two different types of applications: **internal** applications and **third-party** applications.
+There are two types of applications: **internal** applications and **third-party** applications.
 
-## Basic
+## Basic Configuration
 
-To configure a WeCom provider, the following table describes the required parameters.
+To configure a WeCom provider, you need to provide the following parameters:
 
 **Parameter Description**:
 
-| Parameter| Description|
-|:---------: | :--------------------: |
-|Sub type|   Internal or Third-party    |
-| Method|    Silent or Normal           |
-|Client ID|    The enterprise  CorpID  |
-|Client secret|  The enterprise  CorpSecret  |
-|Agent ID|      Application agentid           |
+| Parameter    | Description                                   |
+|:------------:|:--------------------------------------------:|
+| Sub type     | Internal or Third-party                       |
+| Method       | Silent or Normal                              |
+| Client ID    | The enterprise CorpID                         |
+| Client secret| The enterprise CorpSecret                      |
+| Agent ID     | Application agentid                           |
 
 :::info
 
-WeCom has two authorization methods. **Silent** authorization and **normal** authorization.
+WeCom supports two authorization methods: **Silent** authorization and **normal** authorization.
 
-**Silent authorization**: After the user clicks the link, the page is `redirect_URI? code=CODE&state=STATE`
+**Silent authorization**: After the user clicks the link, the page is redirected to `redirect_URI? code=CODE&state=STATE`
 
-**Normal authorization**: After the user clicks the link, a middle page is displayed for the user to choose whether to
-authorize or not. After the user confirms the authorization, go to `redirect_uri?code=CODE&state=STATE`
+**Normal authorization**: After the user clicks the link, a middle page is displayed for the user to choose whether to authorize or not. After the user confirms the authorization, they are redirected to `redirect_uri?code=CODE&state=STATE`
 
-For more details, please see [document](https://developer.work.weixin.qq.com/document/path/91119).
+For more details, please refer to the [official documentation](https://developer.work.weixin.qq.com/document/path/91119).
 
 :::
 
-## More
+## More Information
 
-For more information about internal application, please see [Internal application](https://developer.work.weixin.qq.com/document/path/91022).
+For more information about internal applications, please refer to the [Internal Application](https://developer.work.weixin.qq.com/document/path/91022) documentation.
 
-About Third-party application, please see [Third-party application](https://developer.work.weixin.qq.com/document/path/91120).
+For information about third-party applications, please refer to the [Third-Party Application](https://developer.work.weixin.qq.com/document/path/91120) documentation.

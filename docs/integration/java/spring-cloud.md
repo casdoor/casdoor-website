@@ -5,15 +5,15 @@ keywords: [Spring Cloud]
 authors: [leo220yuyaodog]
 ---
 
-Under the Spring Cloud microservice system, general authentication occurs at the gateway. Please refer to [casdoor-springcloud-gateway-example](/docs/integration/java/spring-cloud-gateway).
+In the Spring Cloud microservice system, general authentication occurs at the gateway. Please refer to [casdoor-springcloud-gateway-example](/docs/integration/java/spring-cloud-gateway) for more information.
 
 If you want to use Casdoor in a single service, you can refer to [casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example).
 
-No matter in the gateway layer or in the single service, both use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter).
+Whether it's in the gateway layer or in a single service, both use the [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter).
 
 ## What's more
 
-You can explore the following projects/docs to learn more about the integration of Java with Casdoor.
+You can explore the following projects/docs to learn more about integrating Java with Casdoor:
 
 - [casdoor-java-sdk](https://github.com/casdoor/casdoor-java-sdk)
 - [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter)

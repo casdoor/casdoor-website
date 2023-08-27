@@ -1,23 +1,25 @@
 ---
-title: Subscription 
-description: Casdoor Subscription overview
+title: Subscription
+description: Casdoor Subscription Overview
 keywords: [Subscription]
 authors: [isulimanov, Chinoholo0807]
 ---
 
-`Subscription` helps to manage user's selected `Plan` that make easy to control `Application`'s features access.
+The `Subscription` feature helps in managing a user's selected `Plan`, making it easy to control the access to `Application` features.
 
 :::tip
-Since each `Plan` based on `Role` you can assign Plan's Role to user and use enforce API for permission checking.  
+
+Since each `Plan` is based on a `Role`, you can assign the Plan's Role to a user and use the enforce API for permission checking.
+
 :::
 
-`Subscription` can be created in three ways:
+A `Subscription` can be created in three ways:
 
-- Manually by admin
-- Via the Pricing flow (After sign up a `paid-user` and buy the selected `Plan`)
+- Manually by an admin
+- Via the Pricing flow (after signing up as a `paid-user` and purchasing the selected `Plan`)
 - Via API
 
-The relation between `Pricing`, `Plan`, `Subscription`, `Product` and `Payment` is as follow:
+The relationship between `Pricing`, `Plan`, `Subscription`, `Product`, and `Payment` is as follows:
 
 ![relation](/img/pricing/relation.png)
 
@@ -30,13 +32,13 @@ Every Subscription has these properties:
 - `CreatedTime`
 - `DisplayName`
 - `Description`
-- `Duration` : Duration of Subscription.
-- `StartTime` : Starting time for Subscription to take effect.
-- `EndTime` : End time for Subscription to take effect.
-- `Pricing` : Related Pricing.
-- `Plan` : Related Plan.
-- `Payment` : Related Payment.
-- `User` : The user who hold this Subscription.
-- `State` : Currently, the Subscription has the following states: `Pending`, `Error`, `Suspended`, `Active`, `Upcoming`, `Expired`.
+- `Duration`: The duration of the Subscription.
+- `StartTime`: The starting time for the Subscription to take effect.
+- `EndTime`: The end time for the Subscription to take effect.
+- `Pricing`: The related Pricing.
+- `Plan`: The related Plan.
+- `Payment`: The related Payment.
+- `User`: The user who holds this Subscription.
+- `State`: Currently, the Subscription has the following states: `Pending`, `Error`, `Suspended`, `Active`, `Upcoming`, `Expired`.
 
 ![subscription edit](/img/pricing/sub_edit.png)

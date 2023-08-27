@@ -111,7 +111,7 @@ module.exports = {
         "application/overview",
         "application/terminology",
         "application/config",
-        "application/signup-items-tabel",
+        "application/signup-items-table",
         "application/ui-customization",
         "application/specify-login-organization",
         "application/tags",

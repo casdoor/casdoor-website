@@ -1,19 +1,17 @@
 ---
 title: Nginx
-description: use Nginx to reverse proxy your backend Go program, quickly start the Casdoor service
+description: Use Nginx to reverse proxy your backend Go program and quickly start the Casdoor service.
 keywords: [Nginx]
 authors: [ErikQQY]
 ---
 
-Although Casdoor is a front-end back-end separation architecture, in the production environment, the back-end program still provides static file services for front-end files. Therefore, you can use reverse proxy software such as [Nginx](https://www.nginx.com/) to proxy all traffic for the Casdoor domain and redirect it to the port monitored by the backend go program.
+Though Casdoor follows a front-end back-end separation architecture, in a production environment, the back-end program still provides static file services for front-end files. Hence, you can employ reverse proxy software like [Nginx](https://www.nginx.com/) to proxy all traffic for the Casdoor domain and redirect it to the port monitored by the backend Go program.
 
-In this chapter you will learn how to use Nginx to reverse proxy your backend Go program, and quickly start the Casdoor service.
+In this chapter, you will learn how to use Nginx to reverse proxy your backend Go program and quickly start the Casdoor service.
 
 ## 1. Build front end static files
 
-Now assume that you have downloaded Casdoor and completed the necessary configuration. If not, go to **Get started** section.
-
-You only needs to build static files, like this:
+Assuming you have downloaded Casdoor and completed the necessary configuration (if not, refer to the **Get started** section), you only need to build the static files as follows:
 
 ````mdx-code-block
 
@@ -41,19 +39,20 @@ yarn install && yarn run build
 ```bash
 npm install && npm run build
 ```
+
 </TabItem>
 
 </Tabs>
 
 ````
 
-## 2. Run the back end program
+## 2. Run the back-end program
 
 ```sh
 go run main.go
 ```
 
-Or build first:
+Or, build it first:
 
 ```sh
 go build && ./main
@@ -65,7 +64,7 @@ go build && ./main
 vim /path/to/nginx/nginx.conf
 ```
 
-Add a server:
+Then, add a server:
 
 ```nginx
 server {
@@ -81,7 +80,7 @@ server {
 }
 ```
 
-Then restart your nginx process, run:
+Next, restart your Nginx process. Run:
 
 ```bash
 nginx -s reload

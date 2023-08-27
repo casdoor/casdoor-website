@@ -11,16 +11,16 @@ This is an example of **Aliyun OSS**.
 
 :::
 
-The AccessKey is your key to access Aliyun API, with full account permissions.
+The AccessKey is your key to access Aliyun API with full account permissions.
 
-So [created AccessKey](https://help.aliyun.com/document_detail/53045.html) in Aliyun workbench.
+To create an AccessKey, follow the instructions in the [Aliyun workbench](https://help.aliyun.com/document_detail/53045.html).
 
-Then create OSS service:
+Next, create the OSS service:
 
 ![Create OSS](/img/providers/createaliyunoss.png)
 
-Fill the necessary information in Casdoor and save:
+Fill in the necessary information in Casdoor and save:
 
 ![OSS](/img/providers/storage/oss.png)
 
-Then you can use Aliyun cloud storage services in your application.
+You can now use Aliyun cloud storage services in your application.

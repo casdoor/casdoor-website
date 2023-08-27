@@ -1,27 +1,27 @@
 ---
 title: Overview
-description: Manage users in Casdoor
+description: Managing Users in Casdoor
 keywords: [user, properties, import]
 authors: [sh1luo]
 ---
 
-## User properties
+## User Properties
 
-As an authentication platform, Casdoor is able to manage users. Every user has these properties:
+As an authentication platform, Casdoor is able to manage users. Every user has the following properties:
 
-- `Owner` Owner organization of the user
-- `Name` User name, unique
+- `Owner`: The organization that owns the user
+- `Name`: The unique username
 - `CreatedTime`
 - `UpdatedTime`
-- `Id` Unique for every user
+- `Id`: Unique identifier for each user
 - `Type`
 - `Password`
 - `PasswordSalt`
-- `PasswordOptions` Password complexitity options
-- `DisplayName` Shown in UI
+- `PasswordOptions`: Password complexity options
+- `DisplayName`: Displayed in the user interface
 - `FirstName`
 - `LastName`
-- `Avatar` A link to user's avatar
+- `Avatar`: A link to the user's avatar
 - `PermanentAvatar`
 - `Email`
 - `Phone`
@@ -44,8 +44,8 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `Ranking`
 - `IsDefaultAvatar`
 - `IsOnline`
-- `IsAdmin` Is the user the admin of his organization
-- `IsGlobalAdmin` Does the user have the permission to manage the Casdoor
+- `IsAdmin`: Indicates whether the user is an admin of their organization
+- `IsGlobalAdmin`: Indicates whether the user has permission to manage the Casdoor
 - `IsForbidden`
 - `IsDeleted`
 - `SignupApplication`
@@ -54,10 +54,10 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `CreatedIp`
 - `LastSigninTime`
 - `LastSigninIp`
-- `Roles` Array of the user's roles
-- `Permissions` Array of the user's permissions
+- `Roles`: An array of the user's roles
+- `Permissions`: An array of the user's permissions
 
-unique Id of the platform:
+Unique IDs for social platform logins:
 
 - `Github`
 - `Google`
@@ -80,18 +80,18 @@ unique Id of the platform:
 - `Slack`
 - `Steam`
 - `Ldap`
-- `Properties` This is a string -> string map, stored all other properties may need.
+- `Properties`: A string->string map that stores any additional properties.
 
-## Import users from XLSX file
+## Importing Users from XLSX File
 
-You can add new users or update existing Casdoor users by uploading a XLSX file of user information.
+You can add new users or update existing Casdoor users by uploading an XLSX file containing user information.
 
-In the Admin Console, go to Users and click **Upload(.xlsx)** button.
+In the Admin Console, go to Users and click the **Upload (.xlsx)** button.
 
-![import users](/img/user/import_users.png)
+![Importing Users](/img/user/import_users.png)
 
-Select your XLSX file and click Open, the users will be imported.
+Select your XLSX file and click Open. The users will be imported.
 
-We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder. The template includes 5 users for test and headers for some required user properties.
+We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder. The template includes 5 test users and headers for some required user properties.
 
-![import successfully](/img/user/import_success.png)
+![Import Successful](/img/user/import_success.png)

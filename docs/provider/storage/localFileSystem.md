@@ -1,33 +1,33 @@
 ---
 title: Local File System
-description: Using Local File System as a storage provider for Casdoor
+description: Using the Local File System as a storage provider for Casdoor
 keywords: [Local File System, storage, provider]
 authors: [UsherFall]
 ---
 
 :::info
 
-Local File System provider will store your uploaded files in the Casdoor `files` folder
+The Local File System provider will store your uploaded files in the Casdoor `files` folder.
 
-For example, When your Casdoor is located in the `/home/user/casdoor` directory, the uploaded files will be stored in the `/home/user/casdoor/files` folder.
+For example, when your Casdoor is located in the `/home/user/casdoor` directory, the uploaded files will be stored in the `/home/user/casdoor/files` folder.
 
 :::
 
-## Config the Casdoor provider
+## Configure the Casdoor provider
 
-![local file config](/img/providers/storage/localFileConfig.png)
+![Local File configuration](/img/providers/storage/localFileConfig.png)
 
-`Path prefix` is the prefix of the location path for your files, you can fill it in as needed.
-In the following example, you can see the difference with or without prefix.
+The `Path prefix` is the prefix of the location path for your files. You can fill it in as needed.
+In the following example, you can see the difference with or without the prefix.
 
 ### With prefix
 
-![with prefix config](/img/providers/storage/localFileWithPre.png)
+![With prefix configuration](/img/providers/storage/localFileWithPre.png)
 
-![with prefix](/img/providers/storage/localFileWithResult.png)
+![Files with prefix](/img/providers/storage/localFileWithResult.png)
 
 ### Without prefix
 
-![with prefix config](/img/providers/storage/localFileWithoutPre.png)
+![Without prefix configuration](/img/providers/storage/localFileWithoutPre.png)
 
-![with prefix](/img/providers/storage/localFileWithoutResult.png)
+![Files without prefix](/img/providers/storage/localFileWithoutResult.png)

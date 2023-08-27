@@ -1,32 +1,32 @@
 ---
-title: Manage Multi-Factor authentication items
-description: Config Muti-Factor authentication items in organization
-keywords: [organization, 2fa, mfa, muti-factor authentication]
+title: Manage Multi-Factor Authentication Items
+description: Configure Multi-Factor Authentication Items in Organization
+keywords: [organization, 2fa, mfa, multi-factor authentication]
 authors: [leo220yuyaodog]
 ---
 
-## Add Muti-Factor authentication item in organization
+## Add Multi-Factor Authentication Item in Organization
 
-In organization, admin can add the Multi-factor authentication item in account items so that user can config the
-Multi-factor authentication in their owner profile page.
+In the organization, admins can add Multi-Factor Authentication items to the account settings. This allows users to configure Multi-Factor Authentication on their own profile pages.
 
 ![organization-items-mfa](/img/organization/mfa/organization-items-mfa.png)
 
-## Manage Multi-Factor authentication items
+## Manage Multi-Factor Authentication Items
 
-You can manage Multi-Factor authentication to determine which Multi-Factor authentication method are available to users.
+You can manage Multi-Factor Authentication to determine which methods are available to users.
 
-There are two rules for managing Multi-Factor authentication items:
+There are two rules for managing Multi-Factor Authentication items:
 
-- optional: Users can choose whether to enable this type Multi-Factor authentication.
-- prompt: If the user does not enable this Multi-Factor authentication mode, the user will be prompted to enable it after logging in to Casdoor.
-- required: Users must enable this Multi-Factor authentication method.
+- Optional: Users can choose whether to enable this type of Multi-Factor Authentication.
+- Prompt: If the user does not enable this Multi-Factor Authentication mode, they will be prompted to enable it after logging in to Casdoor.
+- Required: Users must enable this Multi-Factor Authentication method.
 
 ![organization-mfa-table](/img/organization/mfa/organization-mfa-table.png)
 
-The image of the notification that prompts users to enable Multi-Factor authentication
+The image below shows the notification that prompts users to enable Multi-Factor Authentication.
+
 ![mfa prompt](/img/organization/mfa/mfa-prompt.png)
 
-This video shows that after the Multi-Factor authentication method is set to required, the user needs to enable Multi-Factor
-authentication before they can complete the login process.
+This video demonstrates that when the Multi-Factor Authentication method is set to required, users need to enable Multi-Factor Authentication before they can complete the login process.
+
 ![mfa prompt](/img/organization/mfa/mfa-required.gif)

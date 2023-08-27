@@ -7,8 +7,8 @@ authors: [Marvelousp4]
 
 ## Keycloak Syncer
 
-The Keycloak syncer is basically the same as the [database syncer](/docs/syncer/Database), except that the `Table` and `Table columns` can be configured automatically for Keycloak.
+The Keycloak syncer is essentially the same as the [database syncer](/docs/syncer/Database), with the added functionality of automatic configuration for Keycloak `Tables` and `Table columns`.
 
-In addition, the Keycloak syncer will query `credential` table, `keycloak_group` table and `user_group_membership` table because the user information in Keycloak is stored in multiple tables.
+Furthermore, the Keycloak syncer will fetch data from the `credential` table, `keycloak_group` table, and `user_group_membership` table, as user information in Keycloak is stored across multiple tables.
 
 ![edit](/img/syncer/Keycloak/syncer_keycloak_edit.png)

@@ -1,6 +1,6 @@
 ---
 title: Application Config
-description: Configure your applications authentication
+description: Configure your application's authentication
 keywords: [config, application]
 authors: [ErikQQY]
 ---
@@ -10,43 +10,44 @@ import styles from '../styles.module.css';
 import CasdoorCard from "@site/src/components/CasdoorCard"
 ```
 
-After you deploy your casdoor on your server, and setup your organization, you can deploy your applications now!
+After you deploy Casdoor on your server and set up your organization, you can now deploy your applications!
 
-Let's see how to config your applications authentication using Casdoor!
+Let's see how to configure your application's authentication using Casdoor!
 
 :::note
 
-Here, for example, I want to setup my Forum using [Casnode](https://casnode.org)
+For example, I want to set up my Forum using [Casnode](https://casnode.org).
 
 :::
 
-I create my application and fill some necessary configures.
+I create my application and fill in some necessary configurations.
 
-Select organization I created to make users in this organization can use this application.
+Select the organization I created so that users in this organization can use this application.
 
 ![Organization](/img/application/config/organization.png)
 
-While this organization is named ```my_organization```, so I choose it in drop-down menu.
+Since this organization is named `my_organization`, I choose it from the drop-down menu.
 
 ![Select Organization](/img/application/config/selectorganization.png)
 
-Then I want my users can use Casdoor to complete authentication when they are signing up, so I fill the redirect url here as **<https://your-site-url.com/callback>**
+Next, I want my users to be able to use Casdoor for authentication when they sign up. So, I fill in the redirect URL here as **<https://your-site-url.com/callback>**.
 
 :::caution
 
-So here, we need to remember the `callback URL` in provider application is **Casdoor's callback url**, and the `Redirect URL` in Casdoor is **your website callback url**
+Please note that the `callback URL` in the provider application should be Casdoor's callback URL, and the `Redirect URL` in Casdoor should be your website's callback URL.
 
-#### Further understanding
+#### Further Understanding
 
-If I want the authentication progress to work, the detailed progress should be like this:
+To make the authentication process work, the detailed steps are as follows:
 
-Users send a request to Casdoor, Casdoor use the `Client ID` and `Client Secret` to get authentication from GitHub, Google or other providers.
-
-If the authentication success, GitHub callback to Casdoor to tell Casdoor authentication success, so the GitHub authorization callback URL should be my Casdoor callback URL which is **<http://your-casdoor-url.com/callback>**, then Casdoor tells the application authentication success which means the Casdoor callback URL should be my application callback URL, that is **<http://your-site-url.com/callback>**.
+1. Users send a request to Casdoor.
+2. Casdoor uses the `Client ID` and `Client Secret` to authenticate with GitHub, Google, or other providers.
+3. If the authentication is successful, GitHub calls back to Casdoor to notify Casdoor about the successful authentication. Therefore, the GitHub authorization callback URL should be your Casdoor's callback URL, which is **<http://your-casdoor-url.com/callback>**.
+4. Casdoor then informs the application about the authentication success. This means that the Casdoor callback URL should be your application's callback URL, which is **<http://your-site-url.com/callback>**.
 
 :::
 
-Then you can add which third party apps can sign up by adding providers and setting its properties.
+You can also add third-party apps for sign up by adding providers and setting their properties.
 
 ![Select providers](/img/application/config/selectproviders.png)
 
@@ -58,7 +59,7 @@ Then you can add which third party apps can sign up by adding providers and sett
 
 :::tip
 
-Note that if you don't want users to access your app using a **username/password**, you can switch off the ```Password On``` button, so users can only access app using third party services:
+Note that if you don't want users to access your app using a **username/password**, you can switch off the `Password On` button. This way, users can only access the app using third-party services.
 
 ![Password On](/img/application/config/PasswordOn.png)
 
