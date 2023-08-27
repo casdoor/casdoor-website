@@ -1,45 +1,44 @@
 ---
 title: OpenShift
-description: Using Casdoor for authentication in openshift
-keywords: [openshift]
+description: Using Casdoor for authentication in OpenShift
+keywords: [OpenShift]
 authors: [UsherFall]
 ---
 
-OpenShift supports OIDC, so we can integrate Casdoor with OpenShift.
-The following steps demonstrate how to integrate Casdoor with OpenShift Local using [the online demo of Casdoor](https://demo.casdoor.com/).
+OpenShift supports OIDC, so we can integrate Casdoor with OpenShift. The following steps demonstrate how to integrate Casdoor with OpenShift Local using the [online demo of Casdoor](https://demo.casdoor.com/).
 
-## Step1. Create an Casdoor application
+## Step 1: Create an Casdoor application
 
-Add a new application in Casdoor, note following points.
+Add a new application in Casdoor, noting the following points:
 
 - Remember the `Client ID` and `Client secret` for the next step.
-- The format of the Redirect URL is `https://oauth-openshift.apps.<cluster_name>.<cluster_domain>/*`, Fill it in depending your situation
+- The format of the Redirect URL is `https://oauth-openshift.apps.<cluster_name>.<cluster_domain>/*`. Fill it in depending on your situation.
 
 ![Create an application in Casdoor](/img/integration/go/openshift/openshift_1.png)
 
-## Step2. Openshift Oauth Configuration
+## Step 2: OpenShift OAuth Configuration
 
-Now, login into the Openshift Console as Kubeadmin. Once you are logged In. Browse to the side menu, locate the Cluster settings
+Now log into the OpenShift Console as Kubeadmin. Once you are logged in, browse to the side menu and locate the Cluster settings.
 
-![Openshift side menu](/img/integration/go/openshift/openshift_2.png)
+![OpenShift side menu](/img/integration/go/openshift/openshift_2.png)
 
-Under Global Configuration You will see Oauth
+Under Global Configuration, you will see OAuth.
 
-![Oauth configuration in Cluster settings](/img/integration/go/openshift/openshift_3.png)
+![OAuth configuration in Cluster settings](/img/integration/go/openshift/openshift_3.png)
 
-You will see the Identity Provider section. In ADD section, select the OpenID Connect from options.
+You will see the Identity Provider section. In the ADD section, select OpenID Connect from the options.
 
-![select menu](/img/integration/go/openshift/openshift_4.png)
+![Select menu](/img/integration/go/openshift/openshift_4.png)
 
-Configure OIDC, note following points.
+Configure OIDC, noting the following points:
 
-- Fill in the `Client ID` and `Client Secret` remembered in the previous step.
-- The Issuer URL must use https, with the form `https://<casdoor-host>`, again depending on your situation
+- Fill in the `Client ID` and `Client Secret` remembered from the previous step.
+- The Issuer URL must use https, in the form `https://<casdoor-host>`, again depending on your situation.
 
 ![Configure OIDC](/img/integration/go/openshift/openshift_5.png)
 
-## Step3. Test OIDC Authentication
+## Step 3: Test OIDC Authentication
 
-Access the Openshift console in the browser. You will see casdoor (The Name you configured in the previous step). Click on the casdoor login option. You will get redirected to the Casdoor login page.
+Access the OpenShift console in the browser. You will see Casdoor (the name you configured in the previous step). Click on the Casdoor login option. You will be redirected to the Casdoor login page.
 
 ![Final result](/img/integration/go/openshift/login.gif)

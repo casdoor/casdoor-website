@@ -1,13 +1,13 @@
 ---
 title: Alibaba Cloud
-description: Using Alibaba Cloud as a SMS provider for Casdoor
+description: Using Alibaba Cloud as an SMS provider for Casdoor
 keywords: [Alibaba Cloud, SMS, provider]
 authors: [UsherFall]
 ---
 
-## Fill the necessary information in Casdoor
+## Fill in the necessary information in Casdoor
 
-There are four required fields. `Client ID`, `Client secret`, `Sign Name`, `Template code`. The relationship corresponding to the Alibaba Cloud account is as follows:
+There are four required fields: `Client ID`, `Client secret`, `Sign Name`, and `Template code`. The corresponding relationship with the Alibaba Cloud account is as follows:
 
 | Name          | Name in Alibaba  | is required |
 |---------------|------------------|------------|
@@ -20,24 +20,24 @@ There are four required fields. `Client ID`, `Client secret`, `Sign Name`, `Temp
 
 - AccessKey ID and AccessKey Secret
 
-After I logged in my Aliyun workbench, click AccessKey to create ID and Secret.
+After logging into my Aliyun workbench, I click on "AccessKey" to create an ID and Secret.
 
-![aliyun workbench](/img/providers/sms/aliyunsms.png)
+![Alibaba Cloud workbench](/img/providers/sms/aliyunsms.png)
 
-By creating AccessKey, I get my AccessKey ID and AccessKey Secret:
+By creating an AccessKey, I obtain my AccessKey ID and AccessKey Secret:
 
 ![AccessKey](/img/providers/sms/accesskey.png)
 
 - Signature
 
-![alibabaSign](/img/providers/sms/alibabaSign.png)
+![Alibaba Signature](/img/providers/sms/alibabaSign.png)
 
 - Template code
 
-![alibabaCode](/img/providers/sms/alibabaCode.png)
+![Alibaba Template Code](/img/providers/sms/alibabaCode.png)
 
-### Config Casdoor provider
+### Configure Casdoor provider
 
-Enter your phone number in `SMS Test` to test
+Enter your phone number in the `SMS Test` field to test.
 
-![alibabaProvider](/img/providers/sms/alibabaProvider.png)
+![Alibaba Provider Configuration](/img/providers/sms/alibabaProvider.png)

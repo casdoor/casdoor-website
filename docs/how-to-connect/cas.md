@@ -1,19 +1,17 @@
 ---
-title: CAS
-description: Using Casdoor as CAS server
+title: Using Casdoor as a CAS Server
+description: How to use Casdoor as a CAS server
 keywords: [CAS, server]
 authors: [ComradeProgrammer]
 ---
 
-## Using Casdoor as CAS server
+## Using Casdoor as a CAS Server
 
-Casdoor now can be used as CAS server. Up to now the casdoor has supported the feature of CAS3.0 .
+Casdoor can now be used as a CAS server. It currently supports CAS 3.0.
 
 ### Overview
 
-The prefix of CAS endpoint in Casdoor is `<Endpoint of casdoor>/cas/<organization name>/<application name>`,which means:
-
-Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an application called `cas-java-app` which belongs to an organization called `casbin`, and if we are trying to let user login in via CAS, then
+The CAS endpoint prefix in Casdoor is `<Casdoor endpoint>/cas/<organization name>/<application name>`. Here is an example using the endpoint `https://door.casdoor.com` with an application named `cas-java-app` under the organization `casbin`:
 
 - `/login` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/login`
 - `/logout` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/logout`
@@ -25,55 +23,53 @@ Suppose the endpoint of Casdoor is `https://door.casdoor.com`, which contains an
 - `/p3/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/proxyValidate`
 - `/samlValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/samlValidate`
 
-See <https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol-Specification.html> for more information about CAS and its different versions, as well as parameters for these endpoints.
+For more information about CAS, its different versions, and parameters for these endpoints, refer to the [CAS Protocol Specification](https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol-Specification.html).
 
-### An example
+### An Example
 
-Here is an offical example <https://github.com/apereo/cas-sample-java-webapp>, which contains an example web app utilizing the offical CAS java client <https://github.com/apereo/java-cas-client>. By going through this example, we will illustrate how to connect to Casdoor via CAS.
+Here is an official example [GitHub Repository](https://github.com/apereo/cas-sample-java-webapp) that contains a web app and utilizes the official CAS Java client [GitHub Repository](https://github.com/apereo/java-cas-client). By going through this example, you can learn how to connect to Casdoor via CAS.
 
 :::note
 
-Note: Currently Casdoor only support all three versions of CAS: CAS 1.0 & 2.0 & CAS 3.0 .
+Note: Currently, Casdoor only supports all three versions of CAS: CAS 1.0, 2.0, and 3.0.
 
 :::
 
-The cas configuration is located in `src/main/webapp/WEB-INF/web.yml`.
+The CAS configuration is located in `src/main/webapp/WEB-INF/web.yml`.
 
-By default, this app uses CAS 3.0, which is specified by the following configurations.
+By default, this app uses CAS 3.0, which is specified by the following configurations:
 
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
 ```
 
-Suppose you want to protect this web app via CAS 2.0, you are supposed to change CAS Validation Filter to the following content.
+If you want to protect this web app using CAS 2.0, change the CAS Validation Filter to the following:
 
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
 ```
 
-If you want to use CAS 1.0, use
+For CAS 1.0, use the following:
 
 ```xml
 <filter-name>CAS Validation Filter</filter-name>
 <filter-class>org.jasig.cas.client.validation.Cas10TicketValidationFilter</filter-class>
 ```
 
-For all the appearances of parameter 'casServerUrlPrefix', change them to
+For all instances of the `casServerUrlPrefix` parameter, change them to:
 
 ```xml
-
 <param-name>casServerUrlPrefix</param-name>
 <param-value>http://door.casdoor.com/cas/casbin/cas-java-app</param-value>
-
 ```
 
-For all the appearances of parameter 'casServerLoginUrl' change them to
+For all instances of the `casServerLoginUrl` parameter, change them to:
 
 ```xml
 <param-name>casServerLoginUrl</param-name>
 <param-value>http://door.casdoor.com/cas/casbin/cas-java-app/login</param-value>
 ```
 
-If you need to customize more configurations, see <https://github.com/apereo/java-cas-client> for detailed information.
+If you need to customize more configurations, see the [Java CAS client GitHub Repository](https://github.com/apereo/java-cas-client) for detailed information.

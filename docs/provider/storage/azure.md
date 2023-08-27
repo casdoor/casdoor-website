@@ -7,37 +7,37 @@ authors: [sh1luo]
 
 :::note
 
-This is an example of **Azure Blob**
+This is an example of **Azure Blob**.
 
 :::
 
 - You must have an [Azure storage](https://docs.microsoft.com/azure/storage/common/storage-account-create?tabs=azure-portal) account.
 
-### Step1. Select Azure Blob
+### Step 1: Select Azure Blob
 
-Select the Azure Blob as the storage type. ![azureSelect.png](/img/providers/storage/azureSelect.png)
+Select Azure Blob as the storage type. ![azureSelect.png](/img/providers/storage/azureSelect.png)
 
-### Step2. Fill the necessary information in Casdoor
+### Step 2: Fill in the necessary information in Casdoor
 
-There are four required fields. `Client ID`, `Client secret`, `Endpoint`, `Bucket`. The relationship corresponding to the Azure Blob account is as follows:
+There are four required fields: `Client ID`, `Client secret`, `Endpoint`, and `Bucket`. The corresponding relationship to the Azure Blob account is as follows:
 
-| Name                | Name in Azure   | is required |
-|---------------------|-----------------|-------------|
-| Client ID           | AccountName     | required    |
-| Client secret       | AccountKey      | required    |
-| Endpoint            | ContainerUrl    | required    |
-| Endpoint (intranet) | PrivateEndpoint |             |
-| Bucket              | ContainerName   | required    |
-| Path prefix         |                 |             |
-| Domain              | DomainName      |             |
+| Field Name    | Azure Name    | Required |
+| ------------- | ------------- | -------- |
+| Client ID     | AccountName   | Required |
+| Client secret | AccountKey    | Required |
+| Endpoint      | ContainerUrl  | Required |
+| Endpoint (intranet) | PrivateEndpoint | |
+| Bucket        | ContainerName | Required |
+| Path prefix   |               | |
+| Domain        | DomainName    | |
 
 - AccountName
 
-    `AccountName` is your AccountName.
+The `AccountName` is your AccountName.
 
 - AccountKey
 
-    The `AccountKey` is your key to access Azure API.
+The `AccountKey` is your key to access the Azure API.
 
 :::note
 
@@ -49,7 +49,7 @@ You can obtain your account key from the Azure Portal under the "Access Keys" se
 
 - ContainerUrl
 
-In your container properties, you can obtain ContainerUrl
+You can obtain the ContainerUrl from your container properties.
 
 ![azureUrl.png](/img/providers/storage/azureUrl.png)
 
@@ -59,7 +59,7 @@ Azure Private Endpoint is a feature that allows connecting Azure services to Azu
 
 - ContainerName
 
-In my example, Create a default container called 'default'.
+In this example, a default container called 'default' is created.
 
 ![azureContainer.png](/img/providers/storage/azureContainer.png)
 
@@ -69,10 +69,10 @@ The custom domain name in your Azure CDN.
 
 ![azureCDN.png](/img/providers/storage/azureCDN.png)
 
-### Step3. Save your configuration
+### Step 3: Save your configuration
 
 The final result is as follows:
 
 ![azureResult.png](/img/providers/storage/azureResult.png)
 
-Then you can use Azure Blob Storage services in your application.
+Now you can use Azure Blob Storage services in your application.

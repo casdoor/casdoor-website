@@ -1,25 +1,25 @@
 ---
-title: k8s
-description: Deploy Casdoor in k8s
-keywords: [k8s, kubernetes]
+title: Deploying Casdoor in Kubernetes (k8s)
+description: Learn how to deploy Casdoor in a Kubernetes cluster
+keywords: [k8s, Kubernetes, Casdoor, deployment]
 authors: [ComradeProgrammer]
 ---
 
-## Deploy Casdoor in k8s
+## Deploy Casdoor in Kubernetes (k8s)
 
-We have given a basic example of deploying Casdoor into k8s. In the root folder of casdoor, there exists a file named "k8s.yaml", which includes an example minimum configuration to be used in deploying casdoor in k8s, a deployment and a service.
+We provide a basic example of deploying Casdoor in a Kubernetes cluster. In the root folder of Casdoor, you will find a file named "k8s.yaml". This file contains an example configuration for deploying Casdoor in Kubernetes, including a deployment and a service.
 
-First, make sure that you have modified the conf/app.conf so that the casdoor can successfully connect to the database, and the database is running. Second, make sure k8s is able to pull the necessary images.
+Before starting the deployment, ensure that you have modified the `conf/app.conf` file so that Casdoor can connect to the database successfully and that the database itself is running. Also, make sure that Kubernetes is able to pull the necessary images.
 
-Run
+To deploy Casdoor, run the following command:
 
 ```shell
 kubectl apply -f k8s.yaml
 ```
 
-And soon you can see the result via command `kubectl get pods`
+You can check the deployment status by running the command `kubectl get pods`.
 
-The content of k8s.yaml is as follow
+Here is the content of `k8s.yaml`:
 
 ```yaml
 # this is only an EXAMPLE of deploying casddor in kubernetes
@@ -81,4 +81,4 @@ spec:
 
 ```
 
-This file is merely an example. For example, you can choose to use a namespace other than default, use a service type instead of nodeport to expose the casdoor, or use a use config map in k8s to mount the configuration file, which is a more recommended way in k8s.
+Please note that this file is only an example. You can make various modifications as per your requirements, such as using a different namespace, service type, or a ConfigMap to mount the configuration file. Using a ConfigMap is a recommended approach in Kubernetes for mounting configuration files in a production environment.

@@ -1,19 +1,19 @@
 ---
 title: Overview
-description: Using Email to complete authentication
+description: Using Email for authentication
 keywords: [email]
 authors: [kininaru]
 ---
 
-## Add an Email provider
+## Adding an Email provider
 
-1. Click `Add` to add a new provider.
-2. Select `Email` in `Category`
+1. Click on `Add` to add a new provider.
+2. Select `Email` under the `Category` section.
 
     ![Email provider](/img/providers/emailprovider.png)
 
-3. Fill `Username`, `Password`, `Host`, `Port` of your smtp service.
+3. Fill in the fields for `Username`, `Password`, `Host`, and `Port` for your SMTP service.
 
     ![Email Config](/img/providers/emailconfig.png)
 
-4. Fill customized `Email Title` and `Email Content` and save.
+4. Customize the `Email Title` and `Email Content`, then save the changes.

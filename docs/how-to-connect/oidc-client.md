@@ -5,15 +5,15 @@ keywords: [OIDC, discovery, client]
 authors: [nomeguy]
 ---
 
-## OIDC discovery
+## OIDC Discovery
 
-Casdoor has fulfilled the OIDC protocol completely. If your application is already running against another OAuth 2.0 (OIDC) identity provider via a standard OIDC client library and you want to migrate to Casdoor, using OIDC discovery will be very easy for you to switch to Casdoor. Casdoor's OIDC discovery URL is:
+Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch. Casdoor's OIDC discovery URL is:
 
 ```url
 <your-casdoor-backend-host>/.well-known/openid-configuration
 ```
 
-E.g., the OIDC discovery URL for the demo site is: <https://door.casdoor.com/.well-known/openid-configuration> , with the following content:
+For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.com/.well-known/openid-configuration>, and it contains the following information:
 
 ```json
 {
@@ -96,23 +96,23 @@ E.g., the OIDC discovery URL for the demo site is: <https://door.casdoor.com/.we
 }
 ```
 
-## List of OIDC client libraries
+## List of OIDC Client Libraries
 
-Here we list a few OIDC client libraries for some languages like Go and Java:
+Here is a list of some OIDC client libraries for languages like Go and Java:
 
 | OIDC client library | Language | Link                                                   |
 |---------------------|----------|--------------------------------------------------------|
 | go-oidc             | Go       | <https://github.com/coreos/go-oidc>                      |
 | pac4j-oidc          | Java     | <https://www.pac4j.org/docs/clients/openid-connect.html> |
 
-The above table is far from being complete. For a full list of OIDC client libraries, please see more details at:
+Please note that the above table is not exhaustive. For a full list of OIDC client libraries, you can find more details at:
 
 1. <https://oauth.net/code/>
 2. <https://openid.net/certified-open-id-developer-tools/>
 
-## OIDC UserInfo fields
+## OIDC UserInfo Fields
 
-The following table shows how OIDC UserInfo fields (via `/api/userinfo` API) are mapped from properties of Casdoor's User table:
+The following table illustrates how OIDC UserInfo fields (via the `/api/userinfo` API) are mapped from properties of Casdoor's User table:
 
 | Casdoor User Field | OIDC UserInfo Field |
 |--------------------|---------------------|
@@ -126,4 +126,4 @@ The following table shows how OIDC UserInfo fields (via `/api/userinfo` API) are
 | Location           | address             |
 | Phone              | phone               |
 
-See UserInfo's definition here: <https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185>
+You can see the definition of UserInfo [here](https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185).

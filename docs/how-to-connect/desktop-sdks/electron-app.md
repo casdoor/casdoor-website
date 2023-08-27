@@ -1,40 +1,40 @@
 ---
-title: Electron App
-description: An Electron app example for Casdoor
-keywords: [electron, sdk]
+title: Electron App Example for Casdoor
+description: This is an Electron app example that demonstrates Casdoor's integration capabilities.
+keywords: [electron, SDK, Casdoor]
 authors: [Resulte]
 ---
 
-An [Electron app example](https://github.com/casdoor/casdoor-electron-example) for Casdoor.
+An [Electron app example](https://github.com/casdoor/casdoor-electron-example) that demonstrates Casdoor's integration capabilities.
 
-## How to run example
+## How to Run the Example
 
 ### Initialization
 
-You need to initialize 6 parameters, which are all string type:
+You need to initialize 6 parameters, all of which are string type:
 
 | Name                 | Description                                                                                      | Path                   |
 | -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------- |
-| serverUrl            | your Casdoor server URL                                                                          | `src/App.js`         |
-| clientId             | the Client ID of your Casdoor application                                                        | `src/App.js`         |
-| appName              | the name of your Casdoor application                                                             | `src/App.js`         |
-| redirectPath         | the path of the redirect URL for your Casdoor application, will be `/callback` if not provided | `src/App.js`         |
-| clientSecret         | the Client Secret of your Casdoor application                                                   | `src/App.js`         |
-| casdoorServiceDomain | your Casdoor server URL                                                                          | `public/electron.js` |
+| serverUrl            | Your Casdoor server URL                                                                          | `src/App.js`         |
+| clientId             | The Client ID of your Casdoor application                                                        | `src/App.js`         |
+| appName              | The name of your Casdoor application                                                             | `src/App.js`         |
+| redirectPath         | The path of the redirect URL for your Casdoor application, will be `/callback` if not provided | `src/App.js`         |
+| clientSecret         | The Client Secret of your Casdoor application                                                   | `src/App.js`         |
+| casdoorServiceDomain | Your Casdoor server URL                                                                          | `public/electron.js` |
 
 If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com/) as the default Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
 
-### Available commands
+### Available Commands
 
 In the project directory, you can run:
 
 #### `npm run dev` or `yarn dev`
 
-Builds the electron app and run this app.
+Builds the electron app and runs this app.
 
 #### `npm run make` or `yarn make`
 
-Package and distribute your application. It will create the `out` folder where your package will be located:
+Packages and distributes your application. It will create the `out` folder where your package will be located:
 
 ```bash
 // Example for macOS out/  
@@ -43,18 +43,18 @@ Package and distribute your application. It will create the `out` folder where y
 └── out/casdoor-electron-example-darwin-x64/casdoor-electron-example.app/Contents/MacOS/casdoor-electron-example
 ```
 
-### Prview
+### Preview
 
-After you run this electron application, a new window will be showed on your desktop.
-![electron login](/img/how-to-connect/desktop-sdks/electron-app/login.png)
-If you click `Login with Casdoor` button, your default browser will be opened automatically and show the login page.
-![browser](/img/how-to-connect/desktop-sdks/electron-app/browser.png)
-After you login successfully, your electron application will be opened and your user name will be showed on your application.
-![electron logout](/img/how-to-connect/desktop-sdks/electron-app/logout.png)
-You can preview the whole process by the gif image below.
-![electron gif](/img/how-to-connect/desktop-sdks/electron-app/preview.gif)
+Once you run this Electron application, a new window will appear on your desktop.
+![Electron Login](/img/how-to-connect/desktop-sdks/electron-app/login.png)
+If you click the `Login with Casdoor` button, your default browser will automatically open and display the login page.
+![Browser View](/img/how-to-connect/desktop-sdks/electron-app/browser.png)
+Following a successful login, your Electron application will open, and your user name will be displayed on your application.
+![Electron Logout](/img/how-to-connect/desktop-sdks/electron-app/logout.png)
+You can preview the entire process in the gif image below.
+![Electron Preview Gif](/img/how-to-connect/desktop-sdks/electron-app/preview.gif)
 
-## How to integrate
+## Integration Steps
 
 ### Set the custom protocol
 
@@ -74,9 +74,9 @@ if (process.defaultApp) {
 }
 ```
 
-This will help the browser to open your electron application and send the login info to the electron application.
+This will allow the browser to open your electron application and send the login info to the electron application.
 
-### Open the login url by the browser
+### Open the login URL in the browser
 
 ```javascript
 const serverUrl = "https://door.casdoor.com";
@@ -89,14 +89,14 @@ const redirectUrl = "casdoor://localhost:3000" + redirectPath;
 
 const signinUrl = `${serverUrl}/login/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUrl)}&scope=profile&state=${appName}&noRedirect=true`;
 
-shell.openExternal(signinUrl); //Open the login url by the browser
+shell.openExternal(signinUrl); //Open the login url in the browser
 ```
 
-You can change the first 5 parameters.
+You can change the first five parameters.
 
 ### Listen to the open application event
 
-After you login successfully in the browser, the browser will open your electron application. You need to listen to the open application event.
+Once you successfully log in through the browser, the browser will open your Electron application. Therefore, you must listen to the open application event.
 
 ```javascript
 const gotTheLock = app.requestSingleInstanceLock();
@@ -169,4 +169,4 @@ ipcMain.handle("getUserInfo", async (event, clientId, clientSecret) => {
 });
 ```
 
-Finally, you can parse the code and get the user info just by following the [OAuth docs page](/docs/how-to-connect/oauth).
+Finally, you can parse the code and get the user info following the [OAuth docs page](/docs/how-to-connect/oauth).

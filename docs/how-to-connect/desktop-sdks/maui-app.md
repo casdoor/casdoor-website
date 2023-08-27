@@ -1,41 +1,41 @@
 ---
 title: Mobile SDKs .NET MAUI App 
-description: An .NET MAUI App example for Casdoor
-keywords: [dotnet, sdk]
+description: A .NET MAUI App example for Casdoor
+keywords: [.NET, SDK]
 authors: [RVShershnev]
 ---
 
-[The repository contains .NET MAUI app and .NET MAUI library](https://github.com/RVShershnev/casdoor-dotnet-maui-example) for demonstration [Casdoor](https://casdoor.org/) authentication by Open ID Connect.
+[This repository contains a .NET MAUI app and .NET MAUI library](https://github.com/RVShershnev/casdoor-dotnet-maui-example) for demonstrating Casdoor authentication by OpenID Connect.
 
 ## Demonstration
 
-### **Android**
+### Android
 
 ![Android](/img/how-to-connect/desktop-sdks/maui-app/android.gif)
 
-### **Windows**
+### Windows
 
 ![Windows](/img/how-to-connect/desktop-sdks/maui-app/windows.gif)
 
 ## Requirements
 
 - [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0) installed on your machine
-- The required assets needed for your target(s) platform(s) as described [here](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app)
+- The required assets needed for your target platform(s), as described [here](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app)
 - Visual Studio 2022 for Windows 17.3  or Visual Studio 2022 for Mac 17.4 (optional)
 
-## Getting started
+## Getting Started
 
-### Step 1: Create MAUI Application
+### Step 1: Create a MAUI Application
 
 Create your [MAUI Application](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app).
 
-### Step 2: Add reference
+### Step 2: Add a Reference
 
 Add a reference to the `Casdoor.MauiOidcClient` in your project.  
 
-### Step 3: Add Casdoor client
+### Step 3: Add the Casdoor Client
 
-Add `CasdoorClient` as singleton in the services.
+Add `CasdoorClient` as a singleton in the services.
 
 ```csharp
 builder.Services.AddSingleton(new CasdoorClient(new()
@@ -52,9 +52,9 @@ builder.Services.AddSingleton(new CasdoorClient(new()
 }));
 ```
 
-### Step 4: Design UI
+### Step 4: Design the UI
 
-Add code to `MainPage` file.
+Add code to the `MainPage` file.
 
 **MainPage.xaml**
 
@@ -86,7 +86,7 @@ Add code to `MainPage` file.
                 <Label
                 Text="Welcome to .NET Multi-platform App UI"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                SemanticProperties.Description="Welcome to dot net Multi-platform App UI"
                 FontSize="18"
                 HorizontalOptions="Center" />
 
@@ -136,7 +136,7 @@ namespace Casdoor.MauiOidcClient.Example
     {
         int count = 0;
         private readonly CasdoorClient client;
-        private string acsessToken;
+        private string accessToken;
         public MainPage(CasdoorClient client)
         {
             InitializeComponent();
@@ -162,7 +162,7 @@ namespace Casdoor.MauiOidcClient.Example
         private async void OnLoginClicked(object sender, EventArgs e)
         {
             var loginResult = await client.LoginAsync();
-            acsessToken = loginResult.AccessToken;
+            accessToken = loginResult.AccessToken;
             if (!loginResult.IsError)
             {
                 NameLabel.Text = loginResult.User.Identity.Name;
@@ -179,7 +179,7 @@ namespace Casdoor.MauiOidcClient.Example
 
         private async void OnLogoutClicked(object sender, EventArgs e)
         {
-            var logoutResult = await client.LogoutAsync(acsessToken);
+            var logoutResult = await client.LogoutAsync(accessToken);
 
 
             if (!logoutResult.IsError)
@@ -197,9 +197,9 @@ namespace Casdoor.MauiOidcClient.Example
 }
 ```
 
-### Step 5: Support Android platform
+### Step 5: Support the Android Platform
 
-Modify `AndroidManifest.xml` file.
+Modify the `AndroidManifest.xml` file.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -215,6 +215,6 @@ Modify `AndroidManifest.xml` file.
 </manifest>
 ```
 
-### Step 6: Launch application
+### Step 6: Launch the Application
 
-**Visual Studio:** Press Ctrl + F5 to start
+**Visual Studio:** Press Ctrl + F5 to start.

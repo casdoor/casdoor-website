@@ -1,23 +1,23 @@
 ---
-title: Roles
-description: the user's roles
+title: User Roles
+description: Roles assigned to users
 keywords: [user, roles]
 authors: [Resulte]
 ---
 
-Each user may have multiple roles.
-You can see the user's roles on the user's profile.
+Each user can have multiple roles.
+You can view the roles assigned to a user on their profile.
 
-![roles](/img/user/users_roles.png)
+![user roles](/img/user/users_roles.png)
 
-## Role properties
+## Role Properties
 
-Every role has these properties:
+Every role has the following properties:
 
 * `Owner`
 * `Name`
 * `CreatedTime`
 * `DisplayName`
 * `IsEnabled`
-* `Users` Array of this role's sub users
-* `Roles` Array of this role's sub roles
+* `Users`: An array of sub users belonging to this role
+* `Roles`: An array of sub roles belonging to this role

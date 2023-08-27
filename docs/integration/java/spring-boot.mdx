@@ -1,28 +1,28 @@
 ---
 title: Spring Boot
-description: Using Casdoor in Spring Boot project
-keywords: [SpringBoot, Spring Boot]
+description: Using Casdoor in a Spring Boot project
+keywords: [Spring Boot]
 authors: [seriouszyx]
 ---
 
-[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example of how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in SpringBoot project. We will show you the steps below.
+[casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) is an example of how to use [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) in a Spring Boot project. We will guide you through the steps below.
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+Firstly, Casdoor should be deployed.
 
 You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation). Please deploy your Casdoor instance in **production mode**.
 
-After a successful deployment, you need to ensure:
+After a successful deployment, make sure the following:
 
-- Open your favorite browser and visit **<http://localhost:8000>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
+- Open your favorite browser and visit **<http://localhost:8000>**. You will see the login page of Casdoor.
+- Test the login functionality by entering `admin` as the username and `123` as the password.
 
-Then you can quickly implement a casdoor-based login page in your own app with the following steps.
+Now, you can quickly implement a Casdoor-based login page in your own app using the following steps.
 
-## Step2. Import casdoor-spring-boot-starter
+## Step 2: Import casdoor-spring-boot-starter
 
-You can import the casdoor-spring-boot-starter with  maven or gradle.
+You can import the casdoor-spring-boot-starter using Maven or Gradle.
 
 ````mdx-code-block
 import Tabs from '@theme/Tabs';
@@ -63,20 +63,20 @@ implementation group: 'org.casbin', name: 'casdoor-spring-boot-starter', version
 
 ````
 
-## Step3. Init Config
+## Step 3: Initialize Config
 
-Initialization requires 6 parameters, which are all string type.
+Initialization requires 6 string-type parameters in the following order:
 
-| Name (in order)  | Must | Description                                         |
-|------------------|------|-----------------------------------------------------|
-| endpoint         | Yes  | Casdoor Server Url, such as `http://localhost:8000` |
-| clientId         | Yes  | Application.client_id                               |
-| clientSecret     | Yes  | Application.client_secret                           |
-| certificate      | Yes  | Application.certificate                             |
-| organizationName | Yes  | Application.organization                            |
-| applicationName  | No   | Application.name                                    |
+| Name               | Required | Description                                         |
+|--------------------|----------|-----------------------------------------------------|
+| endpoint           | Yes      | Casdoor Server URL, such as `http://localhost:8000` |
+| clientId           | Yes      | Application client ID                               |
+| clientSecret       | Yes      | Application client secret                           |
+| certificate        | Yes      | Application certificate                             |
+| organizationName   | Yes      | Application organization                            |
+| applicationName    | No       | Application name                                    |
 
-You can use Java properties or YAML files to init as below.
+You can use Java properties or YAML files for initialization.
 
 ````mdx-code-block
 
@@ -122,15 +122,15 @@ casdoor:
 
 :::caution
 
-You should replace the configuration with your own Casdoor instance, especially the `clientId`, `clientSecret` and the `jwtPublicKey`.
+Replace the configuration values with your own Casdoor instance, especially the `clientId`, `clientSecret`, and `jwtPublicKey`.
 
 :::
 
-## Step4. Redirect to the login page
+## Step 4: Redirect to the Login Page
 
-When you need the authentication who access your app, you can send the target url and redirect to the login page provided by Casdoor.
+When you need to authenticate users who access your app, you can send the target URL and redirect to the login page provided by Casdoor.
 
-Please be sure that you have added the callback url (e.g. **<http://localhost:8080/login>**) in application configuration in advance.
+Make sure you have added the callback URL (e.g. **<http://localhost:8080/login>**) in the application configuration beforehand.
 
 ```java
 @Resource
@@ -142,13 +142,13 @@ public String toLogin() {
 }
 ```
 
-## Step5. Get token and parse
+## Step 5: Get Token and Parse
 
-After Casdoor verification passed, it will be redirected to your application with code and state.
+After the Casdoor verification is passed, it will redirect back to your application with the code and state.
 
-You can get the code and call `getOAuthToken` method, then parse out jwt token.
+You can get the code and call the `getOAuthToken` method, then parse the JWT token.
 
-`CasdoorUser` contains the basic information about the user provided by Casdoor. You can use it as a keyword to set the session in your application.
+`CasdoorUser` contains the basic information about the user provided by Casdoor. You can use it to set the session in your application.
 
 ```java
 @RequestMapping("login")
@@ -167,9 +167,9 @@ public String login(String code, String state, HttpServletRequest request) {
 }
 ```
 
-## Service
+## Services
 
-Examples of APIs are shown below.
+Examples of APIs are shown below:
 
 - CasdoorAuthService
   - `String token = casdoorAuthService.getOAuthToken(code, "app-built-in");`
@@ -191,9 +191,9 @@ Examples of APIs are shown below.
   - `CasdoorResponse response = casdoorResourceService.uploadResource(user, tag, parent, fullFilePath, file);`
   - `CasdoorResponse response = casdoorResourceService.deleteResource(file.getName());`
 
-## What's more
+## More Resources
 
-You can explore the following projects/docs to learn more about the integration of Java with Casdoor.
+You can explore the following projects/docs to learn more about integrating Java with Casdoor:
 
 - [casdoor-java-sdk](https://github.com/casdoor/casdoor-java-sdk)
 - [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter)

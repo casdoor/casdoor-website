@@ -5,42 +5,42 @@ keywords: [ShardingSphere]
 authors: [jakiuncle]
 ---
 
-[shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui) have integrated Casdoor. We can use it after config it.
+[shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui) has integrated Casdoor. You can use it after configuring it.
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+Firstly, Casdoor should be deployed.
 
 You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
 
-After a successful deployment, you need to ensure:
+After a successful deployment, make sure:
 
 - The Casdoor server is successfully running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
+- Open your favorite browser and visit **<http://localhost:7001>**. You will see the login page of Casdoor.
+- Input `admin` and `123` to test if the login functionality is working fine.
 
-Then you can quickly implement a casdoor based login page in your own app with the following steps.
+Then, you can quickly implement a Casdoor-based login page in your own app with the following steps.
 
-## Step2. Configure Casdoor application and configure application in ShardingSphere
+## Step 2: Configure Casdoor application and configure application in ShardingSphere
 
-1.**Create or use an existing Casdoor application**
+1. **Create or use an existing Casdoor application**
 ![img](/img/integration/java/ShardingSphere/casdoorConfig.png)
-RedirectURLs is depend on what url you need redirect.The selected data will use in next.
+The RedirectURLs depend on the URL you need to redirect to. The selected data will be used in the next step.
 
-2.**On the certificate editing page, you can see your `Certificate`**
+2. **On the certificate editing page, you can see your `Certificate`**
 
-![img](/img/integration/java/ShardingSphere/cert.png)
+    ![img](/img/integration/java/ShardingSphere/cert.png)
 
-3.**Configure application in ShardingSphere**
+3. **Configure the application in ShardingSphere**
 
-First we need find the application.properties we need configure
+    First, we need to find the application.properties that we need to configure.
 
-![img](/img/integration/java/ShardingSphere/list.png)
+    ![img](/img/integration/java/ShardingSphere/list.png)
 
-Second we need copy the data in Casdoor application and paste them into application.
+    Next, we need to copy the data from the Casdoor application and paste it into the application.
 
-![img](/img/integration/java/ShardingSphere/application.png)
+    ![img](/img/integration/java/ShardingSphere/application.png)
 
-4.**Test it**
+4. **Test it**
 
-![img](/img/integration/java/ShardingSphere/test.gif)
+    ![img](/img/integration/java/ShardingSphere/test.gif)

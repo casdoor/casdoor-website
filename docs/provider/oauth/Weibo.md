@@ -7,8 +7,8 @@ authors: [Marvelousp4]
 
 ## Weibo ✔️
 
-Weibo's developer account application is not difficult, but the speed is relatively slow. It takes about 2-3 days.
+Applying for a developer account with Weibo is not difficult, but the process can be slow, taking about 2-3 days.
 
-Visit [Developer Website](https://open.weibo.com/developers/basicinfo), filling in basic information and waiting for a long review...
+To get started, visit the [Developer Website](https://open.weibo.com/developers/basicinfo) and fill in the required basic information. Then, you will need to wait for a thorough review...
 
-After the review is approved, you can get the Client Id and Client Secret.
+Once your application is approved, you will receive the Client Id and Client Secret.

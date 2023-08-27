@@ -1,46 +1,40 @@
 ---
-title: Spring Security Filter
-description: Based on Spring Security Filter, how to use OIDC to connect your application.
-keywords: [OIDC, Spirng Security, Spring Security Filter, Filter]
+title: Spring Security Filter with OIDC integration for Casdoor
+description: This article explains how to use Spring Security Filter to connect your application with Casdoor using OIDC.
+keywords: [OIDC, Spirng Security, Spring Security Filter, Filter, Casdoor]
 authors: [wenxuan70]
 ---
 
-Casdoor can use OIDC protocol as IDP to connect various applications. Here, we will use the filter in spring security to integrate casdoor and show you how to connect to the application using oidc.
+Casdoor is an open-source IDP that supports OIDC and various other protocols. In this article, we will see how to integrate Casdoor with your application using Spring Security Filter and OIDC.
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+First, you need to deploy the Casdoor server. Refer to the [official documentation](/docs/basic/server-installation) for server installation instructions. After successful deployment, ensure that:
 
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
+- The Casdoor server is running at **<http://localhost:8000>**.
+- You can see the Casdoor login page at **<http://localhost:7001>**.
+- You can test the login functionality by logging in with the credentials `admin` and `123`.
 
-After a successful deployment, you need to ensure:
+After verifying these steps, follow the steps below to integrate Casdoor with your application.
 
-- The Casdoor server is successfully running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
+## Step 2: Configure Casdoor Application
 
-Then you can quickly implement a casdoor based login page in your own app with the following steps.
-
-## Step2. Configure Casdoor application
-
-1. Create or use an existing Casdoor application.
-2. Add Your redirect url (You can see more detials about how to get redirect url in the next section).
+- Create a new Casdoor application or use an existing one.
+- Add your redirect URL. You can find more information about obtaining the redirect URL in the next section.
    ![Casdoor Application Setting](/img/integration/java/spring_security/casdoor_setting.png)
-3. On the certificate editing page, you can see your `Certificate`.
+- Obtain your `Certificate` on the certificate editing page.
    ![Casdoor Certification Setting](/img/integration/java/spring_security/casdoor_certification.png)
-4. Add provider you want and supplement other settings.
+- Add the provider and other settings as needed.
 
-Not surprisingly, you can get these values on the application settings page: `Application Name`, `Organization Name`, `Redirect URL`, `Client ID`, `Client Secret`, `Certification`. As shown above, we will use them in the next step.
+You can obtain the values for `Application Name`, `Organization Name`, `Redirect URL`, `Client ID`, `Client Secret`, and `Certificate` on the application settings page. We will use them in the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
+## Step 3: Configure Spring Security
 
-## Step3. Configure Spring Security
-
-You can customize the settings of spring security filters to process tokens:
+You can customize the settings of the Spring Security filters to process tokens:
 
 :::caution
 
-You should replace the configuration with your own Casdoor instance especially the `<Client ID>` and others.
+Make sure you replace the configuration values with your own Casdoor instance, especially `<Client ID>` and the others.
 
 :::
 
@@ -59,17 +53,13 @@ casdoor:
 
 :::caution
 
-For frontend applications, the default value of `<FRONTEND_HOSTNAME>` is `localhost:3000`.
-
-For example, in the following demo, the redirect URL should be `http://localhost:3000/callback`.
-
-You should also configure this in `casdoor` application.
+For frontend applications, the default value of `<FRONTEND_HOSTNAME>` is `localhost:3000`. In this demo, the redirect URL is `http://localhost:3000/callback`. Make sure to configure this in your `casdoor` application.
 
 :::
 
-## Step4. Configure Frontend
+## Step 4: Configure Frontend
 
-You need to install `casdoor-js-sdk` and configure `SDK`.
+You need to install `casdoor-js-sdk` and configure the SDK as follows:
 
 1. Install `casdoor-js-sdk`.
 
@@ -98,11 +88,11 @@ You need to install `casdoor-js-sdk` and configure `SDK`.
     export const CasdoorSDK = new Sdk(sdkConfig);
     ```
 
-## Step5. Get Started with A Demo
+## Step 5: Set Up a Demo
 
-1. We can create a Spring Boot application.
+1. Create a Spring Boot application.
 
-2. We can add some configurations to handle JWT.
+2. Add some configurations to handle JWT.
 
     ```java
     @EnableWebSecurity
@@ -154,7 +144,7 @@ You need to install `casdoor-js-sdk` and configure `SDK`.
     }
     ```
 
-3. We can add a simple JWT filter to intercept requests that need to verify tokens.
+3. Add a simple JWT filter to intercept requests that require token verification.
 
     ```java
     @Component
@@ -211,7 +201,7 @@ You need to install `casdoor-js-sdk` and configure `SDK`.
 
     When the user accesses the interface requiring authentication, `JwtTokenFilter` will obtain the token from the request header `Authorization` and verify it.
 
-4. Next, we need to define a `Controller` to handle that when the user login to the `casdoor`, it will be redirected to the server and carry the `code` and `state`. The server needs to verify the user's identity from the `casdoor` and obtain the `token` through these two parameters.
+4. Define a `Controller` to handle when the user logs in to Casdoor. After the user logs in, they will be redirected to the server and carry the `code` and `state`. The server then needs to verify the user's identity from Casdoor and obtain the `token` through these two parameters.
 
     ```java
     @RestController
@@ -238,15 +228,15 @@ You need to install `casdoor-js-sdk` and configure `SDK`.
     }
     ```
 
-## Step6. Try the demo!
+## Step 6: Try the Demo
 
-First, you can try to access the frontend application through the browser. If you have not logged in, it will display a login button. Click the login button, and you will be redirected to the `casdoor` login page.
+You can access the frontend application through your browser. If you are not logged in, you will see a login button. Click on it, and you will be redirected to the Casdoor login page.
 
 If you visit your root page,
 ![welcome](/img/integration/java/spring_security/spring_security_filter_welcome.png)
 
-Click the `Casdoor Login` button and the page will redirect to casdoor's login page.
+Click the `Casdoor Login` button, and the page will redirect to Casdoor's login page.
 ![casdoor](/img/integration/java/spring_security/spring_security_filter_casdoor.png)
 
-After you log in, the page will redirect to `/`.
+After logging in, you will be redirected to `/`.
 ![resource](/img/integration/java/spring_security/spring_security_filter_resource.png)

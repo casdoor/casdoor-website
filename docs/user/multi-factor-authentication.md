@@ -7,89 +7,79 @@ authors: [leo220yuyaodog]
 
 ## About multi-factor authentication
 
-MFA (Multi-Factor Authentication) is a security measure that can improve the security of users and systems. It requires
-users to provide two or more factors of authentication to verify their identity when logging in or performing sensitive operations.
+MFA (Multi-Factor Authentication) is a security measure that can enhance the security of users and systems. It requires users to provide two or more factors of authentication to verify their identity when logging in or performing sensitive operations.
 
-For Casdoor, the second form of authentication is a code that's sent as a text message or email. After you enable MFA,
-Casdoor generates an authentication code any time someone attempts to sign in your account. The only way someone can sign in your account is if they know both your password and have access to the authentication code.
+For Casdoor, the second form of authentication is a code that is sent as a text message or email. Once you enable MFA, Casdoor generates an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
 
-## Config MFA
+## Configuring MFA
 
-1. In user profile page, you can see the configuration of multi-factor authentication. If you can't see it, make sure the organization has added
-   multi-factor authentication item in the account items table.
+1. On the user profile page, you can see the configuration of multi-factor authentication. If you cannot see it, make sure the organization has added the multi-factor authentication item in the account items table.
 
    ![mfa_config](/img/user/mfa/mfa_config.png)
 
 2. Click the "setup" button.
 
-   ![mfa setup](/img/user/mfa/mfa_setup.png)
+   ![mfa_setup](/img/user/mfa/mfa_setup.png)
 
 3. Type your password and click "Next Step".
 
-   ![mfa check password](/img/user/mfa/mfa_check_password.png)
+   ![mfa_check_password](/img/user/mfa/mfa_check_password.png)
 
 ### Configuring multi-factor authentication using a TOTP mobile app
 
-A time-based one-time password (TOTP) application automatically generates an authentication code that changes after a
-certain period of time. We recommend using:
+A time-based one-time password (TOTP) application automatically generates an authentication code that changes after a certain period of time. We recommend using:
 
 - [Google Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en_US&gl=US)
 - [Microsoft Authenticator](https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=en_US&gl=US).
 
 :::tip
-To configure authentication via TOTP on multiple devices, during setup, scan the QR code using each device at the same
-time. If 2FA is already enabled, and you want to add another device, you must re-configure your TOTP app from user profile page.
+To configure authentication via TOTP on multiple devices, during setup, scan the QR code using each device at the same time. If 2FA is already enabled, and you want to add another device, you must reconfigure your TOTP app from the user profile page.
 :::
 
 ![totp](/img/user/mfa/mfa_totp.png)
 
-1. In "Verify Code" step, do one of the following:
+1. In the "Verify Code" step, do one of the following:
 
-   - Scan the QR code with your mobile device's app. After scanning, the app displays a six-digit code that you can enter on
-     Casdoor.
-   - If you can't scan the QR code, you can manually copy and enter the secret in your TOTP app instead.
+   - Scan the QR code with your mobile device's app. After scanning, the app displays a six-digit code that you can enter on Casdoor.
+   - If you cannot scan the QR code, you can manually copy and enter the secret in your TOTP app instead.
 
-2. The TOTP mobile application saves your account on Casdoor and generates a new authentication code every few seconds.
-   On Casdoor, type the code into the field "Passcode" and click "Next Step".
+2. The TOTP mobile application saves your account on Casdoor and generates a new authentication code every few seconds. On Casdoor, type the code into the "Passcode" field and click "Next Step".
 
-3. Above "Enable" button, copy your recovery codes and save to your device. Save them to a secure location because your
-   recovery codes can help you get back into your account if you lose access.
+3. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
 
-   ![mfa enable](/img/user/mfa/mfa_enable.png)
+   ![mfa_enable](/img/user/mfa/mfa_enable.png)
 
 :::caution
-One recovery code can only be used once. If you use a recovery code to sign in, it will be invalid.
+Each recovery code can only be used once. If you use a recovery code to sign in, it will become invalid.
 :::
 
 ### Configuring multi-factor authentication using text messages
 
-If you have bound your mobile phone number, Casdoor will use it to send you a text message.
+If you have added your mobile phone number, Casdoor will use it to send you a text message.
 
 ![mfa_bound](/img/user/mfa/mfa_bound.png)
 
-If not, you need to bind your mobile phone number first.
+If you have not added your mobile phone number, you need to add it first.
 
 ![mfa_binding](/img/user/mfa/mfa_binding.png)
 
-1. Select your country code and type your mobile phone number.
+1. Select your country code and enter your mobile phone number.
 
-2. Check your information is correct, click "Send Code".
+2. Check if your information is correct and click "Send Code".
 
-3. You'll receive a text message with a security code. Then type the code into the field "Enter your code" and click "Next Step".
+3. You will receive a text message with a security code. Then enter the code into the "Enter your code" field and click "Next Step".
 
-4. Above "Enable" button, copy your recovery codes and save to your device. Save them to a secure location because your
-   recovery codes can help you get back into your account if you lose access.
+4. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
 
 ### Configuring multi-factor authentication using email
 
-Config email as your multi-factor authentication method is similar to text messages.
+Configuring email as your multi-factor authentication method is similar to using text messages.
 
-1. Use your current email or type your email address and click "Send Code".
+1. Use your current email or enter your email address and click "Send Code".
 
-2. Then type the code into the field "Enter your code" and click "Next Step".
+2. Then enter the code into the "Enter your code" field and click "Next Step".
 
-3. Above "Enable" button, copy your recovery codes and save to your device. Save them to a secure location because your
-   recovery codes can help you get back into your account if you lose access.
+3. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
 
 ## Changing your preferred MFA method
 
@@ -97,13 +87,12 @@ You can add multiple MFA methods. Only the preferred method will be used when yo
 
 If you want to set a preferred MFA method, click the "Set preferred" button.
 
-![preferred mfa method](/img/user/mfa/mfa_preferred_method.png)
+![preferred_mfa_method](/img/user/mfa/mfa_preferred_method.png)
 
-A "Preferred" label is displayed on your preferred method.
+A "Preferred" label will be displayed on your preferred method.
 
-## Disable multi-factor authentication
+## Disabling multi-factor authentication
 
-If you want to disable multi-factor authentication, click the "Disable" button. All your multi-factor authentication config
-will be deleted.
+If you want to disable multi-factor authentication, click the "Disable" button. All your multi-factor authentication settings will be deleted.
 
-![disable mfa](/img/user/mfa/mfa_disable.png)
+![disable_mfa](/img/user/mfa/mfa_disable.png)

@@ -1,63 +1,63 @@
 ---
-title: Contributor guide
-description: Contributor guide
+title: Contributor Guide
+description: A guide on how to contribute to Casdoor
 keywords: [Contributor, guide]
 authors: [leo220yuyaodog]
 ---
 
-Welcome to Casdoor! This document is a guideline about how to contribute to Casdoor.
+Welcome to Casdoor! This document serves as a guideline on how to contribute to Casdoor.
 
-If you find something incorrect or missing, please leave comments / suggestions.
+If you find any incorrect or missing information, please leave your comments or suggestions.
 
-## Get involved
+## Get Involved
 
 There are many ways to contribute to Casdoor. Here are some ideas to get started:
 
-Use Casdoor and report issues! When using Casdoor, report issues to promote development of Casdoor, no matter bugs or proposal. Before filing an issue on GitHub, it would be better to discuss first on [Discord](https://discord.gg/5rPsrAzK7S) or [GitHub Discussions](https://github.com/casdoor/casdoor/discussions)
+- Use Casdoor and report issues. When using Casdoor, report any issues - whether they're bugs or proposals - on [GitHub Discussions](https://github.com/casdoor/casdoor/discussions) or on [Discord](https://discord.gg/5rPsrAzK7S) before filing an issue on GitHub.
 
 :::info
 
-When reporting an issue, please use English to describe the details of your problem.
+Please use English to describe the details of your problem when reporting an issue.
 
 :::
 
-Help with docs! Contributing start from docs is a good choice to start your contribution.
+- Help with documentation. Starting your contribution work with docs is a good choice.
 
-Help solve issues! We prepare a table containing easy tasks suitable for beginners, with different levels of challenges labeled with different tags, check the table here [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1).
+- Help solve issues. We have a table that contains easy tasks suitable for beginners under [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1), with different levels of challenges labeled with different tags.
 
 ## Contributing
 
-Now, if you are ready to create PR, here is the workflow for contributors:
+If you are ready to create a PR, here is the workflow for contributors:
 
-1. Fork to your own
+1. Fork to your own repository.
 
-2. Clone fork to a local repository
+2. Clone your fork to a local repository.
 
-3. Create a new branch and work on it
+3. Create a new branch and work on it.
 
-4. Keep your branch in sync
+4. Keep your branch in sync.
 
-5. Commit your changes (make sure your commit message is concise)
+5. Commit your changes. Make sure your commit message is concise.
 
-6. Push your commits to your forked repository
+6. Push your commits to your forked repository.
 
 7. Create a pull request from your branch to our **master** branch.
 
 ## Pull Requests
 
-### Before you get started
+### Before You Get Started
 
-Casdoor uses GitHub as its developing platform. So the pull requests are the main source of contributions.
+Casdoor uses GitHub as its development platform, and pull requests are the primary source of contributions.
 
-There are something you need to know before you open a pull request:
+Here are some things you need to know before opening a pull request:
 
-- When you first pull request, you need to sign the **CLA**.
+- You need to sign the **CLA** when you first create a pull request.
 
-- Explain why you send this PR and what this PR would do to the repo.
+- Explain why you are submitting the pull request and what it will do to the repo.
 
-- **One commit is allowed**. Make sure the PR does only one thing, otherwise please split it.
+- Only one commit is allowed. If the PR does more than one thing, please split it.
 
-- If there are newly added files, please include Casdoor license to the top of new file(s).
+- If there are any newly added files, please include the Casdoor license at the top of the new file(s).
 
 ```text
 // Copyright 2022 The Casdoor Authors. All Rights Reserved.
@@ -81,7 +81,7 @@ Your pull requests should follow the Conventional Commits spec. The basic requir
 
 :::caution
 
-The PR title must be in lower case.
+PR titles must be in lowercase.
 
 :::
 
@@ -97,20 +97,19 @@ The PR title must be in lower case.
     feat: allow provided config object to extend other configs
     ```
 
-3. **docs**: a commit of the _type_ `docs` add or improve a document.
+3. **docs**: a commit of the _type_ `docs` adds or improves documentation.
 
     ```text
     docs: correct spelling of CHANGELOG
     ```
 
-For more details, please refer to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary).
+For more details, please refer to the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) page.
 
-### Link PR with issue (if existed)
+### Linking PRs with Issues
 
-You can link a pull request to an issue to show that a fix is in progress and to automatically close the issue when the
-pull request is merged.
+You can link a pull request to an issue to show a fix is in progress and to automatically close the issue when the pull request is merged.
 
-#### Linking a pull request to an issue using a keyword
+#### Linking a Pull Request to an Issue Using a Keyword
 
 You can link a pull request to an issue by using a supported keyword in the pull request's description or in a commit message. The pull request **must be** on the default branch.
 
@@ -118,22 +117,21 @@ You can link a pull request to an issue by using a supported keyword in the pull
 - fix
 - resolve
 
-Issue in the same repository, for example:
+An issue in the same repository, for instance:
 
 ```text
 Fix: #902
 ```
 
-For more details, please see [Link PR to issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+For more details, please refer to [Linking a Pull Request to an Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
 
-### Modify PRs
+### Modifying PRs
 
-Inevitably, your PR may need to be revised. Please **re-use** the same PR when the code needs changes. Don't close the PR and open a new one.
+Your PR may need revision. Please modify the same PR when the code needs changes; don't close the PR and open a new one. Here is an example:
 
-Here is a possible example:
+- Modify the code on your local.
 
-- Modify the code in your local.
-- Modify this commit.  
+- Modify your commit.  
 
 ```shell
 git commit --amend
@@ -145,22 +143,21 @@ git commit --amend
 git push --force
 ```
 
-Then the PR has been modified successfully! You can check it in Casdoor repository.
+Then, you will have successfully modified the PR!
 
 ## Code Related
 
-Some principles:
+Some Principles:
 
-Readability - Important code should be well-documented. Code style should be complied with the existing one.
+- Readability: important code should be well-documented. Code style should comply with the existing one.
 
-### Naming convention
+### Naming Convention
 
-e.g.,`signupUrl`for var names,`Signup URL`for UI
+For instance, `signupUrl` for variable names, `Signup URL` for UI.
 
-### How to update i18n data?
+### How to Update i18n Data?
 
-Please note that we use [Crowdin](https://crowdin.com/project/casdoor-site) as translating platform and i18next as
-translating tool. When you add some words using i18next in the `web/` directory, you can run the `i18n/generate_test.go`to auto-generate the `web/src/locales/**/data.json`.
+Please note that we use [Crowdin](https://crowdin.com/project/casdoor-site) as a translating platform and i18next as a translating tool. When you add strings using i18next in the `web/` directory, you can run the `i18n/generate_test.go` to auto-generate `web/src/locales/**/data.json`.
 
 Run `i18n/generate_test.go`:
 
@@ -168,15 +165,15 @@ Run `i18n/generate_test.go`:
 cd i18n && go test
 ```
 
-All languages are filled in English by default. You are encouraged to help translate the newly added
-strings in the `web/src/locales/zh/data.json` by [Crowdin](https://crowdin.com/project/casdoor-site) after your PR has been merged.
+All languages are filled in English by default. After your PR has been merged, you are encouraged to help translate the newly added
+strings in `web/src/locales/zh/data.json` by [Crowdin](https://crowdin.com/project/casdoor-site).
 
 :::caution
 
-If you are not familiar with other language, please don't translate it. Keep the file as it is.
+If you are not familiar with a language, please do not translate it; keep the file as it is.
 
 :::
 
 ## License
 
-By contributing to Casdoor, you agree that your contributions will be licensed under its Apache License.
+By contributing to Casdoor, you agree that your contributions will be licensed under the Apache License.

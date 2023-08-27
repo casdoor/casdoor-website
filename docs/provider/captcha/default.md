@@ -1,34 +1,38 @@
 ---
 title: Default
-description: Using Casdoor default captcha in your application
+description: Using Casdoor's default captcha in your application
 keywords: [captcha]
 authors: [Resulte]
 ---
 
-Default captcha implements generation and verification of image. A default captcha image is the sequence of digits 0-9 with the defined length(5).
+The default captcha implementation generates and verifies an image. In the default captcha image, a sequence of digits 0-9 is used with a defined length of 5.
 
-## Configure in Casdoor
+## Configuring in Casdoor
 
-Create a new provider in Casdoor.
+To configure the default captcha in Casdoor, follow these steps:
 
-Select category as  **Captcha** , type as  **Default** .
+1. Create a new provider in Casdoor.
+2. Select the category as **Captcha**, and the type as **Default**.
 
-![Default provider](/img/providers/captcha/default_provider.png)
+    ![Default provider](/img/providers/captcha/default_provider.png)
 
-And you can click **Preview** button to preview the style of this captcha.
+3. Click on the **Preview** button to preview the style of this captcha.
 
-![Default preview](/img/providers/captcha/default_preview.png)
+    ![Default preview](/img/providers/captcha/default_preview.png)
 
-## Applied in application
+## Applying in your application
 
-Edit the application you want to configure in Casdoor. Select the provider just added. There are three kinds of rules:
+To apply the default captcha in your application, do the following:
 
-- `Always` Always turned on human-machine verification when login.
-- `None` Never require human-machine verification, the accout will be blocked when it attempted to login into the same application with wrong password for the 5st time within 15 minutes. And it will be unblocked after 15 minutes.
-- `Dynamic` After 5 failed login attempts, the account will not be blocked but instead, human-machine verification will be required.
+1. Edit the application you want to configure in Casdoor.
+2. Select the provider that you just added. There are three types of rules available:
+
+- `Always`: Always requires human-machine verification during login.
+- `None`: Never requires human-machine verification. The account will be blocked if it attempts to login with the wrong password for the 5th time within 15 minutes. The block will be lifted after 15 minutes.
+- `Dynamic`: After 5 failed login attempts, human-machine verification will be required but the account will not be blocked.
 
 ![Default provider app](/img/providers/captcha/default_provider_app.png)
 
-We also provide a demo video to demonstrate the differences in rules, which we hope will be helpful to you
+We also provide a demo video to demonstrate the differences in rules, which we hope will be helpful to you.
 
 <video src="/video/provider/default_provider_app.mp4" controls="controls" width="100%"></video>

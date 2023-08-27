@@ -7,37 +7,41 @@ authors: [leoil]
 
 ## Configure Geetest
 
-Configure Geetest and get the public and secret key
+To configure Geetest and obtain the public and secret key, follow these steps:
 
-1. Go to the Geetest **CAPTCHA V4** in [geetest product page](https://auth.geetest.com/product)
+1. Go to the Geetest **CAPTCHA V4** section on the [Geetest product page](https://auth.geetest.com/product).
 
-   ![configure geetest product](/img/providers/captcha/geetest_product.png)
+   ![Configure Geetest product](/img/providers/captcha/geetest_product.png)
 
-2. Create Application : enter the Name and address to your application.
+2. Create an application by entering the name and address for your application.
 
-   ![geetest application](/img/providers/captcha/geetest_create_application.png)
+   ![Geetest application](/img/providers/captcha/geetest_create_application.png)
 
-3. Add events: choose **web** for device
+3. Add events and choose "web" for the device.
 
-   ![eetest event](/img/providers/captcha/geetest_add_events.png)
+   ![Geetest event](/img/providers/captcha/geetest_add_events.png)
 
-4. Get `ID` and `Key`
+4. Retrieve the `ID` and `Key`.
 
-   ![configure geetest key](/img/providers/captcha/geetest_key.png)
+   ![Configure Geetest key](/img/providers/captcha/geetest_key.png)
 
-## Configure casdoor
+## Configure Casdoor
 
-1. Crete a new provider in Casdoor
+Follow these steps to configure Casdoor:
 
-   Select category as **Captcha** , type as **Geetest**.
-   Fill in the `Site key`  and `Secret key` with ID, Key in Geetest.
+1. Create a new provider in Casdoor.
 
-2. Click Preview button to preview the style of this captcha.
+   Set the category as **Captcha** and the type as **Geetest**.
+   Fill in the `Site key` and `Secret key` with the ID and Key obtained from Geetest.
 
-   ![configure app provider](/img/providers/captcha/geetest_casdoor_configure.gif)
+2. Click the Preview button to preview the style of this captcha.
 
-## Applied in application
+   ![Configure app provider](/img/providers/captcha/geetest_casdoor_configure.gif)
 
-Edit the **application** you want to configure in Casdoor. Select the provider just added and click the button Save.
+## Apply in your application
 
-![configure app provider](/img/providers/captcha/geetest_app_provider.png)
+To apply the Geetest configuration in your application:
+
+Edit the **application** you want to configure in Casdoor. Select the provider you just added and click the Save button.
+
+![Configure app provider](/img/providers/captcha/geetest_app_provider.png)
