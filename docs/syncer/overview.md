@@ -1,20 +1,20 @@
 ---
 title: Overview
-description: Synchronize users in Casdoor
+description: Synchronizing users in Casdoor
 keywords: [users, sync, syncer]
 authors: [leo220yuyaodog]
 ---
 
-As an authentication platform, Casdoor can easily manipulate users stored in databases.
+As an authentication platform, Casdoor can easily manage users stored in databases.
 
 ## Syncer
 
-Casdoor stores users in **user** table. Don't worry about migrating your application **user** data into Casdoor, when you plan to use Casdoor as an authentication platform. Casdoor provides **syncer** to quickly help you sync user data to Casdoor.
+Casdoor stores users in the **user** table. So, when you plan to use Casdoor as an authentication platform, there is no need to worry about migrating your application's user data into Casdoor. Casdoor provides a **syncer** to quickly help you synchronize user data to Casdoor.
 
-Specify the database and user table that you want to synchronize to Casdoor. And the syncer will sync the data after the specified interval. For details, see [database syncer](/docs/syncer/Database).
+You need to specify the database and user table that you want to synchronize with Casdoor, and the syncer will take care of syncing the data at regular intervals. For more details, refer to the [database syncer](/docs/syncer/Database).
 
 ## Synchronization hash
 
-Casdoor use hash to determine how to update a user. Casdoor would calculate the hash value of each user in the table, which is generated using users' information, such as password or mobile phone number.
+Casdoor uses a hash function to determine how to update a user. This hash value is calculated for each user in the table, using information such as the password or mobile phone number.
 
-If the calculated hash value of a user with a specific `Id` changed compared with the original value, Casdoor would affirm which user table has been updated. Then the database would update the old information, realize the **bilateral synchronization** between Casdoor user table and origin user table.
+If the calculated hash value of a user with a specific `Id` changes compared to the original value, Casdoor confirms that the user table has been updated. Subsequently, the database updates the old information, thereby achieving **bilateral synchronization** between the Casdoor user table and the original user table.

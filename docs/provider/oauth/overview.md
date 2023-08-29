@@ -5,9 +5,9 @@ keywords: [OAuth]
 authors: [ErikQQY]
 ---
 
-Casdoor can use other OAuth applications as a signin method.
+Casdoor allows for the use of other OAuth applications as a sign-in method.
 
-Now, Casdoor supports many OAuth application providers. Icons of providers will be shown in login and signup pages after adding to Casdoor. Here are the providers Casdoor supports:
+Currently, Casdoor supports multiple OAuth application providers. The icons of these providers will be displayed on the login and signup pages once they have been added to Casdoor. The following are the providers that Casdoor supports:
 
 | Provider | Logo | Provider | Logo | Provider | Logo | Provider | Logo |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -43,17 +43,17 @@ Before this, there are some general concepts you need to understand.
 
 ## Add an OAuth provider
 
-1. Navigate to your Casdoor index page
-2. Click `Providers` in the top bar
-3. Click `Add`, then you can see a new provider in the list top
-4. Click the new provider to modify it
-5. Select `OAuth` in  `Category`
-6. Choose the OAuth provider you need in `Type`
-7. Fill the most important information, `Client ID` and `Client Secret`
+1. Go to your Casdoor index page.
+2. Click on `Providers` in the top bar.
+3. Click on `Add`, and you will see a new provider added to the list at the top.
+4. Click on the new provider to make changes to it.
+5. In the `Category` section, select `OAuth`.
+6. Choose the specific OAuth provider that you require from the `Type` dropdown.
+7. Fill in the necessary information, such as `Client ID` and `Client Secret`.
 
-## Applied in application
+## Application Setup
 
-1. Click `Applicaton` in the top bar and choose one application, edit
-2. click provider add button, select the provider you just added
-3. Modify the permissions of the provider, such as allowing registration, login, and unbinding
-4. Done!
+1. Click on `Application` in the top bar and select the desired application to edit.
+2. Click on the provider add button and choose the newly added provider.
+3. Modify the provider's permissions, such as enabling registration, login, and unbinding.
+4. You're all set!

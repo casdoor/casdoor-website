@@ -1,20 +1,20 @@
 ---
 title: Overview
-description: Using Casbin to manage users' access rights in organization
-keywords: [permission, Casbin]
+description: Using Casbin to manage user access rights in organizations
+keywords: [permissions, Casbin]
 authors: [seriouszyx, MagicalSheep]
 ---
 
 ## Introduction
 
-All users associated with a single Casdoor organization are shared between the organization's applications and therefore have access to the applications. Sometimes you may want to restrict users' access to certain applications, or certain resources in a certain application. In this case, you can use `Permission` implemented by [Casbin](https://casbin.org/).
+All users associated with a single Casdoor organization share access to the organization's applications. However, there may be instances where you want to restrict user access to certain applications or specific resources within an application. In such cases, you can utilize the `Permission` feature provided by [Casbin](https://casbin.org/).
 
-Before going further, you should have an understanding of how Casbin works and its related concepts, such as Model, Policy, and Adapter. In short, Model defines your permission policy structure, and how requests should match these permission policies and their effects. Policy is the description of your specific permission rules. After Casbin obtains Model and Policy information, it can enforce permission control on incoming requests. As an abstraction layer, Adapter shields the source of Policy for Casbin's executor, so that Policy can be stored everywhere, such as files or databases.
+Before delving deeper into the topic, it is important to have a basic understanding of how Casbin works and its related concepts, such as Models, Policies, and Adapters. In a nutshell, a Model defines the structure of your permission policies and the criteria for matching requests against these policies and their outcomes. A Policy, on the other hand, describes the specific permission rules. Once Casbin has the necessary Model and Policy information, it can enforce permission control on incoming requests. Acting as an abstraction layer, an Adapter shields Casbin's executor from the source of the Policy, allowing the storage of Policies in various locations like files or databases.
 
-Back to the topic of permission configuration in Casdoor. In the Casdoor Web UI, you can add a Model for your organization in the `Model` configuration item, and a Policy for your organization in the `Permission` configuration item. With [Casbin Online Editor](https://casbin.org/editor), you can get Model and Policy files suitable for your usage scenarios. You can easily import the Model file into Casdoor through the Casdoor Web UI for use by the built-in Casbin. But for Policy (that is, the `Permission` configuration item in the Casdoor Web UI), some additional instructions are required here. Let us continue to mention later.
+Returning to the subject of permission configuration in Casdoor, you can add a Model for your organization in the `Model` configuration item within the Casdoor Web UI, and a Policy for your organization in the `Permission` configuration item. The [Casbin Online Editor](https://casbin.org/editor) can provide you with Model and Policy files tailored to your specific usage scenarios. You can effortlessly import the Model file into Casdoor through its Web UI for use by the built-in Casbin. However, for the Policy (i.e., the `Permission` configuration item in the Casdoor Web UI), further instructions are necessary, which will be discussed later.
 
-Just as your application needs to enforce permission control through the built-in Casbin of Casdoor, as a built-in application, Casdoor also uses its Model and Policy to control the calling permissions of the API interface through Casbin. However, Casdoor can call Casbin from internal code, but external applications cannot. Therefore, Casdoor exposes an API for calling the built-in Casbin to external applications. We will show you the definitions of these API interfaces and how to use them later.
+Just as your application needs to enforce permission control through Casdoor's built-in Casbin, Casdoor itself utilizes its own Model and Policy to regulate access permissions for the API interfaces through Casbin. Though Casdoor can call Casbin from internal code, external applications cannot. As a solution, Casdoor exposes an API for external applications to call the built-in Casbin. We will provide definitions of these API interfaces and instructions on how to use them shortly.
 
-End of the chapter, we will use a practical example to show you how Casdoor cooperates with external applications for permission control.
+Towards the end of this chapter, we will showcase a practical example to demonstrate how Casdoor works in collaboration with external applications for permission control.
 
-Let's start!
+Let's get started!

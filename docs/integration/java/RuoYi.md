@@ -5,142 +5,147 @@ keywords: [RuoYi]
 authors: [jakiuncle]
 ---
 
-Casdoor can simply connect to RuoYi-cloud.
+Casdoor can be easily integrated with RuoYi-cloud.
 
-## Step 1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+First, deploy Casdoor.
 
 You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
 
-After a successful deployment, you need to ensure:
+After successful deployment, ensure the following:
 
-- The Casdoor server is successfully running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
+- The Casdoor server is running at **<http://localhost:8000>**.
+- Open your favorite browser and visit **<http://localhost:7001>** to access the Casdoor login page.
+- Test the login functionality by entering `admin` and `123`.
 
-Then you can quickly implement a casdoor-based login page in your own app with the following steps.
+Next, you can quickly implement a Casdoor-based login page in your own app following these steps.
 
-## Step 2. Configure Casdoor
+## Step 2: Configure Casdoor
 
-Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser as  your develop browser).
+To configure Casdoor, please follow these steps:
 
-You also should configure an organization, an application and the Synchronizer. You also can refer to [casdoor](https://door.casdoor.com/login).
+1. Open Casdoor in a browser by clicking [here](https://door.casdoor.com/login). It is recommended to use a different browser than your development browser.
 
-Some points needing attention:
+2. Configure an organization, an application, and the Synchronizer in Casdoor. You can find detailed instructions on how to do this [here](https://door.casdoor.com/login).
 
-1. The table columns in edit syncer:
-     ![table colums](/img/integration/java/RuoYi/tableColumns.png)
-2. The password type in edit organization:
-     ![passwordType](/img/integration/java/RuoYi/passwordType.png)
-3. You also should open soft deletion.
+Here are some additional points to keep in mind:
+
+1. When editing the syncer, make sure to check the table columns: ![Table Columns](/img/integration/java/RuoYi/tableColumns.png).
+
+2. When editing the organization, make sure to select the correct password type: ![Password Type](/img/integration/java/RuoYi/passwordType.png).
+
+3. Lastly, ensure that you have enabled soft deletion.
+
+Please make sure to follow these instructions carefully to properly configure Casdoor.
 
 ## Step 3. Reform your front-end
 
-### 3.1 jump to casdoor's login page
+### 3.1 Jump to Casdoor's login page
 
-We can use front-end sdk, take vue-sdk as an example here. After you init vue-sdk, you can get casdoor login page url by getSigninUrl().
+We can use a front-end SDK, taking vue-sdk as an example here. After you initialize vue-sdk, you can obtain the Casdoor login page URL by using the getSigninUrl() function.
 
-You can link it with the way you like and you can delete some ruoyi-cloud original code which you have no further use, such as original account and password el-input.
+You can link it in the way you prefer, and feel free to delete any original code from Ruoyi-Cloud that is no longer necessary, such as the original account and password el-input.
 
-### 3.2 Accept the code and state which return by casdoor
+### 3.2 Accept the code and state returned by Casdoor
 
-After we login in successfully by casdoor, casdoor sends the code and state to the page that we set up. We can get the code and state with function create.
+After successfully logging in through Casdoor, Casdoor sends the code and state to the page we set up. We can retrieve the code and state using the create() function.
 
 ```javascript
 created() {
-    let url = window.document.location.href//get url
+    let url = window.document.location.href; // get URL
     let u = new URL(url);
-    this.loginForm.code = u.searchParams.get('code')//get code and state
-    this.loginForm.state = u.searchParams.get('state')
-    if(this.loginForm.code!=null&&this.loginForm.state!=null){//if code and state is null, execute handleLogin
-      this.handleLogin()
+    this.loginForm.code = u.searchParams.get('code'); // get code and state
+    this.loginForm.state = u.searchParams.get('state');
+    if (this.loginForm.code != null && this.loginForm.state != null) { // if code and state are not null, execute handleLogin
+      this.handleLogin();
     }  
 }
 ```
 
-For RuoYi-Cloud, we just change its original method which sends account and password to send code and state. Therefore, it just changes what is sent to the back end, relative to the original login.
+For RuoYi-Cloud, we simply modify its original method of sending the account and password to send the code and state instead. Therefore, the change is only in what is sent to the backend, in relation to the original login.
 
-## Step 4. Reform your back-end
+## Step 4: Refactor your back-end
 
-### 4.1 Accept the code and state which return by front-end
+### 4.1 Accept the code and state returned by the front-end
 
 ```java
 @PostMapping("login")
-public R<?> callback(@RequestBody CodeBody code) {//we should define a CodeBody entity which have code and state
+public R<?> callback(@RequestBody CodeBody code) {
     String token = casdoorAuthService.getOAuthToken(code.getCode(), code.getState());
     CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);
-    if(casdoorUser.getName()!=null){
+    if (casdoorUser.getName() != null) {
         String casdoorUserName = casdoorUser.getName();
-        if(sysLoginService.getUserByCasdoorName(casdoorUserName)==null){//if database haven't this user
-            // add this user into database
-            sysLoginService.casdoorRegister(casdoorUserName);
+        if (sysLoginService.getUserByCasdoorName(casdoorUserName) == null) {
+            sysLoginService.casdoorRegister(casdoorUserName); // Add this user to the database if they don't exist
         }
     }
-    LoginUser userInfo = sysLoginService.casdoorLogin(casdoorUser.getName());//get this user's information by database
+    LoginUser userInfo = sysLoginService.casdoorLogin(casdoorUser.getName()); // Get the user's information from the database
     return R.ok(tokenService.createToken(userInfo));
 }
 ```
 
-In this method, we use casdoor-SpringBoot-sdk method and slightly modified RuoYi-Cloud Method.
+In this method, we are using the casdoor-SpringBoot-sdk method and making slight modifications to the RuoYi-Cloud method.
 
-For example, RuoYi-Cloud original register with account and password, I change the register with account like casdoorRegister.
+For example, the RuoYi-Cloud original method registers an account with a password. I have changed it to register an account using the `casdoorRegister` method.
 
-I also add a method to execute whether this account exists like getUserByCasdoorName and change execute userinfo with account and password to with account.
+I have also added a method `getUserByCasdoorName` to check if the account exists, and changed the method `executeUserInfo` to `executeWithAccount` to reflect this change.
 
-It's easy, because we only need to delete the part of checking password.
+This is an easy modification, as we only need to remove the part that checks the password.
 
-## Step 5. Summary
+## Step 5: Summary
 
-### 5.1 front-end
+### 5.1 Front-end
 
-- We need to delete original login and register.
-- We also need to accept code and state and send them to back-end.
+- The existing login and register pages need to be removed.
+- Additionally, the front-end needs to accept code and state parameters and send them to the back-end.
 
-### 5.2 back-end
+### 5.2 Back-end
 
-RuoYi back-end has perfect login and registration function. We just need to change a little, so it is very convenient.
+The RuoYi back-end already has a well-implemented login and registration function. We just need to make some minor modifications, which makes the process highly convenient.
 
-## Step 6. Detailed steps
+## Step 6: Detailed Steps
 
-1. Deploy and configure casdoor. We must take care of the organization's password type which should choose bcrypt because RuoYi-Cloud's password type is bcrypt.
-2. We should use casdoor syncers to copy database users to your casdoor organization. This step can make the original account import to casdoor.
-3. After we deployed casdoor, we should change front-end. We should close RuoYi check code
+1. Deploy and configure Casdoor. Be sure to select the bcrypt password type for the organization, as RuoYi-Cloud also uses bcrypt for passwords.
+
+2. Use Casdoor syncers to copy database users to your Casdoor organization. This will import the original accounts into Casdoor.
+
+3. After deploying Casdoor, make changes to the front-end. Disable the RuoYi check code.
 
     ![checkcode Switch](/img/integration/java/RuoYi/loginSwitch.png)
 
-    Note that RuoYi-Cloud captcha needs to be close in nacos again.
-    Note that RuoYi-Cloud open registration function requires changing sys.account.registerUser to true.
+    Note that the RuoYi-Cloud captcha needs to be disabled in Nacos again.
+    Also, the RuoYi-Cloud registration function needs to be enabled by setting `sys.account.registerUser` to `true`.
 
-4. We should add button jump to casdoor and change data's loginForm
+4. Add a button for users to log in with Casdoor, and modify the data's `loginForm`.
 
     ![login button](/img/integration/java/RuoYi/loginButton.png)
     ![data loginForm](/img/integration/java/RuoYi/loginForm.png)
-    Here I write url, you can get url by casdoor-vue-sdk or casdoor-SpringBoot-sdk.
+    Here, I have written the URL, but you can obtain it using the Casdoor-Vue-SDK or Casdoor-SpringBoot-SDK.
 
-5. Because we don't use the original login, we should delete the method about cookie and checkcode method.
+5. Since we are no longer using the original login method, delete the cookie and checkcode methods.
 
-    So the new create function:
+    The new `created` function should look like this:
 
     ```javascript
     created() {
-        let url = window.document.location.href//get url
+        let url = window.document.location.href; // Get the URL
         let u = new URL(url);
-        this.loginForm.code = u.searchParams.get('code')//get code and state
-        this.loginForm.state = u.searchParams.get('state')
-        if(this.loginForm.code!=null&&this.loginForm.state!=null){//if code and state is null, execute handleLogin
-          this.handleLogin()
+        this.loginForm.code = u.searchParams.get('code'); // Get the code and state
+        this.loginForm.state = u.searchParams.get('state');
+        if (this.loginForm.code != null && this.loginForm.state != null) { // If code and state are not null, execute handleLogin
+            this.handleLogin();
         }  
     }
     ```
 
-6. In fact, we just need to change the parameter we send to back-end and delete the function we don't need, we don't need to change anything else.
+6. In fact, we only need to change the parameter we send to the back-end and delete the unnecessary functions. No other changes are necessary.
 
     ![handleLogin](/img/integration/java/RuoYi/handleLogin.png)
     ![Login](/img/integration/java/RuoYi/Login.png)
     ![login](/img/integration/java/RuoYi/login2.png)
 
-7. Import dependency in back-end.
+7. Import the required dependency in the back-end.
 
     ```xml title="pom.xml"
     <dependency>
@@ -150,66 +155,63 @@ RuoYi back-end has perfect login and registration function. We just need to chan
     </dependency>
     ```
 
-    You also need to configure casdoor in resource.
+    You also need to configure Casdoor in the resource file.
 
-8. Callback function is defined as the redirect function. I change some methods in sysLoginService slightly. I delete the check password step because we don't need it.
+8. Define the callback function as the redirect function. Make changes to some methods in `sysLoginService`. Delete the password check step because it is no longer needed.
 
     ```java
     @PostMapping("login")
-    public R<?> callback(@RequestBody CodeBody code) {//we should define a CodeBody entity which have code and state
+    public R<?> callback(@RequestBody CodeBody code) {
+        // Define a CodeBody entity with code and state
         String token = casdoorAuthService.getOAuthToken(code.getCode(), code.getState());
         CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);
-        if(casdoorUser.getName()!=null){
+        if (casdoorUser.getName() != null) {
             String casdoorUserName = casdoorUser.getName();
-            if(sysLoginService.getUserByCasdoorName(casdoorUserName)==null){//if database haven't this user
-                // add this user into database
+            if (sysLoginService.getUserByCasdoorName(casdoorUserName) == null) {
+                // If the user is not in the RuoYi-Cloud database but exists in Casdoor, create the user in the database
                 sysLoginService.casdoorRegister(casdoorUserName);
             }
         }
-        LoginUser userInfo = sysLoginService.casdoorLogin(casdoorUser.getName());//get this user's information by database
+        LoginUser userInfo = sysLoginService.casdoorLogin(casdoorUser.getName());
+        // Get the user's information from the database
         return R.ok(tokenService.createToken(userInfo));
     }
     ```
 
-9. SysLoginService's new method
+9. Add new methods to `SysLoginService`.
 
     ```java
-    public LoginUser casdoorLogin(String username){
-        // execute user
+    public LoginUser casdoorLogin(String username) {
         R<LoginUser> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
-        if (R.FAIL == userResult.getCode())
-        {
+        // Execute the user
+        if (R.FAIL == userResult.getCode()) {
             throw new ServiceException(userResult.getMsg());
         }
 
-        if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData()))
-        {
-            recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "this user is not exist");
-            throw new ServiceException("user：" + username + " is not exist");
+        if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData())) {
+            recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "This user does not exist");
+            throw new ServiceException("User " + username + " does not exist");
         }
         LoginUser userInfo = userResult.getData();
         SysUser user = userResult.getData().getSysUser();
-        if (UserStatus.DELETED.getCode().equals(user.getDelFlag()))
-        {
-            recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "sorry, your account was deleted");
-            throw new ServiceException("sorry, your account：" + username + " was deleted");
+        if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
+            recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "Sorry, your account has been deleted");
+            throw new ServiceException("Sorry, your account " + username + " has been deleted");
         }
-        if (UserStatus.DISABLE.getCode().equals(user.getStatus()))
-        {
-            recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "your account is disabled, you can contact admin ");
-             throw new ServiceException(sorry, your account：" + username + " is disabled");
+        if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+            recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "Your account is disabled. Please contact the administrator");
+            throw new ServiceException("Sorry, your account " + username + " is disabled");
         }
-        recordLogService.recordLogininfor(username, Constants.LOGIN_SUCCESS, "login successfully");
+        recordLogService.recordLogininfor(username, Constants.LOGIN_SUCCESS, "Login successful");
         return userInfo;
     }
     ```
 
     ```java
-    public String getUserByCasdoorName(String casdoorUsername){
+    public String getUserByCasdoorName(String casdoorUsername) {
         R<LoginUser> userResult = remoteUserService.getUserInfo(casdoorUsername, SecurityConstants.INNER);
-        if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData()))
-        {
-            //if this user is not in RuoYi-Cloud database and casdoor have this user, we should create this user in database
+        if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData())) {
+            // If the user is not in the RuoYi-Cloud database but exists in Casdoor, create the user in the database
             return null;
         }
         String username = userResult.getData().getSysUser().getUserName();
@@ -218,20 +220,18 @@ RuoYi back-end has perfect login and registration function. We just need to chan
     ```
 
     ```java
-    public void casdoorRegister(String username){
-        if (StringUtils.isAnyBlank(username))
-        {
-            throw new ServiceException("User must fill in");
+    public void casdoorRegister(String username) {
+        if (StringUtils.isAnyBlank(username)) {
+            throw new ServiceException("User must provide a username");
         }
         SysUser sysUser = new SysUser();
         sysUser.setUserName(username);
         sysUser.setNickName(username);
         R<?> registerResult = remoteUserService.registerUserInfo(sysUser, SecurityConstants.INNER);
         System.out.println(registerResult);
-        if (R.FAIL == registerResult.getCode())
-        {
+        if (R.FAIL == registerResult.getCode()) {
             throw new ServiceException(registerResult.getMsg());
         }
-        recordLogService.recordLogininfor(username, Constants.REGISTER, "register successfully");
+        recordLogService.recordLogininfor(username, Constants.REGISTER, "Registration successful");
     }
     ```

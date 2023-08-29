@@ -1,23 +1,23 @@
 ---
-title: Custom Provider
-description: Add your own custom OAuth provider
-keywords: [Custom Provider]
+title: Custom Provider for Casdoor
+description: Add your custom OAuth provider to Casdoor
+keywords: [Custom Provider, OAuth, Casdoor]
 authors: [halozhy]
 ---
 
 :::note
 
-Casdoor supports custom providers, but the custom providers must follow the standard process of 3-legged OAuth, and the return value of `Token URL` and `UserInfo URL` must follow the format specified by Casdoor.
+Casdoor supports custom providers. However, the custom providers must follow the standard process of 3-legged OAuth, and the return values of `Token URL` and `UserInfo URL` must conform to the format specified by Casdoor.
 
 :::
 
-First, go to the provider page of Casdoor, and create a new provider. Select “Custom” in the Type item. It can be seen that in addition to `Client ID` and `Client Secret`, you need to fill in `Auth URL`, `Scope`, `Token URL`, `UserInfo URL` and `Favicon`.
+To create a new custom provider, navigate to the provider page of Casdoor, and select “Custom” in the Type field. You will then need to fill in `Client ID`, `Client Secret`, `Auth URL`, `Scope`,`Token URL`, `UserInfo URL`, and `Favicon`.
 
 ![image-20220418100744005](/img/providers/OAuth/customprovider.png)
 
 - `Auth URL` is the custom provider's OAuth login page address.
 
-  Suppose we fill in `https://door.casdoor.com/login/oauth/authorize` at the `Auth URL`, then when the user logs in with this custom provider, the browser will first jump to
+  If you fill in `https://door.casdoor.com/login/oauth/authorize` as the `Auth URL`, then, when a user logs in with this custom provider, the browser will first redirect to
 
   ```url
   https://door.casdoor.com/login/oauth/authorize?client_id={ClientID}&redirect_uri=https://{your-casdoor-hostname}/callback&state={State_generated_by_Casdoor}&response_type=code&scope={Scope}` 
@@ -29,21 +29,21 @@ First, go to the provider page of Casdoor, and create a new provider. Select “
   https://{your-casdoor-hostname}/callback?code={code}
   ```
 
-  Then the code parameter in this URL will be recognized by Casdoor.
+  After this step, Casdoor will recognize the code parameter in the URL.
 
-- `Scope` is the scope parameter carried when accessing the `Auth URL`, which is filled in according to the requirements of the custom provider.
+- `Scope` is the scope parameter carried when accessing the `Auth URL`, and you should fill it in as per the custom provider's requirements.
 
-- `Token URL` is the API address for obtaining accessToken.
+- `Token URL` is the API endpoint for obtaining the accessToken.
 
-  After obtaining the code in the previous step, Casdoor needs to use this code to get the accessToken.
+  Once you obtain the code in the previous step, Casdoor should use it to get the accessToken.
 
-  Suppose we fill in `https://door.casdoor.com/api/login/oauth/access_token` at the `Token URL`, then Casdoor will access the Token URL as follows
+  If you fill in `https://door.casdoor.com/api/login/oauth/access_token` as the `Token URL`, then Casdoor will access it using the following command
 
   ```bash
   curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback" https://door.casdoor.com/api/login/oauth/access_token
   ```
 
-  The custom provider should return at least the following
+  The custom provider should return at least the following information:
 
   ```json
   {
@@ -55,15 +55,15 @@ First, go to the provider page of Casdoor, and create a new provider. Select “
   }
   ```
 
-- `UserInfo URL` is the API address for obtaining user information by accessToken.
+- `UserInfo URL` is the API endpoint for obtaining user information via the accessToken.
 
-  Suppose we fill in `https://door.casdoor.com/api/userinfo` at the `UserInfo URL`, then Casdoor will access the UserInfo URL as follows
+  If you fill in `https://door.casdoor.com/api/userinfo` as the `UserInfo URL`, then Casdoor will access it using the following command
 
   ```bash
   curl -X GET -H "Authorization: Bearer {accessToken}" https://door.casdoor.com/api/userinfo
   ```
 
-  The custom provider should return at least the following
+  The custom provider should return at least the following information:
 
   ```json
   {
@@ -76,4 +76,4 @@ First, go to the provider page of Casdoor, and create a new provider. Select “
 
 - `Favicon` is the logo URL of a custom provider.
 
-  This logo will be displayed on Casdoor's login page along with other third-party login providers.
+  This logo will be displayed on Casdoor's login page together with other third-party login providers.

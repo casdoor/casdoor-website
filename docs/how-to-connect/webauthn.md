@@ -7,54 +7,52 @@ authors: [ComradeProgrammer]
 
 ## Overview
 
-We are delighted to inform the Casdoor's customers that Casdoor now supports logging in with WebAuthn, which means, you may be able to log in with your biological identifications like fingerprints or facial recognition even U-disks, provided that your device support these cool authorization method and WebAuthn.
+We are delighted to inform Casdoor's customers that Casdoor now supports logging in with WebAuthn. This means that you can log in using your biological identifications such as fingerprints or facial recognition, or even U-disks, provided that your device supports these cool authorization methods and WebAuthn.
 
 ### What is WebAuthn?
 
-The Web Authentication API (also known as WebAuthn: <https://webauthn.io/>) is a specification written by the W3C and FIDO, with the participation of Google, Mozilla, Microsoft, Yubico, and others. The API allows servers to register and authenticate users using public key cryptography instead of a password. **It allows servers to integrate with the strong authenticators now built into devices, like Windows Hello or Apple’s Touch ID**.
+WebAuthn is the Web Authentication API, a specification written by the W3C and FIDO in collaboration with Google, Mozilla, Microsoft, Yubico, and others. This API allows servers to register and authenticate users using public key cryptography instead of a password. It enables servers to integrate with strong authenticators built into devices, such as Windows Hello or Apple's Touch ID.
 
-To be concise, WebAuthn asks users to generate a public key - private key pair, and hand over the public key to the website. When a user wants to log in to a website, the web generates a random number and asks the user to encrypt it with its private key and send back the result. After receiving the result, the website will try to use the public key to decrypt, and if the decrypted number is the same as the random number generated before, the user will be regarded as a legal user and he will be allowed to log in. We call the public key combined with necessary information (like username or information about user's authorizer ) the Webauthn Credential, which is exactly what is stored by the website.
+To put it simply, WebAuthn requires users to generate a public key-private key pair and provide the public key to the website. When a user wants to log in to a website, the web generates a random number and asks the user to encrypt it with their private key and send the result back. Upon receiving the result, the website uses the public key to decrypt it. If the decrypted number matches the random number generated earlier, the user is considered a legitimate user and is granted access to log in. The combination of the public key and necessary information, like the username or information about the user's authorizer, is called the WebAuthn Credential, which is stored by the website.
 
-The public key - private key pair is exclusively uniquely distinguished three information: (user's username, user's authorizer, and the website's url). This means, if the (user's username, user's authorizer, and the website's url) is all the same, the key pair should be identical, and vice versa.
+The public key-private key pair is exclusively and uniquely associated with three pieces of information: the user's username, the user's authorizer, and the website's URL. This means that if the combination of (user's username, user's authorizer, and the website's URL) is the same, the key pair should be identical, and vice versa.
 
-For more detailed information about the WebAuthn Technology, you can visit <https://webauthn.guide/>.
+For more detailed information about WebAuthn technology, you can visit <https://webauthn.guide/>.
 
-### How to use WebAuthn in casdoor?
+### How to use WebAuthn in Casdoor?
 
-In the login page, you must have already seen the choice of using WebAuthn to login in. But considering that you haven't got a Webauthn credential (webauth password, if this inaccurate explanation can make you understand better) yet, so in this tutorial, we are going to show you how to create and manage a credential first and then, how to log in with the credential.
+On the login page, you may have already noticed the option to log in using WebAuthn. However, if you don't have a WebAuthn credential yet (which can be likened to a WebAuth password), this tutorial will show you how to create and manage a credential and then log in using it.
 
-#### Step0: modify the configurations and turn on the WebAuthn authentication
+#### Step 0: Modify the configurations and enable WebAuthn authentication
 
-In conf/app.conf you can see
+In the `conf/app.conf` file, you can find the following configuration:
 
 ```ini
 origin = "http://localhost:8000"
 ```
 
-Please ensure this configuration is EXACTLY the url of your website
+Please ensure that this configuration exactly matches the URL of your website.
 
-**Only https is supported for WebAuthn unless you are using localhost**
+**Note: Only HTTPS is supported for WebAuthn, unless you are using localhost.**
 
-Then log in as the administrator and go to the edit page of your application. Turn the switch on "Enable WebAuthn signin". By default, this feature is not enabled.
+Next, log in as the administrator and go to the edit page of your application. Turn on the "Enable WebAuthn signin" switch. By default, this feature is not enabled.
 
-#### Step 1: go to "my account" page
+#### Step 1: Go to "My Account" page
 
-Step 1: go to account page. On this page, you shall see the "Add WebAuthn Credential" Button and a list manifesting all the Webauthn credentials you have previously registered.
+Navigate to the account page. On this page, you should see the "Add WebAuthn Credential" button and a list displaying all the WebAuthn credentials you have previously registered.
 
-![Webauthn1](/img/webauthn/webauthn.png)
+![WebAuthn1](/img/webauthn/webauthn.png)
 
-Press the button and then follow the instructions of your device to register a new credential into casdoor.
+Click the button and follow the instructions of your device to register a new credential in Casdoor. You can remove any credentials using the "delete" button in the list.
 
-You can remove any credentials via the "delete" button in the list.
+#### Step 2: Log in using WebAuthn
 
-#### Step 2: log in via WebAuthn
+Before starting this step, make sure you have logged out of Casdoor.
 
-Before this step starts, make sure you have logged out the casdoor.
+Go to the login page, select the WebAuthn login method, enter your username, and click the login button. Follow the instructions of your device.
 
-Go to the log in page, choose the wenauthn login method, enter your username and press the login button, and follow the instructions of your device.
+(For example, if you are using fingerprint and Windows Hello, you should see something like this)
 
-(For example, if you use fingerprint and Window Hello, you are supposed to see something like this)
+![WebAuthn2](/img/webauthn/login_webauthn.png)
 
-![Webauthn2](/img/webauthn/login_webauthn.png)
-
-Then you will see that you have already logged in.
+You will then be logged in successfully.

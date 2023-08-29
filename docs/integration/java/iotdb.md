@@ -1,59 +1,59 @@
 ---
 title: Apache IoTDB
-description: Using Casdoor Apache IoTDB
+description: Using Casdoor with Apache IoTDB
 keywords: [Apache IoTDB]
 authors: [jakiuncle]
 ---
 
-Casdoor can simply connect to [Apache IoTDB](https://github.com/apache/iotdb).
+Casdoor can easily connect to [Apache IoTDB](https://github.com/apache/iotdb).
 
-Because the code for connecting casdoor has been added in [Apache IoTDB Web Workbench](https://github.com/apache/iotdb-web-workbench), we just need to configure application.yml in back-end and open front switch.
+The code for connecting Casdoor has already been added in [Apache IoTDB Web Workbench](https://github.com/apache/iotdb-web-workbench), so all we need to do is configure the application.yml file in the back-end and activate the front-end switch.
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+First, deploy Casdoor.
 
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
+You can refer to the official Casdoor documentation for the [Server Installation](/docs/basic/server-installation).
 
-After a successful deployment, you need to ensure:
+After deploying successfully, ensure that:
 
-- The Casdoor server is successfully running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
+- The Casdoor server is running successfully at **<http://localhost:8000>**.
+- Open your preferred browser and visit **<http://localhost:7001>**, where you will see the Casdoor login page.
+- Test the login functionality by entering `admin` and `123`.
 
-Then you can quickly implement a Casdoor-based login page in your own app with the following steps.
+With these steps completed, you can now quickly implement a Casdoor-based login page in your own application.
 
-## Step2. Configure Casdoor
+## Step 2: Configure Casdoor
 
-Configure casdoor can refer to [casdoor](https://door.casdoor.com/login)(Configure casdoor's browser better not use one browser as your develop browser).
+To configure Casdoor, refer to [casdoor](https://door.casdoor.com/login) (It is recommended not to use the same browser you are developing in to configure Casdoor's browser).
 
-You also should configure an organization and an application. You also can refer to [casdoor](https://door.casdoor.com/login).
+You should also create an organization and an application. Refer to [casdoor](https://door.casdoor.com/login) for instructions.
 
-### 2.1 you should create an organization
+### 2.1 Create an organization
 
 ![organization](/img/integration/java/IoTDB/editOrganization.png)
 
-### 2.2 you should create an application
+### 2.2 Create an application
 
 ![application](/img/integration/java/IoTDB/editApplication.png)
 
-## Step3. Open Apache IoTDB Web Workbench front-end switch
+## Step 3: Activate Apache IoTDB Web Workbench front-end switch
 
-Open this switch to make code and state send to back-end.
+Open this switch to send the code and state to the back-end.
 
-This switch in the iotdb-web-workbench/fronted/.env
+This switch can be found in iotdb-web-workbench/fronted/.env file.
 
 ![frontSwitch](/img/integration/java/IoTDB/frontSwitch.png)
 
-## Step4. Configure back-end code
+## Step 4: Configure the back-end code
 
-You should configure casdoor's Configuration in the iotdb-web-workbench/backend/src/main/resources/application.properties
+You need to configure Casdoor's settings in the iotdb-web-workbench/backend/src/main/resources/application.properties file.
 
 ```ini
 casdoor.endpoint = http://localhost:8000
-casdoor.clientId = <client id in previous step>
-casdoor.clientSecret = <client Secret in previous step>
-casdoor.certificate=<client certificate in previous step>
+casdoor.clientId = <client id from previous step>
+casdoor.clientSecret = <client secret from previous step>
+casdoor.certificate=<client certificate from previous step>
 casdoor.organizationName=IoTDB
 casdoor.applicationName=app-IoTDB
 ```

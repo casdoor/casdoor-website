@@ -111,10 +111,11 @@ module.exports = {
         "application/overview",
         "application/terminology",
         "application/config",
-        "application/signup-items-tabel",
+        "application/signup-items-table",
         "application/ui-customization",
         "application/specify-login-organization",
         "application/tags",
+        "application/invitation-code",
       ],
     },
     {
@@ -356,10 +357,25 @@ module.exports = {
           type: "category",
           label: "C++",
           collapsed: true,
-          link: {type: "generated-index"},
+          link: {
+            type: "generated-index",
+            slug: "/category/cpp",
+          },
           items: [
             "integration/C++/Nginx",
             "integration/C++/Envoy",
+          ],
+        },
+        {
+          type: "category",
+          label: "C#",
+          collapsed: true,
+          link: {
+            type: "generated-index",
+            slug: "/category/csharp",
+          },
+          items: [
+            "integration/CSharp/Unity",
           ],
         },
         {

@@ -1,18 +1,17 @@
 ---
 title: Permissions
-description: the user's permissions
+description: User Permissions
 keywords: [user, permissions]
 authors: [Resulte]
 ---
 
-Each user may have multiple permissions.
-You can see the user's permissions on the user's profile.
+Each user may have multiple permissions. You can view the user's permissions on their profile.
 
 ![permissions](/img/user/users_permissions.png)
 
-## Permission properties
+## Permission Properties
 
-Premision has these properties:
+Permissions have the following properties:
 
 * `Owner`
 * `Name`
@@ -20,9 +19,9 @@ Premision has these properties:
 * `DisplayName`
 * `IsEnabled`
 * `Model`
-* `Users` Array of this role's sub users
-* `Roles` Array of this role's sub roles
+* `Users`: An array of this role's sub-users
+* `Roles`: An array of this role's sub-roles
 * `ResourceType`
-* `Resources` Array of the resources
-* `Actions` Array of the actions
+* `Resources`: An array of the resources
+* `Actions`: An array of actions
 * `Effect`

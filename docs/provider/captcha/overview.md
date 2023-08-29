@@ -5,29 +5,29 @@ keywords: [captcha]
 authors: [Resulte]
 ---
 
-Casdoor can be configured to support different captchas to check whether the operation is made by human. If you add a captcha provider and applied it in the application, when the user logins, registers or forgets password and needs to send a code, then a captcha check dialog will appear to check whether the operation is made by human.
+Casdoor can be configured to support different captchas to verify if the operation is performed by a human. By adding a captcha provider and applying it in the application, when users login, register, or forget their password and need to send a code, a captcha check dialog will appear to verify if the operation is performed by a human.
 
-Now, Casdoor supports many captcha providers. Here are the providers Casdoor supporting:
+Currently, Casdoor supports multiple captcha providers. The following are the providers supported by Casdoor:
 
 |                         **Default**                          |                     Cloudflare Turnstile                     |                        **reCAPTCHA**                         |                         **hCaptcha**                         |                      **Aliyun Captcha**                      |                                  Geetest                                   |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |:--------------------------------------------------------------------------:|
 | <img src="https://cdn.casbin.org/img/social_default.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_cloudflare.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_recaptcha.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_hcaptcha.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_aliyun.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_geetest.png" width="40"></img> |
 |                            **✅**                             |                            **✅**                             |                            **✅**                             |                            **✅**                             |                            **✅**                             |                                   **✅**                                    |
 
-We will show you how to apply  a captcha and add it to Casdoor.
+We will show you how to apply a captcha and add it to Casdoor.
 
 ## Add a captcha provider
 
-1. Navigate to your Casdoor index page
-2. Click `Providers` in the top bar
-3. Click `Add`, then you can see a new provider in the list top
-4. Click the new provider to modify it
-5. Select `Captcha` in  `Category`
-6. Choose the Captcha provider you need in `Type`
-7. Fill the most important information, different captcha providers have different information that needs to be filled in
+1. Navigate to your Casdoor index page.
+2. Click on `Providers` in the top bar.
+3. Click on `Add`, then you will see a new provider in the top list.
+4. Click on the new provider to modify it.
+5. Select `Captcha` in the `Category`.
+6. Choose the captcha provider you need in the `Type`.
+7. Fill in the most important information. Different captcha providers may require different information to be filled in.
 
-## Applied in application
+## Applying in the application
 
-1. Click `Applicaton` in the top bar and choose one application to edit.
-2. Click provider add button, and select the provider you just added.
+1. Click on `Application` in the top bar and choose one application to edit.
+2. Click on the provider add button and select the provider you just added.
 3. Done!

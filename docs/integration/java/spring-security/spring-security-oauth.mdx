@@ -1,40 +1,40 @@
 ---
 title: Spring Security OAuth
-description: Using Spring Security as an example to show how to use OIDC to connect to your applications
-keywords: [OIDC, Spirng Security]
+description: Using Spring Security as an example to demonstrate how to use OIDC to connect to your applications
+keywords: [OIDC, Spring Security]
 authors: [wenxuan70]
 ---
 
-Casdoor can use OIDC protocol as IDP to connect various applications. Here we will use Spring Security as an example to show you how to use OIDC to connect to your applications.
+Casdoor can use the OIDC protocol as an IDP to connect various applications. In this guide, we will use Spring Security as an example to show you how to use OIDC to connect to your applications.
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+First, you need to deploy Casdoor.
 
 You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
 
-After a successful deployment, you need to ensure:
+After successfully deploying Casdoor, make sure:
 
-- The Casdoor server is successfully running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test login functionality is working fine.
+- The Casdoor server is running on **<http://localhost:8000>**.
+- Open your favorite browser and visit **<http://localhost:7001>**, where you will see the login page of Casdoor.
+- Verify that the login functionality is working fine by entering `admin` and `123`.
 
-Then you can quickly implement a casdoor based login page in your own app with the following steps.
+Now, you can quickly implement a Casdoor-based login page in your own app by following the steps below.
 
-## Step2. Configure Casdoor application
+## Step 2. Configure Casdoor application
 
-1. Create or use an existing Casdoor application.
-2. Add Your redirect url (You can see more details about how to get redirect url in the next section)
-![Casdoor Application Setting](/img/integration/appsetting_spring_security.png)
-3. Add provider you want and supplement other settings.
+1. Create a new Casdoor application or use an existing one.
+2. Add your redirect URL (You can find more details on how to obtain the redirect URL in the next section).
+   ![Casdoor Application Settings](/img/integration/appsetting_spring_security.png)
+3. Add the desired provider and fill in any additional settings.
 
-Not surprisingly, you can get two values ​​on the application settings page: `Client ID` and `Client secret` like the picture above. We will use them in next step.
+On the application settings page, you will find two values: `Client ID` and `Client secret`, as shown in the image above. We will use these values in the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
+Open your preferred browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**. Here, you will find the OIDC configuration of Casdoor.
 
-## Step3. Configure Spring Security
+## Step 3. Configure Spring Security
 
-Spring Security natively support OIDC.
+Spring Security natively supports OIDC.
 
 You can customize the settings of Spring Security OAuth2 Client:
 
@@ -103,20 +103,20 @@ spring.security.oauth2.client.provider.casdoor.user-name-attribute=name
 
 :::caution
 
-For default situation of Spring Security, the `<Redirect URL>` should be like `http://<You Spirng Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/custom`.
+For the default situation of Spring Security, the `<Redirect URL>` should be like `http://<Your Spring Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/custom`.
 For example, in the following demo, the redirect URL should be `http://localhost:8080/login/oauth2/code/custom`.
 
-You should also configure this in `casdoor` application.
+You should also configure this in the `casdoor` application.
 
 :::
 
-You can also customize the settings by `ClientRegistration` in your code. You can find the mapping [here](https://docs.spring.io/spring-security/site/docs/5.2.12.RELEASE/reference/html/oauth2.html#oauth2login-boot-property-mappings)
+You can also customize the settings using `ClientRegistration` in your code. You can find the mapping [here](https://docs.spring.io/spring-security/site/docs/5.2.12.RELEASE/reference/html/oauth2.html#oauth2login-boot-property-mappings)
 
-## Step4. Get Started with A Demo
+## Step 4: Get Started with a Demo
 
 1. We can create a Spring Boot application.
 
-2. We can add a configuration which protects all endpoints except `/` and `/login**` for users to log in.
+2. We can add a configuration that protects all endpoints except `/` and `/login**` for users to log in.
 
     ```java
     @EnableWebSecurity
@@ -124,14 +124,19 @@ You can also customize the settings by `ClientRegistration` in your code. You ca
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().antMatchers("/", "/login**").permitAll().anyRequest().authenticated().and()
-                    .oauth2Login();
+            http.authorizeRequests()
+                .antMatchers("/", "/login**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .oauth2Login();
 
         }
     }
     ```
 
-3. We can add a naive page for user to log in.
+3. We can add a naive page for the user to log in.
 
     ```html
     <!DOCTYPE html>
@@ -149,16 +154,16 @@ You can also customize the settings by `ClientRegistration` in your code. You ca
                 Thymeleaf - 1</a>
         </nav>
         <div class="container">
-            <label>Welcome ! </label> <br /> <a th:href="@{/foos/}"
+            <label>Welcome!</label> <br /> <a th:href="@{/foos/}"
                 class="btn btn-primary">Login</a>
         </div>
     </body>
     </html>
     ```
 
-    When user clicks the `login` button, he will be redirected to `casdoor`.
+    When the user clicks the `login` button, they will be redirected to `casdoor`.
 
-4. Next, we can define our protected resources. We can export an endpoint called `/foos` and a web page for display.
+4. Next, we can define our protected resources. We can expose an endpoint called `/foos` and a web page for display.
 
     Data Model
 
@@ -221,8 +226,7 @@ You can also customize the settings by `ClientRegistration` in your code. You ca
             <a class="navbar-brand" th:href="@{/foos/}">Spring OAuth Client
                 Thymeleaf -1</a>
             <ul class="navbar-nav ml-auto">
-                <li class="navbar-text">Hi, <span sec:authentication="name">preferred_username</span>&nbsp;&nbsp;&nbsp;
-                </li>
+                <li class="navbar-text">Hi, <span sec:authentication="name">preferred_username</span>&nbsp;&nbsp;&nbsp;</li>
             </ul>
         </nav>
         <div class="container">
@@ -239,8 +243,12 @@ You can also customize the settings by `ClientRegistration` in your code. You ca
                         <td colspan="4">No foos</td>
                     </tr>
                     <tr th:each="foo : ${foos}">
-                        <td><span th:text="${foo.id}"> ID </span></td>
-                        <td><span th:text="${foo.name}"> Name </span></td>
+                        <td>
+                            <span th:text="${foo.id}">ID</span>
+                        </td>
+                        <td>
+                            <span th:text="${foo.name}">Name</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -251,19 +259,19 @@ You can also customize the settings by `ClientRegistration` in your code. You ca
 
 :::caution
 
-All the web page template should be put under `resources/templates`.
+All the web page templates should be placed under `resources/templates`.
 
 :::
 
-## Step5. Try the demo!
+## Step 5: Try the demo!
 
-Firstly, you can try to open your favorite browser and directly visit `/foos`. It will automatically redirect to casdoor's login page. You can log in here or from the root page.
+Firstly, you can try opening your favorite browser and directly visiting `/foos`. It will automatically redirect you to Casdoor's login page. You can log in there or from the root page.
 
-If you visit your root page,
+If you visit your root page, you will see the Casdoor Application Setting.
 ![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_welcome.png)
 
-Click the `login` button and the page will redirect to casdoor's login page.
+Click the `login` button and the page will redirect you to Casdoor's login page.
 ![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_casdoor.png)
 
-After you log in, the page will redirect to `/foos`.
+After logging in, the page will redirect you to `/foos`.
 ![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_resource.png)

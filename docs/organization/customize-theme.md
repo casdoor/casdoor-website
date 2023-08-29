@@ -1,37 +1,34 @@
 ---
-title: Customize theme
-description: Customize themes for organizations and applications under the organization
+title: Customizing Themes
+description: Learn how to customize themes for organizations and applications within an organization
 keywords: [theme]
 authors: [leo220yuyaodog]
 ---
 
-Casdoor allows you to customize theme to satisfy UI diversity from business or brand requirements,
-including primary color, border radius.
+Casdoor allows you to customize themes to meet the UI diversity requirements of businesses or brands, including primary color and border radius.
 
-In Casdoor, the scope of theme includes global, organization, and application.
+Within Casdoor, themes can be customized at the global, organization, and application levels.
 
-1. Global scope: this is the default theme of Casdoor and is applied to any organization that chooses to follow the global theme. It can only be modified in Casdoor source code, there is no way to modify it in web UI.
+1. Global scope: This is the default theme of Casdoor and is applied to any organization that chooses to follow the global theme. Modifications can only be made in the Casdoor source code and cannot be modified in the web UI.
 
-2. Organization scope: the theme for an organization can be customized in the organization edit page. The theme takes effect in all the Casdoor after-login pages for the users in the organization and the entry pages (signup, signin, forget password, etc.) of the applications that follow the organization theme.
+2. Organization scope: The theme for an organization can be customized on the organization edit page. This theme applies to all Casdoor after-login pages for users within the organization, as well as the entry pages (signup, signin, forget password, etc.) of applications that follow the organization theme.
 
-3. Application scope: the theme for an application can be customized in the application edit page. The theme takes effect in the the entry pages (signup, signin, forget password, etc.) of the application.
+3. Application scope: The theme for an application can be customized on the application edit page. This theme applies to the entry pages (signup, signin, forget password, etc.) of the specific application.
 
-## Customize organization theme
+## Customizing the Organization Theme
 
-We provide a demo to demonstrate how to config theme in organization:
+We provide a demo to demonstrate how to configure the theme for an organization:
 
 ![edit theme](/img/organization/edit_theme.gif)
 
 :::info
 
-If your account organization is same as the organization you are editing, after you save the configuration, it will take effect immediately as the video above show.
-But if they are different, you need to log in the organization to see the effect.
+If your account organization is the same as the organization you are editing, the configuration changes will take effect immediately as shown in the video above. However, if they are different, you will need to log in to the organization to see the changes.
 
 :::
 
-## Customize application theme
+## Customizing the Application Theme
 
-Applications customize theme use the same theme editor as the organization. But even more conveniently, you can preview the
-theme in the preview panel.
+Applications can customize themes using the same theme editor as the organization. Additionally, you can preview the theme conveniently in the preview panel.
 
 ![preview](/img/organization/application_preview.png)

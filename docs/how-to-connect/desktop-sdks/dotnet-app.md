@@ -1,72 +1,71 @@
 ---
-title: Dotnet Desktop App
-description: An Dotnet desktop app example for Casdoor
-keywords: [dotnet, sdk]
+title: dotNET Desktop App
+description: A dotNET desktop app example for Casdoor
+keywords: [dotNET, SDK]
 authors: [zh6335901]
 ---
 
-An [Dotnet desktop app example](https://github.com/casdoor/casdoor-dotnet-desktop-example) for Casdoor.
+A [Dotnet desktop app example](https://github.com/casdoor/casdoor-dotnet-desktop-example) for Casdoor.
 
-## How to run example
+## How to Run the Example
 
 ### Prerequisites
 
-[dotnet6 sdk](https://dotnet.microsoft.com/en-us/download)
-
-[webview2 runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/#download-section) (It's already preinstalled in your windows generally)
+- [dotNET 6 SDK](https://dotnet.microsoft.com/en-us/download)
+- [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section) (It is usually preinstalled on Windows)
 
 ### Initialization
 
-The initialization requires 5 parameters, which are all string type:
+The initialization requires 5 parameters, all of which are of type string:
 
 | Name         | Description                                                                                             | File                  |
 | ------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
-| Domain       | Your Casdoor server host/domain                                                                         | `CasdoorVariables.cs` |
+| Domain       | The host/domain of your Casdoor server                                                                  | `CasdoorVariables.cs` |
 | ClientId     | The Client ID of your Casdoor application                                                               | `CasdoorVariables.cs` |
 | AppName      | The name of your Casdoor application                                                                    | `CasdoorVariables.cs` |
-| CallbackUrl  | The path of the callback URL for your Casdoor application, will be `casdoor://callback` if not provided | `CasdoorVariables.cs` |
+| CallbackUrl  | The path of the callback URL for your Casdoor application. If not provided, it will be `casdoor://callback` | `CasdoorVariables.cs` |
 | ClientSecret | The Client Secret of your Casdoor application                                                           | `CasdoorVariables.cs` |
 
-If you don't set these parameters, this project will use the [Casdoor online demo](https://door.casdoor.com) as the default Casdoor server and use the [Casnode](https://door.casdoor.com/applications/app-casnode) as the default Casdoor application.
+If you do not set these parameters, the project will default to using the [Casdoor online demo](https://door.casdoor.com) as the Casdoor server and the [Casnode](https://door.casdoor.com/applications/app-casnode) as the Casdoor application.
 
 ### Running
 
 #### Visual Studio
 
-1. Open casdoor-dotnet-desktop-example.sln
-2. Press Ctrl + F5 to start
+1. Open `casdoor-dotnet-desktop-example.sln`
+2. Press `Ctrl + F5` to start
 
-#### Command line
+#### Command Line
 
-1. cd src/DesktopApp
-2. dotnet run
+1. `cd src/DesktopApp`
+2. `dotnet run`
 
 ### Preview
 
-After you run this dotnet desktop application, a new window will be showed on your desktop.
+After running the dotNET desktop application, a new window will appear on your desktop.
 ![index](/img/how-to-connect/desktop-sdks/dotnet-app/index.png)
 
-If you click `Casdoor Login` button, a login window will be showed on your desktop.
+If you click the `Casdoor Login` button, a login window will appear on your desktop.
 ![login](/img/how-to-connect/desktop-sdks/dotnet-app/login.png)
 
-After you login successfully, a user profile window will be showed on your desktop. It displays your user name.
+After successfully logging in, a user profile window will appear on your desktop, displaying your username.
 ![user profile](/img/how-to-connect/desktop-sdks/dotnet-app/userprofile.png)
 
-You can preview the whole process by the gif image below.
+You can preview the entire process in the GIF image below.
 ![preview gif](/img/how-to-connect/desktop-sdks/dotnet-app/preview.gif)
 
-## How to integrate
+## How to Integrate
 
-### Open the login window
+### Opening the Login Window
 
 ```csharp
 var login = new Login();
-// Trigger when login succeeded, you will receive auth code in event handler
+// Triggered when login succeeds, you will receive an auth code in the event handler
 login.CodeReceived += Login_CodeReceived;
 login.ShowDialog();
 ```
 
-### Use auth code to get the user info
+### Using the Auth Code to Get User Info
 
 ```csharp
 public async Task<string?> RequestToken(string clientId, string clientSecret, string code)

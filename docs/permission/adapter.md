@@ -1,39 +1,36 @@
 ---
 title: Adapter
-description: Config adapter and basic CRUD to policy
+description: Configure adapter and perform basic CRUD operations on policy
 keywords: [permission, Casbin, adapter, policy]
 authors: [leo220yuyaodog]
 ---
 
-Casdoor supports using the UI to connect the adapter and manage the policy rules. In Casbin, the policy storage is implemented
-as an adapter (aka middleware for Casbin). A Casbin user can use an adapter to load policy rules from a storage, or save
-policy rules to it.
+Casdoor supports using the UI to connect the adapter and manage policy rules. In Casbin, the storage of policy rules is implemented as an adapter, which acts as middleware for Casbin. A Casbin user can use an adapter to load policy rules from a storage or save policy rules to it.
 
 ## Adapter
 
-- `type` : Adapter type. Now support database adapter.
+- `type`: Adapter type. Currently supports database adapter.
 - `Host`
 - `Port`
 - `User`
 - `Password`
-- `Database type` : Now support MySQL, PostgreSQL, SQL server, Oracle, SQLite 3.
-- `Database` : The database name.
-- `Table` : The table name. If the table does not exist, it will be created.
+- `Database type`: Currently supports MySQL, PostgreSQL, SQL Server, Oracle, SQLite 3.
+- `Database`: The name of the database.
+- `Table`: The name of the table. If the table does not exist, it will be created.
 
 ![adapter_config](/img/permission/adapter/adapter_config.png)
 
 :::info
 
-After fill all the fields, please don't forget to **save** the config. Then click the **sync** button to load the policy rules.
-The policy rules will be shown in the below table.
+After filling in all the fields, please remember to **save** the configuration. Then click the **sync** button to load the policy rules. The policy rules will be displayed in the table below.
 
 :::
 
 ![adapter_policy](/img/permission/adapter/adapter_policy.png)
 
-## Basic CURD
+## Basic CRUD Operations
 
-If you connect the adapter successfully, you can make basic CURD to the policy rules.
+If you have successfully connected the adapter, you can perform basic CRUD operations on the policy rules.
 
 - Add
 
@@ -41,13 +38,12 @@ If you connect the adapter successfully, you can make basic CURD to the policy r
 
 :::tip
 
-You can only add one policy at one time. The newly added policy is in the first row in the table, but actually, it will
-be saved in the last row. So next time you sync the policies, they will appear in the last row of the table.
+You can only add one policy at a time. The newly added policy will appear as the first row in the table, but it will actually be saved in the last row. So, when you sync the policies next time, they will appear in the last row of the table.
 
 :::
 
 - Edit
-  
+
   ![adapter_edit](/img/permission/adapter/edit.gif)
 
 - Delete

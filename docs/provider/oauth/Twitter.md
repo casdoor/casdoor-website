@@ -5,13 +5,15 @@ keywords: [Twitter, OAuth]
 authors: [Marvelousp4]
 ---
 
-## Twitter(still working🚧)
+## Twitter (Work in Progress 🚧)
 
-> Twitter’s application steps are somewhat troublesome, and the official restrictions are a bit strict, so it may be more difficult to apply for a developer account than other third-party platforms.
+> Applying for a developer account on Twitter can be a bit cumbersome due to the strict official restrictions. It may be more challenging compared to other third-party platforms.
 
-Visit [Developer Portal](https://developer.twitter.com/en/portal/dashboard), register if you don't have an account. Twitter needs to know what you are applying for a developer account for. You must fill in it carefully, otherwise it will not pass.
+To get started, visit the [Developer Portal](https://developer.twitter.com/en/portal/dashboard) and create an account if you don't have one. Twitter requires you to provide detailed information about your application for a developer account. Make sure to fill in the information accurately to avoid any issues during the review process.
 
-After the application is approved, create an application, fill in the callback address and other information, you need to do two things, which will be set is **Authentication settings** section.
+Once your application is approved, you can proceed to create an application. You need to complete two important tasks in the **Authentication settings** section:
 
-- Manually turn on **3-legged OAuth**, for Sign in with Twitter, posting Tweets on behalf of other accounts and more.
-- Enable **Request email address from users**, for getting user email address.
+1. Manually enable **3-legged OAuth**. This is necessary for features such as "Sign in with Twitter" and posting Tweets on behalf of other accounts.
+2. Enable **Request email address from users** to obtain the user's email address.
+
+Make sure to carefully fill in the callback address and other required information for your application.

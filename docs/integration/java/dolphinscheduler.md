@@ -5,56 +5,54 @@ keywords: [DolphinScheduler]
 authors: [Abingcbc]
 ---
 
-Casdoor is one of the supported login method for [Apache DolphinScheduler](https://github.com/apache/dolphinscheduler).
+Casdoor is one of the supported login methods for [Apache DolphinScheduler](https://github.com/apache/dolphinscheduler).
 
-## Step1. Deploy Casdoor
+## Step 1: Deploy Casdoor
 
-Firstly, the Casdoor should be deployed.
+Firstly, Casdoor should be deployed. You can refer to the Casdoor official documentation for [Server Installation](https://casdoor.org/docs/basic/server-installation).
 
-You can refer to the Casdoor official documentation for the [Server Installation](https://casdoor.org/docs/basic/server-installation).
+After a successful deployment, please ensure that:
 
-After a successful deployment, you need to ensure:
+* The Casdoor server is running successfully at <http://localhost:8000>.
+* Open your favorite browser and visit <http://localhost:7001>. You will see the login page of Casdoor.
+* Test the login functionality by inputting "admin" and "123".
 
-* The Casdoor server is successfully running on <http://localhost:8000>.
-* Open your favorite browser and visit <http://localhost:7001>, you will see the login page of Casdoor.
-* Input admin and 123 to test login functionality is working fine.
+Once the deployment is completed, you can quickly implement a Casdoor-based login page in your own app by following the steps below.
 
-Then you can quickly implement a Casdoor based login page in your own app with the following steps.
+## Step 2: Configure Casdoor Application
 
-## Step2. Configure Casdoor Application
-
-1. Create or use an existing Casdoor application.
-2. Add Your redirect url (You can see more details about how to get redirect url in the next section)
+1. Create a new Casdoor application or use an existing one.
+2. Add your redirect URL (You can find more details about how to obtain the redirect URL in the next section).
    ![Casdoor Application Setting](/img/integration/java/spring_security/casdoor_setting.png)
-3. Add provider you want and supplement other settings.
+3. Add the desired provider and fill in other necessary settings.
 
-Not surprisingly, you can get two values on the application settings page: `Client ID` and `Client secret` like the picture above. We will use them in next step.
+On the application settings page, you will find two important values: `Client ID` and `Client secret`, as shown in the picture above. We will use these values in the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, you will see the OIDC configure of Casdoor.
+Open your favorite browser and visit **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** to view the OIDC configuration of Casdoor.
 
-## Step3. Configure Dolphinscheduler
+## Step 3: Configure DolphinScheduler
 
 > dolphinscheduler-api/src/main/resources/application.yaml
 
 ```yaml
 security:
   authentication:
-    # Authentication types (supported types: PASSWORD,LDAP,CASDOOR_SSO)
+    # Authentication types (supported types: PASSWORD, LDAP, CASDOOR_SSO)
     type: CASDOOR_SSO
 casdoor:
-  # Your Casdoor server url
+  # The URL of your Casdoor server
   endpoint:
   client-id:
   client-secret:
-  # The certificate may be multi-line, you can use `|-` for ease
+  # The certificate may be multi-line; you can use `|-` for ease
   certificate: 
-  # Your organization name added in Casdoor
+  # The organization name you added in Casdoor
   organization-name:
-  # Your application name added in Casdoor
+  # The application name you added in Casdoor
   application-name:
-  # Doplhinscheduler login url
+  # The DolphinScheduler login URL
   redirect-url: http://localhost:5173/login 
 ```
 
-Now, Dolphinschduler will automatically redirect you to Casdoor for authentication.
+Now, DolphinScheduler will automatically redirect you to Casdoor for authentication.
 ![Demo](/img/integration/java/dolphinscheduler/dolphinscheduler.gif)

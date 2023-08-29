@@ -7,46 +7,46 @@ authors: [leo220yuyaodog]
 
 ## Introduction
 
-In an organization, you can customize users' **account items**. This includes whether each item is **visible**. If visible,
-its **view rule** and **modify rule**.
+In an organization, you can customize users' **account items**. This includes whether each item is **visible** and its **view rule** and **modify rule**.
 
-When you customize account items in an organization, this configuration
-takes effect on the home page of all members of that organization.
+When you customize account items in an organization, this configuration takes effect on the home page of all members of that organization.
 
-## How to customize?
+## How to Customize?
 
-Account item has four attributes:
+Account items have four attributes:
 
-|    Column Name    |   Selectable Value  | Description    |
-| :---------: | :------------------------------: | -----------|
-|    Name    |    -    | Account item name.                                                  |
-|    Visible    |      `True` / `False`      | Select whether this account item is visible on the user home page.                                                    |
-| ViewRule | `Rule Items` | Select a rule to use with view the account item. |
-| ModifyRule | `Rule Items` | Select a rule to use with modify the account item. |
+| Column Name | Selectable Value | Description |
+| :---------: | :--------------: | ----------- |
+|    Name     |        -         | Account item name. |
+|   Visible   | `True` / `False` | Select whether this account item is visible on the user home page. |
+|  ViewRule  |    Rule Items    | Select a rule to use when viewing the account item. |
+| ModifyRule |    Rule Items    | Select a rule to use when modifying the account item. |
 
-Enter the Organization Edit page, you will find the following:
+To customize account items, follow these steps:
 
-![account_customize.png](/img/organization/account_customize.png)
+1. Go to the Organization Edit page.
+2. You will find the following options:
 
-Casdoor provides very simple operations to configure:
+   ![account_customize.png](/img/organization/account_customize.png)
 
-- Set the item to be visible or invisible
+3. Casdoor provides simple operations to configure account items:
+   - Set the item to be visible or invisible.
 
-![account_visible.png](/img/organization/account_visible.png)
+     ![account_visible.png](/img/organization/account_visible.png)
 
-- Set viewing and modifying rules
+   - Set viewing and modifying rules.
 
-![account_rule.png](/img/organization/account_rule.png)
+     ![account_rule.png](/img/organization/account_rule.png)
 
-There are 3 rules:
+There are 3 rules available:
 
-- `Public`: Everyone has permission
-- `Self`: The users has their own permission
-- `Admin`: The administrator has permission
+- `Public`: Everyone has permission.
+- `Self`: Each user has their own permission.
+- `Admin`: The administrator has permission.
 
-## Account table
+## Account Table
 
-The following are all the fields in account item. For a description, you can see [user](/docs/user/overview).
+Below are all the fields in the account item. For descriptions, you can refer to [user](/docs/user/overview).
 
 - `Organization`
 - `ID`

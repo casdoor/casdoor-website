@@ -1,23 +1,23 @@
 ---
 title: DB Migration
-description: Handle DB Migration in Casdoor
+description: Handling DB Migration in Casdoor
 keywords: [deployment, Database, Migration]
 authors: [forestmgy]
 ---
 
-When the database is upgraded, it is easy to have a data crash, for example, we need to delete an old field.  Fortunately, the [xorm](https://xorm.io/) used by Casdoor will help us with a lot of database migration problems. But we still need to handle some schema and data migrations ourselves, such as a **field name changed**
+When upgrading the database, there is a risk of data loss, such as when deleting an old field. Luckily, Casdoor utilizes [xorm](https://xorm.io/), which assists with many database migration problems. However, some schema and data migrations must still be handled manually, such as when a field name is changed.
 
 :::note
 
-You can understand xorm Schema operation in [xorm docs](https://xorm.io/docs/chapter-03/readme/)
+Refer to the [xorm docs](https://xorm.io/docs/chapter-03/readme/) for a better understanding of xorm's schema operations.
 
 :::
 
-## How it works
+## How it Works
 
-As mentioned above, when a field name changes, xorm will not be able to do anything, but xorm provides a [migrate](https://gitea.com/xorm/xorm/src/branch/master/migrate) package to help us solve this problem.
+As mentioned earlier, xorm is unable to handle field name changes. To address this, xorm provides a [migrate](https://gitea.com/xorm/xorm/src/branch/master/migrate) package that can assist with this problem.
 
-You can write code like this to handle field renaming:
+To handle field renaming, you can write code like this:
 
 ```go
 migrations := []*migrate.Migration{
@@ -37,8 +37,8 @@ migrations := []*migrate.Migration{
     m.Migrate()
 ```
 
-What we want to achieve is: **rename `p_type` to `ptype`**. But since xorm **does not support field renaming**, we can only use a more complicated way: assign the value of `p_type` to `ptype`, and then delete the `p_type` field.
+Our objective is to **rename `p_type` to `ptype`**. However, since xorm **does not support field renaming**, we must resort to a more intricate approach: assigning the value of `p_type` to `ptype`, and subsequently deleting the `p_type` field.
 
-The `ID` field uniquely refers to the migration we performed. After the `m.Migrate()` runs, and the value of the `ID` will be added to the migrations table of the database.
+The `ID` field uniquely identifies the migration being performed. After `m.Migrate()` runs, the value of `ID` will be added to the migrations table of the database.
 
-When the project is started again, the database will check the existing `ID` field in the table and will not perform operations with the same `ID`
+Upon starting the project again, the database will check for any existing `ID` field in the table and refrain from performing any operations associated with the same `ID`.
