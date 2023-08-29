@@ -7,8 +7,6 @@ authors: [zh6335901]
 
 An [Dotnet desktop app example](https://github.com/casdoor/casdoor-dotnet-desktop-example) for Casdoor.
 
-An [Dotnet desktop **AvaloniaUI** app example](https://github.com/RVShershnev/casdoor-dotnet-avalonia-example) for Casdoor.
-
 ## How to run example
 
 ### Prerequisites
