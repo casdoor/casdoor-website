@@ -23,12 +23,12 @@ Select `OpenID Connect` in Custom providers, fill in the following information:
 |-----------------|---------------------------------------|------------------------------------------|
 | Name            | Any be any string you would like      | casdoor                                  |
 | Client ID       | Client ID for the Casdoor application | 294b09fbc17f95daf2fe                     |
-| Issuer (URL)    | Casdoor server URL                    | https://door.casdoor.com                 |
+| Issuer (URL)    | Casdoor server URL                    | "https://door.casdoor.com"               |
 | Client Secret   | Client secret for Casdoor application | dd8982f7046ccba1bbd7851d5c1ece4e52bf039d |
 
 ![oidc_config0](/img/integration/javascript/firebase/oidc_config0.png)
 
-The above examples values can be retrieved from Casdoor demo site: https://door.casdoor.com/applications/casbin/app-vue-python-example
+The above examples values can be retrieved from Casdoor demo site: [app-vue-python-example](https://door.casdoor.com/applications/casbin/app-vue-python-example)
 
 ![oidc_config1](/img/integration/javascript/firebase/oidc_config1.png)
 
