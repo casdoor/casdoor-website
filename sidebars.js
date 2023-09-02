@@ -444,6 +444,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/javascript/wechat_miniprogram",
+            "integration/javascript/firebase",
           ],
         },
         {
