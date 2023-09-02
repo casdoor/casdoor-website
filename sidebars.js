@@ -443,8 +443,8 @@ module.exports = {
           collapsed: true,
           link: {type: "generated-index"},
           items: [
-            "integration/javascript/wechat_miniprogram",
             "integration/javascript/firebase",
+            "integration/javascript/wechat_miniprogram",
           ],
         },
         {
