@@ -40,7 +40,5 @@ Add Callback URL to Casdoor application Redirect URLs:
 
 ![oidc_config3](/img/integration/javascript/firebase/oidc_config3.png)
 
-Then click "Save" button. 
-
 Here we provide an example [casdoor-firebase-example](https://github.com/casdoor/casdoor-firebase-example) for you to use Casdoor authentication in your app.
 To see more details for how to use Casdoor authentication in your app, please refer to [Firebase document](https://firebase.google.com/docs/auth).
