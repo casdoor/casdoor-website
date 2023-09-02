@@ -19,12 +19,12 @@ You need to enable "Identity Platform" feature first to enable OIDC integration 
 
 Select `OpenID Connect` in Custom providers, fill in the following information:
 
-| Name (in order) | Description                           | Example value                            |
-|-----------------|---------------------------------------|------------------------------------------|
-| Name            | Any be any string you would like      | casdoor                                  |
-| Client ID       | Client ID for the Casdoor application | 294b09fbc17f95daf2fe                     |
-| Issuer (URL)    | Casdoor server URL                    | "https://door.casdoor.com"               |
-| Client Secret   | Client secret for Casdoor application | dd8982f7046ccba1bbd7851d5c1ece4e52bf039d |
+| Name (in order) | Description                           | Example value                                        |
+|-----------------|---------------------------------------|------------------------------------------------------|
+| Name            | Any be any string you would like      | casdoor                                              |
+| Client ID       | Client ID for the Casdoor application | 294b09fbc17f95daf2fe                                 |
+| Issuer (URL)    | Casdoor server URL                    | [https://door.casdoor.com](https://door.casdoor.com) |
+| Client Secret   | Client secret for Casdoor application | dd8982f7046ccba1bbd7851d5c1ece4e52bf039d             |
 
 ![oidc_config0](/img/integration/javascript/firebase/oidc_config0.png)
 
