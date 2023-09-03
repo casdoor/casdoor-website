@@ -62,6 +62,15 @@ module.exports = {
             "how-to-connect/desktop-sdks/qt-app",
           ],
         },
+        {
+          type: "category",
+          label: "Mobile SDKs",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "how-to-connect/mobile-sdks/react-native-app",
+          ],
+        },
         "how-to-connect/plugin",
         "how-to-connect/oauth",
         "how-to-connect/cas",
