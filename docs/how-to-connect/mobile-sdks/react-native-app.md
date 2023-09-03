@@ -44,10 +44,30 @@ react-native run-android
 
 > Make sure to turn on the emulator or real device before running.
 
-### After running, you will see the following  interfaces
+### Preview
 
-|                                                             **iOS**                                                              |                                                            **Android**                                                            |
-|:--------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------:|
+After running this react-native-example mobile application, the following window will be displayed on the emulator or real device.
+
+|                                                 **iOS**                                                  |                                                   **Android**                                                    |
+|:--------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
+| <img src="/img/how-to-connect/mobile-sdks/react-native-app/iOS-login.png" alt="iOS-login" width="250" /> | <img src="/img/how-to-connect/mobile-sdks/react-native-app/Android-login.png" alt="Android-login" width="250" /> |
+
+If you click the `Login with Casdoor` button, the Casdoor login window will appear on the screen.
+
+|                                                         **iOS**                                                          |                                                           **Android**                                                            |
+|:------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="/img/how-to-connect/mobile-sdks/react-native-app/iOS-casdoor-login.png" alt="iOS-casdoor-login" width="250" /> | <img src="/img/how-to-connect/mobile-sdks/react-native-app/Android-casdoor-login.png" alt="Android-casdoor-login" width="250" /> |
+
+After a successful login, a user profile window will appear on your screen displaying your user information.
+
+|                                                       **iOS**                                                       |                                                           **Android**                                                            |
+|:-------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="/img/how-to-connect/mobile-sdks/react-native-app/iOS-userInfo.png" alt="iOS-userInfo" width="250" /> | <img src="/img/how-to-connect/mobile-sdks/react-native-app/Android-userInfo.png" alt="Android-userInfo" width="250" /> |
+
+You can preview the entire process in the following GIF image.
+
+|                                                             **iOS**                                                              |                                 **Android**                                                                                              |
+|:--------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------:|
 | <img src="https://github.com/casdoor/casdoor-react-native-example/blob/master/iOS-gif.gif?raw=true" alt="iOS-gif" width="250" /> | <img src="https://github.com/casdoor/casdoor-react-native-example/blob/master/Android-gif.gif?raw=true" alt="Android-gif" width="250" /> |
 
 ## How to Integrate
