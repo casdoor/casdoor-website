@@ -18,32 +18,37 @@ There is a [Casdoor React Native mobile app example](https://github.com/casdoor/
 ```
 
 - install dependencies
-```bash 
+
+```bash
  cd casdoor-react-native-example
  yarn install
  cd ios/
  pod install
 ```
+
 - run on ios
+
 ```bash
 cd casdoor-react-native-example
 react-native start
 react-native run-ios
 ```
+
 - run on android
+
 ```bash
 cd casdoor-react-native-example
 react-native start
 react-native run-android
 ```
+
 > Make sure to turn on the emulator or real device before running.
 
-### After running, you will see the following  interfaces:
+### After running, you will see the following  interfaces
 
 |                                                             **iOS**                                                              |                                                            **Android**                                                            |
 |:--------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------:|
 | <img src="https://github.com/casdoor/casdoor-react-native-example/blob/master/iOS-gif.gif?raw=true" alt="iOS-gif" width="250" /> | <img src="https://github.com/casdoor/casdoor-react-native-example/blob/master/Android-gif.gif?raw=true" alt="Android-gif" width="250" /> |
-
 
 ## How to Integrate
 
@@ -53,13 +58,13 @@ The integration and use of the sdk is very simple, the following steps will show
 
 ### Step 1: Import SDK
 
-~~~shell script
+```shell script
 # NPM
 npm i casdoor-react-native-sdk
 
 # Yarn
 yarn add casdoor-react-native-sdk
-~~~
+```
 
 ### Step 2: Initialize SDK
 
