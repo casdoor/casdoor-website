@@ -19,7 +19,6 @@ Copy the Channel ID of the channel you want to post a message to. You can grab t
 
 ![discord_channel](/img/providers/notification/discord_channel.png)
 
-
 ## Step 3: Configure Casdoor Discord Provider
 
 There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Discord is as follows:

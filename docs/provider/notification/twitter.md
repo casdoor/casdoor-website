@@ -21,7 +21,6 @@ Copy your `API Key` and `API Secret`, `Access Token` and `Access Token Secret`
 - [Find Twitter ID](https://codeofaninja.com/tools/find-twitter-id/)
 - [Twiteridfinder](https://twiteridfinder.com/)
 
-
 ## Step 3: Configure Casdoor Twitter Provider
 
 There are five required fields: `Client ID`, `Client secret`, `Client ID 2`, `Client secret 2` and `Chat ID`. The relationship between the fields and Twitter is as follows:

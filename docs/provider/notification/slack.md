@@ -21,7 +21,6 @@ Copy the Channel ID of the channel you want to post a message to. You can grab t
 
 ![slack_channel](/img/providers/notification/slack_channel.png)
 
-
 ## Step 3: Configure Casdoor Slack Provider
 
 There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Slack is as follows:

@@ -26,7 +26,6 @@ The json will look like this:
 }
 ```
 
-
 ## Step 3: Configure Casdoor Google Chat Provider
 
 Fill in the `Application credential` in the metadata.
