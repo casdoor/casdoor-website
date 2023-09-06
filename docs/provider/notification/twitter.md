@@ -18,7 +18,6 @@ Copy your `API Key` and `API Secret`, `Access Token` and `Access Token Secret`
 `Twitter ID` can't be obtained directly, you can get it from some third-party tools.
 
 - [TweeterID](https://tweeterid.com/)
-- [Find Twitter ID](https://codeofaninja.com/tools/find-twitter-id/)
 - [Twiteridfinder](https://twiteridfinder.com/)
 
 ## Step 3: Configure Casdoor Twitter Provider
