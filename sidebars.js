@@ -205,6 +205,10 @@ module.exports = {
             "provider/notification/overview",
             "provider/notification/telegram",
             "provider/notification/customHttp",
+            "provider/notification/slack",
+            "provider/notification/googleChat",
+            "provider/notification/twitter",
+            "provider/notification/discord",
           ],
         },
         {
