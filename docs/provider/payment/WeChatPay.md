@@ -47,10 +47,10 @@ There are four required fields: `Client ID`, `Client secret`, `App ID`, `Provide
 |---------------|--------------------|
 |Category       |   choose `Payment` |
 |Type           |   choose `WeChat Pay`  |
-| Client ID     | `Merchant ID` obtained from Step 1.3  |
-| Client secret | `API Key v3` obtained from Step 1.1  |
-| App ID        | `App ID` obtained from Step 1.3 | 
-| Cert          | `Cert` configured at Step 1.2 |
+|Client ID     | `Merchant ID` obtained from Step 1.3  |
+|Client secret | `API Key v3` obtained from Step 1.1  |
+|App ID        | `App ID` obtained from Step 1.3 |
+|Cert          | `Cert` configured at Step 1.2 |
 
 ![wechat pay provider](/img/providers/payment/wechat_provider.png)
 
