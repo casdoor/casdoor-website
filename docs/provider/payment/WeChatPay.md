@@ -6,6 +6,7 @@ authors: [Wrapping-2000, Chinoholo0807]
 ---
 
 ## Step 1. Preparation
+
 First, you need to have a merchant account at [WeChat Merchant Platform](https://pay.weixin.qq.com/index.php/public/wechatpay_en).
 
 Before accessing the WeChat Pay, there are some preparations that need to be done.
@@ -19,6 +20,7 @@ Log in to WeChat Merchant Platform, select `Account Settings > API Security >Set
 ![wechat api key v3](/img/providers/payment/wechat_apikey_v3.png)
 
 How to get `API Key v3` : [APIv3 Key Settings](https://kf.qq.com/faq/180830E36vyQ180830AZFZvu.html)
+
 ### 1.2 Get Merchant Certificate
 
 You can log in to WeChat Merchant Platform, and select `Account Settings > API Security > API Certificate` to download the certificate.
@@ -50,8 +52,6 @@ There are four required fields: `Client ID`, `Client secret`, `App ID`, `Provide
 | Client secret | `API Key v3` obtained from Step 1.1  |
 | App ID        | `App ID` obtained from Step 1.3 | 
 | Cert          | `Cert` configured at Step 1.2 |
-
-<!-- The acquisition of `Merchant ID` and `APIv3 key` is as mentioned before. For the App ID, see [here](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml) for more help. -->
 
 ![wechat pay provider](/img/providers/payment/wechat_provider.png)
 
