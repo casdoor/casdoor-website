@@ -52,7 +52,7 @@ There are four required fields: `Client ID`, `Client secret`, `App ID`, `Provide
 |App ID        | `App ID` obtained from Step 1.3 |
 |Cert          | `Cert` configured at Step 1.2 |
 
-![wechat pay provider](/img/providers/payment/wechat_provider.png)
+![wechat pay provider](/img/providers/payment/wechat_payment_provider.png)
 
 ## Step 3. Add the WeChat Pay Payment provider for your product
 
