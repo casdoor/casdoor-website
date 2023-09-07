@@ -247,7 +247,7 @@ module.exports = {
             "provider/payment/paypal",
             "provider/payment/stripe",
             "provider/payment/Alipay",
-            "provider/payment/WeChatPay",
+            "provider/payment/wechatpay",
           ],
         },
         {
