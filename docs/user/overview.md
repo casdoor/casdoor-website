@@ -95,3 +95,31 @@ Select your XLSX file and click Open. The users will be imported.
 We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder. The template includes 5 test users and headers for some required user properties.
 
 ![Import Successful](/img/user/import_success.png)
+
+## Bypass password encryption 
+
+When migrating users from an external database to Casdoor, there might be situations where you want to bypass or control the default encryption method provided by `organization` default Password type method. 
+
+This can be achieved by using the `passwordType` field during user import.
+
+
+:::note User with Bycrypt password
+
+Below is an example of a POST body request for the API route `/api/add-user`. 
+
+
+```json
+{
+  "owner": "organization",
+    "signupApplication": "first-app",
+    "email":"dev@dev.com",
+    "name": "dev",
+    "displayName": "developper",
+    "password": "$2a$10$.o/iVyDE9Xk8ioywHDnQRu72RviOi6FPa1ujhusbSCZeg7VOa6MY6",
+    "passwordType":"bcrypt",
+}
+```
+Here, the user's password is already encrypted using the bcrypt algorithm, so we specify the `passwordType` as "bcrypt" to inform Casdoor not to encrypt it again.
+
+:::
+
