@@ -29,6 +29,9 @@
         },
         {
             "pattern": "^https://www.epis2048.net/2022/modify-kodexplorer-to-support-casdoor/index.html"
+        },
+        {
+            "pattern": "^https://help.brevo.com/hc/en-us/articles/7924908994450"
         }
     ]
 }
