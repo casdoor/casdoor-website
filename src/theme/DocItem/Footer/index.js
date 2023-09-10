@@ -92,14 +92,15 @@ function IconTrans(props) {
   );
 }
 
-function TransThisPage({transUrl}) {
+function TransThisPage(props) {
   return (
     <>
       <a
-        href={transUrl}
+        href={props.transUrl}
         target="_blank"
         rel="noreferrer noopener"
         className={ThemeClassNames.common.editThisPage}
+        {...props}
       >
         <IconTrans style={{marginRight: "0.3em", verticalAlign: "sub"}} />
         <Translate>
@@ -114,7 +115,7 @@ function EditMetaRow({editUrl, transUrl, authors}) {
   return (
     <div className={clsx(ThemeClassNames.docs.docFooterEditMetaRow, "row")}>
       <div className="col">
-        {editUrl && <EditThisPage editUrl={editUrl} />} {transUrl && <TransThisPage transUrl={transUrl} />}
+        {editUrl && <EditThisPage editUrl={editUrl} />} {transUrl && <TransThisPage transUrl={transUrl} style={{marginLeft: "2rem"}} />}
       </div>
       <div className={clsx("col", styles.lastUpdated)}>
         <ContributedBy authors={authors} />
