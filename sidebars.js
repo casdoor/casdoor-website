@@ -181,6 +181,7 @@ module.exports = {
           items: [
             "provider/email/overview",
             "provider/email/mailhog",
+            "provider/email/brevo",
           ],
         },
         {
