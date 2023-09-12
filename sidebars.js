@@ -183,6 +183,7 @@ module.exports = {
             "provider/email/mailhog",
             "provider/email/brevo",
             "provider/email/azureACS",
+            "provider/email/sendgrid",
           ],
         },
         {

@@ -27,6 +27,6 @@ Now create an email provider in Casdoor. Fill in the necessary information.
 
 ![brevo_provider](/img/providers/brevo_provider.png)
 
-Click on the `Test SMTP Connection` button. If you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the MailHog service.
+Click on the `Test SMTP Connection` button. If you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the Brevo service.
 
 Next, click on the `Send Testing Email` button. If you see `Email sent successfully`, it means that the test email has been sent successfully from the `From` address to the `Test Email`.
