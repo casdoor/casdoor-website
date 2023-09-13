@@ -40,7 +40,7 @@ How to get `App ID` : [WeChat Pay APPID Query Guide](https://pay.weixin.qq.com/s
 ## Step 2.  Create a WeChat Pay Payment provider
 
 
-There are four required fields: `Client ID`, `Client secret`, `App ID`, `Provider URL`. The relationship corresponding to the Azure Blob account is as follows:
+Next, create a WeChat Pay Payment provider in Casdoor by filling in the necessary information.
 
 | Name          | Name in WeChat Pay |
 |---------------|--------------------|
