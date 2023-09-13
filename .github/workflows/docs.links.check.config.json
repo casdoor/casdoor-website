@@ -32,6 +32,9 @@
         },
         {
             "pattern": "^https://help.brevo.com/hc/en-us/articles/7924908994450"
+        },
+        {
+            "pattern": "^https://opendocs.alipay.com\\S+"
         }
     ]
 }
