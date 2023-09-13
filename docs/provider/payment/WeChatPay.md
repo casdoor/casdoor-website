@@ -53,7 +53,7 @@ Next, create a WeChat Pay Payment provider in Casdoor by filling in the necessar
 
 <!-- The acquisition of `Merchant ID` and `APIv3 key` is as mentioned before. For the App ID, see [here](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml) for more help. -->
 
-![wechat pay provider](/img/providers/payment/wechat_provider.png)
+![wechat pay provider](/img/providers/payment/wechat_payment_provider.png)
 
 ## Step 3. Add the WeChat Pay Payment provider for your product
 
