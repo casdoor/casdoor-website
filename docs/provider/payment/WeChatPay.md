@@ -6,6 +6,7 @@ authors: [Wrapping-2000, Chinoholo0807]
 ---
 
 ## Step 1. Preparation
+
 First, you need to have a merchant account at [WeChat Merchant Platform](https://pay.weixin.qq.com/index.php/public/wechatpay_en).
 
 Before accessing the WeChat Pay, there are some preparations that need to be done.
@@ -38,7 +39,6 @@ How to get `Merchant ID` : [WeChat Pay Merchant ID Query Guide](https://kf.qq.co
 How to get `App ID` : [WeChat Pay APPID Query Guide](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml)
 
 ## Step 2.  Create a WeChat Pay Payment provider
-
 
 There are four required fields: `Client ID`, `Client secret`, `App ID`, `Provider URL`. The relationship corresponding to the Azure Blob account is as follows:
 

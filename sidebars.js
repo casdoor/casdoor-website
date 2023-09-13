@@ -181,6 +181,9 @@ module.exports = {
           items: [
             "provider/email/overview",
             "provider/email/mailhog",
+            "provider/email/brevo",
+            "provider/email/azureACS",
+            "provider/email/sendgrid",
           ],
         },
         {
@@ -247,7 +250,7 @@ module.exports = {
             "provider/payment/paypal",
             "provider/payment/stripe",
             "provider/payment/Alipay",
-            "provider/payment/wechatpay",
+            "provider/payment/WeChatPay",
           ],
         },
         {
