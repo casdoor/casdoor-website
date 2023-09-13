@@ -7,7 +7,7 @@ authors: [Chinoholo0807]
 
 ## Step 1. Preparation
 
-First, you need to have a merchant account at [Alipay Open Platform](https://open.alipay.com/).
+First, you need to have a merchant account at Alipay Open Platform.
 
 Before accessing the Alipay, there are some preparations that need to be done.
 
@@ -15,7 +15,7 @@ You can refer to the documentation [preparation before access](https://opendocs.
 
 ### 1.1 Get APPID
 
-Login the [Alipay Open Platform Console](https://open.alipay.com/develop/pm/create?templateId=6-bcb9-7250e6fd2c431487669730456&from=payappsite) and create an application.
+Login the Alipay Open Platform Console and [create an application](https://opendocs.alipay.com/open/200/105310).
 
 How to get the `APPID` : [Alipay APPID Query Guide](https://opendocs.alipay.com/common/02nebp)
 
