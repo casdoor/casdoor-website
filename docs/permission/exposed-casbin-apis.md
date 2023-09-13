@@ -8,7 +8,9 @@ authors: [MagicalSheep]
 ## Introduction
 
 Let's assume that your application's front-end has obtained the `access_token` of the logged-in user and now wants to authenticate the user for some access. You cannot simply place the `access_token` into the HTTP request header to use these APIs because Casdoor uses the `Authorization` field to check the access permission. Like any other APIs provided by Casdoor, the `Authorization` field consists of the application client id and secret, using the [Basic HTTP Authentication Scheme](https://datatracker.ietf.org/doc/html/rfc7617).
-It looks like `Basic XXX`. For this reason, Casbin APIs should be called by the application backend server. Here are the steps on how to do it.
+It looks like `Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>`. For this reason, Casbin APIs should be called by the application backend server. Here are the steps on how to do it.
+
+Take the [app-vue-python-example](https://door.casdoor.com/applications/casbin/app-vue-python-example) application in the demo site for example, the authorization header should be: `Authorization: Basic 294b09fbc17f95daf2fe dd8982f7046ccba1bbd7851d5c1ece4e52bf039d`.
 
 1. The front-end passes the `access_token` to the backend server through the HTTP request header.
 2. The backend server retrieves the user id from the `access_token`.
@@ -24,7 +26,7 @@ Request:
 ```shell
 curl --location --request POST 'http://localhost:8000/api/enforce?permissionId=example-org/example-permission' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Basic client_id_and_secret' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
 --data-raw '["example-org/example-user", "example-resource", "example-action"]'
 ```
 
@@ -50,7 +52,7 @@ Request:
 ```shell
 curl --location --request POST 'http://localhost:8000/api/batch-enforce?permissionId=example-org/example-permission' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Basic client_id_and_secret' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
 --data-raw '[["example-org/example-user", "example-resource", "example-action"], ["example-org/example-user2", "example-resource", "example-action"], ["example-org/example-user3", "example-resource", "example-action"]]'
 ```
 
@@ -79,7 +81,7 @@ Request:
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-objects' \
---header 'Authorization: Basic client_id_and_secret'
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
 ```
 
 Response:
@@ -96,7 +98,7 @@ Request:
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-actions' \
---header 'Authorization: Basic client_id_and_secret'
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
 ```
 
 Response:
@@ -115,7 +117,7 @@ Request:
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-roles' \
---header 'Authorization: Basic client_id_and_secret'
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
 ```
 
 Response:
