@@ -61,7 +61,7 @@ Next, create an Alipay Payment provider in Casdoor by filling in the necessary i
 
 ## Step 3. Add the Alipay Pay Payment provider for your product
 
-Finally, add the WeChat Pay Payment provider for your product so that users can purchase the product using Alipay.
+Finally, add the Alipay Payment provider for your product so that users can purchase the product using Alipay.
 
 ![add wechat pay payment provider for product](/img/providers/payment/alipay_product.png)
 
