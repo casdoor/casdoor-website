@@ -31,13 +31,9 @@ Here is an example of creating an app in Casdoor:
 
 Expand the **Settings** from the left navigation bar, click on the **Authentication** option from this list.
 
-1. Enable **Use SSO** and **Automatic user provisioning**.
+1. Enable **Use SSO** and **Automatic user provisioning**: ![portainer_2](/img/integration/go/portainer/portainer_2.png)
 
-![portainer_2](/img/integration/go/portainer/portainer_2.png)
-
-2. Fill in the necessary information as follows:
-
-![portainer_3](/img/integration/go/portainer/portainer_3.png)
+2. Fill in the necessary information as follows: ![portainer_3](/img/integration/go/portainer/portainer_3.png)
 
 - `Authorization URL`: **https://<CASDOOR_HOST>/login/oauth/authorize**
 
