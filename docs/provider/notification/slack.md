@@ -25,10 +25,10 @@ Copy the Channel ID of the channel you want to post a message to. You can grab t
 
 There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Slack is as follows:
 
-| Name    | Name in Slack |
-|---------|---------------|
-| App Key | Access Token  |
-| Chat ID | Channel ID    |
-| Content |               |
+| Name       | Name in Slack |
+|------------|---------------|
+| Secret key | Access Token  |
+| Chat ID    | Channel ID    |
+| Content    |               |
 
 ![slack_provider](/img/providers/notification/slack_provider.png)

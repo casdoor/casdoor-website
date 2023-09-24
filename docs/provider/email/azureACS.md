@@ -21,7 +21,7 @@ Copy your `Endpoint` and `Private Key` for usage
 
 ### Step 2: Configure Casdoor email Provider
 
-Now create an email provider in Casdoor, fill in the necessary information. The relationship between the fields and Slack is as follows:
+Now create an email provider in Casdoor, fill in the necessary information. The relationship between the fields and Azure ACS is as follows:
 
 :::note
 
@@ -32,7 +32,7 @@ Now create an email provider in Casdoor, fill in the necessary information. The 
 | Name         | Name in Azure ACS |
 |--------------|-------------------|
 | From Address |                   |
-| App ID       | Private Key       |
+| Secret key   | Private Key       |
 | Host         | Endpoint          |
 
 ![azureACS_provider](/img/providers/azureACS_provider.png)
