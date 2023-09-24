@@ -11,4 +11,6 @@ On the application edit page, you can find the `Tags` configuration section wher
 
 ![configure_tags](/img/application/tags/configure_app_tags.png)
 
-Click [here](/video/application/application_tags.mp4) to download and watch a video demonstrating how application tags work.
+Here is a video demonstrating how application tags work:
+
+<video src="/video/application/application_tags.mp4" controls="controls" width="100%"></video>

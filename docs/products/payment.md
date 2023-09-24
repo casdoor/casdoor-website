@@ -9,7 +9,9 @@ After the payment is successfully processed, you will be able to view the transa
 
 ## Invoice
 
-To issue an invoice, navigate to the edit screen by clicking on the following link: [payment_edit.png](/img/products/payment_edit.png).
+To issue an invoice, navigate to the edit screen:
+
+![payment_edit.png](/img/products/payment_edit.png).
 
 On the edit screen, you will need to fill in the relevant invoice information. There are two invoice types available: `individual` and `organization`.
 
