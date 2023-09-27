@@ -25,11 +25,11 @@ To find your chat ID, use [RawDataBot](https://t.me/raw_info_bot).
 
 There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Telegram is as follows:
 
-| Name    | Name in Telegram |
-|---------|------------------|
-| App Key | API Token        |
-| Chat ID | Chat ID          |
-| Content |                  |
+| Name       | Name in Telegram |
+|------------|------------------|
+| Secret key | API Token        |
+| Chat ID    | Chat ID          |
+| Content    |                  |
 
 ![telegram_provider](/img/providers/notification/telegram_provider.png)
 

@@ -408,6 +408,7 @@ module.exports = {
             "integration/go/gitea",
             "integration/go/grafana",
             "integration/go/minio",
+            "integration/go/portainer",
           ],
         },
         {
