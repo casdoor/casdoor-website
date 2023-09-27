@@ -20,7 +20,7 @@ Now you can use Casdoor as RADIUS server.
 
 ## Use Casdoor as RADIUS server
 
-Casdoor currently support follow standard RADIUS request:
+Casdoor currently can support follow standard RADIUS request:
 
 - `Access-Request` : The authentication request message is sent by the RADIUS client to the Casdoor. Casdoor determines whether to allow access based on the user information carried in the message and reply with `Access-Reject` or `Access-Accept`.
 
