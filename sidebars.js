@@ -366,6 +366,14 @@ module.exports = {
     },
     {
       type: "category",
+      label: "RADIUS",
+      link: {type: "generated-index"},
+      items: [
+        "radius/overview",
+      ],
+    },
+    {
+      type: "category",
       label: "Integrations",
       link: {type: "generated-index"},
       items: [
