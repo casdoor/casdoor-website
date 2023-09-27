@@ -20,6 +20,7 @@ Log in to WeChat Merchant Platform, select `Account Settings > API Security >Set
 ![wechat api key v3](/img/providers/payment/wechat_apikey_v3.png)
 
 How to get `API Key v3` : [APIv3 Key Settings](https://kf.qq.com/faq/180830E36vyQ180830AZFZvu.html)
+
 ### 1.2 Get Merchant Certificate
 
 You can log in to WeChat Merchant Platform, and select `Account Settings > API Security > API Certificate` to download the certificate.
