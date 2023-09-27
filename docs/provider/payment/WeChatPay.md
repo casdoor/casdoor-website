@@ -54,8 +54,6 @@ Next, create a WeChat Pay Payment provider in Casdoor by filling in the necessar
 
 ![wechat pay provider](/img/providers/payment/wechat_payment_provider.png)
 
-![wechat pay provider](/img/providers/payment/wechat_provider.png)
-
 ## Step 3. Add the WeChat Pay Payment provider for your product
 
 Finally, add the WeChat Pay Payment provider for your product so that users can purchase the product using WeChat Pay.
