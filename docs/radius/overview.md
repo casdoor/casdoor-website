@@ -11,7 +11,7 @@ You can use Casdoor as a RADIUS server. RADIUS is a client/server protocol, the 
 
 Before deploying Casdoor, you need to modify the RADIUS-related configurations in the `conf/app.conf` file, including the server port and secret:
 
-```
+```text
 radiusServerPort = 1812
 radiusSecret = "secret"
 ```
