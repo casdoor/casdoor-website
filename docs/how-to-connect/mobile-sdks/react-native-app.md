@@ -94,7 +94,6 @@ Initialization requires 7 parameters, which are all string type:
 |------------------|------|------------------------------------------------------------------------------------------------|
 | serverUrl        | Yes  | your Casdoor server URL                                                                        |
 | clientId         | Yes  | the Client ID of your Casdoor application                                                      |
-| clientSecret     | Yes  | the Client Secret of your Casdoor application                                                  |
 | appName          | Yes  | the name of your Casdoor application                                                           |
 | organizationName | Yes  | the name of the Casdoor organization connected with your Casdoor application                   |
 | redirectPath     | No   | the path of the redirect URL for your Casdoor application, will be `/callback` if not provided |
@@ -106,7 +105,6 @@ import SDK from 'casdoor-react-native-sdk'
 const sdkConfig = {
   serverUrl: 'https://door.casdoor.com',
   clientId: 'b800a86702dd4d29ec4d',
-  clientSecret: '1219843a8db4695155699be3a67f10796f2ec1d5',
   appName: 'app-example',
   organizationName: 'casbin',
   redirectPath: 'http://localhost:5000/callback',
