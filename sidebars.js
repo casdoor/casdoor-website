@@ -327,6 +327,7 @@ module.exports = {
         "syncer/overview",
         "syncer/Database",
         "syncer/Keycloak",
+        "syncer/WeCom",
       ],
     },
     {
