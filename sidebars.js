@@ -375,6 +375,14 @@ module.exports = {
     },
     {
       type: "category",
+      label: "SCIM",
+      link: {type: "generated-index"},
+      items: [
+        "scim/overview",
+      ],
+    },
+    {
+      type: "category",
       label: "Integrations",
       link: {type: "generated-index"},
       items: [
