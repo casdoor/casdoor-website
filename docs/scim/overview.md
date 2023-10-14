@@ -13,7 +13,7 @@ You can use Casdoor as a SCIM service provider.
 Currently Casdoor only support `User Resource Schema`, you can manage users through SCIM User operations.
 You can interact with the Casdoor through the following endpoints:
 
-| Endpoint          | Method  | Description | 
+| Endpoint          | Method  | Description |
 | ------------- | ------------- | ------------- |
 | /scim/ServiceProviderConfig | GET | Provide details about the features of the SCIM standard that are supported, for example, the resources that are supported. |
 | /scim/Schemas | GET | Provide details about the service provider schemas. |
@@ -42,13 +42,13 @@ The mapping relationship between attributes is as follows:
 | userName | Name |
 | password | Password |
 | displayName | DisplayName |
-| profileUrl | Homepage | 
-| userType | Type | 
+| profileUrl | Homepage |
+| userType | Type |
 | name.givenName | FirstName |
-| name.familyName | LastName | 
+| name.familyName | LastName |
 | emails[0].value | Email |
-| phoneNumbers[0].value | Phone | 
-| photos[0].value | Avatar | 
+| phoneNumbers[0].value | Phone |
+| photos[0].value | Avatar |
 | addresses[0].locality | Location |
 | addresses[0].region | Region |
 | addresses[0].country | CountryCode |
