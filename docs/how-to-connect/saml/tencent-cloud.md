@@ -43,6 +43,15 @@ In the application edit page, enter the **ACS URL** and configure the **Saml Att
 
 ![Add acs url and configure saml attribute](/img/how-to-connect/saml/saml_tencent-cloud_acs.png)
 
+The configuration information for Saml Attribute is as follows:
+
+| Name                                           | Name Format  | Value  |
+|:---------------------------------------------  |:-------------|:-------|
+| https://cloud.tencent.com/SAML/Attributes/Role | Unspecified  | qcs::cam::uin/{AccountID}:roleName/{RoleName1};qcs::cam::uin/{AccountID}:roleName/{RoleName2},qcs::cam::uin/{AccountID}:saml-provider/{ProviderName} |
+| https://cloud.tencent.com/SAML/Attributes/RoleSessionName | Unspecified | casdoor |
+
+
+
 :::info
 
 * In the Role source attribute, replace {AccountID}, {RoleName}, and {ProviderName} with the following content:
