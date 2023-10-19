@@ -85,6 +85,7 @@ module.exports = {
             "how-to-connect/saml/keycloak",
             "how-to-connect/saml/google-workspace",
             "how-to-connect/saml/appgate",
+            "how-to-connect/saml/tencent-cloud",
           ],
         },
         "how-to-connect/webauthn",
