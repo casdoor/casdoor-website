@@ -1,5 +1,5 @@
 ---
-title: Tecent Cloud
+title: Tencent Cloud
 description: Using Casdoor as a SAML IdP
 keywords: [SAML, IdP]
 authors: [Songjf-ttk]
