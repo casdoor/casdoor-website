@@ -47,8 +47,8 @@ The configuration information for Saml Attribute is as follows:
 
 | Name                                           | Name Format  | Value  |
 |:---------------------------------------------  |:-------------|:-------|
-| <https://cloud.tencent.com/SAML/Attributes/Role> | Unspecified  | qcs::cam::uin/{AccountID}:roleName/{RoleName1};qcs::cam::uin/{AccountID}:roleName/{RoleName2},qcs::cam::uin/{AccountID}:saml-provider/{ProviderName} |
-| <https://cloud.tencent.com/SAML/Attributes/RoleSessionName> | Unspecified | casdoor |
+| `https://cloud.tencent.com/SAML/Attributes/Role` | Unspecified  | qcs::cam::uin/{AccountID}:roleName/{RoleName1};qcs::cam::uin/{AccountID}:roleName/{RoleName2},qcs::cam::uin/{AccountID}:saml-provider/{ProviderName} |
+| `https://cloud.tencent.com/SAML/Attributes/RoleSessionName` | Unspecified | casdoor |
 
 :::info
 
