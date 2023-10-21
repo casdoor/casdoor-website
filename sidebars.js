@@ -239,6 +239,7 @@ module.exports = {
             "provider/saml/overview",
             "provider/saml/aliyun",
             "provider/saml/keycloak",
+            "provider/saml/custom",
           ],
         },
         {
