@@ -13,7 +13,7 @@ First, you need to obtain the metadata of IDP, which is a XML document used to d
 It needs to include information such as `EntityID`, `SSO Endpoint`, etc.
 
 Some IDPs, such as Keycloak, require SP information to provide metadata.
-You can refer to the document  [Keycloak](/docs/provider/saml/keycloak.md).
+You can refer to the document  [Keycloak](/docs/provider/saml/keycloak).
 
 You can use oktadev to test the SAML Custom Provider, here is the [metadata](https://idp.oktadev.com/metadata).
 
