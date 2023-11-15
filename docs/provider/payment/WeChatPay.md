@@ -61,3 +61,17 @@ Finally, add the WeChat Pay Payment provider for your product so that users can 
 ![add wechat pay payment provider for product](/img/providers/payment/wechat_product.png)
 
 <video src="/video/provider/payment/use_wechatpay_buy_product.mp4" controls="controls" width="100%"></video>
+
+## Support for JSAPI payment
+
+Currently, Casdoor supports [JSAPI payment](https://pay.weixin.qq.com/docs/merchant/products/jsapi-payment/introduction.html) and [Native payment](https://pay.weixin.qq.com/docs/merchant/products/native-payment/introduction.html) in WeChat Pay.
+
+To support JSAPI payment, you should configure a [WeChat OAuth Provider](/docs/provider/oauth/Wechat) which support `WeChat Media Platform`.
+The `Client ID 2` of WeChat OAuth Provider and the `App ID` of WeChat Pay Payment Provider need to be same.
+
+![relation between wechat pay payment provider and wechat oauth provider](/img/providers/payment/wechat_jsapi_conf.png)
+
+After log in via WeChat(in the mobile scenario: e.g. the WeChat built-in browser inside the WeChat mobile app), users can purchase product using WeChat Pay based on JSAPI payment.
+
+
+<video src="/video/provider/payment/use_wechatpay_via_jsapi.mp4" controls="controls" width="100%" align="center"></video>
