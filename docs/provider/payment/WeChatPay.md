@@ -73,5 +73,4 @@ The `Client ID 2` of WeChat OAuth Provider and the `App ID` of WeChat Pay Paymen
 
 After log in via WeChat(in the mobile scenario: e.g. the WeChat built-in browser inside the WeChat mobile app), users can purchase product using WeChat Pay based on JSAPI payment.
 
-
 <video src="/video/provider/payment/use_wechatpay_via_jsapi.mp4" controls="controls" width="100%" align="center"></video>
