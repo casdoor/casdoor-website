@@ -62,14 +62,14 @@ In this step, you need to add the **HASURA_GRAPHQL_JWT_SECRET** to Hasura.
 
 To do so, go to the Hasura docker-compose.yaml and then add the new `HASURA_GRAPHQL_JWT_SECRET` as below.
 
-The `HASURA_GRAPHQL_JWT_SECRET` should be in the following format:
+The `HASURA_GRAPHQL_JWT_SECRET` should be in the following format. Remember to change `<Casdoor endpoint>` to your own Casdoor's URL (like `https://door.casdoor.com`)
 
 ```yaml
 HASURA_GRAPHQL_JWT_SECRET: '{"claims_map": {
       "x-hasura-allowed-roles": ["user","editor"],
       "x-hasura-default-role": "user",
       "x-hasura-user-id": "userID"
-    },"jwk_url":"https://door.casdoor.com/.well-known/jwks"}'
+    },"jwk_url":"<Casdoor endpoint>/.well-known/jwks"}'
 ```
 
 Save the change and reload the docker.
@@ -81,14 +81,14 @@ Save the change and reload the docker.
 Since there is no client implementation, you can get your access token by making a request by the below URL:
 
 ```url
-http://localhost:8000/login/oauth/authorize?client_id=<client ID>>&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin&scope=read&state=app-built-in<public certificate>>
+http://localhost:8000/login/oauth/authorize?client_id=<client ID>&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin&scope=read&state=app-built-in<public certificate>>
 ```
 
-Change the client ID to the ID you copied before and input the public certificate of Casdoor, which you can find in Casdoor/Certs.
+Change `client ID` to the ID you copied before and input the public certificate of Casdoor, which you can find in Casdoor's Certs page.
 
 Then input the username and password you created for Hasura before.
 
-Click "Sign in."
+Click "Sign in"
 
 ![Retrieve the JWT Token](/img/integration/Haskell/Hasura/login.png)
 
@@ -96,9 +96,9 @@ Go back to the Casdoor/Token page.
 
 ![Token Page](/img/integration/Haskell/Hasura/tokens.png)
 
-Find the Username you input before, then click "edit."
+Find the Username you input before, then click "edit"
 
-Copy the Access Token.
+Copy the Access Token
 
 ![Access Token](/img/integration/Haskell/Hasura/access.png)
 
