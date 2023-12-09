@@ -7,6 +7,12 @@ authors: [Resulte]
 
 Alibaba Cloud Captcha is a captcha service provided by Alibaba Cloud. It offers two ways to verify captcha: "Sliding Validation" and "Intelligent Validation". You can find more details about it in this [link](https://help.aliyun.com/product/28308.html).
 
+:::info
+
+Currently, only [Alibaba Cloud Captcha 1.0](https://help.aliyun.com/zh/captcha/captcha1-0) is supported. [Alibaba Cloud Captcha 2.0](https://help.aliyun.com/zh/captcha) is currently in the public testing phase, so there are no plans for adaptation in the near term.
+
+:::
+
 ## Add Captcha Configuration in Alibaba Cloud
 
 To add the Captcha configuration, log in to the [Alibaba Cloud management console](https://account.aliyun.com/), search for and go to the Captcha Service. Then, click on **Confirm Open** to enable the Captcha Service.
