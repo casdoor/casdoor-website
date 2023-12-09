@@ -69,7 +69,7 @@ All granted access tokens can also be accessed via the web UI by an admin user i
     /page?access_token=<The access token>
     ```
 
-    Demo site example: <https://door.casdoor.com/api/get-global-providers?access_token=eyJhbGciOiJSUzI1NiIs>...
+    Demo site example: `https://door.casdoor.com/api/get-global-providers?access_token=eyJhbGciOiJSUzI1NiIs`
 
 2. HTTP Bearer token, the HTTP header format is:
 
@@ -93,7 +93,7 @@ The below examples shows how to call `GetOAuthToken()` function in Go via casdoo
     /page?clientId=<The client ID>&clientSecret=<the client secret>
     ```
 
-    Demo site example: <https://door.casdoor.com/api/get-global-providers?clientId=294b09fbc17f95daf2fe&clientSecret=dd8982f7046ccba1bbd7851d5c1ece4e52bf039d>
+    Demo site example: `https://door.casdoor.com/api/get-global-providers?clientId=294b09fbc17f95daf2fe&clientSecret=dd8982f7046ccba1bbd7851d5c1ece4e52bf039d`
 
 2. [HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication), the HTTP header format is:
 
@@ -125,4 +125,4 @@ We can use the username and password for a Casdoor user to call `Casdoor Public 
     /page?username=<The user's organization name>/<The user name>&password=<the user's password>"
     ```
 
-Demo site example: <https://door.casdoor.com/api/get-global-providers?username=built-in/admin&password=123>
+Demo site example: `https://door.casdoor.com/api/get-global-providers?username=built-in/admin&password=123`
