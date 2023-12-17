@@ -1,6 +1,6 @@
 ---
-title: AzureAD
-description: Add AzureAD as a third-party service to complete authentication
+title: Azure AD
+description: Add Azure AD as a third-party service to complete authentication
 keywords: [AzureAD]
 authors: [leo220yuyaodog]
 ---

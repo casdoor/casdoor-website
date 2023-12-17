@@ -169,6 +169,7 @@ module.exports = {
             "provider/oauth/baidu",
             "provider/oauth/adfs",
             "provider/oauth/azureAD",
+            "provider/oauth/azureADb2c",
             "provider/oauth/infoflow",
             "provider/oauth/okta",
             "provider/oauth/lark",

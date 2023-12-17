@@ -76,7 +76,8 @@ Unique IDs for social platform logins:
 - `Casdoor`
 - `Infoflow`
 - `Apple`
-- `AzureAD`
+- `Azure AD`
+- `Azure AD B2C`
 - `Slack`
 - `Steam`
 - `Ldap`
