@@ -1,5 +1,5 @@
 ---
-title: Custom Provider for Casdoor
+title: Custom OAuth
 description: Add your custom OAuth provider to Casdoor
 keywords: [Custom Provider, OAuth, Casdoor]
 authors: [halozhy]

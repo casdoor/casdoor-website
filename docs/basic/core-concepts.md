@@ -37,15 +37,19 @@ flowchart LR;
     end;
     
     subgraph SMS;
-        AWS\\nAliyunCloud;
+        Twilio\nAmazon-SNS\n...;
     end;
     
     subgraph OAuth;
-        Github\\nGoogle\\nFacebook\\nWeChat;
+        Google\nGithub\nFacebook\nAzureAD\nCustomOAuth\n...;
     end;
     
     subgraph SAML;
-        Keycloak\\nAliyunIDaaS;
+        CustomSAML\nKeycloak\n...;
+    end;
+    
+    subgraph Email;
+        Default\nSendGrid\nAzureACS\n...;
     end;
     
     subgraph Applications-1;

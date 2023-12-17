@@ -7,7 +7,7 @@ authors: [UsherFall]
 
 ## Fill in the necessary information in Casdoor
 
-There are four required fields: `Client ID`, `Client secret`, `Sender number`, and `Template code`. The corresponding relationship to the Tencent Cloud COS account is as follows:
+There are four required fields: `Client ID`, `Client secret`, `Sender number`, and `Template code`. The corresponding relationship to the Twilio account is as follows:
 
 | Name          | Name in Twilio      | Required   |
 |---------------|---------------------|------------|

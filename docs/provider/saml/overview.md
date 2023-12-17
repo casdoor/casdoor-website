@@ -1,7 +1,7 @@
 ---
 title: Overview
 description: Using identities from external identity providers that support SAML 2.0
-keywords: [SAML, Keycloak, Aliyun IDaaS]
+keywords: [SAML, Keycloak, Alibaba Cloud IDaaS]
 authors: [seriouszyx]
 ---
 
@@ -9,7 +9,7 @@ Casdoor can be configured to support user login to the UI using identities from 
 
 Now, Casdoor supports multiple SAML application providers. Icons of the providers will be displayed on the login page after being added to Casdoor. Here are the providers that Casdoor supports:
 
-| Aliyun IDaaS | Keycloak | Custom |
+| Alibaba Cloud IDaaS | Keycloak | Custom |
 | :----------: | :------: | :-----: |
 | <img src="https://cdn.casbin.org/img/social_aliyun.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_keycloak.png" width="40"></img> | <img src="https://cdn.casbin.org/img/social_custom.png" width="40"></img> |
 |      ✅      |    ✅    |    ✅    |

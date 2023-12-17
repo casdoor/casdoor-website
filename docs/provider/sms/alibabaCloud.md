@@ -20,7 +20,7 @@ There are four required fields: `Client ID`, `Client secret`, `Sign Name`, and `
 
 - AccessKey ID and AccessKey Secret
 
-After logging into my Aliyun workbench, I click on "AccessKey" to create an ID and Secret.
+After logging into my Alibaba Cloud workbench, I click on "AccessKey" to create an ID and Secret.
 
 ![Alibaba Cloud workbench](/img/providers/sms/aliyunsms.png)
 
