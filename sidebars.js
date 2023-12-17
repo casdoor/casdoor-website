@@ -20,6 +20,7 @@ module.exports = {
         "basic/core-concepts",
         "basic/server-installation",
         "basic/try-with-docker",
+        "basic/try-with-helm",
         "basic/public-api",
         "basic/tutorials",
         {
