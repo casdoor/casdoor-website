@@ -400,6 +400,7 @@ module.exports = {
           },
           items: [
             "integration/C++/Nginx",
+            "integration/C++/NginxCommunityVersion",
             "integration/C++/Envoy",
           ],
         },
