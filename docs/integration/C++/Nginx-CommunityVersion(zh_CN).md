@@ -46,7 +46,7 @@ This article was written in Chinese (Simplified). If you are confused, please us
 
 6. 根据您的项目信息来完成角色配置。在本文中，我们使用`nginx_role`作为示例的角色名称。
 
-    ![ConfigureRole](/img/integration/C++/NGINX_Plus/ConfigureRole.jpg)
+    ![ConfigureRole](/img/integration/C++/NGINX_Community/ConfigureRole.jpg)
 
 7. （可选）在顶栏中选择“用户管理”-“用户”，然后根据您的需求添加新用户。如果您需要的用户已存在，请跳过此步骤。在本文中我们创建了名为“user”的示例用户。
 
