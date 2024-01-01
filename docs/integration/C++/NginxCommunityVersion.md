@@ -26,23 +26,23 @@ This guide assumes that you have the following conditions:
 1. Log in to your Casdoor admin account.
 2. In the top bar, select "Identity Authentication" > "Applications", and then click "Add" on the "Applications" page.
 
-    ![addApp](/img/integration/C++/NGINX_Community/addApp.jpg)
+    ![addApp](/img/integration/C++/NGINX_Community/addApp.png)
 
 3. Complete the application configuration based on your project information. In this article, we use "Nginx-Community" as the example application name.
 
-    ![ConfigureApp](/img/integration/C++/NGINX_Community/ConfigureApp.jpg)
+    ![ConfigureApp](/img/integration/C++/NGINX_Community/ConfigureApp.png)
 
 4. Take note of the values of the "Client ID" and "Client Secret" fields. They will be used when configuring OAuth2-Proxy later. Then configure the "Redirect URL" as `https://project.yourdomain.com/oauth2/callback/`.
 
-    ![RecordInfo](/img/integration/C++/NGINX_Community/RecordInfo.jpg)
+    ![RecordInfo](/img/integration/C++/NGINX_Community/RecordInfo.png)
 
 5. In the top bar, select "Casbin Permission Management" > "Roles", and then click "Add" on the "Roles" page.
 
-    ![AddRole](/img/integration/C++/NGINX_Community/AddRole.jpg)
+    ![AddRole](/img/integration/C++/NGINX_Community/AddRole.png)
 
 6. Complete the role configuration based on your project information. In this article, we use "nginx_role" as the example role name.
 
-    ![ConfigureRole](/img/integration/C++/NGINX_Community/ConfigureRole.jpg)
+    ![ConfigureRole](/img/integration/C++/NGINX_Community/ConfigureRole.png)
 
 7. (Optional) In the top bar, select "User Management" > "Users", and then add new users based on your needs. If the users you need already exist, you can skip this step. In this article, we create an example user named "user".
 
