@@ -125,78 +125,78 @@ This guide assumes that you have the following conditions:
 
     **Note**: You need to adjust this configuration file according to your specific situation. Due to Nginx versions and other factors, this configuration file may not work smoothly on all Nginx instances. Please adjust the relevant content based on your own Nginx information.
 
-```nginx
-server {
-    listen 443 ssl http2;
+    ```nginx
+    server {
+        listen 443 ssl http2;
 
-    include /path/to/ssl.conf;
+        include /path/to/ssl.conf;
 
-    # Add the following content
-    location ^~ /oauth2/ {
-        proxy_pass       http://127.0.0.1:65534; # Change this to the "--http-address" configured in step II.6
+        # Add the following content
+        location ^~ /oauth2/ {
+            proxy_pass       http://127.0.0.1:65534; # Change this to the "--http-address" configured in step II.6
 
-        proxy_set_header Host                    $host;
-        proxy_set_header X-Real-IP               $remote_addr;
-        proxy_set_header X-Scheme                $scheme;
+            proxy_set_header Host                    $host;
+            proxy_set_header X-Real-IP               $remote_addr;
+            proxy_set_header X-Scheme                $scheme;
 
-        proxy_set_header X-Auth-Request-Redirect $request_uri;
-        # or, if you are handling multiple domains:
-        # proxy_set_header X-Auth-Request-Redirect $scheme://$host$request_uri;
-    }
-    location = /oauth2/auth {
-        proxy_pass       http://127.0.0.1:65534; # Change this to the "--http-address" configured in step II.6
-
-        proxy_set_header Host             $host;
-        proxy_set_header X-Real-IP        $remote_addr;
-        proxy_set_header X-Scheme         $scheme;
-        proxy_set_header Content-Length   "";
-        proxy_pass_request_body           off;
-    }
-    location ^~ / {
-        auth_request /oauth2/auth;
-        error_page 401 = /oauth2/sign_in;
-
-        auth_request_set $user   $upstream_http_x_auth_request_user; 
-        auth_request_set $email  $upstream_http_x_auth_request_email; 
-        proxy_set_header X-User  $user; # Pass the username of the user logged in to your backend service
-        proxy_set_header X-Email $email; # Pass the email of the user logged in to your backend service
-
-        auth_request_set $token  $upstream_http_x_auth_request_access_token;
-        proxy_set_header X-Access-Token $token; # Pass the user's login token to your backend service
-
-        # The following configurations are related to cookie validation for user login
-        auth_request_set $auth_cookie $upstream_http_set_cookie;
-        add_header Set-Cookie $auth_cookie;
-
-        auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
-
-        if ($auth_cookie ~* "(; .*)") {
-            set $auth_cookie_name_0 $auth_cookie;
-            set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
-        }   
-
-        if ($auth_cookie_name_upstream_1) {
-            add_header Set-Cookie $auth_cookie_name_0;
-            add_header Set-Cookie $auth_cookie_name_1;
+            proxy_set_header X-Auth-Request-Redirect $request_uri;
+            # or, if you are handling multiple domains:
+            # proxy_set_header X-Auth-Request-Redirect $scheme://$host$request_uri;
         }
-        proxy_no_cache $cookie_session;
+        location = /oauth2/auth {
+            proxy_pass       http://127.0.0.1:65534; # Change this to the "--http-address" configured in step II.6
 
-        # Provide the web page to the user after successful validation
+            proxy_set_header Host             $host;
+            proxy_set_header X-Real-IP        $remote_addr;
+            proxy_set_header X-Scheme         $scheme;
+            proxy_set_header Content-Length   "";
+            proxy_pass_request_body           off;
+        }
+        location ^~ / {
+            auth_request /oauth2/auth;
+            error_page 401 = /oauth2/sign_in;
 
-        proxy_pass http://127.0.0.1:8080; # The address where your backend service runs
-        # Note: This is not the Casdoor deployment address or the Oauth2-Proxy running address, but the address where your backend service that needs login protection runs.
+            auth_request_set $user   $upstream_http_x_auth_request_user; 
+            auth_request_set $email  $upstream_http_x_auth_request_email; 
+            proxy_set_header X-User  $user; # Pass the username of the user logged in to your backend service
+            proxy_set_header X-Email $email; # Pass the email of the user logged in to your backend service
 
-        # Then add configurations to pass user IP, Connection request headers, etc., to your backend service, for example:
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection upgrade;
-        proxy_set_header Accept-Encoding gzip;
+            auth_request_set $token  $upstream_http_x_auth_request_access_token;
+            proxy_set_header X-Access-Token $token; # Pass the user's login token to your backend service
+
+            # The following configurations are related to cookie validation for user login
+            auth_request_set $auth_cookie $upstream_http_set_cookie;
+            add_header Set-Cookie $auth_cookie;
+
+            auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
+
+            if ($auth_cookie ~* "(; .*)") {
+                set $auth_cookie_name_0 $auth_cookie;
+                set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
+            }   
+
+            if ($auth_cookie_name_upstream_1) {
+                add_header Set-Cookie $auth_cookie_name_0;
+                add_header Set-Cookie $auth_cookie_name_1;
+            }
+            proxy_no_cache $cookie_session;
+
+            # Provide the web page to the user after successful validation
+
+            proxy_pass http://127.0.0.1:8080; # The address where your backend service runs
+            # Note: This is not the Casdoor deployment address or the Oauth2-Proxy running address, but the address where your backend service that needs login protection runs.
+
+            # Then add configurations to pass user IP, Connection request headers, etc., to your backend service, for example:
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection upgrade;
+            proxy_set_header Accept-Encoding gzip;
+        }
+        access_log /path/to/access_log.log;
+        error_log /path/to/error_log.log;
     }
-    access_log /path/to/access_log.log;
-    error_log /path/to/error_log.log;
-}
-```
+    ```
 
 2. Save the file and reload your Nginx.
 
