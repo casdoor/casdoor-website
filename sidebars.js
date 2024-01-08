@@ -228,6 +228,7 @@ module.exports = {
             "provider/storage/localFileSystem",
             "provider/storage/amazon-s3",
             "provider/storage/azure",
+            "provider/storage/google-cloudstorage",
             "provider/storage/minio",
             "provider/storage/aliyun-oss",
             "provider/storage/tencentCloudCOS",
