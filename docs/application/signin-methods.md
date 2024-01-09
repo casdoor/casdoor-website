@@ -9,7 +9,7 @@ On the Application Configuration page, we can configure the sign-in item table. 
 
 ![Signin Methods](/img/application/signin-methods/signin-methods.png)
 
-For a detailed explanation of each sign-in item, please refer to the table below. Currently, only `Password`, `verification code` and `WebAuthn` login methods are available.
+For a detailed explanation of each sign-in item, please refer to the table below. Currently, only `Password`, `verification code`, `WebAuthn` and `LDAP` login methods are available.
 
 | Column Name | Selectable Value | Description                                                                                                                                                 |
 |:-----------:|:----------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -18,11 +18,12 @@ For a detailed explanation of each sign-in item, please refer to the table below
 |    Rule     |  `Rule Items`   | Select a rule to customize this sign-in method. Detailed rules are described in the table below. |
 |   Action    |        -         | Users can perform actions such as moving this sign-in method up, moving it down, or deleting it.                            |
 
-Currently, only the `Verification code` sign-in method supports configuration rules.
+At present, configuration rules are only supported for the `Password` and `Verification code` sign-in methods.
 
-| Sign-in Method Name |              Selectable Rules              | Description                                                                                                                                                                                                                                                                                                                    |
-|:-------------------:|:------------------------------------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|  Verification code  | `All(default)`/ `Email only` / `Phone only` | Select the sign-in methods available to the user. Choosing `All` , then both email and phone numbers can be verified for sign-in. Choosing `Email only` , then only eamil login is allowed. Choosing `Phone only`, then only the phone number is allowed to authenticate the login. |
+| Sign-in Method Name |              Selectable Rules               | Description                                                                                                                                                                                                                                                                        |
+|:-------------------:|:-------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|      Password       |         `All(default)`/ `Non-LDAP`          | Select the sign-in methods available to the user. Choosing `All`, then LDAP users can also sign-in. Choosing `Non-LDAP`, then LDAP users are prohibited from sign-in.                                                                                                              |
+|  Verification code  | `All(default)`/ `Email only` / `Phone only` | Select the sign-in methods available to the user. Choosing `All`, then both email and phone numbers can be verified for sign-in. Choosing `Email only` , then only eamil login is allowed. Choosing `Phone only`, then only the phone number is allowed to authenticate the login. |
 
 :::note
 
@@ -40,7 +41,7 @@ To make it easier for users to understand, we can change the display name of the
 
 :::tip
 
-All sign-in methods will be added by default, it is required that at least one sign-in method be added.
+All login options, except for LDAP, are enabled by default. And it is required that at least one sign-in method be added.
 
 :::
 
