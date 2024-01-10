@@ -21,9 +21,12 @@ The following are the available token fields in Casdoor:
 - `Scope` (Scope of authorization)
 - `TokenType` (e.g., `Bearer` type)
 
-After logging into the application, there are two options to generate a JWT Token:
+After logging into the application, there are three options to generate a JWT Token:
 
 - `JWT`
 - `JWT-Empty`
+- `JWT-Custom`
 
-The `JWT` option will create a token with all fields of the `User` object, while the `JWT-Empty` option will create a token with all non-empty values for the user.
+The options are as follows: JWT will generate a token containing all User fields, JWT-Empty will generate a token with all non-empty values for the user, and JWT-Custom will generate a token containing custom User Token fields (you can choose attributes in the Token fields).
+
+![JWT-Custom](/img/token/overview/JWT-Custom.png)
