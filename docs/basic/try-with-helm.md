@@ -16,43 +16,34 @@ Now we show how to deploy Casdoor on Kubernetes using Helm for easy and scalable
 
 ## Installation Steps
 
-### Step 1: Add Casdoor Helm Repository
+### Step 1: Install the Casdoor Chart
 
-Add the Casdoor Helm repository to your Helm client:
-
-```shell
-helm repo add casdoor https://hub.docker.com/repository/docker/casbin/casdoor-helm-charts
-helm repo update
-```
-
-### Step 2: Install the Casdoor Chart
-
-Install the Casdoor chart with the release name `my-casdoor`:
+Install the Casdoor chart:
 
 ```shell
-helm install my-casdoor casdoor/casdoor-helm-charts
+helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version 0.4.3
 ```
 
-### Step 3: Accessing Casdoor
+### Step 2: Accessing Casdoor
 
 Once installed, Casdoor can be accessed at the provided service URL by your Kubernetes cluster.
 
 ### Customization and Configuration
 
-Customize your Casdoor installation by modifying the Helm chart values. For detailed options, refer to the `values.yaml` file in the chart.
+Customize your Casdoor installation by modifying the Helm chart values. For detailed options, refer to the [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/charts/casdoor/values.yaml) file in the chart.
 
 ### Managing the Deployment
 
 To upgrade your Casdoor deployment:
 
 ```shell
-helm upgrade my-casdoor casdoor/casdoor-helm-charts
+helm upgrade casdoor casdoor/casdoor-helm-charts
 ```
 
 To uninstall Casdoor:
 
 ```shell
-helm delete my-casdoor
+helm delete casdoor
 ```
 
 For further management and customization, refer to the Helm and Kubernetes documentation.
