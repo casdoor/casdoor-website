@@ -66,9 +66,9 @@ The `HASURA_GRAPHQL_JWT_SECRET` should be in the following format. Remember to c
 
 ```yaml
 HASURA_GRAPHQL_JWT_SECRET: '{"claims_map": {
-      "x-hasura-allowed-roles": ["user","editor"],
-      "x-hasura-default-role": "user",
-      "x-hasura-user-id": "userID"
+      "x-hasura-allowed-roles": {"path": "$.roles"},
+      "x-hasura-default-role": {"path": "$.roles[0]"},
+      "x-hasura-user-id": {"path": "$.id"}
     },"jwk_url":"<Casdoor endpoint>/.well-known/jwks"}'
 ```
 
