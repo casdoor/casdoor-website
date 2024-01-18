@@ -232,6 +232,7 @@ module.exports = {
             "provider/storage/minio",
             "provider/storage/aliyun-oss",
             "provider/storage/tencentCloudCOS",
+            "provider/storage/synology-nas",
           ],
         },
         {
