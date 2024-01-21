@@ -29,5 +29,4 @@ There are five required fields: `Client ID`, `Client secret` and `Endpoint`. The
 
 ![synologyConfig.png](/img/providers/storage/synologyConfig.png)
 
-
 You can refer to the official documentation for configuration: [link](https://www.synology.cn/zh-cn/support/developer#tool)
