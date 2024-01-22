@@ -43,4 +43,15 @@ APIs with the same "@Tag" labels will be put into the same group.
     mybee generate docs
     ```
 
+5. (Optional) If you want to generate swagger document for specific tags or apis, here are some example commands:
+
+    ```bash
+    mybee generate docs --tags "Adapter API"
+    mybee generate docs --tags "Adapter API,Login API"
+    mybee generate docs --apis "add-adapter"
+    mybee generate docs --apis "add-adapter,delete-adapter"
+    ```
+
+    Notably: We only accept a comma `,` as the separator when multiple tags/apis provided.
+
 Then you will find that the new swagger files are generated.
