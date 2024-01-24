@@ -13,8 +13,8 @@ authors: [ErikQQY]
 - `Description`: Describes the application.
 - `Tags`: Only users with tags listed in the application tags can login.
 - `Organization`: The organization that the app belongs to.
-- `EnablePassword`: If users can login via password.
 - `EnableSignUp`: If users can sign up. If not, accounts of the application.
+- `SigninMethods`: Configuration of Sign-in Methods
 - `SignupItems`: Fields that need to be filled in when users register.
 - `Providers`: Provide all kinds of services for the applications (such as OAuth, Email, SMS service).
 - `ClientId`: OAuth client ID.

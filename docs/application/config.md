@@ -59,8 +59,6 @@ You can also add third-party apps for sign up by adding providers and setting th
 
 :::tip
 
-Note that if you don't want users to access your app using a **username/password**, you can switch off the `Password On` button. This way, users can only access the app using third-party services.
-
-![Password On](/img/application/config/PasswordOn.png)
+If you want to do more personalized configuration of the application's sign-in methods, such as disabling a certain sign-in method or turning off a certain sign-in method, you can refer to the **[Signin Methods](./signin-methods.md)**
 
 :::
