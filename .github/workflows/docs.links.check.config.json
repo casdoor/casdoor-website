@@ -35,6 +35,9 @@
         },
         {
             "pattern": "^https://opendocs.alipay.com\\S+"
+        },
+        {
+            "pattern": "^https://www.bytebase.com/docs"
         }
     ]
 }
