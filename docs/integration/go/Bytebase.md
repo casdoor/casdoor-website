@@ -5,7 +5,7 @@ keywords: [OAuth2, Bytebase, IDP]
 authors: [jakiuncle]
 ---
 
-[Casdoor](/docs/basic/server-installation) can use OAuth2 to connect various applications. In this example, we will use [Bytebase](https://www.bytebase.com/docs/get-started/install/deploy-with-docker?source=demo) to demonstrate how to use OAuth2 to connect to your applications.
+[Casdoor](/docs/basic/server-installation) can use OAuth2 to connect various applications. In this example, we will use [Bytebase](https://www.bytebase.com/docs/get-started/self-host/) to demonstrate how to use OAuth2 to connect to your applications.
 
 The following are the configuration names:
 
@@ -15,7 +15,7 @@ The following are the configuration names:
 
 ## Step 1: Deploy Casdoor and Bytebase
 
-Firstly, deploy [Casdoor](/docs/basic/server-installation) and [Bytebase](https://www.bytebase.com/docs/get-started/install/deploy-with-docker?source=demo).
+Firstly, deploy [Casdoor](/docs/basic/server-installation) and [Bytebase](https://www.bytebase.com/docs/get-started/self-host/).
 
 After successful deployment, make sure that:
 

@@ -15,7 +15,7 @@ Refer to the [xorm docs](https://xorm.io/docs/chapter-03/readme/) for a better u
 
 ## How it Works
 
-As mentioned earlier, xorm is unable to handle field name changes. To address this, xorm provides a [migrate](https://gitea.com/xorm/xorm/src/branch/master/migrate) package that can assist with this problem.
+As mentioned earlier, xorm is unable to handle field name changes. To address this, xorm provides a [migrate](https://gitea.com/xorm/xorm/src/branch/v1/migrate) package that can assist with this problem.
 
 To handle field renaming, you can write code like this:
 
