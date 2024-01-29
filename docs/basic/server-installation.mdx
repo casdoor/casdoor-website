@@ -186,10 +186,16 @@ There are currently two methods to start, and you can choose one according to yo
 
 #### Backend
 
+Casdoor's Go backend requires a database dependency. You can start it by running the following command:
+
+```bash
+make deps
+```
+
 Casdoor's Go backend runs on port 8000 by default. You can start the Go backend with the following command:
 
 ```bash
-go run main.go
+go run main.go --createDatabase=true
 ```
 
 After the server is successfully running, you can start the frontend part.
