@@ -328,6 +328,14 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Invitations",
+      link: {type: "generated-index"},
+      items: [
+        "invitation/overview",
+      ],
+    },
+    {
+      type: "category",
       label: "Syncer",
       link: {type: "generated-index"},
       items: [
