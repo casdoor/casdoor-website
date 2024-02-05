@@ -73,6 +73,7 @@ module.exports = {
           ],
         },
         "how-to-connect/plugin",
+        "how-to-connect/nextjs",
         "how-to-connect/oauth",
         "how-to-connect/cas",
         {
