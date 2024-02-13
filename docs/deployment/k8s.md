@@ -1,5 +1,5 @@
 ---
-title: Deploying Casdoor in Kubernetes (k8s)
+title: Deploying to Kubernetes
 description: Learn how to deploy Casdoor in a Kubernetes cluster
 keywords: [k8s, Kubernetes, Casdoor, deployment]
 authors: [ComradeProgrammer]

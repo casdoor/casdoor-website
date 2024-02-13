@@ -35,6 +35,8 @@ module.exports = {
       label: "Deployment",
       link: {type: "generated-index"},
       items: [
+        "deployment/nginx",
+        "deployment/k8s",
         "deployment/data-initialization",
         "deployment/deploy-cdn",
         "deployment/deploy-intranet",
@@ -360,15 +362,6 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "webhooks/overview",
-      ],
-    },
-    {
-      type: "category",
-      label: "Deploy",
-      link: {type: "generated-index"},
-      items: [
-        "deploy/nginx",
-        "deploy/k8s",
       ],
     },
     {
