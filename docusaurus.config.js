@@ -61,16 +61,6 @@ module.exports = {
           position: "left",
         },
         {
-          href: "https://casdoor.com",
-          label: "For Enterprise",
-          position: "left",
-        },
-        {
-          href: "https://casdoor.com",
-          label: "Hosting Plan (SaaS)",
-          position: "left",
-        },
-        {
           type: "localeDropdown",
           position: "right",
           dropdownItemsAfter: [
@@ -97,20 +87,6 @@ module.exports = {
         {
           type: "search",
           position: "right",
-        },
-        {
-          type: "custom-casdoor",
-          label: "Sign Up",
-          src: "https://casdoor.com",
-          position: "right",
-          className: "casdoor-signup casdoor-link",
-        },
-        {
-          type: "custom-casdoor",
-          label: "Login",
-          src: "https://casdoor.com",
-          position: "right",
-          className: "casdoor-login casdoor-link",
         },
       ],
     },
@@ -203,12 +179,6 @@ var _hmt = _hmt || [];
       additionalLanguages: ["nginx", "java", "properties", "groovy", "ruby"],
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-    },
-    announcementBar: {
-      id: "announcement", // ID of the announcement bar
-      content:
-      "<a target=\"_blank\" rel=\"noreferrer\" href=\"https://casbin.org/\">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>",
-      isCloseable: true,
     },
     docs: {
       sidebar: {hideable: true},
