@@ -35,7 +35,7 @@ module.exports = {
       title: "Casdoor",
       logo: {
         alt: "My Site Logo",
-        src: "img/casbin.svg",
+        src: "img/casdoor.png",
       },
       // hideOnScroll: true,
       items: [
@@ -191,11 +191,13 @@ var _hmt = _hmt || [];
         },
       ],
       logo: {
-        alt: "Casbin Logo",
-        src: "img/casbin_min.svg",
-        href: "https://casbin.org/",
+        alt: "Casdoor Logo",
+        src: "img/casdoor.png",
+        href: "https://casdoor.org/",
+        width: 72,
+        height: 72,
       },
-      copyright: `Copyright © ${new Date().getFullYear()} Casbin contributors.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Casdoor contributors.`,
     },
     prism: {
       additionalLanguages: ["nginx", "java", "properties", "groovy", "ruby"],

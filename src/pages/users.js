@@ -9,11 +9,11 @@ export default function Users() {
       <header className="hero hero--primary">
         <div className="container">
           <h1 className="hero__title">
-            <Translate>Who&apos;s using Casbin?</Translate>
+            <Translate>Who&apos;s using Casdoor?</Translate>
           </h1>
           <p className="hero__subtitle">
             <Translate>
-              Hundreds of projects are using Casbin, from established Fortune 500 companies to hot new startups. If you&apos;re curious to see what can be accomplished with Casbin, check out these apps!
+              Hundreds of projects are using Casdoor, from established Fortune 500 companies to hot new startups. If you&apos;re curious to see what can be accomplished with Casdoor, check out these apps!
             </Translate>
           </p>
         </div>
@@ -26,7 +26,7 @@ export default function Users() {
         <UserList />
         <br /><br /><br />
         <h2>
-          <Translate>Is your project also using Casbin?</Translate>
+          <Translate>Is your project also using Casdoor?</Translate>
         </h2>
         <a className="button button--lg button--outline button--primary" href="https://github.com/casbin/casbin-website-v2/edit/master/static/data/users.json">
           <Translate>Add your company here</Translate>
