@@ -16,7 +16,7 @@ Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get
 
 1. `git clone https://github.com/casdoor/casdoor-website.git`
 2. `cd casdoor-website`
-3. `yarn`: install dependencies.
+3. `yarn install`: install dependencies.
 4. `yarn start`: starting the development server.
 
 ## Contributing
