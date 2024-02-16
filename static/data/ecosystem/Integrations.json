@@ -1,0 +1,592 @@
+[
+  {
+    "title": "Google",
+    "url": "https://casdoor.org/docs/provider/oauth/google",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Google One Tap",
+    "url": "https://casdoor.org/docs/provider/oauth/googleonetap",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "GitHub",
+    "url": "https://casdoor.org/docs/provider/oauth/github",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "LinkedIn",
+    "url": "https://casdoor.org/docs/provider/oauth/linkedin",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Facebook",
+    "url": "https://casdoor.org/docs/provider/oauth/facebook",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "AD FS",
+    "url": "https://casdoor.org/docs/provider/oauth/adfs",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Azure AD",
+    "url": "https://casdoor.org/docs/provider/oauth/azureAD",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Google",
+    "url": "https://casdoor.org/docs/provider/oauth/google",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Custom OAuth",
+    "url": "https://casdoor.org/docs/provider/oauth/CustomProvider",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Okta",
+    "url": "https://casdoor.org/docs/provider/oauth/okta",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Twitter",
+    "url": "https://casdoor.org/docs/provider/oauth/Twitter",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Weibo",
+    "url": "https://casdoor.org/docs/provider/oauth/Weibo",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "WeChat",
+    "url": "https://casdoor.org/docs/provider/oauth/Wechat",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "WeCom",
+    "url": "https://casdoor.org/docs/provider/oauth/weCom",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Tencent QQ",
+    "url": "https://casdoor.org/docs/provider/oauth/Tencent",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "DingTalk",
+    "url": "https://casdoor.org/docs/provider/oauth/DingTalk",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Google",
+    "url": "https://casdoor.org/docs/provider/oauth/google",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Steam",
+    "url": "https://casdoor.org/docs/provider/oauth/Steam",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Gitee",
+    "url": "https://casdoor.org/docs/provider/oauth/gitee",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Baidu",
+    "url": "https://casdoor.org/docs/provider/oauth/baidu",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Infoflow",
+    "url": "https://casdoor.org/docs/provider/oauth/infoflow",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Lark",
+    "url": "https://casdoor.org/docs/provider/oauth/lark",
+    "description": "",
+    "tags": [
+      "Integration",
+      "OAuth"
+    ],
+    "image": ""
+  },
+  {
+    "title": "SendGrid",
+    "url": "https://casdoor.org/docs/provider/email/sendgrid",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Email"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Azure ACS",
+    "url": "https://casdoor.org/docs/provider/email/azureACS",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Email"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Brevo",
+    "url": "https://casdoor.org/docs/provider/email/brevo",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Email"
+    ],
+    "image": ""
+  },
+  {
+    "title": "MailHog",
+    "url": "https://casdoor.org/docs/provider/email/mailhog",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Email"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Twilio",
+    "url": "https://casdoor.org/docs/provider/sms/twilio",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SMS"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Amazon SNS",
+    "url": "https://casdoor.org/docs/provider/sms/amazonSns",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SMS"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Azure ACS",
+    "url": "https://casdoor.org/docs/provider/sms/acs",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SMS"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Alibaba Cloud",
+    "url": "https://casdoor.org/docs/provider/sms/alibabaCloud",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SMS"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Telegram",
+    "url": "https://casdoor.org/docs/provider/notification/telegram",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Notification"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Custom HTTP",
+    "url": "https://casdoor.org/docs/provider/notification/customHttp",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Notification"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Slack",
+    "url": "https://casdoor.org/docs/provider/notification/slack",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Notification"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Google Chat",
+    "url": "https://casdoor.org/docs/provider/notification/googleChat",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Notification"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Twitter",
+    "url": "https://casdoor.org/docs/provider/notification/twitter",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Notification"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Discord",
+    "url": "https://casdoor.org/docs/provider/notification/discord",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Notification"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Local File System",
+    "url": "https://casdoor.org/docs/provider/storage/localFileSystem",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Amazon S3",
+    "url": "https://casdoor.org/docs/provider/storage/amazon-s3",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Azure Blob",
+    "url": "https://casdoor.org/docs/provider/storage/azure",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Google Cloud Storage",
+    "url": "https://casdoor.org/docs/provider/storage/google-cloudstorage",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "MinIO",
+    "url": "https://casdoor.org/docs/provider/storage/minio",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Alibaba Cloud OSS",
+    "url": "https://casdoor.org/docs/provider/storage/aliyun-oss",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Tencent Cloud COS",
+    "url": "https://casdoor.org/docs/provider/storage/tencentCloudCOS",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Synology NAS",
+    "url": "https://casdoor.org/docs/provider/storage/synology-nas",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Storage"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Custom",
+    "url": "https://casdoor.org/docs/provider/saml/custom",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Keycloak",
+    "url": "https://casdoor.org/docs/provider/saml/keycloak",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Alibaba Cloud IDaaS",
+    "url": "https://casdoor.org/docs/provider/saml/aliyun",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "PayPal",
+    "url": "https://casdoor.org/docs/provider/payment/paypal",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Stripe",
+    "url": "https://casdoor.org/docs/provider/payment/stripe",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Alipay",
+    "url": "https://casdoor.org/docs/provider/payment/Alipay",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "WeChat Pay",
+    "url": "https://casdoor.org/docs/provider/payment/WeChatPay",
+    "description": "",
+    "tags": [
+      "Integration",
+      "SAML"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Default",
+    "url": "https://casdoor.org/docs/provider/captcha/default",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Captcha"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Cloudflare Turnstile",
+    "url": "https://casdoor.org/docs/provider/captcha/cloudflareTurnstile",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Captcha"
+    ],
+    "image": ""
+  },
+  {
+    "title": "reCAPTCHA",
+    "url": "https://casdoor.org/docs/provider/captcha/recaptcha",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Captcha"
+    ],
+    "image": ""
+  },
+  {
+    "title": "hCaptcha",
+    "url": "https://casdoor.org/docs/provider/captcha/hcaptcha",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Captcha"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Alibaba Cloud Captcha",
+    "url": "https://casdoor.org/docs/provider/captcha/aliyunCaptcha",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Captcha"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Geetest",
+    "url": "https://casdoor.org/docs/provider/captcha/geetest",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Captcha"
+    ],
+    "image": ""
+  },
+  {
+    "title": "MetaMask",
+    "url": "https://casdoor.org/docs/provider/web3/metamask",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Web3"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Web3-Onboard",
+    "url": "https://casdoor.org/docs/provider/web3/web3onboard",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Web3"
+    ],
+    "image": ""
+  }
+]

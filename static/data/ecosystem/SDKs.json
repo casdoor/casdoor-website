@@ -1,0 +1,292 @@
+[
+  {
+    "title": "Android SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Android apps",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "iOS SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For iOS apps",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "React Native SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For React Native apps",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Flutter SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Flutter apps",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Firebase SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Google Firebase apps",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Unity Games SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Unity 2D/3D PC/Mobile games",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "uni-app SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For uni-app apps",
+    "tags": [
+      "SDK",
+      "Mobile"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Electron SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Electron apps",
+    "tags": [
+      "SDK",
+      "Desktop"
+    ],
+    "image": ""
+  },
+  {
+    "title": ".NET Desktop SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For .NET desktop apps",
+    "tags": [
+      "SDK",
+      "Desktop"
+    ],
+    "image": ""
+  },
+  {
+    "title": "C/C++ SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For C/C++ desktop apps",
+    "tags": [
+      "SDK",
+      "Desktop"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Javascript SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For traditional non-SPA websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Frontend-only SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For frontend-only SPA websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "React SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For React websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Next.js SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Next.js websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Vue SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Vue websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Angular SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Angular websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Flutter SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Angular websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "ASP.NET SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For ASP.NET Blazor WASM websites",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Firebase SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Google Firebase apps",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Go SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Go backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Java SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Java backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Node.js SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Node.js backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Python SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Python backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "PHP SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For PHP backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": ".NET SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For ASP.NET backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Rust SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Rust backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "C/C++ SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For C/C++ backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Dart SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Dart backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  },
+  {
+    "title": "Ruby SDK",
+    "url": "https://casdoor.org/docs/how-to-connect/sdk",
+    "description": "For Ruby backends",
+    "tags": [
+      "SDK",
+      "Web"
+    ],
+    "image": ""
+  }
+]
