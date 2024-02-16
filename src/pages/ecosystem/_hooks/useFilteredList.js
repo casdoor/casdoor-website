@@ -2,7 +2,7 @@ import {useLocation} from "@docusaurus/router";
 import {useEffect, useMemo, useState} from "react";
 import {readSearchTags} from "@site/src/pages/ecosystem/_components/ShowcaseTagSelect";
 import {readOperator} from "@site/src/pages/ecosystem/_components/ShowcaseFilterToggle";
-import {sortedList} from "@site/src/tableData/tableData";
+import {sortedList} from "@site/src/components/EcosystemData/tableData";
 
 const SearchNameQueryKey = "name";
 

@@ -3,10 +3,10 @@ import clsx from "clsx";
 
 import Heading from "@theme/Heading";
 import styles from "./styles.module.css";
-import {sortBy} from "@site/src/tableData/tableData";
+import {sortBy} from "@site/src/components/EcosystemData/tableData";
 import Tooltip from "@site/src/pages/ecosystem/_components/ShowcaseTooltip";
 import FavoriteIcon from "@site/src/components/svgIcons/FavoriteIcon";
-import {TagList, Tags} from "@site/src/tableData/tags";
+import {TagList, Tags} from "@site/src/components/EcosystemData/tags";
 import {useHistory} from "@docusaurus/router";
 
 const TagComp = React.forwardRef(({label, color, description, tag}, ref) => {
@@ -66,7 +66,7 @@ function getTitleURL(title) {
   const regex = /\]\((.+?)\)/;
   const match = title.match(regex);
   let url = "";
-  if(match) {
+  if (match) {
     url = match[1];
   }
   return url;

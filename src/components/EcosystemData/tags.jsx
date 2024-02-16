@@ -1,13 +1,20 @@
 import {translate} from "@docusaurus/Translate";
 
-export const Tags = {
+const colorList = [
+  "#C99F55", "#6C0931", "#D59F40", "#D1BB6A",
+  "#7EF24F", "#247515", "#266494", "#27B961",
+  "#5DD72D", "#B288CA", "#887292", "#778C62",
+  "#A476DD", "#9BB75E", "#9A7577", "#2355D8",
+  "#01923F", "#9D94D7", "#2318DA", "#7BCD3B",
+  "#69FD3D", "#E397B0", "#07AACF", "#9512AA",
+];
+const tag = {
   Integration: {
     label: translate({message: "Integration"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   OAuth: {
     label: translate({message: "OAuth"}),
@@ -15,71 +22,62 @@ export const Tags = {
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Email: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "Email"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   SMS: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "SMS"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Notification: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "Notification"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Storage: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "Storage"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   SAML: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "SAML"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Captcha: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "Captcha"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Web3: {
-    label: translate({message: "OAuth"}),
+    label: translate({message: "Web3"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Provider: {
-    label: translate({message: "Go"}),
+    label: translate({message: "Provider"}),
     description: translate({
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Cpp: {
     label: translate({message: "Cpp"}),
@@ -88,16 +86,14 @@ export const Tags = {
                 "Cpp language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00599C",
   },
   Csharp: {
-    label: translate({message: "Cpp"}),
+    label: translate({message: "Csharp"}),
     description: translate({
       message:
                 "Cpp language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00599C",
   },
   Go: {
     label: translate({message: "Go"}),
@@ -105,7 +101,6 @@ export const Tags = {
       message: "go language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#00ADD8",
   },
   Java: {
     label: translate({message: "Java"}),
@@ -114,15 +109,13 @@ export const Tags = {
                 "Java language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#007396",
   },
   JavaScript: {
-    label: translate({message: "NodeJS"}),
+    label: translate({message: "JavaScript"}),
     description: translate({
       message: "NodeJS runtime",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#339933",
   },
   Lua: {
     label: translate({message: "Lua"}),
@@ -131,7 +124,6 @@ export const Tags = {
                 "Lua language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#000080",
   },
   PHP: {
     label: translate({message: "PHP"}),
@@ -140,9 +132,7 @@ export const Tags = {
                 "PHP language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#777BB4",
   },
-
   Ruby: {
     label: translate({message: "Ruby"}),
     description: translate({
@@ -150,16 +140,14 @@ export const Tags = {
                 "Ruby language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#CC342D",
   },
   Haskell: {
-    label: translate({message: "Ruby"}),
+    label: translate({message: "Haskell"}),
     description: translate({
       message:
                 "Ruby language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#CC342D",
   },
   Python: {
     label: translate({message: "Python"}),
@@ -168,45 +156,45 @@ export const Tags = {
                 "Python Language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#3776AB",
   },
   SDK: {
-    label: translate({message: "dotNET"}),
+    label: translate({message: "SDK"}),
     description: translate({
       message:
                 ".NET runtime",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#512BD4",
   },
   Mobile: {
-    label: translate({message: "Rust"}),
+    label: translate({message: "Mobile"}),
     description: translate({
       message:
                 "Rust language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#000000",
   },
 
   Desktop: {
-    label: translate({message: "Swift"}),
+    label: translate({message: "Desktop"}),
     description: translate({
       message:
                 "Swift language",
       id: "showcase.tag.favorite.description",
     }),
-    color: "#FA7343",
   },
 
   Web: {
-    label: translate({message: "adapter"}),
+    label: translate({message: "Web"}),
     description: translate({
       message: "Adapter",
       id: "showcase.tag.opensource.description",
     }),
-    color: "#FFC107",
   },
 };
+Object.keys(tag).forEach((key, index) => {
+  tag[key].color = colorList[index];
+});
+
+export const Tags = tag;
 
 export const TagList = Object.keys(Tags);

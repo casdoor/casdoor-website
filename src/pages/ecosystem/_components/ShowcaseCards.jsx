@@ -1,7 +1,7 @@
 import {useFilteredList} from "@site/src/pages/ecosystem/_hooks/useFilteredList";
 import Heading from "@theme/Heading";
 import Translate from "@docusaurus/Translate";
-import {sortedList} from "@site/src/tableData/tableData";
+import {sortedList} from "@site/src/components/EcosystemData/tableData";
 import styles from "@site/src/pages/ecosystem/styles.module.css";
 import clsx from "clsx";
 import FavoriteIcon from "@site/src/components/svgIcons/FavoriteIcon";
@@ -42,7 +42,7 @@ export default function ShowcaseCards() {
               >
                 <Heading as="h2">
                   <Translate id="showcase.favoritesList.title">
-                    Our favorites
+                                        Our favorites
                   </Translate>
                 </Heading>
                 <FavoriteIcon svgClass={styles.svgIconFavorite} />
@@ -59,7 +59,7 @@ export default function ShowcaseCards() {
           <div className="container margin-top--lg">
             <Heading as="h2" className={styles.showcaseHeader}>
               <Translate id="showcase.usersList.allUsers">
-                All plugins
+                                All plugins
               </Translate>
             </Heading>
             <ul className={clsx("clean-list", styles.showcaseList)}>

@@ -9,14 +9,15 @@ import ShowcaseTooltip from "@site/src/pages/ecosystem/_components/ShowcaseToolt
 import ShowcaseTagSelect from "@site/src/pages/ecosystem/_components/ShowcaseTagSelect";
 import FavoriteIcon from "@site/src/components/svgIcons/FavoriteIcon";
 import React from "react";
-import {TagList, Tags} from "@site/src/tableData/tags";
+import {TagList, Tags} from "@site/src/components/EcosystemData/tags";
 
 export default function ShowcaseFilters() {
   const filteredUsers = useFilteredList();
   const siteCountPlural = useSiteCountPlural();
 
-  const languageList = TagList.slice(0, 11);
-  const pluginList = TagList.slice(11);
+  const IntegrationList = TagList.slice(0, 9);
+  const ProviderList = TagList.slice(9, 20);
+  const SDKList = TagList.slice(20);
 
   return (
     <section className="container margin-top--l margin-bottom--lg">
@@ -32,7 +33,7 @@ export default function ShowcaseFilters() {
       <div>
         <ul className={clsx("clean-list", styles.checkboxList)}>
           {
-            languageList.map((tag, i) => {
+            IntegrationList.map((tag, i) => {
               return <Li key={i} tag={tag}></Li>;
             })}
         </ul>
@@ -40,7 +41,16 @@ export default function ShowcaseFilters() {
       <div>
         <ul className={clsx("clean-list", styles.checkboxList)}>
           {
-            pluginList.map((tag, i) => {
+            ProviderList.map((tag, i) => {
+              return <Li key={i} tag={tag}></Li>;
+            })
+          }
+        </ul>
+      </div>
+      <div>
+        <ul className={clsx("clean-list", styles.checkboxList)}>
+          {
+            SDKList.map((tag, i) => {
               return <Li key={i} tag={tag}></Li>;
             })
           }
