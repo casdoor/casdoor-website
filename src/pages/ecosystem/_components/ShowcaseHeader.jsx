@@ -4,10 +4,11 @@ import Translate from "@docusaurus/Translate";
 import React from "react";
 import {DESCRIPTION, TITLE} from "@site/src/pages/ecosystem";
 import Tooltip from "@site/src/pages/ecosystem/_components/ShowcaseTooltip";
-const SUBMIT_URL = "https://github.com/casbin/casbin-website-v2";
+
+const SUBMIT_URL = "https://github.com/casdoor/casdoor-website/tree/master/static/data";
 
 export default function ShowcaseHeader() {
-  const tooltipText = "fork repository, find specific files in tableData folder, add a new item, make a PR.(click to open tableData folder)";
+  const tooltipText = "fork repo, find specific files in data folder, add a new item, make a PR.(click to open data folder)";
 
   return (
     <section className="margin-top--lg margin-bottom--lg text--center">
