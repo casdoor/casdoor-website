@@ -7,7 +7,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/google.jpeg"
   },
   {
     "title": "Google One Tap",
@@ -17,7 +17,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/google.jpeg"
   },
   {
     "title": "GitHub",
@@ -27,7 +27,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/github.png"
   },
   {
     "title": "LinkedIn",
@@ -37,7 +37,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/linkedin.png"
   },
   {
     "title": "Facebook",
@@ -47,7 +47,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/facebook.png"
   },
   {
     "title": "AD FS",
@@ -67,17 +67,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
-  },
-  {
-    "title": "Google",
-    "url": "https://casdoor.org/docs/provider/oauth/google",
-    "description": "",
-    "tags": [
-      "Integration",
-      "OAuth"
-    ],
-    "image": ""
+    "image": "/img/ecosystem/azureAD.png"
   },
   {
     "title": "Custom OAuth",
@@ -97,7 +87,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/okta.png"
   },
   {
     "title": "Twitter",
@@ -107,7 +97,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/twitter.png"
   },
   {
     "title": "Weibo",
@@ -117,7 +107,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/weibo.png"
   },
   {
     "title": "WeChat",
@@ -127,7 +117,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/wechat.png"
   },
   {
     "title": "WeCom",
@@ -137,7 +127,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/wecom.png"
   },
   {
     "title": "Tencent QQ",
@@ -147,7 +137,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/qq.png"
   },
   {
     "title": "DingTalk",
@@ -157,17 +147,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
-  },
-  {
-    "title": "Google",
-    "url": "https://casdoor.org/docs/provider/oauth/google",
-    "description": "",
-    "tags": [
-      "Integration",
-      "OAuth"
-    ],
-    "image": ""
+    "image": "/img/ecosystem/dingtalk.png"
   },
   {
     "title": "Steam",
@@ -177,7 +157,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/steam.jpeg"
   },
   {
     "title": "Gitee",
@@ -187,7 +167,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/gitee.png"
   },
   {
     "title": "Baidu",
@@ -197,7 +177,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/baidu.png"
   },
   {
     "title": "Infoflow",
@@ -207,7 +187,7 @@
       "Integration",
       "OAuth"
     ],
-    "image": ""
+    "image": "/img/ecosystem/infoflow.png"
   },
   {
     "title": "Lark",
@@ -227,7 +207,7 @@
       "Integration",
       "Email"
     ],
-    "image": ""
+    "image": "/img/ecosystem/sendgrid.png"
   },
   {
     "title": "Azure ACS",
@@ -237,7 +217,7 @@
       "Integration",
       "Email"
     ],
-    "image": ""
+    "image": "/img/ecosystem/azure.png"
   },
   {
     "title": "Brevo",
@@ -247,7 +227,7 @@
       "Integration",
       "Email"
     ],
-    "image": ""
+    "image": "/img/ecosystem/brevo.png"
   },
   {
     "title": "MailHog",
@@ -267,7 +247,7 @@
       "Integration",
       "SMS"
     ],
-    "image": ""
+    "image": "/img/ecosystem/twilio.png"
   },
   {
     "title": "Amazon SNS",
@@ -277,7 +257,7 @@
       "Integration",
       "SMS"
     ],
-    "image": ""
+    "image": "/img/ecosystem/amazonSNS.png"
   },
   {
     "title": "Azure ACS",
@@ -287,7 +267,7 @@
       "Integration",
       "SMS"
     ],
-    "image": ""
+    "image": "/img/ecosystem/azure.png"
   },
   {
     "title": "Alibaba Cloud",
@@ -297,7 +277,7 @@
       "Integration",
       "SMS"
     ],
-    "image": ""
+    "image": "/img/ecosystem/alibabaCloud.png"
   },
   {
     "title": "Telegram",
@@ -307,7 +287,7 @@
       "Integration",
       "Notification"
     ],
-    "image": ""
+    "image": "/img/ecosystem/telegram.png"
   },
   {
     "title": "Custom HTTP",
@@ -327,7 +307,7 @@
       "Integration",
       "Notification"
     ],
-    "image": ""
+    "image": "/img/ecosystem/slack.png"
   },
   {
     "title": "Google Chat",
@@ -337,7 +317,7 @@
       "Integration",
       "Notification"
     ],
-    "image": ""
+    "image": "/img/ecosystem/googlechat.png"
   },
   {
     "title": "Twitter",
@@ -347,7 +327,7 @@
       "Integration",
       "Notification"
     ],
-    "image": ""
+    "image": "/img/ecosystem/twitter.png"
   },
   {
     "title": "Discord",
@@ -357,7 +337,7 @@
       "Integration",
       "Notification"
     ],
-    "image": ""
+    "image": "/img/ecosystem/discord.png"
   },
   {
     "title": "Local File System",
@@ -377,7 +357,7 @@
       "Integration",
       "Storage"
     ],
-    "image": ""
+    "image": "/img/ecosystem/amazonS3.png"
   },
   {
     "title": "Azure Blob",
@@ -387,7 +367,7 @@
       "Integration",
       "Storage"
     ],
-    "image": ""
+    "image": "/img/ecosystem/azureBlob.png"
   },
   {
     "title": "Google Cloud Storage",
@@ -397,7 +377,7 @@
       "Integration",
       "Storage"
     ],
-    "image": ""
+    "image": "/img/ecosystem/googleCloudStorage.png"
   },
   {
     "title": "MinIO",
@@ -407,7 +387,7 @@
       "Integration",
       "Storage"
     ],
-    "image": ""
+    "image": "/img/ecosystem/minIO.png"
   },
   {
     "title": "Alibaba Cloud OSS",
@@ -417,7 +397,7 @@
       "Integration",
       "Storage"
     ],
-    "image": ""
+    "image": "/img/ecosystem/alibabaOSS.png"
   },
   {
     "title": "Tencent Cloud COS",
@@ -427,7 +407,7 @@
       "Integration",
       "Storage"
     ],
-    "image": ""
+    "image": "/img/ecosystem/tencentCloud.png"
   },
   {
     "title": "Synology NAS",
@@ -457,7 +437,7 @@
       "Integration",
       "SAML"
     ],
-    "image": ""
+    "image": "/img/ecosystem/keycloak.png"
   },
   {
     "title": "Alibaba Cloud IDaaS",
@@ -467,7 +447,7 @@
       "Integration",
       "SAML"
     ],
-    "image": ""
+    "image": "/img/ecosystem/alibabaCloud.png"
   },
   {
     "title": "PayPal",
@@ -477,7 +457,7 @@
       "Integration",
       "SAML"
     ],
-    "image": ""
+    "image": "/img/ecosystem/paypal.png"
   },
   {
     "title": "Stripe",
@@ -487,7 +467,7 @@
       "Integration",
       "SAML"
     ],
-    "image": ""
+    "image": "/img/ecosystem/stripe.png"
   },
   {
     "title": "Alipay",
@@ -497,7 +477,7 @@
       "Integration",
       "SAML"
     ],
-    "image": ""
+    "image": "/img/ecosystem/alipay.png"
   },
   {
     "title": "WeChat Pay",
@@ -507,7 +487,7 @@
       "Integration",
       "SAML"
     ],
-    "image": ""
+    "image": "/img/ecosystem/wechatPay.png"
   },
   {
     "title": "Default",
@@ -527,7 +507,7 @@
       "Integration",
       "Captcha"
     ],
-    "image": ""
+    "image": "/img/ecosystem/cloudflare.png"
   },
   {
     "title": "reCAPTCHA",
@@ -537,7 +517,7 @@
       "Integration",
       "Captcha"
     ],
-    "image": ""
+    "image": "/img/ecosystem/re.png"
   },
   {
     "title": "hCaptcha",
@@ -547,7 +527,7 @@
       "Integration",
       "Captcha"
     ],
-    "image": ""
+    "image": "/img/ecosystem/h.jpeg"
   },
   {
     "title": "Alibaba Cloud Captcha",
@@ -557,7 +537,7 @@
       "Integration",
       "Captcha"
     ],
-    "image": ""
+    "image": "/img/ecosystem/alibabaCloud.png"
   },
   {
     "title": "Geetest",
@@ -567,7 +547,7 @@
       "Integration",
       "Captcha"
     ],
-    "image": ""
+    "image": "/img/ecosystem/gee.png"
   },
   {
     "title": "MetaMask",
@@ -577,7 +557,7 @@
       "Integration",
       "Web3"
     ],
-    "image": ""
+    "image": "/img/ecosystem/metaMask.png"
   },
   {
     "title": "Web3-Onboard",

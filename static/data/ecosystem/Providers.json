@@ -7,7 +7,7 @@
       "Provider",
       "Cpp"
     ],
-    "image": ""
+    "image": "/img/ecosystem/nginx.png"
   },
   {
     "title": "NginxCommunityVersion",
@@ -17,7 +17,7 @@
       "Provider",
       "Cpp"
     ],
-    "image": ""
+    "image": "/img/ecosystem/nginx.png"
   },
   {
     "title": "Envoy",
@@ -27,7 +27,7 @@
       "Provider",
       "Cpp"
     ],
-    "image": ""
+    "image": "/img/ecosystem/envoy.png"
   },
   {
     "title": "Unity",
@@ -37,7 +37,7 @@
       "Provider",
       "Csharp"
     ],
-    "image": ""
+    "image": "/img/ecosystem/unity.png"
   },
   {
     "title": "Kubernetes",
@@ -47,7 +47,7 @@
       "Provider",
       "Go"
     ],
-    "image": ""
+    "image": "/img/ecosystem/k8s.png"
   },
   {
     "title": "OpenShift",
@@ -57,7 +57,7 @@
       "Provider",
       "Go"
     ],
-    "image": ""
+    "image": "/img/ecosystem/os.png"
   },
   {
     "title": "BookStack",
@@ -77,7 +77,7 @@
       "Provider",
       "Go"
     ],
-    "image": ""
+    "image": "/img/ecosystem/byteBase.png"
   },
   {
     "title": "ELK",
@@ -97,7 +97,7 @@
       "Provider",
       "Go"
     ],
-    "image": ""
+    "image": "/img/ecosystem/gitea.png"
   },
   {
     "title": "Grafana",
@@ -107,7 +107,7 @@
       "Provider",
       "Go"
     ],
-    "image": ""
+    "image": "/img/ecosystem/gra.jpeg"
   },
   {
     "title": "MinIO",
@@ -117,7 +117,7 @@
       "Provider",
       "Go"
     ],
-    "image": ""
+    "image": "/img/ecosystem/minIO.png"
   },
   {
     "title": "Portainer",
@@ -137,7 +137,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/springBoot.png"
   },
   {
     "title": "Spring Cloud",
@@ -147,7 +147,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/springCloud.jpeg"
   },
   {
     "title": "Spring Cloud Gateway",
@@ -157,7 +157,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/springCloud.jpeg"
   },
   {
     "title": "Spring Security",
@@ -167,7 +167,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/springS.jpeg"
   },
   {
     "title": "Jenkins Plugin",
@@ -177,7 +177,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/jenkins.png"
   },
   {
     "title": "Jenkins OIDC",
@@ -187,7 +187,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/jenkins.png"
   },
   {
     "title": "Jira",
@@ -197,7 +197,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/jira.png"
   },
   {
     "title": "Connecting Applications with OIDC Protocol - Confluence",
@@ -247,7 +247,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/ss.jpeg"
   },
   {
     "title": "Apache IoTDB",
@@ -257,7 +257,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/TDB.png"
   },
   {
     "title": "Apache DolphinScheduler",
@@ -267,7 +267,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/DS.png"
   },
   {
     "title": "FireZone",
@@ -277,7 +277,7 @@
       "Provider",
       "Java"
     ],
-    "image": ""
+    "image": "/img/ecosystem/fz.png"
   },
   {
     "title": "Cloud Foundry",
@@ -307,7 +307,7 @@
       "Provider",
       "JavaScript"
     ],
-    "image": ""
+    "image": "/img/ecosystem/fireBase.png"
   },
   {
     "title": "WeChat MiniProgram",
@@ -317,7 +317,7 @@
       "Provider",
       "JavaScript"
     ],
-    "image": ""
+    "image": "/img/ecosystem/miniProgram.png"
   },
   {
     "title": "APISIX",
@@ -327,7 +327,7 @@
       "Provider",
       "Lua"
     ],
-    "image": ""
+    "image": "/img/ecosystem/apisix.jpeg"
   },
   {
     "title": "Zentao",
@@ -367,7 +367,7 @@
       "Provider",
       "PHP"
     ],
-    "image": ""
+    "image": "/img/ecosystem/moodle.png"
   },
   {
     "title": "GitLab",
@@ -377,7 +377,7 @@
       "Provider",
       "Ruby"
     ],
-    "image": ""
+    "image": "/img/ecosystem/gitlab.png"
   },
   {
     "title": "Hasura",
@@ -387,7 +387,7 @@
       "Provider",
       "Haskell"
     ],
-    "image": ""
+    "image": "/img/ecosystem/hasura.png"
   },
   {
     "title": "JumpServer",
@@ -397,6 +397,6 @@
       "Provider",
       "Python"
     ],
-    "image": ""
+    "image": "/img/ecosystem/JS.png"
   }
 ]

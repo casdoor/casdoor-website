@@ -7,7 +7,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/android.png"
   },
   {
     "title": "iOS SDK",
@@ -17,7 +17,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/ios.png"
   },
   {
     "title": "React Native SDK",
@@ -27,7 +27,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/RN.png"
   },
   {
     "title": "Flutter SDK",
@@ -37,7 +37,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/flutter.png"
   },
   {
     "title": "Firebase SDK",
@@ -47,7 +47,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/firebase.png"
   },
   {
     "title": "Unity Games SDK",
@@ -57,7 +57,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/unity.png"
   },
   {
     "title": "uni-app SDK",
@@ -67,7 +67,7 @@
       "SDK",
       "Mobile"
     ],
-    "image": ""
+    "image": "/img/ecosystem/uni-app.png"
   },
   {
     "title": "Electron SDK",
@@ -77,7 +77,7 @@
       "SDK",
       "Desktop"
     ],
-    "image": ""
+    "image": "/img/ecosystem/electron.png"
   },
   {
     "title": ".NET Desktop SDK",
@@ -87,7 +87,7 @@
       "SDK",
       "Desktop"
     ],
-    "image": ""
+    "image": "/img/ecosystem/dotNET.png"
   },
   {
     "title": "C/C++ SDK",
@@ -97,7 +97,7 @@
       "SDK",
       "Desktop"
     ],
-    "image": ""
+    "image": "/img/ecosystem/cpp.png"
   },
   {
     "title": "Javascript SDK",
@@ -107,7 +107,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/js.jpeg"
   },
   {
     "title": "Frontend-only SDK",
@@ -117,7 +117,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/js.jpeg"
   },
   {
     "title": "React SDK",
@@ -127,7 +127,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/react.png"
   },
   {
     "title": "Next.js SDK",
@@ -137,7 +137,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/next.png"
   },
   {
     "title": "Vue SDK",
@@ -147,7 +147,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/vue.png"
   },
   {
     "title": "Angular SDK",
@@ -157,7 +157,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/angular.png"
   },
   {
     "title": "Flutter SDK",
@@ -167,7 +167,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/flutter.png"
   },
   {
     "title": "ASP.NET SDK",
@@ -177,7 +177,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/asp.jpeg"
   },
   {
     "title": "Firebase SDK",
@@ -187,7 +187,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/firebase.png"
   },
   {
     "title": "Go SDK",
@@ -197,7 +197,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/go.png"
   },
   {
     "title": "Java SDK",
@@ -207,7 +207,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/java.png"
   },
   {
     "title": "Node.js SDK",
@@ -217,7 +217,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/node.png"
   },
   {
     "title": "Python SDK",
@@ -227,7 +227,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/python.png"
   },
   {
     "title": "PHP SDK",
@@ -237,7 +237,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/PHP.png"
   },
   {
     "title": ".NET SDK",
@@ -247,7 +247,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/dotNET.png"
   },
   {
     "title": "Rust SDK",
@@ -257,7 +257,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/dotNET.png"
   },
   {
     "title": "C/C++ SDK",
@@ -267,7 +267,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/rust.jpeg"
   },
   {
     "title": "Dart SDK",
@@ -277,7 +277,7 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/dart.png"
   },
   {
     "title": "Ruby SDK",
@@ -287,6 +287,6 @@
       "SDK",
       "Web"
     ],
-    "image": ""
+    "image": "/img/ecosystem/ruby.jpeg"
   }
 ]
