@@ -1,0 +1,402 @@
+[
+  {
+    "title": "Nginx",
+    "url": "https://casdoor.org/docs/integration/C++/Nginx",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Cpp"
+    ],
+    "image": "/img/ecosystem/nginx.png"
+  },
+  {
+    "title": "NginxCommunityVersion",
+    "url": "https://casdoor.org/docs/integration/C++/NginxCommunityVersion",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Cpp"
+    ],
+    "image": "/img/ecosystem/nginx.png"
+  },
+  {
+    "title": "Envoy",
+    "url": "https://casdoor.org/docs/integration/C++/Envoy",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Cpp"
+    ],
+    "image": "/img/ecosystem/envoy.png"
+  },
+  {
+    "title": "Unity",
+    "url": "https://casdoor.org/docs/integration/CSharp/Unity",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Csharp"
+    ],
+    "image": "/img/ecosystem/unity.png"
+  },
+  {
+    "title": "Kubernetes",
+    "url": "https://casdoor.org/docs/integration/go/kubernetes",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/k8s.png"
+  },
+  {
+    "title": "OpenShift",
+    "url": "https://casdoor.org/docs/integration/go/openshift",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/os.png"
+  },
+  {
+    "title": "BookStack",
+    "url": "https://casdoor.org/docs/integration/go/bookstack",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/bookstack.png"
+  },
+  {
+    "title": "Bytebase",
+    "url": "https://casdoor.org/docs/integration/go/Bytebase",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/byteBase.png"
+  },
+  {
+    "title": "ELK",
+    "url": "https://casdoor.org/docs/integration/go/elk",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/elk.png"
+  },
+  {
+    "title": "Gitea",
+    "url": "https://casdoor.org/docs/integration/go/gitea",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/gitea.png"
+  },
+  {
+    "title": "Grafana",
+    "url": "https://casdoor.org/docs/integration/go/grafana",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/gra.jpeg"
+  },
+  {
+    "title": "MinIO",
+    "url": "https://casdoor.org/docs/integration/go/minio",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/minIO.png"
+  },
+  {
+    "title": "Portainer",
+    "url": "https://casdoor.org/docs/integration/go/portainer",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Go"
+    ],
+    "image": "/img/ecosystem/portainer.png"
+  },
+  {
+    "title": "Spring Boot",
+    "url": "https://casdoor.org/docs/integration/java/spring-boot",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/springBoot.png"
+  },
+  {
+    "title": "Spring Cloud",
+    "url": "https://casdoor.org/docs/integration/java/spring-cloud",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/springCloud.png"
+  },
+  {
+    "title": "Spring Cloud Gateway",
+    "url": "https://casdoor.org/docs/integration/java/spring-cloud-gateway",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/springCloud.png"
+  },
+  {
+    "title": "Spring Security",
+    "url": "https://casdoor.org/docs/category/spring-security",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/springS.jpeg"
+  },
+  {
+    "title": "Jenkins Plugin",
+    "url": "https://casdoor.org/docs/integration/java/jenkins-plugin",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/jenkins.png"
+  },
+  {
+    "title": "Jenkins OIDC",
+    "url": "https://casdoor.org/docs/integration/java/jenkins-oidc",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/jenkins.png"
+  },
+  {
+    "title": "Jira",
+    "url": "https://casdoor.org/docs/category/jira",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/jira.png"
+  },
+  {
+    "title": "Connecting Applications with OIDC Protocol - Confluence",
+    "url": "https://casdoor.org/docs/integration/java/Confluence",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/confluence.png"
+  },
+  {
+    "title": "RuoYi",
+    "url": "https://casdoor.org/docs/integration/java/RuoYi",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/ruoyi.webp"
+  },
+  {
+    "title": "Pulsar Manager",
+    "url": "https://casdoor.org/docs/integration/java/Pulsar-manager",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/pulsar.svg"
+  },
+  {
+    "title": "Using Casdoor in ShenYu",
+    "url": "https://casdoor.org/docs/integration/java/shenyu",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/shenyu.svg"
+  },
+  {
+    "title": "ShardingSphere",
+    "url": "https://casdoor.org/docs/integration/java/ShardingSphere",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/ss.jpeg"
+  },
+  {
+    "title": "Apache IoTDB",
+    "url": "https://casdoor.org/docs/integration/java/iotdb",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/TDB.png"
+  },
+  {
+    "title": "Apache DolphinScheduler",
+    "url": "https://casdoor.org/docs/integration/java/dolphinscheduler",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/DS.png"
+  },
+  {
+    "title": "FireZone",
+    "url": "https://casdoor.org/docs/integration/java/firezone",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/fz.png"
+  },
+  {
+    "title": "Cloud Foundry",
+    "url": "https://casdoor.org/docs/integration/java/CloudFoundry",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/cloudFoundry.jpeg"
+  },
+  {
+    "title": "Thingsboard",
+    "url": "https://casdoor.org/docs/integration/java/Thingsboard",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Java"
+    ],
+    "image": "/img/ecosystem/thingsboard.png"
+  },
+  {
+    "title": "Firebase",
+    "url": "https://casdoor.org/docs/integration/javascript/firebase",
+    "description": "",
+    "tags": [
+      "Integration",
+      "JavaScript"
+    ],
+    "image": "/img/ecosystem/fireBase.png"
+  },
+  {
+    "title": "WeChat MiniProgram",
+    "url": "https://casdoor.org/docs/integration/javascript/wechat_miniprogram",
+    "description": "",
+    "tags": [
+      "Integration",
+      "JavaScript"
+    ],
+    "image": "/img/ecosystem/miniProgram.png"
+  },
+  {
+    "title": "APISIX",
+    "url": "https://casdoor.org/docs/integration/lua/apisix",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Lua"
+    ],
+    "image": "/img/ecosystem/apisix.jpeg"
+  },
+  {
+    "title": "Zentao",
+    "url": "https://casdoor.org/docs/integration/php/zentao",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ],
+    "image": "/img/ecosystem/zentao.png"
+  },
+  {
+    "title": "Using Casdoor as an OAuth2 Server in ShowDoc",
+    "url": "https://casdoor.org/docs/integration/php/showdoc",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ],
+    "image": "/img/ecosystem/showdoc.svg"
+  },
+  {
+    "title": "Flarum",
+    "url": "https://casdoor.org/docs/integration/php/Flarum",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ],
+    "image": "/img/ecosystem/flarum.png"
+  },
+  {
+    "title": "Moodle",
+    "url": "https://casdoor.org/docs/integration/php/Moodle",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ],
+    "image": "/img/ecosystem/moodle.png"
+  },
+  {
+    "title": "GitLab",
+    "url": "https://casdoor.org/docs/integration/ruby/gitlab",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Ruby"
+    ],
+    "image": "/img/ecosystem/gitlab.png"
+  },
+  {
+    "title": "Hasura",
+    "url": "https://casdoor.org/docs/integration/Haskell/Hasura",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Haskell"
+    ],
+    "image": "/img/ecosystem/hasura.png"
+  },
+  {
+    "title": "JumpServer",
+    "url": "https://casdoor.org/docs/integration/python/JumpServer",
+    "description": "",
+    "tags": [
+      "Integration",
+      "Python"
+    ],
+    "image": "/img/ecosystem/JS.png"
+  }
+]

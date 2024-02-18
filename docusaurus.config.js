@@ -51,6 +51,11 @@ module.exports = {
           position: "left",
         },
         {
+          href: "/ecosystem",
+          label: "Ecosystem",
+          position: "left",
+        },
+        {
           label: "Blog",
           to: "/blog",
           position: "left",
