@@ -88,7 +88,7 @@ function ShowcaseCard({item}) {
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center",
-        paddingTop: "10px",
+        padding: "20px",
       }} rel="noreferrer"
       >
         <img
