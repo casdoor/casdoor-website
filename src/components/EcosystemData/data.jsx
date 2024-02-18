@@ -1,5 +1,5 @@
-import Integrations from "/static/data/ecosystem/Integrations.json";
-import Providers from "/static/data/ecosystem/Providers.json";
+import Integrations from "/static/data/ecosystem/Providers.json";
+import Providers from "/static/data/ecosystem/Integrations.json";
 import SDKs from "/static/data/ecosystem/SDKs.json";
 
 const data = [

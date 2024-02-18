@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import Heading from "@theme/Heading";
 import styles from "./styles.module.css";
-import {sortBy} from "@site/src/components/EcosystemData/tableData";
+import {sortBy} from "@site/src/components/EcosystemData/data";
 import Tooltip from "@site/src/pages/ecosystem/_components/ShowcaseTooltip";
 import FavoriteIcon from "@site/src/components/svgIcons/FavoriteIcon";
 import {TagList, Tags} from "@site/src/components/EcosystemData/tags";
