@@ -62,19 +62,8 @@ function getCardImage(item) {
   return item.image || "/img/favicon.png";
 }
 
-function getTitleURL(title) {
-  const regex = /\]\((.+?)\)/;
-  const match = title.match(regex);
-  let url = "";
-  if (match) {
-    url = match[1];
-  }
-  return url;
-}
-
 function ShowcaseCard({item}) {
   const image = getCardImage(item);
-  const titleURL = getTitleURL(item.title);
 
   return (
     <li key={item.title} className="card shadow--md">
@@ -82,7 +71,7 @@ function ShowcaseCard({item}) {
         "card__image"
       )}
       target={"_blank"}
-      href={titleURL}
+      href={item.url}
       style={{
         display: "flex",
         flexDirection: "row",
@@ -105,9 +94,11 @@ function ShowcaseCard({item}) {
         }}
       >
         <div className={clsx(styles.showcaseCardHeader)}>
-          <Heading as="h4" className={styles.showcaseCardTitle}>
-            {item.title}
-          </Heading>
+          <a href={item.url} target={"_blank"} rel="noreferrer">
+            <Heading as="h4" className={styles.showcaseCardTitle}>
+              {item.title}
+            </Heading>
+          </a>
           {item.tags.includes("favorite") && (
             <FavoriteIcon svgClass={styles.svgIconFavorite} size="small" />
           )}
