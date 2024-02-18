@@ -92,7 +92,7 @@
   {
     "title": "Twitter",
     "url": "https://casdoor.org/docs/provider/oauth/Twitter",
-    "description": "",
+    "description": "For twitter oauth",
     "tags": [
       "Provider",
       "OAuth"
@@ -212,7 +212,7 @@
   {
     "title": "Azure ACS",
     "url": "https://casdoor.org/docs/provider/email/azureACS",
-    "description": "",
+    "description": "ACS as the Email Provider",
     "tags": [
       "Provider",
       "Email"
@@ -262,7 +262,7 @@
   {
     "title": "Azure ACS",
     "url": "https://casdoor.org/docs/provider/sms/acs",
-    "description": "",
+    "description": "ACS as the SNS provider",
     "tags": [
       "Provider",
       "SMS"
@@ -322,7 +322,7 @@
   {
     "title": "Twitter",
     "url": "https://casdoor.org/docs/provider/notification/twitter",
-    "description": "",
+    "description": "For twitter notification",
     "tags": [
       "Provider",
       "Notification"

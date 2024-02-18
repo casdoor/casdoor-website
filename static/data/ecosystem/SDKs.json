@@ -42,7 +42,7 @@
   {
     "title": "Firebase SDK",
     "url": "https://casdoor.org/docs/how-to-connect/sdk",
-    "description": "For Google Firebase apps",
+    "description": "For Google Firebase mobile apps",
     "tags": [
       "SDK",
       "Mobile"
@@ -182,7 +182,7 @@
   {
     "title": "Firebase SDK",
     "url": "https://casdoor.org/docs/how-to-connect/sdk",
-    "description": "For Google Firebase apps",
+    "description": "For Google Firebase web apps",
     "tags": [
       "SDK",
       "Web"
@@ -257,7 +257,7 @@
       "SDK",
       "Web"
     ],
-    "image": "/img/ecosystem/dotNET.png"
+    "image": "/img/ecosystem/rust.jpeg"
   },
   {
     "title": "C/C++ SDK",
@@ -267,7 +267,7 @@
       "SDK",
       "Web"
     ],
-    "image": "/img/ecosystem/rust.jpeg"
+    "image": "/img/ecosystem/cpp.png"
   },
   {
     "title": "Dart SDK",
