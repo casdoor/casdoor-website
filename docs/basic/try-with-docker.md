@@ -46,18 +46,6 @@ Run the container with port `8000` exposed to the host. The image will be automa
 docker run -p 8000:8000 casbin/casdoor-all-in-one
 ```
 
-:::caution
-
-Some users in areas like China usually use Docker image mirror services like [Alibaba Cloud Image Booster](https://help.aliyun.com/document_detail/60750.html) ([English](https://www.alibabacloud.com/help/en/container-registry/latest/accelerate-the-download-of-docker-official-images)) to achieve higher download speeds compared to DockerHub. However, these services have a known issue where the `latest` tag provided by them is not up-to-date. As a result, fetching the `latest` tag may result in a very old image. To mitigate this issue, you can specify the image version number explicitly using the following command:
-
-```shell
-docker pull casbin/casdoor-all-in-one:$(curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor-all-in-one/tags/?page_size=1&page=2" | sed 's/,/,\n/g' | grep '"name"' |awk -F '"' '{print $4}')
-```
-
-Note: The above command utilizes Linux tools like `curl`, `sed`, `grep`, and `awk`. If you are using Windows, make sure you run it in a Linux-style shell like `Git Shell` or `Cygwin`. `CMD` or `PowerShell` won't work.
-
-:::
-
 Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
 
 ```bash
@@ -65,52 +53,7 @@ admin
 123
 ```
 
-### **Option-2**: Try with docker-compose
-
-:::caution
-
-Some users in areas like China usually use Docker image mirror services like [Alibaba Cloud Image Booster](https://help.aliyun.com/document_detail/60750.html) ([English](https://www.alibabacloud.com/help/en/container-registry/latest/accelerate-the-download-of-docker-official-images)) to achieve higher download speeds compared to DockerHub. However, these services have a known issue where the `latest` tag provided by them is not up-to-date. As a result, fetching the `latest` tag may result in a very old image. To mitigate this issue, you can specify the image version number explicitly using the following command:
-
-```shell
-docker pull casbin/casdoor:$(curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g' | grep '"name"' |awk -F '"' '{print $4}')
-```
-
-Note: The above command utilizes Linux tools like `curl`, `sed`, `grep`, and `awk`. If you are using Windows, make sure you run it in a Linux-style shell like `Git Shell` or `Cygwin`. `CMD` or `PowerShell` won't work.
-
-:::
-
-Create a `conf/app.conf` directory in the same directory level as the `docker-compose.yml` file. Then, copy [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) from Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
-
-Create a separate database using docker-compose:
-
-```bash
-docker-compose up
-```
-
-That's it! :small_airplane:
-
-Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
-
-```bash
-admin
-123
-```
-
-*Note: If you dig deeper into the docker-compose.yml file, you may be puzzled by the environment variable we created called "RUNNING_IN_DOCKER". When the database 'db' is created via docker-compose, it is available on your PC's localhost but not the localhost of the Casdoor container. To prevent you from running into troubles caused by modifying app.conf, which can be quite difficult for a new user, we provided this environment variable and pre-assigned it in the docker-compose.yml. When this environment variable is set to true, localhost will be replaced with host.docker.internal so that Casdoor can access the database.*
-
-### **Option-3**: Try directly with the standard image
-
-:::caution
-
-Some users in areas like China usually use Docker image mirror services like [Alibaba Cloud Image Booster](https://help.aliyun.com/document_detail/60750.html) ([English](https://www.alibabacloud.com/help/en/container-registry/latest/accelerate-the-download-of-docker-official-images)) to achieve higher download speeds compared to DockerHub. However, these services have a known issue where the `latest` tag provided by them is not up-to-date. As a result, fetching the `latest` tag may result in a very old image. To mitigate this issue, you can specify the image version number explicitly using the following command:
-
-```shell
-docker pull casbin/casdoor:$(curl -sS "https://hub.docker.com/v2/repositories/casbin/casdoor/tags/?page_size=1&page=2" | sed 's/,/,\n/g' | grep '"name"' |awk -F '"' '{print $4}')
-```
-
-Note: The above command utilizes Linux tools like `curl`, `sed`, `grep`, and `awk`. If you are using Windows, make sure you run it in a Linux-style shell like `Git Shell` or `Cygwin`. `CMD` or `PowerShell` won't work.
-
-:::
+### **Option-2**: Try directly with the standard image
 
 :::tip
 
@@ -144,3 +87,28 @@ Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log in
 admin
 123
 ```
+
+### **Option-3**: Try with docker-compose
+
+Create a `conf/app.conf` directory in the same directory level as the `docker-compose.yml` file. Then, copy [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) from Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
+
+Create a separate database using docker-compose:
+
+```bash
+docker-compose up
+```
+
+That's it! :small_airplane:
+
+Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
+
+```bash
+admin
+123
+```
+
+:::note
+
+If you dig deeper into the docker-compose.yml file, you may be puzzled by the environment variable we created called "RUNNING_IN_DOCKER". When the database 'db' is created via docker-compose, it is available on your PC's localhost but not the localhost of the Casdoor container. To prevent you from running into troubles caused by modifying app.conf, which can be quite difficult for a new user, we provided this environment variable and pre-assigned it in the docker-compose.yml. When this environment variable is set to true, localhost will be replaced with host.docker.internal so that Casdoor can access the database.
+
+:::
