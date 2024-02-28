@@ -83,11 +83,11 @@ Assuming you have already prepared a database called `casdoor`, you should speci
 ```ini
 driverName = postgres
 dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor"
-dbName =
+dbName = casdoor
 ```
 
 :::info
-For PostgreSQL, ensure that `dataSourceName` has a non-empty `dbName`, and leave the standalone `dbName` field empty as shown in the example above.
+For PostgreSQL, ensure that `dataSourceName` has a non-empty `dbName` and also [duplicate](https://github.com/casdoor/casdoor/issues/2127) the database name for the `dbname` field as shown in the example above.
 :::
 
 #### CockroachDB
@@ -97,7 +97,7 @@ CockroachDB can also be used with the PostgreSQL driver and has the same configu
 ```ini
 driverName = postgres
 dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor serial_normalization=virtual_sequence"
-dbName =
+dbName = casdoor
 ```
 
 :::info
