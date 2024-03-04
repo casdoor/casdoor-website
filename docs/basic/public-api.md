@@ -103,11 +103,25 @@ The below examples shows how to call `GetOAuthToken()` function in Go via casdoo
 
 If you are not familiar with the Base64 encoding, you can use a library to do that because `HTTP Basic Authentication` is a popular standard supported by many places.
 
-### 3. By `username` and `password`
+### 3. By `Access key` and `Access secret`
+
+We can use the access key and access secret for a Casdoor user to call `Casdoor Public API` as the user itself. The access key and access secret can be configured in the user setting page by an admin or the user himself. the `update-user` API can also be called to update these fields. The permissions for the API calls will be the same as the user.
+
+#### How to authenticate?
+
+1. HTTP `GET` parameter, the URL format is:
+
+    ```shell
+    /page?accessKey=<The user's access key>&accessSecret=<the user's access secret>"
+    ```
+
+Demo site example: `https://door.casdoor.com/api/get-global-providers?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796/admin&accessSecret=79911517-fc36-4093-b115-65a9741f6b14`
+
+### 4. By `username` and `password`
 
 :::caution
 
-This authentication method is not safe and kept here only for compatibility or demo purposes. We recommend using the previous two authentication methods instead.
+This authentication method is not safe and kept here only for compatibility or demo purposes. We recommend using the previous three authentication methods instead.
 
 #### What will happen?
 
