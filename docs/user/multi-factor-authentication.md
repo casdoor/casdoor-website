@@ -33,7 +33,9 @@ A time-based one-time password (TOTP) application automatically generates an aut
 - [Microsoft Authenticator](https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=en_US&gl=US).
 
 :::tip
+
 To configure authentication via TOTP on multiple devices, during setup, scan the QR code using each device at the same time. If 2FA is already enabled, and you want to add another device, you must reconfigure your TOTP app from the user profile page.
+
 :::
 
 ![totp](/img/user/mfa/mfa_totp.png)
@@ -50,7 +52,9 @@ To configure authentication via TOTP on multiple devices, during setup, scan the
    ![mfa_enable](/img/user/mfa/mfa_enable.png)
 
 :::caution
+
 Each recovery code can only be used once. If you use a recovery code to sign in, it will become invalid.
+
 :::
 
 ### Configuring multi-factor authentication using text messages
