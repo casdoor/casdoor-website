@@ -24,5 +24,7 @@ On the application edit page, you can find the `Org select mode` configuration o
 ![mode_select](/img/application/specify-login-organization/mode_select.png)
 
 :::info
+
 The organization select page will only be shown when the route is `/login` or `<organization>/login`. This means that the application should be set as the **default application** in the organization or the app-built-in.
+
 :::
