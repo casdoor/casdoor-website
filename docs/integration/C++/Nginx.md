@@ -108,15 +108,14 @@ To configure NGINX Plus as the OpenID Connect relying party, follow these steps:
 
     ```bash
     curl http://<casdoor-server-address>/.well-known/openid-configuration | python -m json.tool
-    ...
     {
         "authorization_endpoint": "https://<casdoor-server-address>/login/oauth/authorize",
-        ...
+        "...":"...",
         "token_endpoint": "http://<casdoor-server-address>/api/login/oauth/access_token",
-        ...
+        "...":"...",
         "jwks_uri": "http://<casdoor-server-address>/.well-known/jwks",
-     ...
-     }
+        "...":"...",
+    }
     ```
 
 4. Open **/etc/nginx/conf.d/openid_connect_configuration.conf** using your preferred text editor. Modify the "default" parameter value for each of the following [map](https://nginx.org/en/docs/http/ngx_http_map_module.html#map) directives with the specified values:<span id="jump2"></span>

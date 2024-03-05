@@ -74,7 +74,7 @@ With the correctly composed URL, your Application will make the user launch a re
 
 This step is straightforward: the user is redirected to the URL composed in Step 1, and the user will see the login page from Casdoor. By entering the correct username and credentials into the login page, Casdoor now knows the identity of the user and is about to send two pieces of information back to the callback URL set in Step 1: `code` and `state`.
 
-The user opens the URL and provides the credentials to Casdoor. Casdoor will say: *"Looking good ~ this is the user who is authorizing the Application to get the `code` and `state`. I know this user in my database, and I will send the `code` and `state` back to the Application using the callback URL (`redirect_uri`)"*
+The user opens the URL and provides the credentials to Casdoor. Casdoor will say: "Looking good ~ this is the user (who is authorizing the Application to get the `code` and `state`) I know in my database, and I will send the `code` and `state` back to the Application using the callback URL (`redirect_uri`)".
 
 With these two pieces of information sent back to your Application, the authorization is granted to the app, and the `Authorization Grant` is completed.
 
