@@ -47,10 +47,6 @@ To make the authentication process work, the detailed steps are as follows:
 
 :::
 
-You can also add third-party apps for sign up by adding providers and setting their properties.
-
-![Select providers](/img/application/config/selectproviders.png)
-
 ```mdx-code-block
 <div className={styles.signingradientborder}>
   <CasdoorCard src="https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https://forum.casbin.com/callback&scope=read&state=app-casbin-forum" height= "680" />

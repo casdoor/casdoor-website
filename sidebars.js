@@ -126,6 +126,7 @@ module.exports = {
         "application/overview",
         "application/terminology",
         "application/config",
+        "application/providers",
         "application/signin-methods",
         "application/signup-items-table",
         "application/ui-customization",
