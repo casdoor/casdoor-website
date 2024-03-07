@@ -47,9 +47,7 @@ To make the authentication process work, the detailed steps are as follows:
 
 :::
 
-You can also add third-party apps for sign up by adding providers and setting their properties.
 
-![Select providers](/img/application/config/selectproviders.png)
 
 ```mdx-code-block
 <div className={styles.signingradientborder}>
