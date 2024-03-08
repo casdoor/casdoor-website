@@ -60,9 +60,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title"><Translate>Casdoor</Translate></h1>
         <br />
-        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A UI-first Identity
-          Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS,
-          integrated with Casbin RBAC and ABAC permission management</Translate></p>
+        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos</Translate></p>
         <br />
         <div className={styles.buttons}>
           <Link
@@ -157,18 +155,18 @@ function ContentLogin() {
             <br />
             <Translate>With supporting for</Translate>
             <br />
-            <img src="https://cdn.casbin.org/img/social_google.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_github.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_facebook.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_twitter.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_linkedin.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_weibo.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_wechat.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_qq.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_gitee.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_wecom.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_mail.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_google.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_github.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_facebook.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_twitter.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_linkedin.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_weibo.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_wechat.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_qq.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_dingtalk.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_gitee.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_wecom.png" width="30"></img>
+            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_mail.png" width="30"></img>
             <img src="https://cdn.casbin.org/img/social_msg.png" width="30"></img>
             <br />
             <Translate>third-party application login, You can choose your favorite social network to
@@ -197,7 +195,7 @@ function ContentSignup() {
             <br /><br /><br /><br /><br />
             <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
           </div>
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height="795" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height="850" />
         </div>
       </div>
     </div>
@@ -209,7 +207,7 @@ function ContentForget() {
     <div className={styles.contentforget}>
       <div className="container text--center">
         <div className="row">
-          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="600" height="620" />
+          <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="700" height="620" />
           <div className="col">
             <br /><br /><br /><br />
             <p className="padding-horiz--md">
@@ -267,8 +265,8 @@ function OpenCollective() {
 export default function Home() {
   return (
     <Layout
-      title={"Casdoor · An Open Source UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS"}
-      description="Casdoor is an Open Source UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML and CAS">
+      title={"Casdoor · An open-source UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos"}
+      description="Casdoor is an open-source UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
