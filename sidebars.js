@@ -93,6 +93,7 @@ module.exports = {
             "how-to-connect/saml/tencent-cloud",
           ],
         },
+        "how-to-connect/face-id",
         "how-to-connect/webauthn",
       ],
     },
