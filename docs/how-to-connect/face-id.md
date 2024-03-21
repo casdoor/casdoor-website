@@ -9,12 +9,6 @@ authors: [HGZ-20]
 
 We've now incorporated `Face ID` login into Casdoor by leveraging face-api.js.
 
-:::danger
-
-Casdoor's current facial recognition is built on the basic, open-source face-api.js, making it insecure. Please carefully consider before enabling facial recognition for login. We may plan to include a more secure, third-party facial recognition SDK in the future.
-
-:::
-
 ## Activation method
 
 ### Add the Face ID option in the organization's Account items
