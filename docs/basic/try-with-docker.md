@@ -112,3 +112,23 @@ admin
 If you dig deeper into the docker-compose.yml file, you may be puzzled by the environment variable we created called "RUNNING_IN_DOCKER". When the database 'db' is created via docker-compose, it is available on your PC's localhost but not the localhost of the Casdoor container. To prevent you from running into troubles caused by modifying app.conf, which can be quite difficult for a new user, we provided this environment variable and pre-assigned it in the docker-compose.yml. When this environment variable is set to true, localhost will be replaced with host.docker.internal so that Casdoor can access the database.
 
 :::
+
+### **Option-4**: Build your own image with the Dockerfile
+
+Building an all-in-one image with Dockerfile.allinone is for testing purposes only
+
+```bash
+docker build -f ./Dockerfile.allinone -t casdoor:v1.xxx.0 .
+```
+
+Building a standard image with Dockerfile.main is for testing purposes only
+
+```bash
+docker build -f ./Dockerfile.main-t casdoor:v1.xxx.0 .
+```
+:::note
+
+When building a standard image with Dockerfile.mian, [configure your own database](https://casdoor.org/zh/docs/basic/server-installation#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93) at source root `conf/app.conf`.
+Modify v1.xxx.0 to your custom version.
+
+:::
