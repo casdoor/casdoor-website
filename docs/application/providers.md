@@ -26,3 +26,5 @@ Our provider can differentiate between different scenarios, and you can choose d
 |       all       | If you want to use a single provider for all functionalities, you can choose the "all" rule. This means that the same provider will be used for all scenarios mentioned above in your application. |
 
 ![Select rules](/img/application/providers/choose_providers.png)
+
+![Select regions](/img/application/providers/choose_region.png)
