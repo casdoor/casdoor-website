@@ -26,3 +26,9 @@ Our provider can differentiate between different scenarios, and you can choose d
 |       all       | If you want to use a single provider for all functionalities, you can choose the "all" rule. This means that the same provider will be used for all scenarios mentioned above in your application. |
 
 ![Select rules](/img/application/providers/choose_providers.png)
+
+In country/region column, you can specify SMS providers for some regions. For example, if you choose us, china for SMS provider A and All for SMS provider B (B needs to be under A), when you use phone number belongs to china or us, casdoor will use SMS provider A to send the message, and use B for other country/region.
+
+It is important to note that the higher the provider's ranking, the higher its priority
+
+![Select regions](/img/application/providers/choose_region.png)
