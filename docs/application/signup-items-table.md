@@ -17,6 +17,8 @@ For a detailed explanation of each signup item, please refer to the table below.
 |   Visible   | `True` / `False` | Select whether this signup item is visible on the registration page.                                                                                        |
 |  Required   | `True` / `False` | Select whether this signup item is mandatory.                                                                                                    |
 |  Prompted   | `True` / `False` | Select whether to prompt the user when they forget to fill in this signup item.                                                                               |
+| Label  | - | If this signup item start with `Text`, Label should be the html code for this field. If not it will repalce the label of this signup item.   |
+| Custom CSS  | - | CSS code for this signup item.  |
 |    Rule     |  `Rule Items`   | Select a rule to customize this signup item. Detailed rules are described in the table below. |
 |   Action    |        -         | Users can perform actions such as moving this signup item up, moving it down, or deleting it.                            |
 
