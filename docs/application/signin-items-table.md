@@ -20,4 +20,3 @@ For a detailed explanation of each signin item, please refer to the table below.
 |    Placeholder     |        -         | The placeholder of the signin item.                                         |
 |    Rule     |  `Rule Items`   | Select a rule to customize this signin item. Detailed rules are described in the table below. |
 |   Action    |        -         | Users can perform actions such as moving this signin item up, moving it down, or deleting it.                            |
-
