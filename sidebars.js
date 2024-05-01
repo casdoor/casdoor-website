@@ -130,6 +130,7 @@ module.exports = {
         "application/providers",
         "application/signin-methods",
         "application/signup-items-table",
+        "application/signin-items-table",
         "application/ui-customization",
         "application/specify-login-organization",
         "application/tags",
