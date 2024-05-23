@@ -41,4 +41,10 @@ Add the Google OAuth provider and enter the `Client ID` and `Client Secret` in y
 
 ![Google Provider](/img/providers/OAuth/googleprovider.png)
 
+If Get password is enabled, you should enable google people api first and add scope `https://www.googleapis.com/auth/user.phonenumbers.read`
+
+![Google People Api](/img/providers/OAuth/googleproviderpeopleapi.png)
+
+![Google Provider Scope](/img/providers/OAuth/googleproviderscope.png)
+
 You can now use Google as a third-party service to complete authentication.
