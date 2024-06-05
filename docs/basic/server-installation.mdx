@@ -221,6 +221,7 @@ For Linux:
 
 ```bash
 go build
+go test -v -run TestGetVersionInfo ./util/system_test.go ./util/system.go > version_info.txt
 ./casdoor
 ```
 
@@ -228,6 +229,7 @@ For Windows:
 
 ```bash
 go build
+go test -v -run TestGetVersionInfo ./util/system_test.go ./util/system.go > version_info.txt
 casdoor.exe
 ```
 
