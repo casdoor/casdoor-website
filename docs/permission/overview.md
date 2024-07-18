@@ -8,6 +8,7 @@ authors: [seriouszyx, MagicalSheep]
 All users associated with a single Casdoor organization share access to the organization's applications. However, there may be instances where you want to restrict user access to certain applications or specific resources within an application. In such cases, you can utilize the `Permission` feature provided by [Casbin](https://casbin.org/).
 
 ## Casbin Fundamentals
+
 - **Model**
   
   defines the structure of your permission policies and the criteria for matching requests against these policies and their outcomes.
@@ -29,16 +30,21 @@ All users associated with a single Casdoor organization share access to the orga
     The [Casbin Online Editor](https://casbin.org/editor) can provide you with Model and Policy files tailored to your specific usage scenarios. You can effortlessly import the Model file into Casdoor through its Web UI for use by the built-in Casbin.
 
     Or you can add it manually in casbin's ui interface.
+  
   ### Where to Find
+  
    ![find_models](/img/permission/overview/find_models.png)
   
   ### Add
+  
    ![add](/img/permission/overview/add.gif)
 
   ### Edit
+  
    ![edit](/img/permission/overview/edit.gif)
 
-  ### Delete 
+  ### Delete
+  
    ![delete](/img/permission/overview/delete.gif)
  
 
@@ -49,9 +55,11 @@ All users associated with a single Casdoor organization share access to the orga
 
 
 ## Casdoor's Exposed Casbin API
+
    Just as your application needs to enforce permission control through Casdoor's built-in Casbin, Casdoor itself utilizes its own Model and Policy to regulate access permissions for the API           interfaces through Casbin.
    
    Though Casdoor can call Casbin from internal code, external applications cannot.
+   
 - **usage**
   
   for external applications to call the built-in Casbin.
