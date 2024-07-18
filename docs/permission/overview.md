@@ -54,9 +54,8 @@ All users associated with a single Casdoor organization share access to the orga
 ## Casdoor's Exposed Casbin API
 
    Just as your application needs to enforce permission control through Casdoor's built-in Casbin, Casdoor itself utilizes its own Model and Policy to regulate access permissions for the API interfaces through Casbin.
-   
    Though Casdoor can call Casbin from internal code, external applications cannot.
-   
+
 - **usage**
   
   for external applications to call the built-in Casbin.
