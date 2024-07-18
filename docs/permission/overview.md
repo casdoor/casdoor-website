@@ -26,7 +26,21 @@ All users associated with a single Casdoor organization share access to the orga
 
 - **Model Configuration**
   
-    The [Casbin Online Editor](https://casbin.org/editor) can provide you with Model and Policy files tailored to your specific usage scenarios. You can effortlessly import the Model file into          Casdoor through its Web UI for use by the built-in Casbin.
+    The [Casbin Online Editor](https://casbin.org/editor) can provide you with Model and Policy files tailored to your specific usage scenarios. You can effortlessly import the Model file into Casdoor through its Web UI for use by the built-in Casbin.
+
+    Or you can add it manually in casbin's ui interface.
+  ### Where to Find
+   ![find_models](/img/permission/overview/find_models.png)
+  
+  ### Add
+   ![add](/img/permission/overview/add.gif)
+
+  ### Edit
+   ![edit](/img/permission/overview/edit.gif)
+
+  ### Delete 
+   ![delete](/img/permission/overview/delete.gif)
+ 
 
 - **Policy Configuration**
   
