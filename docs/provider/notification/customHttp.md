@@ -20,7 +20,7 @@ There are three required fields: `Method`, `Parameter name`, `Content`, and `Cha
 | Method         | Select `GET` or `POST` method.                                      |
 | Parameter name | URL query parameter name or body parameter, depending on the `method`. |
 | Content        | The message you want to send.                                       |
-| Chat ID | Your HTTP address                                                    |
+| Endpoint | Your HTTP address                                                    |
 
 ![custom_http_provider](/img/providers/notification/custom_http_provider.png)
 
