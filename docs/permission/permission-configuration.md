@@ -6,7 +6,6 @@ authors: [MagicalSheep]
 ---
 ### Each Item in the Permission Configuration Page
 
-
 - `Organization`: The name of the organization to which the policy belongs. An organization can have multiple permission policy files.
 - `Name`: The globally unique name of the permission policy in the organization. It is used to identify the policy file.
 - `Display name`: Not important.
@@ -34,29 +33,24 @@ authors: [MagicalSheep]
 
 ## How to Configure and Use
 
- ### Where to Find
+### Where to Find
  
    ![edit_organization](/img/permission/permission-configuration/editorganization.gif)
   
-  ### Add
+### Add
   
    ![add1](/img/permission/permission-configuration/add1.png)
-   
    ![add2](/img/permission/permission-configuration/add2.png)
-   
    ![add3](/img/permission/permission-configuration/add3.png)
 
    Or you can import permissions from xlsx file.
 
-  ### Edit
+### Edit
   
    ![edit](/img/permission/permission-configuration/edit.gif)
 
-  ### Delete 
+### Delete 
   
    ![delete](/img/permission/permission-configuration/delete.gif)
 
-
 As you can see, this configuration page is almost tailor-made for the `(sub, obj, act)` model.
-
-
