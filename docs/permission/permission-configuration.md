@@ -34,7 +34,7 @@ authors: [MagicalSheep]
 ## How to Configure and Use
 
 ### Where to Find
- 
+
    ![edit_organization](/img/permission/permission-configuration/editorganization.gif)
   
 ### Add
@@ -49,8 +49,8 @@ authors: [MagicalSheep]
   
    ![edit](/img/permission/permission-configuration/edit.gif)
 
-### Delete 
-  
+### Delete
+
    ![delete](/img/permission/permission-configuration/delete.gif)
 
 As you can see, this configuration page is almost tailor-made for the `(sub, obj, act)` model.
