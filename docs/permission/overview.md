@@ -31,22 +31,6 @@ All users associated with a single Casdoor organization share access to the orga
 
     Or you can add it manually in casbin's ui interface.
 
-### Where to Find
-  
-   ![find_models](/img/permission/overview/find_models.png)
-  
-### Add
-  
-   ![add](/img/permission/overview/add.gif)
-
-### Edit
-  
-   ![edit](/img/permission/overview/edit.gif)
-
-### Delete
-  
-   ![delete](/img/permission/overview/delete.gif)
-
 - **Policy Configuration**
   
     for the Policy (i.e., the `Permission` configuration item in the Casdoor Web UI), further instructions are necessary, which will be discussed later.
