@@ -31,26 +31,4 @@ authors: [MagicalSheep]
 
   This option takes effect for Casdoor itself to control application access. If you want an external application to enforce permission controls using the interface Casdoor exposes, it won't do anything. You should describe the effect of pattern matching in the Model file.
 
-## How to Configure and Use
-
-### Where to Find
-
-   ![edit_organization](/img/permission/permission-configuration/editorganization.gif)
-  
-### Add
-  
-   ![add1](/img/permission/permission-configuration/add1.png)
-   ![add2](/img/permission/permission-configuration/add2.png)
-   ![add3](/img/permission/permission-configuration/add3.png)
-
-   Or you can import permissions from xlsx file.
-
-### Edit
-  
-   ![edit](/img/permission/permission-configuration/edit.gif)
-
-### Delete
-
-   ![delete](/img/permission/permission-configuration/delete.gif)
-
 As you can see, this configuration page is almost tailor-made for the `(sub, obj, act)` model.
