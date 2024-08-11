@@ -135,6 +135,7 @@ module.exports = {
         "application/specify-login-organization",
         "application/tags",
         "application/invitation-code",
+        "application/shared-application",
       ],
     },
     {
