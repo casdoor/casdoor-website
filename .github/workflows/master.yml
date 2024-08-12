@@ -14,17 +14,18 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn crowdin:sync
           yarn build
     
       - name: Build PDF prerequisites 🔨
         run: |
-          sudo apt install fonts-noto -y
-          curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
+          sudo apt-get update && sudo apt-get install fonts-noto -y
+          wget https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz
           tar zxf prince-14.2-linux-generic-x86_64.tar.gz
           cd prince-14.2-linux-generic-x86_64
           yes "" | sudo ./install.sh
+          cd .. && rm -rf prince-14.2-linux-generic-x86_64*
 
       # https://github.com/signcl/docusaurus-prince-pdf
       - name: Generate PDF 🖨️
@@ -33,16 +34,19 @@ jobs:
           sleep 3s
           npx docusaurus-prince-pdf --include-index -u http://localhost:3000/docs/overview --output pdf/Casdoor_Docs.pdf
           npx docusaurus-prince-pdf --include-index -u http://localhost:3000/zh/docs/overview --list-only
-          wget https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
+          wget -O print.css https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
           prince --no-warn-css --style=print.css --input-list=./pdf/localhost-zh-docs-overview.txt -o pdf/Casdoor_Docs_zh.pdf
-          rm pdf/*.txt
-          mv pdf/* build/pdf/ -f
+          rm pdf/*.txt print.css
+          mkdir -p build/pdf && mv pdf/* build/pdf/
+
+      - name: Compress artifacts
+        run: tar -czf artifacts.tar.gz build
 
       - name: Upload results 📤
         uses: actions/upload-artifact@v3
         with:
-          name: PDFs
-          path: build/pdf/
+          name: build-and-pdfs
+          path: artifacts.tar.gz
           if-no-files-found: error
 
       - name: Deploy 🚀
@@ -54,3 +58,9 @@ jobs:
           repository-name: casdoor/casdoor.github.io
           branch: master # The deploy branch.
           folder: build # The deploy folder.
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf build artifacts.tar.gz
+          yarn cache clean
