@@ -9,15 +9,33 @@ jobs:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     runs-on: ubuntu-latest
     steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install and Build 🔧
         run: |
           yarn install
           yarn crowdin:sync
           yarn build
-    
+
       - name: Build PDF prerequisites 🔨
         run: |
           sudo apt install fonts-noto -y
@@ -26,7 +44,7 @@ jobs:
           cd prince-14.2-linux-generic-x86_64
           yes "" | sudo ./install.sh
 
-      # https://github.com/signcl/docusaurus-prince-pdf
+        # https://github.com/signcl/docusaurus-prince-pdf
       - name: Generate PDF 🖨️
         run: |
           yarn serve > /dev/null &
@@ -38,6 +56,13 @@ jobs:
           rm pdf/*.txt
           mv pdf/* build/pdf/ -f
 
+      - name: Clean up 🧹
+        run: |
+          rm -rf prince-14.2-linux-generic-x86_64*
+          yarn cache clean
+          npm cache clean --force
+          sudo apt-get clean
+
       - name: Upload results 📤
         uses: actions/upload-artifact@v3
         with:
@@ -48,7 +73,7 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ssh-key: ${{ secrets.DEPLOY_KEY}}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
           git-config-name: ${{ secrets.GH_NAME }}
           git-config-email: ${{ secrets.GH_EMAIL }}
           repository-name: casdoor/casdoor.github.io
