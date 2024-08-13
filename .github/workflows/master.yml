@@ -9,58 +9,73 @@ jobs:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     runs-on: ubuntu-latest
     steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Install and Build 🔧
         run: |
-          yarn install --frozen-lockfile
+          yarn install
           yarn crowdin:sync
           yarn build
-    
+
       - name: Build PDF prerequisites 🔨
         run: |
-          sudo apt-get update && sudo apt-get install fonts-noto -y
-          wget https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz
+          sudo apt install fonts-noto -y
+          curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
           tar zxf prince-14.2-linux-generic-x86_64.tar.gz
           cd prince-14.2-linux-generic-x86_64
           yes "" | sudo ./install.sh
-          cd .. && rm -rf prince-14.2-linux-generic-x86_64*
 
-      # https://github.com/signcl/docusaurus-prince-pdf
+        # https://github.com/signcl/docusaurus-prince-pdf
       - name: Generate PDF 🖨️
         run: |
           yarn serve > /dev/null &
           sleep 3s
           npx docusaurus-prince-pdf --include-index -u http://localhost:3000/docs/overview --output pdf/Casdoor_Docs.pdf
           npx docusaurus-prince-pdf --include-index -u http://localhost:3000/zh/docs/overview --list-only
-          wget -O print.css https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
+          wget https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
           prince --no-warn-css --style=print.css --input-list=./pdf/localhost-zh-docs-overview.txt -o pdf/Casdoor_Docs_zh.pdf
-          rm pdf/*.txt print.css
-          mkdir -p build/pdf && mv pdf/* build/pdf/
+          rm pdf/*.txt
+          mv pdf/* build/pdf/ -f
 
-      - name: Compress artifacts
-        run: tar -czf artifacts.tar.gz build
+      - name: Clean up 🧹
+        run: |
+          rm -rf prince-14.2-linux-generic-x86_64*
+          yarn cache clean
+          npm cache clean --force
+          sudo apt-get clean
 
       - name: Upload results 📤
         uses: actions/upload-artifact@v3
         with:
-          name: build-and-pdfs
-          path: artifacts.tar.gz
+          name: PDFs
+          path: build/pdf/
           if-no-files-found: error
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ssh-key: ${{ secrets.DEPLOY_KEY}}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
           git-config-name: ${{ secrets.GH_NAME }}
           git-config-email: ${{ secrets.GH_EMAIL }}
           repository-name: casdoor/casdoor.github.io
           branch: master # The deploy branch.
           folder: build # The deploy folder.
-
-      - name: Cleanup
-        if: always()
-        run: |
-          rm -rf build artifacts.tar.gz
-          yarn cache clean
