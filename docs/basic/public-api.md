@@ -87,13 +87,20 @@ The below examples shows how to call `GetOAuthToken()` function in Go via casdoo
 
 #### How to authenticate?
 
-1. HTTP `GET` parameter, the URL format is:
+1. Create a pair of accessKey and accessSecret in account setting page.
+2. HTTP `GET` parameter, the URL format is:
 
     ```shell
     /page?clientId=<The client ID>&clientSecret=<the client secret>
     ```
 
     Demo site example: `https://door.casdoor.com/api/get-global-providers?clientId=294b09fbc17f95daf2fe&clientSecret=dd8982f7046ccba1bbd7851d5c1ece4e52bf039d`
+
+![User Api Key](/img/basic/user_api_key.png)
+
+```bash
+curl --location 'http://door.casdoor.com/api/user?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796&accessSecret=79911517-fc36-4093-b115-65a9741f6b14'
+```
 
 2. [HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication), the HTTP header format is:
 
