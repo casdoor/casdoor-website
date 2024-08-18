@@ -109,13 +109,21 @@ We can use the access key and access secret for a Casdoor user to call `Casdoor 
 
 #### How to authenticate?
 
-1. HTTP `GET` parameter, the URL format is:
+1. Create a pair of accessKey and accessSecret in account setting page.
+
+2. HTTP `GET` parameter, the URL format is:
 
     ```shell
     /page?accessKey=<The user's access key>&accessSecret=<the user's access secret>"
     ```
 
 Demo site example: `https://door.casdoor.com/api/get-global-providers?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796/admin&accessSecret=79911517-fc36-4093-b115-65a9741f6b14`
+
+![User Api Key](/img/basic/user_api_key.png)
+
+```bash
+curl --location 'http://door.casdoor.com/api/user?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796&accessSecret=79911517-fc36-4093-b115-65a9741f6b14'
+```
 
 ### 4. By `username` and `password`
 
