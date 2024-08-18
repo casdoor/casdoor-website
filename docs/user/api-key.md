@@ -7,7 +7,7 @@ authors: [DacongDA]
 
 ## Access api with api key
 
-You can access casdoor api with accessKey and accessSecret of user. 
+You can access casdoor api with accessKey and accessSecret of user.
 
 1. Create a pair of accessKey and accessSecret in account setting page.
 2. Put accessKey and accessSercet in into the http query param.
