@@ -73,6 +73,10 @@ Set to `0` to disable auto sync. Any other value means **Sync every few minutes*
 The sync table displays all the users obtained from the LDAP server within the specific `ou`. If the users have already been synced, the checkbox will be disabled. You can select the users by checking the box, and then sync the selected users from the LDAP server.
 ![ldap_sync](/img/ldap/ldap_sync.png)
 
+## Default group
+
+Group to which users belong after synchronization.
+
 :::caution
 
 If the `uid` of a user in the LDAP server is the same as the `name` of an existing user in the Casdoor organization, Casdoor will create a new user with a `name` that includes the `uid` and a random string. However, this user may not be able to log in because the name of the newly synced user does not exist in the LDAP server. Therefore, it is recommended to avoid this situation.
