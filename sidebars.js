@@ -95,6 +95,7 @@ module.exports = {
         },
         "how-to-connect/face-id",
         "how-to-connect/webauthn",
+        "how-to-connect/casdoor-authenticator-app",
       ],
     },
     {
