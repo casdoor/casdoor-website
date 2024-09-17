@@ -21,7 +21,7 @@ Now we show how to deploy Casdoor on Kubernetes using Helm for easy and scalable
 Install the Casdoor [chart](https://hub.docker.com/r/casbin/casdoor-helm-charts/tags):
 
 ```shell
-helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version 1.604.0
+helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version v1.702.0
 ```
 
 ### Step 2: Accessing Casdoor
@@ -33,7 +33,7 @@ Once installed, Casdoor can be accessed at the provided service URL by your Kube
 Customize your Casdoor installation by modifying the Helm chart values. For detailed options, refer to the [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/charts/casdoor/values.yaml) file in the chart. The following parameters can be configured.
 
 | Parameter                                    | Description                                                                                 | Default Value                                                                                      |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+|----------------------------------------------|---------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 | `replicaCount`                               | Number of replicas of the Casdoor application to run.                                       | `1`                                                                                                |
 | `image.repository`                           | Repository for the Casdoor Docker image.                                                    | `casbin`                                                                                           |
 | `image.name`                                 | Name of the Casdoor Docker image.                                                           | `casdoor`                                                                                          |
