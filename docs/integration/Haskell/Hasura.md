@@ -44,7 +44,7 @@ Refer to the image below for reference.
 
 The next step is to create a `user` role for the app. Users should be able to see only their records but not other people's records.
 
-Configure the `user` role as shown in the image below. For more information, read about [configuring permission rules in Hasura](https://hasura.io/docs/latest/graphql/core/auth/authorization/permission-rules/).
+Configure the `user` role as shown in the image below. For more information, read about [configuring permission rules in Hasura](https://hasura.io/docs/2.0/auth/authorization/permissions/).
 
 ![Picture showing how to set permissions in Hasura](https://graphql-engine-cdn.hasura.io/learn-hasura/assets/graphql-hasura-authentication/keycloak/hasura-set-permissions.png)
 
