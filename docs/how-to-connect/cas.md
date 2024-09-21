@@ -23,7 +23,7 @@ The CAS endpoint prefix in Casdoor is `<Casdoor endpoint>/cas/<organization name
 - `/p3/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/proxyValidate`
 - `/samlValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/samlValidate`
 
-For more information about CAS, its different versions, and parameters for these endpoints, refer to the [CAS Protocol Specification](https://apereo.github.io/cas/6.6.x/protocol/CAS-Protocol-Specification.html).
+For more information about CAS, its different versions, and parameters for these endpoints, refer to the [CAS Protocol Specification](https://apereo.github.io/cas/7.1.x/protocol/CAS-Protocol-Specification.html).
 
 ### An Example
 
