@@ -398,5 +398,18 @@
       "Python"
     ],
     "image": "/img/ecosystem/JS.png"
+  },
+  {
+    "title": "React Admin",
+    "url": "https://casdoor.org/docs/integration/javascript/ReactAdmin",
+    "description": "The React Framework for B2B Apps",
+    "tags": [
+      "Integration",
+      "JavaScript",
+      "Web",
+      "Desktop",
+      "Mobile"
+    ],
+    "image": "/img/ecosystem/RA.png"
   }
 ]
