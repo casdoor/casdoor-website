@@ -346,6 +346,14 @@ module.exports = {
     },
     {
       type: "category",
+      label: "IP Whitelist",
+      link: {type: "generated-index"},
+      items: [
+        "ip-whitelist/ip-whitelist",
+      ],
+    },
+    {
+      type: "category",
       label: "Syncer",
       link: {type: "generated-index"},
       items: [
