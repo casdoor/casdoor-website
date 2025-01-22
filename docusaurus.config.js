@@ -51,15 +51,20 @@ module.exports = {
           position: "left",
         },
         {
+          label: "Authenticator App",
+          to: "/docs/how-to-connect/totp-authenticator-app",
+          position: "left",
+        },
+        {
           href: "/ecosystem",
           label: "Ecosystem",
           position: "left",
         },
-        {
-          label: "Blog",
-          to: "/blog",
-          position: "left",
-        },
+        // {
+        //   label: "Blog",
+        //   to: "/blog",
+        //   position: "left",
+        // },
         {
           label: "Help",
           to: "/help",

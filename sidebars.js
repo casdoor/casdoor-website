@@ -51,6 +51,7 @@ module.exports = {
         "how-to-connect/overview",
         "how-to-connect/oidc-client",
         "how-to-connect/sdk",
+        "how-to-connect/totp-authenticator-app",
         "how-to-connect/single-sign-on",
         "how-to-connect/vue-sdk",
         {
@@ -95,7 +96,6 @@ module.exports = {
         },
         "how-to-connect/face-id",
         "how-to-connect/webauthn",
-        "how-to-connect/totp-authenticator-app",
       ],
     },
     {

@@ -1,24 +1,24 @@
 ---
-title: Totp Authenticator App
-description: Store totp code in Casdoor
+title: Casdoor Authenticator App
+description: Store TOTP code in Casdoor
 keywords: [authenticator, 2fa, password manager, totp, multi-factor authentication]
 authors: [IZUMI-Zu]
 ---
 
 ## Overview
 
-We are excited to introduce the Casdoor Authenticator App, a mobile application built using React Native that provides multi-factor authentication with TOTP for both iOS and Android platforms. This app allows users to store TOTP (Time-based One-Time Password) codes securely in Casdoor, offering a comprehensive solution for managing two-factor authentication (2FA) needs directly from mobile devices.
+Casdoor-App (https://app.casdoor.org/) is an open-source authenticator App (source code: https://github.com/casdoor/casdoor-app) like Google Authenticator, Microsoft Authenticator or Authy. It provides Multi-Factor Authentication (MFA) with TOTP for both iOS and Android. This app allows users to store Time-based One-Time Password (TOTP) securely in the App, which is cloud-synced with Casdoor, offering a comprehensive solution for managing Two-Factor Authentication (2FA) needs directly from mobile devices.
 
 ### Key Features
 
-- **Multi-Factor Authentication**: Generate secure TOTP-based codes for enhanced account protection
-- **Offline Mode**: Generate TOTP codes without an internet connection
-- **Account Synchronization**: Securely sync your accounts across multiple devices
-- **Privacy-Focused**: All data is encrypted and stored securely
-- **User-Friendly Interface**: Simple and intuitive design for easy navigation
+- **Multi-Factor Authentication (MFA)**: Generate secure TOTP-based codes for enhanced account protection.
+- **Offline mode**: Generate TOTP codes without an internet connection.
+- **Account synchronization**: Securely sync your accounts across multiple devices.
+- **Privacy-focused**: All data is encrypted and stored securely.
+- **Friendly UI**: Simple and intuitive design for easy navigation.
 
-| Android App | iOS App |
-| ----------- | ------- |
+| Android                                             | iOS                                         |
+|-----------------------------------------------------|---------------------------------------------|
 | ![android](/img/totp-authenticator-app/android.png) | ![ios](/img/totp-authenticator-app/ios.png) |
 
 ## What is TOTP?
@@ -34,11 +34,11 @@ TOTP stands for Time-based One-Time Passwords and is a common form of two-factor
 
 ### Step 0: Install the Casdoor Authenticator App
 
-The Casdoor Authenticator App is currently available for Android devices. You can download the app from the following sources:
+Casdoor-App is currently available for Android devices. You can download the app from the following sources:
 
-1. Official GitHub Releases: [Casdoor Authenticator App Latest Release](https://github.com/casdoor/casdoor-app/releases/latest)
-2. Source Code: [Casdoor Authenticator App GitHub Repository](https://github.com/casdoor/casdoor-app)
-3. Documentation Site: [Casdoor App Documentation](https://app.casdoor.org)
+1. Homepage: https://app.casdoor.org
+2. Source code: https://github.com/casdoor/casdoor-app
+3. Binary release: https://github.com/casdoor/casdoor-app/releases
 
 For developers interested in building the app from source, you can find the source code and build instructions in the [Casdoor App GitHub Repository](https://github.com/casdoor/casdoor-app#building-from-source).
 
