@@ -7,7 +7,7 @@ authors: [IZUMI-Zu]
 
 ## Overview
 
-Casdoor-App (https://app.casdoor.org/) is an open-source authenticator App (source code: https://github.com/casdoor/casdoor-app) like Google Authenticator, Microsoft Authenticator or Authy. It provides Multi-Factor Authentication (MFA) with TOTP for both iOS and Android. This app allows users to store Time-based One-Time Password (TOTP) securely in the App, which is cloud-synced with Casdoor, offering a comprehensive solution for managing Two-Factor Authentication (2FA) needs directly from mobile devices.
+Casdoor-Authenticator ([https://app.casdoor.org/](https://app.casdoor.org/)) is an open-source authenticator App (source code: [https://github.com/casdoor/casdoor-authenticator](https://github.com/casdoor/casdoor-authenticator)) like Google Authenticator, Microsoft Authenticator or Authy. It provides Multi-Factor Authentication (MFA) with TOTP for both iOS and Android. This app allows users to store Time-based One-Time Password (TOTP) securely in the App, which is cloud-synced with Casdoor, offering a comprehensive solution for managing Two-Factor Authentication (2FA) needs directly from mobile devices.
 
 ### Key Features
 
@@ -34,13 +34,13 @@ TOTP stands for Time-based One-Time Passwords and is a common form of two-factor
 
 ### Step 0: Install the Casdoor Authenticator App
 
-Casdoor-App is currently available for Android devices. You can download the app from the following sources:
+Casdoor-Authenticator is currently available for Android devices. You can download the app from the following sources:
 
-1. Homepage: https://app.casdoor.org
-2. Source code: https://github.com/casdoor/casdoor-app
-3. Binary release: https://github.com/casdoor/casdoor-app/releases
+1. Homepage: [https://app.casdoor.org](https://app.casdoor.org)
+2. Source code: [https://github.com/casdoor/casdoor-authenticator](https://github.com/casdoor/casdoor-authenticator)
+3. Binary release: [https://github.com/casdoor/casdoor-authenticator/releases](https://github.com/casdoor/casdoor-authenticator/releases)
 
-For developers interested in building the app from source, you can find the source code and build instructions in the [Casdoor App GitHub Repository](https://github.com/casdoor/casdoor-app#building-from-source).
+For developers interested in building the app from source, you can find the source code and build instructions in the [Casdoor Authenticator GitHub Repository](https://github.com/casdoor/casdoor-authenticator#building-from-source).
 
 ### Step 1: Enable Totp Account storage in Casdoor Server (Optional)
 

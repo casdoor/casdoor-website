@@ -220,7 +220,7 @@ var _hmt = _hmt || [];
         <script>
           document.write(Math.random() < 0.5 ? 
             '<a target="_blank" rel="noreferrer" href="https://casbin.org/">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>' :
-            '<a target="_blank" rel="noreferrer" href="https://app.casdoor.org/">🔐 Looking for an open-source and cross-platform multi-factor authentication solution? Learn more about: Casdoor-App</a>'
+            '<a target="_blank" rel="noreferrer" href="https://app.casdoor.org/">🔐 Looking for an open-source and cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
           );
         </script>
       `,
