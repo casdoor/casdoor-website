@@ -268,6 +268,7 @@ module.exports = {
             "provider/payment/stripe",
             "provider/payment/Alipay",
             "provider/payment/WeChatPay",
+            "provider/payment/AirWallex",
           ],
         },
         {
