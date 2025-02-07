@@ -490,6 +490,16 @@
     "image": "/img/ecosystem/wechatPay.png"
   },
   {
+    "title": "AirWallex",
+    "url": "https://casdoor.org/docs/provider/payment/AirWallex",
+    "description": "",
+    "tags": [
+      "Provider",
+      "SAML"
+    ],
+    "image": "/img/ecosystem/airwallex.svg"
+  },
+  {
     "title": "Default",
     "url": "https://casdoor.org/docs/provider/captcha/default",
     "description": "",
