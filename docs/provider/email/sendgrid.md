@@ -1,11 +1,11 @@
 ---
 title: SendGrid
-description: Using SendGrid as the SMTP server
+description: Using SendGrid as Email Provider
 keywords: [email, SendGrid]
 authors: [UsherFall]
 ---
 
-In this guide, we will be using SendGrid as the SMTP server.
+In this guide, we will be using SendGrid as Email Provider.
 
 ### Step 1: Create API key for your SendGrid account
 
@@ -19,18 +19,28 @@ Refer to the document to verify your email sender, you can choose **Single Sende
 
 ### Step 3: Configure Casdoor email Provider
 
-Now create an email provider in Casdoor. Fill in the required fields below:
+Now create an SendGrid email provider in Casdoor. Fill in the fields below:
 
-| Required fields | Remark                    |
-|-----------------|---------------------------|
-| Username        | Enter "apikey"            |
-| Password        | Your SendGrid's API key   |
-| From Address    | Your verified sender      |
-| Host            | Enter "smtp.sendgrid.net" |
-| Port            | Default is 465            |
+| Required fields | Description                          |
+|-----------------|--------------------------------------|
+| Secret key      | Your SendGrid's API Key              |
+| From address    | Your verified Email address (domain) |
 
-![sendgrid_provider](/img/providers/sendgrid_provider.png)
 
-Click on the `Test SMTP Connection` button. If you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the SendGrid service.
+| Default fields | Description                            |
+|-----------------|-----------------------------------|
+| Endpoint        | Default: /v3/mail/send            |
+| Host            | Default: https://api.sendgrid.com |
 
-Next, click on the `Send Testing Email` button. If you see `Email sent successfully`, it means that the test email has been sent successfully from the `From` address to the `Test Email`.
+| Email fields  | Description                                |
+|---------------|--------------------------------------------|
+| From name     | Your Email Sender's display name           |
+| Email title   | Your Email's title                         |
+| Email content | Support HTML template                      |
+| Test Email    | Your recipient's email address for testing |
+
+
+
+![sendgrid_email_provider_fields](/img/providers/sendgrid_email_provider_fields.png)
+
+Click on the `Send Testing Email` button. Check your `Test Email` address for Testing Email.
