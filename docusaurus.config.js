@@ -218,9 +218,9 @@ var _hmt = _hmt || [];
       id: "announcement", // ID of the announcement bar
       content: `
         <script>
-          document.write(Math.random() < 0.5 ? 
-            '<a target="_blank" rel="noreferrer" href="https://casbin.org/">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>' :
-            '<a target="_blank" rel="noreferrer" href="https://app.casdoor.org/">🔐 Looking for an open-source and cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
+          document.write(Math.random() < 0.8 ? 
+            '<a target="_blank" href="https://github.com/casibase/casibase/">💖 Looking for an open-source LangChain-like AI knowledge database & chat bot with admin UI and multi-model support (ChatGPT, Claude, Llama 3, DeepSeek R1, HuggingFace, etc.) ? Learn more about: Casibase</a>' :
+            '<a target="_blank" href="https://github.com/casdoor/casdoor-authenticator/">🔐 Looking for an open-source and cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
           );
         </script>
       `,
