@@ -82,7 +82,7 @@ Assuming you have already prepared a database called `casdoor`, you should speci
 
 ```ini
 driverName = postgres
-dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor"
+dataSourceName = user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor
 dbName = casdoor
 ```
 
@@ -96,7 +96,7 @@ CockroachDB can also be used with the PostgreSQL driver and has the same configu
 
 ```ini
 driverName = postgres
-dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor serial_normalization=virtual_sequence"
+dataSourceName = user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor serial_normalization=virtual_sequence
 dbName = casdoor
 ```
 
@@ -110,7 +110,7 @@ To configure SQLite3, you should specify `app.conf` like this:
 
 ```ini
 driverName = sqlite
-dataSourceName = "file:casdoor.db?cache=shared"
+dataSourceName = file:casdoor.db?cache=shared
 dbName = casdoor
 ```
 
