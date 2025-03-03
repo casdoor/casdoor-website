@@ -35,7 +35,7 @@ To configure a webhook in Casdoor:
 1. **Navigate to the Casdoor Webhooks Section:**
    - Open your Casdoor instance.
    - Go to **Settings** > **Webhooks**.
-   
+
 2. **Create a New Webhook:**
    - Click on **Add Webhook**.
    - Enter the **Webhook URL** where Casdoor should send event data.
