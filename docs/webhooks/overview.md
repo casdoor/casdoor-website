@@ -5,8 +5,6 @@ authors: [huang-yilong]
 keywords: [webhook, event-driven, API, integration]
 ---
 
-# Webhooks in Casdoor
-
 ## Overview
 
 Casdoor provides an event-driven system that allows you to integrate with external applications using webhooks. Webhooks enable real-time communication by sending HTTP `POST` requests with a JSON payload to a configured endpoint whenever a specified event occurs. This allows your application to react to Casdoor events such as user sign-ups, logins, logouts, and profile updates.
