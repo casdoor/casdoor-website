@@ -38,6 +38,9 @@
         },
         {
             "pattern": "^https://www.bytebase.com/docs"
+        },
+        {
+            "pattern": "^https://www.n-able.com/"
         }
     ]
 }

@@ -51,15 +51,20 @@ module.exports = {
           position: "left",
         },
         {
+          label: "Authenticator App",
+          to: "/docs/how-to-connect/totp-authenticator-app",
+          position: "left",
+        },
+        {
           href: "/ecosystem",
           label: "Ecosystem",
           position: "left",
         },
-        {
-          label: "Blog",
-          to: "/blog",
-          position: "left",
-        },
+        // {
+        //   label: "Blog",
+        //   to: "/blog",
+        //   position: "left",
+        // },
         {
           label: "Help",
           to: "/help",
@@ -211,8 +216,14 @@ var _hmt = _hmt || [];
     },
     announcementBar: {
       id: "announcement", // ID of the announcement bar
-      content:
-      "<a target=\"_blank\" rel=\"noreferrer\" href=\"https://casbin.org/\">💖 Looking for an open-source and cross-platform authorization solution that supports ACL, RBAC, ABAC? Learn more about: Casbin</a>",
+      content: `
+        <script>
+          document.write(Math.random() < 0.8 ? 
+            '<a target="_blank" href="https://github.com/casibase/casibase/">💖 Looking for an open-source LangChain-like AI knowledge database & chat bot with admin UI and multi-model support (ChatGPT, Claude, Llama 3, DeepSeek R1, HuggingFace, etc.) ? Learn more about: Casibase</a>' :
+            '<a target="_blank" href="https://github.com/casdoor/casdoor-authenticator/">🔐 Looking for an open-source and cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
+          );
+        </script>
+      `,
       isCloseable: true,
     },
     docs: {

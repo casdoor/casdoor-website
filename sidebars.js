@@ -51,6 +51,7 @@ module.exports = {
         "how-to-connect/overview",
         "how-to-connect/oidc-client",
         "how-to-connect/sdk",
+        "how-to-connect/totp-authenticator-app",
         "how-to-connect/single-sign-on",
         "how-to-connect/vue-sdk",
         {
@@ -114,6 +115,7 @@ module.exports = {
         "organization/overview",
         "organization/organization-tree",
         "organization/passwordComplexity",
+        "organization/passwordObfuscator",
         "organization/accountCustomization",
         "organization/customize-theme",
         "organization/mfa-items",
@@ -266,6 +268,7 @@ module.exports = {
             "provider/payment/stripe",
             "provider/payment/Alipay",
             "provider/payment/WeChatPay",
+            "provider/payment/AirWallex",
           ],
         },
         {
@@ -340,6 +343,14 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "invitation/overview",
+      ],
+    },
+    {
+      type: "category",
+      label: "IP Whitelist",
+      link: {type: "generated-index"},
+      items: [
+        "ip-whitelist/ip-whitelist",
       ],
     },
     {

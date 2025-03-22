@@ -82,7 +82,7 @@ Assuming you have already prepared a database called `casdoor`, you should speci
 
 ```ini
 driverName = postgres
-dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor"
+dataSourceName = user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor
 dbName = casdoor
 ```
 
@@ -96,7 +96,7 @@ CockroachDB can also be used with the PostgreSQL driver and has the same configu
 
 ```ini
 driverName = postgres
-dataSourceName = "user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor serial_normalization=virtual_sequence"
+dataSourceName = user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor serial_normalization=virtual_sequence
 dbName = casdoor
 ```
 
@@ -110,7 +110,7 @@ To configure SQLite3, you should specify `app.conf` like this:
 
 ```ini
 driverName = sqlite
-dataSourceName = "file:casdoor.db?cache=shared"
+dataSourceName = file:casdoor.db?cache=shared
 dbName = casdoor
 ```
 
@@ -140,6 +140,7 @@ logPostOnly = true
 origin = "https://door.casdoor.com"
 staticBaseUrl = "https://cdn.casbin.org"
 enableGzip = true
+inactiveTimeoutMinutes =
 ```
 
 - `appname` is the application name, which currently has no practical use.
@@ -163,6 +164,7 @@ As a beginner, you only need to modify two items: `driverName` and `dataSourceNa
 - `origin` is the origin backend domain name.
 - `staticBaseUrl` is the address of the static image used when the system initializes the database.
 - `enableGzip` will accept and respond with gzip encoding if the request header includes `Accept-Encoding=gzip`.
+- `inactiveTimeoutMinutes` sets the maximum number of minutes of inactivity. If the inactivity time reaches this value, then casdoor will log the user out. Empty value or value less than or equal to 0 means there is no limit on the user's inactivity time.
 
 ### Via Environment Variables
 
