@@ -296,6 +296,16 @@ module.exports = {
             "provider/web3/web3onboard",
           ],
         },
+        {
+          type: "category",
+          label: "Face ID",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/faceid/overview",
+            "provider/faceid/alibaba_cloud_facebody",
+          ],
+        },
       ],
     },
     {
