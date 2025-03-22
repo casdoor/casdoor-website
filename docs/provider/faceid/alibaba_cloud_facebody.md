@@ -25,14 +25,11 @@ Go to console and create AccessKey and AccessSecret
 
 ![alibaba_cloud_faceid_accesskey.png](/img/providers/faceid/alibaba_cloud_faceid_accesskey.png)
 
-
 ![alibaba_cloud_faceid_accesskey.png](/img/providers/faceid/alibaba_cloud_faceid_create_accesskey.png)
-
 
 ### Step 3: Find Endpoint
 
 You can find your endpoint ID in [Aliyun doc](https://help.aliyun.com/document_detail/40654.html)
-
 
 ### Step 4: Create Alibaba Cloud Facebody provider in Casdoor
 
