@@ -79,6 +79,10 @@ Then run
 docker run  -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
 ```
 
+:::note
+The default user of Casdoor has a uid and gid of 1000. When using volume mapping with SQLite (or any storage requiring file permissions), ensure that the path (e.g., `/folder/of/app.conf` in the example above) is accessible to uid 1000. This avoids permission errors like `permission denied` when Casdoor writes to mapped volumes.
+:::
+
 Anyway, just **mount the app.conf to /conf/app.conf** and start the container.
 
 Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
