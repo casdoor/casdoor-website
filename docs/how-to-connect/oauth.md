@@ -120,6 +120,12 @@ https://REDIRECT_URI/#access_token=ACCESS_TOKEN
 
 Casdoor also supports the [id_token](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`, which is a feature of OpenID.
 
+### Device Grant
+
+Maybe your devices have limited input capabilities or lack a suitable browser, and you need to use Device Grant. First, you need to make sure you have Device Grant enabled, the request `device_authorization_endpoint` in OIDC discover, then use QR code or text to show `verification_uri` and lead user to enter login page.
+
+Second, you should request `token endpoint` to get Access Token with parameter define in [rfc8628](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
+
 ### Resource Owner Password Credentials Grant
 
 If your application doesn't have a frontend that redirects users to Casdoor, then you may need this.
