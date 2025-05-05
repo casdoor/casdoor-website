@@ -42,10 +42,10 @@ After registering the Key, note down the **Key ID** and **download the `.p8` fil
 
 **Configure the Casdoor Provider:**
 
-1.  **Client ID**: Enter the Apple **Services ID `Identifier`** you created earlier.
-2.  **Team ID**: Enter your Apple **Team ID** (found on the Membership page).
-3.  **Key ID**: Enter the Apple **Key ID** you noted down.
-4.  **Key Text**: Open the downloaded `.p8` file with a text editor. Copy its **entire content** (including the `-----BEGIN...` and `-----END...` lines) and paste it here.
-5.  **Check Redirect URL**: Verify that the `Redirect URL` shown here in Casdoor has been correctly added to the **Return URLs** in your Apple Services ID configuration.
+1. **Client ID**: Enter the Apple **Services ID `Identifier`** you created earlier.
+2. **Team ID**: Enter your Apple **Team ID** (found on the Membership page).
+3. **Key ID**: Enter the Apple **Key ID** you noted down.
+4. **Key Text**: Open the downloaded `.p8` file with a text editor. Copy its **entire content** (including the `-----BEGIN...` and `-----END...` lines) and paste it here.
+5. **Check Redirect URL**: Verify that the `Redirect URL` shown here in Casdoor has been correctly added to the **Return URLs** in your Apple Services ID configuration.
 
 ![Configure Casdoor Provider](/img/providers/OAuth/appleconfigcasdoor.png)
