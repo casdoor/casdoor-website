@@ -169,6 +169,7 @@ module.exports = {
             "provider/oauth/github",
             "provider/oauth/linkedin",
             "provider/oauth/facebook",
+            "provider/oauth/apple",
             "provider/oauth/adfs",
             "provider/oauth/azureAD",
             "provider/oauth/azureADb2c",
