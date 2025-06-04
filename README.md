@@ -9,7 +9,7 @@ Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get
 ### Requirements
 
 1. [Git](https://git-scm.com/downloads)
-2. [Node.js](https://nodejs.org/en/download/)：v16.14 or above
+2. [Node.js](https://nodejs.org/en/download/): 20 or above (LTS)
 3. [Yarn](https://classic.yarnpkg.com/en/docs/install): please use Yarn 1
 
 ### Running Locally
