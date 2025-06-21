@@ -370,6 +370,15 @@
     "image": "/img/ecosystem/moodle.png"
   },
   {
+    "title": "Zabbix",
+    "url": "https://casdoor.org/docs/integration/php/Zabbix",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ]
+  },
+  {
     "title": "GitLab",
     "url": "https://casdoor.org/docs/integration/ruby/gitlab",
     "description": "",

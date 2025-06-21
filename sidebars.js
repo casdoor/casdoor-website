@@ -537,6 +537,7 @@ module.exports = {
             "integration/php/showdoc",
             "integration/php/Flarum",
             "integration/php/Moodle",
+            "integration/php/Zabbix",
           ],
         },
         {
