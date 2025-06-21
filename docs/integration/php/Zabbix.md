@@ -28,7 +28,7 @@ By default, the `zabbix - web - nginx - mysql` Docker container looks for the fo
 
 **Creating Certificates in CASdoor**: Log in to the CASdoor management interface and follow the system prompts to create two certificates. These two certificates will be used for communication encryption between Zabbix and CASdoor.
 
-![1750407047596](/img/integration/php/Zabbix/1750407047596.png)
+![Create Certificate](/img/integration/php/Zabbix/create_certificate.png)
 
 **Copying Certificates and Private Keys**: Copy the created certificate and private key files to the Zabbix configuration directory `/etc/zabbix/conf/certs`. If you are using Docker for deployment, you can map local certificate files to the container using volume mounting.
 
@@ -38,7 +38,7 @@ For SAML configuration in Zabbix, three required fields need to be set: `Single 
 
 Log in to the Zabbix management interface, click `User` -> `authentication` -> `SAML settings`.
 
-![1750406319841](/img/integration/php/Zabbix/1750406319841.png)
+![Zabbix configuration](/img/integration/php/Zabbix/zabbix_configuration.png)
 
 Configure Zabbix according to the SAML metadata in the CASdoor configuration:
 
@@ -53,19 +53,19 @@ Some necessary configurations need to be made in CASdoor to ensure the normal op
 
 **Editing Name and Logo**: Log in to the CASdoor management interface, find the relevant settings, and edit the application's name and logo for better presentation to users.
 
-![1750406667233](/img/integration/php/Zabbix/1750406667233.png)
+![Application Information](/img/integration/php/Zabbix/application_information.png)
 
 **Selecting a Certificate**: In CASdoor, select `zabbix_idp` as the certificate for signing and encrypting SAML messages to ensure communication security.
 
-![1750406998796](/img/integration/php/Zabbix/1750406998796.png)
+![Selecting a Certificate](/img/integration/php/Zabbix/select_certificate.png)
 
 **Redirect URL**: Enter a unique name. In your SP (Zabbix), this may be called `Audience` or `Entity ID`. Ensure that the `Redirect URL` you enter here is consistent with that in your SP; otherwise, single sign - on may fail.
 
-![1750406879193](/img/integration/php/Zabbix/1750406879193.png)
+![Redirect URL](/img/integration/php/Zabbix/redirect_url.png)
 
 **Reply URL**: Enter the URL of the ACS (Assertion Consumer Service) for validating SAML responses. This URL is the address where Zabbix receives SAML assertions sent by CASdoor.
 
-![1750406863896](/img/integration/php/Zabbix/1750406863896.png)
+![Reply URL](/img/integration/php/Zabbix/reply_url.png)
 
 ## Step 5: Creating a Zabbix User
 
@@ -74,7 +74,7 @@ Create a test user in Zabbix to verify the single sign - on functionality.
 1. Log in to the Zabbix management interface and find the user management module.
 2. Create a user with the username "test" (you can customize the username; this is just an example).
 
-![1750404108955](/img/integration/php/Zabbix/1750404108955.png)
+![Creating a Zabbix User](/img/integration/php/Zabbix/create_zabbix_user.png)
 
 ## Step 6: Creating a CASdoor User
 
@@ -84,7 +84,7 @@ Add a user in CASdoor with the same username as the one set in Zabbix.
 2. Add a new user with the same username as the one created in Zabbix.
 3. Select Zabbix and enter the user's email address.
 
-![1750475338005](/img/integration/php/Zabbix/1750475338005.png)
+![Creating a CASdoor User](/img/integration/php/Zabbix/create_casdoor_user.png)
 
 ## Step 7: Zabbix Login Process
 
@@ -92,16 +92,16 @@ After completing the above configurations and user creation, you can test the si
 
 Open a browser and visit `localhost/index.php`.
 
-![1750404150026](/img/integration/php/Zabbix/1750404150026.png)
+![Login Process1](/img/integration/php/Zabbix/login_process1.png)
 
 Click `Sign in with Single Sign - On(SAML)`.
 
 You will be redirected to the CASdoor page. On the CASdoor page, enter the corresponding username and password to log in.
 
-![1750406741644](/img/integration/php/Zabbix/1750406741644.png)
+![Login Process2](/img/integration/php/Zabbix/login_process2.png)
 
 If the login is successful, you will be redirected back to `https://localhost:8080/zabbix.index.php`, indicating that the single sign - on functionality is working properly.
 
-![1750406785499](/img/integration/php/Zabbix/1750406785499.png)
+![Login Process3](/img/integration/php/Zabbix/login_process3.png)
 
 Through the above steps, you can successfully complete the integration of Zabbix and CASdoor and achieve single sign - on functionality for users. If you encounter any problems during the configuration process, please refer to relevant documentation or community forums for help.

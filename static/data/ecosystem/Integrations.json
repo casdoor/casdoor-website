@@ -330,6 +330,15 @@
     "image": "/img/ecosystem/apisix.jpeg"
   },
   {
+    "title": "Zabbix",
+    "url": "https://casdoor.org/docs/integration/php/Zabbix",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ]
+  },
+  {
     "title": "Zentao",
     "url": "https://casdoor.org/docs/integration/php/zentao",
     "description": "",
@@ -368,15 +377,6 @@
       "PHP"
     ],
     "image": "/img/ecosystem/moodle.png"
-  },
-  {
-    "title": "Zabbix",
-    "url": "https://casdoor.org/docs/integration/php/Zabbix",
-    "description": "",
-    "tags": [
-      "Integration",
-      "PHP"
-    ]
   },
   {
     "title": "GitLab",
