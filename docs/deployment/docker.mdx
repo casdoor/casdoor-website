@@ -13,6 +13,7 @@ In this chapter, you will learn how to deploy Casdoor using Docker and Docker Co
 ## Prerequisites
 
 Before starting, ensure you have:
+
 - Docker installed on your system
 - Docker Compose installed (for compose method)
 - A domain name pointing to your server (for reverse proxy configurations)
@@ -429,20 +430,20 @@ your-domain.com {
 
 ## Configuration
 
-1. Create the necessary configuration directories:
+### Create the necessary configuration directories
 
 ```bash
 mkdir -p conf logs
 ```
 
-2. Download the Casdoor configuration files:
+### Download the Casdoor configuration files
 
 ```bash
 wget https://raw.githubusercontent.com/casdoor/casdoor/master/conf/app.conf -O conf/app.conf
 wget https://raw.githubusercontent.com/casdoor/casdoor/master/conf/init_data.json -O conf/init_data.json
 ```
 
-3. Edit `conf/app.conf` to match your environment settings.
+### Edit `conf/app.conf` to match your environment settings.
 
 ## Testing
 
@@ -453,7 +454,7 @@ After deployment, visit your domain in your browser:
 
 ## Troubleshooting
 
-### Check container logs:
+### Check container logs
 
 ```bash
 # For docker-compose
@@ -463,7 +464,7 @@ docker-compose logs casdoor
 docker logs casdoor
 ```
 
-### Verify reverse proxy configuration:
+### Verify reverse proxy configuration
 
 ```bash
 # Check if containers are running
@@ -473,7 +474,7 @@ docker ps
 curl -I http://localhost:8000
 ```
 
-### SSL Certificate Issues:
+### SSL Certificate Issues
 
 - Ensure your domain points to the correct server IP
 - Check that ports 80 and 443 are open in your firewall
