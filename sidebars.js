@@ -35,6 +35,7 @@ module.exports = {
       label: "Deployment",
       link: {type: "generated-index"},
       items: [
+        "deployment/docker",
         "deployment/nginx",
         "deployment/k8s",
         "deployment/data-initialization",
