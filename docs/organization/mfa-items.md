@@ -30,3 +30,13 @@ The image below shows the notification that prompts users to enable Multi-Factor
 This video demonstrates that when the Multi-Factor Authentication method is set to required, users need to enable Multi-Factor Authentication before they can complete the login process.
 
 ![mfa prompt](/img/organization/mfa/mfa-required.gif)
+
+## Remember Multi-Factor Authentication
+
+When logging in to Casdoor, users can choose to have the Multi-Factor Authentication for this account remembered for a specific period. This means they won't be prompted to perform Multi-Factor Authentication for the account again during that time.
+
+![mfa remember](/img/organization/mfa/mfa-remember.png)
+
+You can set the duration for which Multi-Factor Authentication is remembered for an account in the organization settings. As shown, there is an "MFA remember time" option where you can specify the time (e.g., set it to 12 hours as in the example).
+
+![mfa remember time](/img/organization/mfa/mfa-remember-time.png)
