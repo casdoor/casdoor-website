@@ -22,6 +22,6 @@ authors: [kininaru]
 
 You can use the following placeholders to display some variables
 
-1. %{user.friendlyName} is the Display name of user.
+1. `%{user.friendlyName}` is the Display name of user.
 
-2. %link is the reset link for forget password function. (You should put %link in the \<reset-link\>\</reset-link\> label)
+2. `%link` is the reset link for forget password function. (You should put `%link` in the `<reset-link></reset-link>` label)
