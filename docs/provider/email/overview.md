@@ -20,7 +20,7 @@ authors: [kininaru]
 
 ## Modify email content
 
-You can use the following placeholders to display some variables
+You can use the following placeholders to display some variables.
 
 1. `%{user.friendlyName}` is the Display name of user.
 
