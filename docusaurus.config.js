@@ -267,6 +267,7 @@ var _hmt = _hmt || [];
   ],
   plugins: ["docusaurus-plugin-sass", "docusaurus-plugin-hotjar"],
   scripts: [
+    '/js/casibase.js',
     {
       src: "/js/isMainland.js",
       async: true,
