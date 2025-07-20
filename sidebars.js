@@ -200,6 +200,7 @@ module.exports = {
             "provider/email/azureACS",
             "provider/email/brevo",
             "provider/email/mailhog",
+            "provider/email/mailpit",
           ],
         },
         {

@@ -240,6 +240,16 @@
     "image": "/img/ecosystem/mailhog.png"
   },
   {
+    "title": "Mailpit",
+    "url": "https://casdoor.org/docs/provider/email/mailpit",
+    "description": "",
+    "tags": [
+      "Provider",
+      "Email"
+    ],
+    "image": "/img/ecosystem/mailpit.png"
+  },
+  {
     "title": "Twilio",
     "url": "https://casdoor.org/docs/provider/sms/twilio",
     "description": "",
