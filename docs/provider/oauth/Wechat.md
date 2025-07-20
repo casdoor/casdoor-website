@@ -7,6 +7,8 @@ authors: [Marvelousp4]
 
 ## WeChat ✔️
 
+## Add WeChat OAuth Provider
+
 To add WeChat OAuth provider to your application, follow these steps:
 
 1. Visit the [WeChat developer platform](https://open.weixin.qq.com/) and register as a developer.
@@ -45,3 +47,17 @@ Due to the limitations of WeChat OAuth, there is currently no way to log in via 
 :::
 
 For more detailed information, please visit the [WeChat Open Platform](https://developers.weixin.qq.com/doc/oplatform/en/Website_App/WeChat_Login/Wechat_Login.html).
+
+## Enable WeChat QR Code Login
+
+You can choose whether to enable the WeChat QR code login option on the setting page. To do so, add the WeChat provider in your application configuration and add the WeChat option in your signin methods. Once added, the login page will display a "WeChat" tab as a login option, allowing users to log in by scanning the QR code.
+
+The QR code login process is as follows:
+
+1. On the login page, after selecting the "WeChat" tab, a WeChat QR code will be automatically loaded and displayed.
+2. The user scans the QR code using the WeChat app and completes the authorization to log in.
+3. If the QR code expires or needs to be refreshed, the user can click the "Refresh" link below the QR code to obtain a new one.
+
+![set-wechat](/img/providers/OAuth/set-wechat.png)
+
+![wechat-login](/img/providers/OAuth/wechat-login.png)
