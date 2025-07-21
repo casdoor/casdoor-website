@@ -41,7 +41,7 @@ Create a `docker-compose.yml` file:
 ```yaml
 services:
   casdoor:
-    image: casdoor/casdoor:latest
+    image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
     ports:
@@ -81,7 +81,7 @@ docker run -d \
   -v $(pwd)/conf:/conf \
   -v $(pwd)/logs:/logs \
   -e GIN_MODE=release \
-  casdoor/casdoor:latest
+  casbin/casdoor:latest
 ```
 
 </TabItem>
@@ -137,7 +137,7 @@ services:
       - casdoor-network
 
   casdoor:
-    image: casdoor/casdoor:latest
+    image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
     environment:
@@ -194,7 +194,7 @@ services:
       - casdoor-network
 
   casdoor:
-    image: casdoor/casdoor:latest
+    image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
     environment:
@@ -300,7 +300,7 @@ services:
     command: certonly --webroot --webroot-path=/var/www/certbot --email your-email@example.com --agree-tos --no-eff-email -d your-domain.com
 
   casdoor:
-    image: casdoor/casdoor:latest
+    image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
     environment:
@@ -389,7 +389,7 @@ services:
       - casdoor-network
 
   casdoor:
-    image: casdoor/casdoor:latest
+    image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
     environment:
