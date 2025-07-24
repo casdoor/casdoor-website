@@ -445,6 +445,10 @@ wget https://raw.githubusercontent.com/casdoor/casdoor/master/init_data.json.tem
 
 ### Edit `conf/app.conf` to match your environment settings
 
+:::note
+The default user of Casdoor has a uid and gid of 1000. When using volume mapping with SQLite (or any storage requiring file permissions), ensure that the path (e.g., `/folder/of/app.conf` in the example above) is accessible to uid 1000. This avoids permission errors like `permission denied` when Casdoor writes to mapped volumes.
+:::
+
 ## Testing
 
 After deployment, visit your domain in your browser:
