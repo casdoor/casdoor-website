@@ -43,3 +43,27 @@ Once the bind operation completes successfully, you can perform the search opera
 - To search for all users under a certain organization, such as all users in `built-in`, you should use a `DN` like this: `ou=built-in,dc=example,dc=com`, and add `cn=*` in the Filter field.
 - To search for all users in all organizations (assuming the user has sufficient permissions), you should use a `DN` like this: `ou=*,dc=example,dc=com`, and add `cn=*` in the Filter field.
 - To search for all users in a specific group, you should use a filter query like this: `(memberOf=organization_name/group_name)` in the Filter field.
+
+### Supported RFC-Style Features
+
+#### Partial Root DSE Query Support
+
+The Root DSE (baseDN="") provides directory capabilities.
+
+- Query namingContexts (organization list): `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "" -s base "(objectClass=*)" namingContexts`  
+  Returns visible organization DNs.
+
+- Query subschemaSubentry: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "" -s base "(objectClass=*)" subschemaSubentry`  
+  Returns `subschemaSubentry: cn=Subschema`.
+
+#### Schema Query Support
+
+Query objectClasses: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "cn=Subschema" -s base "(objectClass=*)" objectClasses`  
+Returns definitions for posixAccount and posixGroup.
+
+#### POSIX Filters
+
+- `(objectClass=posixAccount)` returns user list.  
+- `(objectClass=posixGroup)` returns group list under organization (e.g., `ldapsearch -x -H ldap://<casdoor-server>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "ou=<org>" "(objectClass=posixGroup)"`).  
+
+Note: `(objectClass=posixGroup)` Does not support combined searches like `(&(objectClass=posixGroup)(cn=<group>))`. Use `memberOf` for group members.
