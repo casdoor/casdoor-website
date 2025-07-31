@@ -66,4 +66,4 @@ Returns definitions for posixAccount and posixGroup.
 - `(objectClass=posixAccount)` returns user list.  
 - `(objectClass=posixGroup)` returns group list under organization (e.g., `ldapsearch -x -H ldap://<casdoor-server>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "ou=<org>" "(objectClass=posixGroup)"`).  
 
-Note: `(objectClass=posixGroup)` Does not support combined searches like `(&(objectClass=posixGroup)(cn=<group>))`. Use `memberOf` for group members.
+Note: `(objectClass=posixGroup)` Does not support combined searches like `(&(objectClass=posixGroup)(cn=<group>))`. Please use `memberOf` for searching members in a group.
