@@ -38,6 +38,36 @@ If you fill in the `Reply URL`, Casdoor will send the `SAMLResponse` by **POST**
   
   ![Entity ID](/img/how-to-connect/saml/saml_entityId.png)
 
+### SAML attributes
+
+Some SP will require you to provide external attributes in SAML Response, you can add those in SAML attributes table. And you can insert user's field to it.
+
+For examle
+
+| Name |  Name format   | Value|
+|:------------------:|:-------------:| :-------------:|
+|       https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName        |     Unspecified     |  \$user.name  |
+|    https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName     |  Unspecified  |  acs\:ram\:\:1879818006829152\:role/\$user.roles,acs\:ram\:\:1879818006829152\:saml-provider/testa    |
+
+will generate response with external `saml:Attribute`
+
+```xml
+<saml:Attribute Name="https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">
+    <saml:AttributeValue xsi:type="xs:string">admi122n@outlook.com</saml:AttributeValue>
+</saml:Attribute>
+<saml:Attribute Name="https://www.aliyun.com/SAML-Role/Attributes/Role" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">
+    <saml:AttributeValue xsi:type="xs:string"> acs:ram::1879818006829152:role/role1,acs:ram::1879818006829152:saml-provider/testa</saml:AttributeValue>
+    <saml:AttributeValue xsi:type="xs:string"> acs:ram::1879818006829152:role/role2,acs:ram::1879818006829152:saml-provider/testa</saml:AttributeValue>
+</saml:Attribute>
+```
+
+:::info
+
+We only support insert `$user.owner`,`$user.name`,`$user.email`,`$user.id`,`$user.phone`,`$user.roles`,`$user.permissions`,`$user.groups`
+
+:::
+
+
 ### User profile
 
 After successfully logging in, the user profile in the returned `SAMLResponse` from Casdoor has three fields. The attributes in the XML and the attributes of the user in Casdoor are mapped as follows:
