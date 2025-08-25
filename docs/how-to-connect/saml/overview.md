@@ -46,8 +46,8 @@ For examle
 
 | Name |  Name format   | Value|
 |:------------------:|:-------------:| :-------------:|
-|       https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName        |     Unspecified     |  \$user.name  |
-|    https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName     |  Unspecified  |  acs\:ram\:\:1879818006829152\:role/\$user.roles,acs\:ram\:\:1879818006829152\:saml-provider/testa    |
+|       <https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName>        |     Unspecified     |  \$user.name  |
+|    <https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName>     |  Unspecified  |  acs\:ram\:\:1879818006829152\:role/\$user.roles,acs\:ram\:\:1879818006829152\:saml-provider/testa    |
 
 will generate response with external `saml:Attribute`
 
@@ -66,7 +66,6 @@ will generate response with external `saml:Attribute`
 We only support insert `$user.owner`,`$user.name`,`$user.email`,`$user.id`,`$user.phone`,`$user.roles`,`$user.permissions`,`$user.groups`
 
 :::
-
 
 ### User profile
 
