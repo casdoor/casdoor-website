@@ -31,6 +31,16 @@ To learn how to configure a payment provider, refer to [Payment Provider](/docs/
 
 Finally, fill in the **Return URL**. This is the URL to which the payment provider page will redirect after the payment is completed.
 
+If you need the provider to redirect users directly to other links instead of the casdoor callback page, you can fill the SuccessUrl field, Casdoor will append payment owner and name behind the link you provider, for example `http://example.com/patha/pathb?transactionOwner={paymentOwner}&transactionName={paymentName}&otherPrams=value`.
+
+:::caution
+
+If you fill the SuccessUrl field, you must call `NotifyPayment` api manually, otherwise the transaction will fail.
+
+You should call the `NotifyPayment` api `api/notify-payment/paymentOwner/paymentName` with the param we provided in SuccessUrl.
+
+:::
+
 ## Preview the Product
 
 You're done! Review the details and save:
