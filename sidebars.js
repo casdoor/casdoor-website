@@ -536,6 +536,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/php/Zabbix",
+            "integration/php/WordPress",
             "integration/php/zentao",
             "integration/php/showdoc",
             "integration/php/Flarum",
