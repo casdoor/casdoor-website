@@ -339,6 +339,15 @@
     ]
   },
   {
+    "title": "WordPress",
+    "url": "https://casdoor.org/docs/integration/php/WordPress",
+    "description": "",
+    "tags": [
+      "Integration",
+      "PHP"
+    ]
+  },
+  {
     "title": "Zentao",
     "url": "https://casdoor.org/docs/integration/php/zentao",
     "description": "",
