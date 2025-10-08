@@ -348,6 +348,7 @@ module.exports = {
         "user/multi-factor-authentication",
         "user/roles",
         "user/permissions",
+        "user/forms",
       ],
     },
     {
