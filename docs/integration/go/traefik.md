@@ -35,9 +35,11 @@ After a successful deployment, make sure that:
 
 1. Create a new Casdoor application or use an existing one.
 2. Add your redirect URL. The redirect URL should be in the format:
-   ```
+
+   ```text
    http://<your-domain>/callback
    ```
+
    For example: `http://localhost:8080/callback`
 
 3. Note down the following values from your application settings:
@@ -48,7 +50,7 @@ After a successful deployment, make sure that:
 
 ![Casdoor Application Setting](/img/integration/appsetting_spring_security.png)
 
-4. Configure your application to use the appropriate authentication providers as needed.
+1. Configure your application to use the appropriate authentication providers as needed.
 
 ## Step 3: Deploy traefik-casdoor-auth Middleware
 
@@ -115,6 +117,7 @@ networks:
 ```
 
 Replace the placeholder values:
+
 - `<your-client-id>`: Your Casdoor application client ID
 - `<your-client-secret>`: Your Casdoor application client secret
 - `<your-organization>`: Your Casdoor organization name
@@ -145,13 +148,13 @@ server:
   callbackUrl: "http://localhost/callback"
 ```
 
-3. Run the middleware:
+1. Run the middleware:
 
 ```bash
 ./traefik-casdoor-auth --config config.yaml
 ```
 
-4. Configure Traefik to use the middleware. Add to your Traefik dynamic configuration:
+1. Configure Traefik to use the middleware. Add to your Traefik dynamic configuration:
 
 ```yaml
 http:
