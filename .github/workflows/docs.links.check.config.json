@@ -43,9 +43,6 @@
             "pattern": "^https://www.n-able.com/"
         },
         {
-            "pattern": "^/docs/user/overview#using-the-properties-field"
-        },
-        {
             "pattern": "^https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63"
         }
     ]
