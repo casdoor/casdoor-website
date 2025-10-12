@@ -81,7 +81,6 @@ Unique IDs for social platform logins:
 - `Slack`
 - `Steam`
 - `Ldap`
-- `Properties`: A string->string map that stores any additional custom properties.
 
 ## Using the Properties Field
 
@@ -90,49 +89,6 @@ The `Properties` field is a flexible key-value map (`map[string]string`) that al
 - Store organization-specific user attributes
 - Add custom metadata that doesn't fit into standard fields
 - Extend user profiles without modifying the core schema
-
-### Setting Properties
-
-You can set properties when creating or updating a user through the API. Here's an example of a user object with custom properties:
-
-```json
-{
-  "owner": "my-organization",
-  "name": "john_doe",
-  "displayName": "John Doe",
-  "email": "john@example.com",
-  "properties": {
-    "department": "Engineering",
-    "employeeId": "EMP-12345",
-    "costCenter": "CC-100",
-    "manager": "jane_smith"
-  }
-}
-```
-
-### Accessing Properties
-
-Properties can be accessed through:
-
-- **Casdoor API**: When retrieving user information via API calls, the `properties` field will be included in the response
-- **User Interface**: Properties can be viewed and edited in the Casdoor user management interface if configured as visible in the organization's account customization settings
-- **Token Claims**: Custom properties can be included in JWT tokens if configured in your application settings
-
-### Use Cases
-
-Common use cases for the Properties field include:
-
-- **Employee Information**: Store employee-specific data like employee ID, department, or job level
-- **Integration Data**: Store external system identifiers for user synchronization
-- **Custom Attributes**: Add any organization-specific attributes such as team name, project assignments, or security clearance levels
-- **Temporary Flags**: Store temporary status flags or metadata for user workflows
-
-### Best Practices
-
-- Use consistent naming conventions for property keys (e.g., camelCase or snake_case)
-- Document your custom properties and their expected values
-- Keep property values as strings; perform type conversions in your application as needed
-- Avoid storing sensitive information in properties; use appropriate secure fields instead
 
 ## Importing Users from XLSX File
 
