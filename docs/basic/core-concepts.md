@@ -182,6 +182,12 @@ type User struct {
 }
 ```
 
+:::tip
+
+The `Properties` field is a flexible key-value map for storing custom user attributes. See the [User Properties documentation](/docs/user/overview#using-the-properties-field) for detailed usage examples and best practices.
+
+:::
+
 ## Application
 
 An **application** represents a web service that needs to be protected by Casdoor, such as a forum site, an OA system, or a CRM system.
