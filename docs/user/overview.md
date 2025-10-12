@@ -81,7 +81,14 @@ Unique IDs for social platform logins:
 - `Slack`
 - `Steam`
 - `Ldap`
-- `Properties`: A string->string map that stores any additional properties.
+
+## Using the Properties Field
+
+The `Properties` field is a flexible key-value map (`map[string]string`) that allows you to store custom attributes for users beyond the predefined fields in the User schema. This is particularly useful when you need to:
+
+- Store organization-specific user attributes
+- Add custom metadata that doesn't fit into standard fields
+- Extend user profiles without modifying the core schema
 
 ## Importing Users from XLSX File
 
