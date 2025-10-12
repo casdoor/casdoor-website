@@ -13,6 +13,30 @@ Casdoor frontend web UI is a [SPA (Single-Page Application)](https://developer.m
 
 The full reference for the `Casdoor Public API` can be found on Swagger: [**https://door.casdoor.com/swagger**](https://door.casdoor.com/swagger). These Swagger docs are automatically generated using Beego's Bee tool. If you want to generate the Swagger docs by yourself, see: [How to generate the swagger file](/docs/developer-guide/swagger/#how-to-generate-the-swagger-file)
 
+## Machine-to-Machine (M2M) Authentication
+
+Machine-to-machine (M2M) authentication is designed for scenarios where services, applications, or backend systems need to authenticate and communicate with APIs **without user interaction**. This is particularly useful for:
+
+- **Backend services** calling Casdoor APIs programmatically
+- **CLI tools** that need to interact with your APIs using access tokens
+- **B2B enterprise scenarios** where organizations need to generate tokens for API access (e.g., admin tokens for management operations, read tokens for data access)
+- **Automated processes** such as scheduled jobs, data synchronization, or system integrations
+- **Microservices** that need to authenticate with each other
+
+Casdoor supports M2M authentication through the following methods:
+
+1. **Client Credentials Grant (OAuth 2.0)**: The recommended approach for M2M scenarios. This uses the [Client Credentials Grant flow](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) where applications authenticate using their `Client ID` and `Client Secret` to obtain access tokens. See the [OAuth Client Credentials Grant](/docs/how-to-connect/oauth#client-credentials-grant) documentation for details on obtaining tokens via this flow.
+
+2. **Direct API Authentication with Client ID and Secret**: Use the application's credentials directly in API calls (see method #2 below).
+
+### Use Cases for M2M Authentication
+
+- **Organization-level API access**: In B2B scenarios, you can create a Casdoor application for each organization. The application's client credentials provide admin-level permissions for that organization, enabling them to manage their users, generate tokens, and access organizational resources independently.
+
+- **Token generation for downstream services**: Generate access tokens programmatically (using Client Credentials Grant) that can be distributed to CLI tools, read-only services, or other applications that need scoped access to your APIs.
+
+- **Service-to-service authentication**: Backend services can authenticate as an "application" rather than as a user, with permissions equivalent to the organization admin.
+
 ## How to authenticate with `Casdoor Public API`
 
 ### 1. By `Access token`
@@ -77,13 +101,19 @@ All granted access tokens can also be accessed via the web UI by an admin user i
     Authorization: Bearer <The access token>
     ```
 
-### 2. By `Client ID` and `Client secret`
+### 2. By `Client ID` and `Client secret` (Machine-to-Machine)
+
+This method is the primary approach for **machine-to-machine (M2M) authentication**. It allows applications, services, or backend systems to authenticate with Casdoor APIs without any user interaction.
 
 #### How to get the client ID and secret?
 
-The application edit page (e.g., <https://door.casdoor.com/applications/casbin/app-vue-python-example>) will show the client ID and secret for an application. This authentication is useful when you want to call the API as a "machine", "application" or a "service" instead of a user. The permissions for the API calls will be the same as the application (aka the admin of the organization).
+The application edit page (e.g., <https://door.casdoor.com/applications/casbin/app-vue-python-example>) will show the client ID and secret for an application. This authentication method is useful when you want to call the API as a "machine", "application", or a "service" instead of a user. The permissions for the API calls will be the same as the application (equivalent to the admin of the organization).
 
-The below examples shows how to call `GetOAuthToken()` function in Go via casdoor-go-sdk.
+#### Use cases
+
+- **Service authentication**: Backend services calling Casdoor APIs programmatically
+- **Organization management**: In B2B scenarios, create an application per organization to enable them to manage users and generate tokens independently
+- **Token generation**: Obtain access tokens via the [OAuth Client Credentials Grant](/docs/how-to-connect/oauth#client-credentials-grant) flow for distribution to CLI tools or other services
 
 #### How to authenticate?
 
@@ -102,6 +132,48 @@ The below examples shows how to call `GetOAuthToken()` function in Go via casdoo
     ```
 
 If you are not familiar with the Base64 encoding, you can use a library to do that because `HTTP Basic Authentication` is a popular standard supported by many places.
+
+#### Obtaining access tokens with Client Credentials
+
+For machine-to-machine scenarios where you need to obtain an access token (rather than using client credentials directly), use the **OAuth 2.0 Client Credentials Grant** flow:
+
+1. Make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` with:
+
+    ```json
+    {
+        "grant_type": "client_credentials",
+        "client_id": "YOUR_CLIENT_ID",
+        "client_secret": "YOUR_CLIENT_SECRET"
+    }
+    ```
+
+2. You will receive an access token response:
+
+    ```json
+    {
+        "access_token": "eyJhb...",
+        "token_type": "Bearer",
+        "expires_in": 10080,
+        "scope": "openid"
+    }
+    ```
+
+3. Use the `access_token` to call Casdoor APIs (see method #1 above).
+
+For more details, see the [Client Credentials Grant](/docs/how-to-connect/oauth#client-credentials-grant) documentation.
+
+:::info
+
+**For B2B Enterprises**: You can create separate Casdoor applications for each of your customer organizations. Each application has its own `client_id` and `client_secret`, which your customers can use to:
+
+- Authenticate as their organization (with admin privileges)
+- Generate access tokens for their users or services
+- Manage their organization's users and permissions independently
+- Integrate your APIs into their systems without UI-based login flows
+
+This approach allows you to delegate organization management to your customers while maintaining security and isolation between different organizations.
+
+:::
 
 ### 3. By `Access key` and `Access secret`
 
