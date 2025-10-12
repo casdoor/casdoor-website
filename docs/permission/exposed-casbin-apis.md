@@ -15,16 +15,42 @@ Take the [app-vue-python-example](https://door.casdoor.com/applications/casbin/a
 1. The front-end passes the `access_token` to the backend server through the HTTP request header.
 2. The backend server retrieves the user id from the `access_token`.
 
-As a note in advance, these interfaces are also designed (for now) for the `(sub, obj, act)` model. The `permissionId` in the URL parameters is the identity of the applied permission policy, which consists of the organization name and the permission policy name (i.e., `organization name/permission name`). The body is the request format defined by the Casbin model of the permission, usually representing `sub`, `obj` and `act` respectively.
+As a note in advance, these interfaces are also designed (for now) for the `(sub, obj, act)` model. The body is the request format defined by the Casbin model of the permission, usually representing `sub`, `obj` and `act` respectively.
 
 In addition to the API interface for requesting enforcement of permission control, Casdoor also provides other interfaces that help external applications obtain permission policy information, which is also listed here.
 
 ### Enforce
 
-Request:
+The Enforce API supports multiple query parameters to specify which permission(s) to enforce against. **Only one parameter should be provided at a time**:
+
+- `permissionId`: The identity of a specific permission policy (format: `organization name/permission name`)
+- `modelId`: The identity of a permission model (format: `organization name/model name`) - enforces against all permissions using this model
+- `resourceId`: The identity of a resource - enforces against all permissions for this resource
+- `enforcerId`: The identity of a specific enforcer
+- `owner`: The organization name - enforces against all permissions in this organization
+
+Request using `permissionId`:
 
 ```shell
 curl --location --request POST 'http://localhost:8000/api/enforce?permissionId=example-org/example-permission' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
+--data-raw '["example-org/example-user", "example-resource", "example-action"]'
+```
+
+Request using `modelId`:
+
+```shell
+curl --location --request POST 'http://localhost:8000/api/enforce?modelId=example-org/example-model' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
+--data-raw '["example-org/example-user", "example-resource", "example-action"]'
+```
+
+Request using `resourceId`:
+
+```shell
+curl --location --request POST 'http://localhost:8000/api/enforce?resourceId=example-org/example-resource' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
 --data-raw '["example-org/example-user", "example-resource", "example-action"]'
@@ -41,19 +67,39 @@ Response:
     "data": [
         true
     ],
-    "data2": null
+    "data2": [
+        "example-org/example-model/example-adapter"
+    ]
 }
 ```
 
+Note: When using `modelId`, `resourceId`, `enforcerId`, or `owner` parameters, the response `data` array may contain multiple boolean values (one for each permission that was checked), and `data2` contains the corresponding model and adapter identifiers.
+
 ### BatchEnforce
 
-Request:
+The BatchEnforce API supports multiple query parameters to specify which permission(s) to enforce against. **Only one parameter should be provided at a time**:
+
+- `permissionId`: The identity of a specific permission policy (format: `organization name/permission name`)
+- `modelId`: The identity of a permission model (format: `organization name/model name`) - enforces against all permissions using this model
+- `enforcerId`: The identity of a specific enforcer
+- `owner`: The organization name - enforces against all permissions in this organization
+
+Request using `permissionId`:
 
 ```shell
 curl --location --request POST 'http://localhost:8000/api/batch-enforce?permissionId=example-org/example-permission' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
 --data-raw '[["example-org/example-user", "example-resource", "example-action"], ["example-org/example-user2", "example-resource", "example-action"], ["example-org/example-user3", "example-resource", "example-action"]]'
+```
+
+Request using `modelId`:
+
+```shell
+curl --location --request POST 'http://localhost:8000/api/batch-enforce?modelId=example-org/example-model' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>' \
+--data-raw '[["example-org/example-user", "example-resource", "example-action"], ["example-org/example-user2", "example-resource", "example-action"]]'
 ```
 
 Response:
@@ -71,13 +117,26 @@ Response:
             false
         ]
     ],
-    "data2": null
+    "data2": [
+        "example-org/example-model/example-adapter"
+    ]
 }
 ```
 
+Note: When using `modelId`, `enforcerId`, or `owner` parameters, the response `data` array may contain multiple arrays of boolean values (one array for each permission that was checked), and `data2` contains the corresponding model and adapter identifiers.
+
 ### GetAllObjects
 
-Request:
+This API retrieves all objects (resources) that a user has access to. It accepts an optional `userId` parameter. If not provided, it uses the logged-in user's session.
+
+Request with `userId` parameter:
+
+```shell
+curl --location --request GET 'http://localhost:8000/api/get-all-objects?userId=example-org/example-user' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
+```
+
+Request using session (userId determined from session):
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-objects' \
@@ -87,14 +146,28 @@ curl --location --request GET 'http://localhost:8000/api/get-all-objects' \
 Response:
 
 ```json
-[
-    "app-built-in"
-]
+{
+    "status": "ok",
+    "msg": "",
+    "data": [
+        "app-built-in",
+        "example-resource"
+    ]
+}
 ```
 
 ### GetAllActions
 
-Request:
+This API retrieves all actions that a user can perform. It accepts an optional `userId` parameter. If not provided, it uses the logged-in user's session.
+
+Request with `userId` parameter:
+
+```shell
+curl --location --request GET 'http://localhost:8000/api/get-all-actions?userId=example-org/example-user' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
+```
+
+Request using session (userId determined from session):
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-actions' \
@@ -104,16 +177,29 @@ curl --location --request GET 'http://localhost:8000/api/get-all-actions' \
 Response:
 
 ```json
-[
-    "read",
-    "write",
-    "admin"
-]
+{
+    "status": "ok",
+    "msg": "",
+    "data": [
+        "read",
+        "write",
+        "admin"
+    ]
+}
 ```
 
 ### GetAllRoles
 
-Request:
+This API retrieves all roles assigned to a user. It accepts an optional `userId` parameter. If not provided, it uses the logged-in user's session.
+
+Request with `userId` parameter:
+
+```shell
+curl --location --request GET 'http://localhost:8000/api/get-all-roles?userId=example-org/example-user' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
+```
+
+Request using session (userId determined from session):
 
 ```shell
 curl --location --request GET 'http://localhost:8000/api/get-all-roles' \
@@ -123,7 +209,11 @@ curl --location --request GET 'http://localhost:8000/api/get-all-roles' \
 Response:
 
 ```json
-[
-    "role_kcx66l"
-]
+{
+    "status": "ok",
+    "msg": "",
+    "data": [
+        "role_kcx66l"
+    ]
+}
 ```
