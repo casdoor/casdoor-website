@@ -41,6 +41,9 @@
         },
         {
             "pattern": "^https://www.n-able.com/"
+        },
+        {
+            "pattern": "^/docs/user/overview#using-the-properties-field"
         }
     ]
 }
