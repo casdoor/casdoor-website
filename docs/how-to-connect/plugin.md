@@ -7,6 +7,8 @@ authors: [hsluoyz]
 
 Casdoor also provides plugins or middlewares for some very popular platforms, such as Java's Spring Boot, PHP's WordPress, and Python's Odoo, among others.
 
+For command-line interface integration, see the [Casdoor CLI](/docs/how-to-connect/cli) documentation.
+
 | Casdoor plugin      | Language   | Source code                                              |
 |---------------------|------------|----------------------------------------------------------|
 | Spring Boot plugin  | Java       | <https://github.com/casdoor/casdoor-spring-boot-starter> |
