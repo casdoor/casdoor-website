@@ -76,6 +76,7 @@ module.exports = {
             "how-to-connect/mobile-sdks/react-native-app",
           ],
         },
+        "how-to-connect/cli",
         "how-to-connect/plugin",
         "how-to-connect/chrome-extension",
         "how-to-connect/nextjs",
