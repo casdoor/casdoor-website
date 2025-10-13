@@ -28,6 +28,10 @@
     border-radius: 20px;
     transform: scale(1);
     max-width: 100%;
+
+    iframe {
+      max-width: 100%;
+    }
   }
 
   .signingradientborder {
@@ -38,6 +42,10 @@
     margin: auto;
     transform: scale(1);
     max-width: 100%;
+
+    iframe {
+      max-width: 100%;
+    }
   }
 }
 

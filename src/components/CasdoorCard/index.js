@@ -6,7 +6,7 @@ export default function CasdoorCard(props) {
       src={props.src}
       width={props.width}
       height={props.height}
-      style={{borderRadius: "20px", maxWidth: "100%"}}
+      style={{borderRadius: "20px"}}
       frameBorder="0"
       scrolling="no"
     ></iframe>
