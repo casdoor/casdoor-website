@@ -7,6 +7,7 @@ import EditThisPage from "@theme/EditThisPage";
 import TagsListInline from "@theme/TagsListInline";
 import styles from "./styles.module.css";
 import Translate from "@docusaurus/Translate";
+import {useLocation} from "@docusaurus/router";
 
 // Eject DocItem/Footer
 
@@ -92,6 +93,57 @@ function IconTrans(props) {
   );
 }
 
+function IconPrint(props) {
+  return (
+    <svg
+      fill="currentColor"
+      height="20"
+      width="20"
+      viewBox="0 0 24 24"
+      aria-hidden
+      {...props}
+    >
+      <path
+        d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
+      />
+    </svg>
+  );
+}
+
+function IconIssue(props) {
+  return (
+    <svg
+      fill="currentColor"
+      height="20"
+      width="20"
+      viewBox="0 0 24 24"
+      aria-hidden
+      {...props}
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+      />
+    </svg>
+  );
+}
+
+function IconShare(props) {
+  return (
+    <svg
+      fill="currentColor"
+      height="20"
+      width="20"
+      viewBox="0 0 24 24"
+      aria-hidden
+      {...props}
+    >
+      <path
+        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+      />
+    </svg>
+  );
+}
+
 function TransThisPage(props) {
   return (
     <>
@@ -108,6 +160,72 @@ function TransThisPage(props) {
         </Translate>
       </a>
     </>
+  );
+}
+
+function ActionButtons({docPath}) {
+  const location = useLocation();
+  const {siteConfig} = useDocusaurusContext();
+  const currentUrl = siteConfig.url + location.pathname;
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleShare = async() => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          url: currentUrl,
+        });
+      } catch (err) {
+        // User cancelled or share failed - silently ignore
+      }
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        alert("Link copied to clipboard!");
+      }).catch(() => {
+        // Failed to copy - silently ignore
+      });
+    }
+  };
+
+  const issueUrl = `https://github.com/casdoor/casdoor-website/issues/new?title=Issue in ${docPath}&body=Issue description for: ${currentUrl}`;
+
+  return (
+    <div className={styles.docItemActionButtons}>
+      <button
+        className={styles.actionButton}
+        onClick={handlePrint}
+        title="Print this page"
+        aria-label="Print this page"
+      >
+        <IconPrint style={{marginRight: "0.3em", verticalAlign: "sub"}} />
+        <Translate>Print</Translate>
+      </button>
+      <a
+        href={issueUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        className={styles.actionButton}
+        title="Open doc issue"
+        aria-label="Open doc issue"
+      >
+        <IconIssue style={{marginRight: "0.3em", verticalAlign: "sub"}} />
+        <Translate>Open doc issue</Translate>
+      </a>
+      <button
+        className={styles.actionButton}
+        onClick={handleShare}
+        title="Share this page"
+        aria-label="Share this page"
+      >
+        <IconShare style={{marginRight: "0.3em", verticalAlign: "sub"}} />
+        <Translate>Share</Translate>
+      </button>
+    </div>
   );
 }
 
@@ -130,10 +248,9 @@ export default function DocItemFooter() {
   const authors = metadata.frontMatter.authors || ["casdoor"];
   const canDisplayTagsRow = tags.length > 0;
   const canDisplayEditMetaRow = !!(editUrl);
-  const canDisplayFooter = canDisplayTagsRow || canDisplayEditMetaRow;
-  if (!canDisplayFooter) {
-    return null;
-  }
+
+  const location = useLocation();
+  const docPath = location.pathname.replace(/^\/docs\//, "");
 
   // get current locale
   const {i18n} = useDocusaurusContext();
@@ -150,6 +267,7 @@ export default function DocItemFooter() {
   return (
     <footer
       className={clsx(ThemeClassNames.docs.docFooter, "docusaurus-mt-lg")}>
+      <ActionButtons docPath={docPath} />
       {canDisplayTagsRow && <TagsRow tags={tags} />}
       {canDisplayEditMetaRow && (
         <EditMetaRow

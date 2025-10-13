@@ -3,3 +3,50 @@
     text-align: right;
   }
 }
+
+.docItemActionButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.25rem;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover {
+  background-color: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+  text-decoration: none;
+  color: var(--ifm-font-color-base);
+}
+
+.actionButton:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 996px) {
+  .docItemActionButtons {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .actionButton {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
