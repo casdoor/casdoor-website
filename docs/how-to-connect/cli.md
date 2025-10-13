@@ -226,10 +226,3 @@ make build TARGET_OS=linux && make install TARGET_OS=linux    # For Linux
 
 casdoor login
 ```
-
-## Support
-
-- **GitHub Repository**: <https://github.com/casdoor/casdoor-cli>
-- **Report Issues**: <https://github.com/casdoor/casdoor-cli/issues>
-- **Discord**: [Join our Discord community](https://discord.gg/5rPsrAzK7S)
-- **Casdoor Documentation**: [Official Documentation](/docs/overview)
