@@ -77,6 +77,7 @@ module.exports = {
           ],
         },
         "how-to-connect/plugin",
+        "how-to-connect/chrome-extension",
         "how-to-connect/nextjs",
         "how-to-connect/nuxt",
         "how-to-connect/oauth",
