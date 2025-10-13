@@ -15,6 +15,9 @@ import {useWindowSize} from "@docusaurus/theme-common";
 
 function FrameMask(props) {
   const [mouseState, setMouseState] = useState({state: false});
+  const windowSize = useWindowSize();
+  const isMobile = windowSize === "mobile";
+
   const maskStyle = {
     position: "absolute",
     top: "0px",
@@ -46,7 +49,7 @@ function FrameMask(props) {
       <div style={maskStyle} hidden={!mouseState.state} onClick={() => {window.open(props.src);}}>
         <Link
           className="button button--secondary button--lg"
-          style={{marginTop: "50%", marginRight: "3rem", marginLeft: "3rem"}}>
+          style={{marginTop: "50%", marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}>
           <Translate>Online Demo</Translate>
         </Link>
       </div>
@@ -55,6 +58,9 @@ function FrameMask(props) {
 }
 
 function HomepageHeader() {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize === "mobile";
+
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
@@ -65,13 +71,13 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            style={{marginTop: "2rem", marginRight: "3rem", marginLeft: "3rem"}}
+            style={{marginTop: "2rem", marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}
             to="/docs/overview">
             <Translate>Get Started</Translate>
           </Link>
           <Link
             className="button button--secondary button--lg"
-            style={{marginTop: "2rem", marginRight: "3rem", marginLeft: "3rem"}}
+            style={{marginTop: "2rem", marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}
             to="https://door.casdoor.com/">
             <Translate>Online Demo</Translate>
           </Link>
@@ -155,19 +161,21 @@ function ContentLogin() {
             <br />
             <Translate>With supporting for</Translate>
             <br />
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_google.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_github.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_facebook.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_twitter.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_linkedin.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_weibo.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_wechat.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_qq.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_dingtalk.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_gitee.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_wecom.png" width="30"></img>
-            <img style={{marginRight: "10px"}} src="https://cdn.casbin.org/img/social_mail.png" width="30"></img>
-            <img src="https://cdn.casbin.org/img/social_msg.png" width="30"></img>
+            <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", padding: "10px 0"}}>
+              <img src="https://cdn.casbin.org/img/social_google.png" width="30" alt="Google"></img>
+              <img src="https://cdn.casbin.org/img/social_github.png" width="30" alt="GitHub"></img>
+              <img src="https://cdn.casbin.org/img/social_facebook.png" width="30" alt="Facebook"></img>
+              <img src="https://cdn.casbin.org/img/social_twitter.png" width="30" alt="Twitter"></img>
+              <img src="https://cdn.casbin.org/img/social_linkedin.png" width="30" alt="LinkedIn"></img>
+              <img src="https://cdn.casbin.org/img/social_weibo.png" width="30" alt="Weibo"></img>
+              <img src="https://cdn.casbin.org/img/social_wechat.png" width="30" alt="WeChat"></img>
+              <img src="https://cdn.casbin.org/img/social_qq.png" width="30" alt="QQ"></img>
+              <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="30" alt="DingTalk"></img>
+              <img src="https://cdn.casbin.org/img/social_gitee.png" width="30" alt="Gitee"></img>
+              <img src="https://cdn.casbin.org/img/social_wecom.png" width="30" alt="WeCom"></img>
+              <img src="https://cdn.casbin.org/img/social_mail.png" width="30" alt="Email"></img>
+              <img src="https://cdn.casbin.org/img/social_msg.png" width="30" alt="SMS"></img>
+            </div>
             <br />
             <Translate>third-party application login, You can choose your favorite social network to
               login.</Translate>
@@ -225,12 +233,15 @@ function ContentForget() {
 }
 
 function Showcase() {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize === "mobile";
+
   return (
     <div className="hero text--center showcase">
       <div className="container">
         <h1><Translate>Who&apos;s using Casdoor?</Translate></h1>
         <p style={{
-          width: "50vw",
+          width: isMobile ? "90%" : "50vw",
           margin: "auto",
         }}>
           <Translate values={{
