@@ -77,3 +77,22 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
 - `UserInfo URL` is the API endpoint for obtaining user information via the accessToken.
 
   If you fill in `https://door.casdoor.com/api/userinfo` as the `UserInfo URL`, then Casdoor will access it using the following command
+
+  ```bash
+  curl -X GET -H "Authorization: Bearer {accessToken}" https://door.casdoor.com/api/userinfo
+  ```
+
+  The custom provider should return at least the following information:
+
+  ```json
+  {
+    "name": "admin",
+    "preferred_username": "Admin",
+    "email": "admin@example.com",
+    "picture": "https://casbin.org/img/casbin.svg"
+  }
+  ```
+
+- `Favicon` is the logo URL of a custom provider.
+
+  This logo will be displayed on Casdoor's login page together with other third-party login providers.
