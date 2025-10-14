@@ -382,6 +382,14 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Certificates",
+      link: {type: "generated-index"},
+      items: [
+        "cert/overview",
+      ],
+    },
+    {
+      type: "category",
       label: "Tokens",
       link: {type: "generated-index"},
       items: [
