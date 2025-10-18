@@ -92,6 +92,12 @@ You will get the following response:
 }
 ```
 
+:::info
+
+In Casdoor, `access_token` and `id_token` are identical. Both contain the same JWT with user information. See [Token Overview](/docs/token/overview#access-token-and-id-token) for more details.
+
+:::
+
 :::note
 
 Casdoor also supports the [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature. When getting the authorization code, you can add two parameters to enable PKCE:
@@ -159,6 +165,12 @@ You will get the following response:
 }
 ```
 
+:::info
+
+In Casdoor, `access_token` and `id_token` are identical. Both contain the same JWT with user information. See [Token Overview](/docs/token/overview#access-token-and-id-token) for more details.
+
+:::
+
 ### Client Credentials Grant
 
 You can also use Client Credentials Grant when your application does not have a frontend.
@@ -185,6 +197,12 @@ You will get the following response:
     "scope": "openid"
 }
 ```
+
+:::info
+
+In Casdoor, `access_token` and `id_token` are identical. Both contain the same JWT with user information. See [Token Overview](/docs/token/overview#access-token-and-id-token) for more details.
+
+:::
 
 It is important to note that the AccessToken obtained in this way differs from the first three in that it corresponds to the application rather than to the user.
 
@@ -216,6 +234,12 @@ You will get a response like this:
     "scope": "openid"
 }
 ```
+
+:::info
+
+In Casdoor, `access_token` and `id_token` are identical. Both contain the same JWT with user information. See [Token Overview](/docs/token/overview#access-token-and-id-token) for more details.
+
+:::
 
 ## How to Verify Access Token
 
