@@ -7,6 +7,19 @@ authors: [sh1luo]
 
 Casdoor is built on OAuth and utilizes tokens as users' OAuth tokens.
 
+## Access Token and ID Token
+
+In Casdoor, the `access_token` and `id_token` are **identical**. Both tokens contain the same JWT payload with user information and claims. This is a design choice in Casdoor that simplifies token management.
+
+This approach means:
+
+- Both tokens contain the same user information and custom claims
+- Both tokens can be used interchangeably for authentication and authorization
+- The token format and expiration settings apply to both tokens equally
+- You cannot configure separate claims for `access_token` and `id_token`
+
+## Token Fields
+
 The following are the available token fields in Casdoor:
 
 - `Owner`
