@@ -102,59 +102,32 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
 
 ### Application-Specific OIDC Endpoints
 
-Casdoor also supports application-specific OIDC discovery endpoints. This feature enables each application to have its own isolated OIDC configuration, which is particularly useful for multi-tenant deployments where different applications need distinct issuers and certificates.
+Besides the global discovery endpoint, you can use application-specific OIDC discovery endpoints. Each application gets its own isolated OIDC configuration with a unique issuer. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
 
-The application-specific OIDC discovery URL pattern is:
+The application-specific discovery URL follows this pattern:
 
 ```url
 <your-casdoor-backend-host>/.well-known/<application-name>/openid-configuration
 ```
 
-For example, if you have an application named `app-example`, the discovery URL would be:
+For example, if you have an application named `app-example`:
 
 ```url
 https://door.casdoor.com/.well-known/app-example/openid-configuration
 ```
 
-#### Key Differences from Global Endpoints
+The main difference is that the `issuer` and `jwks_uri` fields in the discovery response contain the application path. The `issuer` becomes `https://door.casdoor.com/.well-known/app-example` instead of just `https://door.casdoor.com`, and the `jwks_uri` points to `/.well-known/app-example/jwks`. Everything else, including the authorization and token endpoints, stays the same.
 
-When using application-specific endpoints, the following fields in the OIDC discovery response will be scoped to that application:
-
-- **issuer**: Contains the application-specific path (e.g., `https://door.casdoor.com/.well-known/app-example`)
-- **jwks_uri**: Points to the application-specific JWKS endpoint (e.g., `https://door.casdoor.com/.well-known/app-example/jwks`)
-
-#### Additional Application-Specific Endpoints
-
-Along with the discovery endpoint, two more application-specific endpoints are available:
-
-**JSON Web Key Set (JWKS)**:
+You can also access the JWKS and WebFinger endpoints for each application:
 
 ```url
 <your-casdoor-backend-host>/.well-known/<application-name>/jwks
-```
-
-This endpoint returns the public keys used to verify tokens issued for this specific application. If the application has a custom certificate configured, it will be used; otherwise, it falls back to the global certificates.
-
-**WebFinger**:
-
-```url
 <your-casdoor-backend-host>/.well-known/<application-name>/webfinger
 ```
 
-This endpoint provides resource discovery for the specific application.
+The JWKS endpoint returns the public keys for verifying tokens. When an application has its own certificate configured, that certificate is used. Otherwise, it falls back to the global certificates.
 
-#### Use Cases
-
-Application-specific OIDC endpoints are beneficial when you need:
-
-- **Multi-tenant deployments**: Different applications with isolated OIDC configurations
-- **Application-specific certificates**: Each app using its own signing certificate for enhanced security
-- **Flexible integrations**: Third-party applications integrating using app-specific endpoints without affecting other applications
-- **Gradual migration**: Existing applications can continue using global endpoints while new applications adopt specific endpoints
-
-#### Example Comparison
-
-**Global Endpoint Response**:
+Here's what the responses look like. The global endpoint returns:
 
 ```json
 {
@@ -165,7 +138,7 @@ Application-specific OIDC endpoints are beneficial when you need:
 }
 ```
 
-**Application-Specific Endpoint Response** (for application `app-example`):
+While the application-specific endpoint for `app-example` returns:
 
 ```json
 {
@@ -175,8 +148,6 @@ Application-specific OIDC endpoints are beneficial when you need:
   ...
 }
 ```
-
-The authorization and token endpoints remain the same, but the issuer and JWKS URIs are application-specific, allowing for proper token validation and certificate management per application.
 
 ## List of OIDC Client Libraries
 
