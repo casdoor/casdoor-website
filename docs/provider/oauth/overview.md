@@ -51,6 +51,10 @@ Before this, there are some general concepts you need to understand.
 6. Choose the specific OAuth provider that you require from the `Type` dropdown.
 7. Fill in the necessary information, such as `Client ID` and `Client Secret`.
 
+## User Field Mapping
+
+OAuth providers often return additional user information beyond the standard profile fields. Casdoor's [User Mapping](/docs/provider/oauth/user-mapping) feature allows you to automatically populate user profile fields from OAuth claims returned by your identity provider. This is particularly useful when integrating with enterprise identity providers like Okta, Azure AD, or other custom OAuth services that provide rich user metadata.
+
 ## Application Setup
 
 1. Click on `Application` in the top bar and select the desired application to edit.
