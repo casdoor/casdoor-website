@@ -7,7 +7,11 @@ authors: [nomeguy]
 
 ## OIDC Discovery
 
-Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch. Casdoor's OIDC discovery URL is:
+Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch.
+
+### Global OIDC Endpoint
+
+Casdoor's global OIDC discovery URL is:
 
 ```url
 <your-casdoor-backend-host>/.well-known/openid-configuration
@@ -95,6 +99,84 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
   ]
 }
 ```
+
+### Application-Specific OIDC Endpoints
+
+Casdoor also supports application-specific OIDC discovery endpoints. This feature enables each application to have its own isolated OIDC configuration, which is particularly useful for multi-tenant deployments where different applications need distinct issuers and certificates.
+
+The application-specific OIDC discovery URL pattern is:
+
+```url
+<your-casdoor-backend-host>/.well-known/<application-name>/openid-configuration
+```
+
+For example, if you have an application named `app-example`, the discovery URL would be:
+
+```url
+https://door.casdoor.com/.well-known/app-example/openid-configuration
+```
+
+#### Key Differences from Global Endpoints
+
+When using application-specific endpoints, the following fields in the OIDC discovery response will be scoped to that application:
+
+- **issuer**: Contains the application-specific path (e.g., `https://door.casdoor.com/.well-known/app-example`)
+- **jwks_uri**: Points to the application-specific JWKS endpoint (e.g., `https://door.casdoor.com/.well-known/app-example/jwks`)
+
+#### Additional Application-Specific Endpoints
+
+Along with the discovery endpoint, two more application-specific endpoints are available:
+
+**JSON Web Key Set (JWKS)**:
+
+```url
+<your-casdoor-backend-host>/.well-known/<application-name>/jwks
+```
+
+This endpoint returns the public keys used to verify tokens issued for this specific application. If the application has a custom certificate configured, it will be used; otherwise, it falls back to the global certificates.
+
+**WebFinger**:
+
+```url
+<your-casdoor-backend-host>/.well-known/<application-name>/webfinger
+```
+
+This endpoint provides resource discovery for the specific application.
+
+#### Use Cases
+
+Application-specific OIDC endpoints are beneficial when you need:
+
+- **Multi-tenant deployments**: Different applications with isolated OIDC configurations
+- **Application-specific certificates**: Each app using its own signing certificate for enhanced security
+- **Flexible integrations**: Third-party applications integrating using app-specific endpoints without affecting other applications
+- **Gradual migration**: Existing applications can continue using global endpoints while new applications adopt specific endpoints
+
+#### Example Comparison
+
+**Global Endpoint Response**:
+
+```json
+{
+  "issuer": "https://door.casdoor.com",
+  "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
+  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  ...
+}
+```
+
+**Application-Specific Endpoint Response** (for application `app-example`):
+
+```json
+{
+  "issuer": "https://door.casdoor.com/.well-known/app-example",
+  "jwks_uri": "https://door.casdoor.com/.well-known/app-example/jwks",
+  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  ...
+}
+```
+
+The authorization and token endpoints remain the same, but the issuer and JWKS URIs are application-specific, allowing for proper token validation and certificate management per application.
 
 ## List of OIDC Client Libraries
 
