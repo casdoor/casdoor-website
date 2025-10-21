@@ -7,7 +7,11 @@ authors: [nomeguy]
 
 ## OIDC Discovery
 
-Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch. Casdoor's OIDC discovery URL is:
+Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch.
+
+### Global OIDC Endpoint
+
+Casdoor's global OIDC discovery URL is:
 
 ```url
 <your-casdoor-backend-host>/.well-known/openid-configuration
@@ -93,6 +97,55 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
     "HS384",
     "HS512"
   ]
+}
+```
+
+### Application-Specific OIDC Endpoints
+
+Besides the global discovery endpoint, you can use application-specific OIDC discovery endpoints. Each application gets its own isolated OIDC configuration with a unique issuer. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
+
+The application-specific discovery URL follows this pattern:
+
+```url
+<your-casdoor-backend-host>/.well-known/<application-name>/openid-configuration
+```
+
+For example, if you have an application named `app-example`:
+
+```url
+https://door.casdoor.com/.well-known/app-example/openid-configuration
+```
+
+The main difference is that the `issuer` and `jwks_uri` fields in the discovery response contain the application path. The `issuer` becomes `https://door.casdoor.com/.well-known/app-example` instead of just `https://door.casdoor.com`, and the `jwks_uri` points to `/.well-known/app-example/jwks`. Everything else, including the authorization and token endpoints, stays the same.
+
+You can also access the JWKS and WebFinger endpoints for each application:
+
+```url
+<your-casdoor-backend-host>/.well-known/<application-name>/jwks
+<your-casdoor-backend-host>/.well-known/<application-name>/webfinger
+```
+
+The JWKS endpoint returns the public keys for verifying tokens. When an application has its own certificate configured, that certificate is used. Otherwise, it falls back to the global certificates.
+
+Here's what the responses look like. The global endpoint returns:
+
+```json
+{
+  "issuer": "https://door.casdoor.com",
+  "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
+  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  ...
+}
+```
+
+While the application-specific endpoint for `app-example` returns:
+
+```json
+{
+  "issuer": "https://door.casdoor.com/.well-known/app-example",
+  "jwks_uri": "https://door.casdoor.com/.well-known/app-example/jwks",
+  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  ...
 }
 ```
 
