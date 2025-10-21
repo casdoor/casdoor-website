@@ -51,6 +51,7 @@ module.exports = {
       items: [
         "how-to-connect/overview",
         "how-to-connect/oidc-client",
+        "how-to-connect/openid-certification",
         "how-to-connect/sdk",
         "how-to-connect/totp-authenticator-app",
         "how-to-connect/single-sign-on",
