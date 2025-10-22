@@ -167,6 +167,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/oauth/overview",
+            "provider/oauth/user-mapping",
             "provider/oauth/google",
             "provider/oauth/googleonetap",
             "provider/oauth/github",
