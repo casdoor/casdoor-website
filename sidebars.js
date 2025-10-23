@@ -134,6 +134,7 @@ module.exports = {
         "application/config",
         "application/providers",
         "application/signin-methods",
+        "application/exclusive-signin",
         "application/signup-items-table",
         "application/signin-items-table",
         "application/ui-customization",
