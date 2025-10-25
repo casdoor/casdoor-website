@@ -234,7 +234,7 @@ curl --location --request GET 'http://localhost:8000/api/run-casbin-command?lang
 Parameters:
 
 - `language`: The programming language for the Casbin CLI (e.g., `go`, `java`, `node`, `python`)
-- `args`: A JSON-encoded array of command-line arguments (e.g., `["-v"]` for version, `["new"]` for creating new files)
+- `args`: A JSON-encoded array of command-line arguments (e.g., `["-v"]` for version, `["new"]` for creating new files). Note: URL-encode the JSON array when using it as a query parameter
 
 Response:
 
