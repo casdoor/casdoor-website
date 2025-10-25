@@ -53,6 +53,10 @@ To make the authentication process work, the detailed steps are as follows:
 </div>
 ```
 
+## Verification Code Settings
+
+You can configure the **Code resend timeout** to control how long users must wait before requesting another verification code via email or SMS. Set the value in seconds (default is 60). This helps prevent abuse while maintaining security. A value of 0 uses the global default.
+
 :::tip
 
 If you want to do more personalized configuration of the application's sign-in methods, such as disabling a certain sign-in method or turning off a certain sign-in method, you can refer to the **[Signin Methods](./signin-methods.md)**

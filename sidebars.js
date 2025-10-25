@@ -142,7 +142,6 @@ module.exports = {
         "application/tags",
         "application/invitation-code",
         "application/shared-application",
-        "application/verification-code",
       ],
     },
     {
@@ -170,7 +169,6 @@ module.exports = {
           items: [
             "provider/oauth/overview",
             "provider/oauth/user-mapping",
-            "provider/oauth/account-linking",
             "provider/oauth/google",
             "provider/oauth/googleonetap",
             "provider/oauth/github",
@@ -355,7 +353,6 @@ module.exports = {
         "user/roles",
         "user/permissions",
         "user/forms",
-        "user/soft-delete",
       ],
     },
     {

@@ -48,6 +48,8 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `IsGlobalAdmin`: Indicates whether the user has permission to manage the Casdoor
 - `IsForbidden`
 - `IsDeleted`
+
+When a user is soft-deleted (`IsDeleted = true`), they cannot sign in through any authentication method, including OAuth providers. This prevents deleted users from re-registering via third-party login.
 - `SignupApplication`
 - `Hash`
 - `PreHash`
