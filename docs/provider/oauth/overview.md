@@ -55,6 +55,10 @@ Before this, there are some general concepts you need to understand.
 
 OAuth providers often return additional user information beyond the standard profile fields. Casdoor's [User Mapping](/docs/provider/oauth/user-mapping) feature allows you to automatically populate user profile fields from OAuth claims returned by your identity provider. This is particularly useful when integrating with enterprise identity providers like Okta, Azure AD, or other custom OAuth services that provide rich user metadata.
 
+## Automatic Account Linking
+
+When users authenticate via OAuth, Casdoor automatically attempts to link accounts using multiple strategies: existing OAuth links, email/phone matching (if enabled), and case-insensitive username matching. This is particularly useful for enterprises with existing users who want to enable OAuth authentication without requiring manual account linking.
+
 ## Application Setup
 
 1. Click on `Application` in the top bar and select the desired application to edit.

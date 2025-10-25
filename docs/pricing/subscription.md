@@ -16,8 +16,10 @@ Since each `Plan` is based on a `Role`, you can assign the Plan's Role to a user
 A `Subscription` can be created in three ways:
 
 - Manually by an admin
-- Via the Pricing flow (after signing up as a `paid-user` and purchasing the selected `Plan`)
+- Via the Pricing flow when purchasing a product with pricing and plan information (available for all user types)
 - Via API
+
+Any user can create a subscription when purchasing a product, enabling flexible conversion from free to paid tiers. Subscription enforcement (requiring an active subscription for access) only applies to users with `type = "paid-user"`.
 
 The relationship between `Pricing`, `Plan`, `Subscription`, `Product`, and `Payment` is as follows:
 
