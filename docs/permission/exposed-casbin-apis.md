@@ -217,3 +217,33 @@ Response:
     ]
 }
 ```
+
+### RunCasbinCommand
+
+This API executes Casbin CLI commands and returns their output. It's designed for running language-specific Casbin command-line tools through Casdoor's backend, supporting languages like Java, Go, Node.js, Python, and others.
+
+The API includes an in-memory cache that stores command results for 5 minutes. When the same command is executed with identical parameters, the cached result is returned immediately without re-executing the command, improving response times and reducing server load.
+
+Request:
+
+```shell
+curl --location --request GET 'http://localhost:8000/api/run-casbin-command?language=go&args=["-v"]' \
+--header 'Authorization: Basic <Your_Application_ClientId> <Your_Application_ClientSecret>'
+```
+
+Parameters:
+
+- `language`: The programming language for the Casbin CLI (e.g., `go`, `java`, `node`, `python`)
+- `args`: A JSON-encoded array of command-line arguments (e.g., `["-v"]` for version, `["new"]` for creating new files). Note: URL-encode the JSON array when using it as a query parameter
+
+Response:
+
+```json
+{
+    "status": "ok",
+    "msg": "",
+    "data": "casbin version 2.x.x"
+}
+```
+
+The cache key is generated from the language and arguments, so different commands are cached independently. Expired entries are automatically cleaned up to prevent memory growth.
