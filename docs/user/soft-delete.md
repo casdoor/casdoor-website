@@ -22,7 +22,7 @@ When a user account is soft-deleted:
 
 When a soft-deleted user attempts to log in using username/password or any authentication method, they receive an error message:
 
-```
+```text
 The user has been deleted and cannot be used to sign in, please contact the administrator
 ```
 

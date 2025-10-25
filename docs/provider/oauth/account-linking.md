@@ -23,12 +23,14 @@ When a user logs in via an OAuth provider (such as WeChat, Wecom, Google, GitHub
 The username matching feature is particularly useful for enterprise scenarios:
 
 **Example scenario:**
+
 - A user "john.doe" exists in Casdoor
 - The organization uses Wecom for internal authentication
 - Signup is disabled for security reasons
 - The user attempts to log in via Wecom with username "John.Doe"
 
 With username matching enabled, Casdoor automatically:
+
 1. Searches for existing users with matching usernames (case-insensitive)
 2. Links the OAuth account to the matched Casdoor user
 3. Synchronizes OAuth profile information
