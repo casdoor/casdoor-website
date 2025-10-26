@@ -13,6 +13,19 @@ Casdoor frontend web UI is a [SPA (Single-Page Application)](https://developer.m
 
 The full reference for the `Casdoor Public API` can be found on Swagger: [**https://door.casdoor.com/swagger**](https://door.casdoor.com/swagger). These Swagger docs are automatically generated using Beego's Bee tool. If you want to generate the Swagger docs by yourself, see: [How to generate the swagger file](/docs/developer-guide/swagger/#how-to-generate-the-swagger-file)
 
+## API Response Language
+
+Casdoor APIs support internationalized responses. The default response language is English. To receive error messages and other text content in your preferred language, include the `Accept-Language` header in your API requests:
+
+```bash
+# Example: Get error messages in French
+curl -X GET https://door.casdoor.com/api/get-account \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Accept-Language: fr"
+```
+
+Supported language codes include `en`, `zh`, `es`, `fr`, `de`, `ja`, `ko`, and more. For a complete list and more details, see the [Internationalization](/docs/internationalization) documentation.
+
 ## Machine-to-Machine (M2M) Authentication
 
 Machine-to-machine (M2M) authentication is designed for scenarios where services, applications, or backend systems need to authenticate and communicate with APIs **without user interaction**. This is particularly useful for:
