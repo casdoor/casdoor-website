@@ -15,13 +15,13 @@ The full reference for the `Casdoor Public API` can be found on Swagger: [**http
 
 ## API Response Language
 
-Casdoor APIs support internationalized responses. To receive error messages and other text content in your preferred language, include the `Accept-Language` header in your API requests:
+Casdoor APIs support internationalized responses. The default response language is English. To receive error messages and other text content in your preferred language, include the `Accept-Language` header in your API requests:
 
 ```bash
-# Example: Get error messages in Chinese
+# Example: Get error messages in French
 curl -X GET https://door.casdoor.com/api/get-account \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Accept-Language: zh"
+  -H "Accept-Language: fr"
 ```
 
 Supported language codes include `en`, `zh`, `es`, `fr`, `de`, `ja`, `ko`, and more. For a complete list and more details, see the [Internationalization](/docs/internationalization) documentation.
