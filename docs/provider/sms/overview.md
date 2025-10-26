@@ -19,3 +19,9 @@ We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send
    ![Select Type](/img/providers/sms/selecttype.png)
 
 4. Retrieve the necessary information from your SMS provider and fill out the corresponding fields.
+
+## Proxy configuration
+
+For SMS providers that use HTTP APIs (such as Custom HTTP SMS), you can enable proxy support if your server cannot directly access the SMS service. When enabled, SMS traffic will be routed through the SOCKS5 proxy configured in Casdoor's configuration file.
+
+To enable proxy support, toggle the `Enable proxy` switch in the provider settings. This option is available for Custom HTTP SMS providers and helps when operating in restricted network environments.

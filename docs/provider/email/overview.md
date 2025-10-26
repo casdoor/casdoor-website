@@ -18,6 +18,12 @@ authors: [kininaru]
 
 4. Customize the `Email Title` and `Email Content`, then save the changes.
 
+## Proxy configuration
+
+If your server cannot directly access the SMTP service (such as Gmail), you can enable the proxy option. When enabled, email traffic will be routed through the SOCKS5 proxy configured in Casdoor's configuration file.
+
+To enable proxy support, toggle the `Enable proxy` switch in the provider settings. This is particularly useful when connecting to external email services from restricted network environments.
+
 ## Modify email content
 
 You can use the following placeholders to display some variables.
