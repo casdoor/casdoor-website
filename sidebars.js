@@ -313,6 +313,15 @@ module.exports = {
             "provider/faceid/alibaba_cloud_facebody",
           ],
         },
+        {
+          type: "category",
+          label: "MFA",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/mfa/radius",
+          ],
+        },
       ],
     },
     {
