@@ -53,7 +53,10 @@ The syncer automatically maps WeCom user fields to Casdoor user fields:
 | gender | Gender | Gender (1=Male, 2=Female) |
 | status/enable | IsForbidden | Account status |
 
-The syncer automatically handles user account status based on WeCom's status and enable fields. Users who are disabled, not activated, or have quit will be marked as forbidden in Casdoor.
+The syncer automatically handles user account status based on WeCom's status and enable fields:
+
+- **Activated users** (status=1, enable=1): Normal Casdoor users
+- **Disabled, not activated, or quit users** (status=2/4/5 or enable=0): Marked as forbidden in Casdoor
 
 ## Running the Syncer
 
