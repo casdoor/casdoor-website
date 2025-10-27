@@ -1,41 +1,64 @@
 ---
 title: WeCom
-description: Using WeCom Syncer to synchronize databases
-keywords: [syncer, database]
+description: Using WeCom Syncer to synchronize users from WeCom
+keywords: [syncer, wecom, wechat work]
 authors: [UsherFall]
 ---
 
-## WeCom Syncer
+WeCom Syncer allows you to automatically import users from your WeCom (企业微信) organization into Casdoor. The syncer fetches user information from all departments in your WeCom organization through the WeCom API and keeps the user data synchronized.
 
-By using WeCom syncer, you can sync WeCom user and department data to Casdoor's user table and group table.
+## Configuration
 
 The following fields are required:
 
-- `Organization`: The organization that the user will be imported to
-- `Name`: The syncer's name
-- `Type`: Select "WeCom"
-- `User`: Your WeCom Company ID
-- `Password`: Your WeCom App secret
-- `ClientSecret`: Your WeCom Sync of Contacts secret
+- **Organization**: The Casdoor organization where users will be imported
+- **Name**: A unique name for this syncer
+- **Type**: Select "WeCom"
+- **Corp ID**: Your WeCom organization's Corp ID
+- **Corp Secret**: The secret for your WeCom application
 
-Follow the steps below to configure.
+## Setup Steps
 
-### Step 1: Get WeCom Syncer configuration items
+### Step 1: Obtain WeCom Credentials
 
-- In your WeCom management platform, navigate to **My Company**, get `Company ID` in **Company Information**.
+1. Log in to your [WeCom Admin Console](https://work.weixin.qq.com/)
+2. Navigate to **My Company** → **Company Information** to find your **Corp ID**
+3. Go to **Applications & Tools** → **Applications** → Create or select an application
+4. Get the **Secret** (Corp Secret) from the application details page
 
-![wecom_corpid](/img/syncer/WeCom/syncer_wecom_corpid.png)
+### Step 2: Configure the Syncer in Casdoor
 
-- In your Self-build App, get `App secret`.
+1. Navigate to the **Syncers** page in Casdoor
+2. Click **Add** to create a new syncer
+3. Fill in the required information:
+   - Set **Type** to "WeCom"
+   - Enter your WeCom **Corp ID** in the Corp ID field
+   - Enter your application **Secret** in the Corp Secret field
+4. Click **Test Connection** to verify your credentials
+5. Configure the table columns mapping (the default mapping should work for most cases)
+6. Save the syncer configuration
 
-![wecom_app](/img/syncer/WeCom/syncer_wecom_app.png)
+## Field Mappings
 
-- In Sync of Contacts Management Tool, get `Sync of Contacts secret`.
+The syncer automatically maps WeCom user fields to Casdoor user fields:
 
-![wecom_contact](/img/syncer/WeCom/syncer_wecom_contact.png)
+| WeCom Field | Casdoor Field | Description |
+|-------------|---------------|-------------|
+| userid | Id | User's unique identifier |
+| name | DisplayName | User's display name |
+| email | Email | Email address |
+| mobile | Phone | Phone number |
+| avatar | Avatar | Profile picture URL |
+| position | Title | Job title |
+| gender | Gender | Gender (1=Male, 2=Female) |
+| status/enable | IsForbidden | Account status |
 
-### Step2: Config Casdoor WeCom Syncer
+The syncer automatically handles user account status based on WeCom's status and enable fields. Users who are disabled, not activated, or have quit will be marked as forbidden in Casdoor.
 
-Go to Syncers tab, select `WeCom` type and fill in the required information as shown below. Then, save the changes.
+## Running the Syncer
 
-![wecom_provider](/img/syncer/WeCom/syncer_wecom_provider.png)
+After configuration, you can:
+
+- Enable **Is enabled** to allow automatic synchronization on schedule
+- Use the **Sync** button to manually trigger a synchronization
+- The syncer will fetch users from all departments and deduplicate them automatically
