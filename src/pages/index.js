@@ -58,21 +58,26 @@ function FrameMask(props) {
 }
 
 function HomepageHeader() {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize === "mobile";
+
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title" style={{fontSize: "3.5rem", fontWeight: "700", marginBottom: "1.5rem"}}><Translate>Casdoor</Translate></h1>
-        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 800, fontSize: "1.4rem", lineHeight: "1.8", fontWeight: "400"}}><Translate>A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos</Translate></p>
+        <h1 className="hero__title"><Translate>Casdoor</Translate></h1>
+        <br />
+        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A modern UI-first Identity and Access Management (IAM) / Single Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory, and Kerberos</Translate></p>
+        <br />
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            style={{marginTop: "2.5rem", padding: "0.8rem 2rem", fontSize: "1.1rem", fontWeight: "600", borderRadius: "8px"}}
+            style={{marginTop: "2rem", marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}
             to="/docs/overview">
             <Translate>Get Started</Translate>
           </Link>
           <Link
             className="button button--secondary button--lg"
-            style={{marginTop: "2.5rem", padding: "0.8rem 2rem", fontSize: "1.1rem", fontWeight: "600", borderRadius: "8px"}}
+            style={{marginTop: "2rem", marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}
             to="https://door.casdoor.com/">
             <Translate>Online Demo</Translate>
           </Link>
@@ -87,17 +92,14 @@ function LearnHowTo() {
   return (
     <div className={styles.explain}>
       <div className="container text--center">
-        <h2 style={{fontSize: "2.5rem", fontWeight: "700", marginBottom: "3rem"}}><Translate>How Casdoor Works</Translate></h2>
         <div className="row">
           <div className={styles.explaingif}>
-            <img src="/img/principles.gif" alt="Casdoor work principle" height="90%" width="90%" style={{borderRadius: "12px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)"}}></img>
+            <img src="/img/principles.gif" alt="Casdoor work principle" height="90%" width="90%"></img>
           </div>
           <div className="col">
             <div className={styles.explaintext}>
-              <p style={{fontSize: "1.25rem", lineHeight: "1.8"}}>
-                <Translate>As an authentication platform, </Translate><Translate>Casdoor implements the
-                authentication by communicating with providers and users.</Translate>
-              </p>
+              <br />
+              <Translate>As an authentication platform, Casdoor provides authentication services by seamlessly integrating with identity providers and managing user authentication flows.</Translate>
             </div>
           </div>
         </div>
@@ -110,20 +112,17 @@ function ContentInterface() {
   return (
     <div className={styles.contentinterface}>
       <div className="container text--center">
-        <h2 style={{fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem"}}><Translate>Easy Integration</Translate></h2>
         <div className="row">
           <div className="col" style={{margin: "auto"}}>
-            <p style={{fontSize: "1.2rem", lineHeight: "1.8", marginBottom: "2rem"}}>
-              <Translate description="Help page forum" values={{
-                docLink: (
-                  <Link href="/docs/category/how-to-connect-to-casdoor">
-                    <Translate>How to Connect to Casdoor</Translate>
-                  </Link>
-                ),
-              }}>
-                {"Casdoor SDK provides many functions, such as identity authentication, user management, resource upload, etc. Access to Casdoor is very convenient, please visit {docLink} for details."}
-              </Translate>
-            </p>
+            <Translate description="Help page forum" values={{
+              docLink: (
+                <Link href="/docs/category/how-to-connect-to-casdoor">
+                  <Translate>How to Connect to Casdoor</Translate>
+                </Link>
+              ),
+            }}>
+              {"The Casdoor SDK provides comprehensive features including identity authentication, user management, and resource uploads. Integrating with Casdoor is straightforward—visit {docLink} for detailed instructions."}
+            </Translate>
           </div>
           <TabList>
             <TabItem value="login.js">
@@ -153,42 +152,34 @@ function ContentLogin() {
   return (
     <div className={styles.contentlogin}>
       <div className="container text--center">
-        <h2 style={{fontSize: "2.5rem", fontWeight: "700", marginBottom: "3rem"}}><Translate>Powerful Authentication</Translate></h2>
         <div className="row">
           <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/login" width="600" height="730" />
-          <div className="col" style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-            <p style={{fontSize: "1.2rem", lineHeight: "1.8", marginBottom: "1.5rem"}}>
-              <Translate>Casdoor is a powerful authentication platform.</Translate>
-              {" "}
-              <Translate>With supporting for</Translate>
-            </p>
-            <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "15px", padding: "20px 0", margin: "1rem 0"}}>
-              <img src="https://cdn.casbin.org/img/social_google.png" width="35" alt="Google" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_github.png" width="35" alt="GitHub" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_facebook.png" width="35" alt="Facebook" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_twitter.png" width="35" alt="Twitter" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_linkedin.png" width="35" alt="LinkedIn" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_weibo.png" width="35" alt="Weibo" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_wechat.png" width="35" alt="WeChat" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_qq.png" width="35" alt="QQ" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="35" alt="DingTalk" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_gitee.png" width="35" alt="Gitee" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_wecom.png" width="35" alt="WeCom" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_mail.png" width="35" alt="Email" style={{transition: "transform 0.2s"}}></img>
-              <img src="https://cdn.casbin.org/img/social_msg.png" width="35" alt="SMS" style={{transition: "transform 0.2s"}}></img>
+          <div className="col">
+            <br /><br /><br /><br />
+            <Translate>Casdoor is a powerful authentication platform with support for multiple identity providers.</Translate>
+            <br />
+            <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", padding: "10px 0"}}>
+              <img src="https://cdn.casbin.org/img/social_google.png" width="30" alt="Google"></img>
+              <img src="https://cdn.casbin.org/img/social_github.png" width="30" alt="GitHub"></img>
+              <img src="https://cdn.casbin.org/img/social_facebook.png" width="30" alt="Facebook"></img>
+              <img src="https://cdn.casbin.org/img/social_twitter.png" width="30" alt="Twitter"></img>
+              <img src="https://cdn.casbin.org/img/social_linkedin.png" width="30" alt="LinkedIn"></img>
+              <img src="https://cdn.casbin.org/img/social_weibo.png" width="30" alt="Weibo"></img>
+              <img src="https://cdn.casbin.org/img/social_wechat.png" width="30" alt="WeChat"></img>
+              <img src="https://cdn.casbin.org/img/social_qq.png" width="30" alt="QQ"></img>
+              <img src="https://cdn.casbin.org/img/social_dingtalk.png" width="30" alt="DingTalk"></img>
+              <img src="https://cdn.casbin.org/img/social_gitee.png" width="30" alt="Gitee"></img>
+              <img src="https://cdn.casbin.org/img/social_wecom.png" width="30" alt="WeCom"></img>
+              <img src="https://cdn.casbin.org/img/social_mail.png" width="30" alt="Email"></img>
+              <img src="https://cdn.casbin.org/img/social_msg.png" width="30" alt="SMS"></img>
             </div>
-            <p style={{fontSize: "1.1rem", lineHeight: "1.8"}}>
-              <Translate>third-party application login, You can choose your favorite social network to
-              login.</Translate>
-              {" "}
-              <Translate>And Casdoor support the extension of third-party login with plugins.</Translate>
-            </p>
-            <p style={{fontSize: "1rem", marginTop: "1rem"}}>
-              <Translate>For more details about third-party login, please visit</Translate> <Link
-                to="/docs/provider/overview"><Translate>provider</Translate></Link>.{" "}
-              <Translate>And if your want more providers, please propose it in</Translate> <Link
-                href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>.
-            </p>
+            <br />
+            <Translate>Enable third-party authentication and let users sign in with their preferred social network or identity provider. Casdoor also supports extending authentication options through custom plugins.</Translate>
+            <br />
+            <Translate>For more information about identity providers, visit our</Translate> <Link
+              to="/docs/provider/overview"><Translate>provider documentation</Translate></Link>.{" "}
+            <Translate>If you need additional providers, please submit a request to</Translate> <Link
+              href="https://github.com/casdoor/casdoor"><Translate>our community</Translate></Link>.
           </div>
         </div>
       </div>
@@ -200,12 +191,10 @@ function ContentSignup() {
   return (
     <div className={styles.contentsignup}>
       <div className="container text--center">
-        <h2 style={{fontSize: "2.5rem", fontWeight: "700", marginBottom: "3rem"}}><Translate>Easy Registration</Translate></h2>
         <div className="row">
-          <div className="col" style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-            <p style={{fontSize: "1.2rem", lineHeight: "1.8"}}>
-              <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
-            </p>
+          <div className="col">
+            <br /><br /><br /><br /><br />
+            <Translate>Casdoor also supports direct user registration. Users can sign up by providing their</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display Name</Translate></b>, <b><Translate>Password</Translate></b>, <Translate>and</Translate> <b><Translate>Email</Translate></b>. <Translate>After receiving the verification</Translate> <b><Translate>Email Code</Translate></b>, <Translate>they can complete the registration process.</Translate>
           </div>
           <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height="850" />
         </div>
@@ -218,16 +207,14 @@ function ContentForget() {
   return (
     <div className={styles.contentforget}>
       <div className="container text--center">
-        <h2 style={{fontSize: "2.5rem", fontWeight: "700", marginBottom: "3rem"}}><Translate>Password Recovery</Translate></h2>
         <div className="row">
           <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/forget" width="700" height="620" />
-          <div className="col" style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
-            <p className="padding-horiz--md" style={{fontSize: "1.2rem", lineHeight: "1.8"}}>
-              <Translate>Casdoor support forget and retrieve password feature.</Translate>
+          <div className="col">
+            <br /><br /><br /><br />
+            <p className="padding-horiz--md">
+              <Translate>Casdoor provides password recovery functionality.</Translate>
               {" "}
-              <Translate>To retrieve your password, you can enter your username, email or phone linked to
-                your account and enter the verification code sent to your email or your phone, enter
-                your new password and confirm to reset your new password.</Translate>
+              <Translate>To reset your password, enter your username, email, or phone number associated with your account. You&apos;ll receive a verification code via email or SMS. Enter the code along with your new password to complete the reset process.</Translate>
             </p>
           </div>
         </div>
@@ -241,15 +228,12 @@ function Showcase() {
   const isMobile = windowSize === "mobile";
 
   return (
-    <div className="hero text--center showcase" style={{padding: "80px 0"}}>
+    <div className="hero text--center showcase">
       <div className="container">
-        <h2 style={{fontSize: "2.5rem", fontWeight: "700", marginBottom: "2rem"}}><Translate>Who&apos;s using Casdoor?</Translate></h2>
+        <h1><Translate>Who&apos;s using Casdoor?</Translate></h1>
         <p style={{
           width: isMobile ? "90%" : "50vw",
           margin: "auto",
-          fontSize: "1.2rem",
-          lineHeight: "1.8",
-          marginBottom: "3rem",
         }}>
           <Translate values={{
             UsersPage: (
@@ -258,9 +242,10 @@ function Showcase() {
               </Link>
             ),
           }}>
-            {"Hundreds of projects are using Casdoor, from established Fortune 500 companies to hot new startups. If you're curious to see what can be accomplished Casdoor, {UsersPage}!"}
+            {"Hundreds of projects use Casdoor, from Fortune 500 companies to innovative startups. To see what's possible with Casdoor, {UsersPage}!"}
           </Translate>
         </p>
+        <br /><br />
         <UserList />
       </div>
     </div>
