@@ -6,10 +6,16 @@
  */
 
 .heroBanner {
-  padding: 1rem 0;
+  padding: 4rem 0 6rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      var(--ifm-hero-background-color) 0%,
+      rgb(var(--ifm-color-primary-rgb, 76, 0, 255) 0.2) 100%
+    );
 
   // color: var(--ifm-font-color-base);
   color: #e3e3e3;
@@ -54,10 +60,11 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
 @mixin content {
-  padding: 60px 0;
+  padding: 80px 0;
   font-size: 1.3rem;
   justify-content: center;
   line-height: 40px;
@@ -90,24 +97,36 @@
   display: flex;
   transform: scale(0.85);
   margin-right: 10vw;
-  box-shadow: 0 0 50px black;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 50%);
   border-radius: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.headerborder:hover {
+  transform: scale(0.87);
+  box-shadow: 0 25px 80px rgb(0 0 0 / 60%);
 }
 
 .gradientborder {
   display: flex;
   transform: scale(0.85);
-  box-shadow: 0 0 50px grey;
+  box-shadow: 0 10px 40px rgb(128 128 128 / 30%);
   border-radius: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gradientborder:hover {
+  transform: scale(0.87);
+  box-shadow: 0 15px 50px rgb(128 128 128 / 40%);
 }
 
 /* Workflow explain gif layout here */
 .explain {
-  padding: 20px 20px 0;
+  padding: 60px 20px 40px;
   font-size: 1.3rem;
   justify-content: center;
   line-height: 40px;
-  background-color: var(--ifm-color-emphasis-100);
+  background: linear-gradient(180deg, var(--ifm-color-emphasis-100) 0%, var(--ifm-background-color) 100%);
 }
 
 .explaingif {
