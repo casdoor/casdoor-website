@@ -1,7 +1,7 @@
 ---
 title: MFA / 2FA
 description: Secure your account with MFA / 2FA
-keywords: [MFA, 2FA, Authentication, Security, SMS, TOTP, Email]
+keywords: [MFA, 2FA, Authentication, Security, SMS, TOTP, Email, RADIUS]
 authors: [leo220yuyaodog]
 ---
 
@@ -9,7 +9,7 @@ authors: [leo220yuyaodog]
 
 MFA (Multi-Factor Authentication) is a security measure that can enhance the security of users and systems. It requires users to provide two or more factors of authentication to verify their identity when logging in or performing sensitive operations.
 
-For Casdoor, the second form of authentication is a code that is sent as a text message or email. Once you enable MFA, Casdoor generates an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
+Casdoor supports multiple second-factor authentication methods including SMS codes, email codes, TOTP authenticator apps, and RADIUS authentication. Once you enable MFA, Casdoor requires an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
 
 ## Configuring MFA
 
@@ -84,6 +84,24 @@ Configuring email as your multi-factor authentication method is similar to using
 2. Then enter the code into the "Enter your code" field and click "Next Step".
 
 3. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
+
+### Configuring multi-factor authentication using RADIUS
+
+RADIUS MFA allows you to authenticate against an external RADIUS server for the second authentication factor. This is useful when integrating with existing authentication infrastructure.
+
+Before using RADIUS MFA, your administrator must configure a RADIUS provider in the application. Once configured:
+
+1. Enter your RADIUS username when prompted.
+
+2. Enter your RADIUS password. This password will be verified against the configured RADIUS server.
+
+3. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
+
+:::note
+
+The RADIUS authentication communicates with the external RADIUS server configured by your administrator. Make sure you have the correct username and password for your RADIUS account.
+
+:::
 
 ## Changing your preferred MFA method
 

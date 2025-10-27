@@ -9,7 +9,7 @@ Casdoor utilizes providers to offer third-party services for the platform. In th
 
 ## What We Have
 
-Currently, we have six types of providers:
+Currently, we have seven types of providers:
 
 - **OAuth Providers**
 
@@ -29,6 +29,9 @@ Currently, we have six types of providers:
 - **Captcha Providers**
 
   Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha, Alibaba Cloud Captcha, and Cloudflare Turnstile.
+- **MFA Providers**
+
+  Casdoor supports external authentication servers for multi-factor authentication. Currently supports RADIUS servers for authenticating users as a second factor during login.
 
 ## How to Configure and Use
 
