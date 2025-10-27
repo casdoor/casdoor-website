@@ -2,7 +2,7 @@
 title: Azure AD
 description: Using Azure AD Syncer to synchronize users from Azure Active Directory
 keywords: [syncer, azure ad, microsoft]
-authors: [Copilot]
+authors: [nomeguy]
 ---
 
 Azure AD Syncer enables automatic user synchronization from Azure Active Directory (Microsoft Entra ID) to Casdoor. The syncer uses the Microsoft Graph API to fetch user information and keeps your user directory up to date.
