@@ -11,7 +11,12 @@ As an authentication platform, Casdoor can easily manage users stored in databas
 
 Casdoor stores users in the **user** table. So, when you plan to use Casdoor as an authentication platform, there is no need to worry about migrating your application's user data into Casdoor. Casdoor provides a **syncer** to quickly help you synchronize user data to Casdoor.
 
-You need to specify the database and user table that you want to synchronize with Casdoor, and the syncer will take care of syncing the data at regular intervals. For more details, refer to the [database syncer](/docs/syncer/Database).
+Casdoor supports multiple syncer types to import users from different sources:
+
+- **Database**: Synchronize users from any database supported by Xorm (MySQL, PostgreSQL, SQL Server, Oracle, SQLite). See [database syncer](/docs/syncer/Database).
+- **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
+- **WeCom**: Fetch users from WeCom (企业微信) organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
+- **Azure AD**: Synchronize users from Azure Active Directory using Microsoft Graph API. See [Azure AD syncer](/docs/syncer/AzureAD).
 
 ## Synchronization hash
 
