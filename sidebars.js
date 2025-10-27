@@ -387,6 +387,7 @@ module.exports = {
       items: [
         "syncer/overview",
         "syncer/Database",
+        "syncer/AzureAD",
         "syncer/Keycloak",
         "syncer/WeCom",
       ],
