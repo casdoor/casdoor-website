@@ -258,7 +258,7 @@ function Showcase() {
               </Link>
             ),
           }}>
-            {"Hundreds of projects are using Casdoor, from established Fortune 500 companies to hot new startups.If you're curious to see what can be accomplished Casdoor, {UsersPage}!"}
+            {"Hundreds of projects are using Casdoor, from established Fortune 500 companies to hot new startups. If you're curious to see what can be accomplished Casdoor, {UsersPage}!"}
           </Translate>
         </p>
         <UserList />
@@ -268,7 +268,10 @@ function Showcase() {
 }
 
 function OpenCollective() {
-  if (useWindowSize() === "mobile") {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize === "mobile";
+
+  if (isMobile) {
     return (
       <iframe title="Sponsors" src="https://opencollective.com/casbin/banner.html" style={{width: "100%", height: "1100px", display: "block"}}></iframe>
     );
