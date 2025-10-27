@@ -21,22 +21,30 @@ The following fields are required:
 
 ### Step 1: Obtain WeCom Credentials
 
-1. Log in to your [WeCom Admin Console](https://work.weixin.qq.com/)
-2. Navigate to **My Company** → **Company Information** to find your **Corp ID**
-3. Go to **Applications & Tools** → **Applications** → Create or select an application
-4. Get the **Secret** (Corp Secret) from the application details page
+In your WeCom management platform, navigate to **My Company**, get **Corp ID** in **Company Information**.
+
+![wecom_corpid](/img/syncer/WeCom/syncer_wecom_corpid.png)
+
+In your Self-build App, get **App secret** (Corp Secret).
+
+![wecom_app](/img/syncer/WeCom/syncer_wecom_app.png)
+
+Optionally, in Sync of Contacts Management Tool, you can get **Sync of Contacts secret** for advanced configurations.
+
+![wecom_contact](/img/syncer/WeCom/syncer_wecom_contact.png)
 
 ### Step 2: Configure the Syncer in Casdoor
 
-1. Navigate to the **Syncers** page in Casdoor
-2. Click **Add** to create a new syncer
-3. Fill in the required information:
-   - Set **Type** to "WeCom"
-   - Enter your WeCom **Corp ID** in the Corp ID field
-   - Enter your application **Secret** in the Corp Secret field
-4. Click **Test Connection** to verify your credentials
-5. Configure the table columns mapping (the default mapping should work for most cases)
-6. Save the syncer configuration
+Go to Syncers tab, select **WeCom** type and fill in the required information:
+
+- Enter your WeCom **Corp ID** in the Corp ID field
+- Enter your application **Secret** (App secret) in the Corp Secret field
+
+Then save the changes.
+
+![wecom_provider](/img/syncer/WeCom/syncer_wecom_provider.png)
+
+Click **Test Connection** to verify your credentials before enabling the syncer.
 
 ## Field Mappings
 
