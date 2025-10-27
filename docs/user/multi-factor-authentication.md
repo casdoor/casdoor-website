@@ -9,7 +9,9 @@ authors: [leo220yuyaodog]
 
 MFA (Multi-Factor Authentication) is a security measure that can enhance the security of users and systems. It requires users to provide two or more factors of authentication to verify their identity when logging in or performing sensitive operations.
 
-Casdoor supports multiple second-factor authentication methods including SMS codes, email codes, TOTP authenticator apps, and RADIUS authentication. Once you enable MFA, Casdoor requires an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
+Casdoor supports multiple second-factor authentication methods including SMS codes, email codes, TOTP authenticator apps, and RADIUS authentication.
+
+Once you enable MFA, Casdoor requires an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
 
 ## Configuring MFA
 
@@ -91,9 +93,9 @@ RADIUS MFA allows you to authenticate against an external RADIUS server for the 
 
 Before using RADIUS MFA, your administrator must configure a RADIUS provider in the application. Once configured:
 
-1. Enter your RADIUS username when prompted.
+1. Enter your RADIUS username when prompted during setup.
 
-2. Enter your RADIUS password. This password will be verified against the configured RADIUS server.
+2. Enter your RADIUS password to verify the setup. This password will be verified against the configured RADIUS server. During subsequent logins, you'll enter this same RADIUS password as your second factor.
 
 3. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
 
