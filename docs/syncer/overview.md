@@ -14,9 +14,9 @@ Casdoor stores users in the **user** table. So, when you plan to use Casdoor as 
 Casdoor supports multiple syncer types to import users from different sources:
 
 - **Database**: Synchronize users from any database supported by Xorm (MySQL, PostgreSQL, SQL Server, Oracle, SQLite). See [database syncer](/docs/syncer/Database).
-- **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
-- **WeCom**: Fetch users from WeCom (企业微信) organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
 - **Azure AD**: Synchronize users from Azure Active Directory using Microsoft Graph API. See [Azure AD syncer](/docs/syncer/AzureAD).
+- **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
+- **WeCom**: Fetch users from WeCom organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
 
 ## Synchronization hash
 
