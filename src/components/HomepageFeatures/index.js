@@ -13,7 +13,7 @@ const FeatureList = [
     description: (
       <>
         <Translate>
-        Within a few steps, we can setup a Casdoor app and realize our authorization management.
+        Set up a Casdoor application in just a few steps and manage your authentication and authorization with ease.
         </Translate>
       </>
     ),
@@ -26,19 +26,19 @@ const FeatureList = [
     description: (
       <>
         <Translate>
-        Casdoor has a front-end back-end separation architecture, with maneuverable web UI and supporting high concurrency.
+        Built with a modern frontend-backend separation architecture, Casdoor delivers an intuitive web UI while supporting high concurrency.
         </Translate>
       </>
     ),
   },
   {
     title: translate({
-      message: "Supporting Multi-Language",
+      message: "Multi-Language Support",
     }),
     path: "/img/language",
     description: (
       <>
-        <Translate>Casdoor is supporting multi-languages, using i18n to support multi-languages UI. For more languages support, welcome to propose in</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
+        <Translate>Casdoor supports multiple languages through i18n, providing a localized UI experience. To request additional language support, please visit</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
       </>
     ),
   },

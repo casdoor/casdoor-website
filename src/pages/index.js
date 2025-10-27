@@ -66,7 +66,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title"><Translate>Casdoor</Translate></h1>
         <br />
-        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A UI-first Identity Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos</Translate></p>
+        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A modern UI-first Identity and Access Management (IAM) / Single Sign-On (SSO) platform supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory, and Kerberos</Translate></p>
         <br />
         <div className={styles.buttons}>
           <Link
@@ -99,8 +99,7 @@ function LearnHowTo() {
           <div className="col">
             <div className={styles.explaintext}>
               <br />
-              <Translate>As an authentication platform, </Translate><br /><Translate>Casdoor implements the
-                authentication by communicating with providers and users.</Translate>
+              <Translate>As an authentication platform, Casdoor provides authentication services by seamlessly integrating with identity providers and managing user authentication flows.</Translate>
             </div>
           </div>
         </div>
@@ -122,7 +121,7 @@ function ContentInterface() {
                 </Link>
               ),
             }}>
-              {"Casdoor SDK provides many functions, such as identity authentication, user management, resource upload, etc. Access to Casdoor is very convenient, please visit {docLink} for details."}
+              {"The Casdoor SDK provides comprehensive features including identity authentication, user management, and resource uploads. Integrating with Casdoor is straightforward—visit {docLink} for detailed instructions."}
             </Translate>
           </div>
           <TabList>
@@ -157,9 +156,7 @@ function ContentLogin() {
           <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/login" width="600" height="730" />
           <div className="col">
             <br /><br /><br /><br />
-            <Translate>Casdoor is a powerful authentication platform.</Translate>
-            <br />
-            <Translate>With supporting for</Translate>
+            <Translate>Casdoor is a powerful authentication platform with support for multiple identity providers.</Translate>
             <br />
             <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", padding: "10px 0"}}>
               <img src="https://cdn.casbin.org/img/social_google.png" width="30" alt="Google"></img>
@@ -177,16 +174,12 @@ function ContentLogin() {
               <img src="https://cdn.casbin.org/img/social_msg.png" width="30" alt="SMS"></img>
             </div>
             <br />
-            <Translate>third-party application login, You can choose your favorite social network to
-              login.</Translate>
+            <Translate>Enable third-party authentication and let users sign in with their preferred social network or identity provider. Casdoor also supports extending authentication options through custom plugins.</Translate>
             <br />
-            <Translate>And Casdoor support the extension of third-party login with plugins.</Translate>
-            <br />
-            <Translate>For more details about third-party login, please visit</Translate> <Link
-              to="/docs/provider/overview"><Translate>provider</Translate></Link>
-            <br />
-            <Translate>And if your want more providers, please propose it in</Translate> <Link
-              href="https://github.com/casdoor/casdoor"><Translate>our Casdoor community</Translate></Link>
+            <Translate>For more information about identity providers, visit our</Translate> <Link
+              to="/docs/provider/overview"><Translate>provider documentation</Translate></Link>.{" "}
+            <Translate>If you need additional providers, please submit a request to</Translate> <Link
+              href="https://github.com/casdoor/casdoor"><Translate>our community</Translate></Link>.
           </div>
         </div>
       </div>
@@ -201,7 +194,7 @@ function ContentSignup() {
         <div className="row">
           <div className="col">
             <br /><br /><br /><br /><br />
-            <Translate>Casdoor also support sign up directly. By filling your</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display name</Translate></b>, <b><Translate>Password</Translate></b> <Translate>and</Translate> <b><Translate>Email</Translate></b><Translate>, after your receive your</Translate> <b><Translate>Email code</Translate></b><Translate>, you can sign up in Casdoor.</Translate>
+            <Translate>Casdoor also supports direct user registration. Users can sign up by providing their</Translate> <b><Translate>Username</Translate></b>, <b><Translate>Display Name</Translate></b>, <b><Translate>Password</Translate></b>, <Translate>and</Translate> <b><Translate>Email</Translate></b>. <Translate>After receiving the verification</Translate> <b><Translate>Email Code</Translate></b>, <Translate>they can complete the registration process.</Translate>
           </div>
           <FrameMask className={styles.gradientborder} src="https://door.casdoor.com/signup" width="600" height="850" />
         </div>
@@ -219,11 +212,9 @@ function ContentForget() {
           <div className="col">
             <br /><br /><br /><br />
             <p className="padding-horiz--md">
-              <Translate>Casdoor support forget and retrieve password feature.</Translate>
-              <br />
-              <Translate>To retrieve your password, you can enter your username, email or phone linked to
-                your account and enter the verification code sent to your email or your phone, enter
-                your new password and confirm to reset your new password.</Translate>
+              <Translate>Casdoor provides password recovery functionality.</Translate>
+              {" "}
+              <Translate>To reset your password, enter your username, email, or phone number associated with your account. You&apos;ll receive a verification code via email or SMS. Enter the code along with your new password to complete the reset process.</Translate>
             </p>
           </div>
         </div>
@@ -251,7 +242,7 @@ function Showcase() {
               </Link>
             ),
           }}>
-            {"Hundreds of projects are using Casdoor, from established Fortune 500 companies to hot new startups.If you're curious to see what can be accomplished Casdoor, {UsersPage}!"}
+            {"Hundreds of projects use Casdoor, from Fortune 500 companies to innovative startups. To see what's possible with Casdoor, {UsersPage}!"}
           </Translate>
         </p>
         <br /><br />
@@ -262,7 +253,10 @@ function Showcase() {
 }
 
 function OpenCollective() {
-  if (useWindowSize() === "mobile") {
+  const windowSize = useWindowSize();
+  const isMobile = windowSize === "mobile";
+
+  if (isMobile) {
     return (
       <iframe title="Sponsors" src="https://opencollective.com/casbin/banner.html" style={{width: "100%", height: "1100px", display: "block"}}></iframe>
     );
