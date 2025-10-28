@@ -69,22 +69,6 @@ Common scenarios where user impersonation is helpful:
 - **Demonstration**: Show features or workflows from a specific user's perspective
 - **Audit**: Investigate suspicious activity or verify user actions
 
-## Security Considerations
-
-When using the master password feature:
-
-1. **Audit Logging**: All sign-in attempts, including those using the master password, are logged in Casdoor
-2. **Limited Distribution**: Only share the master password with administrators who absolutely need it
-3. **Regular Rotation**: Change the master password periodically as part of your security policy
-4. **Alternative Methods**: Consider using role-based testing accounts instead of impersonation when possible
-5. **Compliance**: Ensure that user impersonation complies with your organization's privacy and security policies
-
-:::tip Best Practice
-
-Document when and why the master password was used for impersonation. This creates an audit trail and helps maintain accountability.
-
-:::
-
 ## Disabling User Impersonation
 
 To disable user impersonation:
