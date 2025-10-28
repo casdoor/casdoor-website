@@ -45,7 +45,14 @@ The master password is extremely sensitive. Anyone with access to the master pas
 
 To sign in as a user using the master password:
 
-1. Go to the login page for your organization: `/login/<organization_name>` (Replace `<organization_name>` with your actual organization name, e.g., `/login/my-company`)
+1. Go to the login page for your organization: `/login/<organization_name>`
+
+   :::tip Example
+
+   For an organization named "my-company", use: `https://your-casdoor-domain.com/login/my-company`
+
+   :::
+
 2. Enter the username of the user you want to impersonate
 3. Enter the organization's master password (not the user's password)
 4. Sign in
