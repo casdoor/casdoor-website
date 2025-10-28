@@ -359,6 +359,7 @@ module.exports = {
       items: [
         "user/overview",
         "user/multi-factor-authentication",
+        "user/impersonation",
         "user/roles",
         "user/permissions",
         "user/forms",
