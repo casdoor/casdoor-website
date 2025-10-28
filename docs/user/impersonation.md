@@ -2,7 +2,6 @@
 title: User Impersonation
 description: Using master password to impersonate users in Casdoor
 keywords: [user impersonation, master password, admin login, simulate user]
-authors: [copilot]
 ---
 
 User impersonation allows administrators to temporarily sign in as another user within their organization. This feature is useful for troubleshooting user-specific issues, testing permissions, or providing support without requiring the user's actual password.
@@ -46,7 +45,7 @@ The master password is extremely sensitive. Anyone with access to the master pas
 
 To sign in as a user using the master password:
 
-1. Go to the login page for your organization: `/login/<organization_name>`
+1. Go to the login page for your organization: `/login/<organization_name>` (Replace `<organization_name>` with your actual organization name, e.g., `/login/my-company`)
 2. Enter the username of the user you want to impersonate
 3. Enter the organization's master password (not the user's password)
 4. Sign in
