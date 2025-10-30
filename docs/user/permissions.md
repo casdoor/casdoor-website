@@ -19,8 +19,8 @@ Permissions have the following properties:
 * `DisplayName`
 * `IsEnabled`
 * `Model`
-* `Users`: An array of this permission's sub-users
-* `Roles`: An array of this permission's sub-roles
+* `Users`: An array of users belonging to this permission
+* `Roles`: An array of roles belonging to this permission
 * `ResourceType`
 * `Resources`: An array of the resources
 * `Actions`: An array of actions
