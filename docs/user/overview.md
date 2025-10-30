@@ -54,8 +54,8 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `CreatedIp`
 - `LastSigninTime`
 - `LastSigninIp`
-- `Roles`: An array of the user's roles
-- `Permissions`: An array of the user's permissions
+- `Roles`: An array of the user's roles (extended field, read-only via User API)
+- `Permissions`: An array of the user's permissions (extended field, read-only via User API)
 
 Unique IDs for social platform logins:
 
@@ -81,6 +81,17 @@ Unique IDs for social platform logins:
 - `Slack`
 - `Steam`
 - `Ldap`
+
+## Understanding Roles and Permissions Fields
+
+The `Roles` and `Permissions` fields in the User object are **extended fields** that are dynamically populated when retrieving user data. These fields are not stored directly in the User table but are collected from the Roles and Permissions resources through the `ExtendUserWithRolesAndPermissions()` function.
+
+**Important:** You cannot update roles and permissions through the `/api/update-user` endpoint, even when using the `columns` parameter. To manage user roles and permissions, you must use the dedicated APIs for Roles and Permissions resources.
+
+To assign roles or permissions to users:
+
+- **Roles**: Use the Roles API endpoints to create and assign roles. Visit the Roles management page (e.g., `https://door.casdoor.com/roles`) or use the [roles API](/docs/user/roles#managing-roles-via-api).
+- **Permissions**: Use the Permissions API endpoints to create and assign permissions. Visit the Permissions management page (e.g., `https://door.casdoor.com/permissions`) or use the [permissions API](/docs/user/permissions#managing-permissions-via-api).
 
 ## Using the Properties Field
 
