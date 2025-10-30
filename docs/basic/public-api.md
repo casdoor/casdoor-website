@@ -243,11 +243,11 @@ Casdoor implements flexible CORS handling to allow secure cross-origin API reque
 - Origins matching your application's **redirect URIs** (configured in the application settings)
 - Origins matching the Casdoor server's own hostname
 - The configured origin in Casdoor's settings
-- Special cases: `appleid.apple.com`, `/api/login/oauth/access_token`, and `/api/userinfo` endpoints
+- Special endpoint exceptions: requests to `/api/login/oauth/access_token` and `/api/userinfo` endpoints, and requests from `appleid.apple.com`
 
 **How it works:**
 
-When you make a cross-origin API request, Casdoor checks if your origin is in the application's redirect URIs list. If matched, the server includes CORS headers in the response allowing the request. For preflight `OPTIONS` requests, Casdoor returns appropriate headers including allowed methods (`POST`, `GET`, `OPTIONS`, `DELETE`) and credentials support.
+When you make a cross-origin API request, Casdoor validates the origin through multiple checks in order: valid IP addresses or localhost, matching redirect URIs in any application, matching the server's hostname, or configured origins. If any validation passes, the server includes CORS headers in the response allowing the request. For preflight `OPTIONS` requests, Casdoor returns appropriate headers including allowed methods (`POST`, `GET`, `OPTIONS`, `DELETE`) and credentials support.
 
 **Configuration:**
 
