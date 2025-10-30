@@ -233,3 +233,22 @@ We can use the username and password for a Casdoor user to call `Casdoor Public 
     ```
 
 Demo site example: `https://door.casdoor.com/api/get-global-providers?username=built-in/admin&password=123`
+
+## CORS (Cross-Origin Resource Sharing)
+
+Casdoor implements flexible CORS handling to allow secure cross-origin API requests. The server validates the `Origin` header and returns appropriate `Access-Control-Allow-Origin` headers based on the following rules:
+
+**Allowed origins:**
+
+- Origins matching your application's **redirect URIs** (configured in the application settings)
+- Origins matching the Casdoor server's own hostname
+- The configured origin in Casdoor's settings
+- Special cases: `appleid.apple.com`, `/api/login/oauth/access_token`, and `/api/userinfo` endpoints
+
+**How it works:**
+
+When you make a cross-origin API request, Casdoor checks if your origin is in the application's redirect URIs list. If matched, the server includes CORS headers in the response allowing the request. For preflight `OPTIONS` requests, Casdoor returns appropriate headers including allowed methods (`POST`, `GET`, `OPTIONS`, `DELETE`) and credentials support.
+
+**Configuration:**
+
+To enable CORS for your application, add your frontend's origin to the application's **Redirect URIs** in the Casdoor admin panel. This allows your application to make authenticated API calls from the browser.
