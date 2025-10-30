@@ -20,3 +20,9 @@ For a detailed explanation of each signin item, please refer to the table below.
 |    Placeholder     |        -         | The placeholder of the signin item.                                         |
 |    Rule     |  `Rule Items`   | Select a rule to customize this signin item. Detailed rules are described in the table below. |
 |   Action    |        -         | Users can perform actions such as moving this signin item up, moving it down, or deleting it.                            |
+
+The Captcha signin item supports configuration rules to control how verification is presented to users.
+
+| Item Name | Selectable Rules | Description                                                                                                        |
+|:---------:|:----------------:|--------------------------------------------------------------------------------------------------------------------|
+| Captcha   | `Normal` / `Inline` | Choose how captcha verification is displayed. `Normal` shows a modal dialog when sending verification codes. `Inline` displays the captcha directly on the signin page, streamlining the verification process. |
