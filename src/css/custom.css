@@ -2,6 +2,10 @@
 /* stylelint-disable value-keyword-case */
 /* stylelint-disable docusaurus/copyright-header */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
