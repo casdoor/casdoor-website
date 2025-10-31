@@ -319,6 +319,7 @@ module.exports = {
           collapsed: true,
           link: {type: "generated-index"},
           items: [
+            "provider/mfa/push",
             "provider/mfa/radius",
           ],
         },
