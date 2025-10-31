@@ -233,6 +233,7 @@ module.exports = {
             "provider/notification/googleChat",
             "provider/notification/twitter",
             "provider/notification/discord",
+            "provider/notification/wecom",
           ],
         },
         {

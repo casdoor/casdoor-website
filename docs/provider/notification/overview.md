@@ -23,6 +23,7 @@ Currently, Casdoor supports multiple Notification providers. Here are the provid
 |      Line       |    <img src="https://cdn.casbin.org/img/social_line.png" width="40" />     |
 |     Matrix      |   <img src="https://cdn.casbin.org/img/social_matrix.png" width="40" />    |
 | Microsoft Teams |    <img src="https://cdn.casbin.org/img/social_teams.png" width="40" />    |
+|      WeCom      |   <img src="https://cdn.casbin.org/img/social_wecom.png" width="40" />    |
 |   Pushbullet    | <img src="https://cdn.casbin.org/img/social_pushbullet.png" width="40" />  |
 |    Pushover     |  <img src="https://cdn.casbin.org/img/social_pushover.png" width="40" />   |
 |     Reddit      |   <img src="https://cdn.casbin.org/img/social_reddit.png" width="40" />    |
