@@ -7,9 +7,9 @@ authors: []
 
 Push notification MFA enables users to receive verification codes through mobile push services during authentication. This method leverages Casdoor's existing notification provider infrastructure, supporting services like Duo, Pushover, Telegram, and 20+ other providers.
 
-## Configure Push Notification Provider
+## Configure Notification Provider
 
-To add a push notification provider for MFA:
+Push notification MFA uses notification providers to send verification codes. To add a notification provider:
 
 1. Navigate to the **Providers** page and click **Add**.
 
