@@ -23,11 +23,10 @@ For more information, refer to the [WeCom Webhook Documentation](https://develop
 
 In Casdoor, create a new notification provider and select "WeCom" as the type.
 
-There are two required fields: `Endpoint` and `Content`. The relationship between the fields and WeCom is as follows:
+There is one required field for WeCom configuration. The relationship between the Casdoor field and WeCom is as follows:
 
-| Name     | Description              |
-|----------|--------------------------|
-| Endpoint | Webhook URL              |
-| Content  | Message content template |
+| Name     | Name in WeCom |
+|----------|---------------|
+| Endpoint | Webhook URL   |
 
-Paste your webhook URL into the `Endpoint` field. The `Content` field defines the message template that will be sent to the WeCom group.
+Paste your webhook URL into the `Endpoint` field. When you send a notification, Casdoor will use the configured message template to deliver messages to your WeCom group.
