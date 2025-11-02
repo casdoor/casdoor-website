@@ -82,6 +82,16 @@ Unique IDs for social platform logins:
 - `Steam`
 - `Ldap`
 
+## Email Normalization
+
+Casdoor normalizes all email addresses to lowercase to ensure uniqueness and prevent duplicate accounts. This means that `user@example.com`, `User@Example.com`, and `USER@EXAMPLE.COM` are treated as the same email address, complying with RFC 5321 standards.
+
+This normalization happens automatically during:
+
+- User signup and account creation
+- User login and authentication
+- Email duplicate checking
+
 ## Understanding Roles and Permissions Fields
 
 The `Roles` and `Permissions` fields in the User object are **extended fields** that are dynamically populated when retrieving user data. These fields are not stored directly in the User table but are collected from the Roles and Permissions resources through the `ExtendUserWithRolesAndPermissions()` function.
