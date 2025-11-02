@@ -116,58 +116,47 @@ dbName = casdoor
 
 ### Via Ini file
 
-Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf), which by default contains the following content:
+Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf). As a beginner, you only need to modify `driverName` and `dataSourceName` based on your database (see [Configure Database](#configure-database)). Below is a complete reference of all configuration options:
 
-```ini
-appname = casdoor
-httpport = 8000
-runmode = dev
-SessionOn = true
-copyrequestbody = true
-driverName = mysql
-dataSourceName = root:123456@tcp(localhost:3306)/
-dbName = casdoor
-tableNamePrefix =
-showSql = false
-redisEndpoint =
-defaultStorageProvider =
-isCloudIntranet = false
-authState = "casdoor"
-socks5Proxy = "127.0.0.1:10808"
-verificationCodeTimeout = 10
-initScore = 2000
-logPostOnly = true
-origin = "https://door.casdoor.com"
-staticBaseUrl = "https://cdn.casbin.org"
-enableGzip = true
-inactiveTimeoutMinutes =
-initDataFile =
-```
-
-- `appname` is the application name, which currently has no practical use.
-- `httpport` is the port that your backend application is listening on.
-- `runmode` can be set to `dev` or `prod`.
-- `SessionOn` determines whether to enable session and is enabled by default.
-- `copyrequestbody` determines whether to copy the request body for later use, enabled by default.
-- `driverName`, `dataSourceName`, and `dbName` were introduced earlier. Please see [Configure Database](#configure-database) for details.
-- `verificationCodeTimeout` sets the expiration time of the verification code. After expiration, the user needs to obtain it again.
-
-As a beginner, you only need to modify two items: `driverName` and `dataSourceName` based on your database. This database will be used by Casdoor to store all data, including users, organizations, and applications.
-
-- `tableNamePrefix` is the prefix of the table when using an adapter.
-- `showSql` determines whether to show SQL statements on the logger if the log level is greater than INFO.
-- `redisEndpoint` is the Redis endpoint used by Beego session storage. If this parameter is empty, the session data will be stored locally as files in the `./tmp` folder. To use Redis as Beego session storage, the value would be something like: `redis.example.com:6379`. If Redis is deployed locally, you can use `localhost:6379`. If Redis password is enabled, use `redis.example.com:6379,db,password`. See more details at: <https://github.com/beego/beedoc/blob/master/en-US/module/session.md#saving-provider-config>.
-- `defaultStorageProvider` is the default file storage service name. If you need to use file storage services such as avatar upload, you need to set up a storage provider and apply it in your application. See [**storage**](/docs/provider/storage/overview) for details.
-- `isCloudIntranet` is used to identify whether your provider endpoint is an intranet endpoint.
-- `authState` is the authorization application name. This parameter will be checked when logging in.
-- `socks5Proxy` is the SOCKS proxy server IP address. Set the proxy port because we have Google-related services or use `Google`, `GitHub`, `Facebook`, `LinkedIn`, or `Steam` as OAuth Providers, which may be restricted by the network in some areas.
-- `initScore` is the initial score of each user. Each user has a score attribute. The score is used by [**Casnode**](https://github.com/casbin/casnode) and does not control anything in Casdoor.
-- `logPostOnly` is used to determine whether only the post method is used to add a record.
-- `origin` is the origin backend domain name.
-- `staticBaseUrl` is the address of the static image used when the system initializes the database.
-- `enableGzip` will accept and respond with gzip encoding if the request header includes `Accept-Encoding=gzip`.
-- `inactiveTimeoutMinutes` sets the maximum number of minutes of inactivity. If the inactivity time reaches this value, then casdoor will log the user out. Empty value or value less than or equal to 0 means there is no limit on the user's inactivity time.
-- `initDataFile` specifies the path to the data initialization file. If not set, Casdoor looks for `init_data.json` in the root directory. See [Data Initialization](/docs/deployment/data-initialization) for details.
+| Parameter | Default Value | Description |
+|-----------|---------------|-------------|
+| `appname` | `casdoor` | Application name (currently has no practical use) |
+| `httpport` | `8000` | Port that the backend application listens on |
+| `runmode` | `dev` | Running mode: `dev` or `prod` |
+| `copyrequestbody` | `true` | Whether to copy request body for later use |
+| `driverName` | `mysql` | Database driver (e.g., `mysql`, `postgres`, `sqlite`). See [Configure Database](#configure-database) |
+| `dataSourceName` | `root:123456@tcp(localhost:3306)/` | Database connection string. See [Configure Database](#configure-database) |
+| `dbName` | `casdoor` | Database name used by Casdoor |
+| `tableNamePrefix` | (empty) | Prefix for table names when using an adapter |
+| `showSql` | `false` | Show SQL statements in logger when log level is greater than INFO |
+| `redisEndpoint` | (empty) | Redis endpoint for session storage (e.g., `localhost:6379`). If empty, sessions are stored locally in `./tmp`. For password: `host:port,db,password` |
+| `defaultStorageProvider` | (empty) | Default storage provider name for file uploads (e.g., avatars). See [storage](/docs/provider/storage/overview) |
+| `isCloudIntranet` | `false` | Whether provider endpoints use intranet addresses |
+| `authState` | `"casdoor"` | Authorization application name checked during login |
+| `socks5Proxy` | `"127.0.0.1:10808"` | SOCKS5 proxy address for OAuth providers (Google, GitHub, etc.) that may be blocked |
+| `verificationCodeTimeout` | `10` | Verification code expiration time in minutes |
+| `initScore` | `0` | Initial score assigned to new users (used by Casnode, not Casdoor) |
+| `logPostOnly` | `true` | Whether to log only POST requests |
+| `isUsernameLowered` | `false` | Whether to convert usernames to lowercase |
+| `origin` | (empty) | Backend origin URL (e.g., `https://door.casdoor.com`) |
+| `originFrontend` | (empty) | Frontend origin URL if different from backend |
+| `staticBaseUrl` | `"https://cdn.casbin.org"` | CDN URL for static assets used during database initialization |
+| `isDemoMode` | `false` | Enable demo mode restrictions |
+| `batchSize` | `100` | Batch size for bulk operations |
+| `enableErrorMask` | `false` | Whether to mask detailed error messages |
+| `enableGzip` | `true` | Accept and respond with gzip encoding when client supports it |
+| `inactiveTimeoutMinutes` | (empty) | Auto-logout timeout in minutes. Empty or ≤0 means no timeout |
+| `ldapServerPort` | `389` | Port for LDAP server |
+| `ldapsCertId` | `""` | Certificate ID for LDAPS connections |
+| `ldapsServerPort` | `636` | Port for LDAPS (LDAP over SSL) server |
+| `radiusServerPort` | `1812` | Port for RADIUS server |
+| `radiusDefaultOrganization` | `"built-in"` | Default organization for RADIUS authentication |
+| `radiusSecret` | `"secret"` | Shared secret for RADIUS authentication |
+| `quota` | `{"organization": -1, "user": -1, "application": -1, "provider": -1}` | Resource quotas (-1 means unlimited) |
+| `logConfig` | `{"adapter":"file", "filename": "logs/casdoor.log", "maxdays":99999, "perm":"0770"}` | Logging configuration (adapter, file path, rotation, permissions) |
+| `initDataNewOnly` | `false` | Whether to initialize data only for new installations |
+| `initDataFile` | `"./init_data.json"` | Path to data initialization file. See [Data Initialization](/docs/deployment/data-initialization) |
+| `frontendBaseDir` | `"../cc_0"` | Base directory for frontend files (only for development) |
 
 ### Via Environment Variables
 
