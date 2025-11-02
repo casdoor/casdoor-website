@@ -141,12 +141,14 @@ origin = "https://door.casdoor.com"
 staticBaseUrl = "https://cdn.casbin.org"
 enableGzip = true
 inactiveTimeoutMinutes =
+initDataFile =
 ```
 
 - `appname` is the application name, which currently has no practical use.
 - `httpport` is the port that your backend application is listening on.
 - `runmode` can be set to `dev` or `prod`.
 - `SessionOn` determines whether to enable session and is enabled by default.
+- `copyrequestbody` determines whether to copy the request body for later use, enabled by default.
 - `driverName`, `dataSourceName`, and `dbName` were introduced earlier. Please see [Configure Database](#configure-database) for details.
 - `verificationCodeTimeout` sets the expiration time of the verification code. After expiration, the user needs to obtain it again.
 
@@ -165,6 +167,7 @@ As a beginner, you only need to modify two items: `driverName` and `dataSourceNa
 - `staticBaseUrl` is the address of the static image used when the system initializes the database.
 - `enableGzip` will accept and respond with gzip encoding if the request header includes `Accept-Encoding=gzip`.
 - `inactiveTimeoutMinutes` sets the maximum number of minutes of inactivity. If the inactivity time reaches this value, then casdoor will log the user out. Empty value or value less than or equal to 0 means there is no limit on the user's inactivity time.
+- `initDataFile` specifies the path to the data initialization file. If not set, Casdoor looks for `init_data.json` in the root directory. See [Data Initialization](/docs/deployment/data-initialization) for details.
 
 ### Via Environment Variables
 
