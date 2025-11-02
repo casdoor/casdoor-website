@@ -13,7 +13,13 @@ Here we give a tutorial for importing or exporting config data.
 
 ## Import Config Data
 
-If there is a configuration file named `init_data.json` at the root directory of Casdoor, it will be used to initialize data in Casdoor. All you have to do is place this file in the root directory where Casdoor will run.
+By default, if there is a configuration file named `init_data.json` at the root directory of Casdoor, it will be used to initialize data in Casdoor. You can also specify a custom path for the initialization file by setting the `initDataFile` parameter in `conf/app.conf`:
+
+```ini
+initDataFile = /path/to/your/init_data.json
+```
+
+If no custom path is specified, Casdoor will look for `init_data.json` in the root directory where Casdoor runs.
 
 If you are using the official Docker image of Casdoor, here are some scripts that can help you to mount `init_data.json` into the container.
 
