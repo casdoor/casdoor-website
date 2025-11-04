@@ -2,7 +2,7 @@
 title: Single Sign-Out (SSO Logout)
 description: Implement Single Sign-Out to log users out from all applications simultaneously
 keywords: [SSO, Single Sign-Out, Logout, Session Management]
-authors: [Copilot]
+authors: [leo220yuyaodog]
 ---
 
 ## Introduction
@@ -200,6 +200,7 @@ async function logout() {
   const accessToken = localStorage.getItem('access_token');
   
   try {
+    // Use the full Casdoor server URL in your application
     const response = await fetch('https://door.casdoor.com/api/sso-logout', {
       method: 'POST',
       headers: {
@@ -327,7 +328,8 @@ When using session cookies for authentication, ensure CSRF protection is enabled
 
 ```javascript
 // Include CSRF token in the request headers
-fetch('/api/sso-logout', {
+// Replace with your actual Casdoor server URL
+fetch('https://door.casdoor.com/api/sso-logout', {
   method: 'POST',
   headers: {
     'X-CSRF-Token': getCsrfToken()
@@ -386,7 +388,8 @@ Common error scenarios:
 ```javascript
 async function logout() {
   try {
-    const response = await fetch('/api/sso-logout', {
+    // Replace with your actual Casdoor server URL
+    const response = await fetch('https://door.casdoor.com/api/sso-logout', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}` }
     });
