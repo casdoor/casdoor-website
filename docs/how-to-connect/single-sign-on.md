@@ -77,3 +77,9 @@ Open the profile page and go to the "Home" page (`/` URL path). You will see the
 ![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
 
 Click on a tile in the application list, and it will jump to the homepage URL of that application with the GET parameter `?silentSignin=1`. It will automatically log into the application if the application has integrated with Casdoor SSO (so it will recognize the `?silentSignin=1` parameter and perform a silent login in the background).
+
+## SSO Logout
+
+When using SSO, you might need to log a user out from all applications simultaneously. Casdoor provides an SSO logout endpoint that terminates all active sessions and expires all tokens for a user across all applications in the organization.
+
+To implement SSO logout in your application, make a request to the `/api/sso-logout` endpoint. This endpoint will ensure the user is completely logged out from all integrated applications. For detailed information about the SSO logout API, including authentication methods and request examples, see the [SSO Logout](/docs/basic/public-api#sso-logout) section in the Public API documentation.

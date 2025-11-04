@@ -234,6 +234,48 @@ We can use the username and password for a Casdoor user to call `Casdoor Public 
 
 Demo site example: `https://door.casdoor.com/api/get-global-providers?username=built-in/admin&password=123`
 
+## SSO Logout
+
+The SSO logout endpoint `/api/sso-logout` allows you to log out a user from all applications in an organization simultaneously. When called, this endpoint will:
+
+- Delete all active sessions for the user across all applications
+- Expire all access tokens issued to the user
+- Clear the current session and token
+
+This is particularly useful when you need to ensure a user is completely logged out from all services, such as during security incidents or when implementing organization-wide logout policies.
+
+### Endpoint
+
+```http
+GET/POST /api/sso-logout
+```
+
+### Authentication
+
+This endpoint requires the user to be authenticated. You can use any of the authentication methods described in the [How to authenticate](#how-to-authenticate-with-casdoor-public-api) section above.
+
+### Example Request
+
+```bash
+# Using access token
+curl -X POST https://door.casdoor.com/api/sso-logout \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+
+# Using session cookie
+curl -X POST https://door.casdoor.com/api/sso-logout \
+  --cookie "your-session-cookie"
+```
+
+### Response
+
+```json
+{
+  "status": "ok",
+  "msg": "",
+  "data": ""
+}
+```
+
 ## CORS (Cross-Origin Resource Sharing)
 
 Casdoor implements flexible CORS handling to allow secure cross-origin API requests. The server validates the `Origin` header and returns appropriate `Access-Control-Allow-Origin` headers based on the following rules:
