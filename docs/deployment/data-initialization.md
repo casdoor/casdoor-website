@@ -70,13 +70,35 @@ spec:
 
 ## Export Config Data
 
-You can also export all of Casdoor configuration data into a file for data migration. A Go test named `TestDumpToFile()` is provided at: [init_data_dump_test.go](https://github.com/casdoor/casdoor/blob/master/object/init_data_dump_test.go)
+You can export all Casdoor configuration data to a file for backup or migration purposes. There are two methods available:
+
+### Using the Binary (Recommended)
+
+If you're running Casdoor from a binary, use the `-export` flag to dump the database to a JSON file:
+
+```bash
+# Export to default location (init_data_dump.json)
+./casdoor -export
+
+# Export to a custom path
+./casdoor -export -exportPath /path/to/backup.json
+```
+
+The export runs after database initialization but before the server starts, then exits automatically. This method works with any deployment method (binary, Docker, Kubernetes) and doesn't require Go toolchain or source code access.
+
+### Using Go Test
+
+If you have access to the source code, you can use the test method:
 
 ```bash
 go test ./object -v -run TestDumpToFile
 ```
 
-After running this Go test, a file named `init_data_dump.json` will be generated in same directory. This file contains your full Casdoor configuration data. If you want to migrate the data into another Casdoor instance, just rename `init_data_dump.json` to `init_data.json` and move it to root directory of target Casdoor folder.
+This will generate `init_data_dump.json` in the same directory.
+
+### Migrating Data
+
+After exporting, rename `init_data_dump.json` to `init_data.json` and place it in the root directory of your target Casdoor installation. On startup, Casdoor will automatically import the data.
 
 ## References
 
