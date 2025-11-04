@@ -54,6 +54,7 @@ module.exports = {
         "how-to-connect/sdk",
         "how-to-connect/totp-authenticator-app",
         "how-to-connect/single-sign-on",
+        "how-to-connect/single-sign-out",
         "how-to-connect/vue-sdk",
         {
           type: "category",
