@@ -5,7 +5,7 @@ keywords: [Pricing, Plan, Subscription]
 authors: [isulimanov, Chinoholo0807]
 ---
 
-Casdoor can be used as a subscription management system through its `Plan`, `Pricing`, and `Subscription` features.
+Casdoor can be used as a subscription management system through its `Product`, `Payment`, `Plan`, `Plan`, `Pricing`, and `Subscription` features.
 
 You can choose which plans to include in your price list, as shown in the pictures below:
 

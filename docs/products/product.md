@@ -1,5 +1,5 @@
 ---
-title: Products
+title: Product
 description: Add products that you want to sell
 keywords: [products]
 authors: [leo220yuyaodog]

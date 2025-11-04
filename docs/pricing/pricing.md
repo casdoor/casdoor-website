@@ -1,5 +1,5 @@
 ---
-title: Pricing Overview
+title: Pricing
 description: An Overview of Casdoor Pricing
 keywords: [Pricing]
 authors: [isulimanov, Chinoholo0807]
