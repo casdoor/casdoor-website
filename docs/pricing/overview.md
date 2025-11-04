@@ -1,11 +1,11 @@
 ---
 title: Overview
 description: Casdoor Pricing Overview
-keywords: [Pricing, Plan, Subscription]
+keywords: [Pricing, Plan, Subscription, Transaction]
 authors: [isulimanov, Chinoholo0807]
 ---
 
-Casdoor can be used as a subscription management system through its `Product`, `Payment`, `Plan`, `Plan`, `Pricing`, and `Subscription` features.
+Casdoor can be used as a subscription management system through its `Product`, `Payment`, `Plan`, `Pricing`, `Subscription`, and `Transaction` features.
 
 You can choose which plans to include in your price list, as shown in the pictures below:
 
