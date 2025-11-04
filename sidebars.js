@@ -346,6 +346,7 @@ module.exports = {
         "pricing/plan",
         "pricing/pricing",
         "pricing/subscription",
+        "pricing/transaction",
       ],
     },
     {
