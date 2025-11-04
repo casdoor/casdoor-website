@@ -336,19 +336,12 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Products",
-      link: {type: "generated-index"},
-      items: [
-        "products/product",
-        "products/payment",
-      ],
-    },
-    {
-      type: "category",
-      label: "Pricing",
+      label: "SaaS Management",
       link: {type: "generated-index"},
       items: [
         "pricing/overview",
+        "products/product",
+        "products/payment",
         "pricing/plan",
         "pricing/pricing",
         "pricing/subscription",
