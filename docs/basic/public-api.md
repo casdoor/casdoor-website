@@ -247,7 +247,7 @@ This is particularly useful when you need to ensure a user is completely logged 
 ### Endpoint
 
 ```http
-GET/POST /api/sso-logout
+GET or POST /api/sso-logout
 ```
 
 ### Authentication
@@ -263,7 +263,7 @@ curl -X POST https://door.casdoor.com/api/sso-logout \
 
 # Using session cookie
 curl -X POST https://door.casdoor.com/api/sso-logout \
-  --cookie "your-session-cookie"
+  --cookie "casdoor_session_id=abc123def456"
 ```
 
 ### Response
