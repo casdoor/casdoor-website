@@ -42,6 +42,7 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `Score`
 - `Karma`
 - `Ranking`
+- `Balance`: User's account balance for transactions
 - `IsDefaultAvatar`
 - `IsOnline`
 - `IsAdmin`: Indicates whether the user is an admin of their organization

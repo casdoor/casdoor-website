@@ -26,3 +26,12 @@ Casdoor provides multiple password storage algorithms that can be selected on th
 In addition to logging into Casdoor via an application (which redirects to Casdoor for SSO), a Casdoor user can also choose to directly log into Casdoor via the organization's login page: `/login/<organization_name>`, e.g., <https://door.casdoor.com/login/casbin> in the demo site.
 
 :::
+
+## Organization Balance Tracking
+
+Organizations can track two types of balances:
+
+- **Org Balance**: The organization's own balance for organization-level transactions
+- **User Balance**: Sum of all user balances within the organization (read-only, automatically calculated)
+
+These balances are automatically updated when transactions are created, modified, or deleted. The balance fields are visible in the organization edit page and organization list page.
