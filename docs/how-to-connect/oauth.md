@@ -207,6 +207,12 @@ https://<CASDOOR_HOST>/api/login/oauth/access_token
 }
 ```
 
+:::note
+
+This is a Casdoor-specific extension. The special code value `"guest-user"` triggers guest user creation instead of the standard authorization code flow.
+
+:::
+
 The response contains an access token for the newly created guest user:
 
 ```json
