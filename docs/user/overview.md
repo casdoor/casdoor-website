@@ -82,6 +82,17 @@ Unique IDs for social platform logins:
 - `Steam`
 - `Ldap`
 
+## User Tags
+
+The `Tag` field allows you to categorize users for different purposes. Casdoor uses specific tag values for special user types:
+
+- `normal-user`: Standard users with full authentication capabilities
+- `guest-user`: Temporary users created through [guest authentication](/docs/how-to-connect/guest-auth) without initial credentials
+  - Automatically upgrade to `normal-user` when they set a proper username or password
+  - Cannot sign in directly until they upgrade their account
+
+You can also define custom tags to restrict application access. See [Application Tags](/docs/application/tags) for more information.
+
 ## Email Normalization
 
 Casdoor normalizes all email addresses to lowercase to ensure uniqueness and prevent duplicate accounts. This means that `user@example.com`, `User@Example.com`, and `USER@EXAMPLE.COM` are treated as the same email address, complying with RFC 5321 standards.

@@ -7,6 +7,8 @@ authors: [Chinoholo0807]
 
 The application tags are used to restrict user access to the application. Specifically, only users with tags listed in the application tags are allowed to log in. For example, the application `dev_app` has tags `dev, prd`. Only users with the tag `dev` or `prd` can log in to `dev_app`. Please note that admin and global admin users are not affected by application tags.
 
+Casdoor uses specific tag values for special user types. The `guest-user` tag identifies temporary users created through guest authentication. These users automatically upgrade to `normal-user` when they set credentials. See [Guest Authentication](/docs/how-to-connect/guest-auth) for details.
+
 On the application edit page, you can find the `Tags` configuration section where you can add tags.
 
 ![configure_tags](/img/application/tags/configure_app_tags.png)
