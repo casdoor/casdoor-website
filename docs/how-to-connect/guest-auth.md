@@ -2,7 +2,7 @@
 title: Guest Authentication
 description: Create temporary users without credentials
 keywords: [guest, authentication, temporary users, passwordless]
-authors: [Copilot]
+authors: [nomeguy]
 ---
 
 Guest authentication enables applications to create temporary users without requiring credentials upfront. This is useful for allowing users to access your application immediately while deferring registration until later.
