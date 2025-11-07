@@ -29,7 +29,7 @@ The WeChat provider supports two different sets of credentials:
 
 - **Client ID & Client Secret**: Required for `WeChat Open Platform (微信开放平台)`. Used for both Web (QR code) and Mobile (in-app browser) login types.
 
-- **Client ID 2, Client Secret 2 & Access Token** (optional): For `WeChat Media Platform (微信公众平台)`. The `Access Token` field corresponds to the `Token` in the server configuration of WeChat Media Platform. This enables login through your `WeChat Official Account (微信公众号)` within the WeChat built-in browser.
+- **Client ID 2, Client Secret 2 & Access Token** (optional): For `WeChat Media Platform (微信公众平台)`. The `Access Token` field should contain the `Token` value from the server configuration section of your WeChat Media Platform account. This enables login through your `WeChat Official Account (微信公众号)` within the WeChat built-in browser.
 
 ### QR Code Login (Web SubType)
 
@@ -38,7 +38,7 @@ When using the Web SubType, if you configure the optional second credential set 
 - Log in directly using information from `WeChat Media Platform (微信公众平台)`
 - Log in using information from `WeChat Open Platform (微信开放平台)` after following your WeChat official account
 
-Casdoor will prompt users to follow the WeChat official account before proceeding with login. Note that this feature only works in PC scenarios since mobile phones cannot scan QR codes displayed on themselves.
+Casdoor will prompt users to follow the WeChat official account before proceeding with login. Note that this feature only works in PC scenarios since mobile devices cannot scan QR codes displayed on their own screens.
 
 ### Configuration Steps
 
