@@ -188,54 +188,6 @@ You will get the following response:
 
 It is important to note that the AccessToken obtained in this way differs from the first three in that it corresponds to the application rather than to the user.
 
-### Guest Authentication
-
-Guest authentication allows applications to create temporary users without requiring credentials upfront. Guest users can later upgrade to normal users by setting a username and password.
-
-To create a guest user and get an access token, send a POST request to:
-
-```url
-https://<CASDOOR_HOST>/api/login/oauth/access_token
-```
-
-```json
-{
-    "grant_type": "authorization_code",
-    "client_id": ClientId,
-    "client_secret": ClientSecret,
-    "code": "guest-user"
-}
-```
-
-:::note
-
-This is a Casdoor-specific extension. The special code value `"guest-user"` triggers guest user creation instead of the standard authorization code flow.
-
-:::
-
-The response contains an access token for the newly created guest user:
-
-```json
-{
-    "access_token": "eyJhb...",
-    "id_token": "eyJhb...",
-    "refresh_token": "eyJhb...",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid"
-}
-```
-
-The guest user is created with a randomly generated username (format: `guest_<uuid>`) and a random password. The user is tagged with `guest-user` to identify them as a temporary user.
-
-**Guest User Upgrade**
-
-Guest users are automatically upgraded to normal users when they update their username to a non-guest format or change their password through the user update API. After upgrade, the user tag changes from `guest-user` to `normal-user`, enabling standard login.
-
-**Restrictions**
-
-Guest users cannot sign in directly through the standard login flow. They must first upgrade their account by setting a proper username and password.
-
 ### Refresh Token
 
 Maybe you want to update your Access Token, then you can use the `refreshToken` you obtained above.

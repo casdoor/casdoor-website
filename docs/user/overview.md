@@ -87,7 +87,7 @@ Unique IDs for social platform logins:
 The `Tag` field allows you to categorize users for different purposes. Casdoor uses specific tag values for special user types:
 
 - `normal-user`: Standard users with full authentication capabilities
-- `guest-user`: Temporary users created through guest authentication without initial credentials
+- `guest-user`: Temporary users created through [guest authentication](/docs/how-to-connect/guest-auth) without initial credentials
   - Automatically upgrade to `normal-user` when they set a proper username or password
   - Cannot sign in directly until they upgrade their account
 
