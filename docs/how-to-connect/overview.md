@@ -25,26 +25,26 @@ As an Identity Provider (IdP), Casdoor supports four authentication protocols:
 
 <summary>What is OAuth 2.0?</summary>
 
-[OAuth 2](https://oauth.net/2/) is an authorization framework that enables applications—such as Facebook, GitHub, and Casdoor—to obtain limited access to user accounts on an HTTP service. It works by delegating user authentication to the service that hosts a user account and authorizing third-party applications to access that user account. OAuth 2 provides authorization flows for web and desktop applications, as well as mobile devices.
+[OAuth 2](https://oauth.net/2/) is an authorization framework that enables applications—such as Facebook, GitHub, and Casdoor—to obtain limited access to user accounts on an HTTP service. It works by delegating user authentication to the service that hosts the user account and authorizing third-party applications to access that account. OAuth 2 provides authorization flows for web applications, desktop applications, and mobile devices.
 
 </details>
 
-Casdoor's authorization process is built upon the OAuth 2.0 protocol. We recommend using the OAuth 2.0 protocol for the following reasons:
+Casdoor's authorization process is built upon the OAuth 2.0 protocol. We recommend using OAuth 2.0 for the following reasons:
 
-1. The protocol is simple and easy to implement, and can solve many scenarios.
+1. The protocol is simple, easy to implement, and can address many authentication scenarios.
 2. It has a high maturity level and extensive community support.
 
 Therefore, your application will communicate with Casdoor via OAuth 2.0 (OIDC). There are three ways to connect to Casdoor:
 
 ### Standard OIDC client
 
-**[Standard OIDC client](/docs/how-to-connect/oidc-client)**: Use a standard OIDC client implementation, which is widely provided in any programming language or framework.
+**[Standard OIDC client](/docs/how-to-connect/oidc-client)**: Use a standard OIDC client implementation, which is widely available in any programming language or framework.
 
 <details>
 
 <summary>What is OIDC?</summary>
 
-[OpenID Connect (OIDC)](https://openid.net/connect/) is an open authentication protocol that works on top of the OAuth 2.0 framework. Targeted toward consumers, OIDC allows individuals to use single sign-on (SSO) to access relying party sites using OpenID Providers (OPs), such as an email provider or social network, to authenticate their identities. It provides the application or service with information about the user, the context of their authentication, and access to their profile information.
+[OpenID Connect (OIDC)](https://openid.net/connect/) is an open authentication protocol that works on top of the OAuth 2.0 framework. Targeted toward consumers, OIDC allows individuals to use single sign-on (SSO) to access relying party sites using OpenID Providers (OPs), such as email providers or social networks, to authenticate their identities. It provides applications or services with information about the user, the context of their authentication, and access to their profile information.
 
 </details>
 
@@ -52,13 +52,13 @@ Casdoor fully supports the OIDC protocol. If your application is already using a
 
 ### Casdoor SDKs
 
-**[Casdoor SDKs](/docs/how-to-connect/sdk)**: For most programming languages, Casdoor provides easy-to-use SDK libraries on top of OIDC, with extended functionality that is only available in Casdoor.
+**[Casdoor SDKs](/docs/how-to-connect/sdk)**: For most programming languages, Casdoor provides easy-to-use SDK libraries built on top of OIDC, with extended functionality that is only available in Casdoor.
 
-Compared to the standard OIDC protocol, Casdoor's SDK provides more functionalities, like user management and resource uploading, among others. Connecting to Casdoor via the Casdoor SDK requires more time than using a standard OIDC client library, but it offers the best **flexibility** and the most **powerful** API.
+Compared to the standard OIDC protocol, Casdoor's SDK provides additional functionality, such as user management and resource uploading. Connecting to Casdoor via the Casdoor SDK requires more time than using a standard OIDC client library, but it offers the best **flexibility** and the most **powerful** API.
 
 ### Casdoor plugin
 
-**[Casdoor plugin](/docs/how-to-connect/plugin)**: If your application is built on top of a popular platform (like Spring Boot, WordPress, etc.) and Casdoor (or a third party) has already provided a plugin or middleware for it, you should use it. Using a plugin is much easier than manually invoking the Casdoor SDK because the former is specially made for the platform.
+**[Casdoor plugin](/docs/how-to-connect/plugin)**: If your application is built on top of a popular platform (such as Spring Boot, WordPress, etc.) and Casdoor (or a third party) has already provided a plugin or middleware for it, you should use it. Using a plugin is much easier than manually invoking the Casdoor SDK because plugins are specifically designed for their target platform.
 
 **Plugins:**
 
@@ -76,7 +76,7 @@ Compared to the standard OIDC protocol, Casdoor's SDK provides more functionalit
 
 <summary>What is SAML?</summary>
 
-Security Assertion Markup Language (SAML) is an open standard that allows identity providers (IdP) to pass authorization credentials to service providers (SP). What this jargon means is that you can use one set of credentials to log into many different websites. It's much simpler to manage one login per user than it is to manage separate logins to email, customer relationship management (CRM) software, Active Directory, etc.
+Security Assertion Markup Language (SAML) is an open standard that allows identity providers (IdP) to pass authorization credentials to service providers (SP). This means you can use one set of credentials to log into many different websites. It's much simpler to manage one login per user than to manage separate logins for email, customer relationship management (CRM) software, Active Directory, etc.
 
 SAML transactions use Extensible Markup Language (XML) for standardized communications between the identity provider and service providers. SAML is the link between the authentication of a user's identity and the authorization to use a service.
 

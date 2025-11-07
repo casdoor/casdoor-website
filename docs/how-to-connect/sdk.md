@@ -7,17 +7,17 @@ authors: [nomeguy]
 
 ## Introduction
 
-Compared to the standard OIDC protocol, Casdoor provides more functionalities in its SDK, like user management, resource uploading, etc. Connecting to Casdoor via Casdoor SDK costs more time than using a standard OIDC client library but will provide the best flexibility and the most powerful API.
+Compared to the standard OIDC protocol, Casdoor's SDK provides additional functionality, such as user management and resource uploading. Connecting to Casdoor via the Casdoor SDK requires more time than using a standard OIDC client library but provides the best flexibility and the most powerful API.
 
 Casdoor SDKs can be divided into two categories:
 
-1. **Frontend SDK**: Like Javascript SDK, Vue SDK for websites, Android or iOS SDKs for Apps, etc. Casdoor supports providing authentication for both websites and mobile Apps.
+1. **Frontend SDK**: SDKs for websites (like Javascript SDK, Vue SDK) and mobile apps (Android or iOS SDKs). Casdoor supports providing authentication for both websites and mobile applications.
 2. **Backend SDK**: SDKs for backend languages like Go, Java, Node.js, Python, PHP, etc.
 
 :::tip
 
-If your website is developed in a frontend and backend separated manner, then you can use the Javascript
-SDK: `casdoor-js-sdk` or React SDK: `casdoor-react-sdk` or Vue SDK: `casdoor-vue-sdk` to integrate Casdoor in frontend. If your web application is a traditional website developed by JSP or PHP, you can just use the backend SDKs only. See an example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
+If your website is developed with a frontend-backend separation architecture, you can use the Javascript
+SDK: `casdoor-js-sdk`, React SDK: `casdoor-react-sdk`, or Vue SDK: `casdoor-vue-sdk` to integrate Casdoor in the frontend. If your web application is a traditional website developed with JSP or PHP, you can use backend SDKs only. See an example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example)
 
 :::
 
@@ -71,7 +71,7 @@ For a full list of the official Casdoor SDKs, please see: <https://github.com/or
 
 ### 1. Backend SDK configuration
 
-When your application starts up, you need to initialize the Casdoor SDK config by calling the `InitConfig()` function with required parameters. Take casdoor-go-sdk as
+When your application starts up, you need to initialize the Casdoor SDK configuration by calling the `InitConfig()` function with the required parameters. Using casdoor-go-sdk as an
 example: <https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64>
 
 ```go
