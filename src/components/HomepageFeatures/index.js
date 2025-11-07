@@ -20,13 +20,13 @@ const FeatureList = [
   },
   {
     title: translate({
-      message: "Frontend Backend Separation",
+      message: "Frontend-Backend Separation",
     }),
     path: "/img/storage",
     description: (
       <>
         <Translate>
-        Built with a modern frontend-backend separation architecture, Casdoor delivers an intuitive web UI while supporting high concurrency.
+        Built with a modern frontend-backend separation architecture, Casdoor provides an intuitive web UI while supporting high concurrency.
         </Translate>
       </>
     ),
@@ -38,7 +38,7 @@ const FeatureList = [
     path: "/img/language",
     description: (
       <>
-        <Translate>Casdoor supports multiple languages through i18n, providing a localized UI experience. To request additional language support, please visit</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
+        <Translate>Casdoor supports multiple languages through i18n, providing a localized UI experience. To request support for additional languages, please visit</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
       </>
     ),
   },

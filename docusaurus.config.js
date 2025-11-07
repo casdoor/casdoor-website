@@ -3,7 +3,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: "Casdoor · An open-source UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos",
+  title: "Casdoor · An open-source, UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos",
   url: "https://casdoor.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -16,7 +16,7 @@ module.exports = {
     locales: ["en", "zh", "ko", "ru", "fr", "de", "ja", "es", "pt", "uk", "th", "ar"],
   },
   themeConfig: {
-    metadata: [{name: "Casdoor", content: "An open-source UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos"}],
+    metadata: [{name: "Casdoor", content: "An open-source, UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos"}],
     algolia: {
       appId: "U9MEH3VSV1",
       apiKey: "9ef7ab8761a6480738185ecd6d1ecde7",
@@ -214,8 +214,8 @@ var _hmt = _hmt || [];
       content: `
         <script>
           document.write(Math.random() < 0.8 ? 
-            '<a target="_blank" href="https://github.com/casibase/casibase/">💖 Looking for an open-source LangChain-like AI knowledge database & chat bot with admin UI and multi-model support (ChatGPT, Claude, Llama 3, DeepSeek R1, HuggingFace, etc.) ? Learn more about: Casibase</a>' :
-            '<a target="_blank" href="https://github.com/casdoor/casdoor-authenticator/">🔐 Looking for an open-source and cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
+            '<a target="_blank" href="https://github.com/casibase/casibase/">💖 Looking for an open-source, LangChain-like AI knowledge database & chatbot with admin UI and multi-model support (ChatGPT, Claude, Llama 3, DeepSeek R1, HuggingFace, etc.)? Learn more about: Casibase</a>' :
+            '<a target="_blank" href="https://github.com/casdoor/casdoor-authenticator/">🔐 Looking for an open-source, cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
           );
         </script>
       `,
