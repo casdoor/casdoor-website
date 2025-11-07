@@ -9,7 +9,7 @@ authors: [hsluoyz]
 
 ### Operating System
 
-All major operating systems, including Windows, Linux, and macOS, are supported.
+All major operating systems are supported, including Windows, Linux, and macOS.
 
 ### Environment
 
@@ -19,13 +19,13 @@ All major operating systems, including Windows, Linux, and macOS, are supported.
 
 :::info
 
-We strongly suggest using [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install) to run and build Casdoor frontend. Using NPM might cause UI styling issues. For more details, see: [casdoor#294](https://github.com/casdoor/casdoor/issues/294).
+We strongly recommend using [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install) to run and build the Casdoor frontend. Using NPM might cause UI styling issues. For more details, see: [casdoor#294](https://github.com/casdoor/casdoor/issues/294).
 
 :::
 
 :::caution
 
-If your network fails to directly sync the Go dependency packages successfully, you need to use a Go proxy by configuring the GOPROXY environment variable. We strongly recommend using: <https://goproxy.cn/>
+If your network fails to directly sync Go dependency packages successfully, you need to use a Go proxy by configuring the GOPROXY environment variable. We strongly recommend using: <https://goproxy.cn/>
 
 :::
 
@@ -76,7 +76,7 @@ dbName = casdoor
 
 #### PostgreSQL
 
-Before running Casdoor, you need to manually prepare a database for PostgreSQL, as Casdoor requires selecting a database when opening Postgres with xorm.
+Before running Casdoor, you need to manually prepare a database for PostgreSQL, as Casdoor requires a database to be selected when opening Postgres with xorm.
 
 Assuming you have already prepared a database called `casdoor`, you should specify `app.conf` like this:
 

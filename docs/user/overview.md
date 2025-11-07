@@ -7,7 +7,7 @@ authors: [sh1luo]
 
 ## User Properties
 
-As an authentication platform, Casdoor is able to manage users. Every user has the following properties:
+As an authentication platform, Casdoor manages user accounts. Every user has the following properties:
 
 - `Owner`: The organization that owns the user
 - `Name`: The unique username
@@ -44,8 +44,8 @@ As an authentication platform, Casdoor is able to manage users. Every user has t
 - `Ranking`
 - `IsDefaultAvatar`
 - `IsOnline`
-- `IsAdmin`: Indicates whether the user is an admin of their organization
-- `IsGlobalAdmin`: Indicates whether the user has permission to manage the Casdoor
+- `IsAdmin`: Indicates whether the user is an administrator of their organization
+- `IsGlobalAdmin`: Indicates whether the user has permission to manage Casdoor
 - `IsForbidden`
 - `IsDeleted`: When a user is soft-deleted (`IsDeleted = true`), they cannot sign in through any authentication method, including OAuth providers. This prevents deleted users from re-registering via third-party login.
 - `SignupApplication`

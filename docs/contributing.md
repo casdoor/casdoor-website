@@ -5,7 +5,7 @@ keywords: [Contributor, guide]
 authors: [leo220yuyaodog]
 ---
 
-Welcome to Casdoor! This document serves as a guideline on how to contribute to Casdoor.
+Welcome to Casdoor! This document serves as a guide on how to contribute to Casdoor.
 
 If you find any incorrect or missing information, please leave your comments or suggestions.
 
@@ -13,7 +13,7 @@ If you find any incorrect or missing information, please leave your comments or 
 
 There are many ways to contribute to Casdoor. Here are some ideas to get started:
 
-- Use Casdoor and report issues. When using Casdoor, report any issues - whether they're bugs or proposals - on [GitHub Discussions](https://github.com/casdoor/casdoor/discussions) or on [Discord](https://discord.gg/5rPsrAzK7S) before filing an issue on GitHub.
+- Use Casdoor and report issues. When using Casdoor, report any issues—whether they're bugs or proposals—on [GitHub Discussions](https://github.com/casdoor/casdoor/discussions) or on [Discord](https://discord.gg/5rPsrAzK7S) before filing an issue on GitHub.
 
 :::info
 
@@ -21,9 +21,9 @@ Please use English to describe the details of your problem when reporting an iss
 
 :::
 
-- Help with documentation. Starting your contribution work with docs is a good choice.
+- Help with documentation. Starting your contribution with documentation is a good choice.
 
-- Help solve issues. We have a table that contains easy tasks suitable for beginners under [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1), with different levels of challenges labeled with different tags.
+- Help solve issues. We have a table containing easy tasks suitable for beginners under [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1), with different levels of challenges labeled with different tags.
 
 ## Contributing
 
@@ -55,7 +55,7 @@ Here are some things you need to know before opening a pull request:
 
 - Explain why you are submitting the pull request and what it will do to the repo.
 
-- Only one commit is allowed. If the PR does more than one thing, please split it.
+- Only one commit is allowed per pull request. If the PR does more than one thing, please split it into multiple PRs.
 
 - If there are any newly added files, please include the Casdoor license at the top of the new file(s).
 
