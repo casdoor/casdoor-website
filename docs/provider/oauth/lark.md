@@ -36,3 +36,13 @@ Now create a Lark OAuth provider in Casdoor. Fill in the necessary information.
 ![create a Lark OAuth provider](/img/providers/OAuth/lark_provider_conf_detail.png)
 
 Now you can use Lark as the third-party service to complete authentication.
+
+## Username Handling
+
+Casdoor uses a fallback mechanism to ensure user accounts are created successfully even when Lark's OAuth response has incomplete data. The username field follows this priority:
+
+1. **UserId** - Primary identifier used when available
+2. **UnionId** - Links users across multiple Lark organizations
+3. **OpenId** - Always present, used as final fallback
+
+This ensures authentication succeeds reliably since OpenId is guaranteed in Lark's OAuth response.
