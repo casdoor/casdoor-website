@@ -5,7 +5,7 @@ keywords: [provider, OAuth, SMS, Storage, Email, Payment, Captcha]
 authors: [kininaru]
 ---
 
-Casdoor utilizes providers to offer third-party services for the platform. In this chapter, you will learn how to add providers to Casdoor.
+Casdoor uses providers to offer third-party services for the platform. In this chapter, you will learn how to add providers to Casdoor.
 
 ## What We Have
 
@@ -13,10 +13,10 @@ Currently, we have seven types of providers:
 
 - **OAuth Providers**
 
-  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ, and many other OAuth applications to Casdoor. For more details, please refer to the [OAuth](/docs/provider/oauth/overview) section.
+  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ, and many other OAuth applications to Casdoor. For more details, refer to the [OAuth](/docs/provider/oauth/overview) section.
 - **SMS Providers**
 
-  Casdoor sends SMS to users when they want to verify their phone numbers. SMS providers are used to send SMS in Casdoor.
+  Casdoor sends SMS messages to users when they need to verify their phone numbers. SMS providers are used to send SMS messages in Casdoor.
 - **Email Providers**
 
   Email providers are similar to SMS providers.
@@ -37,21 +37,21 @@ Currently, we have seven types of providers:
 
 ### Scope
 
-Providers have different scopes, which are determined by the creator. Only Administrators have the permission to add and configure providers. There are two types of Administrators in Casdoor:
+Providers have different scopes determined by their creator. Only Administrators have permission to add and configure providers. There are two types of Administrators in Casdoor:
 
-- **Global Administrator**: All users under the `built-in` organization and the users who enable `IsGlobalAdmin`. The providers created by the Global Administrator can be used by all applications.
+- **Global Administrator**: All users under the `built-in` organization and users who have enabled `IsGlobalAdmin`. Providers created by Global Administrators can be used by all applications.
 
-- **Organization Administrator**: Users who enable `IsAdmin`. The providers created by the Organization Administrator can **only** be used by the applications under the organization (under development...).
+- **Organization Administrator**: Users who have enabled `IsAdmin`. Providers created by Organization Administrators can **only** be used by applications under the same organization (under development...).
 
 ### Add to Application
 
-Follow the steps below to add providers to your application. Note that you cannot use the provider in your application until you have added it.
+Follow the steps below to add providers to your application. Note that you cannot use a provider in your application until you have added it.
 
 1. Go to the application edit page and add a new provider row.
 
     ![provider_overview_add](/img/providers/provider_overview_add.png)
 
-2. Select a provider that you want to add to the application. You will see all the providers that the application can use.
+2. Select a provider that you want to add to the application. You will see all providers that the application can use.
 
     ![provider_overview_select](/img/providers/provider_overview_select.png)
 
