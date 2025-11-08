@@ -47,6 +47,9 @@
         },
         {
             "pattern": "^https://door.casdoor.com/"
+        },
+        {
+            "pattern": "^https://stackoverflow.com/"
         }
     ]
 }

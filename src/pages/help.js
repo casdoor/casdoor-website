@@ -14,11 +14,11 @@ function Help() {
         <div className="row">
           <div className="col">
             <h2><Translate>Forum</Translate></h2>
-            <Translate>Discuss with maintainers or share your experience about Casdoor on</Translate> <a href="https://forum.casbin.com"><Translate>Casdoor Forum</Translate></a>.
+            <Translate>Discuss with maintainers or share your experiences with Casdoor on</Translate> <a href="https://forum.casbin.com"><Translate>Casdoor Forum</Translate></a>.
           </div>
           <div className="col">
             <h2><Translate>Discord</Translate></h2>
-            <Translate>You can join the conversation on</Translate> <a href="https://discord.gg/5rPsrAzK7S"><Translate>Discord</Translate></a> <Translate>for contributing help.</Translate>
+            <Translate>You can join the conversation on</Translate> <a href="https://discord.gg/5rPsrAzK7S"><Translate>Discord</Translate></a> <Translate>for community support and to contribute.</Translate>
           </div>
           <div className="col">
             <h2><Translate>Tencent QQ and Wechat</Translate></h2>
@@ -41,7 +41,7 @@ function Help() {
           </div>
           <div className="col">
             <h2>Github</h2>
-            <Translate>At our</Translate> <a href="https://github.com/casdoor/casdoor"><Translate>GitHub repo</Translate></a><Translate>, browse and submit</Translate> <a href="https://github.com/casdoor/casdoor/issues">issues</a> or <a href="https://github.com/casdoor/casdoor/pulls">pull requests</a> <Translate>for bugs you find or any new features you may want implemented.</Translate>
+            <Translate>At our</Translate> <a href="https://github.com/casdoor/casdoor"><Translate>GitHub repo</Translate></a><Translate>, you can browse and submit</Translate> <a href="https://github.com/casdoor/casdoor/issues">issues</a> or <a href="https://github.com/casdoor/casdoor/pulls">pull requests</a> <Translate>for bugs you find or new features you&apos;d like to see implemented.</Translate>
           </div>
         </div>
       </div>

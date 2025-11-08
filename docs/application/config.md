@@ -10,9 +10,9 @@ import styles from '../styles.module.css';
 import CasdoorCard from "@site/src/components/CasdoorCard"
 ```
 
-After you deploy Casdoor on your server and set up your organization, you can now deploy your applications!
+After you deploy Casdoor on your server and set up your organization, you can now configure your applications!
 
-Let's see how to configure your application's authentication using Casdoor!
+Let's see how to configure your application's authentication using Casdoor.
 
 :::note
 
@@ -20,9 +20,9 @@ For example, I want to set up my Forum using [Casnode](https://casnode.org).
 
 :::
 
-I create my application and fill in some necessary configurations.
+I create my application and fill in the necessary configuration details.
 
-Select the organization I created so that users in this organization can use this application.
+Select the organization I created so that users in this organization can access this application.
 
 ![Organization](/img/application/config/organization.png)
 
@@ -30,11 +30,11 @@ Since this organization is named `my_organization`, I choose it from the drop-do
 
 ![Select Organization](/img/application/config/selectorganization.png)
 
-Next, I want my users to be able to use Casdoor for authentication when they sign up. So, I fill in the redirect URL here as **<https://your-site-url.com/callback>**.
+Next, I want my users to be able to use Casdoor for authentication when they sign up. I fill in the redirect URL here as **<https://your-site-url.com/callback>**.
 
 :::caution
 
-Please note that the `callback URL` in the provider application should be Casdoor's callback URL, and the `Redirect URL` in Casdoor should be your website's callback URL.
+Please note that the `callback URL` in the provider application should be Casdoor's callback URL, while the `Redirect URL` in Casdoor should be your website's callback URL.
 
 #### Further Understanding
 
@@ -42,7 +42,7 @@ To make the authentication process work, the detailed steps are as follows:
 
 1. Users send a request to Casdoor.
 2. Casdoor uses the `Client ID` and `Client Secret` to authenticate with GitHub, Google, or other providers.
-3. If the authentication is successful, GitHub calls back to Casdoor to notify Casdoor about the successful authentication. Therefore, the GitHub authorization callback URL should be your Casdoor's callback URL, which is **<http://your-casdoor-url.com/callback>**.
+3. If the authentication is successful, GitHub calls back to Casdoor to notify it about the successful authentication. Therefore, the GitHub authorization callback URL should be your Casdoor callback URL, which is **<http://your-casdoor-url.com/callback>**.
 4. Casdoor then informs the application about the authentication success. This means that the Casdoor callback URL should be your application's callback URL, which is **<http://your-site-url.com/callback>**.
 
 :::
@@ -55,7 +55,7 @@ To make the authentication process work, the detailed steps are as follows:
 
 ## Verification Code Settings
 
-You can configure the **Code resend timeout** to control how long users must wait before requesting another verification code via email or SMS. Set the value in seconds (default is 60). This setting determines the countdown timer duration shown to users on the login page. A value of 0 uses the global default.
+You can configure the **Code resend timeout** to control how long users must wait before requesting another verification code via email or SMS. Set the value in seconds (default is 60). This setting determines the countdown timer duration shown to users on the login page. A value of 0 will use the global default.
 
 :::tip
 
