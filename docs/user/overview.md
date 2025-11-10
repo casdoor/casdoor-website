@@ -90,7 +90,7 @@ Users with `IsAdmin` set to true have administrator privileges within their orga
 - Access to verification code records sent to users in their organization
 - Ability to configure organization-level settings and policies
 
-Organization admins have elevated permissions but are scoped to their organization only. Global admins (`IsGlobalAdmin`) have full access across all organizations in the Casdoor instance.
+Organization admins have elevated permissions but are scoped to their organization only. Global admins (`built-in` organization users) have full access across all organizations in the Casdoor instance.
 
 ## User Tags
 
