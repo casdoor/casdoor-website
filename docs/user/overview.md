@@ -82,6 +82,16 @@ Unique IDs for social platform logins:
 - `Steam`
 - `Ldap`
 
+## Organization Admin Privileges
+
+Users with `IsAdmin` set to true have administrator privileges within their organization:
+
+- Full access to manage users, applications, and resources within their organization
+- Access to verification code records sent to users in their organization
+- Ability to configure organization-level settings and policies
+
+Organization admins have elevated permissions but are scoped to their organization only. Global admins (`built-in` organization users) have full access across all organizations in the Casdoor instance.
+
 ## User Tags
 
 The `Tag` field allows you to categorize users for different purposes. Casdoor uses specific tag values for special user types:
