@@ -58,17 +58,17 @@ Use the [Casbin Online Editor](https://casbin.org/editor) to create and test you
 
 #### Adapter
 
-**Attention!** In the current version, this field describes the name of the database table that stores the permission policy, rather than the name of the adapter configured in the **Adapters** page in the Casdoor Web UI.
+This field specifies the database table name where the permission policy rules are stored.
 
-Casdoor uses its own database to store configured permission policies:
+Casdoor uses its own database to store permission policies:
 
 - If this field is **empty**, the permission policy will be stored in the `permission_rule` table
 - If **specified**, it will be stored in the specified database table
-- If the specified table name does not exist in the database used by Casdoor, it will be created automatically
+- If the specified table name does not exist in the database, it will be created automatically
 
 :::caution Important
 
-We strongly recommend **specifying different adapters (table names) for different models**, as keeping all policies in the same table may cause conflicts.
+Each Model should use a separate Adapter (table name). Different models with different structures should not share the same table, as this may cause conflicts when loading policies.
 
 :::
 
