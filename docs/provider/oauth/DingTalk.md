@@ -26,8 +26,19 @@ Make sure to add the `Redirect Domain`, which should be your Casdoor domain.
 
 For more detailed information, please refer to the [DingTalk developer docs](https://open.dingtalk.com/document/orgapp-server/tutorial-obtaining-user-personal-information).
 
-Additionally, you need to add the following permissions to the DingTalk application:
+### Required Permissions
+
+You need to enable the following permissions in your DingTalk application:
+
+- **Contact.User.Read** - Required for reading user contact information via the `/v1.0/contact/users/me` API endpoint
+
 ![DingTalk](/img/providers/OAuth/dingtalkpermission.png)
+
+:::caution
+
+Without the `Contact.User.Read` permission, authentication will fail when Casdoor tries to fetch user information. Make sure this permission is enabled in your DingTalk application settings under "Permissions Management".
+
+:::
 
 ### Configuring Casdoor
 
