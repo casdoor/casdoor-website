@@ -21,6 +21,15 @@ Casdoor provides multiple password storage algorithms that can be selected on th
 |bcrypt|[bcrypt](https://github.com/casdoor/casdoor/blob/master/cred/bcrypt.go)|[bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is a password-hashing function used to hash and salt passwords securely.|[Spring Boot](https://spring.io/projects/spring-boot), [WordPress](https://stackoverflow.com/questions/1045988/what-type-of-hash-does-wordpress-use)|
 |pbkdf2-salt|[SHA-256 and PBKDF2](https://github.com/casdoor/casdoor/blob/master/cred/pbkdf2-salt.go)|[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is a simple cryptographic key derivation function that is resistant to dictionary attacks and rainbow table attacks. It was originally implemented in Casdoor for the Keycloak syncer. Select this option if you are importing users using the Keycloak syncer.|[Keycloak](http://keycloak.org/)|
 
+## Password Salt Configuration
+
+For algorithms that use salts (`salt`, `md5-salt`, `pbkdf2-salt`), Casdoor provides flexible salt configuration. On the organization edit page, you can set the `Password salt` field to define how passwords are salted:
+
+- **Organization-level salt**: When the `Password salt` field is set, all users in the organization share the same salt value. This ensures consistency across the organization.
+- **Per-user random salt**: When the `Password salt` field is left empty, Casdoor automatically generates a unique random salt for each user. This provides better security by preventing attackers from using precomputed hash tables across multiple users.
+
+The per-user salt approach is recommended for new deployments as it provides stronger security against rainbow table attacks. Each user's salt is stored alongside their password hash and is automatically managed by Casdoor.
+
 :::tip
 
 In addition to logging into Casdoor via an application (which redirects to Casdoor for SSO), Casdoor users can also choose to log in directly via the organization's login page: `/login/<organization_name>`, e.g., <https://door.casdoor.com/login/casbin> on the demo site.
