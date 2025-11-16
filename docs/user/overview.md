@@ -146,6 +146,13 @@ We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master
 
 ![Import Successful](/img/user/import_success.png)
 
+### Upload Permissions
+
+User upload permissions depend on your admin role:
+
+- **Global admins** (users in the `built-in` organization with `IsGlobalAdmin` set to true) can upload users to any organization. The target organization is determined by the `Owner` field in the XLSX file.
+- **Organization admins** (users with `IsAdmin` set to true) can only upload users to their own organization. The system ensures that duplicate checking and user creation are scoped to the correct organization.
+
 ## Bypass password encryption
 
 When migrating users from an external database to Casdoor, there might be situations where you want to bypass or control the default encryption method provided by `organization` default Password type method.
