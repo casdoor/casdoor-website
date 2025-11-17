@@ -44,6 +44,21 @@ Once the bind operation completes successfully, you can perform the search opera
 - To search for all users in all organizations (assuming the user has sufficient permissions), you should use a `DN` like this: `ou=*,dc=example,dc=com`, and add `cn=*` in the Filter field.
 - To search for all users in a specific group, you should use a filter query like this: `(memberOf=organization_name/group_name)` in the Filter field.
 
+#### User Attributes
+
+When searching for users, the LDAP server returns the following attributes for each user entry:
+
+| Attribute | Description | Mapped from |
+|-----------|-------------|-------------|
+| `cn` | Common name | User's name |
+| `uid` | User ID | User's unique identifier |
+| `homeDirectory` | Home directory path | `/home/{username}` |
+| `mail` | Email address | User's email |
+| `mobile` | Mobile phone number | User's phone |
+| `sn` | Surname (last name) | User's last name |
+| `givenName` | Given name (first name) | User's first name |
+| `memberOf` | Group memberships | User's groups |
+
 ### Supported RFC-Style Features
 
 #### Partial Root DSE Query Support
