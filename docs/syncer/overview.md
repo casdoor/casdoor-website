@@ -18,6 +18,8 @@ Casdoor supports multiple syncer types to import users from different sources:
 - **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
 - **WeCom**: Fetch users from WeCom organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
 
+Each syncer type implements a common interface, making it straightforward to add new syncer types or extend existing ones without affecting other parts of the system.
+
 ## Synchronization hash
 
 Casdoor uses a hash function to determine how to update a user. This hash value is calculated for each user in the table, using information such as the password or mobile phone number.
