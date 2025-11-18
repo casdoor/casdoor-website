@@ -7,7 +7,7 @@ authors: [Marvelousp4]
 
 ## Database Syncer
 
-The users table we created as a demo is imported from the [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx).
+The database syncer connects to external databases to synchronize user data with Casdoor. The users table we created as a demo is imported from the [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx).
 
 ![Table](/img/syncer/Database/syncer_database_table.png)
 
