@@ -15,6 +15,8 @@ Casdoor supports multiple syncer types to import users from different sources:
 
 - **Database**: Synchronize users from any database supported by Xorm (MySQL, PostgreSQL, SQL Server, Oracle, SQLite). See [database syncer](/docs/syncer/Database).
 - **Azure AD**: Synchronize users from Azure Active Directory using Microsoft Graph API. See [Azure AD syncer](/docs/syncer/AzureAD).
+- **Active Directory**: Synchronize users from Microsoft Active Directory via LDAP. See [Active Directory syncer](/docs/syncer/ActiveDirectory).
+- **Google Workspace**: Synchronize users from Google Workspace using Admin SDK API. See [Google Workspace syncer](/docs/syncer/GoogleWorkspace).
 - **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
 - **WeCom**: Fetch users from WeCom organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
 
