@@ -44,7 +44,7 @@ Enable the Admin SDK API for your Google Cloud project:
 Set up domain-wide delegation in Google Workspace Admin:
 
 1. In the service account details, copy the **Client ID**
-2. Go to [Google Workspace Admin Console](https://admin.google.com)
+2. Go to [Google Workspace Admin Console](https://workspace.google.com)
 3. Navigate to **Security** → **Access and data control** → **API controls**
 4. Click **Manage Domain Wide Delegation**
 5. Click **Add new**
