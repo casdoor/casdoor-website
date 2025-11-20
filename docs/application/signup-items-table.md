@@ -44,3 +44,9 @@ Firstly, I added some signup items necessary for registration, such as ID, Usern
 Then, I selected the email row's rule item as `No verification`. As a result, the generated preview registration page will have the desired effect.
 
 ![Signup Items Table](/img/application/signup-items-table/signup-items-table-demo-page.png)
+
+:::note
+
+When the organization's "Use email as username" option is enabled and the username field is not visible in the signup items table, the user's email address will automatically be used as their username during registration.
+
+:::
