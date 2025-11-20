@@ -30,6 +30,18 @@ For algorithms that use salts (`salt`, `md5-salt`, `pbkdf2-salt`), Casdoor provi
 
 The per-user salt approach is recommended for new deployments as it provides stronger security against rainbow table attacks. Each user's salt is stored alongside their password hash and is automatically managed by Casdoor.
 
+## Use Email as Username
+
+Organizations can enable the "Use email as username" option, which automatically uses the user's email address as their username during signup when the username field is not visible. This simplifies the registration process by eliminating the need for users to choose a separate username.
+
+When this option is enabled:
+
+- During signup, if the username field is hidden, the email address becomes the username automatically
+- When users reset their email address, their username is updated to match the new email
+- The system maintains consistency between the email and username fields
+
+To enable this feature, check the "Use email as username" option on the organization edit page.
+
 :::tip
 
 In addition to logging into Casdoor via an application (which redirects to Casdoor for SSO), Casdoor users can also choose to log in directly via the organization's login page: `/login/<organization_name>`, e.g., <https://door.casdoor.com/login/casbin> on the demo site.
