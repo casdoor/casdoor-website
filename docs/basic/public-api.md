@@ -114,6 +114,14 @@ All granted access tokens can also be accessed via the web UI by an admin user i
     Authorization: Bearer <The access token>
     ```
 
+3. Custom HTTP header, using the header format:
+
+    ```shell
+    X-Casdoor-Token: <The access token>
+    ```
+
+    This method is useful when the `Authorization` header is already used by reverse proxies, API gateways, or other middleware in your infrastructure. It provides flexibility in integration scenarios where you need an alternative to the standard Bearer token approach.
+
 ### 2. By `Client ID` and `Client secret` (Machine-to-Machine)
 
 This method is the primary approach for **machine-to-machine (M2M) authentication**. It allows applications, services, or backend systems to authenticate with Casdoor APIs without any user interaction.
