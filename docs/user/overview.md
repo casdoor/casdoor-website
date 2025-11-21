@@ -39,7 +39,7 @@ As an authentication platform, Casdoor manages user accounts. Every user has the
 - `Gender`
 - `Birthday`
 - `Education`
-- `Balance`: The user's account balance for recharge products
+- `Balance`: The user's account balance
 - `Score`
 - `Karma`
 - `Ranking`
