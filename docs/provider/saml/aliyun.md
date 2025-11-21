@@ -38,9 +38,15 @@ Select the added SigningKey.
 Fill in all the required information below and submit.
 
 - IDP IdentityId: Keep the same as Issuer URL in Casdoor.
-- SP Entity ID & SP ACS URL(SSO Location): Now fill in whatever you want. After completing the configuration of Casdoor, you need to come to modify.
+- SP Entity ID & SP ACS URL(SSO Location): Use temporary placeholder values for now. After completing the configuration of Casdoor, you will update these with `https://<your-casdoor-domain>/api/acs`.
 - Assertion Attribute: Directly fill in as username.
 - Account Association Mode: Account Association
+
+:::note
+
+The ACS URL (`/api/acs`) only accepts POST requests. Ensure your IdP is configured to use HTTP POST binding.
+
+:::
 
 ![Update information of Signing Key](/img/providers/SAML/aliyun_saml_signingkey_update.png)
 

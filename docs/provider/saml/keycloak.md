@@ -18,6 +18,12 @@ For this example, let's make the following configuration choices and assumptions
 - Based on that, the SP ACS URL for this deployment will be: `http://localhost:8000/api/acs`.
 - Our SP Entity ID will use the same URL: `http://localhost:8000/api/acs`.
 
+:::note
+
+The `/api/acs` endpoint only accepts POST requests. Ensure Keycloak is configured to use HTTP POST binding for SAML responses.
+
+:::
+
 You can use the default realm or create a new realm.
 
 ![Add Keycloak realm](/img/providers/SAML/keycloak_realm_add.png)
