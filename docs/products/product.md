@@ -17,8 +17,15 @@ First, you need to understand the basic properties of the product:
 - Price
 - Quantity
 - Sold
+- Is recharge: When enabled, the product becomes a recharge type with custom pricing
 
 ![product_field.png](/img/products/product_field.png)
+
+### Recharge Products
+
+Recharge products allow users to add custom amounts to their account balance. When you enable the "Is recharge" option, the product price becomes flexible—users can enter any amount they wish to recharge. Upon successful payment, the specified amount is automatically added to the user's balance.
+
+This is useful when you want to let users top up their accounts with any amount instead of fixed product prices.
 
 ## Payment Provider
 
