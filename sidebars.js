@@ -263,6 +263,8 @@ module.exports = {
           items: [
             "provider/saml/overview",
             "provider/saml/custom",
+            "provider/saml/google-workspace",
+            "provider/saml/azure-ad",
             "provider/saml/keycloak",
             "provider/saml/aliyun",
           ],
