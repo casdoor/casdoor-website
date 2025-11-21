@@ -2,7 +2,7 @@
 title: Google Workspace
 description: Using Google Workspace as SAML IdP
 keywords: [Google Workspace, SAML]
-authors: [copilot]
+authors: [nomeguy]
 ---
 
 This guide shows you how to configure Google Workspace as a SAML Identity Provider for Casdoor, allowing users to authenticate with their Google Workspace accounts.
