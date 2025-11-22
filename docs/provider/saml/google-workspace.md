@@ -9,7 +9,7 @@ This guide shows you how to configure Google Workspace as a SAML Identity Provid
 
 ## Configure SAML App in Google Workspace
 
-Access the [Google Admin Console](https://admin.google.com/) and navigate to **Apps** > **Web and mobile apps**.
+Access the Google Admin Console (admin.google.com) and navigate to **Apps** > **Web and mobile apps**.
 
 Click **Add App** > **Add custom SAML app**.
 

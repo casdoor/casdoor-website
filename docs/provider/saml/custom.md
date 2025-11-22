@@ -26,8 +26,6 @@ After configuring your IdP, obtain the metadata, which is an XML document that d
 
 Some IDPs, such as Keycloak, require SP information to provide metadata. You can refer to the document [Keycloak](/docs/provider/saml/keycloak).
 
-You can use oktadev to test the SAML Custom Provider, here is the [metadata](https://idp.oktadev.com/metadata).
-
 ## Step3. Configure SAML Custom Provider
 
 After obtaining the metadata from your IdP, create a SAML Custom Provider in Casdoor and fill in the necessary information.
