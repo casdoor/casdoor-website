@@ -241,8 +241,9 @@ The SSO logout endpoint `/api/sso-logout` allows you to log out a user from all 
 - Delete all active sessions for the user across all applications
 - Expire all access tokens issued to the user
 - Clear the current session and token
+- Send logout notifications to the user's signup application
 
-This is particularly useful when you need to ensure a user is completely logged out from all services, such as during security incidents or when implementing organization-wide logout policies.
+When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the user's signup application. This enables applications to invalidate local sessions immediately, ensuring complete logout across your system. The notification includes sanitized user data (username, email, display name) along with the event type `sso-logout`, making it easy to identify and handle logout events in your application.
 
 ### Endpoint
 
@@ -275,6 +276,30 @@ curl -X POST https://door.casdoor.com/api/sso-logout \
   "data": ""
 }
 ```
+
+### Receiving Logout Notifications
+
+To receive logout notifications in your application, configure notification providers in your user's signup application settings. When SSO logout is triggered, each notification provider receives a POST request with the following payload:
+
+```json
+{
+  "owner": "org-name",
+  "name": "username",
+  "displayName": "John Doe",
+  "email": "user@example.com",
+  "phone": "+1234567890",
+  "id": "user-id",
+  "event": "sso-logout"
+}
+```
+
+For example, using a Custom HTTP notification provider:
+
+- Set **Receiver** to your application's webhook endpoint (e.g., `https://app.example.com/api/logout-webhook`)
+- Set **Method** to POST
+- Set **Title** to `content` (the parameter name for the JSON payload)
+
+Your application can then invalidate the user's local session based on the received user identifier. For more details on configuring notification providers, see the [Notification Providers](/docs/provider/notification/overview) documentation.
 
 ## CORS (Cross-Origin Resource Sharing)
 
