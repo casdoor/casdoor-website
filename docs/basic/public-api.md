@@ -276,6 +276,34 @@ curl -X POST https://door.casdoor.com/api/sso-logout \
 }
 ```
 
+## User Account Information
+
+The `/api/get-account` endpoint retrieves the complete user object for the currently authenticated user. When users authenticate through OAuth providers (GitHub, Google, etc.), this endpoint also returns the `originalToken` field containing the provider's access token.
+
+### OAuth Provider Token
+
+The `originalToken` field allows your application to make authenticated API calls to third-party services on behalf of the user:
+
+```json
+{
+  "status": "ok",
+  "data": {
+    "name": "user123",
+    "originalToken": "ya29.a0AfH6SMBx...",
+    ...
+  }
+}
+```
+
+The token is visible only when:
+
+- The user requests their own account information, OR
+- The requester is an organization admin
+
+For security and privacy, the token is masked with `***` for other requests. This enables your application to interact with third-party APIs (e.g., GitHub API, Google Drive API) without implementing separate OAuth flows.
+
+See the [OAuth documentation](/docs/how-to-connect/oauth#accessing-oauth-provider-tokens) for more details.
+
 ## CORS (Cross-Origin Resource Sharing)
 
 Casdoor implements flexible CORS handling to allow secure cross-origin API requests. The server validates the `Origin` header and returns appropriate `Access-Control-Allow-Origin` headers based on the following rules:

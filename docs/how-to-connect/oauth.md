@@ -277,8 +277,29 @@ You will receive the same response, which looks like this:
 
 If you expect more user information, add `scope` when obtaining the AccessToken in step [Authorization Code Grant](#1).
 
+## Accessing OAuth Provider Tokens
+
+When users authenticate through OAuth providers (GitHub, Google, etc.), you can access the provider's original access token to make API calls to the third-party service on their behalf. This token is stored in the user's `originalToken` field.
+
+The token is available through the `/api/get-account` endpoint:
+
+```json
+{
+  "status": "ok",
+  "data": {
+    "name": "user123",
+    "originalToken": "ya29.a0AfH6SMBx...",
+    ...
+  }
+}
+```
+
+The `originalToken` is visible only when the user requests their own account or when the requester is an admin. For other requests, it is masked for privacy.
+
+This allows your application to interact with third-party APIs (e.g., GitHub API, Google Drive API) using the provider's access token without requiring additional OAuth flows.
+
 ## Differences between the `userinfo` and `get-account` APIs
 
 - `/api/userinfo`: This API returns user information as part of the OIDC protocol. It provides limited information, including only the basic information defined in OIDC standards. For a list of available scopes supported by Casdoor, please refer to the [available scopes](#available-scopes) section.
 
-- `/api/get-account`: This API retrieves the user object for the currently logged-in account. It is a Casdoor-specific API that allows you to obtain all the information of the [user](/docs/basic/core-concepts#user) in Casdoor.
+- `/api/get-account`: This API retrieves the user object for the currently logged-in account. It is a Casdoor-specific API that allows you to obtain all the information of the [user](/docs/basic/core-concepts#user) in Casdoor, including the OAuth provider's access token when applicable.
