@@ -29,7 +29,7 @@ This ensures that the user is completely logged out from all integrated applicat
 
 ### Logout Notifications
 
-When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the user's signup application. This allows your application to respond immediately by invalidating local sessions and clearing cached data.
+When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. This allows your application to respond immediately by invalidating local sessions and clearing cached data.
 
 Each notification provider receives a POST request with the following payload:
 
@@ -45,7 +45,7 @@ Each notification provider receives a POST request with the following payload:
 }
 ```
 
-To receive logout notifications, configure a notification provider (such as Custom HTTP, Telegram, or Slack) in your application's provider settings. For Custom HTTP providers:
+To receive logout notifications, configure a notification provider (such as Custom HTTP, Telegram, or Slack) in your Casdoor application's notification provider settings. For Custom HTTP providers:
 
 - Set **Receiver** to your application's webhook endpoint (e.g., `https://app.example.com/api/logout-webhook`)
 - Set **Method** to POST
