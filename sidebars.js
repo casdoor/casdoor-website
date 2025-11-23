@@ -345,6 +345,7 @@ module.exports = {
       items: [
         "pricing/overview",
         "products/product",
+        "products/product-store",
         "products/payment",
         "products/order",
         "pricing/plan",
