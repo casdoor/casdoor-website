@@ -137,13 +137,22 @@ The `Properties` field is a flexible key-value map (`map[string]string`) that al
 
 You can add new users or update existing Casdoor users by uploading an XLSX file containing user information.
 
-In the Admin Console, go to Users and click the **Upload (.xlsx)** button.
+### Getting Started
+
+In the Admin Console, navigate to the Users page. You'll find two buttons for bulk user operations:
+
+- **Download template**: Generates an XLSX template with all available user fields and their localized column headers
+- **Upload (.xlsx)**: Opens the upload dialog to import users from your XLSX file
 
 ![Importing Users](/img/user/import_users.png)
 
-Select your XLSX file and click Open. The users will be imported.
+The template file includes headers in the format `Display Name#field_name` (e.g., `Organization#owner`), where the display name is localized to your language and the field name after `#` is used for import mapping. The comment prefix (everything before `#`) is automatically removed during import.
 
-We provide a [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder. The template includes 5 test users and headers for some required user properties.
+### Upload Process
+
+When you select an XLSX file, Casdoor displays a preview modal showing all the data to be imported. This allows you to review and verify the information before final submission. Once you confirm, click the upload button to import the users.
+
+We also provide a [sample XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder with 5 test users for reference.
 
 ![Import Successful](/img/user/import_success.png)
 
