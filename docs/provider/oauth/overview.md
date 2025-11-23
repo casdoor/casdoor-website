@@ -59,6 +59,10 @@ OAuth providers often return additional user information beyond the standard pro
 
 When users authenticate via OAuth, Casdoor automatically attempts to link accounts using multiple strategies: existing OAuth links, email/phone matching (if enabled), and case-insensitive username matching. This is particularly useful for enterprises with existing users who want to enable OAuth authentication without requiring manual account linking.
 
+## OAuth Provider Token Access
+
+After users authenticate through OAuth providers, Casdoor stores the provider's access token in the user object. Your application can retrieve this token via the `/api/get-account` API to make authenticated calls to the third-party provider's APIs (e.g., GitHub API, Google Drive API) on behalf of the user. The token is only visible to the user themselves or organization admins. See the [OAuth documentation](/docs/how-to-connect/oauth#accessing-oauth-provider-tokens) for details.
+
 ## Application Setup
 
 1. Click on `Application` in the top bar and select the desired application to edit.
