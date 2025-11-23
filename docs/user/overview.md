@@ -83,19 +83,6 @@ Unique IDs for social platform logins:
 - `Steam`
 - `Ldap`
 
-## OAuth Provider Token
-
-When users authenticate through OAuth providers (GitHub, Google, etc.), Casdoor stores the provider's access token in the `OriginalToken` field. This token allows your application to make authenticated API calls to the third-party service on behalf of the user.
-
-The `OriginalToken` is returned via the `/api/get-account` endpoint and is visible only when:
-
-- The user requests their own account information, OR
-- The requester is an organization admin
-
-For non-admin users requesting other users' data, the token is masked with `***` for privacy. This behavior is consistent with how other sensitive fields like `AccessSecret` are handled.
-
-For more information on accessing user accounts via API, see the [Public API documentation](/docs/basic/public-api).
-
 ## Organization Admin Privileges
 
 Users with `IsAdmin` set to true have administrator privileges within their organization:
