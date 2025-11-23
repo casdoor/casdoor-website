@@ -23,8 +23,35 @@ When the SSO logout endpoint is called, Casdoor performs the following actions:
 1. **Delete all active sessions**: All active sessions for the user across all applications in the organization are terminated
 2. **Expire all access tokens**: All access tokens that were issued to the user are immediately invalidated
 3. **Clear the current session**: The user's current session and authentication state are cleared
+4. **Send logout notifications**: Notification providers configured in the user's signup application receive the logout event
 
 This ensures that the user is completely logged out from all integrated applications and cannot access any resources without re-authenticating.
+
+### Logout Notifications
+
+When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. This allows your application to respond immediately by invalidating local sessions and clearing cached data.
+
+Each notification provider receives a POST request with the following payload:
+
+```json
+{
+  "owner": "org-name",
+  "name": "username",
+  "displayName": "John Doe",
+  "email": "user@example.com",
+  "phone": "+1234567890",
+  "id": "user-id",
+  "event": "sso-logout"
+}
+```
+
+To receive logout notifications, configure a notification provider (such as Custom HTTP, Telegram, or Slack) in your Casdoor application's notification provider settings. For Custom HTTP providers:
+
+- Set **Receiver** to your application's webhook endpoint (e.g., `https://app.example.com/api/logout-webhook`)
+- Set **Method** to POST
+- Set **Title** to `content` (the parameter name for the JSON payload)
+
+Your application can then use the received user information to invalidate local sessions, clear caches, or perform other cleanup tasks. For more details on configuring notification providers, see the [Notification Providers](/docs/provider/notification/overview) documentation.
 
 ## SSO Logout API
 
