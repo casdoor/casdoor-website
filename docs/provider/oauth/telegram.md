@@ -29,6 +29,12 @@ Add a Telegram OAuth provider in Casdoor with the following configuration:
 - **Client ID**: Your bot's username (e.g., `MyAuthBot`)
 - **Client Secret**: The bot token provided by BotFather
 
+:::note Domain Verification
+
+Authentication will only work from the domain you registered with BotFather using the `/setdomain` command. Make sure your Casdoor instance is accessible from this domain.
+
+:::
+
 ## How It Works
 
 Telegram authentication uses HMAC-SHA256 verification to ensure data authenticity:
