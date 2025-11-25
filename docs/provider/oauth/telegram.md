@@ -2,7 +2,7 @@
 title: Telegram
 description: Add Telegram OAuth provider to your application
 keywords: [Telegram, OAuth]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 Telegram Login Widget provides a secure way to authenticate users through their Telegram accounts. Unlike traditional OAuth providers, Telegram uses a widget-based approach with cryptographic verification.
