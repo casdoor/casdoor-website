@@ -187,6 +187,7 @@ module.exports = {
             "provider/oauth/Wechat",
             "provider/oauth/weCom",
             "provider/oauth/Tencent",
+            "provider/oauth/telegram",
             "provider/oauth/DingTalk",
             "provider/oauth/Steam",
             "provider/oauth/gitee",
