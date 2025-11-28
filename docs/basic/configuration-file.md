@@ -20,7 +20,7 @@ Casdoor supports MySQL, MSSQL, SQLite3, and PostgreSQL. By default, Casdoor uses
 
 #### MySQL
 
-Casdoor stores user, node, and topic information in a MySQL database named `casdoor`. If the database does not exist, it must be created manually. The DB connection string can be specified at: <https://github.com/casdoor/casdoor/blob/master/conf/app.conf>
+Casdoor stores user, node, and topic information in a MySQL database named `casdoor`. If the database does not exist, it must be created manually.
 
 ```ini
 driverName = mysql
