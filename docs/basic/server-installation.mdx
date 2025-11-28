@@ -64,9 +64,11 @@ git clone https://github.com/casdoor/casdoor
 
 Casdoor supports MySQL, MSSQL, SQLite3, and PostgreSQL. By default, Casdoor uses MySQL.
 
-#### MySQL
+For detailed database configuration and all available configuration options, please see the [Configuration File](/docs/basic/configuration-file) documentation.
 
-Casdoor stores user, node, and topic information in a MySQL database named `casdoor`. If the database does not exist, it must be created manually. The DB connection string can be specified at: <https://github.com/casdoor/casdoor/blob/master/conf/app.conf>
+#### Quick Start Example
+
+For a quick start with MySQL, configure your `conf/app.conf`:
 
 ```ini
 driverName = mysql
@@ -74,103 +76,11 @@ dataSourceName = root:123456@tcp(localhost:3306)/
 dbName = casdoor
 ```
 
-#### PostgreSQL
-
-Before running Casdoor, you need to manually prepare a database for PostgreSQL, as Casdoor requires a database to be selected when opening Postgres with xorm.
-
-Assuming you have already prepared a database called `casdoor`, you should specify `app.conf` like this:
-
-```ini
-driverName = postgres
-dataSourceName = user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor
-dbName = casdoor
-```
-
 :::info
-For PostgreSQL, ensure that `dataSourceName` has a non-empty `dbName` and also [duplicate](https://github.com/casdoor/casdoor/issues/2127) the database name for the `dbname` field as shown in the example above.
+
+For complete configuration reference including all backend options (`app.conf`) and frontend options (`Conf.js`), see [Configuration File](/docs/basic/configuration-file).
+
 :::
-
-#### CockroachDB
-
-CockroachDB can also be used with the PostgreSQL driver and has the same configuration as PostgreSQL.
-
-```ini
-driverName = postgres
-dataSourceName = user=postgres password=postgres host=localhost port=5432 sslmode=disable dbname=casdoor serial_normalization=virtual_sequence
-dbName = casdoor
-```
-
-:::info
-For CockroachDB, remember to add `serial_normalization=virtual_sequence` to the `dataSourceName` as shown in the example above. Otherwise, you will get an error regarding an existing database whenever the service starts or restarts. Note that this must be added before the database is created.
-:::
-
-#### SQLite3
-
-To configure SQLite3, you should specify `app.conf` like this:
-
-```ini
-driverName = sqlite
-dataSourceName = file:casdoor.db?cache=shared
-dbName = casdoor
-```
-
-### Via Ini file
-
-Casdoor can be configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf). As a beginner, you only need to modify `driverName` and `dataSourceName` based on your database (see [Configure Database](#configure-database)). Below is a complete reference of all configuration options:
-
-| Parameter                   | Default Value                                                                        | Description                                                                                                                                          |
-|-----------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `appname`                   | `casdoor`                                                                            | Application name (currently has no practical use)                                                                                                    |
-| `httpport`                  | `8000`                                                                               | Port that the backend application listens on                                                                                                         |
-| `runmode`                   | `dev`                                                                                | Running mode: `dev` or `prod`                                                                                                                        |
-| `copyrequestbody`           | `true`                                                                               | Whether to copy request body for later use                                                                                                           |
-| `driverName`                | `mysql`                                                                              | Database driver (e.g., `mysql`, `postgres`, `sqlite`). See [Configure Database](#configure-database)                                                 |
-| `dataSourceName`            | `root:123456@tcp(localhost:3306)/`                                                   | Database connection string. See [Configure Database](#configure-database)                                                                            |
-| `dbName`                    | `casdoor`                                                                            | Database name used by Casdoor                                                                                                                        |
-| `tableNamePrefix`           | (empty)                                                                              | Prefix for table names when using an adapter                                                                                                         |
-| `showSql`                   | `false`                                                                              | Show SQL statements in logger when log level is greater than INFO                                                                                    |
-| `redisEndpoint`             | (empty)                                                                              | Redis endpoint for session storage (e.g., `localhost:6379`). If empty, sessions are stored locally in `./tmp`. For password: `host:port,db,password` |
-| `defaultStorageProvider`    | (empty)                                                                              | Default storage provider name for file uploads (e.g., avatars). See [storage](/docs/provider/storage/overview)                                       |
-| `isCloudIntranet`           | `false`                                                                              | Whether provider endpoints use intranet addresses                                                                                                    |
-| `authState`                 | `"casdoor"`                                                                          | Authorization application name checked during login                                                                                                  |
-| `socks5Proxy`               | `"127.0.0.1:10808"`                                                                  | SOCKS5 proxy address for OAuth providers (Google, GitHub, etc.) that may be blocked                                                                  |
-| `verificationCodeTimeout`   | `10`                                                                                 | Verification code expiration time in minutes                                                                                                         |
-| `initScore`                 | `0`                                                                                  | Initial score assigned to new users (used by Casnode, not Casdoor)                                                                                   |
-| `logPostOnly`               | `true`                                                                               | Whether to log only POST requests                                                                                                                    |
-| `isUsernameLowered`         | `false`                                                                              | Whether to convert usernames to lowercase                                                                                                            |
-| `origin`                    | (empty)                                                                              | Backend origin URL (e.g., `https://door.casdoor.com`)                                                                                                |
-| `originFrontend`            | (empty)                                                                              | Frontend origin URL if different from backend                                                                                                        |
-| `staticBaseUrl`             | `"https://cdn.casbin.org"`                                                           | CDN URL for static assets used during database initialization                                                                                        |
-| `isDemoMode`                | `false`                                                                              | Enable demo mode restrictions                                                                                                                        |
-| `batchSize`                 | `100`                                                                                | Batch size for bulk operations                                                                                                                       |
-| `enableErrorMask`           | `false`                                                                              | Whether to mask detailed error messages                                                                                                              |
-| `enableGzip`                | `true`                                                                               | Accept and respond with gzip encoding when client supports it                                                                                        |
-| `inactiveTimeoutMinutes`    | (empty)                                                                              | Auto-logout timeout in minutes. Empty or ≤0 means no timeout                                                                                         |
-| `ldapServerPort`            | `389`                                                                                | Port for LDAP server                                                                                                                                 |
-| `ldapsCertId`               | `""`                                                                                 | Certificate ID for LDAPS connections                                                                                                                 |
-| `ldapsServerPort`           | `636`                                                                                | Port for LDAPS (LDAP over SSL) server                                                                                                                |
-| `radiusServerPort`          | `1812`                                                                               | Port for RADIUS server                                                                                                                               |
-| `radiusDefaultOrganization` | `"built-in"`                                                                         | Default organization for RADIUS authentication                                                                                                       |
-| `radiusSecret`              | `"secret"`                                                                           | Shared secret for RADIUS authentication                                                                                                              |
-| `quota`                     | `{"organization": -1, "user": -1, "application": -1, "provider": -1}`                | Resource quotas (-1 means unlimited)                                                                                                                 |
-| `logConfig`                 | `{"adapter":"file", "filename": "logs/casdoor.log", "maxdays":99999, "perm":"0770"}` | Logging configuration (adapter, file path, rotation, permissions)                                                                                    |
-| `initDataNewOnly`           | `false`                                                                              | Whether to initialize data only for new installations                                                                                                |
-| `initDataFile`              | `"./init_data.json"`                                                                 | Path to data initialization file. See [Data Initialization](/docs/deployment/data-initialization)                                                    |
-| `frontendBaseDir`           | `"../cc_0"`                                                                          | Base directory for frontend files (only for development)                                                                                             |
-
-### Via Environment Variables
-
-All configuration items defined by Casdoor in the ini file mentioned above can be configured via environment variables, as well as some of the beego configurations items (httpport, appname).
-
-For example, when you try to start Casdoor, you can use something like this to pass the configuration via environment variables:
-
-```shell
-appname=casbin go run main.go
-```
-
-In addition, `export` derivatives are also a possible method. The names of environmental variables should exactly match the names you want to use in the ini file.
-
-Note: configurations in environmental variables can override the configurations in the ini file.
 
 ## Run
 
