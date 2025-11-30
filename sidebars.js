@@ -279,6 +279,7 @@ module.exports = {
           items: [
             "provider/payment/overview",
             "provider/payment/dummy",
+            "provider/payment/Balance",
             "provider/payment/paypal",
             "provider/payment/stripe",
             "provider/payment/Alipay",
