@@ -278,6 +278,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/payment/overview",
+            "provider/payment/dummy",
             "provider/payment/paypal",
             "provider/payment/stripe",
             "provider/payment/Alipay",
