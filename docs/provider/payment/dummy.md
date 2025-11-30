@@ -15,10 +15,10 @@ When a user initiates a purchase with the Dummy provider, the payment is immedia
 
 To set up the Dummy payment provider in Casdoor:
 
-|    Field      |   Value            |
+|    Name       |   Value            |
 |      ----     |   ----             |
-|Category       |   `Payment`        |
-|Type           |   `Dummy`          |
+|Category       |   Choose `Payment` |
+|Type           |   Choose `Dummy`   |
 
 No additional configuration like API keys or secrets is required.
 
