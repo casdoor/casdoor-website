@@ -25,7 +25,7 @@ Copy the API key for the next step.
 
 Create a Paddle payment provider in Casdoor:
 
-|    Name       |   Value                     |
+|    Name       |   Name in Paddle            |
 |      ----     |   ----                      |  
 |Category       |   Choose `Payment`          |
 |Type           |   Choose `Paddle`           |
