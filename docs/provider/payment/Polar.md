@@ -5,6 +5,12 @@ keywords: [Polar, payment]
 authors: [Copilot]
 ---
 
+:::note
+
+This is an example of how to configure a **Polar** payment provider.
+
+:::
+
 Polar is a payment platform built for developers and creators selling digital products. It offers a modern checkout experience with support for subscriptions, one-time payments, and product licensing.
 
 ## Step 1. Get Your Access Token
@@ -19,11 +25,11 @@ Copy the generated access token - you'll need this in the next step.
 
 Create a Polar payment provider in Casdoor:
 
-|    Name       |   Value                     |
+|    Name       |   Name in Polar             |
 |      ----     |   ----                      |  
 |Category       |   Choose `Payment`          |
 |Type           |   Choose `Polar`            |
-|Client secret  |   Your access token from Step 1   |
+|Client secret  |   Access token obtained from Step 1   |
 
 The Client ID field is not required for Polar.
 
