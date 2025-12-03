@@ -282,6 +282,7 @@ module.exports = {
             "provider/payment/Balance",
             "provider/payment/paypal",
             "provider/payment/stripe",
+            "provider/payment/Polar",
             "provider/payment/Alipay",
             "provider/payment/WeChatPay",
             "provider/payment/AirWallex",
