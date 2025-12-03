@@ -96,7 +96,7 @@ public async Task<UserDto?> GetUserInfo(string token)
 var token = await _casdoorApi.RequestToken(
     CasdoorVariables.ClientId,
     CasdoorVariables.ClientSecret,
-    authCode
+    authCode,
 );
 
 var user = await _casdoorApi.GetUserInfo(token);
