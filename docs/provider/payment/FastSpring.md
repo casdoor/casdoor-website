@@ -17,7 +17,7 @@ FastSpring is a global e-commerce platform designed for digital commerce, handli
 
 Create an account at [FastSpring](https://fastspring.com/) and access your dashboard.
 
-Navigate to [Integrations > API Credentials](https://dashboard.fastspring.com/developer) in your FastSpring account. Generate or locate your API credentials:
+Navigate to **Developer > API Credentials** in your FastSpring dashboard to generate or locate your API credentials:
 
 - **API Username**: Your FastSpring API username
 - **API Password**: Your FastSpring API password
