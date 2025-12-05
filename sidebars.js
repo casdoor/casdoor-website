@@ -284,6 +284,7 @@ module.exports = {
             "provider/payment/stripe",
             "provider/payment/Polar",
             "provider/payment/Paddle",
+            "provider/payment/FastSpring",
             "provider/payment/Alipay",
             "provider/payment/WeChatPay",
             "provider/payment/AirWallex",
