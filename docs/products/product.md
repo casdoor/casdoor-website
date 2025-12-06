@@ -30,6 +30,7 @@ Recharge products allow users to add amounts to their account balance. When you 
 **Custom amounts**: Allow users to enter any amount they wish to recharge. This provides flexibility when preset amounts don't fit user needs.
 
 **Configuration options**:
+
 - Add multiple preset amounts in the product editor
 - Toggle "Disallow custom amount" to restrict users to preset values only
 - When custom amounts are disabled, at least one preset amount must be defined
