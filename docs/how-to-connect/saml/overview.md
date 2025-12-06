@@ -24,6 +24,8 @@ You can also find the metadata in the application edit page. Click the button to
 
 Casdoor supports both GET and POST `SAMLResponse`. Casdoor needs to know what types of requests the SP supports when Casdoor sends the `SAMLResponse` to the SP. You need to configure the application in Casdoor based on the `SAMLResponse` type supported by your SP.
 
+When integrating Casdoor as a SAML IdP with external identity providers (like Azure AD), the `/api/acs` endpoint receives SAML responses. This endpoint is configured to accept cross-origin POST requests, allowing IdPs from different domains to send authentication data.
+
 :::info
 
 If you fill in the `Reply URL`, Casdoor will send the `SAMLResponse` by **POST** Request. If the Reply URL is empty, Casdoor will use **GET** request. You might wonder how Casdoor knows the `Reply URL` of the SP if the `Reply URL` is empty. Actually, Casdoor can get the URL called `AssertionConsumerServiceURL` by parsing the `SAMLRequest` and send the request with `SAMLResponse` to `AssertionConsumerServiceURL`. The `Reply URL` will overwrite the `AssertionConsumerServiceURL` in `SAMLRequest`.
@@ -41,6 +43,8 @@ If you fill in the `Reply URL`, Casdoor will send the `SAMLResponse` by **POST**
 ### SAML attributes
 
 Some SP will require you to provide external attributes in SAML Response, you can add those in SAML attributes table. And you can insert user's field to it.
+
+If your service provider only requires the NameID field and doesn't need additional user attributes (Email, Name, DisplayName, Roles), you can enable the **Disable SAML attributes** option in the application settings. When enabled, Casdoor will omit these attributes from the SAML response, which can help avoid XML namespace issues with certain SPs that have strict validation requirements.
 
 For examle
 

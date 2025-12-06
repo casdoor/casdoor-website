@@ -42,6 +42,7 @@ How it works
 
 1. In the URL to the application home page, we will carry the `silentSignin` parameter.
 2. In your home page, determine whether you need to log in silently (automatically) by checking the `silentSignin` parameter. If `silentSignin === 1`, the function should return the `SilentSignin` component, which will help you initiate a login request. Since you have auto-login enabled, users will log in automatically without clicking.
+3. The silent sign-in flow ensures proper context matching—it only triggers when the account's organization matches the current application context, preventing duplicate login attempts and unintended automatic sign-ins.
 
 :::
 
