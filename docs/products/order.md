@@ -41,7 +41,7 @@ Orders progress through these states:
 
 ## Viewing Orders
 
-Navigate to the Orders page to view all purchases. You can search, filter by state, and sort orders to find specific transactions.
+Navigate to the Orders page to view all purchases. The order list includes a **Payment** column that links directly to the associated payment record, making it easy to track payment status and details. You can search orders by payment name, filter by state, and sort by various fields to find specific transactions.
 
 ## Managing Orders
 

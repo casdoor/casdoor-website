@@ -23,9 +23,18 @@ First, you need to understand the basic properties of the product:
 
 ### Recharge Products
 
-Recharge products allow users to add custom amounts to their account balance. When you enable the "Is recharge" option, the product price becomes flexible—users can enter any amount they wish to recharge. Upon successful payment, the specified amount is automatically added to the user's balance.
+Recharge products allow users to add amounts to their account balance. When you enable the "Is recharge" option, you can configure how users select recharge amounts:
 
-This is useful when you want to let users top up their accounts with any amount instead of fixed product prices.
+**Preset amounts**: Define specific recharge values (e.g., $10, $50, $100) that users can select. This approach simplifies the purchase decision and works well for common recharge scenarios.
+
+**Custom amounts**: Allow users to enter any amount they wish to recharge. This provides flexibility when preset amounts don't fit user needs.
+
+**Configuration options**:
+- Add multiple preset amounts in the product editor
+- Toggle "Disallow custom amount" to restrict users to preset values only
+- When custom amounts are disabled, at least one preset amount must be defined
+
+Upon successful payment, the selected amount is automatically added to the user's balance. This flexibility lets you balance between guiding users toward specific amounts and giving them freedom to choose.
 
 ## Payment Provider
 
@@ -35,8 +44,6 @@ Multiple payment providers can be added to a product.
 To learn how to configure a payment provider, refer to [Payment Provider](/docs/provider/payment/overview)
 
 ![product_provider.png](/img/products/product_provider.png)
-
-Finally, fill in the **Return URL**. This is the URL to which the payment provider page will redirect after the payment is completed.
 
 ### Success URL (Optional)
 
@@ -61,6 +68,10 @@ http://example.com/payment/success?customParam=value&transactionOwner={paymentOw
 Call the API endpoint: `api/notify-payment/{paymentOwner}/{paymentName}` using the parameters provided in the Success URL query string.
 
 :::
+
+## Access Controls
+
+Products, orders, payments, plans, pricing, and subscriptions enforce admin-only editing permissions. Non-admin users can view these resources but cannot create, modify, or delete them. When viewing as a non-admin, action buttons and form controls are disabled to prevent unauthorized changes.
 
 ## Preview the Product
 

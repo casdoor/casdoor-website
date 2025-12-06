@@ -7,6 +7,8 @@ authors: [leo220yuyaodog]
 
 After the payment is successfully processed, you will be able to view the transaction information of the products in the **Payment** section. This information will include details such as the organization, user, purchase time, and product name.
 
+When viewing a payment, you can navigate directly to the related order using the **View Order** button. After completing a payment, the system offers quick actions to either view the order details or return to the order list, streamlining your workflow.
+
 ## Invoice
 
 To issue an invoice, navigate to the edit screen:

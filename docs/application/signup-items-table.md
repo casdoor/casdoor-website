@@ -17,6 +17,7 @@ For a detailed explanation of each signup item, please refer to the table below.
 |   Visible   | `True` / `False` | Select whether this signup item is visible on the registration page.                                                                                        |
 |  Required   | `True` / `False` | Select whether this signup item is mandatory.                                                                                                    |
 |  Prompted   | `True` / `False` | Select whether to prompt the user when they forget to fill in this signup item.                                                                               |
+|    Regex    |        -         | Regular expression pattern for input validation. When set, the field will be validated against this pattern before submission.   |
 | Label  | - | If this signup item start with `Text`, Label should be the html code for this field. If not it will repalce the label of this signup item.   |
 | Custom CSS  | - | CSS code for this signup item.  |
 |    Rule     |  `Rule Items`   | Select a rule to customize this signup item. Detailed rules are described in the table below. |
@@ -50,3 +51,13 @@ Then, I selected the email row's rule item as `No verification`. As a result, th
 When the organization's "Use email as username" option is enabled and the username field is not visible in the signup items table, the user's email address will automatically be used as their username during registration.
 
 :::
+
+## Field Validation
+
+You can add regex patterns to validate user input during signup. The validation happens on the client side, providing immediate feedback to users before they submit the form. To add validation:
+
+1. Set the **Regex** field for any signup item (e.g., Username, Display name, or custom fields)
+2. Enter a valid regular expression pattern (e.g., `^[a-zA-Z0-9_]+$` for alphanumeric usernames)
+3. Users will see an error message if their input doesn't match the pattern
+
+This works for standard fields (Username, Display name, First name, Last name, Affiliation) and custom input fields, ensuring data quality before it reaches the backend.
