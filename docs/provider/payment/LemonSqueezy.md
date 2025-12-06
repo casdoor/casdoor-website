@@ -2,7 +2,7 @@
 title: Lemon Squeezy
 description: Add Lemon Squeezy payment provider to your application
 keywords: [Lemon Squeezy, payment]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 :::note
