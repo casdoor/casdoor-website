@@ -328,6 +328,16 @@ module.exports = {
         },
         {
           type: "category",
+          label: "ID Verification",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/idv/overview",
+            "provider/idv/jumio",
+          ],
+        },
+        {
+          type: "category",
           label: "MFA",
           collapsed: true,
           link: {type: "generated-index"},
