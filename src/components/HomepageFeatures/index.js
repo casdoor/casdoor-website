@@ -7,38 +7,38 @@ import {useColorMode} from "@docusaurus/theme-common";
 const FeatureList = [
   {
     title: translate({
-      message: "Easy to Use",
+      message: "Enterprise-Grade Authentication",
     }),
     path: "/img/model",
     description: (
       <>
         <Translate>
-        Set up a Casdoor application in just a few steps and manage your authentication and authorization with ease.
+        Deploy a production-ready Casdoor application in minutes. Streamline authentication and authorization management with an intuitive interface designed for enterprise needs.
         </Translate>
       </>
     ),
   },
   {
     title: translate({
-      message: "Frontend-Backend Separation",
+      message: "Modern Architecture",
     }),
     path: "/img/storage",
     description: (
       <>
         <Translate>
-        Built with a modern frontend-backend separation architecture, Casdoor provides an intuitive web UI while supporting high concurrency.
+        Built with a modern frontend-backend separation architecture, Casdoor delivers an intuitive web UI with exceptional performance and scalability for high-concurrency environments.
         </Translate>
       </>
     ),
   },
   {
     title: translate({
-      message: "Multi-Language Support",
+      message: "SaaS Management Platform",
     }),
     path: "/img/language",
     description: (
       <>
-        <Translate>Casdoor supports multiple languages through i18n, providing a localized UI experience. To request support for additional languages, please visit</Translate> <a href="https://github.com/casdoor/"><Translate>our community</Translate></a>.
+        <Translate>Comprehensive SaaS subscription and payment management with support for multiple plans, pricing tiers, and payment providers. Manage products, subscriptions, and transactions seamlessly. To learn more, visit</Translate> <a href="/docs/pricing/overview"><Translate>SaaS Management documentation</Translate></a>.
       </>
     ),
   },
