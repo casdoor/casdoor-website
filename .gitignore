@@ -25,3 +25,6 @@ package-lock.json
 *.iml
 
 .history/
+
+# Temporary files
+/tmp
