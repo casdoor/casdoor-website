@@ -2,7 +2,7 @@
 title: Overview
 description: Identity verification for users using ID Verification providers
 keywords: [ID Verification, identity, verification, KYC]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 Casdoor's ID Verification providers enable real-world identity verification for your users. When configured, users can verify their identity by submitting their ID card information and real name, which gets validated through third-party verification services.
