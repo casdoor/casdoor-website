@@ -334,6 +334,7 @@ module.exports = {
           items: [
             "provider/idv/overview",
             "provider/idv/jumio",
+            "provider/idv/alibaba-cloud",
           ],
         },
         {
