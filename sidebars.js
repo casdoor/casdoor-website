@@ -333,6 +333,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/idv/overview",
+            "provider/idv/alibaba-cloud",
             "provider/idv/jumio",
           ],
         },
