@@ -23,7 +23,7 @@ If no custom path is specified, Casdoor will look for `init_data.json` in the ro
 
 If you are using the official Docker image of Casdoor, here are some scripts that can help you to mount `init_data.json` into the container.
 
-A template for `init_data.json` is provided at: [init_data.json.template](https://github.com/casdoor/casdoor/blob/master/init_data.json.template). Rename it to `init_data.json` before using it.
+A template for `init_data.json` is provided at: [init_data.json.template](https://github.com/casdoor/casdoor/blob/master/init_data.json.template). Rename it to `init_data.json` before using it. The template uses bcrypt as the default password type for organizations, ensuring secure password storage from the start.
 
 ### For Docker
 
