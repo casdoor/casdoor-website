@@ -2,7 +2,7 @@
 title: Jumio
 description: Integrate Jumio for identity verification
 keywords: [Jumio, ID Verification, identity, KYC]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 Jumio is a leading identity verification platform that uses AI-powered technology to verify government-issued IDs and authenticate users. This guide explains how to configure Jumio as an ID Verification provider in Casdoor.
