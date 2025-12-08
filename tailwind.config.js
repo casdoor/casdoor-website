@@ -9,12 +9,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      screens: {
-        "landing-sm": "640px",
-        "landing-md": "768px",
-        "landing-lg": "1024px",
-        "landing-xl": "1280px",
-      },
+      // Using Tailwind's default breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
+      // No need to redefine them
       colors: {
         casdoor: {
           primary: "#3370ff",

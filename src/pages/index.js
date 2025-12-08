@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import clsx from "clsx";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
@@ -6,10 +6,24 @@ import Translate, {translate} from "@docusaurus/Translate";
 import { useWindowSize } from "@docusaurus/theme-common";
 import { motion } from "framer-motion";
 
+// Constants
+const DOCKER_INSTALL_COMMAND = "docker run -p 8000:8000 casbin/casdoor:latest";
+
 // Modern Hero Section inspired by Refine
 function ModernHeroSection() {
   const windowSize = useWindowSize();
   const isMobile = windowSize === "mobile";
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  const handleCopyCommand = async () => {
+    try {
+      await navigator.clipboard.writeText(DOCKER_INSTALL_COMMAND);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
   return (
     <div className={clsx(
@@ -17,8 +31,8 @@ function ModernHeroSection() {
       "bg-gradient-to-br from-white via-blue-50 to-purple-50",
       "dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20",
       "pt-20 pb-32",
-      "landing-sm:pt-24 landing-sm:pb-40",
-      "landing-lg:pt-32 landing-lg:pb-48"
+      "sm:pt-24 sm:pb-40",
+      "lg:pt-32 lg:pb-48"
     )}>
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
@@ -27,15 +41,15 @@ function ModernHeroSection() {
       </div>
 
       <div className={clsx(
-        "relative max-w-7xl mx-auto px-4 landing-sm:px-6 landing-lg:px-8",
-        "flex flex-col landing-lg:flex-row items-center gap-12"
+        "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+        "flex flex-col lg:flex-row items-center gap-12"
       )}>
         {/* Left content */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex-1 text-center landing-lg:text-left"
+          className="flex-1 text-center lg:text-left"
         >
           {/* GitHub stars badge */}
           <Link
@@ -59,7 +73,7 @@ function ModernHeroSection() {
           </Link>
 
           <h1 className={clsx(
-            "text-4xl landing-sm:text-5xl landing-lg:text-6xl",
+            "text-4xl sm:text-5xl lg:text-6xl",
             "font-extrabold tracking-tight",
             "text-gray-900 dark:text-white",
             "mb-6"
@@ -68,10 +82,10 @@ function ModernHeroSection() {
           </h1>
 
           <p className={clsx(
-            "text-lg landing-sm:text-xl",
+            "text-lg sm:text-xl",
             "text-gray-600 dark:text-gray-300",
             "mb-8 max-w-2xl",
-            isMobile ? "mx-auto" : "landing-lg:mx-0"
+            isMobile ? "mx-auto" : "lg:mx-0"
           )}>
             <Translate>
               An open-source, UI-first IAM / SSO platform supporting OAuth 2.0, OIDC, SAML, and 100+ identity providers. 
@@ -80,8 +94,8 @@ function ModernHeroSection() {
           </p>
 
           <div className={clsx(
-            "flex flex-col landing-sm:flex-row gap-4",
-            isMobile ? "items-center" : "landing-lg:items-start"
+            "flex flex-col sm:flex-row gap-4",
+            isMobile ? "items-center" : "lg:items-start"
           )}>
             <Link
               className={clsx(
@@ -134,18 +148,24 @@ function ModernHeroSection() {
               "border border-gray-700"
             )}>
               <span className="text-green-400">$</span>
-              <code>docker run -p 8000:8000 casbin/casdoor:latest</code>
+              <code>{DOCKER_INSTALL_COMMAND}</code>
               <button
-                onClick={() => navigator.clipboard.writeText("docker run -p 8000:8000 casbin/casdoor:latest")}
+                onClick={handleCopyCommand}
                 className={clsx(
                   "p-2 rounded hover:bg-gray-700 transition-colors",
-                  "text-gray-400 hover:text-white"
+                  copySuccess ? "text-green-400" : "text-gray-400 hover:text-white"
                 )}
-                title="Copy to clipboard"
+                title={copySuccess ? "Copied!" : "Copy to clipboard"}
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
+                {copySuccess ? (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
@@ -280,10 +300,10 @@ function FeaturesSection() {
 
   return (
     <div className="py-24 bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 landing-sm:px-6 landing-lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className={clsx(
-            "text-3xl landing-sm:text-4xl landing-lg:text-5xl",
+            "text-3xl sm:text-4xl lg:text-5xl",
             "font-extrabold tracking-tight",
             "text-gray-900 dark:text-white mb-4"
           )}>
@@ -296,7 +316,7 @@ function FeaturesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 landing-md:grid-cols-2 landing-lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -339,10 +359,10 @@ function FeaturesSection() {
 function IntegrationsSection() {
   return (
     <div className="py-24 bg-gray-50 dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 landing-sm:px-6 landing-lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className={clsx(
-            "text-3xl landing-sm:text-4xl font-extrabold",
+            "text-3xl sm:text-4xl font-extrabold",
             "text-gray-900 dark:text-white mb-4"
           )}>
             <Translate>Integrate with Your Favorite Platforms</Translate>
@@ -398,8 +418,8 @@ function CTASection() {
       "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600",
       "text-white"
     )}>
-      <div className="max-w-4xl mx-auto px-4 landing-sm:px-6 landing-lg:px-8 text-center">
-        <h2 className="text-3xl landing-sm:text-4xl landing-lg:text-5xl font-extrabold mb-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6">
           <Translate>Ready to Get Started?</Translate>
         </h2>
         <p className="text-xl mb-8 opacity-90">
@@ -407,7 +427,7 @@ function CTASection() {
             Join thousands of developers building secure authentication with Casdoor
           </Translate>
         </p>
-        <div className="flex flex-col landing-sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/docs/overview"
             className={clsx(
@@ -449,8 +469,8 @@ function StatsSection() {
 
   return (
     <div className="py-16 bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 landing-sm:px-6 landing-lg:px-8">
-        <div className="grid grid-cols-2 landing-md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
@@ -461,7 +481,7 @@ function StatsSection() {
               className="text-center"
             >
               <div className={clsx(
-                "text-4xl landing-sm:text-5xl font-extrabold",
+                "text-4xl sm:text-5xl font-extrabold",
                 "bg-gradient-to-r from-blue-600 to-purple-600",
                 "bg-clip-text text-transparent mb-2"
               )}>
