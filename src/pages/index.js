@@ -160,29 +160,55 @@ function ModernHeroSection() {
         >
           <div className={clsx(
             "relative rounded-2xl overflow-hidden shadow-2xl",
-            "border-8 border-gray-800 dark:border-gray-700",
+            "border-4 border-gray-200 dark:border-gray-700",
+            "bg-white dark:bg-gray-800",
             "transform hover:scale-105 transition-transform duration-300"
           )}>
-            <img
-              src="https://cdn.casdoor.com/casdoor/resource/built-in/admin/casdoor-logo_1185x256.png"
-              alt="Casdoor Demo"
-              className="w-full h-auto"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+            <div className="aspect-video bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center p-8">
+              <div className="text-center">
+                <img
+                  src="https://cdn.casdoor.com/casdoor/resource/built-in/admin/casdoor-logo_1185x256.png"
+                  alt="Casdoor Logo"
+                  className="w-full max-w-md h-auto mx-auto mb-6"
+                />
+                <div className="space-y-4">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        <Translate>Secure Authentication</Translate>
+                      </div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">
+                        <Translate>OAuth 2.0, OIDC, SAML</Translate>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             <Link
               to="https://door.casdoor.com/"
               className={clsx(
                 "absolute inset-0 flex items-center justify-center",
                 "opacity-0 hover:opacity-100 transition-opacity duration-200",
-                "bg-black/50 backdrop-blur-sm"
+                "bg-black/60 backdrop-blur-sm"
               )}
             >
               <span className={clsx(
                 "px-6 py-3 rounded-lg",
                 "bg-white dark:bg-gray-900 text-gray-900 dark:text-white",
                 "font-semibold text-lg shadow-lg",
-                "no-underline"
+                "no-underline flex items-center gap-2"
               )}>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
                 <Translate>View Live Demo</Translate>
               </span>
             </Link>
@@ -412,6 +438,46 @@ function CTASection() {
   );
 }
 
+// Stats Section
+function StatsSection() {
+  const stats = [
+    { number: "100+", label: translate({message: "Identity Providers"}) },
+    { number: "10k+", label: translate({message: "GitHub Stars"}) },
+    { number: "1M+", label: translate({message: "Downloads"}) },
+    { number: "50+", label: translate({message: "Contributors"}) },
+  ];
+
+  return (
+    <div className="py-16 bg-white dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 landing-sm:px-6 landing-lg:px-8">
+        <div className="grid grid-cols-2 landing-md:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className={clsx(
+                "text-4xl landing-sm:text-5xl font-extrabold",
+                "bg-gradient-to-r from-blue-600 to-purple-600",
+                "bg-clip-text text-transparent mb-2"
+              )}>
+                {stat.number}
+              </div>
+              <div className="text-gray-600 dark:text-gray-400 font-medium">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <Layout
@@ -420,6 +486,7 @@ export default function Home() {
     >
       <main className="overflow-hidden">
         <ModernHeroSection />
+        <StatsSection />
         <FeaturesSection />
         <IntegrationsSection />
         <CTASection />
