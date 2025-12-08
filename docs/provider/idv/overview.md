@@ -25,7 +25,7 @@ To add an ID Verification provider:
 1. Navigate to **Providers** in the Casdoor admin panel
 2. Click **Add** to create a new provider
 3. Select **ID Verification** from the Category dropdown
-4. Choose your provider type (Alibaba Cloud for Chinese IDs, Jumio for international documents)
+4. Choose your provider type
 5. Enter the required credentials
 6. Save the provider configuration
 
