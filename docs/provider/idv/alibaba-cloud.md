@@ -1,11 +1,11 @@
 ---
 title: Alibaba Cloud
-description: Integrate Alibaba Cloud for Chinese ID card verification
-keywords: [Alibaba Cloud, ID Verification, identity, KYC, China]
+description: Integrate Alibaba Cloud for ID card verification
+keywords: [Alibaba Cloud, ID Verification, identity, KYC]
 authors: [hsluoyz]
 ---
 
-Alibaba Cloud (Aliyun) offers a financial-grade ID verification service that specializes in validating Chinese national ID cards (身份证). This service verifies whether the provided ID number matches the real name through government databases, making it ideal for applications serving users in mainland China.
+Alibaba Cloud (Aliyun) offers a financial-grade ID verification service that specializes in validating national ID cards. This service verifies whether the provided ID number matches the real name through government databases, making it ideal for applications serving users.
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ To obtain your credentials:
 3. Create an AccessKey pair - you'll get an Access Key ID and Secret Access Key
 4. Enable the Real Person Verification service in your account
 
-The service uses the [Id2MetaVerify API](https://help.aliyun.com/zh/id-verification/financial-grade-id-verification/server-side-integration-2) to verify Chinese ID cards against government records.
+The service uses the [Id2MetaVerify API](https://help.aliyun.com/zh/id-verification/financial-grade-id-verification/server-side-integration-2) to verify ID cards against government records.
 
 ## Configuration
 
@@ -35,7 +35,7 @@ Create a new provider in Casdoor:
 
 ## Usage
 
-When users verify their identity, Casdoor submits their ID card number (身份证号) and real name (姓名) to Alibaba Cloud. The service checks whether these details match the records in China's national ID database.
+When users verify their identity, Casdoor submits their ID card number and real name to Alibaba Cloud. The service checks whether these details match the records in national ID database.
 
 Verification succeeds when:
 
@@ -47,7 +47,7 @@ After successful verification, the user's identity fields are locked and cannot 
 
 ## Requirements
 
-- Users must have valid Chinese national ID cards (supports both 15-digit and 18-digit ID numbers)
+- Users must have valid national ID cards (supports both 15-digit and 18-digit ID numbers)
 - Both the ID card number and real name fields must be filled in before verification
 - Your Alibaba Cloud account must have sufficient API call quotas
 
