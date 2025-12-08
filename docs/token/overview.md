@@ -45,6 +45,16 @@ The options are as follows: JWT will generate a token containing all User fields
 
 ![JWT-Custom](/img/token/overview/JWT-Custom.png)
 
+## JWT-Custom Token Format
+
+When using JWT-Custom format, you have fine-grained control over which fields are included in the generated token. The behavior differs based on field type:
+
+**Built-in OAuth/OIDC fields** (`nonce` and `scope`) are always included in the token, even when empty. This ensures compliance with OAuth 2.0 and OpenID Connect specifications.
+
+**Conditional fields** like `signinMethod` and `provider` are only included when explicitly selected in the Token Fields dropdown. This allows you to control which authentication metadata appears in your tokens.
+
+**User attributes** selected in Token Fields can be customized with specific data types through Custom Token Attributes.
+
 ## Custom Token Attributes
 
 When using JWT-Custom format, you can define custom attributes with their data types. Each attribute has a **Type** field that controls how values are included in the JWT:

@@ -20,7 +20,7 @@ authors: [ErikQQY]
 - `ClientId`: OAuth client ID.
 - `ClientSecret`: OAuth client secret.
 - `RedirectUris`: Casdoor will navigate to one of the URIs if the user logged in successfully.
-- `TokenFormat`: The format of the generated token. It can be in the following formats: `JWT` (containing all `User` fields), `JWT-Empty` (containing all non-empty values) or `JWT-Custom` customizing `User` fields inside access token. When using JWT-Custom, each attribute includes a Type field (`Array` or `String`) to control how values are returned in the token.
+- `TokenFormat`: The format of the generated token. It can be in the following formats: `JWT` (containing all `User` fields), `JWT-Empty` (containing all non-empty values) or `JWT-Custom` customizing `User` fields inside access token. When using JWT-Custom, OAuth/OIDC fields like `nonce` and `scope` are always included (even if empty), while fields like `signinMethod` and `provider` are only included when selected in Token Fields. Each custom attribute includes a Type field (`Array` or `String`) to control how values are returned in the token.
 - `ExpireInHours`: Login will expire after hours.
 - `SigninUrl`:
 - `SignupUrl`: If you provide a sign-up service independently outside of Casdoor, please fill in the URL here.
