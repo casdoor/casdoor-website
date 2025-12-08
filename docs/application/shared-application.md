@@ -19,6 +19,10 @@ If you want to create an application that can be shared with other organizations
 
 ![shared application login link](/img/application/shared-application/shared_application_login_link.png)
 
+## Using Invitations with Shared Applications
+
+When sending [invitations](/docs/invitation/overview) using a shared application, Casdoor automatically generates the correct organization-specific invitation links. The system appends the `-org-{orgName}` suffix to ensure users can successfully register through the invitation, even when the application is shared across multiple organizations.
+
 :::caution
 
 Once you shared an application, it can be used by all organizations, and cannot be disabled for a particular organization.

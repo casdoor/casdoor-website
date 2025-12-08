@@ -23,7 +23,7 @@ Casdoor manages invitations through the following properties
 - `Default code`: Used to populate the default invitation code in the invitation link. For randomly generated invitation codes, the default code is the same as the invitation code. For code in regular expression form, you need to fill in the default code by yourself that matches the regular expression rule in the code
 - `Quota`: Maximum number of times an invitation code can be used
 - `Used count`: Number of times the invitation code has been used
-- `Application`: Allow applications that use this invitation code. Selecting `ALL` makes it available to all apps under the organization
+- `Application`: Allow applications that use this invitation code. Selecting `ALL` makes it available to all apps under the organization. For [shared applications](/docs/application/shared-application), the invitation system automatically handles organization-specific links
 - `Username`: Specific username required when registering with this invitation
 - `Email`: Specific email required when registering with this invitation
 - `Phone`: Specific phone required when registering with this invitation
@@ -64,6 +64,8 @@ When using regular expressions to validate invitation codes, each invitation cod
 ## Invitation Link
 
 Casdoor supports copying the invitation link corresponding to an invitation. The invitation code in the invitation link corresponds to the Default code field. Therefore, for invitations that use regular expressions, the Default code must be manually filled in to generate the correct invitation link. Additionally, when registering using an invitation link, the registration page will automatically populate certain field information set by the invitation corresponding to the invitation code.
+
+When sending invitations for [shared applications](/docs/application/shared-application), the system automatically generates organization-specific links with the correct `-org-{orgName}` suffix, ensuring users can successfully complete registration through the invitation.
 
 ![Invitation Link](/img/invitation/invitation-link-copy.png)
 
