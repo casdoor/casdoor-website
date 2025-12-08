@@ -31,6 +31,8 @@ As an authentication platform, Casdoor manages user accounts. Every user has the
 - `Title`
 - `IdCardType`
 - `IdCard`
+- `RealName`: The user's verified real name (becomes read-only after identity verification)
+- `IsVerified`: Indicates whether the user has completed identity verification through an ID Verification provider
 - `Homepage`
 - `Bio`
 - `Tag`
@@ -103,6 +105,19 @@ The `Tag` field allows you to categorize users for different purposes. Casdoor u
   - Cannot sign in directly until they upgrade their account
 
 You can also define custom tags to restrict application access. See [Application Tags](/docs/application/tags) for more information.
+
+## Identity Verification
+
+Casdoor supports real-world identity verification through ID Verification providers. Users can verify their identity by submitting their ID card information and real name, which gets validated through third-party services like Jumio.
+
+When a user completes identity verification:
+
+- The `IsVerified` field is set to `true`
+- The `RealName`, `IdCardType`, `IdCard`, and related identity fields become read-only
+- The verified status is included in JWT tokens and OIDC userinfo responses
+- A verification badge appears on the user's profile
+
+This feature is useful for applications that require KYC (Know Your Customer) compliance or need to ensure user identity authenticity. See [ID Verification Providers](/docs/provider/idv/overview) for more information on configuring identity verification.
 
 ## Email Normalization
 

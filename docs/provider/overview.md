@@ -9,7 +9,7 @@ Casdoor uses providers to offer third-party services for the platform. In this c
 
 ## What We Have
 
-Currently, we have seven types of providers:
+Currently, we have eight types of providers:
 
 - **OAuth Providers**
 
@@ -29,6 +29,9 @@ Currently, we have seven types of providers:
 - **Captcha Providers**
 
   Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha, Alibaba Cloud Captcha, and Cloudflare Turnstile.
+- **ID Verification Providers**
+
+  Casdoor supports identity verification for users through ID Verification providers. Users can verify their real-world identity by submitting ID card information, which is validated through third-party verification services like Jumio.
 - **MFA Providers**
 
   Casdoor supports external authentication servers for multi-factor authentication. Currently supports RADIUS servers for authenticating users as a second factor during login.
