@@ -47,7 +47,7 @@ After successful verification, the user's identity fields are locked and cannot 
 
 ## Requirements
 
-- Users must have Chinese national ID cards (18-digit ID numbers)
+- Users must have valid Chinese national ID cards (supports both 15-digit and 18-digit ID numbers)
 - Both the ID card number and real name fields must be filled in before verification
 - Your Alibaba Cloud account must have sufficient API call quotas
 
