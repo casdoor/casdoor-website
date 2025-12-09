@@ -24,11 +24,6 @@ module.exports = {
         "basic/try-with-helm",
         "basic/public-api",
         "basic/tutorials",
-        {
-          type: "link",
-          label: "PDF Download",
-          href: "/pdf",
-        },
       ],
     },
     {

@@ -41,40 +41,6 @@ jobs:
           yarn crowdin:sync
           yarn build
 
-      - name: Build PDF prerequisites 🔨
-        run: |
-          sudo apt install fonts-noto -y
-          curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
-          tar zxf prince-14.2-linux-generic-x86_64.tar.gz
-          cd prince-14.2-linux-generic-x86_64
-          yes "" | sudo ./install.sh
-
-        # https://github.com/signcl/docusaurus-prince-pdf
-      - name: Generate PDF 🖨️
-        run: |
-          yarn serve > /dev/null &
-          sleep 3s
-          npx docusaurus-prince-pdf --include-index -u http://localhost:3000/docs/overview --output pdf/Casdoor_Docs.pdf
-          npx docusaurus-prince-pdf --include-index -u http://localhost:3000/zh/docs/overview --list-only
-          wget https://gist.githubusercontent.com/Selflocking/7a07d91d34ee227c93d2d8f583f981e3/raw/996a610b96e7e1f42e06ec555528f3427c2fb647/print.css
-          prince --no-warn-css --style=print.css --input-list=./pdf/localhost-zh-docs-overview.txt -o pdf/Casdoor_Docs_zh.pdf
-          rm pdf/*.txt
-          mv pdf/* build/pdf/ -f
-
-      - name: Clean up 🧹
-        run: |
-          rm -rf prince-14.2-linux-generic-x86_64*
-          yarn cache clean
-          npm cache clean --force
-          sudo apt-get clean
-
-      - name: Upload results 📤
-        uses: actions/upload-artifact@v4
-        with:
-          name: PDFs
-          path: build/pdf/
-          if-no-files-found: error
-
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
