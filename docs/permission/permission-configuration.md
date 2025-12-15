@@ -85,6 +85,7 @@ If RBAC-related fields (for example, *Sub users* or *Sub roles*) are disabled on
 it means the selected Model does not define a `role_definition` or does not support RBAC.
 
 To use an adapter with a Permission:
+
 1. Create or edit a Model and configure it with the appropriate Casbin definition and adapter.
 2. Save the Model.
 3. Select this Model when creating or editing a Permission.
