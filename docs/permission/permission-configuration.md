@@ -81,7 +81,7 @@ In Casdoor, adapters are **not configured per Permission**.
 The adapter and authorization behavior (such as RBAC or ABAC support) are defined at the **Model** level.
 A Permission only references a selected Model and provides policy data (subjects, resources, actions, effects).
 
-If RBAC-related fields (for example, *Sub users* or *Sub roles*) are disabled on the Permission page,
+If RBAC-related fields (for example, *Sub-users* or *Sub-roles*) are disabled on the Permission page,
 it means the selected Model does not define a `role_definition` or does not support RBAC.
 
 To use an adapter with a Permission:
