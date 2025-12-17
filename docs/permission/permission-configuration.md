@@ -74,6 +74,24 @@ Each Model should use a separate Adapter (table name). Different models with dif
 
 Learn more about adapters in the [Adapter documentation](/docs/permission/adapter).
 
+### Adapter and Model relationship
+
+In Casdoor, adapters are **not configured per Permission**.
+
+The adapter and authorization behavior (such as RBAC or ABAC support) are defined at the **Model** level.
+A Permission only references a selected Model and provides policy data (subjects, resources, actions, effects).
+
+If RBAC-related fields (for example, *Sub-users* or *Sub-roles*) are disabled on the Permission page,
+it means the selected Model does not define a `role_definition` or does not support RBAC.
+
+To use an adapter with a Permission:
+
+1. Create or edit a Model and configure it with the appropriate Casbin definition and adapter.
+2. Save the Model.
+3. Select this Model when creating or editing a Permission.
+
+This behavior is expected and by design.
+
 ### Subject Configuration
 
 These fields define **who** the permission policy applies to.
