@@ -44,7 +44,7 @@ The default attributes configuration is typically sufficient:
 - **emailaddress**: `user.mail`
 - **name**: `user.userprincipalname`
 
-You can customize these mappings if needed. If the username attribute is not explicitly mapped, Casdoor will automatically use the email address or NameID from the SAML assertion to populate the username field.
+You can customize these mappings if needed. When the username attribute is not explicitly mapped, Casdoor will automatically fall back to using the email address or NameID from the SAML assertion to populate the username field.
 
 ### SAML Certificates
 

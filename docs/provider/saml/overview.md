@@ -32,7 +32,7 @@ When configuring an external Identity Provider (such as Google Workspace, Azure 
 
 ## User Attribute Mapping
 
-When a user authenticates through SAML, Casdoor extracts user information from the SAML assertion based on your provider's attribute mapping configuration. The username field is particularly important as it's required for user creation in Casdoor.
+When a user authenticates through SAML, Casdoor extracts user information from the SAML assertion based on your provider's attribute mapping configuration. The username field is particularly important as it's required for user identification and creation in Casdoor.
 
 If your IdP doesn't explicitly provide a username mapping or the username field comes back empty, Casdoor automatically applies a fallback strategy:
 
