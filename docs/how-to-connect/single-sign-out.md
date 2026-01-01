@@ -116,6 +116,10 @@ function verifyLogoutSignature(notification, clientSecret) {
 // In your webhook handler
 app.post('/api/logout-webhook', (req, res) => {
   try {
+    if (!req.body.content) {
+      return res.status(400).json({ error: 'Missing content' });
+    }
+    
     const notification = JSON.parse(req.body.content);
     
     if (!verifyLogoutSignature(notification, YOUR_CLIENT_SECRET)) {
@@ -174,7 +178,11 @@ def verify_logout_signature(notification, client_secret):
 @app.route('/api/logout-webhook', methods=['POST'])
 def logout_webhook():
     try:
-        notification = json.loads(request.form.get('content'))
+        content = request.form.get('content')
+        if not content:
+            return jsonify({'error': 'Missing content'}), 400
+        
+        notification = json.loads(content)
         
         if not verify_logout_signature(notification, YOUR_CLIENT_SECRET):
             return jsonify({'error': 'Invalid signature'}), 401
@@ -233,6 +241,10 @@ func verifyLogoutSignature(notification LogoutNotification, clientSecret string)
 // In your webhook handler
 func logoutWebhook(w http.ResponseWriter, r *http.Request) {
     content := r.FormValue("content")
+    if content == "" {
+        http.Error(w, "Missing content", http.StatusBadRequest)
+        return
+    }
     
     var notification LogoutNotification
     if err := json.Unmarshal([]byte(content), &notification); err != nil {
@@ -267,8 +279,8 @@ The SSO logout endpoint accepts both `GET` and `POST` requests, making it flexib
 ### Parameters
 
 - **logoutAll** (optional): Controls the logout scope
-  - `true` or `1` or empty (default): Logs out from all sessions and expires all tokens
-  - Any other value: Logs out only the current session, leaving other sessions active
+  - `true`, `1`, or empty (default): Logs out from all sessions and expires all tokens
+  - `false`, `0`, or any other value: Logs out only the current session, leaving other sessions active
 
 ### Authentication
 
