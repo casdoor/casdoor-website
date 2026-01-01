@@ -22,12 +22,14 @@ The bot token is sensitive information. Never share it publicly or commit it to 
 
 :::
 
-## Configure Telegram Provider in Casdoor
+## Add Telegram Provider in Casdoor
 
-Add a Telegram OAuth provider in Casdoor with the following configuration:
-
-- **Client ID**: Your bot's username (e.g., `MyAuthBot`)
-- **Client Secret**: The bot token provided by BotFather
+1. Navigate to **Providers** in Casdoor's admin panel
+2. Click **Add** to create a new provider
+3. Set **Category** to `OAuth` and **Type** to `Telegram`
+4. Configure the provider:
+   - **Client ID**: Your bot's username (e.g., `MyAuthBot`)
+   - **Client Secret**: The bot token provided by BotFather
 
 :::note Domain Verification
 
@@ -35,30 +37,8 @@ Authentication will only work from the domain you registered with BotFather usin
 
 :::
 
-## How It Works
+## Authentication Flow
 
-Telegram authentication uses HMAC-SHA256 verification to ensure data authenticity:
+When users choose to sign in with Telegram, they authenticate directly through Telegram's widget. The process is straightforward: users click the login button, verify their identity through the Telegram app or website, and Telegram returns their profile information. Casdoor then validates this data using HMAC-SHA256 cryptographic signatures to ensure authenticity before creating or linking the user account. This verification follows [Telegram's security specification](https://core.telegram.org/widgets/login#checking-authorization) to prevent tampering.
 
-1. Users click the Telegram login button and authenticate through the Telegram app or website
-2. Telegram returns authentication data including user ID, name, username, and photo
-3. Casdoor verifies the data using the bot token before creating or linking the user account
-
-The authentication is handled entirely through Telegram's secure channels, and Casdoor validates the response using cryptographic signatures according to [Telegram's specification](https://core.telegram.org/widgets/login#checking-authorization).
-
-## User Information
-
-Telegram provides the following user information:
-
-- **User ID**: Unique identifier for the Telegram account
-- **First Name**: User's first name (always available)
-- **Last Name**: User's last name (if provided)
-- **Username**: Telegram username (if set by user)
-- **Photo URL**: Profile photo (if available)
-
-The display name in Casdoor follows this priority: full name (first + last) → username → user ID.
-
-:::info
-
-Telegram does not provide email addresses through the Login Widget. If your application requires email, consider enabling email verification after the initial authentication.
-
-:::
+Telegram provides basic profile information including user ID, first and last name, username (if set), and profile photo (if available). Note that Telegram does not provide email addresses through the Login Widget. If your application requires email verification, you'll need to collect this separately after the initial authentication.
