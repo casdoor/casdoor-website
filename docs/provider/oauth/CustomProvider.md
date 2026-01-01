@@ -89,9 +89,12 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
     "name": "admin",
     "preferred_username": "Admin",
     "email": "admin@example.com",
-    "picture": "https://casbin.org/img/casbin.svg"
+    "picture": "https://casbin.org/img/casbin.svg",
+    "phone": "+1234567890"
   }
   ```
+
+  The `phone` field is optional. If provided, it will be automatically saved to the user's phone number in Casdoor.
 
 - `Favicon` is the logo URL of a custom provider.
 
