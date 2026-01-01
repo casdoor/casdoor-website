@@ -9,6 +9,8 @@ After the payment is successfully processed, you will be able to view the transa
 
 When viewing a payment, you can navigate directly to the related order using the **View Order** button. After completing a payment, the system offers quick actions to either view the order details or return to the order list, streamlining your workflow.
 
+The payment system automatically creates transactions linked to the user's signup application, ensuring accurate tracking across your organization's applications.
+
 ## Invoice
 
 To issue an invoice, navigate to the edit screen:

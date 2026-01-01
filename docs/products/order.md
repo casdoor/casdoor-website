@@ -16,6 +16,10 @@ While closely related, orders and payments serve different purposes:
 
 Both are created when purchasing a product, but subscriptions use a different flow (Pricing → Plan → Payment → Subscription) without orders.
 
+## Creating Orders
+
+When a user purchases a product, the system creates an order and displays immediate feedback. You'll see a success notification as soon as the order is created, before being redirected to the payment page. If order creation fails, an error message explains what went wrong so you can address the issue.
+
 ## Order Structure
 
 Each order contains:
