@@ -142,11 +142,13 @@ To assign roles or permissions to users:
 
 ## Session Management
 
-Casdoor tracks active user sessions across different devices and browsers. Each time a user signs in, a new session is created with a unique session ID. Administrators can view and manage these sessions through the Sessions page in the admin console.
+Casdoor tracks active user sessions across different devices and browsers. Each time a user signs in, a new session is created with a unique session ID. Administrators can view and manage these sessions through the Sessions page (e.g., `https://door.casdoor.com/sessions`) in the admin console.
 
 ### Managing Multiple Sessions
 
-Users can maintain multiple active sessions simultaneously when signed in from different locations or devices. For example, a user might be logged in from their office computer, mobile phone, and home laptop at the same time. The Sessions page displays all active sessions for each user, showing session IDs and login details.
+By default, users can maintain multiple active sessions simultaneously when signed in from different locations or devices. For example, a user might be logged in from their office computer, mobile phone, and home laptop at the same time. The Sessions page displays all active sessions for each user, showing session IDs and login details.
+
+Note: If [Exclusive Signin](/docs/application/exclusive-signin) is enabled for an application, users are restricted to one active session at a time, and signing in from a new location automatically terminates previous sessions.
 
 Administrators can selectively remove individual sessions by clicking the close button (×) on any session ID tag. This is useful when you need to terminate access from a specific device without affecting the user's other active sessions. When you attempt to delete a session, a confirmation dialog appears to prevent accidental removals.
 
