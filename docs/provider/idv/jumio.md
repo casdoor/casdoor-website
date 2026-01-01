@@ -5,72 +5,24 @@ keywords: [Jumio, ID Verification, identity, KYC]
 authors: [hsluoyz]
 ---
 
-Jumio is a leading identity verification platform that uses AI-powered technology to verify government-issued IDs and authenticate users. This guide explains how to configure Jumio as an ID Verification provider in Casdoor.
+Jumio brings AI-powered identity verification to Casdoor, using advanced technology to validate government-issued IDs and authenticate users worldwide. When you need to verify identities across different countries and document types, Jumio's platform handles the complexity for you.
 
-## Prerequisites
+## Getting Your Credentials
 
-Before integrating Jumio with Casdoor, you'll need:
+Before you can use Jumio with Casdoor, you'll need an account with API access. Head over to [jumio.com](https://www.jumio.com/) to sign up if you haven't already. Once you're in, navigate to your dashboard's API credentials section. You'll find your API Token (which Casdoor calls Client ID) and API Secret (Client Secret) there. Also note your API endpoint URL—it typically looks like `https://api.jumio.com`.
 
-- A Jumio account with API access
-- API credentials (Client ID and Client Secret)
-- Your Jumio API endpoint URL
+## Configuring Casdoor
 
-If you don't have a Jumio account, visit [jumio.com](https://www.jumio.com/) to sign up.
+Setting up Jumio in Casdoor is straightforward. Open your Casdoor admin console and go to Providers. Click Add to create a new provider and fill in the details. Give it a descriptive name like "Jumio-Production", then select "ID Verification" from the Category dropdown and "Jumio" as the Type. Enter your Jumio API Token as the Client ID, your API Secret as the Client Secret, and your endpoint URL. Hit Save and you're halfway there.
 
-## Configuration Steps
-
-### Step 1: Obtain Jumio Credentials
-
-1. Log in to your Jumio account dashboard
-2. Navigate to the API credentials section
-3. Generate or locate your API Token (Client ID) and API Secret (Client Secret)
-4. Note your API endpoint URL (e.g., `https://api.jumio.com`)
-
-### Step 2: Create Provider in Casdoor
-
-1. Go to the Casdoor admin console
-2. Click **Providers** in the top navigation
-3. Click **Add** to create a new provider
-4. Configure the provider:
-   - **Name**: Choose a descriptive name (e.g., "Jumio-Production")
-   - **Category**: Select "ID Verification"
-   - **Type**: Select "Jumio"
-   - **Client ID**: Enter your Jumio API Token
-   - **Client Secret**: Enter your Jumio API Secret
-   - **Endpoint**: Enter your Jumio API endpoint URL
-
-5. Click **Save**
-
-### Step 3: Add Provider to Application
-
-1. Navigate to your application's edit page
-2. Scroll to the Providers section
-3. Click **Add** to add a new provider row
-4. Select your newly created Jumio provider
-5. Save the application configuration
+Now attach the provider to your application. Navigate to your application's edit page, scroll to the Providers section, and add a new provider row. Select your newly created Jumio provider from the list and save the application configuration. Your users can now verify their identities through Jumio.
 
 ## How Verification Works
 
-When a user initiates identity verification:
+When a user clicks the verification button, Casdoor calls Jumio's API with the user's ID information. Jumio creates a verification transaction and returns a reference. In production scenarios, users would complete Jumio's full verification workflow—uploading their ID document and taking a selfie—but the integration handles all the communication behind the scenes. Once Jumio validates everything, Casdoor marks the user as verified and locks their identity fields.
 
-1. Casdoor calls the Jumio API with the user's ID information
-2. Jumio initiates a verification transaction and returns a transaction reference
-3. The user completes the verification workflow (in production scenarios, this involves document upload and selfie capture)
-4. Jumio validates the submitted documents against the provided information
-5. Upon successful verification, the user's account is marked as verified in Casdoor
+You can test your setup from the provider edit page in Casdoor. Make sure you have ID card information and a real name filled in your user profile first. The test functionality will confirm that your API credentials are working correctly and that Casdoor can communicate with Jumio's servers.
 
-## Testing the Provider
+## Production Considerations
 
-You can test your Jumio configuration from the provider edit page:
-
-1. Ensure you have ID card information and real name filled in your user profile
-2. Navigate to the provider edit page
-3. Use the test functionality to verify that the provider is properly configured
-4. Check the response to confirm successful API communication
-
-## Important Notes
-
-- Verification is a one-time process per user. Once verified, users cannot modify their identity information
-- The current implementation initiates the verification workflow through Jumio's API v4
-- For production deployments, ensure your Jumio account has sufficient API call quotas
-- All verification attempts are logged for audit purposes
+Remember that verification is permanent—once a user completes verification, they can't modify their identity information anymore. The current implementation uses Jumio's API v4, so make sure your account has sufficient API call quotas before going live. All verification attempts are logged automatically for audit purposes.

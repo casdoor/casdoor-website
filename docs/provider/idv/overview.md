@@ -5,48 +5,24 @@ keywords: [ID Verification, identity, verification, KYC]
 authors: [hsluoyz]
 ---
 
-Casdoor's ID Verification providers enable real-world identity verification for your users. When configured, users can verify their identity by submitting their ID card information and real name, which gets validated through third-party verification services.
+Casdoor's ID Verification feature lets you confirm your users' real-world identities through trusted third-party services. This is particularly valuable for platforms requiring KYC (Know Your Customer) compliance, financial services, or any application where verifying user identity matters.
 
 ## How It Works
 
-Identity verification in Casdoor follows a straightforward process:
+The verification process is straightforward. Users enter their ID card details (type and number) along with their real name in their account settings. When they click "Verify Identity", Casdoor sends this information to your configured verification provider—either Jumio for document verification or Alibaba Cloud for national ID database checks. The provider validates the details and returns a result.
 
-1. Users fill in their ID card information (type and number) and real name in their account settings
-2. They click the "Verify Identity" button to initiate verification
-3. The configured ID Verification provider validates the submitted information
-4. Upon successful verification, the user's account is marked as verified and sensitive fields are locked
-
-Once verified, users cannot modify their real name, ID card type, ID card number, or related identity information, ensuring data integrity and preventing fraud.
+Once verification succeeds, the user's account gets a verified badge and their identity fields lock automatically. They won't be able to change their real name, ID card type, or ID card number anymore. This protects against identity fraud and ensures data integrity throughout the user's lifecycle.
 
 ## Setting Up a Provider
 
-To add an ID Verification provider:
+Adding an ID Verification provider takes just a few steps. Navigate to the Providers section in your Casdoor admin panel and click Add. Select "ID Verification" from the Category dropdown—this category is now fully integrated into Casdoor's provider system. Choose your provider type (Jumio or Alibaba Cloud), enter the required API credentials, and save.
 
-1. Navigate to **Providers** in the Casdoor admin panel
-2. Click **Add** to create a new provider
-3. Select **ID Verification** from the Category dropdown
-4. Choose your provider type
-5. Enter the required credentials
-6. Save the provider configuration
-
-After creating the provider, add it to your application's provider list so users can access the verification feature.
+After creating the provider, remember to add it to your application's provider list. Users won't see the verification option until the provider is attached to their application.
 
 ## User Verification
 
-Users can verify their identity from their account page. The verification button appears when:
-
-- The user has filled in their ID card type, ID card number, and real name
-- The user hasn't been verified yet
-- An ID Verification provider is configured in their application
-
-After verification, these fields become read-only and a verification badge appears on their profile.
+The verification button appears on the user's account page when three conditions are met: they've filled in their ID card type, ID card number, and real name; they haven't been verified yet; and an ID Verification provider is configured in their application. After successful verification, these fields become read-only and a verification badge appears on their profile.
 
 ## API Integration
 
-Identity verification is available through the `/api/verify-identification` endpoint. The API supports:
-
-- Self-verification: Users can verify themselves without additional parameters
-- Admin verification: Admins can verify other users by providing owner and name parameters
-- Provider selection: Optionally specify which provider to use for testing purposes
-
-The verification status is reflected in the user's `isVerified` field and `realName` is included in JWT tokens and OIDC userinfo responses.
+For developers integrating identity verification programmatically, the `/api/verify-identification` endpoint handles all verification requests. Users can verify themselves without additional parameters, while administrators can verify other users by providing owner and name parameters. The verification status appears in the user's `isVerified` field and their `realName` is included in JWT tokens and OIDC userinfo responses, making it available throughout your application stack.

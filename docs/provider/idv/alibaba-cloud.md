@@ -5,52 +5,24 @@ keywords: [Alibaba Cloud, ID Verification, identity, KYC]
 authors: [hsluoyz]
 ---
 
-Alibaba Cloud (Aliyun) offers a financial-grade ID verification service that specializes in validating national ID cards. This service verifies whether the provided ID number matches the real name through government databases, making it ideal for applications serving users.
+Alibaba Cloud (Aliyun) provides financial-grade ID verification that connects directly to government databases. Unlike document verification services, it validates whether an ID number matches a real name through official records. This makes it ideal for applications serving users in regions where Alibaba Cloud has database access.
 
-## Getting Started
+## Setting Up
 
-You'll need an Alibaba Cloud account with the ID Verification service enabled. If you don't have one, register at [aliyun.com](https://www.aliyun.com/).
+You'll need an Alibaba Cloud account with the ID Verification service enabled. Register at [aliyun.com](https://www.aliyun.com/) if you don't have one yet. Once you're in, navigate to the AccessKey management page and create an AccessKey pair. You'll receive an Access Key ID and Secret Access Key—keep these safe as you'll need them for Casdoor. Don't forget to enable the Real Person Verification service in your account settings.
 
-To obtain your credentials:
+The service uses Alibaba Cloud's [Id2MetaVerify API](https://help.aliyun.com/zh/id-verification/financial-grade-id-verification/server-side-integration-2) under the hood, which queries government ID databases to confirm that an ID card number matches the provided name.
 
-1. Log in to your Alibaba Cloud console
-2. Navigate to the AccessKey management page
-3. Create an AccessKey pair - you'll get an Access Key ID and Secret Access Key
-4. Enable the Real Person Verification service in your account
+## Configuring in Casdoor
 
-The service uses the [Id2MetaVerify API](https://help.aliyun.com/zh/id-verification/financial-grade-id-verification/server-side-integration-2) to verify ID cards against government records.
+Head to the Providers section in your Casdoor admin console and click Add. Set the Category to "ID Verification" and Type to "Alibaba Cloud". Fill in your Access Key ID and Secret Access Key in the respective fields. For the endpoint, you can leave it empty to use the default (`cloudauth.cn-shanghai.aliyuncs.com`) or specify a custom one if needed. Save the provider and add it to your application's provider list.
 
-## Configuration
+## How Verification Works
 
-Create a new provider in Casdoor:
+When users verify their identity, Casdoor sends their ID card number and real name to Alibaba Cloud. The service checks these details against national ID database records. Verification succeeds when the ID card number format is valid, the ID card exists in the government database, and the provided name matches exactly.
 
-1. Go to **Providers** and click **Add**
-2. Set **Category** to "ID Verification"
-3. Select **Type** as "Alibaba Cloud"
-4. Fill in the credentials:
-   - **Access key**: Your Alibaba Cloud Access Key ID
-   - **Secret access key**: Your Alibaba Cloud Secret Access Key
-   - **Endpoint**: Leave empty to use the default (`cloudauth.cn-shanghai.aliyuncs.com`) or specify a custom endpoint
-5. Save and add the provider to your application
+The service supports both 15-digit and 18-digit national ID card numbers. Users must fill in both their ID card number and real name before initiating verification. After successful verification, their identity fields lock automatically to prevent any future changes.
 
-## Usage
+## Testing and Production
 
-When users verify their identity, Casdoor submits their ID card number and real name to Alibaba Cloud. The service checks whether these details match the records in national ID database.
-
-Verification succeeds when:
-
-- The ID card number format is valid
-- The ID card exists in the government database  
-- The provided name matches the registered name for that ID card
-
-After successful verification, the user's identity fields are locked and cannot be changed.
-
-## Requirements
-
-- Users must have valid national ID cards (supports both 15-digit and 18-digit ID numbers)
-- Both the ID card number and real name fields must be filled in before verification
-- Your Alibaba Cloud account must have sufficient API call quotas
-
-## Testing
-
-Test your configuration from the provider edit page in Casdoor. Make sure to use valid test credentials provided by Alibaba Cloud to avoid consuming your production quota during development.
+Test your configuration from the provider edit page in Casdoor before going live. Make sure to use valid test credentials provided by Alibaba Cloud during development—this avoids consuming your production quota while you're still setting things up. Your Alibaba Cloud account needs sufficient API call quotas for production use.

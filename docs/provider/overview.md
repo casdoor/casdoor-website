@@ -31,7 +31,7 @@ Currently, we have eight types of providers:
   Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha, Alibaba Cloud Captcha, and Cloudflare Turnstile.
 - **ID Verification Providers**
 
-  Casdoor supports identity verification for users through ID Verification providers. Users can verify their real-world identity by submitting ID card information, which is validated through third-party verification services like Jumio.
+  Casdoor enables real-world identity verification through specialized providers. When you need to verify that users are who they claim to be, configure an ID Verification provider like Jumio or Alibaba Cloud. Users submit their ID card details and real name, which get validated against government databases or document verification services. Once verified, their identity fields become locked to maintain data integrity.
 - **MFA Providers**
 
   Casdoor supports external authentication servers for multi-factor authentication. Currently supports RADIUS servers for authenticating users as a second factor during login.
