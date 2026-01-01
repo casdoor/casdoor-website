@@ -140,6 +140,22 @@ To assign roles or permissions to users:
 - **Roles**: Use the Roles API endpoints to create and assign roles. Visit the Roles management page (e.g., `https://door.casdoor.com/roles`) or use the [roles API](/docs/user/roles#managing-roles-via-api).
 - **Permissions**: Use the Permissions API endpoints to create and assign permissions. Visit the Permissions management page (e.g., `https://door.casdoor.com/permissions`) or use the [permissions API](/docs/user/permissions#managing-permissions-via-api).
 
+## Session Management
+
+Casdoor tracks active user sessions across different devices and browsers. Each time a user signs in, a new session is created with a unique session ID. Administrators can view and manage these sessions through the Sessions page in the admin console.
+
+### Managing Multiple Sessions
+
+Users can maintain multiple active sessions simultaneously when signed in from different locations or devices. For example, a user might be logged in from their office computer, mobile phone, and home laptop at the same time. The Sessions page displays all active sessions for each user, showing session IDs and login details.
+
+Administrators can selectively remove individual sessions by clicking the close button (×) on any session ID tag. This is useful when you need to terminate access from a specific device without affecting the user's other active sessions. When you attempt to delete a session, a confirmation dialog appears to prevent accidental removals.
+
+### Current Session Protection
+
+For security, Casdoor prevents you from deleting your own active session. If you try to remove the session you're currently using, the system will display an error message. This safeguard ensures you don't accidentally lock yourself out. To end your current session, use the standard logout function instead.
+
+When deleting the last remaining session for a user, the entire session record is automatically cleaned up to maintain database efficiency.
+
 ## Using the Properties Field
 
 The `Properties` field is a flexible key-value map (`map[string]string`) that allows you to store custom attributes for users beyond the predefined fields in the User schema. This is particularly useful when you need to:
