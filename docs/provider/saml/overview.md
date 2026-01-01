@@ -30,6 +30,17 @@ When configuring an external Identity Provider (such as Google Workspace, Azure 
 
 - **Request Method**: The `/api/acs` endpoint only accepts POST requests. Ensure your IdP is configured to send SAML responses via HTTP POST binding.
 
+## User Attribute Mapping
+
+When a user authenticates through SAML, Casdoor extracts user information from the SAML assertion based on your provider's attribute mapping configuration. The username field is particularly important as it's required for user creation in Casdoor.
+
+If your IdP doesn't explicitly provide a username mapping or the username field comes back empty, Casdoor automatically applies a fallback strategy:
+
+1. First, it attempts to use the **email address** from the SAML assertion as the username
+2. If no email is available, it falls back to the **NameID** (unique identifier) from the assertion
+
+This fallback mechanism ensures smooth authentication even when username attributes aren't explicitly configured in your IdP, which is common with providers like Azure AD where the default attribute claims might not include a separate username field.
+
 ## How SAML integration works
 
 When using SAML SSO, users log into Casdoor via the identity provider without ever passing credentials to Casdoor. The progress is shown in the following diagram.
