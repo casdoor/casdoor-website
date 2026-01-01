@@ -29,7 +29,7 @@ Every Transaction has these properties:
 - `User`: Required for User category transactions
 - `Amount`: Transaction amount (positive for income, negative for expenses)
 - `Currency`: The currency code (e.g., "USD", "CNY")
-- `State`: Transaction state (e.g., "Pending", "Paid", "Failed")
+- `State`: Transaction state stored as a string. Common values include "Created", "Paid", "Canceled", "Timeout", and "Error"
 - `Payment`: Related Payment record (if applicable)
 
 ## Balance Tracking
