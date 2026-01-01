@@ -244,6 +244,8 @@ The SSO logout endpoint `/api/sso-logout` allows you to log out a user from all 
 
 This is particularly useful when you need to ensure a user is completely logged out from all services, such as during security incidents or when implementing organization-wide logout policies.
 
+For detailed information about implementing SSO logout in your application, including code examples and best practices, see the [Single Sign-Out](/docs/session/single-sign-out) documentation.
+
 ### Endpoint
 
 ```http
