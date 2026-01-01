@@ -22,6 +22,7 @@ authors: [ErikQQY]
 - `RedirectUris`: Casdoor will navigate to one of the URIs if the user logged in successfully.
 - `TokenFormat`: The format of the generated token. It can be in the following formats: `JWT` (containing all `User` fields), `JWT-Empty` (containing all non-empty values) or `JWT-Custom` customizing `User` fields inside access token. When using JWT-Custom, each attribute includes a Type field (`Array` or `String`) to control how values are returned in the token.
 - `ExpireInHours`: Login will expire after hours.
+- `CookieExpireInHours`: Session timeout in hours (default: 720 hours / 30 days). When users log in without selecting "Remember me", the session is capped at 24 hours for security.
 - `SigninUrl`:
 - `SignupUrl`: If you provide a sign-up service independently outside of Casdoor, please fill in the URL here.
 - `ForgetUrl`: Same as `SignupUrl`.
