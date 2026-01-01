@@ -43,8 +43,12 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
     "link"
   ],
   "grant_types_supported": [
+    "authorization_code",
+    "implicit",
     "password",
-    "authorization_code"
+    "client_credentials",
+    "refresh_token",
+    "urn:ietf:params:oauth:grant-type:device_code"
   ],
   "subject_types_supported": [
     "public"
@@ -99,6 +103,8 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
   ]
 }
 ```
+
+Casdoor supports all standard OAuth 2.0 grant types, including authorization code, implicit, password credentials, client credentials, and refresh token flows. The device code grant (`urn:ietf:params:oauth:grant-type:device_code`) is also available for scenarios like smart TVs or CLI tools that have limited input capabilities. For detailed information on how to use each grant type, see the [OAuth 2.0 documentation](/docs/how-to-connect/oauth).
 
 ### Application-Specific OIDC Endpoints
 
