@@ -115,18 +115,22 @@ function verifyLogoutSignature(notification, clientSecret) {
 
 // In your webhook handler
 app.post('/api/logout-webhook', (req, res) => {
-  const notification = JSON.parse(req.body.content);
-  
-  if (!verifyLogoutSignature(notification, YOUR_CLIENT_SECRET)) {
-    return res.status(401).json({ error: 'Invalid signature' });
+  try {
+    const notification = JSON.parse(req.body.content);
+    
+    if (!verifyLogoutSignature(notification, YOUR_CLIENT_SECRET)) {
+      return res.status(401).json({ error: 'Invalid signature' });
+    }
+    
+    // Invalidate sessions based on sessionIds
+    notification.sessionIds.forEach(sessionId => {
+      invalidateSession(sessionId);
+    });
+    
+    res.json({ status: 'ok' });
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid request' });
   }
-  
-  // Invalidate sessions based on sessionIds
-  notification.sessionIds.forEach(sessionId => {
-    invalidateSession(sessionId);
-  });
-  
-  res.json({ status: 'ok' });
 });
 ```
 
@@ -138,6 +142,11 @@ import hashlib
 import json
 
 def verify_logout_signature(notification, client_secret):
+    # Validate required fields
+    required_fields = ['owner', 'name', 'nonce', 'timestamp', 'sessionIds', 'accessTokenHashes', 'signature']
+    if not all(field in notification for field in required_fields):
+        return False
+    
     # Extract fields
     owner = notification['owner']
     name = notification['name']
@@ -164,16 +173,19 @@ def verify_logout_signature(notification, client_secret):
 # In your webhook handler
 @app.route('/api/logout-webhook', methods=['POST'])
 def logout_webhook():
-    notification = json.loads(request.form.get('content'))
-    
-    if not verify_logout_signature(notification, YOUR_CLIENT_SECRET):
-        return jsonify({'error': 'Invalid signature'}), 401
-    
-    # Invalidate sessions
-    for session_id in notification['sessionIds']:
-        invalidate_session(session_id)
-    
-    return jsonify({'status': 'ok'})
+    try:
+        notification = json.loads(request.form.get('content'))
+        
+        if not verify_logout_signature(notification, YOUR_CLIENT_SECRET):
+            return jsonify({'error': 'Invalid signature'}), 401
+        
+        # Invalidate sessions
+        for session_id in notification['sessionIds']:
+            invalidate_session(session_id)
+        
+        return jsonify({'status': 'ok'})
+    except (json.JSONDecodeError, KeyError):
+        return jsonify({'error': 'Invalid request'}), 400
 ```
 
 **Go Example:**
@@ -185,6 +197,7 @@ import (
     "encoding/hex"
     "encoding/json"
     "fmt"
+    "net/http"
     "strings"
 )
 
@@ -222,7 +235,10 @@ func logoutWebhook(w http.ResponseWriter, r *http.Request) {
     content := r.FormValue("content")
     
     var notification LogoutNotification
-    json.Unmarshal([]byte(content), &notification)
+    if err := json.Unmarshal([]byte(content), &notification); err != nil {
+        http.Error(w, "Invalid request", http.StatusBadRequest)
+        return
+    }
     
     if !verifyLogoutSignature(notification, YOUR_CLIENT_SECRET) {
         http.Error(w, "Invalid signature", http.StatusUnauthorized)
