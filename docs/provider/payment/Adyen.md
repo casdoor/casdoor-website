@@ -28,13 +28,13 @@ Copy both the API key and merchant account name for the next step.
 Create an Adyen payment provider in Casdoor:
 
 |    Name       |   Name in Adyen             |
-|      ----     |   ----                      |
+|      ----     |   ----                      |  
 |Category       |   Choose `Payment`          |
 |Type           |   Choose `Adyen`            |
 |Client ID 2    |   Merchant account name from Step 1   |
 |Client secret  |   API key from Step 1       |
 
-The Client ID field is not used for Adyen.
+The Client ID field is not required for Adyen.
 
 ## Step 3. Add the Provider to Your Product
 
