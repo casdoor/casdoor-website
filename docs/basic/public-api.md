@@ -116,7 +116,7 @@ All granted access tokens can also be accessed via the web UI by an admin user i
 
 ### 2. By `Client ID` and `Client secret` (Machine-to-Machine)
 
-This method is the primary approach for **machine-to-machine (M2M) authentication**. It allows applications, services, or backend systems to authenticate with Casdoor APIs without any user interaction.
+This method is the primary approach for **machine-to-machine (M2M) authentication**. It allows applications, services, or backend systems to authenticate with Casdoor APIs without any user interaction. When you authenticate using client credentials, Casdoor validates them first before checking session data, ensuring reliable authentication for server-to-server API calls.
 
 #### How to get the client ID and secret?
 
@@ -190,7 +190,7 @@ This approach allows you to delegate organization management to your customers w
 
 ### 3. By `Access key` and `Access secret`
 
-We can use the access key and access secret for a Casdoor user to call `Casdoor Public API` as the user itself. The access key and access secret can be configured in the user setting page by an admin or the user himself. the `update-user` API can also be called to update these fields. The permissions for the API calls will be the same as the user.
+We can use the access key and access secret for a Casdoor user to call `Casdoor Public API` as the user itself. The access key and access secret can be configured in the user setting page by an admin or the user himself. the `update-user` API can also be called to update these fields. The permissions for the API calls will be the same as the user. Similar to client credentials, access key authentication is prioritized before session-based checks to ensure consistent API access.
 
 #### How to authenticate?
 
