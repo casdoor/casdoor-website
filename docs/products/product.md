@@ -25,9 +25,11 @@ First, you need to understand the basic properties of the product:
 
 Recharge products allow users to add amounts to their account balance. When you enable the "Is recharge" option, you can configure how users select recharge amounts:
 
-**Preset amounts**: Define specific recharge values (e.g., $10, $50, $100) that users can select. This approach simplifies the purchase decision and works well for common recharge scenarios.
+**Preset amounts**: Define specific recharge values (e.g., $10, $50, $100) that users can select. In the product store, these appear as clickable blue tags, making it easy for users to choose from your suggested amounts. If you define more than three preset amounts, the store displays the first three with a "+N" indicator showing how many more options are available.
 
-**Custom amounts**: Allow users to enter any amount they wish to recharge. This provides flexibility when preset amounts don't fit user needs.
+**Custom amounts**: Allow users to enter any amount they wish to recharge. When enabled, the product store displays a "Custom amount available" indicator, letting users know they can specify their preferred amount during purchase.
+
+You can combine both approaches—users see your preset amounts while still having the option to enter a custom value. Alternatively, disable custom amounts to restrict users to your predefined choices.
 
 **Configuration options**:
 
@@ -35,7 +37,7 @@ Recharge products allow users to add amounts to their account balance. When you 
 - Toggle "Disallow custom amount" to restrict users to preset values only
 - When custom amounts are disabled, at least one preset amount must be defined
 
-Upon successful payment, the selected amount is automatically added to the user's balance. This flexibility lets you balance between guiding users toward specific amounts and giving them freedom to choose.
+Upon successful payment, the selected amount is automatically added to the user's balance.
 
 ## Payment Provider
 
