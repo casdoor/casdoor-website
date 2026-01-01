@@ -61,7 +61,7 @@ You can configure the **Code resend timeout** to control how long users must wai
 
 Each application can have its own session timeout settings through the **Cookie expire** field, which controls how long users stay logged in. The value is specified in hours with a default of 720 hours (30 days).
 
-When users log in without selecting "Remember me" (auto-sign-in disabled), the session is automatically capped at 24 hours for security, even if your configured timeout is longer. This helps protect accounts when users log in from shared or public devices.
+When users log in without selecting "Remember me", the session is automatically capped at 24 hours for security, even if your configured timeout is longer. This helps protect accounts when users log in from shared or public devices.
 
 For example, if you set the cookie expiration to 168 hours (7 days) and a user logs in without checking "Remember me", their session will expire after 24 hours instead of 7 days. However, if they enable "Remember me", the full 7-day timeout applies.
 
