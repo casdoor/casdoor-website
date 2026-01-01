@@ -57,6 +57,14 @@ To make the authentication process work, the detailed steps are as follows:
 
 You can configure the **Code resend timeout** to control how long users must wait before requesting another verification code via email or SMS. Set the value in seconds (default is 60). This setting determines the countdown timer duration shown to users on the login page. A value of 0 will use the global default.
 
+## Session Timeout Configuration
+
+Each application can have its own session timeout settings through the **Cookie expire** field, which controls how long users stay logged in. The value is specified in hours with a default of 720 hours (30 days).
+
+When users log in without selecting "Remember me" (auto-signin disabled), the session is automatically capped at 24 hours for security, even if your configured timeout is longer. This helps protect accounts when users log in from shared or public devices.
+
+For example, if you set the cookie expiration to 168 hours (7 days) and a user logs in without checking "Remember me", their session will expire after 24 hours instead of 7 days. However, if they enable "Remember me", the full 7-day timeout applies.
+
 :::tip
 
 If you want to do more personalized configuration of the application's sign-in methods, such as disabling a certain sign-in method or turning off a certain sign-in method, you can refer to the **[Signin Methods](./signin-methods.md)**
