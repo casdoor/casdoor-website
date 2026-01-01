@@ -116,7 +116,7 @@ All granted access tokens can also be accessed via the web UI by an admin user i
 
 ### 2. By `Client ID` and `Client secret` (Machine-to-Machine)
 
-This method is the primary approach for **machine-to-machine (M2M) authentication**. It allows applications, services, or backend systems to authenticate with Casdoor APIs without any user interaction.
+This method is the primary approach for **machine-to-machine (M2M) authentication**. It allows applications, services, or backend systems to authenticate with Casdoor APIs without any user interaction. The authentication flow has been optimized to ensure reliable operation even in scenarios where user sessions don't exist.
 
 #### How to get the client ID and secret?
 
