@@ -18,18 +18,28 @@ This is particularly useful in scenarios such as:
 
 ## How SSO Logout Works
 
-When the SSO logout endpoint is called, Casdoor performs the following actions:
+Casdoor supports two logout modes controlled by the `logoutAll` parameter:
+
+**Full SSO Logout** (default, when `logoutAll=true` or not specified):
 
 1. **Delete all active sessions**: All active sessions for the user across all applications in the organization are terminated
 2. **Expire all access tokens**: All access tokens that were issued to the user are immediately invalidated
 3. **Clear the current session**: The user's current session and authentication state are cleared
-4. **Send logout notifications**: Notification providers configured in the user's signup application receive the logout event
+4. **Send logout notifications**: Notification providers receive the logout event with all session IDs and token hashes
 
 This ensures that the user is completely logged out from all integrated applications and cannot access any resources without re-authenticating.
 
+**Session-Level Logout** (when `logoutAll=false`):
+
+1. **Delete current session**: Only the current session is terminated
+2. **Clear current authentication state**: The user's current session and token are cleared
+3. **Send targeted notification**: Notification providers receive the logout event with only the current session ID
+
+This allows users to logout from a specific device or browser while remaining logged in on other sessions. This is useful when users share accounts across multiple devices or have concurrent sessions they want to manage individually.
+
 ### Logout Notifications
 
-When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. This allows your application to respond immediately by invalidating local sessions and clearing cached data.
+When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. The notifications now include session-level information and cryptographic signatures for security.
 
 Each notification provider receives a POST request with the following payload:
 
@@ -41,9 +51,60 @@ Each notification provider receives a POST request with the following payload:
   "email": "user@example.com",
   "phone": "+1234567890",
   "id": "user-id",
-  "event": "sso-logout"
+  "event": "sso-logout",
+  "sessionIds": ["session-123", "session-456"],
+  "accessTokenHashes": ["hash-abc", "hash-def"],
+  "nonce": "random-nonce-xyz",
+  "timestamp": 1699900000,
+  "signature": "hmac-sha256-signature"
 }
 ```
+
+**New security fields:**
+
+- `sessionIds`: List of session IDs being logged out (enables targeted session invalidation)
+- `accessTokenHashes`: Hashes of access tokens being expired (helps identify specific tokens to revoke)
+- `nonce`: Random value for replay attack protection
+- `timestamp`: Unix timestamp when the notification was generated
+- `signature`: HMAC-SHA256 signature computed using the application's client secret
+
+#### Verifying Logout Notifications
+
+To prevent malicious logout requests, you should verify the signature of incoming logout notifications:
+
+```go
+// Example verification in Go
+func verifyLogoutNotification(notification *SsoLogoutNotification, clientSecret string) bool {
+    data := fmt.Sprintf("%s|%s|%s|%d|%s|%s",
+        notification.Owner,
+        notification.Name,
+        notification.Nonce,
+        notification.Timestamp,
+        strings.Join(notification.SessionIds, ","),
+        strings.Join(notification.AccessTokenHashes, ","))
+    
+    expectedSignature := hmacSHA256(clientSecret, data)
+    return notification.Signature == expectedSignature
+}
+```
+
+```javascript
+// Example verification in JavaScript
+const crypto = require('crypto');
+
+function verifyLogoutNotification(notification, clientSecret) {
+  const data = `${notification.owner}|${notification.name}|${notification.nonce}|${notification.timestamp}|${notification.sessionIds.join(',')}|${notification.accessTokenHashes.join(',')}`;
+  
+  const expectedSignature = crypto
+    .createHmac('sha256', clientSecret)
+    .update(data)
+    .digest('hex');
+  
+  return notification.signature === expectedSignature;
+}
+```
+
+#### Configuration
 
 To receive logout notifications, configure a notification provider (such as Custom HTTP, Telegram, or Slack) in your Casdoor application's notification provider settings. For Custom HTTP providers:
 
@@ -51,17 +112,23 @@ To receive logout notifications, configure a notification provider (such as Cust
 - Set **Method** to POST
 - Set **Title** to `content` (the parameter name for the JSON payload)
 
-Your application can then use the received user information to invalidate local sessions, clear caches, or perform other cleanup tasks. For more details on configuring notification providers, see the [Notification Providers](/docs/provider/notification/overview) documentation.
+Your application can then verify the signature, check the timestamp to prevent replay attacks, and use the session IDs and token hashes to perform targeted logout operations. For more details on configuring notification providers, see the [Notification Providers](/docs/provider/notification/overview) documentation.
 
 ## SSO Logout API
 
 ### Endpoint
 
 ```http
-GET or POST /api/sso-logout
+GET or POST /api/sso-logout?logoutAll=<true|false>
 ```
 
 The SSO logout endpoint accepts both `GET` and `POST` requests, making it flexible for different integration scenarios.
+
+### Parameters
+
+- `logoutAll` (optional): Controls logout scope. Accepts `true`, `1`, or empty string (default: `true` for backward compatibility)
+  - `true` or `1` or empty: Logout from all sessions across all applications
+  - Any other value (e.g., `false`, `0`): Logout from current session only
 
 ### Authentication
 
@@ -75,10 +142,21 @@ For more details on authentication methods, see the [Casdoor Public API](/docs/b
 
 ### Request Examples
 
-#### Using Access Token
+#### Logout from All Sessions (Default)
 
 ```bash
 curl -X POST https://door.casdoor.com/api/sso-logout \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+
+# Or explicitly specify logoutAll=true
+curl -X POST "https://door.casdoor.com/api/sso-logout?logoutAll=true" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+#### Logout from Current Session Only
+
+```bash
+curl -X POST "https://door.casdoor.com/api/sso-logout?logoutAll=false" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -92,6 +170,7 @@ curl -X POST https://door.casdoor.com/api/sso-logout \
 #### Using JavaScript Fetch API
 
 ```javascript
+// Logout from all sessions
 fetch('https://door.casdoor.com/api/sso-logout', {
   method: 'POST',
   headers: {
@@ -102,11 +181,24 @@ fetch('https://door.casdoor.com/api/sso-logout', {
   .then(response => response.json())
   .then(data => {
     console.log('Logout successful:', data);
-    // Redirect to login page or home page
     window.location.href = '/login';
   })
   .catch(error => {
     console.error('Logout failed:', error);
+  });
+
+// Logout from current session only
+fetch('https://door.casdoor.com/api/sso-logout?logoutAll=false', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${accessToken}`
+  },
+  credentials: 'include'
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log('Logged out from current session:', data);
+    window.location.href = '/login';
   });
 ```
 
@@ -333,7 +425,30 @@ async function logout() {
 
 ## Security Considerations
 
-### 1. Secure Communication
+### 1. Verify Logout Notification Signatures
+
+Always verify the HMAC-SHA256 signature of logout notifications to prevent malicious logout requests. The signature is computed using your application's client secret and includes all critical fields (owner, name, nonce, timestamp, sessionIds, accessTokenHashes). Reject any notification with an invalid signature.
+
+### 2. Check Notification Timestamp
+
+Implement timestamp validation to prevent replay attacks. Reject notifications that are too old (e.g., more than 5 minutes old):
+
+```javascript
+function isNotificationValid(notification) {
+  const maxAge = 5 * 60 * 1000; // 5 minutes in milliseconds
+  const now = Date.now();
+  const notificationTime = notification.timestamp * 1000; // Convert to milliseconds
+  
+  if (now - notificationTime > maxAge) {
+    console.error('Notification is too old, possible replay attack');
+    return false;
+  }
+  
+  return verifyLogoutNotification(notification, clientSecret);
+}
+```
+
+### 3. Secure Communication
 
 Always use HTTPS when calling the SSO logout endpoint to prevent token interception:
 
@@ -345,11 +460,11 @@ const logoutUrl = 'https://door.casdoor.com/api/sso-logout';
 const logoutUrl = 'http://door.casdoor.com/api/sso-logout';
 ```
 
-### 2. Token Validation
+### 4. Token Validation
 
 Casdoor validates the access token before processing the logout request. Ensure your token is valid and has not expired before making the logout call.
 
-### 3. CSRF Protection
+### 5. CSRF Protection
 
 When using session cookies for authentication, ensure CSRF protection is enabled to prevent unauthorized logout requests:
 
@@ -365,7 +480,11 @@ fetch('https://door.casdoor.com/api/sso-logout', {
 });
 ```
 
-### 4. Audit Logging
+### 6. Protect Client Secrets
+
+Keep your application's client secret secure. It's used to sign logout notifications, so if compromised, attackers could forge valid logout requests. Store it securely (e.g., in environment variables or secret management systems) and never expose it in client-side code.
+
+### 7. Audit Logging
 
 Consider logging logout events for security auditing and compliance:
 

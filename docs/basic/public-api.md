@@ -236,19 +236,35 @@ Demo site example: `https://door.casdoor.com/api/get-global-providers?username=b
 
 ## SSO Logout
 
-The SSO logout endpoint `/api/sso-logout` allows you to log out a user from all applications in an organization simultaneously. When called, this endpoint will:
-
-- Delete all active sessions for the user across all applications
-- Expire all access tokens issued to the user
-- Clear the current session and token
-
-This is particularly useful when you need to ensure a user is completely logged out from all services, such as during security incidents or when implementing organization-wide logout policies.
+The SSO logout endpoint `/api/sso-logout` allows you to log out a user from all applications or just the current session. The `logoutAll` parameter controls the logout scope.
 
 ### Endpoint
 
 ```http
-GET or POST /api/sso-logout
+GET or POST /api/sso-logout?logoutAll=<true|false>
 ```
+
+### Parameters
+
+- `logoutAll` (optional): Controls logout scope
+  - `true`, `1`, or empty (default): Logout from all sessions and expire all tokens
+  - Any other value (e.g., `false`, `0`): Logout from current session only
+
+### Behavior
+
+**Full SSO Logout** (default):
+
+- Deletes all active sessions for the user across all applications
+- Expires all access tokens issued to the user
+- Sends logout notifications with all session IDs and token hashes
+
+**Session-Level Logout**:
+
+- Deletes only the current session
+- Preserves other active sessions and tokens
+- Sends logout notification with only the current session ID
+
+This is particularly useful when you need granular session management, such as allowing users to logout from a specific device while remaining logged in on others, or when implementing organization-wide logout policies.
 
 ### Authentication
 
@@ -257,8 +273,12 @@ This endpoint requires the user to be authenticated. You can use any of the auth
 ### Example Request
 
 ```bash
-# Using access token
+# Full SSO logout (all sessions)
 curl -X POST https://door.casdoor.com/api/sso-logout \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+
+# Session-level logout (current session only)
+curl -X POST "https://door.casdoor.com/api/sso-logout?logoutAll=false" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 
 # Using session cookie
