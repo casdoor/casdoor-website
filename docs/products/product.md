@@ -29,7 +29,7 @@ Recharge products allow users to add amounts to their account balance. When you 
 
 **Custom amounts**: Allow users to enter any amount they wish to recharge. When enabled, the product store displays a "Custom amount available" indicator, letting users know they can specify their preferred amount during purchase.
 
-You can combine both approaches—users see your preset amounts while still having the option to enter a custom value. Alternatively, disable custom amounts to restrict users to your predefined choices.
+You can combine both approaches by providing preset amounts while allowing custom values. To restrict users to only your predefined amounts, disable the custom amount option.
 
 **Configuration options**:
 
