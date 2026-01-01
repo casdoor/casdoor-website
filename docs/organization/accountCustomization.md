@@ -60,7 +60,7 @@ To customize account items, follow these steps:
 There are 3 rules available for both View rule and Modify rule:
 
 - **Public**: Everyone has permission. Any user can view/modify this field for any user.
-- **Self**: Each user has their own permission. Users can only view/modify their own field values.
+- **Self**: Each user has their own permission. Users can only view/modify their own field values. The system identifies users by comparing their ID fields first, and if unavailable, falls back to matching the combination of organization owner and username. This ensures the rule works correctly even for users created before the ID field was introduced.
 - **Admin**: The administrator has permission. Only organization administrators can view/modify this field for users.
 
 ### Example Use Cases
