@@ -53,7 +53,7 @@ The backend is configured via a single file: [**conf/app.conf**](https://github.
 
 ### Configuration via Environment Variables
 
-All configuration items defined by Casdoor in the `app.conf` file can also be configured via environment variables, as well as some of the Beego configuration items (`httpport`, `appname`).
+All configuration items defined by Casdoor in the `app.conf` file can also be configured via environment variables, as well as some of the Beego v2 configuration items (`httpport`, `appname`).
 
 For example, when you try to start Casdoor, you can use something like this to pass the configuration via environment variables:
 
