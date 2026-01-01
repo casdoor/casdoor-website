@@ -44,6 +44,32 @@ Casdoor uses [XORM](https://xorm.io/) to communicate with the database. Based on
 
 ## Download
 
+### Pre-built Binaries
+
+Starting from recent releases, Casdoor provides pre-built binaries for all major platforms. This is the fastest way to get started if you don't need to modify the source code.
+
+Download the latest release from [GitHub Releases](https://github.com/casdoor/casdoor/releases). Each release includes binaries for:
+
+- **Linux**: x86_64 and arm64 (`.tar.gz`)
+- **macOS**: x86_64 and arm64 (`.tar.gz`)
+- **Windows**: x86_64 and arm64 (`.zip`)
+
+After downloading, extract the archive and run the `casdoor` executable. The binaries include the web frontend and a sample configuration file (`conf/app.conf`). You'll need to configure the database connection before running (see [Configure Database](#configure-database)).
+
+:::tip Quick Start with Binaries
+
+```bash
+# Linux/macOS example
+tar -xzf casdoor_Linux_x86_64.tar.gz
+cd casdoor_Linux_x86_64
+# Edit conf/app.conf with your database settings
+./casdoor
+```
+
+:::
+
+### Build from Source
+
 The source code of Casdoor is hosted on GitHub: <https://github.com/casdoor/casdoor>. Both the Go backend code and React frontend code are contained in a single repository.
 
 | Name     | Description                     | Language              | Source code                                          |
