@@ -51,6 +51,20 @@ Once you have configured the syncer, enable the **Is enable** option and save. T
 
 You can also use the "Sync" button for database synchronization.
 
+## Supported User Fields
+
+The database syncer supports synchronizing all standard user fields including authentication, MFA settings, and user metadata. Beyond the basic fields like `Name`, `Email`, and `Password`, you can sync:
+
+**Authentication & Security**: `PasswordType`, `ExternalId`, `IsVerified`, `RealName`, `LastSigninTime`, `LastSigninIp`, `LastChangePasswordTime`, `LastSigninWrongTime`, `SigninWrongTimes`, `NeedUpdatePassword`, `IpWhitelist`
+
+**Multi-Factor Authentication**: `MfaRadiusEnabled`, `MfaRadiusUsername`, `MfaRadiusProvider`, `MfaPushEnabled`, `MfaPushReceiver`, `MfaPushProvider`, `MfaRememberDeadline`, `MfaAccounts`, `MfaItems`
+
+**User Identity & Access**: `AvatarType`, `CountryCode`, `Invitation`, `InvitationCode`, `Ldap`, `ManagedAccounts`
+
+**Advanced Features**: `WebauthnCredentials`, `FaceIds`
+
+Fields containing structured data like `WebauthnCredentials`, `FaceIds`, `ManagedAccounts`, `MfaAccounts`, and `MfaItems` should be stored as JSON strings in your database and will be automatically parsed during synchronization.
+
 **Update**
 
 When the `Table columns` are set as shown in the following figure, the update operation is performed.
