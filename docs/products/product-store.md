@@ -15,13 +15,23 @@ This gives you control over what's available for purchase. Draft products, seaso
 
 ## Accessing the Store
 
-Users access the Product Store through the `/product-store` route in your Casdoor instance. The store displays published products in a responsive grid layout, showing:
+Users access the Product Store through the `/product-store` route in your Casdoor instance. The store displays published products in a responsive grid layout. What you see depends on the product type:
 
-- Product image
-- Name and description
-- Price in the configured currency
+**Regular products** display:
+
+- Product image and name
 - Tag (if set)
+- Price with currency symbol
 - Number of units sold
+
+**Recharge products** display:
+
+- Product image and name
+- Tag (if set)
+- Up to 3 preset recharge amounts as blue tags (e.g., $10, $50, $100)
+- A "+N" indicator if more than 3 options exist
+- "Custom amount available" text if users can enter their own amount
+- Currency information
 
 ## Browsing and Purchasing
 
