@@ -16,72 +16,55 @@ To add WeChat OAuth provider to your application, follow these steps:
 
 ![wechat](/img/providers/OAuth/wechat.png)
 
-### Choosing the Right SubType
+When configuring the WeChat provider, you can select a **SubType** to match your login scenario:
 
-When configuring your WeChat provider, select the appropriate SubType based on your login scenario:
+- **Web** (default): For PC browser login with QR code scanning
+- **Mobile**: For mobile login within WeChat's built-in browser using OAuth authorization
 
-- **Web** (default): For PC browser login where users scan a QR code with their WeChat mobile app. Uses the WeChat Open Platform QR code authorization endpoint.
-- **Mobile**: For login when users access your application directly within the WeChat mobile app's built-in browser. Uses the WeChat Open Platform mobile OAuth authorization endpoint.
+Both SubTypes use the same credentials but different OAuth endpoints. If you need both PC and mobile login, create two separate WeChat providers with different SubTypes.
 
-The SubType selector appears in the provider configuration page. If you need to support both PC and mobile scenarios, create two separate WeChat providers with different SubTypes.
+The WeChat provider offers two different sets of keypairs:
 
-### Credentials Configuration
+- The first keypair (`Client ID`, `Client Secret`) is for the `WeChat Open Platform (微信开放平台)` and is designed for the PC login scenario. It allows you to display a QR code in the PC browser, which users can scan using the WeChat app on their mobile phone to sign in.
 
-The WeChat provider supports different credential sets depending on your login scenario. Both Web and Mobile SubTypes use the same WeChat Open Platform credentials but connect to different OAuth endpoints.
+- The second keypair (`Client ID 2`, `Client Secret 2`) and `Access Token` field is for the `WeChat Media Platform (微信公众平台)` and is intended for the inside-WeChat-app login scenario.`Access Token` field is the `Token` you fill in the `server configuration` of the `WeChat Media Platform (微信公众平台)`. It enables users to log in with the WeChat built-in browser inside the WeChat mobile app, which will redirect them to your `WeChat Official Account (微信公众号)` to log in. Please note that WeChat does not support logging in outside of the WeChat app in other mobile browsers or apps. This limitation is imposed by WeChat and not by Casdoor.
 
-**For Web SubType:**
+If you fill in the second keypair (`Client ID 2`, `Client Secret 2`), fill the `Access Token` field and enable the `Enable QR code` switch, then you can choose to login directly using the information from the  `WeChat Media Platform (微信公众平台)` after scanning the QR code, or use the information from the `WeChat Open Platform (微信开放平台)` to login, if you choose `use Wechat Open Platform to login`,after user follow the the WeChat official account (微信公众号), users will be required to scan the QR code of `WeChat Open Platform (微信开放平台)`to login. Casdoor will ask the user to follow the WeChat official account (微信公众号) before proceeding with the login process when the user clicks on the WeChat button to login. It's important to note that this functionality is only available in the PC login scenario because a mobile phone cannot scan the QR code by itself. When used in the mobile scenario (i.e., the WeChat built-in browser inside the WeChat mobile app), Casdoor will automatically skip this step.
 
-- Use the first keypair (`Client ID`, `Client Secret`) from `WeChat Open Platform (微信开放平台)`. This enables QR code scanning for PC browser login.
+You can choose whether to enable the WeChat QR code login option on the setting page. To do so, add the WeChat provider in your application configuration and add the WeChat option in your signin methods. Once added, the login page will display a "WeChat" tab as a login option, allowing users to log in by scanning the QR code.
 
-**For Mobile SubType:**
+The QR code login process is as follows:
 
-- Use the first keypair (`Client ID`, `Client Secret`) from `WeChat Open Platform (微信开放平台)`. This enables OAuth authentication within the WeChat mobile app's built-in browser using the mobile authorization endpoint.
+1. On the login page, after selecting the "WeChat" tab, a WeChat QR code will be automatically loaded and displayed.
+2. The user scans the QR code using the WeChat app and completes the authorization to log in.
+3. If the QR code expires or needs to be refreshed, the user can click the "Refresh" link below the QR code to obtain a new one.
 
-**For WeChat Official Account integration:**
-
-- The second keypair (`Client ID 2`, `Client Secret 2`) and `Access Token` field is for `WeChat Media Platform (微信公众平台)`. The `Access Token` field corresponds to the `Token` in your server configuration. This allows users to log in through your `WeChat Official Account (微信公众号)` when accessing from the WeChat built-in browser.
-
-:::note
-
-WeChat OAuth only works within the WeChat app for mobile scenarios. Third-party mobile browsers and apps cannot authenticate users through WeChat OAuth due to platform restrictions.
-
-:::
-
-### Advanced Configuration
-
-If you configure both the WeChat Open Platform credentials (first keypair) and WeChat Media Platform credentials (second keypair with Access Token), and enable the `Enable QR code` switch, Casdoor provides flexible login options:
-
-- On PC browsers, users can choose between scanning the QR code to login via WeChat Open Platform or WeChat Official Account
-- After following the WeChat Official Account (微信公众号), users will be prompted to scan the WeChat Open Platform QR code for login
-- On mobile devices within the WeChat app, this step is automatically skipped
+![set-wechat](/img/providers/OAuth/set-wechat.png)
 
 :::tip
 
-Link your `WeChat Open Platform (微信开放平台)` and `WeChat Media Platform (微信公众平台)` accounts together inside the WeChat Open Platform settings. This allows Casdoor to recognize users who log in through either PC or mobile as the same account.
+We recommend setting both key sets at the same time and linking your `WeChat Open Platform (微信开放平台)` account and `WeChat Media Platform (微信公众平台)` account together inside the `WeChat Open Platform (微信开放平台)`. This will allow Casdoor to recognize a WeChat user logged in through both PC and mobile as the same user.
 
 :::
 
-For more information, visit the [WeChat Open Platform documentation](https://developers.weixin.qq.com/doc/oplatform/en/Website_App/WeChat_Login/Wechat_Login.html).
+:::note
 
-## Enable WeChat Login
+Due to the limitations of WeChat OAuth, there is currently no way to log in via WeChat in a third-party mobile app or in a mobile browser other than the WeChat app. The mobile login must happen inside the WeChat app for now.
 
-Add the WeChat provider to your application configuration and include WeChat in your signin methods. The login page will then display a "WeChat" option.
+:::
 
-**For Web SubType (QR code login):**
+For more detailed information, please visit the [WeChat Open Platform](https://developers.weixin.qq.com/doc/oplatform/en/Website_App/WeChat_Login/Wechat_Login.html).
 
-1. A QR code appears automatically on the login page
-2. Users scan it with their WeChat app and authorize
-3. If the QR code expires, click "Refresh" to generate a new one
+## Enable WeChat QR Code Login
+
+You can choose whether to enable the WeChat QR code login option on the setting page. To do so, add the WeChat provider in your application configuration and add the WeChat option in your signin methods. Once added, the login page will display a "WeChat" tab as a login option, allowing users to log in by scanning the QR code.
+
+The QR code login process is as follows:
+
+1. On the login page, after selecting the "WeChat" tab, a WeChat QR code will be automatically loaded and displayed.
+2. The user scans the QR code using the WeChat app and completes the authorization to log in.
+3. If the QR code expires or needs to be refreshed, the user can click the "Refresh" link below the QR code to obtain a new one.
 
 ![set-wechat](/img/providers/OAuth/set-wechat.png)
 
 ![wechat-login](/img/providers/OAuth/wechat-login.png)
-
-**For Mobile SubType:**
-
-When users access your application from within WeChat's built-in browser, the login flow works as follows:
-
-1. Users tap the WeChat login button on your application
-2. They are redirected to WeChat's OAuth authorization page
-3. After authorizing, they are redirected back to your application
-4. The user is automatically logged in without needing to scan any QR code
