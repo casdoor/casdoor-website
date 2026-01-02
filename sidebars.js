@@ -48,7 +48,6 @@ module.exports = {
         "how-to-connect/overview",
         "how-to-connect/oidc-client",
         "how-to-connect/sdk",
-        "how-to-connect/totp-authenticator-app",
         "how-to-connect/single-sign-on",
         "how-to-connect/single-sign-out",
         "how-to-connect/vue-sdk",
@@ -333,16 +332,6 @@ module.exports = {
             "provider/idv/alibaba-cloud",
           ],
         },
-        {
-          type: "category",
-          label: "MFA",
-          collapsed: true,
-          link: {type: "generated-index"},
-          items: [
-            "provider/mfa/push",
-            "provider/mfa/radius",
-          ],
-        },
       ],
     },
     {
@@ -371,11 +360,30 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Multi-Factor Authentication",
+      link: {type: "generated-index"},
+      items: [
+        "user/multi-factor-authentication",
+        "organization/mfa-items",
+        "how-to-connect/totp-authenticator-app",
+        {
+          type: "category",
+          label: "MFA Providers",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/mfa/push",
+            "provider/mfa/radius",
+          ],
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Users",
       link: {type: "generated-index"},
       items: [
         "user/overview",
-        "user/multi-factor-authentication",
         "user/impersonation",
         "user/roles",
         "user/permissions",
