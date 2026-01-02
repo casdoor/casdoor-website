@@ -30,4 +30,18 @@ We will show you how to apply a captcha and add it to Casdoor.
 
 1. Click on `Application` in the top bar and choose one application to edit.
 2. Click on the provider add button and select the provider you just added.
-3. Done!
+3. Configure the provider rule to control when CAPTCHA verification appears:
+   - **None**: Disables CAPTCHA completely - no verification modal will appear
+   - **Dynamic**: Shows CAPTCHA after 5 failed login attempts
+   - **Always**: Requires CAPTCHA for every login attempt
+   - **Internet-Only**: Shows CAPTCHA only for public internet requests
+
+![Default provider app](/img/providers/captcha/default_provider_app.png)
+
+We also provide a demo video to demonstrate the differences in rules, which we hope will be helpful to you.
+
+<video src="/video/provider/default_provider_app.mp4" controls="controls" width="100%"></video>
+
+:::tip Disabling CAPTCHA
+To completely disable CAPTCHA verification, set the provider rule to **None**. This is different from SMS/Email providers where "None" means "apply to all scenarios". For CAPTCHA, "None" specifically means the verification is disabled.
+:::
