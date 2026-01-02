@@ -2,7 +2,7 @@
 title: Session Management
 description: Managing user sessions in Casdoor
 keywords: [session, management, delete, multi-session, logout]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 Casdoor provides tools to manage user sessions, including viewing active sessions and selectively terminating them. This gives administrators and users control over who can access their applications and from which devices.
