@@ -100,17 +100,30 @@ Below are all the fields in the account item. For descriptions, you can refer to
 - `Password`
 - `Email`
 - `Phone`
+- `Country code`
 - `Country/Region`
 - `Location`
 - `Affiliation`
 - `Title`
+- `ID card type`
+- `ID card`
+- `Real name` - The user's verified real name (locked after ID verification)
+- `ID verification` - Controls visibility and access to the verify identity button
 - `Homepage`
 - `Bio`
 - `Tag`
 - `Signup application`
+- `Register type`
+- `Register source`
+- `Roles`
+- `Permissions`
+- `Groups`
 - `3rd-party logins`
 - `Properties`
 - `Is admin`
-- `Is global admin`
 - `Is forbidden`
 - `Is deleted`
+- `Multi-factor authentication`
+- `WebAuthn credentials`
+- `Managed accounts`
+- `MFA accounts`
