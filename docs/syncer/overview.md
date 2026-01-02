@@ -22,6 +22,10 @@ Casdoor supports multiple syncer types to import users from different sources:
 
 Each syncer type implements a common interface, making it straightforward to add new syncer types or extend existing ones without affecting other parts of the system.
 
+## Supported User Attributes
+
+Syncers support a comprehensive range of user attributes including basic profile information, authentication credentials (passwords, WebAuthn, MFA settings), security configurations (IP whitelist, verification status), and user activity tracking (login history, password changes). Complex data structures like WebAuthn credentials and Face ID data are automatically handled through JSON serialization.
+
 ## Synchronization hash
 
 Casdoor uses a hash function to determine how to update a user. This hash value is calculated for each user in the table, using information such as the password or mobile phone number.
