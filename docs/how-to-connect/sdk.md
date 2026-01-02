@@ -381,4 +381,4 @@ Casdoor SDKs also provide functions to manage applications programmatically:
 - `UpdateApplication()`: update an application.
 - `DeleteApplication()`: delete an application.
 
-When creating applications via SDK using `AddApplication()`, Casdoor automatically initializes essential fields with sensible defaults. This includes signup items (ID, Username, Display name, Password, Email, Phone, Agreement), signin items, and signin methods. This ensures applications created programmatically work correctly in the UI without requiring manual configuration of these basic settings.
+When creating applications via SDK using `AddApplication()`, Casdoor automatically initializes essential fields with sensible defaults. This includes signup items (ID, Username, Display name, Password, Confirm password, Email, Phone, Agreement), signin items, and signin methods. This ensures applications created programmatically work correctly in the UI without requiring manual configuration of these basic settings.
