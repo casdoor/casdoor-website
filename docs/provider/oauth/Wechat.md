@@ -16,6 +16,13 @@ To add WeChat OAuth provider to your application, follow these steps:
 
 ![wechat](/img/providers/OAuth/wechat.png)
 
+When configuring the WeChat provider, you can select a **SubType** to match your login scenario:
+
+- **Web** (default): For PC browser login with QR code scanning
+- **Mobile**: For mobile login within WeChat's built-in browser using OAuth authorization
+
+Both SubTypes use the same credentials but different OAuth endpoints. If you need both PC and mobile login, create two separate WeChat providers with different SubTypes.
+
 The WeChat provider offers two different sets of keypairs:
 
 - The first keypair (`Client ID`, `Client Secret`) is for the `WeChat Open Platform (微信开放平台)` and is designed for the PC login scenario. It allows you to display a QR code in the PC browser, which users can scan using the WeChat app on their mobile phone to sign in.
