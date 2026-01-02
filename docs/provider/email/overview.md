@@ -72,4 +72,6 @@ When used for password reset, users will see both the verification code and a cl
 </html>
 ```
 
+![Html template](/img/providers/email/email-template.png)
+
 The `<reset-link>` block is automatically removed from emails sent for other purposes like signup or login verification, ensuring the reset link only appears when appropriate.
