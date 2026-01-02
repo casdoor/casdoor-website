@@ -19,14 +19,49 @@ When an event is triggered in Casdoor:
 
 ### Supported Events
 
-Casdoor webhooks support various user-related events, which are stored in the `action` field of the request payload.
+Casdoor webhooks support a comprehensive range of events across authentication, resource management, and system operations. Events are categorized by their functional area:
 
-| Event      | Description                                     |
-|------------|-------------------------------------------------|
-| `signup`   | Triggered when a user signs up                |
-| `login`    | Triggered when a user logs in                 |
-| `logout`   | Triggered when a user logs out                |
-| `update`   | Triggered when user details are updated       |
+#### Authentication & Session Events
+
+- `signup`, `login`, `logout` - User authentication flows
+- `sso-logout`, `unlink` - Single sign-on and account unlinking
+- `new-user` - Custom event for new user creation
+
+#### Resource Management Events
+
+Standard CRUD operations (`add-*`, `update-*`, `delete-*`) are available for: organizations, groups, users, applications, providers, resources, certificates, roles, permissions, models, adapters, enforcers, sessions, tokens, products, payments, plans, pricing, subscriptions, syncers, webhooks, forms, invitations, LDAP configurations, orders, tickets, and transactions.
+
+#### Specialized Operations
+
+**User Management:** `add-user-keys`, `remove-user-from-group`, `upload-users`, `check-user-password`, `set-password`, `reset-email-or-phone`, `verify-identification`
+
+**Bulk Operations:** `upload-groups`, `upload-roles`, `upload-permissions`, `upload-resource`
+
+**Order Processing:** `place-order`, `cancel-order`, `pay-order`
+
+**Payment Handling:** `invoice-payment`, `notify-payment`
+
+**Invitations:** `send-invitation`, `verify-invitation`
+
+**Support Systems:** `add-ticket-message`
+
+**Synchronization:** `run-syncer`, `test-syncer-db`, `sync-ldap-users`
+
+**Access Control:** `enforce`, `batch-enforce`, `add-policy`, `update-policy`, `remove-policy`, `add-record`
+
+**Multi-Factor Authentication:** `delete-mfa`, `set-preferred-mfa`, `mfa/setup/initiate`, `mfa/setup/verify`, `mfa/setup/enable`
+
+**WebAuthn:** `webauthn/signup/begin`, `webauthn/signup/finish`, `webauthn/signin/begin`, `webauthn/signin/finish`
+
+**OAuth & Token Management:** `login/oauth/access_token`, `login/oauth/refresh_token`, `login/oauth/introspect`
+
+**Verification & Communication:** `send-verification-code`, `verify-code`, `verify-captcha`, `send-email`, `send-sms`, `send-notification`
+
+**SAML:** `acs`, `saml/metadata`
+
+**System Operations:** `run-casbin-command`, `refresh-engines`, `health`, `metrics`, `callback`, `device-auth`, `faceid-signin-begin`, `user`, `userinfo`
+
+Each event includes contextual information in the webhook payload, allowing you to implement custom logic based on the specific action that triggered the webhook.
 
 ## Setting Up a Webhook
 
@@ -39,8 +74,8 @@ To configure a webhook in Casdoor:
 2. **Create a New Webhook:**
    - Click on **Add Webhook**.
    - Enter the **Webhook URL** where Casdoor should send event data.
-   - Select the events you want to listen to (e.g., `signup`, `login`).
-   - (Optional) Add custom headers for authentication.
+   - Select one or more events from the comprehensive list of available triggers.
+   - (Optional) Add custom headers for authentication or additional context.
 
 3. **Save the Webhook Configuration:**
    - Once saved, Casdoor will start sending event notifications to the specified endpoint.
