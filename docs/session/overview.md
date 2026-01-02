@@ -2,7 +2,7 @@
 title: Overview
 description: Understanding sessions in Casdoor
 keywords: [session, authentication, token, login]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 Casdoor manages user authentication through sessions, which represent active login states for users across applications. Each session tracks a user's authenticated connection to one or more applications within your organization.
