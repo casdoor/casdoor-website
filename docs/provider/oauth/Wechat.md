@@ -20,14 +20,14 @@ To add WeChat OAuth provider to your application, follow these steps:
 
 When configuring your WeChat provider, select the appropriate SubType based on your login scenario:
 
-- **Web** (default): For PC browser login where users scan a QR code with their WeChat mobile app. This uses the WeChat Open Platform endpoints.
-- **Mobile**: For login within the WeChat mobile app's built-in browser. This enables OAuth authentication when users access your application from within WeChat.
+- **Web** (default): For PC browser login where users scan a QR code with their WeChat mobile app. Uses the WeChat Open Platform QR code authorization endpoint.
+- **Mobile**: For login when users access your application directly within the WeChat mobile app's built-in browser. Uses the WeChat Open Platform mobile OAuth authorization endpoint.
 
 The SubType selector appears in the provider configuration page. If you need to support both PC and mobile scenarios, create two separate WeChat providers with different SubTypes.
 
 ### Credentials Configuration
 
-The WeChat provider supports different credential sets depending on your SubType selection:
+The WeChat provider supports different credential sets depending on your login scenario. Both Web and Mobile SubTypes use the same WeChat Open Platform credentials but connect to different OAuth endpoints.
 
 **For Web SubType:**
 
@@ -79,4 +79,9 @@ Add the WeChat provider to your application configuration and include WeChat in 
 
 **For Mobile SubType:**
 
-When users access your application from within WeChat's built-in browser, they'll be redirected through the standard OAuth flow without needing to scan a QR code.
+When users access your application from within WeChat's built-in browser, the login flow works as follows:
+
+1. Users tap the WeChat login button on your application
+2. They are redirected to WeChat's OAuth authorization page
+3. After authorizing, they are redirected back to your application
+4. The user is automatically logged in without needing to scan any QR code
