@@ -87,6 +87,16 @@ These field-level permissions work in conjunction with the broader [Permission s
 
 :::
 
+## Identity Verification Fields
+
+When using [ID Verification providers](/docs/provider/idv/overview) in your application, two special account fields become relevant:
+
+**Real name** - This field stores the user's verified legal name. Before verification, users can edit this field freely. After successful ID verification, it becomes permanently locked to preserve the verified identity data.
+
+**ID verification** - This field controls access to the identity verification feature. Setting it to visible with appropriate view and modify rules determines who can see and use the verify button on the account page. After verification completes, the real name, ID card type, ID card number, and related fields are automatically locked regardless of their modify rules.
+
+These fields work together with ID card fields to enable secure identity verification workflows in your application.
+
 ## Account Table
 
 Below are all the fields in the account item. For descriptions, you can refer to [user](/docs/user/overview).
@@ -100,17 +110,30 @@ Below are all the fields in the account item. For descriptions, you can refer to
 - `Password`
 - `Email`
 - `Phone`
+- `Country code`
 - `Country/Region`
 - `Location`
 - `Affiliation`
 - `Title`
+- `ID card type`
+- `ID card`
+- `Real name` - The user's verified real name (locked after ID verification)
+- `ID verification` - Controls visibility and access to the verify identity button
 - `Homepage`
 - `Bio`
 - `Tag`
 - `Signup application`
+- `Register type`
+- `Register source`
+- `Roles`
+- `Permissions`
+- `Groups`
 - `3rd-party logins`
 - `Properties`
 - `Is admin`
-- `Is global admin`
 - `Is forbidden`
 - `Is deleted`
+- `Multi-factor authentication`
+- `WebAuthn credentials`
+- `Managed accounts`
+- `MFA accounts`
