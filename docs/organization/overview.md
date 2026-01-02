@@ -9,6 +9,8 @@ An organization is the basic unit of Casdoor that manages users and applications
 
 In the configuration of [applications](/docs/application/config) and [providers](/docs/provider/overview), selecting an organization is important, as it determines whether users can access the application using specific providers.
 
+The organization's display name (or name if no display name is set) is used as the issuer identifier in TOTP authenticator apps. This helps users identify accounts when managing multiple TOTP entries.
+
 You can also set up LDAP in Casdoor. For more details, please see the [LDAP](/docs/ldap/overview) documentation.
 
 Casdoor provides multiple password storage algorithms that can be selected on the organization edit page. New organizations use bcrypt by default for secure password hashing.

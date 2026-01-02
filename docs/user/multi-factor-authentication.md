@@ -42,6 +42,8 @@ To configure authentication via TOTP on multiple devices, during setup, scan the
 
 ![totp](/img/user/mfa/mfa_totp.png)
 
+When you add your account to an authenticator app, the account name will show the organization's display name (or organization name if no display name is set). This helps you identify which organization the TOTP code belongs to when managing multiple accounts.
+
 1. In the "Verify Code" step, do one of the following:
 
    - Scan the QR code with your mobile device's app. After scanning, the app displays a six-digit code that you can enter on Casdoor.
