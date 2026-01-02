@@ -370,3 +370,15 @@ Casdoor Backend SDK provides a lot of helper functions, not limited to:
 - `CheckUserPassword(auth.User)`: check user's password.
 
 These functions are implemented by making RESTful calls against `Casdoor Public API`. If a function is not provided in Casdoor Backend SDK, you can make RESTful calls by yourself.
+
+### 6. **(Optional)** Manage Applications via SDK
+
+Casdoor SDKs also provide functions to manage applications programmatically:
+
+- `AddApplication()`: create a new application.
+- `GetApplication(name string)`: get an application by name.
+- `GetApplications()`: get all applications.
+- `UpdateApplication()`: update an application.
+- `DeleteApplication()`: delete an application.
+
+When creating applications via SDK using `AddApplication()`, Casdoor automatically initializes essential fields with sensible defaults. This includes signup items (ID, Username, Display name, Password, Confirm password, Email, Phone, Agreement), signin items, and signin methods. This ensures applications created programmatically work correctly in the UI without requiring manual configuration of these basic settings.
