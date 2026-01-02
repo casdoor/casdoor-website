@@ -35,7 +35,12 @@ We will show you how to apply a captcha and add it to Casdoor.
    - **Dynamic**: Shows CAPTCHA after 5 failed login attempts
    - **Always**: Requires CAPTCHA for every login attempt
    - **Internet-Only**: Shows CAPTCHA only for public internet requests
-4. Done!
+
+![Default provider app](/img/providers/captcha/default_provider_app.png)
+
+We also provide a demo video to demonstrate the differences in rules, which we hope will be helpful to you.
+
+<video src="/video/provider/default_provider_app.mp4" controls="controls" width="100%"></video>
 
 :::tip Disabling CAPTCHA
 To completely disable CAPTCHA verification, set the provider rule to **None**. This is different from SMS/Email providers where "None" means "apply to all scenarios". For CAPTCHA, "None" specifically means the verification is disabled.

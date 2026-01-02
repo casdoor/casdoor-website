@@ -19,21 +19,3 @@ To configure the default captcha in Casdoor, follow these steps:
 3. Click on the **Preview** button to preview the style of this captcha.
 
     ![Default preview](/img/providers/captcha/default_preview.png)
-
-## Applying in your application
-
-To apply the default captcha in your application, do the following:
-
-1. Edit the application you want to configure in Casdoor.
-2. Select the provider that you just added. There are four types of rules available:
-
-- `None`: Completely disables CAPTCHA verification. No verification modal will appear.
-- `Dynamic`: After 5 failed login attempts, human-machine verification will be required but the account will not be blocked. This applies to all authentication methods, including password and LDAP login.
-- `Always`: Always requires human-machine verification during login.
-- `Internet-Only`: Requires CAPTCHA only for requests from public internet addresses (not local networks).
-
-![Default provider app](/img/providers/captcha/default_provider_app.png)
-
-We also provide a demo video to demonstrate the differences in rules, which we hope will be helpful to you.
-
-<video src="/video/provider/default_provider_app.mp4" controls="controls" width="100%"></video>
