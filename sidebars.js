@@ -49,6 +49,8 @@ module.exports = {
         "how-to-connect/oidc-client",
         "how-to-connect/sdk",
         "how-to-connect/totp-authenticator-app",
+        "session/single-sign-on",
+        "session/single-sign-out",
         "how-to-connect/vue-sdk",
         {
           type: "category",
