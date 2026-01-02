@@ -555,7 +555,7 @@ async function logout() {
 
 ## Related Documentation
 
-- [Single Sign-On (SSO)](/docs/how-to-connect/single-sign-on): Learn how to enable SSO for your applications
+- [Single Sign-On (SSO)](/docs/session/single-sign-on): Learn how to enable SSO for your applications
 - [Casdoor Public API](/docs/basic/public-api): Complete API reference including authentication methods
 - [Tokens](/docs/token/overview): Understand how Casdoor manages access tokens and sessions
 - [OAuth 2.0](/docs/how-to-connect/oauth): Learn about OAuth 2.0 flows supported by Casdoor

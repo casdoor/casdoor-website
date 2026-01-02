@@ -31,6 +31,21 @@ To add an ID Verification provider:
 
 After creating the provider, add it to your application's provider list so users can access the verification feature.
 
+## Configuring Account Fields
+
+For users to access the verification feature, you need to configure the relevant account fields in your organization:
+
+1. Go to **Organizations** and edit your organization
+2. In the **Account items** section, ensure these fields are properly configured:
+   - **ID card type** - Should be visible so users can select their ID type
+   - **ID card** - Should be visible for users to enter their ID number
+   - **Real name** - Should be visible and modifiable by users before verification
+   - **ID verification** - Controls who can see and use the verify button
+
+The typical configuration sets these fields with "Public" view rule and "Self" modify rule, allowing users to manage their own identity information while keeping it visible to the system.
+
+See [Account Customization](/docs/organization/accountCustomization) for detailed information on configuring these fields.
+
 ## User Verification
 
 Users can verify their identity from their account page. The verification button appears when:

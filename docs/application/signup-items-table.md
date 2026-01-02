@@ -9,6 +9,12 @@ On the application configuration page, we can configure the signup items table t
 
 ![Signup Items Table](/img/application/signup-items-table/signup-items-table.png)
 
+:::tip
+
+When creating applications via the Casdoor SDK, default signup items are automatically initialized (including ID, Username, Display name, Password, Confirm password, Email, Phone, and Agreement). This ensures applications work correctly without manual configuration.
+
+:::
+
 For a detailed explanation of each signup item, please refer to the table below.
 
 | Column Name | Selectable Value | Description                                                                                                                                                 |
