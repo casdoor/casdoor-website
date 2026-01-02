@@ -45,24 +45,6 @@ Optional fields:
 - `Avatar base URL`: When syncing users, if the **Avatar base URL** is not empty and the origin **user.avatar** does not have the prefix "http", the new **user.avatar** will be replaced by **Avatar base URL + user.avatar**.
 - `Affiliation table`: It is used to sync the affiliation of the user from this table in the database. Since the affiliation may be a code of type int in the "Affiliation table", it needs to be mapped to a string. Refer to [getAffiliationMap()](https://github.com/casdoor/casdoor/blob/9f3ee275a8b747f914f0e74e897a79abeff96ccb/object/syncer_affiliation.go#L32). Casdoor has some redundant fields to borrow, so [here](https://github.com/casdoor/casdoor/blob/9f3ee275a8b747f914f0e74e897a79abeff96ccb/object/syncer_util.go#L65) we use `score` to map the int code to a string name.
 
-## Supported User Fields
-
-The database syncer supports synchronizing a comprehensive set of user attributes beyond the basic fields. This includes authentication-related data, security settings, and user metadata.
-
-### Authentication and Security Fields
-
-When syncing users from external databases, you can now include advanced authentication data such as WebAuthn credentials for passwordless login, MFA configurations for enhanced security, and Face ID biometric data. The syncer handles these complex fields automatically, converting them between JSON format and database storage.
-
-For MFA setup, supported fields include RADIUS authentication (username and provider), push notifications (receiver and provider), and authenticator app configurations. Recovery codes are also synchronized to ensure users maintain account access.
-
-### User Profile and Metadata
-
-Additional profile fields like real name, country code, external ID, and verification status can be synchronized. The syncer also tracks user activity such as last signin time and IP, password change history, and failed login attempts. This enables comprehensive user management across your systems.
-
-### JSON Fields
-
-Some user attributes are stored as JSON in the database. The syncer automatically handles serialization for fields like `WebauthnCredentials`, `FaceIds`, `ManagedAccounts`, `MfaAccounts`, and `MfaItems`. Simply map these to your database columns with JSON data, and the syncer will process them correctly during synchronization.
-
 Once you have configured the syncer, enable the **Is enable** option and save. The syncer will start working.
 
 ![users](/img/syncer/Database/syncer_database_users.png)
