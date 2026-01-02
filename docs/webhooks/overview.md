@@ -29,7 +29,7 @@ Casdoor webhooks support a comprehensive range of events across authentication, 
 
 #### Resource Management Events
 
-Standard CRUD operations (`add-*`, `update-*`, `delete-*`) are available for: organizations, groups, users, applications, providers, resources, certificates, roles, permissions, models, adapters, enforcers, sessions, tokens, products, payments, plans, pricing, subscriptions, syncers, webhooks, forms, invitations, LDAP configurations, orders, tickets, and transactions.
+Standard CRUD operations (`add-*`, `update-*`, `delete-*`) are available for all core resources including organizations, groups, users, applications, providers, and certificates. Additional resources like roles, permissions, models, adapters, enforcers, sessions, tokens, products, payments, and pricing also support these operations. Webhooks can track changes to syncers, forms, invitations, LDAP configurations, orders, tickets, and transactions as well.
 
 #### Specialized Operations
 
