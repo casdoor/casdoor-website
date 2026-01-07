@@ -42,6 +42,7 @@ Authentication will only work from the domain you registered with BotFather usin
 :::
 
 ## Logging In with Telegram
+
 With the setup completed, users can now log in with Telegram.
 
 <video src="/video/provider/oauth/telegram_login.mp4" controls="controls" width="100%"></video>
