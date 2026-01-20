@@ -27,7 +27,7 @@ Fill in the necessary information in Casdoor and save:
 
 RRSA enables zero-credential authentication by exchanging OIDC tokens for temporary STS credentials. This is particularly useful in Kubernetes environments where managing static credentials becomes cumbersome.
 
-When running Casdoor in an environment that provides OIDC tokens (like Alibaba Cloud ACK with RRSA enabled), you can authenticate without storing long-term credentials. Simply set the following environment variables:
+When running Casdoor in an environment that provides OIDC tokens (like Alibaba Cloud ACK with RRSA enabled), you can authenticate without storing long-term credentials. Configure these environment variables with values from your Alibaba Cloud RAM console:
 
 ```bash
 ALIBABA_CLOUD_ROLE_ARN=acs:ram::YOUR_ACCOUNT_ID:role/YOUR_ROLE_NAME
@@ -35,7 +35,9 @@ ALIBABA_CLOUD_OIDC_PROVIDER_ARN=acs:ram::YOUR_ACCOUNT_ID:oidc-provider/YOUR_PROV
 ALIBABA_CLOUD_OIDC_TOKEN_FILE=/var/run/secrets/tokens/oidc-token
 ```
 
-In the Casdoor storage provider configuration, leave the Client ID and Client Secret fields empty or set them to `rrsa`. Casdoor will automatically detect the RRSA environment and handle authentication using the OIDC token.
+Replace `YOUR_ACCOUNT_ID`, `YOUR_ROLE_NAME`, and `YOUR_PROVIDER_NAME` with your actual values from the [RAM console](https://ram.console.aliyun.com/). The token file path is typically mounted automatically by the Kubernetes service account system.
+
+In the Casdoor storage provider configuration, leave the Client ID and Client Secret fields empty. Casdoor will automatically detect the RRSA environment and handle authentication using the OIDC token.
 
 If RRSA credentials cannot be obtained, Casdoor gracefully falls back to static credentials, ensuring your application continues to work even during configuration changes.
 
