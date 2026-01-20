@@ -45,3 +45,9 @@ Without the `Contact.User.Read` permission, authentication will fail when Casdoo
 Here's the final configuration for DingTalk:
 
 ![DingTalk](/img/providers/OAuth/dingtalkprovider.png)
+
+### User Identification
+
+When users authenticate through DingTalk OAuth, Casdoor uses the `unionid` field as the username. The `unionid` is DingTalk's official unique identifier that remains constant across an employee's lifecycle, even when their job number or other organizational details change.
+
+While DingTalk provides a `job_number` field, it's not suitable for user identification because employees can share the same job number or have it reassigned during organizational changes. The `unionid` ensures stable, reliable user accounts in Casdoor that won't conflict or break when your organization's structure evolves.

@@ -50,7 +50,7 @@ The syncer maps DingTalk user attributes to Casdoor fields as follows:
 
 Account status mapping works inversely: when a DingTalk user is marked as inactive (`active: false`), they appear as forbidden in Casdoor (`IsForbidden: true`). Active DingTalk users sync as normal Casdoor accounts.
 
-The syncer intelligently handles the Name field by preferring the job_number when available, ensuring consistent user identification across your organization's systems.
+The syncer intelligently handles the Name field by preferring the job_number when available, ensuring consistent user identification across your organization's systems. Note that the syncer's behavior differs from the OAuth provider: the syncer uses `job_number` for the Name field (a descriptive identifier), while the OAuth provider uses `unionid` for the username (the unique account identifier). This distinction ensures both human-readable names and stable user accounts.
 
 ## Running the Syncer
 
