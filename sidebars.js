@@ -418,6 +418,7 @@ module.exports = {
         "syncer/GoogleWorkspace",
         "syncer/Keycloak",
         "syncer/WeCom",
+        "syncer/DingTalk",
       ],
     },
     {
