@@ -44,7 +44,7 @@ Upon successful payment, the selected amount is automatically added to the user'
 In addition to setting these properties, you also need to add payment providers to the product.
 Multiple payment providers can be added to a product.
 
-When adding payment providers, Casdoor validates that the product currency is compatible with each provider. For instance, Alipay transactions are only processed in Chinese Yuan (CNY). Products using Alipay must have their currency set to CNY. The system will prevent you from creating or updating products if there's a currency mismatch with any configured provider.
+When adding payment providers, Casdoor validates that the product currency is compatible with each provider. For instance, if you configure a product priced in USD and add PayPal as a payment provider, the system ensures the currency match is valid. The system will prevent you from creating or updating products if there's a currency mismatch with any configured provider.
 
 To learn how to configure a payment provider, refer to [Payment Provider](/docs/provider/payment/overview)
 
