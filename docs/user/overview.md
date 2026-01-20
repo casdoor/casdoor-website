@@ -97,7 +97,9 @@ Organization admins have elevated permissions but are scoped to their organizati
 
 ## User Tags
 
-The `Tag` field allows you to categorize users for different purposes. Casdoor uses specific tag values for special user types:
+The `Tag` field allows you to categorize users for different purposes. You can assign a single tag or multiple tags separated by commas (e.g., `"developer,qa,reviewer"`). When checking application access, each tag is evaluated separately.
+
+Casdoor uses specific tag values for special user types:
 
 - `normal-user`: Standard users with full authentication capabilities
 - `guest-user`: Temporary users created through [guest authentication](/docs/how-to-connect/guest-auth) without initial credentials
