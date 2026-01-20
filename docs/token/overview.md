@@ -43,6 +43,8 @@ After logging into the application, there are three options to generate a JWT To
 
 The options are as follows: JWT will generate a token containing all User fields, JWT-Empty will generate a token with all non-empty values for the user, and JWT-Custom will generate a token containing custom User Token fields (you can choose attributes in the Token fields). JWT-Standard will generate a token with some standard OIDC token fields include email, phone, gender and Address (Address value in other format is not standard).
 
+All token formats now include the `email_verified` claim in accordance with OpenID Connect standards. This boolean field indicates whether the user's email address has been verified by Casdoor. External applications that rely on Casdoor as an identity provider can use this claim to determine email verification status without additional API calls.
+
 ![JWT-Custom](/img/token/overview/JWT-Custom.png)
 
 ## Custom Token Attributes
