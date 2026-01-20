@@ -80,6 +80,14 @@ To configure a webhook in Casdoor:
 3. **Save the Webhook Configuration:**
    - Once saved, Casdoor will start sending event notifications to the specified endpoint.
 
+## Filtering Webhook Payloads
+
+When working with webhooks, you might not always need the complete record data. Casdoor allows you to filter the payload by configuring **ObjectFields** for each webhook. This feature is particularly valuable when you have privacy concerns, bandwidth constraints, or when your endpoint only processes specific fields.
+
+The ObjectFields configuration accepts either "All" to receive the complete record, or a list of specific field names you want to include. When you specify field names, Casdoor will send only those fields in the webhook payload, reducing payload size and exposing only the data your application needs.
+
+If you configure multiple webhooks with different ObjectFields settings, each webhook operates independently. For example, one webhook might receive only user IDs and timestamps, while another receives full user profiles. Casdoor ensures that the filtering applied to one webhook doesn't affect the data sent to others, even when they're triggered by the same event.
+
 ## Example Webhook Payload
 
 Here’s an example of a JSON payload sent to your webhook when a user logs in:
