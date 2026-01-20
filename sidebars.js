@@ -39,6 +39,7 @@ module.exports = {
         "deployment/deploy-cdn",
         "deployment/deploy-intranet",
         "deployment/db-migration",
+        "deployment/version-info",
       ],
     },
     {
