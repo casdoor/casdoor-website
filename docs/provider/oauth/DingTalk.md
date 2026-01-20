@@ -40,6 +40,10 @@ Without the `Contact.User.Read` permission, authentication will fail when Casdoo
 
 :::
 
+### User Identity Mapping
+
+When users authenticate through DingTalk, Casdoor creates their username using the `unionid` field from DingTalk. This identifier uniquely represents each user across your DingTalk organization, ensuring reliable authentication even when employee details change. Since `unionid` remains constant throughout a user's lifecycle, it provides stable account mapping between DingTalk and Casdoor.
+
 ### Configuring Casdoor
 
 Here's the final configuration for DingTalk:
