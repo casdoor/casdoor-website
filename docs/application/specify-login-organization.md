@@ -28,3 +28,11 @@ On the application edit page, you can find the `Org select mode` configuration o
 The organization select page will only be shown when the route is `/login` or `<organization>/login`. This means that the application should be set as the **default application** in the organization or the app-built-in.
 
 :::
+
+## Automatic Organization Redirect
+
+When a user's session expires, Casdoor remembers which organization they last used and automatically redirects them to that organization's login page. This saves time by eliminating the need to select the organization again after a session timeout.
+
+The organization context is stored in the browser's localStorage when you visit an organization-specific login page (e.g., `/login/my-org`). When your session expires and you need to log in again, Casdoor automatically redirects you to that same organization's login page instead of the generic `/login` page.
+
+If no organization context is found in localStorage, you'll be redirected to the default `/login` page where you can select an organization using the configured mode (Input or Select) if enabled.

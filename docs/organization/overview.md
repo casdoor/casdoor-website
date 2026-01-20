@@ -48,4 +48,6 @@ To enable this feature, check the "Use email as username" option on the organiza
 
 In addition to logging into Casdoor via an application (which redirects to Casdoor for SSO), Casdoor users can also choose to log in directly via the organization's login page: `/login/<organization_name>`, e.g., <https://door.casdoor.com/login/casbin> on the demo site.
 
+When you log in through an organization-specific URL, Casdoor remembers this preference. If your session later expires, you'll be automatically redirected back to that organization's login page instead of the generic login page, streamlining the re-authentication process.
+
 :::
