@@ -25,12 +25,15 @@ When a user purchases a product, the system creates an order and displays immedi
 Each order contains:
 
 - **Basic Information**: Owner, name, creation time, and display name
-- **Product Reference**: Links to the product by name to maintain consistency
+- **Product References**: One or more products included in the order
+- **Product Info Snapshots**: Stored details (name, display name, image, price) of products at purchase time
 - **User & Payment**: References to the buyer and associated payment
 - **State Management**: Current state and optional status message
 - **Duration**: Optional start and end times for time-limited purchases (e.g., 1-year cloud instance)
 
-Product details like display name, description, price, and currency are accessed through the product reference rather than duplicated in the order. When you place an order, the system uses the product's currency and price directly. This ensures accurate pricing regardless of your account's balance currency—what you pay matches what the product costs.
+Orders can include multiple products, making it possible to purchase several items in a single transaction. When the order is created, the system captures a snapshot of each product's current information—including its display name, image, detail, and price. This snapshot preserves what you actually bought, even if the product details change later in the system.
+
+The total order price automatically sums up all individual product prices. For products priced in different currencies, all items in a single order must use the same currency to ensure accurate total calculation.
 
 ## Order States
 
@@ -49,10 +52,14 @@ When payment providers notify Casdoor about transaction results, the system upda
 
 ## Viewing Orders
 
-Navigate to the Orders page to view all purchases. The order list includes a **Payment** column that links directly to the associated payment record, making it easy to track payment status and details. You can search orders by payment name, filter by state, and sort by various fields to find specific transactions.
+Navigate to the Orders page to view all purchases. Regular users see only their own orders, while administrators can view all orders in their organization or across all organizations when the default organization is selected.
 
-When viewing orders as an administrator with the default organization selected in Casdoor, you'll see orders from all organizations in your instance. This gives you a comprehensive view of all transactions across your system. Switching to a specific organization filters the list to show only that organization's orders.
+The order list includes a **Products** column showing all items in each order. For orders with multiple products, each product appears as a separate line with a link to its details. The **Payment** column links directly to the associated payment record for tracking transaction status.
+
+You can search orders by payment name, product name, user, or other fields. Filtering by state and sorting by various columns helps locate specific transactions quickly.
 
 ## Managing Orders
 
-Click on an order to view or edit its details. You can update the order state, add messages, or modify duration settings. The product reference ensures you always see current product information.
+Click on an order to view or edit its details. The order editor displays the products in a multi-select dropdown, allowing you to add or remove items from the order. When you modify the product list, the system automatically recalculates the total price based on the stored product information snapshots.
+
+You can also update the order state, add messages, or modify duration settings. The product snapshots preserve historical pricing even if current product prices have changed.

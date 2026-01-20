@@ -1,11 +1,13 @@
 ---
 title: Payment
 description: View the transaction information of the products in Payment
-keywords: [payment, invoice]
+keywords: [payment, invoice, multi-product payment]
 authors: [leo220yuyaodog]
 ---
 
-After the payment is successfully processed, you will be able to view the transaction information of the products in the **Payment** section. This information will include details such as the organization, user, purchase time, and product name.
+After the payment is successfully processed, you will be able to view the transaction information in the **Payment** section. This information includes details such as the organization, user, purchase time, and the products purchased.
+
+Payments can cover multiple products in a single transaction. The payment record lists all products by name and stores their combined display name for reference. When you navigate to view a payment, the **Products** column shows each product as a separate line item with links to their details.
 
 When viewing a payment, you can navigate directly to the related order using the **View Order** button. After completing a payment, the system offers quick actions to either view the order details or return to the order list, streamlining your workflow.
 
