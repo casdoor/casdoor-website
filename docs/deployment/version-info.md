@@ -21,7 +21,7 @@ For example, if you're three commits ahead of version `v1.500.0`, Casdoor will r
 
 For official binary releases and Docker images, git isn't available since these distributions don't include the `.git` folder. To solve this, the build process embeds version information directly into the code during compilation.
 
-When creating a release, the CI pipeline runs a test that extracts version details from git and writes them to a Go source file (`util/variable.go`). This file contains three variables:
+When creating a release, the CI pipeline extracts version details from git and writes them to a Go source file (`util/variable.go`). This file contains three variables:
 
 ```go
 var (
