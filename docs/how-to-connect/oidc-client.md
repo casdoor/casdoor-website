@@ -17,7 +17,7 @@ Casdoor's global OIDC discovery URL is:
 <your-casdoor-backend-host>/.well-known/openid-configuration
 ```
 
-For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.com/.well-known/openid-configuration>, and it contains the following information:
+This endpoint is publicly accessible without authentication, as required by the OIDC specification. For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.com/.well-known/openid-configuration>, and it contains the following information:
 
 ```json
 {
@@ -132,6 +132,8 @@ You can also access the JWKS and WebFinger endpoints for each application:
 ```
 
 The JWKS endpoint returns the public keys for verifying tokens. When an application has its own certificate configured, that certificate is used. Otherwise, it falls back to the global certificates.
+
+These application-specific well-known endpoints are publicly accessible without authentication, following the OIDC specification requirements. This allows clients to discover your OIDC configuration and retrieve public keys for token verification before establishing a user session.
 
 Here's what the responses look like. The global endpoint returns:
 
