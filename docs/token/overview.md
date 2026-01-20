@@ -34,6 +34,14 @@ The following are the available token fields in Casdoor:
 - `Scope` (Scope of authorization)
 - `TokenType` (e.g., `Bearer` type)
 
+## Token Lifecycle and Invalidation
+
+Tokens in Casdoor follow a specific lifecycle from creation through invalidation. When a user logs in, Casdoor generates both an access token and a refresh token. The access token is used for authentication, while the refresh token allows obtaining new access tokens without requiring the user to log in again.
+
+During SSO logout, Casdoor invalidates tokens by setting their `ExpiresIn` field to 0 or a negative value. Both the token introspection endpoint and the refresh token endpoint validate this field before processing requests. If a token has `ExpiresIn <= 0`, it's considered invalid and rejected with an error, even if the token itself is structurally valid and hasn't reached its original expiration time. This approach ensures that refresh tokens cannot be used to obtain new access tokens after logout, providing complete session termination across all token types.
+
+## Token Format Options
+
 After logging into the application, there are three options to generate a JWT Token:
 
 - `JWT`
