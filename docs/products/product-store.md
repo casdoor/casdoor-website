@@ -41,6 +41,8 @@ Each product card in the store is clickable. When a user clicks on a product or 
 2. Select a payment provider (from those configured for the product)
 3. Complete the transaction
 
+Alternatively, regular (non-subscription, non-recharge) products can be added to a shopping cart for later purchase. The "Add to cart" button appears on each applicable product card, letting users collect items before checking out. This makes it easier to purchase multiple products together in a single order.
+
 The purchase process creates a payment record and, for non-subscription products, an order to track fulfillment.
 
 ## Store Display

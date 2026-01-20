@@ -5,9 +5,15 @@ keywords: [payment, invoice]
 authors: [leo220yuyaodog]
 ---
 
-After the payment is successfully processed, you will be able to view the transaction information of the products in the **Payment** section. This information will include details such as the organization, user, purchase time, and product name.
+After the payment is successfully processed, you will be able to view the transaction information of the products in the **Payment** section. This information will include details such as the organization, user, purchase time, and product names.
 
 When viewing a payment, you can navigate directly to the related order using the **View Order** button. After completing a payment, the system offers quick actions to either view the order details or return to the order list, streamlining your workflow.
+
+## Multi-Product Payments
+
+Payments now support multiple products in a single transaction. When an order contains multiple products, the payment record captures all product names and displays them together. The total payment amount reflects the combined price of all items, with individual product details preserved for reference.
+
+For recharge products in multi-item payments, the system calculates recharge amounts separately. If your order mixes regular products with recharge items, only the recharge product amounts are added to your account balance upon successful payment.
 
 ## Payment States and Notifications
 
