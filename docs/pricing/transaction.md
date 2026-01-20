@@ -11,11 +11,13 @@ Transactions are automatically created when users make purchases or recharge the
 
 ## Transaction Categories
 
-Transactions in Casdoor fall into two categories:
+Transactions in Casdoor are classified into two distinct categories that determine how they affect user balances:
 
-**User Transactions** track individual user balances. When a user transaction is created, it updates both the user's balance and the organization's total user balance sum.
+**Purchase** transactions represent spending money to buy products or services. These transactions have negative amounts and decrease the user's balance. When you pay for a product using your Casdoor balance or an external payment provider, a Purchase transaction records the deduction.
 
-**Organization Transactions** track the organization's own operational balance, separate from user balances.
+**Recharge** transactions represent adding funds to a user's balance. When purchasing recharge products or topping up an account, a Recharge transaction with a positive amount is created to increase the available balance.
+
+The system automatically determines the transaction category based on the product type and payment flow. For recharge products, the system creates both a Purchase transaction (for the payment) and a Recharge transaction (for the balance increase).
 
 ## Transaction Properties
 
@@ -24,8 +26,10 @@ Every Transaction has these properties:
 - `Owner`
 - `Name`
 - `CreatedTime`
-- `Category`: Either "User" or "Organization"
-- `Type`: The transaction type (e.g., "Recharge", "Purchase")
+- `Category`: Transaction category - either "Purchase" (spending) or "Recharge" (adding funds)
+- `Type`: The transaction type (e.g., provider category)
+- `Subtype`: Provider-specific transaction subtype
+- `Provider`: Payment provider used for the transaction
 - `User`: Required for User category transactions
 - `Amount`: Transaction amount (positive for income, negative for expenses)
 - `Currency`: The currency code (e.g., "USD", "CNY")
