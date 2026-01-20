@@ -41,6 +41,12 @@ If your IdP doesn't explicitly provide a username mapping or the username field 
 
 This fallback mechanism ensures smooth authentication even when username attributes aren't explicitly configured in your IdP, which is common with providers like Azure AD where the default attribute claims might not include a separate username field.
 
+## Login Behavior
+
+Unlike OAuth providers which auto-redirect when configured as the sole authentication method, SAML providers always display their button on the login page. This design ensures users explicitly choose to authenticate via SAML before being redirected to their identity provider. Even with a single SAML provider configured, clicking the provider button is required to initiate the login flow.
+
+This behavior prevents unexpected redirects and gives users clear control over the authentication method they're using, which is particularly important in enterprise environments where SAML is often one of multiple authentication options.
+
 ## How SAML integration works
 
 When using SAML SSO, users log into Casdoor via the identity provider without ever passing credentials to Casdoor. The progress is shown in the following diagram.
