@@ -19,6 +19,7 @@ Casdoor supports multiple syncer types to import users from different sources:
 - **Google Workspace**: Synchronize users from Google Workspace using Admin SDK API. See [Google Workspace syncer](/docs/syncer/GoogleWorkspace).
 - **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
 - **WeCom**: Fetch users from WeCom organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
+- **DingTalk**: Import users from DingTalk organizations via API. See [DingTalk syncer](/docs/syncer/DingTalk).
 
 Each syncer type implements a common interface, making it straightforward to add new syncer types or extend existing ones without affecting other parts of the system.
 
