@@ -65,7 +65,7 @@ POST /api/mcp
 
 ## Authentication
 
-MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api#how-to-authenticate-with-casdoor-public-api) documentation. The most common approaches are:
+MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api) documentation. The most common approaches are:
 
 **Using an access token** (for user-scoped operations):
 
