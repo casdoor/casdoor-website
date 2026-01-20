@@ -49,6 +49,8 @@ With the setup completed, users can now log in with Telegram.
 
 ## Authentication Flow
 
-When users choose to sign in with Telegram, they authenticate directly through Telegram's widget. The process is straightforward: users click the login button, verify their identity through the Telegram app or website, and Telegram returns their profile information. Casdoor then validates this data using HMAC-SHA256 cryptographic signatures to ensure authenticity before creating or linking the user account. This verification follows [Telegram's security specification](https://core.telegram.org/widgets/login#checking-authorization) to prevent tampering.
+When users choose to sign in with Telegram, Casdoor redirects them to a dedicated widget page where they authenticate through Telegram's official login widget. After clicking the login button, users verify their identity through the Telegram app or website. Once authorized, Telegram returns their profile information to Casdoor's callback endpoint.
+
+The authentication data undergoes strict validation - Casdoor verifies the cryptographic HMAC-SHA256 signature and checks the timestamp to prevent replay attacks. This follows [Telegram's security specification](https://core.telegram.org/widgets/login#checking-authorization) to ensure the data hasn't been tampered with. The system also handles edge cases like empty authorization codes gracefully, automatically prompting users to retry if needed.
 
 Telegram provides basic profile information including user ID, first and last name, username (if set), and profile photo (if available). Note that Telegram does not provide email addresses through the Login Widget. If your application requires email verification, you'll need to collect this separately after the initial authentication.
