@@ -33,13 +33,15 @@ This ensures that the user is completely logged out from all integrated applicat
 
 1. **Delete current session**: Only the current session is terminated
 2. **Clear current authentication state**: The user's current session and token are cleared
-3. **Send targeted notification**: Notification providers receive the logout event with only the current session ID
+3. **Send targeted notification**: Notification providers receive the logout event with the current session ID and associated access token hashes
 
 This allows users to logout from a specific device or browser while remaining logged in on other sessions. This is useful when users share accounts across multiple devices or have concurrent sessions they want to manage individually.
 
+The access token hashes included in session-level logout notifications enable your subsystems to identify exactly which tokens need to be invalidated. When a user logs out from a specific browser or device, you can match the token hashes against your active sessions and perform targeted invalidation without affecting other devices where the user remains logged in.
+
 ### Logout Notifications
 
-When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. The notifications now include session-level information and cryptographic signatures for security.
+When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. The notifications include session IDs, access token hashes, and cryptographic signatures for secure, synchronized logout across all integrated systems.
 
 Each notification provider receives a POST request with the following payload:
 
@@ -60,10 +62,10 @@ Each notification provider receives a POST request with the following payload:
 }
 ```
 
-**New security fields:**
+**Notification fields:**
 
 - `sessionIds`: List of session IDs being logged out (enables targeted session invalidation)
-- `accessTokenHashes`: Hashes of access tokens being expired (helps identify specific tokens to revoke)
+- `accessTokenHashes`: SHA-256 hashes of access tokens being invalidated. Both full SSO logout and session-level logout now include these hashes, allowing your subsystems to match them against active tokens and perform synchronized logout
 - `nonce`: Random value for replay attack protection
 - `timestamp`: Unix timestamp when the notification was generated
 - `signature`: HMAC-SHA256 signature computed using the application's client secret
@@ -517,11 +519,13 @@ If users remain logged in to some applications after SSO logout:
 
 ### Token Still Valid After Logout
 
-If access tokens remain valid after logout:
+If access tokens or refresh tokens remain valid after logout:
 
 1. **Verify the logout endpoint**: Ensure you're calling the correct endpoint (`/api/sso-logout`)
 2. **Check authentication**: Make sure you're sending valid authentication credentials with the logout request
 3. **Review token caching**: Ensure applications don't cache token validation results
+
+After SSO logout, both access tokens and refresh tokens are invalidated. The token records remain in the database with `ExpiresIn` set to 0, but Casdoor's token introspection and refresh token endpoints will reject them. When a client attempts to use a refresh token after logout, they'll receive an `invalid_grant` error with the message "refresh token is invalid, expired or revoked". This ensures complete session termination and prevents token reuse even if the token hasn't reached its original expiration time.
 
 ### Logout Endpoint Returns Error
 
