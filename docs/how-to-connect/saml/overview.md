@@ -52,7 +52,7 @@ SAML responses from Casdoor are always signed to ensure authenticity. However, s
 
 When you encounter login failures with service providers that don't handle signed assertions properly, you can disable assertion signatures while keeping the overall response signature intact. Toggle the **Enable SAML assertion signature** option in your application settings to control this behavior. When disabled, Casdoor will sign only the SAML response envelope, which maintains security while ensuring compatibility with a wider range of service providers.
 
-For examle
+For example
 
 | Name |  Name format   | Value|
 |:------------------:|:-------------:| :-------------:|
