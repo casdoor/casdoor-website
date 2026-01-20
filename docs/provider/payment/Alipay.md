@@ -63,6 +63,12 @@ Next, create an Alipay Payment provider in Casdoor by filling in the necessary i
 
 Finally, add the Alipay Payment provider for your product so that users can purchase the product using Alipay.
 
+:::info Currency Requirement
+
+Alipay only supports transactions in Chinese Yuan (CNY). When adding Alipay as a payment provider, ensure your product's currency is set to CNY. Products with other currencies will be rejected during creation or update to prevent payment failures.
+
+:::
+
 ![add wechat pay payment provider for product](/img/providers/payment/alipay_product.png)
 
 <video src="/video/provider/payment/use_alipay_buy_product.mp4" controls="controls" width="100%"></video>

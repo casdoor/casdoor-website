@@ -50,6 +50,8 @@ The [Casbin Online Editor](https://casbin.org/editor) can provide you with Model
 
 Just as your application needs to enforce permission control through Casdoor's built-in Casbin, Casdoor itself utilizes its own Model and Policy to regulate access permissions for the API interfaces through Casbin. Though Casdoor can call Casbin from internal code, external applications cannot.
 
+Casdoor's default permissions allow all users to access product and order information through APIs like `get-product`, `get-order`, `get-orders`, and `get-user-orders`. This means users can retrieve details about products they're interested in and track their own purchase history without requiring special privileges. If you need stricter control over these endpoints, you can customize the permission policies through Casbin.
+
 As a solution, Casdoor exposes an API for external applications to call the built-in Casbin. See the [Exposed Casbin APIs](/docs/permission/exposed-casbin-apis) documentation for definitions of these API interfaces and instructions on how to use them.
 
 ## Related Features
