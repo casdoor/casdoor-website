@@ -7,6 +7,8 @@ authors: [OutOfEastGate]
 
 You can monitor the runtime information of Casdoor on the [Casdoor web page](https://door.casdoor.com/sysinfo), including CPU Usage, Memory Usage, API Latency, and API Throughput.
 
+The system info page also displays version information showing the exact release tag, commit hash, and commit offset of your running Casdoor instance. This helps you track deployments and ensures you know which version is running in production or development environments.
+
 On the UI, you can view the following information:
 
 - CPU Usage and Memory Usage

@@ -56,6 +56,8 @@ Download the latest release from [GitHub Releases](https://github.com/casdoor/ca
 
 After downloading, extract the archive and run the `casdoor` executable. The binaries include the web frontend and a sample configuration file (`conf/app.conf`). You'll need to configure the database connection before running (see [Configure Database](#configure-database)).
 
+Each pre-built binary contains version metadata that identifies the exact release and commit it was built from. You can query this information via the `/api/get-version-info` endpoint, which helps with troubleshooting and ensuring you're running the intended version in your deployment.
+
 :::tip Quick Start with Binaries
 
 ```bash
@@ -198,6 +200,8 @@ For Windows:
 go build
 casdoor.exe
 ```
+
+When building from source, version information is automatically embedded into the binary. The build process extracts git metadata (tag version, commit hash, and commit offset) and writes it to `util/variable.go`, making it available through the `/api/get-version-info` endpoint. This works even when the binary is distributed without the git repository, which is particularly useful for deployment scenarios and Docker containers.
 
 #### Frontend
 

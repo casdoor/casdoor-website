@@ -468,6 +468,16 @@ docker-compose logs casdoor
 docker logs casdoor
 ```
 
+### Verify version information
+
+You can check which version of Casdoor is running in your container by querying the version API:
+
+```bash
+curl http://localhost:8000/api/get-version-info
+```
+
+This returns the exact version tag, commit hash, and commit offset, helping you verify the deployment and track down any version-specific issues.
+
 ### Verify reverse proxy configuration
 
 ```bash
