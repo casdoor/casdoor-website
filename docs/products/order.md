@@ -30,7 +30,7 @@ Each order contains:
 - **State Management**: Current state and optional status message
 - **Duration**: Optional start and end times for time-limited purchases (e.g., 1-year cloud instance)
 
-Product details like display name, description, price, and currency are accessed through the product reference rather than duplicated in the order.
+Product details like display name, description, price, and currency are accessed through the product reference rather than duplicated in the order. When you place an order, the system uses the product's currency and price directly. This ensures accurate pricing regardless of your account's balance currency—what you pay matches what the product costs.
 
 ## Order States
 
@@ -50,6 +50,8 @@ When payment providers notify Casdoor about transaction results, the system upda
 ## Viewing Orders
 
 Navigate to the Orders page to view all purchases. The order list includes a **Payment** column that links directly to the associated payment record, making it easy to track payment status and details. You can search orders by payment name, filter by state, and sort by various fields to find specific transactions.
+
+When viewing orders as an administrator with the default organization selected in Casdoor, you'll see orders from all organizations in your instance. This gives you a comprehensive view of all transactions across your system. Switching to a specific organization filters the list to show only that organization's orders.
 
 ## Managing Orders
 
