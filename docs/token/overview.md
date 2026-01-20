@@ -53,6 +53,18 @@ The options are as follows: JWT will generate a token containing all User fields
 
 ![JWT-Custom](/img/token/overview/JWT-Custom.png)
 
+### Standard OIDC Claims
+
+All JWT token formats include these standard OpenID Connect claims in the payload:
+
+- `sub` - Subject identifier (unique user ID)
+- `email` - User's email address
+- `email_verified` - Boolean indicating whether the email has been verified by Casdoor
+- `name` or `preferred_username` - User's display name
+- `picture` or `avatar` - User's avatar URL
+
+The `email_verified` claim enables external applications using Casdoor as an identity provider to determine email verification status directly from the token without additional API calls.
+
 ## Custom Token Attributes
 
 When using JWT-Custom format, you can define custom attributes with their data types. Each attribute has a **Type** field that controls how values are included in the JWT:
