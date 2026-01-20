@@ -35,13 +35,15 @@ Users access the Product Store through the `/product-store` route in your Casdoo
 
 ## Browsing and Purchasing
 
-Each product card in the store is clickable. When a user clicks on a product or its "Buy" button, they're directed to the purchase flow where they can:
+Each product card in the store is clickable. When a user clicks on a product, they're directed to the detailed product page where they can review information and decide how to proceed.
 
-1. Review product details
-2. Select a payment provider (from those configured for the product)
-3. Complete the transaction
+From the Product Store, you have two options for each product:
 
-The purchase process creates a payment record and, for non-subscription products, an order to track fulfillment.
+**Buy**: Clicking the "Buy" button takes you directly to the purchase flow where you can select a payment provider and complete the transaction immediately.
+
+**Add to cart**: Available for regular products (not recharge or subscription items), this button adds the product to your personal shopping cart. Your cart persists across sessions, letting you collect multiple products before purchasing them together. Products with different currencies cannot be mixed in the same cart.
+
+The purchase process creates a payment record and, for non-subscription products, an order to track fulfillment. Using the cart, you can organize multiple products before checkout, though the bulk purchase flow is still being developed.
 
 ## Store Display
 

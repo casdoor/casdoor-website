@@ -351,6 +351,7 @@ module.exports = {
         "pricing/overview",
         "products/product",
         "products/product-store",
+        "products/cart",
         "products/payment",
         "products/order",
         "pricing/plan",
