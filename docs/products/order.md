@@ -34,14 +34,18 @@ Product details like display name, description, price, and currency are accessed
 
 ## Order States
 
-Orders progress through these states:
+Orders progress through these states based on payment status:
 
 - **Created**: Order initialized but payment not yet completed
 - **Paid**: Payment successfully processed
+- **PaymentFailed**: Payment attempt failed with an error
+- **Canceled**: Payment or order was cancelled
+- **Timeout**: Payment timed out before completion
 - **Delivered**: Product or service delivered to the user
 - **Completed**: Order fully fulfilled
-- **Canceled**: Order canceled by user or admin
 - **Expired**: Order expired (for time-limited products)
+
+When payment providers notify Casdoor about transaction results, the system updates order states automatically. This synchronization ensures that orders always reflect the current payment status, whether the payment succeeded, failed, was cancelled, or timed out.
 
 ## Viewing Orders
 
