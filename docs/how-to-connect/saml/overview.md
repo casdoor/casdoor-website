@@ -46,7 +46,13 @@ Some SP will require you to provide external attributes in SAML Response, you ca
 
 If your service provider only requires the NameID field and doesn't need additional user attributes (Email, Name, DisplayName, Roles), you can enable the **Disable SAML attributes** option in the application settings. When enabled, Casdoor will omit these attributes from the SAML response, which can help avoid XML namespace issues with certain SPs that have strict validation requirements.
 
-For examle
+### Assertion signature control
+
+SAML responses from Casdoor are always signed to ensure authenticity. However, some service providers may not support or require signed assertions within the response itself. Starting from version 2.81.0, Casdoor added assertion signatures following SAML 2.0 best practices, but this caused compatibility issues with certain SPs like Sentry.
+
+When you encounter login failures with service providers that don't handle signed assertions properly, you can disable assertion signatures while keeping the overall response signature intact. Toggle the **Enable SAML assertion signature** option in your application settings to control this behavior. When disabled, Casdoor will sign only the SAML response envelope, which maintains security while ensuring compatibility with a wider range of service providers.
+
+For example
 
 | Name |  Name format   | Value|
 |:------------------:|:-------------:| :-------------:|
