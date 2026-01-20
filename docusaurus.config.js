@@ -13,7 +13,7 @@ module.exports = {
   projectName: "casdoor-website", // Usually your repo name.
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "zh", "ko", "ru", "fr", "de", "ja", "es", "pt", "uk", "th", "ar"],
+    locales: ["en", "es", "fr", "de", "ja", "zh", "vi", "pt", "tr", "pl", "uk"],
   },
   themeConfig: {
     metadata: [{name: "Casdoor", content: "An open-source, UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos"}],
