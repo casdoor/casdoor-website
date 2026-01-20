@@ -7,7 +7,7 @@ authors: [Chinoholo0807]
 
 Application tags control which users can access your application. When you configure tags on an application, only users whose tags match at least one of the application's tags can sign in. Admin and global admin users bypass this restriction entirely.
 
-For example, if your `dev_app` application has tags `dev` and `prd`, users need either the `dev` tag or the `prd` tag to access it. Users can have multiple tags separated by commas, like `"dev,qa,staging"`. When a user has multiple tags, Casdoor checks each one individually—if any tag matches the application's tags, authentication succeeds.
+For example, if your `dev_app` application has tags `dev` and `staging`, users need either the `dev` tag or the `staging` tag to access it. Users can have multiple tags separated by commas, like `"dev,qa,staging"`. When a user has multiple tags, Casdoor checks each one individually—if any tag matches the application's tags, authentication succeeds.
 
 Casdoor uses specific tag values for special user types. The `guest-user` tag identifies temporary users created through guest authentication. These users automatically upgrade to `normal-user` when they set credentials. See [Guest Authentication](/docs/how-to-connect/guest-auth) for details.
 
