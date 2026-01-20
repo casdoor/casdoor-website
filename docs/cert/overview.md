@@ -1,7 +1,7 @@
 ---
 title: Overview
 description: Managing Certificates in Casdoor
-keywords: [cert, certificate, JWT, RSA, SAML, payment]
+keywords: [cert, certificate, JWT, RSA, ECDSA, SAML, payment]
 authors: [copilot]
 ---
 
@@ -17,7 +17,7 @@ Each certificate in Casdoor has the following properties:
 - **DisplayName**: A human-readable name for the certificate
 - **Scope**: The scope of the certificate (e.g., `JWT`, `SAML`, `Payment`)
 - **Type**: The type of certificate (e.g., `x509`, `Payment`)
-- **CryptoAlgorithm**: The cryptographic algorithm used (e.g., `RS256`, `RSA`)
+- **CryptoAlgorithm**: The cryptographic algorithm used (e.g., `RS256` for RSA, `ES256` for ECDSA)
 - **BitSize**: The key size in bits (e.g., 2048, 4096)
 - **ExpireInYears**: The expiration period of the certificate in years
 - **Certificate**: The public certificate content
@@ -31,13 +31,9 @@ Certificates in Casdoor serve different purposes based on their scope:
 
 JWT certificates are used to sign and verify JSON Web Tokens (JWT) for authentication. When a user logs in through Casdoor, the access token is signed using the private key of the JWT certificate.
 
-**Use cases:**
+Casdoor supports both RSA and ECDSA signing algorithms for JWT tokens. While RSA (RS256, RS384, RS512) has been the traditional choice, ECDSA algorithms (ES256, ES384, ES512) offer smaller signature sizes and faster signature verification with equivalent security levels. This is particularly beneficial when you need to reduce token size for mobile applications or improve performance in high-throughput scenarios.
 
-- Signing access tokens for OAuth/OIDC authentication
-- Verifying tokens in backend applications
-- Securing API communications
-
-The JWT public key is required when configuring Casdoor SDK in your application. You can find and download the public key from the certificate edit page.
+When configuring JWT certificates, you can choose between RSA and ECDSA based on your security requirements and compatibility needs. The JWT public key is required when configuring Casdoor SDK in your application. You can find and download the public key from the certificate edit page.
 
 ![Certs Management](/img/how-to-connect/sdk/howto_cert_list.png)
 
@@ -91,7 +87,7 @@ To create a new certificate in Casdoor:
    - **Display Name**: A human-readable name
    - **Scope**: Select the appropriate scope (JWT, SAML, Payment)
    - **Type**: Select the certificate type
-   - **Crypto Algorithm**: Choose the cryptographic algorithm (e.g., RS256 for JWT)
+   - **Crypto Algorithm**: Choose the cryptographic algorithm (e.g., RS256 for RSA, ES256 for ECDSA). For JWT certificates, both RSA and ECDSA algorithms are supported
    - **Bit Size**: Set the key size (typically 2048 or 4096 bits)
    - **Expire In Years**: Set the expiration period
 4. You can either:
