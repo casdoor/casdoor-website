@@ -23,11 +23,15 @@ This method lets administrators start an impersonation session directly from the
 
 Navigate to the Users page in your Casdoor admin panel. Each user row includes an "Impersonation" button. Clicking this button immediately switches your session to that user's context - you'll see the interface exactly as they do, with their permissions and access rights.
 
+![enter impersonation](/img/user/user_impersonation.png)
+
 During impersonation, you remain logged in with the impersonated user's identity until you explicitly exit. Your session remembers both your admin identity and the impersonated user, so Casdoor knows you're in an impersonation context.
 
 ### Exiting impersonation
 
 When you're ready to return to your admin account, click your user menu in the top right corner. Instead of the usual "Logout" option, you'll see "Exit impersonation." Selecting this returns you to your admin session without logging out completely.
+
+![exit impersonation](/img/user/exit_user_impersonation.png)
 
 :::tip Admin-only feature
 
@@ -46,6 +50,8 @@ During login, Casdoor checks credentials in a specific order: first against the 
 ### Setting up master password
 
 To configure this feature, open your Organization settings and locate the Master Password field. Enter a strong password and save. From that point forward, you can use this password at the login screen with any username from your organization to sign in as that user.
+
+![master password](/img/user/master_password.png)
 
 :::caution Handle with care
 
