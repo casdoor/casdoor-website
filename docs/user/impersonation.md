@@ -51,7 +51,7 @@ During login, Casdoor checks credentials in a specific order: first against the 
 
 To configure this feature, open your Organization settings and locate the Master Password field. Enter a strong password and save. From that point forward, you can use this password at the login screen with any username from your organization to sign in as that user.
 
-![masterpassword](/img/user/master_password.png)
+![master password](/img/user/master_password.png)
 
 :::caution Handle with care
 
