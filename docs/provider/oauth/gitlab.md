@@ -15,7 +15,7 @@ Create a new application by clicking on **"Add new application"** and fill in th
 
 :::caution Required Scopes
 
-Casdoor's GitLab OAuth provider requires the following specified scopes: **read_user** and **profile**. Make sure to check these scopes when creating your GitLab application; otherwise, authentication may fail.
+Casdoor's GitLab OAuth provider requires the following scopes: **read_user** and **profile**. Make sure to check these scopes when creating your GitLab application; otherwise, authentication may fail.
 
 :::
 
