@@ -2,7 +2,7 @@
 title: GitLab
 description: Add GitLab OAuth provider to your application
 keywords: [GitLab, OAuth]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 To set up the GitLab OAuth provider, please go to the [GitLab Applications](https://gitlab.com/-/profile/applications) page (or your self-hosted GitLab instance's equivalent page at `https://your-gitlab-instance/-/profile/applications`).
