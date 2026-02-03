@@ -2,7 +2,7 @@
 title: Alipay
 description: Add Alipay OAuth provider to your application
 keywords: [Alipay, OAuth]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 To set up the Alipay OAuth provider, you need to have a developer account at Alipay Open Platform and configure OAuth application credentials.
