@@ -189,6 +189,7 @@ module.exports = {
             "provider/oauth/DingTalk",
             "provider/oauth/Steam",
             "provider/oauth/gitee",
+            "provider/oauth/gitlab",
             "provider/oauth/baidu",
             "provider/oauth/infoflow",
             "provider/oauth/lark",
