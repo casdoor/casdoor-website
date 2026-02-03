@@ -177,6 +177,7 @@ module.exports = {
             "provider/oauth/adfs",
             "provider/oauth/azureAD",
             "provider/oauth/azureADb2c",
+            "provider/oauth/Alipay",
             "provider/oauth/CustomProvider",
             "provider/oauth/okta",
             "provider/oauth/Twitter",
