@@ -26,7 +26,7 @@ As an authentication platform, Casdoor manages user accounts. Every user has the
 - `Email`: The user's email address (automatically normalized to lowercase)
 - `Phone`: The user's phone number
 - `Location`: The user's geographical location
-- `Address`: An array containing the user's address information
+- `Address`: An array of strings containing the user's address information (e.g., street address, city, state, postal code)
 - `Affiliation`: The user's organization or institutional affiliation
 - `Title`: The user's professional title or job position
 - `IdCardType`: The type of ID card used for identity verification (e.g., passport, driver's license)
