@@ -10,80 +10,80 @@ authors: [sh1luo]
 As an authentication platform, Casdoor manages user accounts. Every user has the following properties:
 
 - `Owner`: The organization that owns the user
-- `Name`: The unique username
-- `CreatedTime`
-- `UpdatedTime`
-- `Id`: Unique identifier for each user
-- `Type`
-- `Password`
-- `PasswordSalt`
+- `Name`: The unique username for the user (must be unique within the organization)
+- `CreatedTime`: Timestamp when the user account was created
+- `UpdatedTime`: Timestamp when the user account was last updated
+- `Id`: Unique identifier (UUID) for each user
+- `Type`: The type of user account (e.g., normal-user, guest-user)
+- `Password`: The user's encrypted password
+- `PasswordSalt`: Salt value used for password hashing
 - `PasswordOptions`: Password complexity options
-- `DisplayName`: Displayed in the user interface
-- `FirstName`
-- `LastName`
-- `Avatar`: A link to the user's avatar
-- `PermanentAvatar`
-- `Email`
-- `Phone`
-- `Location`
-- `Address`
-- `Affiliation`
-- `Title`
-- `IdCardType`
-- `IdCard`
+- `DisplayName`: The user's display name shown in the user interface
+- `FirstName`: The user's first name (given name)
+- `LastName`: The user's last name (family name)
+- `Avatar`: URL or link to the user's current avatar image
+- `PermanentAvatar`: URL to the user's permanently stored avatar (not affected by provider changes)
+- `Email`: The user's email address (automatically normalized to lowercase)
+- `Phone`: The user's phone number
+- `Location`: The user's geographical location
+- `Address`: An array of strings containing the user's address information (e.g., street address, city, state, postal code)
+- `Affiliation`: The user's organization or institutional affiliation
+- `Title`: The user's professional title or job position
+- `IdCardType`: The type of ID card used for identity verification (e.g., passport, driver's license)
+- `IdCard`: The ID card number (becomes read-only after verification)
 - `RealName`: The user's verified real name (becomes read-only after identity verification)
 - `IsVerified`: Indicates whether the user has completed identity verification through an ID Verification provider
-- `Homepage`
-- `Bio`
-- `Tag`
-- `Region`
-- `Language`
-- `Gender`
-- `Birthday`
-- `Education`
-- `Balance`: The user's account balance
-- `Score`
-- `Karma`
-- `Ranking`
-- `IsDefaultAvatar`
-- `IsOnline`
+- `Homepage`: URL to the user's personal homepage or website
+- `Bio`: A short biography or description of the user
+- `Tag`: Tags for categorizing users (can be multiple tags separated by commas)
+- `Region`: The user's geographical region or area
+- `Language`: The user's preferred language for the interface
+- `Gender`: The user's gender
+- `Birthday`: The user's date of birth
+- `Education`: The user's education level or background
+- `Balance`: The user's account balance (for applications with payment features)
+- `Score`: Numerical score associated with the user (application-defined)
+- `Karma`: Karma or reputation points for the user
+- `Ranking`: The user's ranking position (application-defined)
+- `IsDefaultAvatar`: Indicates whether the user is using the default avatar
+- `IsOnline`: Indicates whether the user is currently online
 - `IsAdmin`: Indicates whether the user is an administrator of their organization
 - `IsGlobalAdmin`: Indicates whether the user has permission to manage Casdoor
-- `IsForbidden`
+- `IsForbidden`: Indicates whether the user account has been banned or restricted
 - `IsDeleted`: When a user is soft-deleted (`IsDeleted = true`), they cannot sign in through any authentication method, including OAuth providers. This prevents deleted users from re-registering via third-party login.
-- `SignupApplication`
-- `Hash`
-- `PreHash`
-- `CreatedIp`
-- `LastSigninTime`
-- `LastSigninIp`
+- `SignupApplication`: The application through which the user signed up
+- `Hash`: Hash value used for internal authentication mechanisms
+- `PreHash`: Previous hash value (used during password migration)
+- `CreatedIp`: The IP address from which the user account was created
+- `LastSigninTime`: Timestamp of the user's last sign-in
+- `LastSigninIp`: The IP address from the user's last sign-in
 - `Roles`: An array of the user's roles (extended field, read-only via User API)
 - `Permissions`: An array of the user's permissions (extended field, read-only via User API)
 
 Unique IDs for social platform logins:
 
-- `Github`
-- `Google`
-- `QQ`
-- `WeChat`
-- `Facebook`
-- `DingTalk`
-- `Weibo`
-- `Gitee`
-- `LinkedIn`
-- `Wecom`
-- `Lark`
-- `Gitlab`
-- `Adfs`
-- `Baidu`
-- `Casdoor`
-- `Infoflow`
-- `Apple`
-- `Azure AD`
-- `Azure AD B2C`
-- `Slack`
-- `Steam`
-- `Ldap`
+- `Github`: User's unique identifier from GitHub OAuth login
+- `Google`: User's unique identifier from Google OAuth login
+- `QQ`: User's unique identifier from QQ OAuth login
+- `WeChat`: User's unique identifier from WeChat OAuth login
+- `Facebook`: User's unique identifier from Facebook OAuth login
+- `DingTalk`: User's unique identifier from DingTalk OAuth login
+- `Weibo`: User's unique identifier from Weibo OAuth login
+- `Gitee`: User's unique identifier from Gitee OAuth login
+- `LinkedIn`: User's unique identifier from LinkedIn OAuth login
+- `Wecom`: User's unique identifier from WeCom (WeChat Work) OAuth login
+- `Lark`: User's unique identifier from Lark (Feishu) OAuth login
+- `Gitlab`: User's unique identifier from GitLab OAuth login
+- `Adfs`: User's unique identifier from ADFS authentication
+- `Baidu`: User's unique identifier from Baidu OAuth login
+- `Casdoor`: User's unique identifier from another Casdoor instance OAuth login
+- `Infoflow`: User's unique identifier from Infoflow OAuth login
+- `Apple`: User's unique identifier from Apple OAuth login
+- `Azure AD`: User's unique identifier from Azure Active Directory OAuth login
+- `Azure AD B2C`: User's unique identifier from Azure AD B2C OAuth login
+- `Slack`: User's unique identifier from Slack OAuth login
+- `Steam`: User's unique identifier from Steam OAuth login
+- `Ldap`: User's unique identifier from LDAP authentication
 
 ## Organization Admin Privileges
 
