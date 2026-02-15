@@ -1,118 +1,252 @@
 ---
-title: (Optional) Try with Docker
-description: Try Casdoor with Docker
-keywords: [Casdoor, Docker]
+title: Quick Start with Docker
+description: Get Casdoor running in minutes with Docker
+keywords: [Casdoor, Docker, Quick Start, Getting Started]
 authors: [hsluoyz]
 ---
 
-## Requirements
+Docker is the fastest way to get Casdoor up and running. Whether you're exploring Casdoor for the first time or setting up a development environment, you'll be logging in within minutes!
 
-### Hardware
+## Before You Begin
 
-If you want to build the Docker image yourself, please ensure that your machine has at least **2GB** of memory. Casdoor's frontend is an NPM project of React. Building the frontend requires at least **2GB** of memory. Having less than **2GB** of memory may result in a frontend build failure.
+### System Requirements
 
-If you only need to run the pre-built image, please ensure that your machine has at least **100MB** of memory.
+**To Run Pre-built Images** (quickest option):
 
-### OS
+- 💾 At least **100MB** of RAM
+- 🖥️ Any OS: Linux, Windows, or macOS
+- 🐳 Docker Engine 17.05+ or Docker Desktop
 
-All operating systems (Linux, Windows, and macOS) are supported.
+**To Build Images Yourself** (optional):
 
-### Docker
+- 💾 At least **2GB** of RAM (needed for React frontend compilation)
+- 🖥️ Any OS: Linux, Windows, or macOS  
+- 🐳 Docker Engine 17.05+ or Docker Desktop
 
-You can use **Docker (docker-engine version >= 17.05)** in Linux or **Docker Desktop** in Windows and macOS.
+:::tip Why 17.05+?
 
-* [Docker](https://docs.docker.com/get-docker/)
+We use Docker's multi-stage build feature introduced in version 17.05. Learn more about [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).
 
-Regardless of the operating system, users must ensure that they have **docker-engine version >= 17.05**. This is because we utilize the multi-stage build feature in the docker-compose.yml, which is supported in versions 17.05 and above. For more information, see <https://docs.docker.com/develop/develop-images/multistage-build/>.
+:::
 
-If you are also using docker-compose, please ensure that you have **docker-compose version >= 2.2**. For Linux users, you also need to make sure that docker-compose is installed, as it is separate from docker-engine.
+### Install Docker
 
-## Get the image
+Don't have Docker yet? No problem!
 
-We have provided two DockerHub images:
+- **Download**: [Get Docker](https://docs.docker.com/get-docker/)
+- **Linux users**: Make sure `docker-compose` is installed separately (it's not bundled with Docker Engine)
+- **Version check**: Run `docker --version` and ensure it's 17.05 or newer
 
-Name | Description | Suggestion
-----|------|----
-[casdoor-all-in-one](https://hub.docker.com/r/casbin/casdoor-all-in-one) | Both Casdoor and a MySQL database are included in the image | This image already includes a toy database and is only for testing purposes
-[casdoor](https://hub.docker.com/r/casbin/casdoor) | Only Casdoor is included in the image | This image can be connected to your own database and used in production
+## Choose Your Docker Image
 
-1. casbin/casdoor-all-in-one: This image includes the casdoor binary, a MySQL database, and all the necessary configurations. It is designed for new users who want to try Casdoor quickly. With this image, you can start Casdoor immediately with just one or two commands, without any complex configuration. However, please note that we **do not recommend** using this image in a production environment.
+We provide two official images on DockerHub. Pick the one that fits your needs:
 
-### **Option-1**: Use the toy database
+| Image | What's Inside | Best For | Production Ready? |
+|-------|--------------|----------|------------------|
+| [**casdoor-all-in-one**](https://hub.docker.com/r/casbin/casdoor-all-in-one) | Casdoor + MySQL database | Quick testing & demos | ❌ No (toy database) |
+| [**casdoor**](https://hub.docker.com/r/casbin/casdoor) | Just Casdoor | Production use with your own DB | ✅ Yes |
 
-Run the container with port `8000` exposed to the host. The image will be automatically pulled if it doesn't exist on the local host.
+## 🚀 Option 1: Fastest Start (All-in-One)
 
-```shell
+Perfect for trying out Casdoor without any configuration hassle.
+
+### Start Casdoor
+
+Just run this command:
+
+```bash
 docker run -p 8000:8000 casbin/casdoor-all-in-one
 ```
 
-Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
+Docker will automatically download the image if you don't have it yet. Once it starts, you'll see logs indicating that Casdoor is ready.
 
-```bash
-admin
-123
+### Access Casdoor
+
+Open your browser and visit: **[http://localhost:8000](http://localhost:8000)**
+
+### Login
+
+Use the default admin credentials:
+
+```text
+Username: admin
+Password: 123
 ```
 
-### **Option-2**: Try directly with the standard image
+:::caution Change Default Password
 
-:::tip
+For security, change this password immediately after logging in! Go to your user profile and update it.
 
-If it is not convenient to mount the configuration file to a container, using environment variables is also a possible solution.
+:::
 
-```bash title="example"
+**That's it!** You're now running Casdoor. Explore the dashboard, create test users, and see how it works.
 
+## 🔧 Option 2: Standard Image with Custom Configuration
+
+Use this when you want more control over configuration or need to connect to your own database.
+
+### Using Environment Variables (Easiest)
+
+No config file? No problem! Pass settings via environment variables:
+
+```bash
 docker run \
   -e driverName=mysql \
-  -e dataSourceName='user:password@tcp(x.x.x.x:3306)/' \
+  -e dataSourceName='user:password@tcp(your-db-host:3306)/' \
   -p 8000:8000 \
   casbin/casdoor:latest
+```
 
+Replace `user`, `password`, and `your-db-host` with your actual database credentials.
+
+### Using a Configuration File (More Options)
+
+For advanced configuration, mount an `app.conf` file into the container.
+
+**Step 1: Create your configuration**
+
+Download the sample config file from [Casdoor's GitHub](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) and save it locally as `conf/app.conf`.
+
+For configuration details, see [Server Installation - Via INI File](/docs/basic/server-installation#via-ini-file).
+
+**Step 2: Run with volume mount**
+
+```bash
+docker run -p 8000:8000 -v /path/to/your/conf:/conf casbin/casdoor:latest
+```
+
+Replace `/path/to/your/conf` with the actual path to your `conf` directory.
+
+:::note Permission Tip
+
+The Casdoor container runs as user ID 1000. If you're using SQLite or any file-based storage, make sure the mounted directory is readable/writable by UID 1000 to avoid `permission denied` errors.
+
+**Fix permissions if needed:**
+
+```bash
+sudo chown -R 1000:1000 /path/to/your/conf
 ```
 
 :::
 
-Create `conf/app.conf`. You can copy it from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) in Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
+**Step 3: Access Casdoor**
 
-Then run
+Visit **[http://localhost:8000](http://localhost:8000)** and login with:
 
-```bash
-docker run  -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
+```text
+Username: admin  
+Password: 123
 ```
 
-:::note
-The default user of Casdoor has a uid and gid of 1000. When using volume mapping with SQLite (or any storage requiring file permissions), ensure that the path (e.g., `/folder/of/app.conf` in the example above) is accessible to uid 1000. This avoids permission errors like `permission denied` when Casdoor writes to mapped volumes.
-:::
+## 🐳 Option 3: Docker Compose (Recommended for Development)
 
-Anyway, just **mount the app.conf to /conf/app.conf** and start the container.
+Docker Compose makes it easy to run Casdoor with a dedicated database in a multi-container setup.
 
-Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
+### Setup Steps
+
+**Step 1: Get the docker-compose file**
+
+Create a `docker-compose.yml` file. You can find examples in the [Casdoor repository](https://github.com/casdoor/casdoor).
+
+**Step 2: Create configuration**
+
+In the same directory as your `docker-compose.yml`, create a `conf/` folder and add `app.conf`:
 
 ```bash
-admin
-123
+mkdir conf
+cd conf
+# Download app.conf from GitHub or create your own
+wget https://raw.githubusercontent.com/casdoor/casdoor/master/conf/app.conf
+cd ..
 ```
 
-### **Option-3**: Try with docker-compose
+For configuration details, see [Server Installation - Via INI File](/docs/basic/server-installation#via-ini-file).
 
-Create a `conf/app.conf` directory in the same directory level as the `docker-compose.yml` file. Then, copy [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) from Casdoor. For more details about `app.conf`, you can see [Via Ini file](/docs/basic/server-installation#via-ini-file).
-
-Create a separate database using docker-compose:
+**Step 3: Start everything**
 
 ```bash
 docker-compose up
 ```
 
-That's it! :small_airplane:
+Docker Compose will:
 
-Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`
+1. 🗄️ Create and start a MySQL database container
+2. 🚀 Start the Casdoor container
+3. 🔗 Connect them together
 
-```bash
-admin
-123
+Watch the logs as everything spins up. Once you see "Casdoor is running...", you're ready!
+
+**Step 4: Access Casdoor**
+
+Visit **[http://localhost:8000](http://localhost:8000)** and login:
+
+```text
+Username: admin
+Password: 123
 ```
 
-:::note
+:::tip Understanding the Magic
 
-If you dig deeper into the docker-compose.yml file, you may be puzzled by the environment variable we created called "RUNNING_IN_DOCKER". When the database 'db' is created via docker-compose, it is available on your PC's localhost but not the localhost of the Casdoor container. To prevent you from running into troubles caused by modifying app.conf, which can be quite difficult for a new user, we provided this environment variable and pre-assigned it in the docker-compose.yml. When this environment variable is set to true, localhost will be replaced with host.docker.internal so that Casdoor can access the database.
+If you peek inside the `docker-compose.yml`, you'll notice an environment variable called `RUNNING_IN_DOCKER`. Here's why it exists:
+
+When Docker Compose creates the database container, it's accessible at `localhost` from your PC, but **not** from inside the Casdoor container. To solve this, we use this environment variable to automatically replace `localhost` with `host.docker.internal`, allowing Casdoor to reach the database.
+
+This saves you from manually editing `app.conf` - one less thing to worry about!
 
 :::
+
+## 🎉 You're All Set!
+
+Casdoor is now running. Here's what to explore next:
+
+### First Steps
+
+1. **🔐 Change the Admin Password**  
+   Click on your profile in the top-right corner and update your password.
+
+2. **👥 Create Your First Organization**  
+   Navigate to "Organizations" and create one for your project.
+
+3. **📱 Add an Application**  
+   Go to "Applications" and register your app that will use Casdoor for authentication.
+
+4. **🔌 Configure Providers** (Optional)  
+   Add OAuth providers like GitHub or Google to enable social login.
+
+### Common Tasks
+
+- **Stop Casdoor**: Press `Ctrl+C` in the terminal (or `docker-compose down` for compose setups)
+- **View Logs**: `docker logs <container-id>` or `docker-compose logs`
+- **Restart**: `docker-compose restart` or restart the container
+
+### Troubleshooting
+
+**Port 8000 already in use?**
+
+```bash
+# Use a different port
+docker run -p 8080:8000 casbin/casdoor-all-in-one
+# Then visit http://localhost:8080
+```
+
+**Can't connect to database?**
+
+- Check that your database is running
+- Verify connection credentials in `app.conf`
+- Ensure firewall allows database connections
+
+**Permission denied errors?**
+
+- Make sure mounted volumes are accessible to UID 1000
+- Run: `sudo chown -R 1000:1000 /path/to/conf`
+
+## Next Steps
+
+Now that Casdoor is running, dive deeper:
+
+- **[Core Concepts](/docs/basic/core-concepts)** - Understand organizations, users, and applications
+- **[Connect Your App](/docs/how-to-connect/oauth)** - Integrate Casdoor with your application
+- **[Production Deployment](/docs/deployment/overview)** - Deploy Casdoor for real-world use
+- **[Configuration Guide](/docs/basic/configuration)** - Fine-tune settings for your needs
+
+Questions? Join our [Discord community](https://discord.gg/5rPsrAzK7S) - we're here to help! 🚀
