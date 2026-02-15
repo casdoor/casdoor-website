@@ -10,7 +10,9 @@ import styles from './styles.module.css';
 import CasdoorCard from "@site/src/components/CasdoorCard";
 ```
 
-Casdoor is a UI-first [Identity Access Management (IAM)](https://en.wikipedia.org/wiki/Identity_management) / [Single-Sign-On (SSO)](https://en.wikipedia.org/wiki/Single_sign-on) platform with a web UI that supports OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory, and Kerberos.
+## What is Casdoor?
+
+Casdoor is a modern, UI-first [Identity Access Management (IAM)](https://en.wikipedia.org/wiki/Identity_management) and [Single-Sign-On (SSO)](https://en.wikipedia.org/wiki/Single_sign-on) platform that makes authentication and user management simple and secure. Whether you're building a small app or managing enterprise-scale authentication, Casdoor provides everything you need in one elegant package.
 
 ```mdx-code-block
 <div className={styles.gradientborder}>
@@ -18,132 +20,183 @@ Casdoor is a UI-first [Identity Access Management (IAM)](https://en.wikipedia.or
 </div>
 ```
 
-Casdoor serves both the web UI and the login requests from application users.
+With support for OAuth 2.0, OIDC, SAML, LDAP, and many more protocols, Casdoor seamlessly integrates with your existing infrastructure while providing a beautiful web interface for managing users, applications, and authentication flows.
 
-## Casdoor features
+## Why Choose Casdoor?
 
-1. Casdoor follows a frontend-backend separation architecture and is developed in Golang. It supports high concurrency, provides a web-based UI for management, and supports localization in over 10 languages.
+### 🌍 Built for Global Teams
 
-2. Casdoor supports third-party application login options, such as GitHub, Google, QQ, and WeChat, and supports extending third-party login capabilities with plugins.
+Available in 10+ languages with internationalization support out of the box, Casdoor ensures your users feel at home no matter where they are. The intuitive web-based UI makes managing authentication a breeze for administrators and developers alike.
 
-3. Casdoor supports authorization management based on [Casbin](https://casbin.org/). It supports ACL, RBAC, ABAC, and RESTful access control models.
+### 🔐 Comprehensive Authentication
 
-4. Casdoor provides phone verification codes, email verification codes, and password retrieval functionality.
+**Social Login Made Easy**: Let your users sign in with their favorite platforms - GitHub, Google, Facebook, WeChat, and 50+ other providers. Extend with custom OAuth providers whenever you need.
 
-5. Casdoor supports auditing and recording of access logs.
+**Enterprise-Ready Security**: Support for advanced authentication including WebAuthn, TOTP, multi-factor authentication (MFA), and RADIUS ensures your organization meets the highest security standards.
 
-6. Casdoor integrates with Alibaba Cloud, Tencent Cloud, and Qiniu Cloud for image CDN and cloud storage.
+**Multiple Protocols**: Whether your infrastructure uses OAuth 2.0, OIDC, SAML, CAS, LDAP, or SCIM, Casdoor speaks your language. Integrate with Google Workspace, Active Directory, and Kerberos without breaking a sweat.
 
-7. Casdoor allows customization of registration, login, and password retrieval pages.
+### 🛡️ Powerful Authorization
 
-8. Casdoor supports integration with existing systems through database synchronization, enabling a smooth transition to Casdoor.
+Built on [Casbin](https://casbin.org/), Casdoor delivers flexible authorization management supporting ACL, RBAC, ABAC, and RESTful access control models. Define who can do what with precision and clarity.
 
-9. Casdoor supports mainstream databases such as MySQL, PostgreSQL, and SQL Server, and supports extending to new databases with plugins.
+### 🎨 Fully Customizable
 
-## How it works
+Make it yours! Customize registration, login, and password recovery pages to match your brand. From colors to logos, create a seamless authentication experience that feels native to your application.
 
-![Principle](/img/principles.gif)
+### 📊 Complete Audit Trail
 
-### Step 0 (Pre-knowledge)
+Track every authentication event with comprehensive access logs. Know who logged in, when, and from where - essential for compliance and security monitoring.
 
-1. Casdoor follows the authorization process built upon the OAuth 2.0 protocol. We highly recommend gaining a brief understanding of how OAuth 2.0 works. You can refer to this [introduction](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) to OAuth 2.0.
+### 🔄 Seamless Migration
 
-![image](/img/oauth.png)
+Already have users in an existing system? No problem! Casdoor integrates through database synchronization, allowing you to migrate smoothly without disrupting your users.
 
-### Step 1 (Authorization Request)
+### 🚀 Production-Ready Performance
 
-Your Application (which could be a website or any other application) should compose a URL in the following format: `endpoint/login/oauth/authorize?client_id=xxx&response_type=code&redirect_uri=xxx&scope=read&state=xxx`. Replace `endpoint` with your Casdoor host URL and `xxx` with your own information.
+Built in Golang with a modern frontend-backend architecture, Casdoor handles high concurrency effortlessly. Deploy with confidence using mainstream databases like MySQL, PostgreSQL, or SQL Server, with plugin support for custom data stores.
 
-:::note Hints
+### ☁️ Cloud Native
 
-How to fill out the `xxx` parts?
+Integrate with leading cloud providers including Alibaba Cloud, Tencent Cloud, and Qiniu Cloud for CDN and storage. Casdoor fits perfectly into your cloud infrastructure.
 
-+ For `client_id`: you can find this under each individual Application.
+## How Casdoor Works
 
-+ For `redirect_uri`: you should set this to your own Application's callback URL. Casdoor will use this information to send the response back after authorization.
+![Authentication Flow](/img/principles.gif)
 
-+ For `state`: you should fill this out with your Application name.
+Understanding how Casdoor works is easier than you might think! At its core, Casdoor implements the OAuth 2.0 authorization flow, which might sound complex but is actually quite intuitive. Let's walk through it step by step.
 
-:::
+### Before We Begin
 
-The Application will prompt the user: *"Hey, I need some resources and I need your permission to access these resources. Can you go to this URL and enter your username and password for me?"*
+Casdoor uses the OAuth 2.0 protocol for authorization. If you're new to OAuth, don't worry - we'll explain everything you need to know. For a deeper dive, check out this excellent [introduction to OAuth 2.0](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2).
 
-With the correctly composed URL, your Application will make the user launch a request to this URL, and the `Authorization Request` is completed.
+![OAuth 2.0 Overview](/img/oauth.png)
 
-### Step 2 (Authorization Grant)
+### The Authentication Dance: A Step-by-Step Story
 
-This step is straightforward: the user is redirected to the URL composed in Step 1, and the user will see the login page from Casdoor. By entering the correct username and credentials into the login page, Casdoor now knows the identity of the user and is about to send two pieces of information back to the callback URL set in Step 1: `code` and `state`.
+Think of OAuth as a conversation between three parties: your application, Casdoor (the authentication server), and your user. Here's how they work together:
 
-The user opens the URL and provides credentials to Casdoor. Casdoor will say: "Looking good ~ this is the user (who is authorizing the Application to receive the `code` and `state`) I know in my database, and I will send the `code` and `state` back to the Application using the callback URL (`redirect_uri`)".
+#### Step 1: Your App Asks for Permission
 
-With these two pieces of information sent back to your Application, the authorization is granted to the app, and the `Authorization Grant` is completed.
+Your application needs to access user resources, so it creates a special URL that looks like this:
 
-:::tip
+```url
+https://your-casdoor-url.com/login/oauth/authorize?
+  client_id=YOUR_CLIENT_ID
+  &response_type=code
+  &redirect_uri=https://yourapp.com/callback
+  &scope=read
+  &state=YOUR_APP_NAME
+```
 
-Casdoor also provides third-party logins. In this case, instead of seeing the credential entry page, you will see a list of third-party providers. You can log in to your app using these providers, with Casdoor acting as middleware.
+:::note Quick Reference
 
-:::
+**Where do I find these values?**
 
-### Step 3 (Authorization Grant)
-
-In this step, your Application already has the code from Step 2, and it will speak to Casdoor: *"Hey, the user agreed to give me the `code`. Can you verify this `code` and give me the `access_token`?"*
-
-### Step 4 (Access Token)
-
-Casdoor responds to your Application: *"You know what, this `code` seems legit. You must be the authorized Application. Here's the `access_token` for you."* With this `code`, Casdoor confirms that it is an authorized Application (authorized by the correct user in Step 2) trying to obtain the `access_token` (which will be used later to access more resources).
-
-### Step 5 (Access Token)
-
-In this step, your Application says: *"Nice! I just got the fresh `access_token`. Now I can use it to access something more valuable from the `Resource Server`!"*
-
-Your Application then turns to the `Resource Server` and says: *"Hey buddy, can you check out this `access_token`? I received it from Casdoor. Do you want to verify if this is the correct token you issued to Casdoor?"*
-
-### Step 6 (Protected Resource)
-
-The `Resource Server` responds to your Application: *"Not bad. It seems just like the one I issued to Casdoor, and Casdoor says whoever holds this `access_token` can access these `Protected Resources`. So go ahead and take it!"*
-
-And that's basically how Casdoor works with your Application.
-
-:::note Hint
-
-Casdoor can act as both an `Authorization Server` and a `Resource Server`. In other words, Casdoor authorizes your Application to access resources, usually the currently logged-in user's information, from Casdoor's database.
+- **`client_id`**: Found in your Application settings in Casdoor
+- **`redirect_uri`**: Your application's callback URL where users return after logging in
+- **`state`**: Your application name (helps prevent CSRF attacks)
 
 :::
 
-## Online demo
+Your app essentially tells the user: *"I need access to some of your information. Please go to this URL and log in so I can get permission."*
 
-### Casdoor
+#### Step 2: User Grants Permission
 
-Here is an online demo deployed by Casbin.
+The user clicks the link and lands on Casdoor's login page. After entering their credentials, Casdoor verifies their identity and sends back two important pieces of information to your app's callback URL:
 
-+ [Casdoor official demo](https://door.casdoor.com/)
+- **`code`**: A temporary authorization code
+- **`state`**: The application identifier (for security verification)
 
-Global admin login:
+Casdoor is saying: *"I recognize this user! Here's a special code proving they gave your app permission. Use it wisely!"*
 
-+ Username: `admin`
-+ Password: `123`
+:::tip Social Login Option
 
-### Casbin-OA
+Users can also log in using third-party providers like Google or GitHub. Instead of entering credentials, they'll see a list of login options. Casdoor acts as the middleman, making social login integration a breeze.
 
-Casbin-OA is one of the Casbin web apps. It uses Casdoor for authentication.
+:::
 
-+ [Casbin-OA](https://oa.casbin.com)
-+ Source code: <https://github.com/casbin/casbin-oa>
+#### Step 3: Exchanging the Code for an Access Token
 
-### Casnode
+Now your application has the authorization code. It makes a server-to-server request to Casdoor saying: *"Hey, I have this code from a user. Can you verify it and give me an access token?"*
 
-Casnode is the official forum developed by the Casbin community.
+#### Step 4: Casdoor Issues the Access Token
 
-It uses Casdoor as the authentication platform and manages members.
+Casdoor validates the code and responds: *"This code checks out! Here's your access token. Use it to access the user's information."*
 
-+ [Casnode](https://casnode.org)
-+ Source code: <https://github.com/casbin/casnode>
+This access token is like a temporary key that proves your app has been authorized to access specific user resources.
+
+#### Step 5: Accessing Protected Resources
+
+With the fresh access token in hand, your application can now request user data from Casdoor's resource server (or any other resource server that trusts Casdoor).
+
+Your app says: *"I have this access token from Casdoor. Can I please access the user's profile information?"*
+
+#### Step 6: Getting the Data
+
+The resource server validates the token and responds: *"Token verified! Here's the user data you requested."*
+
+And that's it! Your application now has the user information it needs, and the user has securely authenticated without you having to build complex authentication systems.
+
+:::note Casdoor's Dual Role
+
+Casdoor acts as both an **Authorization Server** (handling the login and token issuance) and a **Resource Server** (storing and providing user information). This means you get a complete authentication solution in one package!
+
+:::
+
+## Try Casdoor Now
+
+### Live Demo
+
+The best way to understand Casdoor is to try it yourself! We've set up a live demo that you can explore right now:
+
+**[🚀 Launch Casdoor Demo](https://door.casdoor.com/)**
+
+Want admin access? Use these credentials to explore all features:
+
+- **Username**: `admin`
+- **Password**: `123`
+
+Feel free to click around, create test applications, and see how everything works. It's a sandbox environment - you can't break anything!
+
+### Real-World Examples
+
+See Casdoor in action with these production applications:
+
+#### Casbin-OA
+
+A complete office automation system using Casdoor for authentication.
+
+- **Live Site**: [oa.casbin.com](https://oa.casbin.com)
+- **Source Code**: [github.com/casbin/casbin-oa](https://github.com/casbin/casbin-oa)
+
+#### Casnode
+
+The official Casbin community forum, powered by Casdoor for member management.
+
+- **Live Site**: [casnode.org](https://casnode.org)
+- **Source Code**: [github.com/casbin/casnode](https://github.com/casbin/casnode)
+
+These aren't just demos - they're real applications serving real users with Casdoor.
 
 ## Architecture
 
-Casdoor consists of two parts:
+Casdoor is built with a modern, scalable architecture that separates concerns for maximum flexibility:
 
-Name | Description | Language | Source code
-----|------|----|----
-Frontend | Web frontend UI for Casdoor | JavaScript + React | <https://github.com/casdoor/casdoor/tree/master/web>
-Backend | RESTful API backend for Casdoor | Golang + Beego + SQL | <https://github.com/casdoor/casdoor>
+| Component | Description | Technology Stack | Source Code |
+|-----------|-------------|------------------|-------------|
+| **Frontend** | Beautiful, responsive web UI for managing users, apps, and settings | JavaScript + React | [View Code](https://github.com/casdoor/casdoor/tree/master/web) |
+| **Backend** | Powerful RESTful API handling authentication, authorization, and data management | Golang + Beego + SQL | [View Code](https://github.com/casdoor/casdoor) |
+
+This separation means you can scale each component independently, customize the frontend without touching the API, or integrate Casdoor's backend into your own UI.
+
+## Next Steps
+
+Ready to get started? Here's your roadmap:
+
+1. **[Quick Start with Docker](/docs/basic/try-with-docker)** - Get Casdoor running in minutes
+2. **[Core Concepts](/docs/basic/core-concepts)** - Understand organizations, users, and applications
+3. **[Connect Your App](/docs/how-to-connect/oauth)** - Integrate Casdoor with your application
+4. **[Deployment Guide](/docs/deployment/overview)** - Deploy Casdoor to production
+
+Questions? Join our [Discord community](https://discord.gg/5rPsrAzK7S) or check out [GitHub Discussions](https://github.com/casdoor/casdoor/discussions) for help from the community!
