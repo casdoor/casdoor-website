@@ -2,7 +2,7 @@
 title: Casdoor as MCP Auth Provider
 description: Use Casdoor as an external OAuth 2.1 authorization server for third-party MCP servers
 keywords: [MCP, OAuth 2.1, authorization, auth provider, DCR, PKCE, JWT, JWKS, self-hosted]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 The Model Context Protocol (MCP) specification requires servers to implement OAuth 2.1 for secure authentication. Building a compliant authorization server from scratch—with Dynamic Client Registration, PKCE, consent screens, JWKS endpoints, and token issuance—is a significant engineering burden for developers who just want to build MCP tools.
