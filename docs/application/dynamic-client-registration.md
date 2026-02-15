@@ -124,7 +124,7 @@ The HTTP status code provides additional context: 400 for invalid requests, 403 
 
 ## Integration with MCP
 
-MCP clients can use DCR to automatically obtain OAuth credentials when connecting to Casdoor. The [MCP Authorization specification](https://spec.modelcontextprotocol.io/specification/basic/authorization/) recommends DCR for seamless client setup.
+MCP clients can use DCR to automatically obtain OAuth credentials when connecting to Casdoor. The MCP Authorization specification recommends DCR for seamless client setup.
 
 Here's how an MCP client would typically use DCR:
 

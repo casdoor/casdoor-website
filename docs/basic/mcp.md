@@ -107,7 +107,7 @@ The response includes the `registration_endpoint`:
 }
 ```
 
-MCP clients following the [MCP Authorization specification](https://spec.modelcontextprotocol.io/specification/basic/authorization/) can register themselves:
+MCP clients following the MCP Authorization specification can register themselves:
 
 ```bash
 curl -X POST https://your-casdoor.com/api/oauth/register \
