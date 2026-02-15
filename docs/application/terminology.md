@@ -10,6 +10,8 @@ authors: [ErikQQY]
 - `Name`: The name of the created app.
 - `CreatedTime`: The time when the application is created.
 - `DisplayName`: The name which the application displays to the public.
+- `Category`: Application category - either "Default" for standard web applications or "Agent" for machine-to-machine applications like MCP servers and API clients.
+- `Type`: Application type based on category. For Default: "All", "OIDC", "OAuth", "SAML", "CAS". For Agent: "MCP", "A2A".
 - `Logo`: Application logos will be displayed on the login and sign up pages.
 - `Title`: Custom title for the login page.
 - `Favicon`: The favicon URL for the application login page.
@@ -43,6 +45,7 @@ authors: [ErikQQY]
 - `RedirectUris`: Casdoor will navigate to one of the URIs if the user logged in successfully.
 - `ForcedRedirectOrigin`: Force redirect to a specific origin after authentication.
 - `GrantTypes`: Supported OAuth grant types.
+- `Scopes`: Custom OAuth scopes for Agent applications. Each scope includes a name, display name, and description. These scopes extend the standard OIDC scopes and appear in the OIDC discovery endpoint.
 - `TokenFormat`: The format of the generated token. It can be in the following formats: `JWT` (containing all `User` fields), `JWT-Empty` (containing all non-empty values) or `JWT-Custom` customizing `User` fields inside access token. When using JWT-Custom, each attribute includes a Type field (`Array` or `String`) to control how values are returned in the token.
 - `TokenSigningMethod`: Algorithm used to sign tokens (e.g., RS256, HS256).
 - `TokenFields`: Custom fields to include in the token.

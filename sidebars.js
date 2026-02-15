@@ -131,6 +131,8 @@ module.exports = {
         "application/overview",
         "application/terminology",
         "application/config",
+        "application/categories",
+        "application/scopes",
         "application/providers",
         "application/signin-methods",
         "application/exclusive-signin",
