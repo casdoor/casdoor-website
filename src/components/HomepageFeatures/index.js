@@ -7,6 +7,20 @@ import {useColorMode} from "@docusaurus/theme-common";
 const FeatureList = [
   {
     title: translate({
+      message: "AI Agent Identity & MCP Server",
+    }),
+    path: "/img/ai-mcp",
+    description: (
+      <>
+        <Translate>
+        Built-in MCP server with Streamable HTTP enables AI agents to manage Casdoor via natural language. Features OAuth 2.1 for AI agents with Dynamic Client Registration (RFC 7591), Authorization Server Metadata (RFC 8414), Resource Indicators (RFC 8707), and per-tool permission control for secure agent-to-agent authentication.
+        </Translate>{" "}
+        <a href="/docs/how-to-connect/mcp/integration"><Translate>Learn more about MCP</Translate></a>.
+      </>
+    ),
+  },
+  {
+    title: translate({
       message: "Enterprise-Grade Authentication",
     }),
     path: "/img/model",
@@ -47,7 +61,7 @@ const FeatureList = [
 function Feature({title, path, description}) {
   const {colorMode} = useColorMode();
   return (
-    <div className={clsx("col col--4")}>
+    <div className={clsx("col col--6 col--lg-3")}>
       <div className="text--center">
         <img src={colorMode === "light" ? path + ".png" : path + "-dark.png"} className={styles.featureSvg} alt={title} />
       </div>

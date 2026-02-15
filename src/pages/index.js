@@ -66,7 +66,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title"><Translate>Casdoor</Translate></h1>
         <br />
-        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>A modern, UI-first Identity and Access Management (IAM) / Single Sign-On (SSO) platform with comprehensive SaaS management capabilities. Supports OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory, and Kerberos</Translate></p>
+        <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>Identity & Access Management for the AI Agent era. The first open-source IAM platform with native MCP server, OAuth 2.1 for AI agents, and full support for OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, MFA, and 100+ identity providers.</Translate></p>
         <br />
         <div className={styles.buttons}>
           <Link
@@ -100,6 +100,74 @@ function LearnHowTo() {
             <div className={styles.explaintext}>
               <br />
               <Translate>As a comprehensive authentication and authorization platform, Casdoor delivers enterprise-grade identity management through seamless integration with leading identity providers and sophisticated user authentication workflows.</Translate>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MCPSection() {
+  return (
+    <div className={styles.contentinterface}>
+      <div className="container text--center">
+        <h2><Translate>MCP & AI Agent Authentication</Translate></h2>
+        <br />
+        <div className="row">
+          <div className="col" style={{margin: "auto"}}>
+            <p style={{fontSize: "1.1rem", lineHeight: "1.8"}}>
+              <Translate>Casdoor provides a built-in MCP server that lets AI agents manage users, applications, and permissions through natural language. Every MCP tool call is authenticated and authorized with fine-grained, scope-based permissions.</Translate>
+            </p>
+            <br />
+            <Translate description="MCP documentation" values={{
+              docLink: (
+                <Link href="/docs/how-to-connect/mcp/integration">
+                  <Translate>MCP documentation</Translate>
+                </Link>
+              ),
+            }}>
+              {"Configure AI tools like Claude Desktop, Cursor, or any MCP-compatible client to connect to Casdoor's MCP endpoint. See our {docLink} for setup instructions."}
+            </Translate>
+          </div>
+          <TabList>
+            <TabItem value="claude_desktop_config.json">
+              <CodeCard language="json">
+                {`{
+  "mcpServers": {
+    "casdoor": {
+      "url": "https://your-casdoor.com/api/mcp",
+      "headers": {
+        "Authorization": "Bearer <access_token>"
+      }
+    }
+  }
+}`}
+              </CodeCard>
+            </TabItem>
+          </TabList>
+        </div>
+        <br />
+        <div className="row" style={{marginTop: "2rem"}}>
+          <div className="col text--center">
+            <h3><Translate>Works with AI Tools</Translate></h3>
+            <br />
+            <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "20px", padding: "10px 0", alignItems: "center"}}>
+              <div style={{padding: "10px 20px", border: "1px solid var(--ifm-color-emphasis-300)", borderRadius: "8px", fontSize: "1rem", fontWeight: "500"}}>
+                Claude Desktop
+              </div>
+              <div style={{padding: "10px 20px", border: "1px solid var(--ifm-color-emphasis-300)", borderRadius: "8px", fontSize: "1rem", fontWeight: "500"}}>
+                Cursor
+              </div>
+              <div style={{padding: "10px 20px", border: "1px solid var(--ifm-color-emphasis-300)", borderRadius: "8px", fontSize: "1rem", fontWeight: "500"}}>
+                Windsurf
+              </div>
+              <div style={{padding: "10px 20px", border: "1px solid var(--ifm-color-emphasis-300)", borderRadius: "8px", fontSize: "1rem", fontWeight: "500"}}>
+                VS Code + GitHub Copilot
+              </div>
+              <div style={{padding: "10px 20px", border: "1px solid var(--ifm-color-emphasis-300)", borderRadius: "8px", fontSize: "1rem", fontWeight: "500"}}>
+                Any MCP Client
+              </div>
             </div>
           </div>
         </div>
@@ -270,12 +338,13 @@ function OpenCollective() {
 export default function Home() {
   return (
     <Layout
-      title={"Casdoor · Modern Identity and Access Management (IAM) / Single Sign-On (SSO) Platform with SaaS Management"}
-      description="Casdoor is a modern, UI-first Identity and Access Management (IAM) / Single Sign-On (SSO) platform with comprehensive SaaS management capabilities. Supports OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos">
+      title={"Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server"}
+      description="Identity & Access Management for the AI Agent era. The first open-source IAM platform with native MCP server, OAuth 2.1 for AI agents, and full support for OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, MFA, and 100+ identity providers.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
         <LearnHowTo />
+        <MCPSection />
         <ContentInterface />
         <ContentLogin />
         <ContentSignup />

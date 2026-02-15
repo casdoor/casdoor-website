@@ -3,7 +3,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: "Casdoor · An open-source, UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos",
+  title: "Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server",
   url: "https://casdoor.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -16,7 +16,7 @@ module.exports = {
     locales: ["en", "es", "fr", "de", "ja", "zh", "vi", "pt", "tr", "pl", "uk"],
   },
   themeConfig: {
-    metadata: [{name: "Casdoor", content: "An open-source, UI-first Identity and Access Management (IAM) / Single-Sign-On (SSO) platform with web UI supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS, Google Workspace, Active Directory and Kerberos"}],
+    metadata: [{name: "Casdoor", content: "Identity & Access Management for the AI Agent era. The first open-source IAM platform with native MCP server, Model Context Protocol support, OAuth 2.1 for AI agent authentication, and full support for OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, MFA, and 100+ identity providers."}],
     algolia: {
       appId: "U9MEH3VSV1",
       apiKey: "9ef7ab8761a6480738185ecd6d1ecde7",
