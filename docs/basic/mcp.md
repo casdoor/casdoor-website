@@ -92,9 +92,9 @@ This returns metadata scoped to that specific application, useful when different
 
 ## Authentication
 
-MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api) documentation. The most common approaches are:
+MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api) documentation. The authentication method you choose affects which tools you can access.
 
-**Using an access token** (for user-scoped operations):
+**Using an access token with scopes** (recommended for automation):
 
 ```bash
 curl -X POST https://your-casdoor.com/api/mcp \
@@ -102,6 +102,8 @@ curl -X POST https://your-casdoor.com/api/mcp \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
+
+Access tokens enforce scope-based authorization. The tools you can use depend on the scopes granted when the token was issued. This approach lets you create tokens with limited permissions for specific tasks.
 
 **Using client credentials** (for service accounts):
 
@@ -111,6 +113,10 @@ curl -X POST https://your-casdoor.com/api/mcp \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
+
+**Using session authentication** (for interactive use):
+
+Session-based authentication through browser cookies grants access to all tools without scope restrictions. This method is intended for interactive use and maintains compatibility with existing workflows.
 
 Unauthenticated requests receive a JSON-RPC error response with a `WWW-Authenticate` header pointing to the OAuth protected resource metadata:
 
@@ -140,6 +146,8 @@ POST /api/mcp
   "method": "tools/list"
 }
 ```
+
+The tools returned depend on your authentication. Without credentials, you see all available tools for discovery purposes. With session authentication, you get the complete list. When using a scoped OAuth token, the response includes only tools your scopes permit.
 
 The server returns tool definitions with input schemas:
 
@@ -304,13 +312,72 @@ When errors occur during tool execution, the response includes an `isError` flag
 
 ## Permission Model
 
-The MCP server follows Casdoor's standard permission model. When you authenticate with client credentials, you operate with the privileges of that application's organization admin. Access tokens provide the permissions of the authenticated user.
+The MCP server enforces fine-grained authorization through OAuth scopes. When you authenticate with an access token, the tools you can access depend on the scopes included in that token. This allows you to create tokens with limited permissions for specific automation tasks, following the principle of least privilege.
 
-Some operations have specific requirements. Creating applications checks against your organization's application quota. IP whitelist validation runs for applications with restricted access. Demo mode applies additional constraints to prevent modifications to the demonstration instance.
+Session-based authentication (using cookies) bypasses scope checking and grants full access to all tools. This maintains backward compatibility with existing integrations while encouraging the adoption of scope-based authorization for better security.
+
+### Scope-Based Tool Access
+
+Each MCP tool requires a specific OAuth scope. For application management tools, the mapping is straightforward:
+
+- `read:application` grants access to `get_applications` and `get_application`
+- `write:application` grants access to `add_application`, `update_application`, and `delete_application`
+
+When you request a token from Casdoor, include the scopes you need in your authorization request. The MCP server filters available tools based on these granted scopes, ensuring that automated processes can only perform actions they're explicitly authorized for.
+
+If you call `tools/list` with a scoped token, the response only includes tools your token can access. Unauthenticated requests still receive the full tool list to enable discovery, but any attempt to actually call a tool without proper authentication will fail.
+
+### Scope Validation Errors
+
+When you try to use a tool without the required scope, the server responds with an `insufficient_scope` error:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 10,
+  "error": {
+    "code": -32001,
+    "message": "insufficient_scope",
+    "data": {
+      "tool": "add_application",
+      "granted_scopes": ["read:application"],
+      "required_scope": "write:application"
+    }
+  }
+}
+```
+
+This error tells you exactly which scope you need to request a new token with the appropriate permissions. The `granted_scopes` field shows what your current token has, and `required_scope` indicates what's needed for the operation.
+
+### Creating Scoped Tokens
+
+When obtaining an OAuth token for MCP access, specify the scopes in your authorization request. For example, to get a token that can only read applications but not modify them:
+
+```bash
+curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
+  -d "grant_type=client_credentials" \
+  -d "client_id=YOUR_CLIENT_ID" \
+  -d "client_secret=YOUR_CLIENT_SECRET" \
+  -d "scope=read:application"
+```
+
+For automation that needs to create and update applications, request the write scope:
+
+```bash
+curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
+  -d "grant_type=client_credentials" \
+  -d "client_id=YOUR_CLIENT_ID" \
+  -d "client_secret=YOUR_CLIENT_SECRET" \
+  -d "scope=write:application"
+```
+
+You can request multiple scopes by separating them with spaces: `scope=read:application write:application`. The token will then have access to all tools covered by those scopes.
+
+Some operations have additional requirements beyond scope authorization. Creating applications checks against your organization's application quota. IP whitelist validation runs for applications with restricted access. Demo mode applies additional constraints to prevent modifications to the demonstration instance.
 
 ## Integration Example
 
-Here's a complete example showing how to connect to Casdoor's MCP server and create an application:
+Here's a complete example showing how to connect to Casdoor's MCP server with scoped authorization:
 
 ```python
 import requests
@@ -318,13 +385,25 @@ import json
 
 # Server configuration
 server_url = "https://your-casdoor.com/api/mcp"
+token_url = "https://your-casdoor.com/api/login/oauth/access_token"
 client_id = "your-client-id"
 client_secret = "your-client-secret"
 
-# Create a session with authentication
+# Get a scoped token for application management
+token_response = requests.post(token_url, data={
+    "grant_type": "client_credentials",
+    "client_id": client_id,
+    "client_secret": client_secret,
+    "scope": "read:application write:application"
+})
+access_token = token_response.json()["access_token"]
+
+# Create a session with the token
 session = requests.Session()
-session.auth = (client_id, client_secret)
-session.headers.update({"Content-Type": "application/json"})
+session.headers.update({
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+})
 
 # Initialize the connection
 init_request = {
@@ -347,16 +426,16 @@ notify_request = {
 }
 session.post(server_url, json=notify_request)
 
-# List available tools
+# List available tools (filtered by scopes)
 list_tools_request = {
     "jsonrpc": "2.0",
     "id": 2,
     "method": "tools/list"
 }
 response = session.post(server_url, json=list_tools_request)
-print("Tools:", response.json())
+print("Available tools:", response.json())
 
-# Create a new application
+# Create a new application (requires write:application scope)
 create_app_request = {
     "jsonrpc": "2.0",
     "id": 3,
@@ -374,8 +453,18 @@ create_app_request = {
     }
 }
 response = session.post(server_url, json=create_app_request)
-print("Create application:", response.json())
+result = response.json()
+
+if "error" in result and result["error"]["code"] == -32001:
+    # Handle insufficient scope error
+    error_data = result["error"]["data"]
+    print(f"Need scope: {error_data['required_scope']}")
+    print(f"Have scopes: {error_data['granted_scopes']}")
+else:
+    print("Created application:", result)
 ```
+
+This example demonstrates obtaining a scoped token, using it to authenticate with the MCP server, and handling potential scope-related errors. The token includes both read and write scopes, allowing full application management.
 
 ## Error Handling
 
@@ -385,7 +474,25 @@ The MCP server returns standard JSON-RPC 2.0 error codes:
 - **-32600**: Invalid Request - Missing required fields
 - **-32601**: Method not found - Unknown method name
 - **-32602**: Invalid params - Malformed parameters
-- **-32001**: Unauthorized - Authentication failed
+- **-32001**: Unauthorized or Insufficient scope
+
+The `-32001` error code covers both authentication failures and authorization issues. When you lack the required scope for a tool, the error includes details about what scope you need:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 5,
+  "error": {
+    "code": -32001,
+    "message": "insufficient_scope",
+    "data": {
+      "tool": "add_application",
+      "granted_scopes": ["read:application"],
+      "required_scope": "write:application"
+    }
+  }
+}
+```
 
 Invalid JSON triggers a parse error:
 
