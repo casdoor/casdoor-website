@@ -58,7 +58,7 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
 
 - `Scope` is the scope parameter carried when accessing the `Auth URL`, and you should fill it in as per the custom provider's requirements.
 
-- `Enable PKCE` controls whether to use Proof Key for Code Exchange (PKCE) when authenticating with your custom provider. Some OAuth services require PKCE for security, while others make it optional. When enabled, Casdoor automatically includes the necessary `code_challenge` and `code_challenge_method` parameters during authentication. Toggle this on if your custom OAuth provider mandates or recommends PKCE.
+- `Enable PKCE` controls whether to use Proof Key for Code Exchange (PKCE) when authenticating with your custom provider. PKCE adds an extra security layer by proving that the client requesting the token is the same one that initiated the authorization flow. When enabled, Casdoor generates a unique cryptographic code verifier for each authentication attempt and includes the corresponding `code_challenge` (SHA-256 hash of the verifier) and `code_challenge_method=S256` in the authorization request. The code verifier is then sent to your provider's token endpoint during token exchange. Enable this if your OAuth provider requires or recommends PKCE.
 
 - `Token URL` is the API endpoint for obtaining the accessToken.
 
@@ -68,6 +68,12 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
 
   ```bash
   curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback" https://door.casdoor.com/api/login/oauth/access_token
+  ```
+
+  When PKCE is enabled, the request includes the code verifier:
+
+  ```bash
+  curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback&code_verifier={code_verifier}" https://door.casdoor.com/api/login/oauth/access_token
   ```
 
   The custom provider should return at least the following information:

@@ -94,13 +94,15 @@ You will get the following response:
 
 :::note
 
-Casdoor also supports the [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature. When getting the authorization code, you can add two parameters to enable PKCE:
+Casdoor supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) (Proof Key for Code Exchange) for enhanced security. To enable PKCE, add two parameters when requesting the authorization code:
 
 ```url
-&code_challenge_method=S256&code_challenge=YOUR_CHANNELLENGE
+&code_challenge_method=S256&code_challenge=YOUR_CHALLENGE
 ```
 
-When getting the token, you need to pass the `code_verifier` parameter to verify PKCE. It is worth mentioning that with PKCE enabled, `Client_Secret` is not required, but if you pass it, it must be the correct value.
+The code challenge should be a Base64-URL-encoded SHA-256 hash of your randomly generated code verifier (43-128 characters). When requesting the token, include the original `code_verifier` parameter. With PKCE enabled, `client_secret` becomes optional, but if provided, it must be correct.
+
+For OAuth providers configured in Casdoor (like Twitter and custom providers with PKCE enabled), Casdoor automatically generates unique code verifiers for each authentication flow, so you don't need to manually implement PKCE.
 
 :::
 

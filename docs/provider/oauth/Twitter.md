@@ -17,3 +17,7 @@ Once your application is approved, you can proceed to create an application. You
 2. Enable **Request email address from users** to obtain the user's email address.
 
 Make sure to carefully fill in the callback address and other required information for your application.
+
+### PKCE Security
+
+Twitter OAuth uses PKCE (Proof Key for Code Exchange) to enhance security. Casdoor automatically generates a unique code verifier for each authentication flow, protecting against authorization code interception attacks. The verifier is temporarily stored client-side during the OAuth flow and securely transmitted to Twitter during token exchange.
