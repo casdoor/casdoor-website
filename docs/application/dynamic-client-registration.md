@@ -5,21 +5,21 @@ keywords: [OAuth 2.0, DCR, dynamic registration, RFC 7591, MCP]
 authors: [hsluoyz]
 ---
 
-## Introduction
+## What is Dynamic Client Registration?
 
-Dynamic Client Registration (DCR) enables applications to register themselves with Casdoor without admin intervention. This follows the OAuth 2.0 standard defined in [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591).
+When you're building a tool that needs OAuth access to Casdoor, you typically create an application through the admin interface and manually configure the client credentials. Dynamic Client Registration (DCR) eliminates this manual step—your software can register itself on the fly by making a single HTTP request.
 
-Instead of manually creating applications through the web interface, your software can send an HTTP request to obtain client credentials. This is particularly useful for MCP clients, CLI tools, and other automated systems that need OAuth access.
+This is especially valuable when you're distributing tools to end users. An MCP client doesn't need pre-configured credentials, a CLI tool can self-register when first run, and desktop apps can obtain their OAuth credentials during installation. Casdoor's implementation follows [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591), the OAuth 2.0 standard for dynamic registration.
 
-## Registration Endpoint
+## Finding the Registration Endpoint
 
-The registration endpoint is advertised through OIDC Discovery at `/.well-known/openid-configuration`. Clients can query this endpoint to find the `registration_endpoint`:
+Casdoor advertises its registration endpoint through OIDC Discovery. Query the `/.well-known/openid-configuration` endpoint to discover all available OAuth endpoints:
 
 ```bash
 curl https://your-casdoor.com/.well-known/openid-configuration
 ```
 
-The response includes:
+Look for the `registration_endpoint` field in the response—that's where you'll send registration requests:
 
 ```json
 {
@@ -31,9 +31,9 @@ The response includes:
 }
 ```
 
-## Registering a Client
+## How to Register a Client
 
-To register a new OAuth application, send a POST request to `/api/oauth/register`:
+Registration is straightforward. Send a POST request to `/api/oauth/register` with your application's metadata:
 
 ```bash
 curl -X POST https://your-casdoor.com/api/oauth/register \
@@ -47,7 +47,7 @@ curl -X POST https://your-casdoor.com/api/oauth/register \
   }'
 ```
 
-The server responds with your new client credentials:
+Casdoor responds with your new client credentials:
 
 ```json
 {
@@ -62,43 +62,38 @@ The server responds with your new client credentials:
 }
 ```
 
-Save the `client_id` and `client_secret` - you'll need them for OAuth flows.
+Store the `client_id` and `client_secret` securely—you'll use them for all subsequent OAuth flows.
 
 ## Request Parameters
 
-The registration request accepts these fields:
+Your registration request needs at least one redirect URI. Everything else is optional, with Casdoor applying sensible defaults:
 
-- **redirect_uris** (required): Array of allowed callback URLs
-- **client_name**: Human-readable application name
-- **grant_types**: OAuth grant types, defaults to `["authorization_code"]`
-- **token_endpoint_auth_method**: Client authentication method (`none`, `client_secret_post`, `client_secret_basic`)
-- **application_type**: Either `web` or `native`
-- **logo_uri**: URL to application logo
-- **client_uri**: URL to application homepage
-- **scope**: Space-separated OAuth scopes
+- **redirect_uris** (required): Array of allowed callback URLs where Casdoor redirects after authentication
+- **client_name**: Display name for your application (auto-generated if omitted)
+- **grant_types**: OAuth grant types your app will use—defaults to `["authorization_code"]`
+- **token_endpoint_auth_method**: How your app authenticates at the token endpoint (`none`, `client_secret_post`, or `client_secret_basic`)
+- **application_type**: Either `web` for server-side apps or `native` for desktop/mobile apps
+- **logo_uri**: URL to your application's logo
+- **client_uri**: URL to your application's homepage
+- **scope**: Space-separated list of OAuth scopes your app requests
 
-If you omit optional fields, Casdoor applies secure defaults. Applications are created with a 7-day token expiration and tagged with `dcr` for easy identification.
+Applications created through DCR get a 7-day token expiration and are tagged with `dcr` for easy identification in the admin interface.
 
-## Organization Policy
+## Controlling DCR Per Organization
 
-Each organization controls DCR availability through the `dcrPolicy` setting:
+Organizations can control whether DCR is available through the `dcrPolicy` setting in the organization configuration page. When set to "disabled", registration requests will fail with an error. The default is "open", allowing anyone to register applications.
 
-- **open** (default): Anyone can register applications
-- **disabled**: DCR is turned off, applications must be created manually
+This gives you flexibility: enable DCR for developer-friendly organizations while keeping it locked down for production environments that require manual oversight.
 
-Organization admins can find this setting in the organization configuration page. When disabled, registration requests return an error indicating DCR is not available.
+## Security Model
 
-## Security Considerations
+DCR intentionally requires no authentication—this is by design for public clients like mobile apps and desktop tools that can't securely store credentials before registration. The model trades off unrestricted registration for the ability to support these client types.
 
-DCR requires no authentication - any client can register. This is by design for public clients like mobile apps or desktop tools. However, consider these points:
+Applications created through DCR belong to the organization's admin account and appear in your application list with a `dcr` tag. Client secrets never expire by default, but you can revoke any application through the admin interface at any time. For production deployments, consider whether your organization actually needs unauthenticated registration. Many scenarios work fine with manual app creation, and disabling DCR removes a potential abuse vector.
 
-The created applications belong to the organization's admin account. They appear in your application list tagged as `dcr` for audit purposes. Client secrets don't expire by default (`client_secret_expires_at: 0`), but you can revoke applications anytime through the admin interface.
+## Complete Example: MCP Client
 
-For production deployments, monitor DCR usage and consider disabling it for organizations that don't need automated registration. The feature shines when building developer tools, MCP servers, or other scenarios where manual app creation creates friction.
-
-## Example: MCP Client Setup
-
-Here's how an MCP client might use DCR:
+Here's how an MCP client might implement DCR from scratch:
 
 ```javascript
 // Discover the registration endpoint
@@ -122,23 +117,8 @@ const registration = await fetch(discovery.registration_endpoint, {
 const { client_id, client_secret } = registration;
 ```
 
-The client can now proceed with the standard OAuth authorization code flow using these credentials.
+With these credentials, the client proceeds through the standard OAuth authorization code flow. The user authenticates in their browser, Casdoor redirects back to your callback URL with an authorization code, and you exchange it for access tokens.
 
-## Error Responses
+## Handling Registration Failures
 
-Registration failures return RFC 7591 compliant error responses:
-
-```json
-{
-  "error": "invalid_redirect_uri",
-  "error_description": "redirect_uris is required"
-}
-```
-
-Common errors include:
-
-- `invalid_redirect_uri`: Missing or malformed redirect URIs
-- `invalid_client_metadata`: Invalid parameter values
-- `access_denied`: DCR is disabled for this organization
-
-Check the `error_description` field for details about what went wrong.
+When something goes wrong, Casdoor returns RFC 7591 compliant errors with an `error` code and human-readable `error_description`. The most common issues: missing redirect URIs (`invalid_redirect_uri`), malformed parameters (`invalid_client_metadata`), or DCR being disabled for the organization (`access_denied`). Check the description field for specifics on what needs to be fixed.
