@@ -2,7 +2,7 @@
 title: Troubleshooting
 description: Common MCP OAuth issues and debugging techniques
 keywords: [MCP, OAuth, troubleshooting, debugging, errors]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 This guide covers common issues when using Casdoor with MCP servers, whether you're connecting to Casdoor's built-in MCP server or using Casdoor as an OAuth provider for your own MCP server.
