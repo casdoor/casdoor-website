@@ -275,7 +275,7 @@ if __name__ == "__main__":
 }
 ```
 
-3. **Restart Claude Desktop** and verify the tools appear in the MCP tools list
+1. **Restart Claude Desktop** and verify the tools appear in the MCP tools list
 
 ## Node.js Example
 
@@ -518,7 +518,7 @@ main().catch(console.error);
 }
 ```
 
-3. **Configure Claude Desktop**:
+1. **Configure Claude Desktop**:
 
 ```json
 {
@@ -531,7 +531,7 @@ main().catch(console.error);
 }
 ```
 
-4. **Restart Claude Desktop**
+1. **Restart Claude Desktop**
 
 ## Go Example
 
@@ -791,7 +791,7 @@ func main() {
 go run main.go
 ```
 
-3. **Test the Protected Resource Metadata**:
+1. **Test the Protected Resource Metadata**:
 
 ```bash
 curl http://localhost:8080/.well-known/oauth-protected-resource

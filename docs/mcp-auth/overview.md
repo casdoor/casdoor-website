@@ -116,7 +116,7 @@ That's it. No user database, no password hashing, no session management, no OAut
 
 To use Casdoor as your MCP authorization provider:
 
-1. **[Deploy Casdoor](../basic/server-installation.md)** or use [Casdoor Cloud](https://door.casdoor.com)
+1. **[Deploy Casdoor](../basic/server-installation.mdx)** or use [Casdoor Cloud](https://door.casdoor.com)
 2. **[Configure your application](./setup.md)** in Casdoor with MCP category and custom scopes
 3. **[Integrate your MCP server](./third-party-integration.md)** using code examples in Python, Node.js, or Go
 

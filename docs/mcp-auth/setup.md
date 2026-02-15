@@ -9,7 +9,7 @@ This guide walks you through configuring Casdoor as the authorization server for
 
 ## Prerequisites
 
-- A running Casdoor instance (see [Server Installation](../basic/server-installation.md) or use [Casdoor Cloud](https://door.casdoor.com))
+- A running Casdoor instance (see [Server Installation](../basic/server-installation.mdx) or use [Casdoor Cloud](https://door.casdoor.com))
 - Admin access to Casdoor's management interface
 - Your MCP server's public URL (e.g., `https://your-mcp-server.com`)
 
@@ -25,8 +25,6 @@ Navigate to the Casdoor admin panel and create a new application for your MCP se
    - **Organization**: Select the organization that will own this application
    - **Category**: Select **Agent** (this unlocks MCP-specific features)
    - **Type**: Select **MCP** (automatically set when Category is Agent)
-
-![Application Basic Settings](/img/mcp-auth/app-basic-settings.png)
 
 The Agent category with MCP type optimizes the application for programmatic access and enables custom scope configuration.
 
@@ -52,8 +50,6 @@ http://127.0.0.1:*
 https://mcp.example.com/oauth/callback
 ```
 
-![Redirect URIs Configuration](/img/mcp-auth/redirect-uris.png)
-
 **Security note**: Wildcard URIs (`*`) are convenient for development but should be restricted in production. Consider using exact URLs for production deployments.
 
 ### Step 3: Set Grant Types
@@ -69,8 +65,6 @@ Configure which OAuth grant types your application supports.
 
 - ❌ **implicit**: Deprecated and insecure for MCP use
 - ❌ **password**: Not compatible with MCP's authorization flow
-
-![Grant Types](/img/mcp-auth/grant-types.png)
 
 ### Step 4: Define Custom Scopes
 
@@ -99,8 +93,6 @@ Custom scopes represent the permissions your MCP server's tools require. Each sc
 | `db:modify` | Modify Database | Create, update, and delete database records |
 | `db:admin` | Database Admin | Manage schemas, tables, and database settings |
 
-![Custom Scopes Configuration](/img/mcp-auth/custom-scopes.png)
-
 **Best practices**:
 
 - Keep scopes granular—users should be able to grant partial access
@@ -121,8 +113,6 @@ The consent screen shows users what permissions they're granting.
    - **Never**: Skip consent (only for trusted first-party applications)
 
 For MCP servers with powerful tools (file access, database modifications), we recommend **Always** or **Once** to ensure users understand what they're authorizing.
-
-![Consent Policy](/img/mcp-auth/consent-policy.png)
 
 ### Step 6: Enable Dynamic Client Registration (Optional)
 
