@@ -106,6 +106,36 @@ For OAuth providers configured in Casdoor (like Twitter and custom providers wit
 
 :::
 
+#### Binding Tokens to Specific Services
+
+When your application needs to call multiple backend services, you might want tokens that are explicitly bound to a specific service. This prevents security issues where a token meant for one service could accidentally be used with another.
+
+Casdoor supports RFC 8707 Resource Indicators, which lets you specify the intended service when requesting authorization. Add the `resource` parameter with an absolute URI identifying your service:
+
+```url
+https://<CASDOOR_HOST>/login/oauth/authorize?
+client_id=CLIENT_ID&
+redirect_uri=REDIRECT_URI&
+response_type=code&
+scope=openid&
+state=STATE&
+resource=https://api.example.com
+```
+
+When you exchange the authorization code for tokens, include the same `resource` parameter:
+
+```json
+{
+    "grant_type": "authorization_code",
+    "client_id": ClientId,
+    "client_secret": ClientSecret,
+    "code": Code,
+    "resource": "https://api.example.com"
+}
+```
+
+The resulting access token will have its `aud` (audience) claim set to your resource URI instead of the client ID. Your backend service can then verify that tokens were issued specifically for it by checking the audience claim. The resource must match exactly between the authorization and token requests.
+
 #### Signup Flow with OAuth
 
 When users sign up through the OAuth authorization flow, they are automatically redirected to your application's callback URL with the authorization code, just like the sign-in flow. Previously, users had to manually click through intermediate pages after creating their account. Now the signup process matches the streamlined experience of signing in—once registration completes, Casdoor immediately generates the authorization code and redirects to your `redirect_uri`.
