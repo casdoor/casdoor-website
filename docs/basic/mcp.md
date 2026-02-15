@@ -457,13 +457,13 @@ result = response.json()
 
 if "error" in result:
     error = result["error"]
-    if error["code"] == -32001 and error.get("message") == "insufficient_scope":
+    if error.get("code") == -32001 and error.get("message") == "insufficient_scope":
         # Handle insufficient scope error
         error_data = error.get("data", {})
         print(f"Need scope: {error_data.get('required_scope', 'unknown')}")
         print(f"Have scopes: {error_data.get('granted_scopes', [])}")
     else:
-        print(f"Error: {error['message']}")
+        print(f"Error: {error.get('message', 'Unknown error')}")
 else:
     print("Created application:", result)
 ```
