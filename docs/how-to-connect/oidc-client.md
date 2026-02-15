@@ -33,7 +33,7 @@ This endpoint is particularly useful for OAuth 2.0 clients that don't require Op
 
 ### Metadata Response
 
-For example, the discovery endpoint for the demo site at <https://door.casdoor.com/.well-known/openid-configuration> returns the following metadata:
+For example, both the OIDC discovery endpoint at <https://door.casdoor.com/.well-known/openid-configuration> and the OAuth 2.0 metadata endpoint at <https://door.casdoor.com/.well-known/oauth-authorization-server> return the same metadata:
 
 ```json
 {
