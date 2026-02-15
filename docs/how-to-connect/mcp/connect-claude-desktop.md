@@ -233,4 +233,4 @@ Now that Claude Desktop is connected to Casdoor:
 - [MCP Server Overview](/docs/how-to-connect/mcp/overview)
 - [Authorization and Scopes](/docs/how-to-connect/mcp/authorization)
 - [Application Categories](/docs/application/categories)
-- [Claude Desktop Documentation](https://claude.ai/docs)
+- [Claude.ai](https://claude.ai)
