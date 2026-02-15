@@ -371,7 +371,7 @@ curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
   -d "scope=write:application"
 ```
 
-You can request multiple scopes by separating them with spaces: `scope=read:application write:application`. The token will then have access to all tools covered by those scopes.
+You can request multiple scopes by separating them with spaces: `scope=read:application write:application` (or `scope=read:application%20write:application` when URL-encoded). The token will then have access to all tools covered by those scopes.
 
 Some operations have additional requirements beyond scope authorization. Creating applications checks against your organization's application quota. IP whitelist validation runs for applications with restricted access. Demo mode applies additional constraints to prevent modifications to the demonstration instance.
 
@@ -455,11 +455,15 @@ create_app_request = {
 response = session.post(server_url, json=create_app_request)
 result = response.json()
 
-if "error" in result and result["error"]["code"] == -32001:
-    # Handle insufficient scope error
-    error_data = result["error"]["data"]
-    print(f"Need scope: {error_data['required_scope']}")
-    print(f"Have scopes: {error_data['granted_scopes']}")
+if "error" in result:
+    error = result["error"]
+    if error["code"] == -32001 and error.get("message") == "insufficient_scope":
+        # Handle insufficient scope error
+        error_data = error.get("data", {})
+        print(f"Need scope: {error_data.get('required_scope', 'unknown')}")
+        print(f"Have scopes: {error_data.get('granted_scopes', [])}")
+    else:
+        print(f"Error: {error['message']}")
 else:
     print("Created application:", result)
 ```
