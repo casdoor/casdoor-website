@@ -94,7 +94,9 @@ You will get the following response:
 
 :::note
 
-Casdoor also supports the [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature. When getting the authorization code, you can add two parameters to enable PKCE:
+Casdoor supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) (Proof Key for Code Exchange) with the S256 code challenge method. This is now advertised in the server metadata discovery endpoints, allowing OAuth 2.0 clients to automatically detect and use this security feature. 
+
+When getting the authorization code, you can add two parameters to enable PKCE:
 
 ```url
 &code_challenge_method=S256&code_challenge=YOUR_CHANNELLENGE

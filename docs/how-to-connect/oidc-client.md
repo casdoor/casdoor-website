@@ -5,9 +5,27 @@ keywords: [OIDC, discovery, client]
 authors: [nomeguy]
 ---
 
-## OIDC Discovery
+## Discovery Endpoints
 
-Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch.
+Casdoor supports both OpenID Connect and OAuth 2.0 server metadata discovery, making it easy to integrate with any standard OIDC or OAuth 2.0 client library. The server advertises its capabilities and endpoints through well-known URLs that clients can query during initialization.
+
+### OAuth 2.0 Authorization Server Metadata
+
+Casdoor implements [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414) for OAuth 2.0 Authorization Server Metadata discovery. This standard is particularly useful for clients that need OAuth 2.0 functionality without the full OpenID Connect layer, such as MCP (Model Context Protocol) clients and other OAuth-focused tools.
+
+The OAuth metadata endpoint is:
+
+```url
+<your-casdoor-backend-host>/.well-known/oauth-authorization-server
+```
+
+For application-specific configurations:
+
+```url
+<your-casdoor-backend-host>/.well-known/<application-name>/oauth-authorization-server
+```
+
+These endpoints return the same metadata structure as the OIDC discovery endpoints, ensuring complete compatibility. This allows clients to discover server capabilities like supported grant types, token endpoints, and security features (including PKCE with S256 method) in a single request.
 
 ### Global OIDC Endpoint
 
@@ -63,6 +81,9 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
     "address",
     "phone",
     "offline_access"
+  ],
+  "code_challenge_methods_supported": [
+    "S256"
   ],
   "claims_supported": [
     "iss",
