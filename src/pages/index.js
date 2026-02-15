@@ -127,7 +127,7 @@ function MCPSection() {
                 </Link>
               ),
             }}>
-              {"Configure AI tools like Claude Desktop, Cursor, or any MCP-compatible client to connect to Casdoor's MCP endpoint. See our {docLink} for setup instructions."}
+              {"Configure AI tools like Claude Desktop, Cursor, or any MCP-compatible client to connect to Casdoor's MCP endpoint. See our {docLink} for setup instructions and secure token management."}
             </Translate>
           </div>
           <TabList>
