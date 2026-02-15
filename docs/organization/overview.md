@@ -44,6 +44,15 @@ When this option is enabled:
 
 To enable this feature, check the "Use email as username" option on the organization edit page.
 
+## Dynamic Client Registration Policy
+
+Organizations can control whether applications can automatically register themselves through the [Dynamic Client Registration (DCR)](/docs/application/dynamic-client-registration) endpoint. The **DCR Policy** setting on the organization edit page offers two options:
+
+- **Open**: Applications can register without authentication, making it easy for MCP clients and developer tools to self-provision OAuth credentials
+- **Disabled**: All registration requests are rejected, requiring manual application creation through the admin interface
+
+The default policy is "open" to support seamless integration with tools that expect automated client registration. For production environments requiring tighter control, set the policy to "disabled" and create applications manually.
+
 :::tip
 
 In addition to logging into Casdoor via an application (which redirects to Casdoor for SSO), Casdoor users can also choose to log in directly via the organization's login page: `/login/<organization_name>`, e.g., <https://door.casdoor.com/login/casbin> on the demo site.

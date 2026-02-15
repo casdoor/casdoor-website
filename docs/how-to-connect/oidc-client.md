@@ -26,6 +26,7 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
   "token_endpoint": "https://door.casdoor.com/api/login/oauth/access_token",
   "userinfo_endpoint": "https://door.casdoor.com/api/userinfo",
   "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
+  "registration_endpoint": "https://door.casdoor.com/api/oauth/register",
   "introspection_endpoint": "https://door.casdoor.com/api/login/oauth/introspect",
   "response_types_supported": [
     "code",
@@ -105,6 +106,12 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
 ```
 
 Casdoor supports all standard OAuth 2.0 grant types, including authorization code, implicit, password credentials, client credentials, and refresh token flows. The device code grant (`urn:ietf:params:oauth:grant-type:device_code`) is also available for scenarios like smart TVs or CLI tools that have limited input capabilities. For detailed information on how to use each grant type, see the [OAuth 2.0 documentation](/docs/how-to-connect/oauth).
+
+### Dynamic Client Registration
+
+The `registration_endpoint` in the discovery metadata advertises support for [Dynamic Client Registration](/docs/application/dynamic-client-registration) (RFC 7591). Applications can POST to this endpoint to automatically obtain OAuth credentials without manual configuration. This is particularly useful for MCP clients, developer tools, and multi-tenant scenarios where applications need to self-provision.
+
+When DCR is enabled for an organization, clients can register by sending their metadata (application name, redirect URIs, etc.) and receive back a client ID and secret. The registration endpoint respects the organization's DCR policy—administrators can disable it if manual application approval is required.
 
 ### Application-Specific OIDC Endpoints
 

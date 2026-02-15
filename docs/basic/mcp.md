@@ -90,6 +90,39 @@ curl https://your-casdoor.com/.well-known/my-app/oauth-protected-resource
 
 This returns metadata scoped to that specific application, useful when different applications have different authorization requirements.
 
+## Automatic Client Registration
+
+MCP clients can use [Dynamic Client Registration](/docs/application/dynamic-client-registration) to automatically obtain OAuth credentials without manual configuration. The OIDC discovery metadata advertises the registration endpoint:
+
+```bash
+curl https://your-casdoor.com/.well-known/openid-configuration
+```
+
+The response includes the `registration_endpoint`:
+
+```json
+{
+  "registration_endpoint": "https://your-casdoor.com/api/oauth/register",
+  ...
+}
+```
+
+MCP clients following the [MCP Authorization specification](https://spec.modelcontextprotocol.io/specification/basic/authorization/) can register themselves:
+
+```bash
+curl -X POST https://your-casdoor.com/api/oauth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "client_name": "Claude Desktop",
+    "redirect_uris": ["http://localhost:3000/callback"],
+    "grant_types": ["authorization_code", "refresh_token"],
+    "token_endpoint_auth_method": "none",
+    "application_type": "native"
+  }'
+```
+
+This eliminates the manual step of creating an application through the admin interface. The client receives credentials immediately and can proceed with the OAuth authorization flow. Organization administrators can disable automatic registration by setting the DCR policy to "disabled" in the organization settings.
+
 ## Authentication
 
 MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api) documentation. The most common approaches are:
