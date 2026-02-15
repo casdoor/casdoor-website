@@ -107,6 +107,7 @@ module.exports = {
             "how-to-connect/mcp/authorization",
             "how-to-connect/mcp/integration",
             "how-to-connect/mcp/error-handling",
+            "how-to-connect/mcp/troubleshooting",
           ],
         },
         "how-to-connect/face-id",
