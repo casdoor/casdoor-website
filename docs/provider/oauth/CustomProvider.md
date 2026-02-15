@@ -42,6 +42,12 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
   https://door.casdoor.com/login/oauth/authorize?client_id={ClientID}&redirect_uri=https://{your-casdoor-hostname}/callback&state={State_generated_by_Casdoor}&response_type=code&scope={Scope}` 
   ```
 
+  When PKCE is enabled, Casdoor automatically appends the necessary security parameters:
+
+  ```url
+  &code_challenge={code_challenge}&code_challenge_method=S256
+  ```
+
   After authorization is completed, the custom provider should redirect to
 
   ```url
@@ -51,6 +57,8 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
   After this step, Casdoor will recognize the code parameter in the URL.
 
 - `Scope` is the scope parameter carried when accessing the `Auth URL`, and you should fill it in as per the custom provider's requirements.
+
+- `Enable PKCE` controls whether to use Proof Key for Code Exchange (PKCE) when authenticating with your custom provider. Some OAuth services require PKCE for security, while others make it optional. When enabled, Casdoor automatically includes the necessary `code_challenge` and `code_challenge_method` parameters during authentication. Toggle this on if your custom OAuth provider mandates or recommends PKCE.
 
 - `Token URL` is the API endpoint for obtaining the accessToken.
 
