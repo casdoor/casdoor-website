@@ -9,15 +9,31 @@ authors: [nomeguy]
 
 Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch.
 
-### Global OIDC Endpoint
+### Discovery Endpoints
 
-Casdoor's global OIDC discovery URL is:
+Casdoor provides metadata through both OpenID Connect and OAuth 2.0 discovery endpoints. Most modern clients automatically discover server capabilities through these standardized endpoints, eliminating manual configuration.
+
+#### OpenID Connect Discovery
+
+The OIDC discovery endpoint is available at:
 
 ```url
 <your-casdoor-backend-host>/.well-known/openid-configuration
 ```
 
-For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.com/.well-known/openid-configuration>, and it contains the following information:
+#### OAuth 2.0 Authorization Server Metadata
+
+Following RFC 8414, Casdoor also exposes OAuth 2.0 server metadata at:
+
+```url
+<your-casdoor-backend-host>/.well-known/oauth-authorization-server
+```
+
+This endpoint is particularly useful for OAuth 2.0 clients that don't require OpenID Connect features. Both endpoints return identical metadata, so you can use whichever fits your client library's expectations.
+
+### Metadata Response
+
+For example, the discovery endpoint for the demo site at <https://door.casdoor.com/.well-known/openid-configuration> returns the following metadata:
 
 ```json
 {
@@ -49,6 +65,9 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
     "client_credentials",
     "refresh_token",
     "urn:ietf:params:oauth:grant-type:device_code"
+  ],
+  "code_challenge_methods_supported": [
+    "S256"
   ],
   "subject_types_supported": [
     "public"
@@ -104,22 +123,26 @@ For example, the OIDC discovery URL for the demo site is: <https://door.casdoor.
 }
 ```
 
-Casdoor supports all standard OAuth 2.0 grant types, including authorization code, implicit, password credentials, client credentials, and refresh token flows. The device code grant (`urn:ietf:params:oauth:grant-type:device_code`) is also available for scenarios like smart TVs or CLI tools that have limited input capabilities. For detailed information on how to use each grant type, see the [OAuth 2.0 documentation](/docs/how-to-connect/oauth).
+Casdoor supports all standard OAuth 2.0 grant types, including authorization code, implicit, password credentials, client credentials, and refresh token flows. The device code grant (`urn:ietf:params:oauth:grant-type:device_code`) is also available for scenarios like smart TVs or CLI tools that have limited input capabilities.
+
+The `code_challenge_methods_supported` field indicates that Casdoor supports PKCE (Proof Key for Code Exchange) with the S256 challenge method. PKCE enhances security for public clients like mobile apps and single-page applications by preventing authorization code interception attacks. When your client library supports automatic PKCE, it will use the S256 method based on this discovery metadata. For manual implementation details, see the [OAuth 2.0 documentation](/docs/how-to-connect/oauth).
 
 ### Application-Specific OIDC Endpoints
 
 Besides the global discovery endpoint, you can use application-specific OIDC discovery endpoints. Each application gets its own isolated OIDC configuration with a unique issuer. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
 
-The application-specific discovery URL follows this pattern:
+The application-specific discovery URLs follow these patterns:
 
 ```url
 <your-casdoor-backend-host>/.well-known/<application-name>/openid-configuration
+<your-casdoor-backend-host>/.well-known/<application-name>/oauth-authorization-server
 ```
 
 For example, if you have an application named `app-example`:
 
 ```url
 https://door.casdoor.com/.well-known/app-example/openid-configuration
+https://door.casdoor.com/.well-known/app-example/oauth-authorization-server
 ```
 
 The main difference is that the `issuer` and `jwks_uri` fields in the discovery response contain the application path. The `issuer` becomes `https://door.casdoor.com/.well-known/app-example` instead of just `https://door.casdoor.com`, and the `jwks_uri` points to `/.well-known/app-example/jwks`. Everything else, including the authorization and token endpoints, stays the same.
