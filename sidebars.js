@@ -131,6 +131,7 @@ module.exports = {
         "application/overview",
         "application/terminology",
         "application/config",
+        "application/dynamic-client-registration",
         "application/categories",
         "application/scopes",
         "application/providers",
