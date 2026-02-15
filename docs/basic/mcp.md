@@ -63,6 +63,33 @@ POST /api/mcp
 }
 ```
 
+## Discovering Casdoor's OAuth Configuration
+
+Casdoor implements [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) OAuth 2.0 Protected Resource Metadata, enabling MCP clients to automatically discover authentication requirements. Query the well-known endpoint to retrieve Casdoor's authorization server details:
+
+```bash
+curl https://your-casdoor.com/.well-known/oauth-protected-resource
+```
+
+The response indicates which OAuth authorization server protects the MCP resource:
+
+```json
+{
+  "resource": "https://your-casdoor.com",
+  "authorization_servers": ["https://your-casdoor.com"],
+  "bearer_methods_supported": ["header"],
+  "scopes_supported": ["openid", "profile", "email"]
+}
+```
+
+For application-specific discovery, append the application name:
+
+```bash
+curl https://your-casdoor.com/.well-known/my-app/oauth-protected-resource
+```
+
+This returns metadata scoped to that specific application, useful when different applications have different authorization requirements.
+
 ## Authentication
 
 MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api) documentation. The most common approaches are:
@@ -85,7 +112,7 @@ curl -X POST https://your-casdoor.com/api/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-Unauthenticated requests receive a JSON-RPC error response:
+Unauthenticated requests receive a JSON-RPC error response with a `WWW-Authenticate` header pointing to the OAuth protected resource metadata:
 
 ```json
 {
@@ -98,6 +125,8 @@ Unauthenticated requests receive a JSON-RPC error response:
   }
 }
 ```
+
+The response includes a `WWW-Authenticate: Bearer realm="/.well-known/oauth-protected-resource"` header, allowing compliant OAuth clients to automatically discover the authorization server configuration.
 
 ## Available Tools
 
