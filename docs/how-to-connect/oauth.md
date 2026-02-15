@@ -104,6 +104,12 @@ When getting the token, you need to pass the `code_verifier` parameter to verify
 
 :::
 
+#### Signup Flow with OAuth
+
+When users sign up through the OAuth authorization flow, they are automatically redirected to your application's callback URL with the authorization code, just like the sign-in flow. Previously, users had to manually click through intermediate pages after creating their account. Now the signup process matches the streamlined experience of signing in—once registration completes, Casdoor immediately generates the authorization code and redirects to your `redirect_uri`.
+
+Your application doesn't need any changes to support this. The authorization parameters (`client_id`, `response_type`, `redirect_uri`, etc.) are automatically passed through the signup process when users choose to create a new account during OAuth authorization.
+
 ### Implicit Grant
 
 Maybe your application doesn't have a backend, and you need to use Implicit Grant. First, you need to make sure you have Implicit Grant enabled, then redirect your users to:
