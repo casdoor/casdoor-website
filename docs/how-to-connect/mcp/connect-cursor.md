@@ -27,10 +27,12 @@ Configure a Casdoor application that Cursor will use for OAuth authentication:
    - **Display Name**: `Cursor IDE MCP Client`
    - **Organization**: Select your organization
    - **Redirect URIs**: Add these OAuth callback URLs:
-     ```
+
+     ```text
      http://127.0.0.1:*/callback
      http://localhost:*/callback
      ```
+
      :::tip
      The wildcard `*` allows Cursor to use any available port for the OAuth callback.
      :::
@@ -147,7 +149,7 @@ Cursor's AI will use the MCP tools to execute these commands. You should see res
 
 **Expected output:**
 
-```
+```text
 I've queried the Casdoor MCP server and found the following applications:
 
 1. cursor-mcp (Cursor IDE MCP Client)
@@ -162,6 +164,7 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: The configuration file might not be in the correct location or has syntax errors.
 
 **Solution**:
+
 - Verify the file path for your operating system
 - Check that the JSON is valid (no trailing commas, proper quotes)
 - Reload Cursor after making changes
@@ -171,6 +174,7 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: The MCP server URL might be incorrect or unreachable.
 
 **Solution**:
+
 - Verify the URL in your `mcp.json` is correct
 - Ensure your Casdoor instance is running and accessible
 - Check for HTTPS/HTTP mismatch (use HTTPS in production)
@@ -180,11 +184,14 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: The callback URL doesn't match the configured Redirect URI in Casdoor.
 
 **Solution**:
+
 - In Casdoor, ensure your application has these redirect URIs:
-  ```
+
+  ```text
   http://127.0.0.1:*/callback
   http://localhost:*/callback
   ```
+
 - The wildcard `*` is crucial - it allows any port
 
 ### Issue: "CORS error" in browser console
@@ -192,6 +199,7 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: Cross-Origin Resource Sharing (CORS) restrictions.
 
 **Solution**:
+
 - Casdoor's MCP endpoint should automatically handle CORS for localhost origins
 - If you're using a custom domain, ensure CORS is properly configured in Casdoor
 
@@ -200,6 +208,7 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: The requested operation requires a scope that wasn't granted.
 
 **Solution**:
+
 - Update the `OAUTH_SCOPES` in your `mcp.json` to include the required scope
 - Example: Add `write:application` if you want to create/modify applications
 - Reload Cursor and re-authorize to get a new token with updated scopes
@@ -209,6 +218,7 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: Access tokens expire after a certain time.
 
 **Solution**:
+
 - If you enabled `Refresh Token` grant type in Step 1, the MCP OAuth helper will automatically refresh expired tokens
 - Otherwise, you'll need to re-authorize by reloading Cursor
 
@@ -217,6 +227,7 @@ I've queried the Casdoor MCP server and found the following applications:
 **Cause**: Cursor might not have loaded the MCP server or OAuth hasn't completed.
 
 **Solution**:
+
 - Check Cursor's developer console (Help → Toggle Developer Tools) for errors
 - Try explicitly mentioning "using Casdoor MCP server" in your prompts
 - Ensure you've completed the OAuth flow in Step 4

@@ -31,9 +31,11 @@ Configure a Casdoor application that ChatGPT will use for OAuth authentication:
    - **Display Name**: `ChatGPT MCP Client`
    - **Organization**: Select your organization
    - **Redirect URIs**: Add the ChatGPT OAuth callback URL:
-     ```
+
+     ```text
      https://chat.openai.com/auth/callback
      ```
+
      :::warning
      ChatGPT requires HTTPS for OAuth callbacks. Ensure your Casdoor instance is accessible via HTTPS.
      :::
@@ -124,7 +126,7 @@ ChatGPT will use the MCP tools to execute these commands. You should see respons
 
 **Expected output for "List all applications":**
 
-```
+```text
 I've connected to your Casdoor instance and found the following applications:
 
 1. chatgpt-mcp (ChatGPT MCP Client)
@@ -175,6 +177,7 @@ EOF
 ```
 
 Set environment variables:
+
 - `CASDOOR_URL`: Your Casdoor instance URL
 - `OAUTH_CLIENT_ID`: Your Client ID
 - `OAUTH_CLIENT_SECRET`: Your Client Secret
@@ -187,6 +190,7 @@ Set environment variables:
 **Cause**: The MCP server URL might be incorrect or unreachable.
 
 **Solution**:
+
 - Verify the URL in ChatGPT settings is correct
 - Ensure your Casdoor instance is publicly accessible via HTTPS
 - Test the MCP endpoint manually: `curl https://your-casdoor.com/api/mcp`
@@ -196,10 +200,13 @@ Set environment variables:
 **Cause**: The callback URL doesn't match the configured Redirect URI in Casdoor.
 
 **Solution**:
+
 - In Casdoor, ensure your application has the correct redirect URI:
-  ```
+
+  ```text
   https://chat.openai.com/auth/callback
   ```
+
 - Check ChatGPT's documentation for the current callback URL
 
 ### Issue: "HTTPS required" error
@@ -207,6 +214,7 @@ Set environment variables:
 **Cause**: ChatGPT requires HTTPS for OAuth flows.
 
 **Solution**:
+
 - Ensure your Casdoor instance uses HTTPS
 - Configure SSL certificates for your domain
 - Use a reverse proxy (Nginx, Caddy) with automatic HTTPS
@@ -217,6 +225,7 @@ Set environment variables:
 **Cause**: Cross-Origin Resource Sharing (CORS) restrictions.
 
 **Solution**:
+
 - Casdoor should automatically allow CORS for OAuth endpoints
 - If using a reverse proxy, ensure CORS headers are properly forwarded
 - Check your Casdoor CORS configuration for ChatGPT's domain
@@ -226,6 +235,7 @@ Set environment variables:
 **Cause**: The requested operation requires a scope that wasn't granted.
 
 **Solution**:
+
 - Update the scopes in ChatGPT's MCP server settings
 - Example: Add `write:application` if you want to create/modify applications
 - Reconnect the server to get a new token with updated scopes
@@ -235,6 +245,7 @@ Set environment variables:
 **Cause**: Access tokens expire after a certain time.
 
 **Solution**:
+
 - Ensure `Refresh Token` grant type is enabled in your Casdoor application (Step 1)
 - ChatGPT should automatically refresh tokens, but you may need to reconnect if refresh fails
 
@@ -243,6 +254,7 @@ Set environment variables:
 **Cause**: The server might not be properly connected or recognized.
 
 **Solution**:
+
 - Verify the connection in ChatGPT settings
 - Try explicitly mentioning "using Casdoor MCP server" in your prompts
 - Start a new conversation to ensure fresh initialization
@@ -261,6 +273,7 @@ Set environment variables:
 
 :::warning
 When using ChatGPT with Casdoor MCP server, be aware that:
+
 - Data from your Casdoor instance may be processed by OpenAI
 - Avoid sharing sensitive user information, passwords, or secrets
 - Review OpenAI's privacy policy and terms of service

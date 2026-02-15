@@ -27,10 +27,12 @@ First, configure a Casdoor application that Claude Desktop will use for OAuth au
    - **Display Name**: `Claude Desktop MCP Client`
    - **Organization**: Select your organization
    - **Redirect URIs**: Add these OAuth callback URLs:
-     ```
+
+     ```text
      http://127.0.0.1:*/callback
      http://localhost:*/callback
      ```
+
      :::tip
      The wildcard `*` allows Claude Desktop to use any available port for the OAuth callback.
      :::
@@ -38,7 +40,7 @@ First, configure a Casdoor application that Claude Desktop will use for OAuth au
 4. **Grant Types**: Enable `Authorization Code` and optionally `Refresh Token`
 5. **Enable PKCE**: Check this option for enhanced security
 6. **Token Format**: `JWT` (recommended)
-7. **(Optional) Application Type**: Set to `Agent` 
+7. **(Optional) Application Type**: Set to `Agent`
 8. **(Optional) Category**: Set to `MCP` for better organization
 
    :::info
@@ -136,7 +138,7 @@ Claude will use the MCP tools to execute these commands. You should see response
 
 **Expected output for "List all applications":**
 
-```
+```text
 I found the following applications in your Casdoor instance:
 
 1. claude-desktop-mcp (Claude Desktop MCP Client)
@@ -150,7 +152,8 @@ I found the following applications in your Casdoor instance:
 
 **Cause**: The MCP server URL might be incorrect or unreachable.
 
-**Solution**: 
+**Solution**:
+
 - Verify the URL in your `claude_desktop_config.json` is correct
 - Ensure your Casdoor instance is running and accessible
 - Check for HTTPS/HTTP mismatch (use HTTPS in production)
@@ -160,11 +163,14 @@ I found the following applications in your Casdoor instance:
 **Cause**: The callback URL doesn't match the configured Redirect URI in Casdoor.
 
 **Solution**:
+
 - In Casdoor, ensure your application has these redirect URIs:
-  ```
+
+  ```text
   http://127.0.0.1:*/callback
   http://localhost:*/callback
   ```
+
 - The wildcard `*` is crucial - it allows any port
 
 ### Issue: "CORS error" in browser console
@@ -172,6 +178,7 @@ I found the following applications in your Casdoor instance:
 **Cause**: Cross-Origin Resource Sharing (CORS) restrictions.
 
 **Solution**:
+
 - Casdoor's MCP endpoint should automatically handle CORS for localhost origins
 - If you're using a custom domain, ensure CORS is properly configured in Casdoor
 
@@ -180,6 +187,7 @@ I found the following applications in your Casdoor instance:
 **Cause**: The requested operation requires a scope that wasn't granted.
 
 **Solution**:
+
 - Update the `OAUTH_SCOPES` in your `claude_desktop_config.json` to include the required scope
 - Example: Add `write:application` if you want to create/modify applications
 - Restart Claude Desktop and re-authorize to get a new token with updated scopes
@@ -189,6 +197,7 @@ I found the following applications in your Casdoor instance:
 **Cause**: Access tokens expire after a certain time.
 
 **Solution**:
+
 - If you enabled `Refresh Token` grant type in Step 1, the MCP OAuth helper will automatically refresh expired tokens
 - Otherwise, you'll need to re-authorize by restarting Claude Desktop
 
@@ -197,6 +206,7 @@ I found the following applications in your Casdoor instance:
 **Cause**: OAuth best practices require HTTPS for production environments.
 
 **Solution**:
+
 - Use HTTPS for your Casdoor instance in production
 - For local development/testing, HTTP with localhost is acceptable
 - Configure SSL certificates or use a reverse proxy like Nginx
