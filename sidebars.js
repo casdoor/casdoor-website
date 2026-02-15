@@ -161,6 +161,16 @@ module.exports = {
     },
     {
       type: "category",
+      label: "MCP Authorization",
+      link: {type: "generated-index"},
+      items: [
+        "mcp-auth/overview",
+        "mcp-auth/setup",
+        "mcp-auth/third-party-integration",
+      ],
+    },
+    {
+      type: "category",
       label: "Permissions",
       link: {type: "generated-index"},
       items: [
