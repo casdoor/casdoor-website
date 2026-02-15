@@ -1,11 +1,13 @@
 ---
 title: Core Concepts
-description: Learn about the core concepts of Casdoor.
+description: Master the fundamental building blocks of Casdoor
 keywords: [core concepts, organization, user, application, provider]
 authors: [hsluoyz]
 ---
 
-As a Casdoor administrator, you should be familiar with at least four core concepts: `Organization`, `User`, `Application`, and `Provider`.
+Think of Casdoor as a toolkit for authentication. To use it effectively, you need to understand four core concepts that work together like pieces of a puzzle: **Organizations**, **Users**, **Applications**, and **Providers**. Once you grasp these, everything else clicks into place.
+
+Let's see how they connect:
 
 ```mermaid
 flowchart LR;
@@ -66,15 +68,31 @@ flowchart LR;
     Applications-2<-->Providers;
 ```
 
-:::tip
+:::tip Follow Along
 
-In the following parts, we will use the demo site <https://door.casdoor.com> as an example.
+We'll use the demo site at <https://door.casdoor.com> throughout this guide. Feel free to explore it as you read!
 
 :::
 
-## Organization
+## 🏢 Organization: Your Container for Everything
 
-In Casdoor, an organization is a container for users and applications. For example, all the employees of a company or all the customers of a business can be abstracted as one organization. The `Organization` class definition is shown below:
+An **organization** is like a workspace that groups related users and applications together. Think of it as:
+
+- **For a company**: All your employees
+- **For a SaaS product**: All your customers  
+- **For a multi-tenant app**: Each tenant gets their own organization
+
+### Why Organizations Matter
+
+Organizations keep things separate and secure. Users in `company-a` can't accidentally access applications in `company-b`. It's perfect for:
+
+- **Multi-tenancy**: Each client gets their own isolated space
+- **Departmental separation**: HR, Engineering, and Sales can have their own orgs
+- **Brand customization**: Each org can have its own look and feel
+
+### What's Inside an Organization?
+
+Let's peek under the hood. Here's the data structure (don't worry if you're not a programmer - the table below explains what matters):
 
 ```go
 type Organization struct {
@@ -98,22 +116,52 @@ type Organization struct {
 }
 ```
 
-## User
+**Key Fields Explained:**
 
-In Casdoor, a user can log into an application. Each user can belong to only one organization but can log into multiple applications owned by the organization. Currently, there are two types of users in Casdoor:
+| Field | What It Does | Example |
+|-------|-------------|---------|
+| `DisplayName` | The friendly name shown to users | "Acme Corporation" |
+| `WebsiteUrl` | Your organization's website | "<https://acme.com>" |
+| `Favicon` | Custom icon for login pages | Your company logo |
+| `PasswordType` | How passwords are hashed | bcrypt, argon2, etc. |
+| `EnableSoftDeletion` | Deleted users go to trash instead of being permanently removed | Useful for compliance |
+| `AccountItems` | Custom fields for user profiles | Employee ID, Department, etc. |
 
-- `built-in` organization users, such as `built-in/admin`: global administrators who have full administrative power on the Casdoor platform.
-- Other organizations' users, such as `my-company/alice`: normal users who can sign up, sign in, sign out, change their own profile, etc.
+## 👤 User: The People in Your System
 
-In the Casdoor API, a user is typically identified as `<organization_name>/<username>`. For example, the default administrator of Casdoor is denoted as `built-in/admin`. Additionally, the `User` class definition includes an `id` property, which is a UUID like `d835a48f-2e88-4c1f-b907-60ac6b6c1b40` and can be chosen as a user's ID by an application.
+**Users** are the people who log in. Simple, right? In Casdoor, every user belongs to exactly one organization but can access multiple applications within that org.
 
-:::tip
+### Two Types of Users
 
-For applications that are only for one organization, it's possible to use `<username>` instead of `<organization_name>/<username>` as the user ID across the application for simplicity.
+Casdoor has a special hierarchy:
+
+1. **🔧 Platform Administrators** (`built-in/admin`)
+   - Lives in the special `built-in` organization
+   - Has god-mode access to everything
+   - Manages Casdoor itself
+
+2. **🙋 Regular Users** (`my-company/alice`)
+   - Belong to your organizations
+   - Can sign up, sign in, and manage their own profiles
+   - Access applications based on permissions
+
+### User Identifiers
+
+Users are identified by a format: `<organization>/<username>`. For example:
+
+- `built-in/admin` - The default Casdoor administrator
+- `acme-corp/john` - John from Acme Corporation  
+- `startup-inc/sarah` - Sarah from Startup Inc
+
+Each user also gets a unique UUID (like `d835a48f-2e88-4c1f-b907-60ac6b6c1b40`) which you can use as a stable identifier in your application.
+
+:::tip Simplify for Single-Org Apps
+
+If your application only serves one organization, you can use just the username (e.g., `alice`) instead of the full identifier (`my-company/alice`). Much cleaner!
 
 :::
 
-Here's the `User` class definition:
+### The User Data Structure
 
 ```go
 type User struct {
@@ -182,15 +230,34 @@ type User struct {
 }
 ```
 
-:::tip
+**What All These Fields Mean:**
 
-The `Properties` field is a flexible key-value map for storing custom user attributes. See the [User Properties documentation](/docs/user/overview#using-the-properties-field) for detailed usage examples and best practices.
+- **Basic Info**: Name, email, phone, avatar - the usual suspects
+- **Profile Details**: Bio, location, birthday, education - make profiles rich
+- **Security Tracking**: Login times, IP addresses, forbidden status - know what's happening  
+- **Social Connections**: GitHub, Google, WeChat, etc. - linked accounts from OAuth providers
+- **Admin Flags**: `IsAdmin`, `IsGlobalAdmin` - permission levels at a glance
+- **Custom Data**: The `Properties` field - your escape hatch for extra data!
+
+:::tip Custom User Properties
+
+Need to store custom fields like "Employee ID" or "Department"? Use the `Properties` field - it's a flexible key-value map for any extra data. Check out the [User Properties documentation](/docs/user/overview#using-the-properties-field) for examples.
 
 :::
 
-## Application
+## 📱 Application: What Users Access
 
-An **application** represents a web service that needs to be protected by Casdoor, such as a forum site, an OA system, or a CRM system.
+An **application** represents any web service or app that needs authentication. This could be:
+
+- 🗨️ A forum (like Casnode)
+- 📊 An office automation (OA) system  
+- 💼 A CRM platform
+- 🛍️ An e-commerce site
+- 🎮 A gaming portal
+
+Each application is essentially a "door" that users walk through to access your service. When users log in, they're logging in through a specific application.
+
+### Application Structure
 
 ```go
 type Application struct {
@@ -226,43 +293,83 @@ type Application struct {
 }
 ```
 
-Each application can have its own customized sign-up page, sign-in page, and more. The root login page `/login` (e.g., <https://door.casdoor.com/login>) is the sign-in page only for Casdoor's built-in application: `app-built-in`.
+**Key Features of Applications:**
 
-An application is a "portal" or "interface" for a user to log into Casdoor. A user must go through one application's sign-in page to log into Casdoor.
+- **OAuth Credentials**: Each app gets `ClientId` and `ClientSecret` for secure API calls
+- **Custom Pages**: You can fully customize signup, signin, and password recovery pages
+- **Flexible Auth**: Toggle password login, code-based signin, or social providers
+- **Token Control**: Set token expiration times that fit your security requirements
 
-| Application   | Sign-up page URL                           | Sign-in page URL                                                                                                                                                                      |
-|---------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| app-built-in  | <https://door.casdoor.com/signup>           | <https://door.casdoor.com/login>                                                                                                                                                         |
-| app-casnode   | <https://door.casdoor.com/signup/app-casnode>| <https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor> |
-| app-casbin-oa | <https://door.casdoor.com/signup/app-casbin-oa> | <https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor>  |
+### Applications are Entry Points
 
-### Login URLs
+Think of an application as the front door. Users must enter through an application's login page to access Casdoor. Here are some examples from the demo site:
 
-It's very easy to log into Casdoor via Casdoor's built-in application; simply visit Casdoor server homepage (e.g., <https://door.casdoor.com> for demo site) and it will automatically redirect you to `/login`. But how do you get the URLs for other applications in frontend and backend code? You can either concatenate strings manually or call some utility functions provided by Casdoor SDKs to get the URLs:
+| Application | Sign-up Page | Sign-in Page |
+|-------------|-------------|--------------|
+| **app-built-in** | [door.casdoor.com/signup](https://door.casdoor.com/signup) | [door.casdoor.com/login](https://door.casdoor.com/login) |
+| **app-casnode** | [door.casdoor.com/signup/app-casnode](https://door.casdoor.com/signup/app-casnode) | OAuth flow with client_id |
+| **app-casbin-oa** | [door.casdoor.com/signup/app-casbin-oa](https://door.casdoor.com/signup/app-casbin-oa) | OAuth flow with client_id |
 
-#### 1. Manually concatenating strings
+### Building Login URLs
 
-- Sign-up page URL
-  - Signup for the specified application: `<your-casdoor-hostname>/signup/<your-application-name>`
-  - Signup by OAuth: `<your-casdoor-hostname>/signup/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
-  - Signup automatically: `<your-casdoor-hostname>/auto-signup/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
-- Sign-in page URL
-  - Sign-in for the specified organization: `<your-casdoor-hostname>/login/<your-organization-name>`
-  - Sign-in by OAuth: `<your-casdoor-hostname>/login/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
+You'll need to construct URLs for signup and signin. Here are three ways to do it:
 
-#### 2. Using frontend SDK (for frontend JavaScript code using React, Vue, or Angular)
+#### Option 1: Manual URL Construction
 
-`getSignupUrl()` and `getSigninUrl()`: [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63)
+Build URLs yourself using this pattern:
 
-#### 3. Using backend SDK (for backend code using Go, Java, etc.)
+**For Sign-up:**
 
-`GetSignupUrl()` and `GetSigninUrl()`: [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39)
+- Standard signup: `<casdoor-url>/signup/<app-name>`
+- OAuth signup: `<casdoor-url>/signup/oauth/authorize?client_id=xxx&response_type=code&redirect_uri=xxx&scope=read&state=casdoor`
+- Auto-signup: `<casdoor-url>/auto-signup/oauth/authorize?client_id=xxx&response_type=code&redirect_uri=xxx&scope=read&state=casdoor`
 
-## Provider
+**For Sign-in:**
 
-Casdoor is a federated single sign-on system that supports multiple identity providers via OIDC, OAuth, and SAML. Casdoor can also send verification codes or other notifications to users via email or SMS. Casdoor uses the concept of `Provider` to manage all these third-party connectors.
+- Organization signin: `<casdoor-url>/login/<org-name>`
+- OAuth signin: `<casdoor-url>/login/oauth/authorize?client_id=xxx&response_type=code&redirect_uri=xxx&scope=read&state=casdoor`
 
-A list of all providers supported by Casdoor can be found at **[provider/overview](/docs/provider/overview)**.
+#### Option 2: Use Frontend SDK
+
+For JavaScript/React/Vue/Angular applications, use helper functions:
+
+```javascript
+import { getSignupUrl, getSigninUrl } from 'casdoor-js-sdk';
+
+const signupUrl = getSignupUrl();
+const signinUrl = getSigninUrl();
+```
+
+See the [casdoor-js-sdk documentation](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63) for details.
+
+#### Option 3: Use Backend SDK
+
+For server-side code in Go, Java, Python, etc.:
+
+```go
+import "github.com/casdoor/casdoor-go-sdk/auth"
+
+signupUrl := auth.GetSignupUrl()
+signinUrl := auth.GetSigninUrl()
+```
+
+See the [casdoor-go-sdk documentation](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39) for details.
+
+## 🔌 Provider: Connecting External Services
+
+**Providers** are like plugins that connect Casdoor to external services. Need to send verification emails? Use an email provider. Want users to log in with GitHub? Add an OAuth provider.
+
+Casdoor supports providers for:
+
+- **🔐 OAuth/OIDC/SAML**: Social login (Google, GitHub, Facebook, etc.)
+- **📧 Email**: SendGrid, Azure ACS, SMTP, and more
+- **📱 SMS**: Twilio, Amazon SNS, Alibaba Cloud, etc.
+- **☁️ Storage**: AWS S3, Azure Blob, Aliyun OSS for file uploads
+- **💳 Payment**: Stripe, PayPal, Alipay for subscription handling
+
+See the complete list at [Provider Overview](/docs/provider/overview).
+
+### Provider Structure
 
 ```go
 type Provider struct {
@@ -303,18 +410,94 @@ type Provider struct {
 }
 ```
 
-## How does Casdoor manage itself?
+**Providers are Flexible:**
 
-Upon running Casdoor for the first time, some built-in objects are created to facilitate its management:
+The Provider struct has many fields because it needs to support dozens of different services. Depending on the `Category` and `Type`:
 
-- A built-in organization named `built-in`.
-- A user named `admin` in the `built-in` organization.
-- A built-in application named `app-built-in`, administered by the `built-in` organization, representing Casdoor itself.
+- **OAuth providers** use `ClientId` and `ClientSecret`
+- **Email providers** use `Host`, `Port`, and credentials
+- **SMS providers** use `AppId`, `SignName`, and `TemplateCode`
+- **Storage providers** use `Endpoint`, `Bucket`, and access keys
 
-All users under the `built-in` organization, including `admin`, will have full administrator privileges on the Casdoor platform. Therefore, if there are multiple administrators, it is advisable to create new accounts under the `built-in` organization. Alternatively, the sign-up channel for the `app-built-in` application should be closed to prevent unwanted access.
+Don't be intimidated - you only fill in the fields relevant to your specific provider type!
 
-:::caution
+## 🎯 How Casdoor Manages Itself
 
-It is not possible to rename or delete the built-in objects via both the web UI or the RESTful API. Casdoor has hardcoded these reserved names in many places; attempting to rename or delete them by modifying the DB may cause the entire system to crash.
+When you first start Casdoor, it creates some special "built-in" objects to bootstrap itself:
+
+### The Built-in Organization
+
+- **Name**: `built-in`
+- **Purpose**: Houses Casdoor's administrators
+- **Special Power**: All users in this org have god-mode access to the entire platform
+
+### The Default Admin User
+
+- **Username**: `built-in/admin`
+- **Default Password**: `123` (⚠️ change this immediately!)
+- **Access**: Full control over Casdoor
+
+### The Built-in Application
+
+- **Name**: `app-built-in`
+- **Purpose**: Represents Casdoor's own admin interface
+- **Access URL**: The root path (e.g., `https://door.casdoor.com`)
+
+### Adding More Administrators
+
+Want to add more admins? Simply create new users under the `built-in` organization. Each one will automatically have full administrative privileges.
+
+:::caution Don't Delete Built-in Objects!
+
+The `built-in` organization, admin user, and app-built-in application are hardcoded into Casdoor's core. **Never** try to:
+
+- Rename them
+- Delete them
+- Modify them directly in the database
+
+Doing so will break your entire Casdoor installation. These objects are sacred - treat them with respect!
 
 :::
+
+## 🎓 Putting It All Together
+
+Let's recap how everything connects:
+
+1. **Organizations** contain **Users** and **Applications**
+2. **Users** belong to one **Organization** but can access multiple **Applications**
+3. **Applications** use **Providers** for authentication methods (social login, email, SMS)
+4. **Providers** connect Casdoor to external services
+
+Here's a real-world scenario:
+
+```text
+Acme Corporation (Organization)
+├── Users: alice, bob, charlie
+├── Applications
+│   ├── Employee Portal (for internal staff)
+│   ├── Customer Dashboard (for clients)
+│   └── Admin Panel (for IT team)
+└── Providers
+    ├── Google OAuth (for social login)
+    ├── SendGrid (for email verification)
+    └── Twilio (for SMS 2FA)
+```
+
+When Alice logs into the Employee Portal:
+
+1. She visits the app's login URL
+2. Chooses to sign in with Google (an OAuth provider)
+3. Google authenticates her and returns to Casdoor
+4. Casdoor creates/updates her user record in Acme Corp organization
+5. She gets access to the Employee Portal!
+
+## Next Steps
+
+Now that you understand the core concepts, you're ready to:
+
+- **[Try Casdoor with Docker](/docs/basic/try-with-docker)** - Get hands-on experience
+- **[Configure Your First Application](/docs/application/overview)** - Set up authentication
+- **[Add Providers](/docs/provider/overview)** - Enable social login and notifications
+- **[Manage Users](/docs/user/overview)** - Learn about user management
+
+Questions? Head to our [Discord community](https://discord.gg/5rPsrAzK7S) where fellow Casdoor users and maintainers are ready to help!
