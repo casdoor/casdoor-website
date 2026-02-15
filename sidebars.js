@@ -132,6 +132,8 @@ module.exports = {
         "application/terminology",
         "application/config",
         "application/dynamic-client-registration",
+        "application/categories",
+        "application/scopes",
         "application/providers",
         "application/signin-methods",
         "application/exclusive-signin",

@@ -13,7 +13,7 @@ Casdoor supports using Access Token to authenticate clients. In this section, we
 
 There are two ways to obtain an Access Token: you can use the [Casdoor SDKs](/docs/how-to-connect/sdk). For detailed information, please refer to the SDK documentation. Here, we will mainly show you how to use the API to get the Access Token.
 
-Casdoor supports four OAuth grant types: [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), and [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4).
+Casdoor supports standard OAuth 2.0 grant types including [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4), [Refresh Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6), [Device Authorization Grant](https://datatracker.ietf.org/doc/html/rfc8628), and [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693).
 
 For security reasons, the Casdoor app has the authorization code mode turned on by default. If you need to use other modes, please go to the appropriate app to set it.
 
@@ -94,13 +94,15 @@ You will get the following response:
 
 :::note
 
-Casdoor also supports the [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) feature. When getting the authorization code, you can add two parameters to enable PKCE:
+Casdoor supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) (Proof Key for Code Exchange) for enhanced security. To enable PKCE, add two parameters when requesting the authorization code:
 
 ```url
-&code_challenge_method=S256&code_challenge=YOUR_CHANNELLENGE
+&code_challenge_method=S256&code_challenge=YOUR_CHALLENGE
 ```
 
-When getting the token, you need to pass the `code_verifier` parameter to verify PKCE. It is worth mentioning that with PKCE enabled, `Client_Secret` is not required, but if you pass it, it must be the correct value.
+The code challenge should be a Base64-URL-encoded SHA-256 hash of your randomly generated code verifier (43-128 characters). When requesting the token, include the original `code_verifier` parameter. With PKCE enabled, `client_secret` becomes optional, but if provided, it must be correct.
+
+For OAuth providers configured in Casdoor (like Twitter and custom providers with PKCE enabled), Casdoor automatically generates unique code verifiers for each authentication flow, so you don't need to manually implement PKCE.
 
 :::
 
@@ -222,6 +224,46 @@ You will get a response like this:
     "scope": "openid"
 }
 ```
+
+### Token Exchange Grant
+
+Token Exchange (RFC 8693) lets you swap an existing token for a new one with different characteristics—particularly useful when one service needs to call another on behalf of a user, or when you need to narrow down a token's scope for a specific downstream service.
+
+To exchange a token, send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+
+```json
+{
+    "grant_type": "urn:ietf:params:oauth:grant-type:token-exchange",
+    "client_id": ClientId,
+    "client_secret": ClientSecret,
+    "subject_token": SubjectToken,
+    "subject_token_type": "urn:ietf:params:oauth:token-type:access_token",
+    "scope": "openid email"
+}
+```
+
+The `subject_token` is the token you want to exchange—typically an access token or JWT you already have. If you want to narrow the permissions in the new token, specify a `scope` that's a subset of the original token's scope. When you omit `scope`, the new token inherits the same scope as the subject token.
+
+Casdoor supports three token types for `subject_token_type`:
+
+- `urn:ietf:params:oauth:token-type:access_token` (default)
+- `urn:ietf:params:oauth:token-type:jwt`
+- `urn:ietf:params:oauth:token-type:id_token`
+
+The response returns a new token tied to the same user as your subject token:
+
+```json
+{
+    "access_token": "eyJhb...",
+    "id_token": "eyJhb...",
+    "refresh_token": "eyJhb...",
+    "token_type": "Bearer",
+    "expires_in": 10080,
+    "scope": "openid email"
+}
+```
+
+For example, an API gateway might exchange a broad-scoped access token for a narrower one before forwarding requests to a downstream microservice. This pattern—called scope downscoping—ensures each service gets only the permissions it needs, rather than inheriting full access from the original token.
 
 ## How to Verify Access Token
 
