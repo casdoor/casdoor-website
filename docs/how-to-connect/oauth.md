@@ -39,7 +39,7 @@ state=STATE
 | openid (no scope)  | sub (user's id), iss (issuer), and aud (audience)   |
 | profile  | user profile info, including name, displayName, and avatar   |
 | email  | user's email address   |
-| address  |  user's address  |
+| address  | user's address — returned as an OIDC address object in **JWT-Standard** tokens; see [OIDC Address Claim](/docs/token/overview#oidc-address-claim) for details  |
 | phone |  user's phone number  |
 
 :::info
