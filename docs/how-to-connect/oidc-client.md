@@ -208,4 +208,10 @@ The following table illustrates how OIDC UserInfo fields (via the `/api/userinfo
 | Location           | address             |
 | Phone              | phone               |
 
+:::note
+
+The `/api/userinfo` endpoint returns the `address` claim as a **plain string** taken from the user's `Location` field (e.g., `"New York"`), not as a structured OIDC address object. This is different from the behavior of **JWT-Standard** tokens, where `address` is returned as a proper OIDC address object built from the user's `Address` array. See [OIDC Address Claim](/docs/token/overview#oidc-address-claim) for the full explanation.
+
+:::
+
 You can see the definition of UserInfo [here](https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185).
