@@ -1,5 +1,5 @@
 ---
-title: DB Migration
+title: Database Migration
 description: Handling DB Migration in Casdoor
 keywords: [deployment, Database, Migration]
 authors: [forestmgy]

@@ -1,5 +1,5 @@
 ---
-title: Signin Methods
+title: Sign-in Methods
 description: Configure the login method and the display order of the login methods
 keywords: [signin, method]
 authors: [HGZ-20]

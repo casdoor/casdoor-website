@@ -1,5 +1,5 @@
 ---
-title: Application Invitation Code
+title: Invitation Codes
 description: Restrict application sign up with invitation codes
 keywords: [application, signup, invitation code]
 authors: [leo220yuyaodog]

@@ -1,5 +1,5 @@
 ---
-title: Third-party Server Integration
+title: Third-Party Server Integration
 description: Complete code examples for integrating Casdoor OAuth into MCP servers
 keywords: [MCP, integration, Python, Node.js, Go, JWT, JWKS, code examples]
 authors: [hsluoyz]

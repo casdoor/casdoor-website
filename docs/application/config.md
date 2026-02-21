@@ -1,5 +1,5 @@
 ---
-title: Application Config
+title: Application Configuration
 description: Configure your application's authentication
 keywords: [config, application]
 authors: [ErikQQY]

@@ -1,5 +1,5 @@
 ---
-title: (Optional) Try with K8s Helm
+title: Try with Kubernetes Helm (Optional)
 description: Learn how to deploy Casdoor on Kubernetes using Helm
 keywords: [Casdoor, Helm, Kubernetes, K8s]
 authors: [nomeguy]

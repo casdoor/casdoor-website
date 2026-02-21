@@ -1,6 +1,6 @@
 ---
-title: dotNET Desktop App
-description: A dotNET desktop app example for Casdoor
+title: .NET Desktop App
+description: A .NET desktop app example for Casdoor
 keywords: [dotNET, SDK]
 authors: [zh6335901]
 ---

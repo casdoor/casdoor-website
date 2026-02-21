@@ -1,5 +1,5 @@
 ---
-title: Permission Configuration
+title: Configuring Permissions
 description: Using exposed Casbin APIs to manage users' access rights in an organization
 keywords: [permissions, Casbin]
 authors: [MagicalSheep]

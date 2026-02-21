@@ -1,5 +1,5 @@
 ---
-title: Manage Multi-Factor Authentication Items
+title: MFA Items
 description: Configure Multi-Factor Authentication Items in Organization
 keywords: [organization, 2fa, mfa, multi-factor authentication]
 authors: [leo220yuyaodog]

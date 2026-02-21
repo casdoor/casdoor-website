@@ -1,7 +1,7 @@
 ---
 title: Overview
-description: Support IP limitation for user entry pages.
-keywords: [ip, whitelist, ip whitelist]
+description: Restrict access to entry pages by IP address.
+keywords: [ip, allowlist, ip allowlist]
 authors: [ZhaoYP-2001]
 ---
 

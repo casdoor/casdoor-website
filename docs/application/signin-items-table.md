@@ -1,5 +1,5 @@
 ---
-title: Signin Items Table
+title: Sign-in Items Table
 description: Configure the signin items table to create a custom signin page
 keywords: [signin, items, table]
 authors: [DacongDA]

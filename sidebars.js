@@ -43,7 +43,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "How to Connect to Casdoor",
+      label: "Connecting to Casdoor",
       link: {type: "generated-index"},
       items: [
         "how-to-connect/overview",
@@ -254,7 +254,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Notification",
+          label: "Notifications",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -301,7 +301,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Payment",
+          label: "Payments",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -357,7 +357,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "ID Verification",
+          label: "Identity Verification",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -435,7 +435,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "IP Whitelist",
+      label: "IP Allowlist",
       link: {type: "generated-index"},
       items: [
         "ip-whitelist/ip-whitelist",

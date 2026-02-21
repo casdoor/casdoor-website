@@ -1,5 +1,5 @@
 ---
-title: Signup Items Table
+title: Sign-up Items Table
 description: Configure the signup items table to create a custom registration page
 keywords: [signup, items, table]
 authors: [Resulte]

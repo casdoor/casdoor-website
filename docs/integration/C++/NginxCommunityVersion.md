@@ -1,5 +1,5 @@
 ---
-title: NginxCommunityVersion
+title: Nginx Community Edition
 description: Using Casdoor with Nginx (Not Nginx-Plus) and Oauth2-Proxy
 keywords: [nginx, OAuth2-Proxy, nginx-community-version]
 authors: [gzyzhy]

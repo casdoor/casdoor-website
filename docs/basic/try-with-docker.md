@@ -1,5 +1,5 @@
 ---
-title: (Optional) Try with Docker
+title: Try with Docker (Optional)
 description: Try Casdoor with Docker
 keywords: [Casdoor, Docker]
 authors: [hsluoyz]

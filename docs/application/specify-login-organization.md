@@ -1,5 +1,5 @@
 ---
-title: Specify Login Organization
+title: Specifying the Login Organization
 description: Specify the login organization on the login page
 keywords: [UI, login, application, organization]
 authors: [leo220yuyaodog]

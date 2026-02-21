@@ -1,5 +1,5 @@
 ---
-title: Spring Security Filter with OIDC integration for Casdoor
+title: Spring Security Filter with OIDC Integration for Casdoor
 description: This article explains how to use Spring Security Filter to connect your application with Casdoor using OIDC.
 keywords: [OIDC, Spirng Security, Spring Security Filter, Filter, Casdoor]
 authors: [wenxuan70]

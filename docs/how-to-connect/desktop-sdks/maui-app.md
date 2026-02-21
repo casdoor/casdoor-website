@@ -1,5 +1,5 @@
 ---
-title: Mobile SDKs .NET MAUI App 
+title: .NET MAUI App
 description: A .NET MAUI App example for Casdoor
 keywords: [.NET, SDK]
 authors: [RVShershnev]

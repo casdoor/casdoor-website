@@ -1,5 +1,5 @@
 ---
-title: Exclusive Signin
+title: Exclusive Sign-in
 description: Configure exclusive signin to allow only one active session per user
 keywords: [exclusive signin, session management, single session]
 authors: [copilot]

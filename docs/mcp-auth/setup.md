@@ -1,5 +1,5 @@
 ---
-title: Auth Provider Setup Guide
+title: Setting Up the Auth Provider
 description: Step-by-step guide to configure Casdoor as an OAuth provider for MCP servers
 keywords: [MCP, setup, configuration, OAuth, scopes, redirect URIs, consent, JWKS]
 authors: [hsluoyz]
