@@ -32,10 +32,11 @@ module.exports = {
       applicationId: "1689986",
     },
     navbar: {
-      title: "Casdoor",
+      title: "",
       logo: {
-        alt: "My Site Logo",
-        src: "img/casdoor.png",
+        alt: "Casdoor",
+        src: "https://cdn.casbin.org/img/casdoor-logo_1185x256.png",
+        srcDark: "https://cdn.casbin.org/img/casdoor-logo_1185x256_dark.png",
       },
       // hideOnScroll: true,
       items: [
