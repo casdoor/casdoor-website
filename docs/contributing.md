@@ -1,66 +1,163 @@
 ---
-title: Contributor Guide
-description: A guide on how to contribute to Casdoor
-keywords: [Contributor, guide]
+title: Contributing to Casdoor
+description: Join our community and help make Casdoor better!
+keywords: [Contributing, Contributor, Guide, Open Source]
 authors: [leo220yuyaodog]
 ---
 
-Welcome to Casdoor! This document serves as a guide on how to contribute to Casdoor.
+We're thrilled that you're interested in contributing to Casdoor! Whether you're fixing a typo, adding a feature, or helping others in discussions, every contribution makes a difference.
 
-If you find any incorrect or missing information, please leave your comments or suggestions.
+This guide will help you get started. Don't worry if you're new to open source - we were all beginners once, and we're here to help you every step of the way!
 
-## Get Involved
+## Ways to Contribute
 
-There are many ways to contribute to Casdoor. Here are some ideas to get started:
+You don't need to be a coding expert to contribute! Here are some ways you can help:
 
-- Use Casdoor and report issues. When using Casdoor, report any issues—whether they're bugs or proposals—on [GitHub Discussions](https://github.com/casdoor/casdoor/discussions) or on [Discord](https://discord.gg/5rPsrAzK7S) before filing an issue on GitHub.
+### 🐛 Report Bugs and Suggest Features
 
-:::info
+Found something that doesn't work? Have an idea for a cool feature? We want to hear about it!
 
-Please use English to describe the details of your problem when reporting an issue.
+**Before filing an issue:**
 
-:::
+1. 💬 Discuss it first on [GitHub Discussions](https://github.com/casdoor/casdoor/discussions) or our [Discord](https://discord.gg/5rPsrAzK7S)
+2. 🔍 Check if someone else already reported it
+3. ✍️ Write your report in English (so everyone can understand)
 
-- Help with documentation. Starting your contribution with documentation is a good choice.
+This helps us understand your needs and may save you time if there's already a solution!
 
-- Help solve issues. We have a table containing easy tasks suitable for beginners under [Casdoor Easy Tasks](https://github.com/orgs/casdoor/projects/1), with different levels of challenges labeled with different tags.
+### 📝 Improve Documentation
 
-## Contributing
+Documentation is crucial, and it's a fantastic way to start contributing! You can:
 
-If you are ready to create a PR, here is the workflow for contributors:
+- Fix typos or clarify confusing explanations
+- Add examples to make concepts clearer
+- Write tutorials for common use cases
+- Translate docs to other languages
 
-1. Fork to your own repository.
+**Why start here?** It helps you learn the project while making immediate impact. Plus, great docs help thousands of users!
 
-2. Clone your fork to a local repository.
+### 💻 Fix Issues
 
-3. Create a new branch and work on it.
+Ready to code? Check out our [Easy Tasks Board](https://github.com/orgs/casdoor/projects/1) where we've curated beginner-friendly issues with labels like:
 
-4. Keep your branch in sync.
+- `good first issue` - Perfect for newcomers
+- `help wanted` - We'd love assistance on these
+- `documentation` - Doc improvements needed
+- `bug` - Something's broken and needs fixing
 
-5. Commit your changes. Make sure your commit message is concise.
+Pick one that interests you and let us know you're working on it!
 
-6. Push your commits to your forked repository.
+### 🌟 Help Others
 
-7. Create a pull request from your branch to our **master** branch.
+Answer questions in Discussions or Discord. Share your Casdoor setup. Write a blog post about your experience. Community building is contribution too!
 
-## Pull Requests
+## Making Your First Contribution
 
-### Before You Get Started
+Ready to submit code or documentation? Here's the step-by-step process:
 
-Casdoor uses GitHub as its development platform, and pull requests are the primary source of contributions.
+### Step 1: Fork the Repository
 
-Here are some things you need to know before opening a pull request:
+Click the "Fork" button on the [Casdoor repository](https://github.com/casdoor/casdoor) to create your own copy.
 
-- You need to sign the **CLA** when you first create a pull request.
+### Step 2: Clone Your Fork
 
-- Explain why you are submitting the pull request and what it will do to the repo.
+```bash
+git clone https://github.com/YOUR-USERNAME/casdoor.git
+cd casdoor
+```
 
-- Only one commit is allowed per pull request. If the PR does more than one thing, please split it into multiple PRs.
+Replace `YOUR-USERNAME` with your GitHub username.
 
-- If there are any newly added files, please include the Casdoor license at the top of the new file(s).
+### Step 3: Create a Feature Branch
 
-```text
-// Copyright 2022 The Casdoor Authors. All Rights Reserved.
+Never work directly on `master`! Create a branch for your changes:
+
+```bash
+git checkout -b my-awesome-feature
+```
+
+Use a descriptive name that explains what you're working on.
+
+### Step 4: Make Your Changes
+
+Now the fun part - write your code or docs! Remember to:
+
+- Keep changes focused (one feature or fix per PR)
+- Write clear, readable code
+- Test your changes locally
+- Follow existing code style
+
+### Step 5: Keep Your Branch Updated
+
+While you work, the main repository might get new commits. Stay in sync:
+
+```bash
+git remote add upstream https://github.com/casdoor/casdoor.git
+git fetch upstream
+git rebase upstream/master
+```
+
+### Step 6: Commit Your Changes
+
+Write a clear, concise commit message:
+
+```bash
+git add .
+git commit -m "feat: add email verification for signup"
+```
+
+We'll cover commit message format in the next section!
+
+### Step 7: Push to Your Fork
+
+```bash
+git push origin my-awesome-feature
+```
+
+### Step 8: Create a Pull Request
+
+Go to your fork on GitHub and click "New Pull Request". Fill in:
+
+- **Title**: Clear, descriptive (follow our format below)
+- **Description**: Explain what and why
+- **Linked Issues**: Reference related issues with `fixes #123`
+
+Then hit "Create Pull Request" and wait for review! 🎉
+
+## Pull Request Guidelines
+
+To keep things organized and make reviews faster, please follow these guidelines:
+
+### Sign the CLA
+
+On your first PR, you'll be asked to sign our Contributor License Agreement (CLA). It's quick and only needed once!
+
+### Write Good PR Descriptions
+
+Help reviewers understand your changes:
+
+```markdown
+## What does this PR do?
+Adds email verification to the signup process
+
+## Why is this needed?
+Prevents fake accounts and improves security
+
+## How was it tested?
+- Manually tested signup flow
+- Added unit tests for email verification
+```
+
+### One PR, One Purpose
+
+Keep PRs focused! If you're adding multiple features, split them into separate PRs. This makes review easier and faster.
+
+### Add License Headers to New Files
+
+Any new file you create needs our license header:
+
+```go
+// Copyright 2024 The Casdoor Authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -75,105 +172,209 @@ Here are some things you need to know before opening a pull request:
 // limitations under the License.
 ```
 
-### Semantic PRs
+Just copy and paste this at the top, updating the year as needed.
 
-Your pull requests should follow the Conventional Commits spec. The basic requirement is that only the PR title or at least one commit message. For example, three commonly used PR titles are given below:
+## Commit Message Format
+
+We use [Conventional Commits](https://www.conventionalcommits.org/) to keep our git history clean and generate changelogs automatically.
 
 :::caution
 
-PR titles must be in lowercase.
+PR titles and commit messages **must be in lowercase**.
 
 :::
 
-1. **fix**: a commit of the _type_ `fix` patches a bug in your codebase.
+| Type | When to Use | Example |
+|------|------------|---------|
+| `feat:` | Adding a new feature | `feat: add oauth provider for twitter` |
+| `fix:` | Fixing a bug | `fix: prevent race condition in token refresh` |
+| `docs:` | Documentation changes | `docs: update installation guide` |
+| `style:` | Code formatting (no logic change) | `style: fix indentation in auth.go` |
+| `refactor:` | Code refactoring | `refactor: simplify user validation logic` |
+| `test:` | Adding or updating tests | `test: add tests for email verification` |
+| `chore:` | Maintenance tasks | `chore: update dependencies` |
 
-    ```text
-    fix: prevent racing of requests
-    ```
+### Examples
 
-2. **feat**: a commit of the _type_ `feat` introduces a new feature to the codebase.
-
-    ```text
-    feat: allow provided config object to extend other configs
-    ```
-
-3. **docs**: a commit of the _type_ `docs` adds or improves documentation.
-
-    ```text
-    docs: correct spelling of CHANGELOG
-    ```
-
-For more details, please refer to the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) page.
-
-### Linking PRs with Issues
-
-You can link a pull request to an issue to show a fix is in progress and to automatically close the issue when the pull request is merged.
-
-#### Linking a Pull Request to an Issue Using a Keyword
-
-You can link a pull request to an issue by using a supported keyword in the pull request's description or in a commit message. The pull request **must be** on the default branch.
-
-- close
-- fix
-- resolve
-
-An issue in the same repository, for instance:
+**Good:**
 
 ```text
-Fix: #902
+fix: resolve database connection timeout
+docs: add examples for custom providers
+feat: implement rate limiting for api endpoints
 ```
 
-For more details, please refer to [Linking a Pull Request to an Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+**Bad:**
 
-### Modifying PRs
+```text
+Fix: Database issue (uppercase)
+update docs (missing type)
+Added new feature for users (not concise)
+```
 
-Your PR may need revision. Please modify the same PR when the code needs changes; don't close the PR and open a new one. Here is an example:
+## Updating a Pull Request
 
-- Modify the code on your local.
+Got review feedback? No problem! Here's how to update your PR:
 
-- Modify your commit.  
+### Make Changes Locally
 
-```shell
+Edit your files based on the feedback.
+
+### Amend Your Commit
+
+Instead of creating a new commit, update the existing one:
+
+```bash
+git add .
 git commit --amend
 ```
 
-- Push to your remote repository.  
+This keeps your PR to a single, clean commit.
 
-```shell
-git push --force
+### Force Push
+
+Since you've rewritten history, use force push:
+
+```bash
+git push --force origin my-awesome-feature
 ```
 
-Then, you will have successfully modified the PR!
+Your PR will automatically update! The reviewer will see your changes.
 
-## Code Related
+## Linking PRs to Issues
 
-Some Principles:
+Connecting your PR to an issue helps track progress and automatically closes issues when merged.
 
-- Readability: important code should be well-documented. Code style should comply with the existing one.
+### How to Link
 
-### Naming Convention
+Use keywords in your PR description or commit message:
 
-For instance, `signupUrl` for variable names, `Signup URL` for UI.
+- `fixes #123` - Closes issue #123 when merged
+- `resolves #456` - Closes issue #456 when merged  
+- `closes #789` - Closes issue #789 when merged
 
-### How to Update i18n Data?
+**Example PR description:**
 
-Please note that we use [Crowdin](https://crowdin.com/project/casdoor-site) as a translating platform and i18next as a translating tool. When you add strings using i18next in the `web/` directory, you can run the `i18n/generate_test.go` to auto-generate `web/src/locales/**/data.json`.
+```markdown
+## Summary
+Add email verification for new users
 
-Run `i18n/generate_test.go`:
+This PR fixes #234 and resolves #256
 
-```shell
-cd i18n && go test
+## Changes
+- Implemented email sending service
+- Added verification code generation
+- Updated signup flow
 ```
 
-All languages are filled in English by default. After your PR has been merged, you are encouraged to help translate the newly added
-strings in `web/src/locales/zh/data.json` by [Crowdin](https://crowdin.com/project/casdoor-site).
+When this PR merges, issues #234 and #256 will automatically close!
 
-:::caution
+Learn more: [Linking PRs to Issues (GitHub Docs)](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
 
-If you are not familiar with a language, please do not translate it; keep the file as it is.
+## Code Guidelines
+
+Follow these principles to keep our codebase clean and maintainable:
+
+### Write Readable Code
+
+- **Document complex logic**: Add comments explaining *why*, not just *what*
+- **Follow existing style**: Match the formatting and patterns already in use
+- **Use meaningful names**: `getUserByEmail()` is better than `get()`
+
+### Naming Conventions
+
+Be consistent with naming across the codebase:
+
+- **Variables**: `camelCase` - e.g., `signupUrl`, `emailProvider`
+- **UI Text**: `Title Case` - e.g., "Signup URL", "Email Provider"
+- **Functions**: `camelCase` - e.g., `validateUser()`, `sendEmail()`
+- **Constants**: `UPPER_SNAKE_CASE` - e.g., `MAX_RETRY_COUNT`
+
+### Working with Internationalization (i18n)
+
+Casdoor supports multiple languages using [Crowdin](https://crowdin.com/project/casdoor-site) and i18next.
+
+**When adding new UI strings:**
+
+1. Add them to your code using i18next
+
+2. Generate translation files:
+
+   ```bash
+   cd i18n
+   go test
+   ```
+
+   This auto-generates `web/src/locales/**/data.json` files with English defaults.
+
+3. After your PR merges, help translate at [Crowdin](https://crowdin.com/project/casdoor-site)
+
+:::caution Translation Etiquette
+
+**Only translate languages you know well!** Machine translations can be misleading or incorrect. If unsure, leave it in English - native speakers will translate it properly.
 
 :::
 
+## Getting Help
+
+Stuck? Have questions? We're here to help!
+
+### Before Asking
+
+1. 📖 Check the [documentation](https://casdoor.org/docs)
+2. 🔍 Search [existing issues](https://github.com/casdoor/casdoor/issues)  
+3. 💬 Browse [GitHub Discussions](https://github.com/casdoor/casdoor/discussions)
+
+### Ask the Community
+
+- **💬 Discord**: [Join our server](https://discord.gg/5rPsrAzK7S) for real-time chat
+- **💭 GitHub Discussions**: [Ask questions](https://github.com/casdoor/casdoor/discussions) that help others too
+- **🐛 GitHub Issues**: For verified bugs only (discuss first!)
+
+### Response Time
+
+We're a global community, so responses might take a bit. Usually:
+
+- Discord: A few hours
+- GitHub Discussions: 1-2 days
+- Pull Request reviews: 2-5 days
+
+Please be patient - we're all volunteers! ❤️
+
+## Code of Conduct
+
+Be respectful, inclusive, and helpful. We're building software together, and kindness makes everything better.
+
+- **Be welcoming**: Everyone was a beginner once
+- **Be patient**: Not everyone has the same experience level
+- **Be constructive**: Criticism should be about code, not people
+- **Be collaborative**: We're on the same team!
+
 ## License
 
-By contributing to Casdoor, you agree that your contributions will be licensed under the Apache License.
+By contributing to Casdoor, you agree that your contributions will be licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+This ensures Casdoor remains open source and free for everyone.
+
+## Thank You! 🙏
+
+Every contribution, no matter how small, makes Casdoor better for thousands of users worldwide. We appreciate your time and effort!
+
+### Recognition
+
+Contributors are recognized in:
+
+- Our [Contributors page](https://github.com/casdoor/casdoor/graphs/contributors)
+- Release notes for significant features
+- The project's history forever!
+
+### What's Next?
+
+Ready to start? Here's your roadmap:
+
+1. **👀 Browse [Good First Issues](https://github.com/orgs/casdoor/projects/1)**
+2. **💬 Say hi on [Discord](https://discord.gg/5rPsrAzK7S)**
+3. **🍴 Fork the repo and start coding!**
+4. **📝 Submit your first PR**
+
+Welcome to the team! 🚀
