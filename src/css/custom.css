@@ -251,6 +251,27 @@ div[class^="announcementBar_"] {
   font-size: 14px;
 }
 
+.navbar__link--llm-mcp {
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgb(113 102 222 / 25%), rgb(108 99 211 / 15%));
+  color: var(--ifm-navbar-link-color);
+}
+
+.navbar__link--llm-mcp:hover {
+  color: var(--ifm-navbar-link-hover-color);
+  background: linear-gradient(135deg, rgb(113 102 222 / 40%), rgb(108 99 211 / 25%));
+}
+
+html[data-theme="dark"] .navbar__link--llm-mcp {
+  background: linear-gradient(135deg, rgb(113 102 222 / 35%), rgb(108 99 211 / 20%));
+}
+
+html[data-theme="dark"] .navbar__link--llm-mcp:hover {
+  background: linear-gradient(135deg, rgb(113 102 222 / 50%), rgb(108 99 211 / 30%));
+}
+
 /* doc sidebar */
 .menu__link {
   font-size: 14px;

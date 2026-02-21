@@ -46,6 +46,12 @@ module.exports = {
           label: "Docs",
         },
         {
+          to: "/docs/how-to-connect/mcp/overview",
+          label: "LLM & MCP",
+          position: "left",
+          className: "navbar__link--llm-mcp",
+        },
+        {
           href: "/ecosystem",
           label: "Integrations",
           position: "left",
