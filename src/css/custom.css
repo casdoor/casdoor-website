@@ -307,6 +307,20 @@ html[data-theme="dark"] .theme-doc-sidebar-container div[title="Expand sidebar"]
   display: none;
 }
 
+/* Footer community links (Discord, Stack Overflow, Google Groups) */
+.footer-community-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.footer-community-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
 /* Mobile breakpoint */
 @media only screen and (max-width: 996px) {
   :root {
