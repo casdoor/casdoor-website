@@ -209,18 +209,6 @@ var _hmt = _hmt || [];
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
-    announcementBar: {
-      id: "announcement", // ID of the announcement bar
-      content: `
-        <script>
-          document.write(Math.random() < 0.8 ? 
-            '<a target="_blank" href="https://github.com/casibase/casibase/">💖 Looking for an open-source, LangChain-like AI knowledge database & chatbot with admin UI and multi-model support (ChatGPT, Claude, Llama 3, DeepSeek R1, HuggingFace, etc.)? Learn more about: Casibase</a>' :
-            '<a target="_blank" href="https://github.com/casdoor/casdoor-authenticator/">🔐 Looking for an open-source, cross-platform multi-factor authentication solution? Learn more about: Casdoor-Authenticator</a>'
-          );
-        </script>
-      `,
-      isCloseable: true,
-    },
     docs: {
       sidebar: {hideable: true},
     },
