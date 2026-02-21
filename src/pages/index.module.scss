@@ -56,6 +56,37 @@
   align-items: center;
 }
 
+.cncfBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 2rem;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 32px;
+  color: #e3e3e3;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+}
+
+.cncfBadgeIcon {
+  flex-shrink: 0;
+  height: 42px;
+  width: auto;
+  opacity: 0.98;
+  vertical-align: middle;
+}
+
 @mixin content {
   padding: 60px 0;
   font-size: 1.3rem;

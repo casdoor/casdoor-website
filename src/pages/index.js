@@ -82,6 +82,21 @@ function HomepageHeader() {
             <Translate>Online Demo</Translate>
           </Link>
         </div>
+        <a
+          href="https://landscape.cncf.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.cncfBadge}
+          aria-label="CNCF Landscape">
+          <img
+            src="https://landscape.cncf.io/images/logo_header.svg"
+            alt="CNCF Landscape"
+            className={styles.cncfBadgeIcon}
+            width={200}
+            height={44}
+          />
+          <span><Translate>Casdoor is part of CNCF Landscape</Translate></span>
+        </a>
       </div>
       <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height="720" />
     </header>
