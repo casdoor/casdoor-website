@@ -266,9 +266,5 @@ var _hmt = _hmt || [];
       src: "/js/isMainland.js",
       async: true,
     },
-    {
-      src: "/js/tawk.js",
-      async: true,
-    },
   ],
 };
