@@ -4,16 +4,31 @@ import styles from "./styles.module.css";
 import Translate, {translate} from "@docusaurus/Translate";
 import {useColorMode} from "@docusaurus/theme-common";
 
+// MCP square icon only (no text), extracted from official MCP docs logo
+const MCP_ICON_LIGHT = "/img/mcp-icon-light.svg";
+const MCP_ICON_DARK = "/img/mcp-icon-dark.svg";
+
+// Multicolor icons from Twemoji (CC-BY 4.0), via jsDelivr CDN (jdecked/twemoji)
+// 1f6e1=shield 1f3e2=office building 1f4c8=chart increasing
+const TWEMOJI_CDN = "https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/svg";
+const FEATURE_ICON_SRC = [
+  null,  // AI & MCP uses MCP icon (iconSrcLight/iconSrcDark) instead
+  `${TWEMOJI_CDN}/1f6e1.svg`,  // Enterprise / Shield
+  `${TWEMOJI_CDN}/1f3e2.svg`,  // Architecture / Office building
+  `${TWEMOJI_CDN}/1f4c8.svg`,  // SaaS / Chart increasing
+];
+
 const FeatureList = [
   {
     title: translate({
       message: "AI Agent Identity & MCP Server",
     }),
-    path: "/img/ai-mcp",
+    iconSrcLight: MCP_ICON_LIGHT,
+    iconSrcDark: MCP_ICON_DARK,
     description: (
       <>
         <Translate>
-        Built-in MCP server with Streamable HTTP enables AI agents to manage Casdoor via natural language. Features OAuth 2.1 for AI agents with Dynamic Client Registration (RFC 7591), Authorization Server Metadata (RFC 8414), Resource Indicators (RFC 8707), and per-tool permission control for secure agent-to-agent authentication.
+        Built-in MCP server with Streamable HTTP lets AI agents manage Casdoor in natural language. OAuth 2.1 for agents with Dynamic Client Registration, per-tool permissions, and secure agent-to-agent auth.
         </Translate>{" "}
         <a href="/docs/how-to-connect/mcp/integration"><Translate>Learn more about MCP</Translate></a>.
       </>
@@ -23,11 +38,11 @@ const FeatureList = [
     title: translate({
       message: "Enterprise-Grade Authentication",
     }),
-    path: "/img/model",
+    iconSrc: FEATURE_ICON_SRC[1],
     description: (
       <>
         <Translate>
-        Deploy a production-ready Casdoor application in minutes. Streamline authentication and authorization management with an intuitive interface designed for enterprise needs.
+        Go from zero to production in minutes. An intuitive console for auth and authorization, built for teams and scale.
         </Translate>
       </>
     ),
@@ -36,11 +51,11 @@ const FeatureList = [
     title: translate({
       message: "Modern Architecture",
     }),
-    path: "/img/storage",
+    iconSrc: FEATURE_ICON_SRC[2],
     description: (
       <>
         <Translate>
-        Built with a modern frontend-backend separation architecture, Casdoor delivers an intuitive web UI with exceptional performance and scalability for high-concurrency environments.
+        Clean frontend-backend separation, fast web UI, and horizontal scalability for high concurrency.
         </Translate>
       </>
     ),
@@ -49,21 +64,35 @@ const FeatureList = [
     title: translate({
       message: "SaaS Management Platform",
     }),
-    path: "/img/language",
+    iconSrc: FEATURE_ICON_SRC[3],
     description: (
       <>
-        <Translate>Comprehensive SaaS subscription and payment management with support for multiple plans, pricing tiers, and payment providers. Manage products, subscriptions, and transactions seamlessly. To learn more, visit</Translate> <a href="/docs/pricing/overview"><Translate>SaaS Management documentation</Translate></a>.
+        <Translate>
+        Full SaaS billing: plans, pricing tiers, and payment providers. Manage products, subscriptions, and revenue in one place.</Translate>{" "}
+        <a href="/docs/pricing/overview"><Translate>SaaS docs</Translate></a>.
       </>
     ),
   },
 ];
 
-function Feature({title, path, description}) {
+function Feature({title, description, iconSrc, iconSrcLight, iconSrcDark}) {
   const {colorMode} = useColorMode();
+  const src = iconSrcLight !== null && iconSrcDark !== null
+    ? (colorMode === "dark" ? iconSrcDark : iconSrcLight)
+    : iconSrc;
   return (
     <div className={clsx("col col--6 col--lg-3")}>
-      <div className="text--center">
-        <img src={colorMode === "light" ? path + ".png" : path + "-dark.png"} className={styles.featureSvg} alt={title} />
+      <div className={styles.featureIconWrap}>
+        {src && (
+          <img
+            src={src}
+            alt=""
+            className={styles.featureIcon}
+            width={120}
+            height={120}
+            loading="lazy"
+          />
+        )}
       </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
