@@ -336,21 +336,6 @@ function Showcase() {
   );
 }
 
-function OpenCollective() {
-  const windowSize = useWindowSize();
-  const isMobile = windowSize === "mobile";
-
-  if (isMobile) {
-    return (
-      <iframe title="Sponsors" src="https://opencollective.com/casbin/banner.html" style={{width: "100%", height: "1100px", display: "block"}}></iframe>
-    );
-  } else {
-    return (
-      <iframe title="Sponsors" src="https://opencollective.com/casbin/banner.html" style={{width: "100%", height: "650px", display: "block"}}></iframe>
-    );
-  }
-}
-
 export default function Home() {
   return (
     <Layout
@@ -366,7 +351,6 @@ export default function Home() {
         <ContentSignup />
         <ContentForget />
         <Showcase />
-        <OpenCollective />
       </main>
     </Layout>
   );
