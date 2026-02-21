@@ -1,51 +1,90 @@
 import React from "react";
 import Layout from "@theme/Layout";
-// eslint-disable-next-line unused-imports/no-unused-imports
-import Translate, {translate} from "@docusaurus/Translate";
+import Translate from "@docusaurus/Translate";
 
 function Help() {
   return (
     <Layout title="Help" description="Help Page" styles={{padding: "19px"}}>
       <div className="container text--center">
-        <br /><br />
+        <br />
+        <br />
         <h1><Translate>Need help?</Translate></h1>
-        <Translate>If you need help with Casdoor, you can try one of the mechanisms below.</Translate>
-        <br /><br /><br /><br />
+        <Translate>If you need help with Casdoor, try one of these options.</Translate>
+        <br />
+        <br />
+        <br />
+        <br />
         <div className="row">
           <div className="col">
-            <h2><Translate>Forum</Translate></h2>
-            <Translate>Discuss with maintainers or share your experiences with Casdoor on</Translate> <a href="https://forum.casbin.com"><Translate>Casdoor Forum</Translate></a>.
-          </div>
-          <div className="col">
-            <h2><Translate>Discord</Translate></h2>
-            <Translate>You can join the conversation on</Translate> <a href="https://discord.gg/5rPsrAzK7S"><Translate>Discord</Translate></a> <Translate>for community support and to contribute.</Translate>
-          </div>
-          <div className="col">
-            <h2><Translate>Tencent QQ and Wechat</Translate></h2>
+            <h2>Discord</h2>
             <Translate
               values={{
-                645200447: (
-                  <a href="https://cdn.casdoor.com/casdoor/resource/built-in/admin/qq_casdoor.png" target="_blank" rel="noreferrer">
-                    645200447
-                  </a>
-                ),
-                Wechat_group: (
-                  <a href="https://cdn.casdoor.com/casdoor/resource/built-in/admin/wechat.jpg" target="_blank" rel="noreferrer">
-                    Wechat group
+                discordLink: (
+                  <a href="https://discord.gg/5rPsrAzK7S" target="_blank" rel="noopener noreferrer">
+                    <Translate>Discord</Translate>
                   </a>
                 ),
               }}
             >
-              {"You can contact us by joining the QQ group: {645200447} or {Wechat_group}"}
+              {"Join the conversation on {discordLink} to get help from contributors."}
             </Translate>
           </div>
           <div className="col">
             <h2>Github</h2>
-            <Translate>At our</Translate> <a href="https://github.com/casdoor/casdoor"><Translate>GitHub repo</Translate></a><Translate>, you can browse and submit</Translate> <a href="https://github.com/casdoor/casdoor/issues">issues</a> or <a href="https://github.com/casdoor/casdoor/pulls">pull requests</a> <Translate>for bugs you find or new features you&apos;d like to see implemented.</Translate>
+            <Translate
+              values={{
+                repoLink: (
+                  <a href="https://github.com/casdoor/casdoor" target="_blank" rel="noopener noreferrer">
+                    <Translate>GitHub repo</Translate>
+                  </a>
+                ),
+                issueLink: (
+                  <a href="https://github.com/casdoor/casdoor/issues" target="_blank" rel="noopener noreferrer">
+                    <Translate>issues</Translate>
+                  </a>
+                ),
+                prLink: (
+                  <a href="https://github.com/casdoor/casdoor/pulls" target="_blank" rel="noopener noreferrer">
+                    <Translate>pull requests</Translate>
+                  </a>
+                ),
+              }}
+            >
+              {"Browse our {repoLink} and submit {issueLink} or {prLink} for bugs or feature requests."}
+            </Translate>
+          </div>
+          <div className="col">
+            <h2><Translate>Google Groups</Translate></h2>
+            <Translate
+              values={{
+                googleGroupsLink: (
+                  <a href="https://groups.google.com/g/casdoor" target="_blank" rel="noopener noreferrer">
+                    <Translate>Google Groups</Translate>
+                  </a>
+                ),
+              }}
+            >
+              {"Discuss with maintainers or share your experience with Casdoor on {googleGroupsLink}."}
+            </Translate>
+          </div>
+          <div className="col">
+            <h2><Translate>Stack Overflow</Translate></h2>
+            <Translate
+              values={{
+                stackOverflowLink: (
+                  <a href="https://stackoverflow.com/search?q=casdoor" target="_blank" rel="noopener noreferrer">
+                    <Translate>Stack Overflow</Translate>
+                  </a>
+                ),
+              }}
+            >
+              {"Ask questions about Casdoor on {stackOverflowLink}."}
+            </Translate>
           </div>
         </div>
       </div>
-      <br /><br />
+      <br />
+      <br />
     </Layout>
   );
 }
