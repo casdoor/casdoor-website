@@ -8,7 +8,7 @@ module.exports = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.png",
+  favicon: "https://casdoor.org/img/casdoor.png",
   organizationName: "casdoor", // Usually your GitHub org/user name.
   projectName: "casdoor-website", // Usually your repo name.
   i18n: {
