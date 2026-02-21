@@ -47,11 +47,11 @@ module.exports = {
         },
         {
           href: "/ecosystem",
-          label: "Ecosystem",
+          label: "Integrations",
           position: "left",
         },
         {
-          label: "Authenticator App",
+          label: "Password App",
           to: "/docs/how-to-connect/totp-authenticator-app",
           position: "left",
         },
@@ -67,12 +67,12 @@ module.exports = {
         },
         {
           href: "https://casdoor.com",
-          label: "For Enterprise",
+          label: "Enterprise Version",
           position: "left",
         },
         {
           href: "https://casdoor.com",
-          label: "Hosting Plan (SaaS)",
+          label: "SaaS",
           position: "left",
         },
         {
