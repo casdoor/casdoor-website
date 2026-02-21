@@ -7,6 +7,7 @@ import HomepageFeatures from "../components/HomepageFeatures";
 // eslint-disable-next-line unused-imports/no-unused-imports
 import Translate, {translate} from "@docusaurus/Translate";
 import CasdoorCard from "../components/CasdoorCard";
+import HeroLoginCarousel from "../components/HeroLoginCarousel";
 import TabList from "../components/TabList";
 import TabItem from "@theme/TabItem";
 import CodeCard from "../components/CodeCard";
@@ -98,7 +99,7 @@ function HomepageHeader() {
           <span><Translate>Casdoor is part of CNCF Landscape</Translate></span>
         </a>
       </div>
-      <FrameMask className={styles.headerborder} src="https://door.casdoor.com/login" width="550" height="720" />
+      <HeroLoginCarousel className={styles.headerborder} />
     </header>
   );
 }
