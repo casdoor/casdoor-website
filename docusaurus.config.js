@@ -24,9 +24,9 @@ module.exports = {
       contextualSearch: true,
     },
     colorMode: {
-      defaultMode: "light",
+      defaultMode: "dark",
       disableSwitch: false,
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
     hotjar: {
       applicationId: "1689986",
