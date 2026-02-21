@@ -90,12 +90,6 @@
         "pinned": true
     },
     {
-        "caption": "r/SpaceX",
-        "image": "users/rspacex.png",
-        "infolink": "https://github.com/r-spacex/SpaceX-API/commit/f8daa8f9878dcd7a281fc8081e3aeb8e5d216089",
-        "pinned": true
-    },
-    {
         "caption": "Elastic",
         "image": "users/elastic.svg",
         "infolink": "https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-dependencies.html",
@@ -126,24 +120,6 @@
         "pinned": true
     },
     {
-        "caption": "Musma",
-        "image": "users/musma.svg",
-        "infolink": "https://www.musma.net/",
-        "pinned": true
-    },
-    {
-        "caption": "Jdlt",
-        "image": "users/jdlt.svg",
-        "infolink": "https://jdlt.co.uk/",
-        "pinned": true
-    },
-    {
-        "caption": "Jfif",
-        "image": "users/360.jfif",
-        "infolink": "https://www.linkedin.com/in/andrew-weng/",
-        "pinned": true
-    },
-    {
         "caption": "Bytebase",
         "image": "users/bytebase.svg",
         "infolink": "https://github.com/bytebase/bytebase/blob/740afc6286cd855fecc3cc54875583c6b650a41a/server/server.go",
@@ -153,12 +129,6 @@
         "caption": "zilliz",
         "image": "users/zilliz.png",
         "infolink": "https://github.com/milvus-io/milvus/blob/d7f38a803d5d23d3e061702e73770cb68aee1dc2/internal/proxy/privilege_interceptor.go",
-        "pinned": true
-    },
-    {
-        "caption": "Ontario Government",
-        "image": "users/ontario.jpg",
-        "infolink": "https://www.linkedin.com/in/nihalpandit",
         "pinned": true
     },
     {
