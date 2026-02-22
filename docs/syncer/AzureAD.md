@@ -1,15 +1,15 @@
 ---
-title: Azure AD
-description: Using Azure AD Syncer to synchronize users from Azure Active Directory
-keywords: [syncer, azure ad, microsoft]
+title: Azure AD syncer
+description: Sync users from Azure Active Directory (Microsoft Entra ID) to Casdoor via Microsoft Graph.
+keywords: [syncer, azure ad, microsoft, Entra]
 authors: [nomeguy]
 ---
 
-Azure AD Syncer enables automatic user synchronization from Azure Active Directory (Microsoft Entra ID) to Casdoor. The syncer uses the Microsoft Graph API to fetch user information and keeps your user directory up to date.
+The **Azure AD syncer** pulls users from Azure Active Directory (Microsoft Entra ID) into Casdoor using the Microsoft Graph API and keeps the directory in sync.
 
 ## Prerequisites
 
-Before configuring the Azure AD syncer, you need to set up an application registration in Azure Portal with the appropriate permissions.
+Register an application in the [Azure Portal](https://portal.azure.com) and grant it the permissions below.
 
 ### Step 1: Register an Application
 

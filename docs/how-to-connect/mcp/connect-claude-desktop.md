@@ -1,23 +1,21 @@
 ---
-title: Connect Claude Desktop
-description: Step-by-step guide to connect Claude Desktop to Casdoor's MCP server
-keywords: [MCP, Claude Desktop, OAuth, PKCE, MCP client]
+title: Connect Claude Desktop to MCP
+description: Connect Claude Desktop to Casdoor’s MCP server with OAuth.
+keywords: [MCP, Claude Desktop, OAuth, PKCE]
 authors: [hsluoyz]
 ---
 
-This guide walks you through connecting Claude Desktop to Casdoor's MCP server, enabling Claude to manage your Casdoor applications, users, and other resources through natural language commands.
+Connect Claude Desktop to Casdoor’s MCP server so Claude can manage your applications, users, and resources via natural language.
 
 ## Prerequisites
-
-Before you begin, ensure you have:
 
 - A running Casdoor instance (accessible via HTTPS recommended for production)
 - [Claude Desktop](https://claude.ai/download) installed on your computer
 - Admin access to your Casdoor instance to create applications
 
-## Step 1: Create an Application in Casdoor
+## Step 1: Create an application in Casdoor
 
-First, configure a Casdoor application that Claude Desktop will use for OAuth authentication:
+Create a Casdoor application for Claude Desktop’s OAuth:
 
 1. Log in to your Casdoor admin panel
 2. Navigate to **Applications** and click **Add**
@@ -44,10 +42,10 @@ First, configure a Casdoor application that Claude Desktop will use for OAuth au
 8. **(Optional) Category**: Set to `MCP` for better organization
 
    :::info
-   Application categories help organize your apps. See [Application Categories](/docs/application/categories) for more details.
+   See [Application categories](/docs/application/categories) for Category and Type options.
    :::
 
-9. Click **Save** and note down your **Client ID** (you'll need it in the next step)
+9. Click **Save** and note the **Client ID** for the next step.
 
 ## Step 2: Configure Claude Desktop
 

@@ -1,65 +1,48 @@
 ---
 title: Overview
-description: Add third-party services to your application
-keywords: [provider, OAuth, SMS, Storage, Email, Payment, Captcha]
+description: Configure third-party providers for OAuth, SMS, email, storage, payment, captcha, and more.
+keywords: [provider, OAuth, SMS, storage, email, payment, captcha, MFA]
 authors: [kininaru]
 ---
 
-Casdoor uses providers to offer third-party services for the platform. In this chapter, you will learn how to add providers to Casdoor.
+**Providers** in Casdoor are connectors to third-party services. This section describes the provider types and how to add and use them.
 
-## What We Have
+## Provider types
 
-Currently, we have eight types of providers:
+Casdoor supports the following provider types:
 
-- **OAuth Providers**
+| Type | Purpose |
+|------|--------|
+| **OAuth** | Sign-in via external identity providers (e.g. GitHub, Google, QQ). See [OAuth](/docs/provider/oauth/overview). |
+| **SMS** | Send SMS verification codes for phone number verification. |
+| **Email** | Send email (e.g. verification codes, notifications). |
+| **Storage** | Store files on the local filesystem or cloud object storage (e.g. S3, OSS). |
+| **Payment** | Accept payments (e.g. Alipay, WeChat Pay, PayPal). Used for products and subscriptions. |
+| **Captcha** | Protect sign-in and sign-up with captcha (Default, reCAPTCHA, hCaptcha, Cloudflare Turnstile, Alibaba Cloud, etc.). |
+| **Identity verification** | Verify user identity via third-party services (e.g. Jumio) using ID documents. |
+| **MFA** | Second-factor authentication (e.g. RADIUS) for multi-factor authentication. |
 
-  Casdoor allows users to sign in through other OAuth applications. You can add GitHub, Google, QQ, and many other OAuth applications to Casdoor. For more details, refer to the [OAuth](/docs/provider/oauth/overview) section.
-- **SMS Providers**
+## Scope and permissions
 
-  Casdoor sends SMS messages to users when they need to verify their phone numbers. SMS providers are used to send SMS messages in Casdoor.
-- **Email Providers**
+Only administrators can add and configure providers. Visibility of providers depends on who created them:
 
-  Email providers are similar to SMS providers.
-- **Storage Providers**
+- **Global administrators**: Users in the `built-in` organization or with `IsGlobalAdmin` enabled. Providers they create can be used by **all** applications.
+- **Organization administrators**: Users with `IsAdmin` enabled. Providers they create can be used **only** by applications in the same organization (behavior may evolve in future releases).
 
-  Casdoor allows users to store files using the local file system or cloud OSS services.
-- **Payment Providers**
+## Adding a provider to an application
 
-  Casdoor can add payment providers, which will be used to add payment methods to products on the product page. Currently, the supported payment providers include Alipay, WeChat Pay, PayPal, and GC.
-- **Captcha Providers**
+A provider must be added to an application before it can be used. Steps:
 
-  Casdoor supports configurable captcha in user flows. Currently, the supported captcha providers include Default Captcha, reCAPTCHA, hCaptcha, Alibaba Cloud Captcha, and Cloudflare Turnstile.
-- **ID Verification Providers**
+1. Open the application edit page and add a new provider row.
 
-  Casdoor supports identity verification for users through ID Verification providers. Users can verify their real-world identity by submitting ID card information, which is validated through third-party verification services like Jumio.
-- **MFA Providers**
+   ![provider_overview_add](/img/providers/provider_overview_add.png)
 
-  Casdoor supports external authentication servers for multi-factor authentication. Currently supports RADIUS servers for authenticating users as a second factor during login.
+2. Choose the provider to attach. The list shows all providers available to that application.
 
-## How to Configure and Use
+   ![provider_overview_select](/img/providers/provider_overview_select.png)
 
-### Scope
+3. For **OAuth** and **Captcha** providers, further configure how they are used. See [OAuth](/docs/provider/oauth/overview/#applied-in-application) and [Captcha](/docs/provider/captcha/default#applied-in-application).
 
-Providers have different scopes determined by their creator. Only Administrators have permission to add and configure providers. There are two types of Administrators in Casdoor:
+   ![provider_overview_config](/img/providers/provider_overview_config.png)
 
-- **Global Administrator**: All users under the `built-in` organization and users who have enabled `IsGlobalAdmin`. Providers created by Global Administrators can be used by all applications.
-
-- **Organization Administrator**: Users who have enabled `IsAdmin`. Providers created by Organization Administrators can **only** be used by applications under the same organization (under development...).
-
-### Add to Application
-
-Follow the steps below to add providers to your application. Note that you cannot use a provider in your application until you have added it.
-
-1. Go to the application edit page and add a new provider row.
-
-    ![provider_overview_add](/img/providers/provider_overview_add.png)
-
-2. Select a provider that you want to add to the application. You will see all providers that the application can use.
-
-    ![provider_overview_select](/img/providers/provider_overview_select.png)
-
-3. For **OAuth** and **Captcha** providers, you can configure their usage. See [OAuth](/docs/provider/oauth/overview/#applied-in-application) and [Captcha](/docs/provider/captcha/default#applied-in-application) for more information.
-
-    ![provider_overview_config](/img/providers/provider_overview_config.png)
-
-Finally, **save** the configuration. You can now try using the provider in your application.
+4. **Save** the application. The provider is now available for that application.

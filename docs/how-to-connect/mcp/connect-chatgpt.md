@@ -1,27 +1,21 @@
 ---
-title: Connect ChatGPT
-description: Step-by-step guide to connect ChatGPT to Casdoor's MCP server
-keywords: [MCP, ChatGPT, OpenAI, OAuth, PKCE, MCP client]
+title: Connect ChatGPT to MCP
+description: Connect ChatGPT to Casdoor’s MCP server with OAuth.
+keywords: [MCP, ChatGPT, OpenAI, OAuth, PKCE]
 authors: [hsluoyz]
 ---
 
-This guide demonstrates how to connect ChatGPT to Casdoor's MCP server, enabling ChatGPT to manage your Casdoor applications, users, and resources through natural language conversations.
+Connect ChatGPT to Casdoor’s MCP server so you can manage applications, users, and resources from ChatGPT. Requires ChatGPT Plus or Enterprise with MCP support ([OpenAI docs](https://openai.com/chatgpt)).
 
 ## Prerequisites
-
-Before you begin, ensure you have:
 
 - A running Casdoor instance (HTTPS required for ChatGPT integration)
 - A ChatGPT Plus or Enterprise account with MCP support
 - Admin access to your Casdoor instance to create applications
 
-:::info
-MCP support in ChatGPT is available for Plus and Enterprise users. Check [OpenAI's documentation](https://openai.com/chatgpt) for the latest availability.
-:::
+## Step 1: Create an application in Casdoor
 
-## Step 1: Create an Application in Casdoor
-
-Configure a Casdoor application that ChatGPT will use for OAuth authentication:
+Create a Casdoor application for ChatGPT’s OAuth:
 
 1. Log in to your Casdoor admin panel
 2. Navigate to **Applications** and click **Add**
@@ -47,10 +41,10 @@ Configure a Casdoor application that ChatGPT will use for OAuth authentication:
 8. **(Optional) Category**: Set to `MCP` for better organization
 
    :::info
-   Application categories help organize your apps. See [Application Categories](/docs/application/categories) for more details.
+   See [Application categories](/docs/application/categories) for Category and Type options.
    :::
 
-9. Click **Save** and note down your **Client ID** and **Client Secret** (you'll need them in the next step)
+9. Click **Save** and note the **Client ID** and **Client Secret** for the next step.
 
 ## Step 2: Configure ChatGPT MCP Connection
 

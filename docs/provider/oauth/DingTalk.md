@@ -1,51 +1,41 @@
 ---
-title: DingTalk
-description: Add DingTalk OAuth provider to your application
+title: DingTalk OAuth
+description: Add DingTalk as an OAuth provider.
 keywords: [DingTalk, OAuth]
 authors: [Marvelousp4]
 ---
 
-## DingTalk ✔️
+Configure DingTalk at the [DingTalk Open Platform](https://open-dev.dingtalk.com/). Create or open an app and note **AppKey** and **AppSecret** (these map to **Client ID** and **Client secret** in Casdoor).
 
-### Configuring DingTalk
-
-To configure DingTalk, visit the [DingTalk developer platform](https://open-dev.dingtalk.com/?spm=ding_open_doc.document.0.0.140a645fxfAUAE#/loginMan) and log in using your DingTalk account. Once you're on the platform, follow the instructions provided to obtain your `Client Id` and `Client Secret`. The corresponding terms in DingTalk are as follows:
-
-| Term           | DingTalk Name |
-|----------------|---------------|
-| Client ID      | AppKey        |
-| Client secret  | AppSecret     |
-
-In DingTalk, you can find the `Appkey` and `AppSecret` in the App Info.
+| Casdoor       | DingTalk  |
+|---------------|-----------|
+| Client ID     | AppKey    |
+| Client secret | AppSecret |
 
 ![DingTalk](/img/providers/OAuth/dingtalkapp.png)
 
-Make sure to add the `Redirect Domain`, which should be your Casdoor domain.
+Add the **Redirect Domain**: your Casdoor domain (e.g. `https://your-casdoor.com`).
 
 ![DingTalk](/img/providers/OAuth/dingtalkredirect.png)
 
-For more detailed information, please refer to the [DingTalk developer docs](https://open.dingtalk.com/document/orgapp-server/tutorial-obtaining-user-personal-information).
+## Required permission
 
-### Required Permissions
-
-You need to enable the following permissions in your DingTalk application:
-
-- **Contact.User.Read** - Required for reading user contact information via the `/v1.0/contact/users/me` API endpoint
+Enable **Contact.User.Read** in your DingTalk app (used for `/v1.0/contact/users/me`). Without it, Casdoor cannot fetch user info and sign-in will fail. Enable it under **Permissions Management**.
 
 ![DingTalk](/img/providers/OAuth/dingtalkpermission.png)
 
 :::caution
-
-Without the `Contact.User.Read` permission, authentication will fail when Casdoor tries to fetch user information. Make sure this permission is enabled in your DingTalk application settings under "Permissions Management".
-
+**Contact.User.Read** must be enabled in the DingTalk application.
 :::
 
-### User Identity Mapping
+## Username mapping
 
-When users authenticate through DingTalk, Casdoor creates their username using the `unionid` field from DingTalk. This identifier uniquely represents each user across your DingTalk organization, ensuring reliable authentication even when employee details change. Since `unionid` remains constant throughout a user's lifecycle, it provides stable account mapping between DingTalk and Casdoor.
+Casdoor uses DingTalk’s **unionid** as the username. This keeps the same user mapped across your DingTalk org even when other details change.
 
-### Configuring Casdoor
+## Add the provider in Casdoor
 
-Here's the final configuration for DingTalk:
+Create an **OAuth** provider, set **Type** to **DingTalk**, and enter **AppKey** as **Client ID** and **AppSecret** as **Client secret**.
 
 ![DingTalk](/img/providers/OAuth/dingtalkprovider.png)
+
+See [DingTalk developer docs](https://open.dingtalk.com/document/orgapp-server/tutorial-obtaining-user-personal-information).

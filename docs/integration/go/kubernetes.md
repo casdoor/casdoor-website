@@ -11,7 +11,7 @@ This article will guide you on how to configure authentication in Kubernetes usi
 
 ## Environment Requirements
 
-Before starting, please make sure that you have the following environment:
+Prerequisites:
 
 - A Kubernetes cluster.
 - A Casdoor application like this [demo website](https://demo.casdoor.com/).
@@ -26,26 +26,24 @@ So your Casdoor application should be deployed on an HTTPS website.
 
 ## Step 1: Creating a Casdoor App and User Account for Authentication
 
-Go to your Casdoor application and add a new application called **Kubernetes**.
-Please remember the `Name`, `Organization`, `client ID`, `client Secret`, and add some grant types to this app.
+In Casdoor add an application (e.g. **Kubernetes**). Note **Name**, **Organization**, **Client ID**, and **Client secret**. Enable the grant types the cluster will use.
 
 ![Create an application in Casdoor](/img/integration/go/kubernetes/Kubernetes_1.png)
 ![Grant types](/img/integration/go/kubernetes/Kubernetes_3.png)
 
-Next, add a new user to the application that you just created.
-Please note that the `Organization` and `Signup application` used here should correspond to the app registered earlier.
+Add a user; set **Organization** and **Signup application** to the application you created.
 
 ![Add a user in Casdoor](/img/integration/go/kubernetes/Kubernetes_2.png)
 
 ## Step 2: Configure Kubernetes API Server with OIDC Authentication
 
-To enable the OIDC plugin, you need to configure the following flags on the API server:
+To enable the OIDC plugin, set the following flags on the API server:
 
 - `--oidc-issuer-url`: URL of the provider that allows the API server to discover public signing keys.
 - `--oidc-client-id`: A client id that all tokens must be issued for.
 
 This article uses minikube for demonstration.
-You can configure the OIDC plugin for the minikube's API server
+Configure the OIDC plugin for the minikube API server
 using the following command at startup:
 
 ```shell
@@ -91,7 +89,7 @@ After executing this code, you should receive a response similar to the followin
 }
 ```
 
-Now, you can use the `id_token` that you just obtained to authenticate with the Kubernetes API server.
+Use the obtained `id_token` to authenticate with the Kubernetes API server.
 
 ### HTTP Request-Based Authentication
 
@@ -125,7 +123,7 @@ users:
 
 ```
 
-Now, you can directly access your API server using kubectl.
+Access the API server with kubectl.
 Try running a test command.
 
 ```shell
@@ -134,7 +132,7 @@ kubectl cluster-info
 
 #### Command Line Argument Method
 
-Alternatively, you can authenticate by directly adding the `id_token` to the command line parameters of kubectl.
+Alternatively, pass the `id_token` in kubectl command-line parameters.
 
 ```shell
 kubectl --token=$(id_token) cluster-info

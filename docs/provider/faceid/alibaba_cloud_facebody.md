@@ -1,42 +1,33 @@
 ---
 title: Alibaba Cloud FaceBody
-description: Add libaba Cloud FaceBody as a third-party faceid service to complete authentication
-keywords: [libaba Cloud FaceBody]
+description: Use Alibaba Cloud FaceBody for face verification.
+keywords: [Alibaba Cloud FaceBody, faceid]
 authors: [dacongda]
 ---
 
-## Introduction
+Alibaba Cloud FaceBody provides face detection, comparison, and human-body detection via API. It is used for scenarios such as face AR, biometric auth, and photo management.
 
-Based on face detection, analysis/comparison technology in images or videos, and human body detection technology, it provides independent modules for face/human body detection and localization, face attribute recognition and face comparison. It can provide developers and enterprises with high-performance online API services for various scenarios such as face AR, biometric identification and authentication, large-scale face retrieval, and photo management.
+## 1. Register and enable FaceBody
 
-## How to use?
-
-The steps to use alibaba cloud facebody are shown below.
-
-### Step 1: Register alibaba cloud facebody
-
-First, visit [Alibaba Cloud Facebody website](https://vision.aliyun.com/facebody) and open a facebody account.
+Sign in at [Alibaba Cloud FaceBody](https://vision.aliyun.com/facebody) and open the service.
 
 ![alibaba_cloud_faceid_register.png](/img/providers/faceid/alibaba_cloud_faceid_register.png)
 
-### Step 2: Buy CompareFace resource pack
+## 2. Purchase CompareFace resource pack
 
-Visit [Face body page](https://vision.console.aliyun.com/cn-shanghai/detail/facebody) and buy CompareFace resource pack
+On the [Face Body console](https://vision.console.aliyun.com/cn-shanghai/detail/facebody), purchase a **CompareFace** resource pack.
 
-### Step 3: Create a client secret
+## 3. Create AccessKey
 
-Go to console and create AccessKey and AccessSecret
+In the Alibaba Cloud console, create an **AccessKey** and **AccessSecret**. Save both.
 
 ![alibaba_cloud_faceid_accesskey.png](/img/providers/faceid/alibaba_cloud_faceid_accesskey.png)
-
 ![alibaba_cloud_faceid_accesskey.png](/img/providers/faceid/alibaba_cloud_faceid_create_accesskey.png)
 
-### Step 4: Find Endpoint
+## 4. Get endpoint
 
-You can find your endpoint ID in [Aliyun doc](https://help.aliyun.com/document_detail/40654.html)
+Find the endpoint for your region in [Aliyun FaceBody docs](https://help.aliyun.com/document_detail/40654.html). Example: region `cn-shanghai` → endpoint `facebody.cn-shanghai.aliyuncs.com`.
 
-for example, if your region id is cn-shanghai, then the endpoint is `facebody.cn-shanghai.aliyuncs.com`
+## 5. Create the provider in Casdoor
 
-### Step 5: Create Alibaba Cloud Facebody provider in Casdoor
-
-The last step is to add an Alibaba Cloud Facebody Face ID provider and fill in the `Client ID`, `Client Secret` and `Endpoint` in your Casdoor.
+**Providers** → **Add**. Set **Category** to **Face ID**, **Type** to **Alibaba Cloud FaceBody**. Enter **Client ID** (AccessKey ID), **Client Secret** (AccessSecret), and **Endpoint**. Save and add the provider to your application.

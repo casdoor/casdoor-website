@@ -1,72 +1,41 @@
 ---
 title: Gitea
-description: Using Casdoor for authentication in Gitea
-keywords: [Gitea]
+description: Use Casdoor as the OAuth/OIDC provider for Gitea sign-in.
+keywords: [Gitea, OAuth, OIDC]
 authors: [ComradeProgrammer]
 ---
 
-## Using Casdoor for authentication in Gitea
+[Gitea](https://gitea.io/en-us/) supports OAuth2/OIDC for sign-in. This guide configures Casdoor as the identity provider.
 
-[Gitea](https://gitea.io/en-us/) is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
+**Prerequisites:** Gitea installed and an admin account. See [install Gitea](https://docs.gitea.io/en-us/install-from-binary/). The first registered user is admin if you did not create one during install.
 
-Gitea supports 3rd-party authentication including Oauth, which makes it possible to use Casdoor to authenticate it. Here is the tutorial for achieving this.
+### 1. Create a Casdoor application
 
-### Preparations
+Create an application in Casdoor. Note the **Client ID** and **Client Secret**. Do **not** set the callback URL yet; it depends on Gitea’s auth source name (step 3).
 
-To configure Gitea to use Casdoor as identification provider, you need to have Gitea installed as well as access to administrator account.
-
-For more information about how to download, install and run Gitea see <https://docs.gitea.io/en-us/install-from-binary/>
-
-You are supposed to create an administrator account during installation. If you didn't, the administrator will be the first registered user. Please use this account proceed the following procedures.
-
-### 1. Create an Casdoor application
-
-Like this
 ![Create an Casdoor application](/img/integration/go/gitea/gitea6.png)
 
-Please remember the client ID and client Secret for the next step.
+### 2. Add authentication source in Gitea
 
-**Please don't fill in the callback url in this step. The url depends on the configurations on gitea in the next step. Later we will come back to set a correct callback url.**
-
-### 2. Configure Gitea to use Casdoor
-
-Log in as administrator. Go to 'Site Administration' page via drop-down menu  in the upper right corner. Then Switch to "Authentication Source" Page.
-
-You are supposed to see something like this.
+Log in as admin → **Site Administration** → **Authentication Source**.
 
 ![Authentication source page](/img/integration/go/gitea/gitea2.png)
 
-Press the "Add Authentication Source" Button, and fill in the form like this.
+Click **Add Authentication Source**. Set **Authentication Type** to **OAuth2** and **OAuth2 Provider** to **OpenID Connect**. Set a **name** for this source and remember it (used for the callback URL). Enter the **Client ID** and **Client Secret** from step 1. Set the **OpenID Connect Auto Discovery URL** to `https://<casdoor-endpoint>/.well-known/openid-configuration`. Save.
 
 ![Add authentication source](/img/integration/go/gitea/gitea3.png)
 
-Please choose the authentication type as "oauth2".
+### 3. Set the callback URL in Casdoor
 
-Please input a name for this authentication source and **remember this name**. This name will be used for the callback_url in the next step.
+In the Casdoor application, add this redirect URL:
 
-Please choose the `OpenID Connect` Oauth2 Provider.
+`<gitea-endpoint>/user/oauth2/<authentication-source-name>/callback`
 
-Fill in the **Client ID** and **Client Secret** remembered in the previous step.
+Replace `<authentication-source-name>` with the name you set in Gitea (e.g. `casdoor`).
 
-Fill in the openid connect auto discovery url, which is supposed to be `<your endpoint of casdoor>/.well-known/openid-configuration`.
+### 4. Test
 
-Fill in the other optional configuration items as you wish. And then submit it.
-
-Submit the form.
-
-### 3. Configure the callback url in casdoor
-
-Go back to the application edit page in step 2, and add the following callback url:
-
-`<endpoint of gitea>/user/oauth2/<authentication source name>/callback`
-
-The `<authentication source name>`is the name for authentication source in Gitea in the previous step.
-
-### 4. Have a try on Gitea
-
-Logout the current administrator account.
-
-You are supposed to see this in login page:
+Sign out of Gitea. On the login page you should see:
 
 ![Gitea login page](/img/integration/go/gitea/gitea4.png)
 

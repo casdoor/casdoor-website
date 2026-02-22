@@ -1,57 +1,48 @@
 ---
 title: Transaction
-description: Casdoor Transaction Overview
-keywords: [Transaction, Balance]
+description: Track payments and balance changes for users and organizations.
+keywords: [transaction, balance, purchase, recharge]
 authors: [Copilot]
 ---
 
-The `Transaction` feature tracks financial activities for users and organizations in Casdoor, enabling balance management and transaction history.
+**Transactions** record financial activity for users and organizations: purchases, recharges, and balance updates. They are created automatically when users pay or top up; balances update in real time.
 
-Transactions are automatically created when users make purchases or recharge their balance. Each transaction updates the corresponding user or organization balance in real-time.
+## Categories
 
-## Transaction Categories
+| Category | Effect | When |
+|----------|--------|------|
+| **Purchase** | Negative amount; balance decreases | Buying products or services (with balance or external payment). |
+| **Recharge** | Positive amount; balance increases | Buying recharge products or topping up. |
 
-Transactions in Casdoor are classified into two distinct categories that determine how they affect user balances:
+For recharge products, the system creates both a Purchase (payment) and a Recharge (balance increase) transaction.
 
-**Purchase** transactions represent spending money to buy products or services. These transactions have negative amounts and decrease the user's balance. When you pay for a product using your Casdoor balance or an external payment provider, a Purchase transaction records the deduction.
+## Transaction properties
 
-**Recharge** transactions represent adding funds to a user's balance. When purchasing recharge products or topping up an account, a Recharge transaction with a positive amount is created to increase the available balance.
+| Property | Description |
+|----------|-------------|
+| **Owner** | Owning organization. |
+| **Name** | Transaction id. |
+| **CreatedTime** | Creation time. |
+| **Category** | `Purchase` or `Recharge`. |
+| **Type** | e.g. provider category. |
+| **Subtype** | Provider-specific subtype. |
+| **Provider** | Payment provider used. |
+| **User** | User (for user-level transactions). |
+| **Amount** | Positive = income, negative = expense. |
+| **Currency** | e.g. USD, CNY. |
+| **State** | e.g. `Created`, `Paid`, `Canceled`, `Timeout`, `Error`. |
+| **Payment** | Related Payment (if any). |
 
-The system automatically determines the transaction category based on the product type and payment flow. For recharge products, the system creates both a Purchase transaction (for the payment) and a Recharge transaction (for the balance increase).
+## Balances
 
-## Transaction Properties
+- **User balance** — Stored on the user; tracks that user’s funds.
+- **Organization** — `orgBalance` (org’s own funds) and `userBalance` (sum of user balances in the org).
 
-Every Transaction has these properties:
+Balances are updated when transactions are created, updated, or deleted.
 
-- `Owner`
-- `Name`
-- `CreatedTime`
-- `Category`: Transaction category - either "Purchase" (spending) or "Recharge" (adding funds)
-- `Type`: The transaction type (e.g., provider category)
-- `Subtype`: Provider-specific transaction subtype
-- `Provider`: Payment provider used for the transaction
-- `User`: Required for User category transactions
-- `Amount`: Transaction amount (positive for income, negative for expenses)
-- `Currency`: The currency code (e.g., "USD", "CNY")
-- `State`: Transaction state stored as a string. Common values include "Created", "Paid", "Canceled", "Timeout", and "Error"
-- `Payment`: Related Payment record (if applicable)
+## Where to view transactions
 
-## Balance Tracking
+- **User** — In the user edit page, in the transactions table below user details.
+- **Organization** — In the organization edit page, for org-level transactions.
 
-Casdoor maintains separate balance fields:
-
-**User Balance** is stored on individual user records and tracks each user's available funds.
-
-**Organization Balances** include two fields: `orgBalance` for the organization's own funds, and `userBalance` for the sum of all user balances within that organization.
-
-Balances are automatically updated when transactions are created, modified, or deleted, ensuring consistency across the system.
-
-## Viewing Transactions
-
-Transaction history is displayed in two locations:
-
-When editing a user account, all transactions for that user appear in a dedicated table below the user details.
-
-When editing an organization, all organization-level transactions are shown in the organization edit page.
-
-Both views provide a chronological record with transaction details including name, creation time, category, type, amount, and state.
+Both views show a chronological list with name, time, category, type, amount, and state.

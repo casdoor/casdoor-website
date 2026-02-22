@@ -1,45 +1,29 @@
 ---
 title: Lemon Squeezy
-description: Add Lemon Squeezy payment provider to your application
+description: Use Lemon Squeezy as a payment provider for subscriptions and one-time purchases.
 keywords: [Lemon Squeezy, payment]
 authors: [hsluoyz]
 ---
 
-:::note
+[Lemon Squeezy](https://www.lemonsqueezy.com/) handles payments, subscriptions, and tax for software and digital products.
 
-This is an example of how to configure a **Lemon Squeezy** payment provider.
+## 1. Get credentials
 
-:::
+In the [Lemon Squeezy](https://www.lemonsqueezy.com/) dashboard: **Settings** → **API** to create an **API key**. In store settings, note your **Store ID**. Keep both for the next step.
 
-Lemon Squeezy is a modern payment platform designed for software companies and digital creators. It handles payments, subscriptions, and global tax compliance in one place.
+## 2. Create the provider in Casdoor
 
-## Step 1. Get Your API Credentials
+**Providers** → **Add**. Set **Category** to **Payment**, **Type** to **Lemon Squeezy**. Map:
 
-Create an account at [Lemon Squeezy](https://www.lemonsqueezy.com/) and access your dashboard.
+| Casdoor       | Lemon Squeezy |
+|---------------|----------------|
+| Client ID     | Store ID       |
+| Client secret | API Key        |
 
-Navigate to **Settings > API** to generate an API key. You'll also need your Store ID, which you can find in your store settings.
+## 3. Attach to a product
 
-Copy both values for the next step.
-
-## Step 2. Create a Lemon Squeezy Payment Provider
-
-Create a Lemon Squeezy payment provider in Casdoor:
-
-|    Name       |   Name in Lemon Squeezy     |
-|      ----     |   ----                      |  
-|Category       |   Choose `Payment`          |
-|Type           |   Choose `Lemon Squeezy`    |
-|Client ID      |   Store ID from Step 1      |
-|Client secret  |   API Key from Step 1       |
-
-## Step 3. Add the Provider to Your Product
-
-Add the Lemon Squeezy payment provider to your product in Casdoor. When users purchase your product, they'll be redirected to Lemon Squeezy's checkout page.
-
-The product name in Casdoor should be set to the Variant ID from your Lemon Squeezy product. You can find this in your product's settings in the Lemon Squeezy dashboard.
+Add this provider to the product in Casdoor. Set the product’s **name** (or identifier) to the **Variant ID** from the Lemon Squeezy product. Checkout redirects users to Lemon Squeezy.
 
 :::tip
-
-For accurate payment status tracking in production, configure webhooks in your Lemon Squeezy dashboard. Without webhooks, payment status is determined by checking if the checkout has expired.
-
+Configure webhooks in the Lemon Squeezy dashboard for reliable payment status. Without webhooks, status is inferred from checkout expiry.
 :::

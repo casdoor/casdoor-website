@@ -7,7 +7,7 @@ authors: [jakiuncle]
 
 [Casdoor](/docs/basic/server-installation) can use OAuth2 to connect various applications. In this example, we will show you how to use OAuth2 to connect Flarum to your applications.
 
-Here are some configuration names you will need:
+Note these variables:
 
 `CASDOOR_HOSTNAME`: The domain name or IP where the Casdoor server is deployed.
 
@@ -21,7 +21,7 @@ After a successful deployment, make sure:
 
 1. You have downloaded the Flarum plugin [FoF Passport](https://github.com/FriendsOfFlarum/passport).
 2. Casdoor can be logged in and used normally.
-3. You can set CASDOOR_HOSTNAME = `http://localhost:8000` when deploying Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+3. For local `prod` mode, set CASDOOR_HOSTNAME = `http://localhost:8000`. See [production mode](/docs/basic/server-installation#production-mode).
 
 ## Step 2: Configure Casdoor application
 
@@ -29,9 +29,9 @@ After a successful deployment, make sure:
 2. Find the redirect URL: `<CASDOOR_HOSTNAME>/auth/passport`.
 3. Add the redirect URL to the Casdoor application: ![Redirect](/img/integration/php/Flarum/RedirectURL.png)
 
-On the application settings page, you will find two values: `Client ID` and `Client secret`. We will use these values in the next step.
+Note **Client ID** and **Client secret** for the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**. You will see the OIDC configuration of Casdoor.
+Open **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** in a browser to view Casdoor's OIDC configuration.
 
 ## Step 3: Configure Flarum
 

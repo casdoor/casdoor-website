@@ -1,35 +1,31 @@
 ---
-title: Telegram
-description: Using Telegram as a notification provider for Casdoor
+title: Telegram notification
+description: Send Casdoor notifications to Telegram.
 keywords: [telegram, notification, provider]
 authors: [UsherFall]
 ---
 
-## Step 1: Get API Token
+## 1. Get bot API token
 
-First, you need to create an account on [Telegram](https://web.telegram.org/). After creating an account, you should contact the [BotFather](https://telegram.me/BotFather), which is a bot used to create other bots.
-
-To create your bot, use the command `/newbot`:
+Create a [Telegram](https://web.telegram.org/) account, then open [@BotFather](https://telegram.me/BotFather) and send `/newbot`. Set the bot name and username; BotFather returns an **API Token**.
 
 ![telegram_bot](/img/providers/notification/telegram_bot.png)
 
-Your bot should have two attributes: a `name` and a `username`. After creating the bot, you will receive an `API Token`.
+## 2. Get chat ID
 
-## Step 2: Get Chat ID
-
-To find your chat ID, use [RawDataBot](https://t.me/raw_info_bot).
+Use [@RawDataBot](https://t.me/raw_info_bot) in Telegram: start a chat and it will show your **Chat ID**.
 
 ![telegram_chat_id](/img/providers/notification/telegram_chat_id.png)
 
-## Step 3: Configure Casdoor Telegram Provider
+## 3. Configure the provider in Casdoor
 
-There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Telegram is as follows:
+Create a **Notification** provider, set **Type** to **Telegram**, and fill in:
 
-| Name       | Name in Telegram |
-|------------|------------------|
-| Secret key | API Token        |
-| Chat ID    | Chat ID          |
-| Content    |                  |
+| Casdoor field | Value     |
+|---------------|-----------|
+| Secret key    | API Token |
+| Chat ID       | Chat ID   |
+| Content       | Message template (optional) |
 
 ![telegram_provider](/img/providers/notification/telegram_provider.png)
 

@@ -1,26 +1,26 @@
 ---
-title: Single Sign-Out (SSO Logout)
-description: Implement Single Sign-Out to log users out from all applications simultaneously
-keywords: [SSO, Single Sign-Out, Logout, Session Management]
+title: Single sign-out (SSO logout)
+description: Log users out from all applications in the organization at once.
+keywords: [SSO, single sign-out, logout, session]
 authors: [leo220yuyaodog]
 ---
 
-## Introduction
+## Overview
 
-Single Sign-Out (SSO Logout) is a feature that allows you to log a user out from all applications in an organization simultaneously. When a user logs out from one application, they are automatically logged out from all other applications that are part of the same SSO ecosystem.
+**Single sign-out (SSO logout)** logs a user out from every application in the organization in one go. When they sign out from one app, all other apps in the same SSO setup are signed out as well.
 
-This is particularly useful in scenarios such as:
+Use it for:
 
 - **Security incidents**: Immediately terminate all active sessions when a security breach is detected
 - **Organization-wide logout policies**: Enforce logout across all services when users leave the organization or change roles
 - **Compliance requirements**: Ensure users are completely logged out from all systems when required by regulations
 - **User-initiated logout**: Allow users to log out from all applications with a single action
 
-## How SSO Logout Works
+## How it works
 
-Casdoor supports two logout modes controlled by the `logoutAll` parameter:
+The `logoutAll` parameter chooses the mode:
 
-**Full SSO Logout** (default, when `logoutAll=true` or not specified):
+**Full SSO logout** (default, `logoutAll=true` or omitted):
 
 1. **Delete all active sessions**: All active sessions for the user across all applications in the organization are terminated
 2. **Expire all access tokens**: All access tokens that were issued to the user are immediately invalidated
@@ -29,7 +29,7 @@ Casdoor supports two logout modes controlled by the `logoutAll` parameter:
 
 This ensures that the user is completely logged out from all integrated applications and cannot access any resources without re-authenticating.
 
-**Session-Level Logout** (when `logoutAll=false`):
+**Session-only logout** (`logoutAll=false`):
 
 1. **Delete current session**: Only the current session is terminated
 2. **Clear current authentication state**: The user's current session and token are cleared
@@ -37,11 +37,11 @@ This ensures that the user is completely logged out from all integrated applicat
 
 This allows users to logout from a specific device or browser while remaining logged in on other sessions. This is useful when users share accounts across multiple devices or have concurrent sessions they want to manage individually.
 
-The access token hashes included in session-level logout notifications enable your subsystems to identify exactly which tokens need to be invalidated. When a user logs out from a specific browser or device, you can match the token hashes against your active sessions and perform targeted invalidation without affecting other devices where the user remains logged in.
+The access token hashes included in session-level logout notifications enable your subsystems to identify exactly which tokens need to be invalidated. When a user logs out from a specific browser or device, match the token hashes against active sessions and perform targeted invalidation without affecting other devices where the user remains logged in.
 
-### Logout Notifications
+### Logout notifications
 
-When SSO logout occurs, Casdoor automatically notifies all notification providers configured in the application where the user registered. The notifications include session IDs, access token hashes, and cryptographic signatures for secure, synchronized logout across all integrated systems.
+On SSO logout, Casdoor sends a request to each notification provider configured for the application the user signed up with. The notifications include session IDs, access token hashes, and cryptographic signatures for secure, synchronized logout across all integrated systems.
 
 Each notification provider receives a POST request with the following payload:
 
@@ -134,7 +134,7 @@ The SSO logout endpoint accepts both `GET` and `POST` requests, making it flexib
 
 ### Authentication
 
-This endpoint requires the user to be authenticated. You can use any of the authentication methods supported by Casdoor:
+This endpoint requires the user to be authenticated. Use any authentication method supported by Casdoor:
 
 - **Access token**: Include the access token in the `Authorization` header
 - **Session cookie**: Use the session cookie that was set during login
@@ -314,7 +314,7 @@ def logout(access_token):
 
 ### Manual Implementation
 
-If you're not using a Casdoor SDK, you can implement SSO logout manually by making an HTTP request to the logout endpoint:
+Without a Casdoor SDK, implement SSO logout by calling the logout endpoint:
 
 ```javascript
 async function logout() {

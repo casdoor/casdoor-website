@@ -1,36 +1,34 @@
 ---
-title: Try with Kubernetes Helm (Optional)
-description: Learn how to deploy Casdoor on Kubernetes using Helm
+title: Try with Helm
+description: Deploy Casdoor on Kubernetes using Helm for manageable, scalable deployments.
 keywords: [Casdoor, Helm, Kubernetes, K8s]
 authors: [nomeguy]
 ---
 
-## Introduction
-
-Now we show how to deploy Casdoor on Kubernetes using Helm for easy and scalable management.
+This page describes how to deploy Casdoor on Kubernetes using Helm.
 
 ## Prerequisites
 
 - A running Kubernetes cluster
-- Helm v3 installed
+- Helm v3
 
-## Installation Steps
+## Installation
 
-### Step 1: Install the Casdoor Chart
+### Step 1: Install the Casdoor chart
 
-Install the Casdoor [chart](https://hub.docker.com/r/casbin/casdoor-helm-charts/tags):
+Install the Casdoor [Helm chart](https://hub.docker.com/r/casbin/casdoor-helm-charts/tags):
 
 ```shell
 helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version v1.702.0
 ```
 
-### Step 2: Accessing Casdoor
+### Step 2: Access Casdoor
 
-Once installed, Casdoor can be accessed at the provided service URL by your Kubernetes cluster.
+After installation, use the service URL provided by your cluster to access Casdoor.
 
-### Customization and Configuration
+### Customization
 
-Customize your Casdoor installation by modifying the Helm chart values. For detailed options, refer to the [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/charts/casdoor/values.yaml) file in the chart. The following parameters can be configured.
+Override [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/charts/casdoor/values.yaml) to customize the deployment. Key parameters:
 
 | Parameter                                    | Description                                                                                 | Default Value                                                                                      |
 |----------------------------------------------|---------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
@@ -68,22 +66,18 @@ Customize your Casdoor installation by modifying the Helm chart values. For deta
 | `envFromConfigmap`                           | Provide Environment variable from configmap.                                                | `[{name:"",configmapName:"",key:""}]`                                                              |
 | `envFrom`                                    | Provide Environment variable from entire secret or configmap.                               | `[{name:"",type:"configmap \| secret"}]`                                                           |
 
-### Managing the Deployment
+### Managing the deployment
 
-To upgrade your Casdoor deployment:
-
-```shell
-helm upgrade casdoor casdoor/casdoor-helm-charts
-```
-
-To uninstall Casdoor:
+Upgrade:
 
 ```shell
-helm delete casdoor
+helm upgrade casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version <version>
 ```
 
-For further management and customization, refer to the Helm and Kubernetes documentation.
+Uninstall:
 
-## Conclusion
+```shell
+helm uninstall casdoor
+```
 
-Using Helm to deploy Casdoor on Kubernetes simplifies the management and scalability of your authentication services within your Kubernetes environment.
+For more options, see the [Helm](https://helm.sh/docs/) and [Kubernetes](https://kubernetes.io/docs/) documentation.

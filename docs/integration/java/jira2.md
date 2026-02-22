@@ -15,12 +15,12 @@ The following are some of the names in the configuration:
 
 ## Step 1: Deploy Casdoor and Jira
 
-Firstly, deploy [Casdoor](/docs/basic/server-installation) and [Jira](https://www.atlassian.com/software/jira/guides/getting-started/overview).
+Deploy [Casdoor](/docs/basic/server-installation) and [Jira](https://www.atlassian.com/software/jira/guides/getting-started/overview).
 
 After a successful deployment, ensure the following:
 
 1. Casdoor can be logged in and used normally.
-2. You can set `CASDOOR_HOSTNAME` to `http://localhost:8000` when deploying Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+2. For local `prod` mode, set `CASDOOR_HOSTNAME` to `http://localhost:8000`. See [production mode](/docs/basic/server-installation#production-mode).
 
 ## Step 2: Configure Casdoor application
 
@@ -30,13 +30,13 @@ After a successful deployment, ensure the following:
 4. Find the redirect URL: ![redirect](/img/integration/java/jira2/redirect.png)
 5. Add a redirect URL: ![Jira Application](/img/integration/java/jira2/jira_application.png)
 
-Not surprisingly, you can obtain two values on the application settings page: `Client ID` and `Client secret`, like the picture above. We will use them in the next step.
+Note **Client ID** and **Client secret** from the application page for the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**. You will see the OIDC configuration of Casdoor.
+Open **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** in a browser to view Casdoor's OIDC configuration.
 
 ## Step 3: Configure Jira
 
 1. We need to continue configuring our Configuration in Jira ![Config](/img/integration/java/jira2/Config.png) ![Config2](/img/integration/java/jira2/Config2.png)
 
-2. You can configure more complex authorization later. For now, check if OpenID actually works.
+2. Configure more complex authorization later; first verify that OpenID sign-in works.
 ![Jira Login](/img/integration/java/jira2/login.gif)

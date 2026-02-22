@@ -1,15 +1,15 @@
 ---
-title: Guest Authentication
-description: Create temporary users without credentials
+title: Guest authentication
+description: Create temporary users without credentials and upgrade them later.
 keywords: [guest, authentication, temporary users, passwordless]
 authors: [nomeguy]
 ---
 
-Guest authentication enables applications to create temporary users without requiring credentials upfront. This is useful for allowing users to access your application immediately while deferring registration until later.
+**Guest authentication** creates temporary users with no username or password. Users can use the app immediately; require full registration later if needed.
 
-## Creating a Guest User
+## Creating a guest user
 
-To create a guest user and obtain an access token, send a POST request to the token endpoint:
+POST to the token endpoint with the special code `guest-user`:
 
 ```bash
 POST https://<CASDOOR_HOST>/api/login/oauth/access_token
@@ -27,9 +27,7 @@ POST https://<CASDOOR_HOST>/api/login/oauth/access_token
 ```
 
 :::note
-
-The special code value `"guest-user"` is a Casdoor-specific extension that triggers guest user creation instead of the standard OAuth authorization code flow.
-
+The code `"guest-user"` is a Casdoor extension that creates a guest user instead of completing the normal OAuth code flow.
 :::
 
 **Response:**
@@ -45,26 +43,15 @@ The special code value `"guest-user"` is a Casdoor-specific extension that trigg
 }
 ```
 
-The system automatically creates a guest user with:
+Casdoor creates a user with: username `guest_<uuid>`, a random password, and tag `guest-user`.
 
-- A randomly generated username in the format `guest_<uuid>`
-- A random password
-- The tag `guest-user` for identification
+## Upgrading to a normal user
 
-## Upgrading Guest Users
-
-Guest users are automatically upgraded to normal users when they update their credentials through the user update API.
-
-**Upgrade triggers:**
-
-- Changing the username to a non-guest format (not starting with `guest_`)
-- Setting or changing the password
-
-After upgrade, the user's tag changes from `guest-user` to `normal-user`, enabling standard authentication.
+When the user sets or changes their username (to something not starting with `guest_`) or sets a password via the user update API, they are upgraded: the tag becomes `normal-user` and they can use normal sign-in.
 
 ## Restrictions
 
-Guest users cannot sign in through the standard login flow. They must first upgrade their account by setting proper credentials. This ensures that guest users transition to permanent accounts before using password-based authentication.
+Guest users cannot sign in via the normal login page until they upgrade (set a real username or password).
 
 ## Example Integration
 

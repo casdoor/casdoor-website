@@ -7,7 +7,7 @@ authors: [SkipperQ]
 
 ## Prerequisites
 
-A running Casdoor server. Please refer to the Casdoor documentation for [Server Installation](https://casdoor.org/docs/basic/server-installation) and [Try with Docker](https://casdoor.org/docs/basic/try-with-docker).
+A running Casdoor server. See [Server installation](/docs/basic/server-installation) and [Try with Docker](/docs/basic/try-with-docker).
 
 ## Configuring Casdoor
 

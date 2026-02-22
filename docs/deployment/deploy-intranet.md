@@ -1,24 +1,19 @@
 ---
-title: Hosting Static Files in an Intranet
-description: How to deploy Casdoor static resources
+title: Hosting static files on an intranet
+description: Serve Casdoor static assets from an intranet-accessible URL.
 keywords: [static resources, deployment, intranet]
 authors: [leo220yuyaodog]
 ---
 
-If you are deploying Casdoor on an **intranet**, you may not be able to access the static resources directly over the
-internet. You need to deploy the static resources where you can access them, and then modify the configuration in Casdoor in
-three places.
+On an **intranet**, the default CDN URL for static assets may be unreachable. Deploy those assets somewhere your network can access and point Casdoor at that URL.
 
 ## Deploy static resources
 
-All static resources in Casdoor, including images, logos, CSS, etc., are stored in the [casbin/static repository](https://github.com/casbin/static).
+Static assets (images, logos, CSS, etc.) are in the [casbin/static](https://github.com/casbin/static) repository. Clone it and serve it from a web server that is reachable from your intranet.
 
-**Clone** the repository and **deploy** it on a web server. Make sure you can access the resources.
+## Point Casdoor at your URL
 
-## Modify in Casdoor
-
-You can simply modify the configuration file to set the static resource address to where you deployed it. Go to
-[conf/app.conf](https://github.com/casdoor/casdoor/blob/c92d34e27c707287545519202463632fb4deacc9/conf/app.conf#L19) and set `staticBaseUrl` to your deployed address.
+In [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf), set `staticBaseUrl` to the base URL where you deployed the static files:
 
 ```ini
 staticBaseUrl = "https://cdn.casbin.org"

@@ -1,51 +1,36 @@
 ---
 title: Adapter
-description: Configure adapter and perform basic CRUD operations on policy
+description: Connect Casbin policy storage (database) and manage policies in the UI.
 keywords: [permission, Casbin, adapter, policy]
 authors: [leo220yuyaodog]
 ---
 
-Casdoor supports using the UI to connect the adapter and manage policy rules. In Casbin, the storage of policy rules is implemented as an adapter, which acts as middleware for Casbin. A Casbin user can use an adapter to load policy rules from a storage or save policy rules to it.
+In Casbin, an **adapter** is the layer that loads and saves policy rules (e.g. to a database). Casdoor lets you configure an adapter in the UI and run basic CRUD on policies.
 
-## Adapter
+## Adapter configuration
 
-- `type`: Adapter type. Currently supports database adapter.
-- `Host`
-- `Port`
-- `User`
-- `Password`
-- `Database type`: Currently supports MySQL, PostgreSQL, SQL Server, Oracle, SQLite 3.
-- `Database`: The name of the database.
-- `Table`: The name of the table. If the table does not exist, it will be created.
+- **Type** — Adapter type (currently database only).
+- **Host**, **Port**, **User**, **Password** — Database connection.
+- **Database type** — MySQL, PostgreSQL, SQL Server, Oracle, or SQLite 3.
+- **Database** — Database name.
+- **Table** — Table name (created if it does not exist).
 
 ![adapter_config](/img/permission/adapter/adapter_config.png)
 
 :::info
-
-After filling in all the fields, please remember to **save** the configuration. Then click the **sync** button to load the policy rules. The policy rules will be displayed in the table below.
-
+After saving the adapter config, click **Sync** to load policies into the table below.
 :::
 
 ![adapter_policy](/img/permission/adapter/adapter_policy.png)
 
-## Basic CRUD Operations
+## CRUD on policies
 
-If you have successfully connected the adapter, you can perform basic CRUD operations on the policy rules.
+Once the adapter is connected, you can add, edit, and delete policy rows in the UI.
 
-- Add
+**Add** — One policy at a time. New rows appear at the top in the UI but are stored at the end; after the next sync they show in the correct order.
 
-  ![adapter_add](/img/permission/adapter/add.gif)
+![adapter_add](/img/permission/adapter/add.gif)
 
-:::tip
+**Edit** — ![adapter_edit](/img/permission/adapter/edit.gif)
 
-You can only add one policy at a time. The newly added policy will appear as the first row in the table, but it will actually be saved in the last row. So, when you sync the policies next time, they will appear in the last row of the table.
-
-:::
-
-- Edit
-
-  ![adapter_edit](/img/permission/adapter/edit.gif)
-
-- Delete
-
-  ![adapter_delete](/img/permission/adapter/delete.gif)
+**Delete** — ![adapter_delete](/img/permission/adapter/delete.gif)

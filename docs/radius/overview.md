@@ -1,33 +1,30 @@
 ---
 title: Overview
-description: Use Casdoor as RADIUS server
-keywords: [RADIUS]
+description: Run Casdoor as a RADIUS server for network access and accounting.
+keywords: [RADIUS, NAS, authentication, accounting]
 authors: [Chinoholo0807]
 ---
 
-You can use Casdoor as a RADIUS server. RADIUS is a client/server protocol, the client can be a NAS or any computer running RADIUS client software.
+Casdoor can act as a **RADIUS** server. RADIUS clients (e.g. a NAS or any host with RADIUS client software) send authentication and accounting requests to Casdoor.
 
-## Congiure
+## Configuration
 
-Before deploying Casdoor, you need to modify the RADIUS-related configurations in the `conf/app.conf` file, including the server port and secret:
+In `conf/app.conf` set the RADIUS port and shared secret:
 
 ```text
 radiusServerPort = 1812
 radiusSecret = "secret"
 ```
 
-Now you can use Casdoor as RADIUS server.
+Then start Casdoor; the RADIUS server will listen on the configured port.
 
-## Use Casdoor as RADIUS server
+## Supported messages
 
-Casdoor currently can support follow standard RADIUS request:
+- **Access-Request** — The client sends an auth request; Casdoor accepts or rejects based on the user and replies with `Access-Accept` or `Access-Reject`.
+- **Accounting-Request** — The client sends start/interim/stop accounting; Casdoor records it and replies with `Accounting-Response`.
 
-- `Access-Request` : The authentication request message is sent by the RADIUS client to the Casdoor. Casdoor determines whether to allow access based on the user information carried in the message and reply with `Access-Reject` or `Access-Accept`.
+![radius flow](/img/radius/radius_flow.png)
 
-- `Accounting-Request` : When a user starts or stops accessing network resources, the RADIUS client will send accounting request (Start/Interim-update/Stop) message to Casdoor. Casdoor will record relevant accounting request message and reply with `Accounting-Response`.
-
-![redius flow](/img/radius/radius_flow.png)
-
-Since Casdoor use Organization to manage User, where each User belongs to a specific Organization, the `Class` attribute in the request needs to be set as the User's Organization.
+Users in Casdoor belong to an **organization**. Set the RADIUS request’s **Class** attribute to the user’s organization name so Casdoor can resolve the user correctly.
 
 ![set organization in request](/img/radius/set_org_in_request.png)

@@ -15,7 +15,7 @@ Once you enable MFA, Casdoor requires an authentication code every time someone 
 
 ## Configuring MFA
 
-1. On the user profile page, you can see the configuration of multi-factor authentication. If you cannot see it, make sure the organization has added the multi-factor authentication item in the account items table.
+1. On the user profile page, open the multi-factor authentication section. If it is missing, ensure the organization has added the MFA item in the account items table.
 
    ![mfa_config](/img/user/mfa/mfa_config.png)
 
@@ -47,7 +47,7 @@ When you add your account to an authenticator app, the account name will show th
 1. In the "Verify Code" step, do one of the following:
 
    - Scan the QR code with your mobile device's app. After scanning, the app displays a six-digit code that you can enter on Casdoor.
-   - If you cannot scan the QR code, you can manually copy and enter the secret in your TOTP app instead.
+   - If the QR code cannot be scanned, copy the secret and enter it manually in the TOTP app.
 
 2. The TOTP mobile application saves your account on Casdoor and generates a new authentication code every few seconds. On Casdoor, type the code into the "Passcode" field and click "Next Step".
 
@@ -67,7 +67,7 @@ If you have added your mobile phone number, Casdoor will use it to send you a te
 
 ![mfa_bound](/img/user/mfa/mfa_bound.png)
 
-If you have not added your mobile phone number, you need to add it first.
+If you have not added your mobile phone number, add it in your account first.
 
 ![mfa_binding](/img/user/mfa/mfa_binding.png)
 
@@ -75,7 +75,7 @@ If you have not added your mobile phone number, you need to add it first.
 
 2. Check if your information is correct and click "Send Code".
 
-3. You will receive a text message with a security code. Then enter the code into the "Enter your code" field and click "Next Step".
+3. Enter the security code from the text message in **Enter your code** and click **Next Step**.
 
 4. Above the "Enable" button, copy your recovery codes and save them to your device. Save them to a secure location because your recovery codes can help you regain access to your account if you lose access.
 
@@ -109,7 +109,7 @@ The RADIUS authentication communicates with the external RADIUS server configure
 
 ## Changing your preferred MFA method
 
-You can add multiple MFA methods. Only the preferred method will be used when you sign in.
+Multiple MFA methods can be added; only the preferred one is used at sign-in.
 
 If you want to set a preferred MFA method, click the "Set preferred" button.
 

@@ -1,43 +1,26 @@
 ---
 title: FastSpring
-description: Add FastSpring payment provider to your application
+description: Use FastSpring as a payment provider for digital products and subscriptions.
 keywords: [FastSpring, payment]
 authors: [Copilot]
 ---
 
-:::note
+[FastSpring](https://fastspring.com/) handles payments, subscriptions, and tax for software and digital products.
 
-This is an example of how to configure a **FastSpring** payment provider.
+## 1. Get credentials
 
-:::
+Sign in at [FastSpring](https://fastspring.com/). Go to **Developer** → **API Credentials** and note your **API Username** and **API Password**. Note your storefront host (e.g. `yourcompany.onfastspring.com`).
 
-FastSpring is a global e-commerce platform designed for digital commerce, handling payment processing, subscription management, and tax compliance for software and digital products.
+## 2. Create the provider in Casdoor
 
-## Step 1. Get Your API Credentials
+**Providers** → **Add**. Set **Category** to **Payment**, **Type** to **FastSpring**. Fill in:
 
-Create an account at [FastSpring](https://fastspring.com/) and access your dashboard.
+| Casdoor       | FastSpring        |
+|---------------|-------------------|
+| Client ID     | API Username      |
+| Client secret | API Password      |
+| Host          | Storefront host (e.g. `mycompany.onfastspring.com`) |
 
-Navigate to **Developer > API Credentials** in your FastSpring dashboard to generate or locate your API credentials:
+## 3. Attach to a product
 
-- **API Username**: Your FastSpring API username
-- **API Password**: Your FastSpring API password
-
-You'll also need your storefront path, which typically follows the format `yourcompany.onfastspring.com`.
-
-## Step 2. Create a FastSpring Payment Provider
-
-Create a FastSpring payment provider in Casdoor:
-
-|    Name       |   Name in FastSpring            |
-|      ----     |   ----                          |  
-|Category       |   Choose `Payment`              |
-|Type           |   Choose `FastSpring`           |
-|Client ID      |   API Username from Step 1      |
-|Client secret  |   API Password from Step 1      |
-|Host           |   Your storefront path (e.g., `mycompany.onfastspring.com`)   |
-
-## Step 3. Add the Provider to Your Product
-
-Add the FastSpring payment provider to your product in Casdoor. When users purchase your product, they'll be redirected to FastSpring's checkout page to complete the transaction.
-
-FastSpring creates transactions dynamically and returns users to your application after payment is completed.
+Add the FastSpring provider to the product in Casdoor. Users are redirected to FastSpring for checkout and returned to your app after payment.

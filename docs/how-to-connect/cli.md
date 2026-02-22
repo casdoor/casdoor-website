@@ -1,4 +1,4 @@
----
+﻿---
 title: Casdoor CLI
 description: Using Casdoor's official command-line interface for managing users, groups, and permissions
 keywords: [CLI, command-line, terminal, bash, shell, user management, groups, permissions, OAuth2]
@@ -7,7 +7,7 @@ authors: [hsluoyz]
 
 **Casdoor CLI** is the official command-line interface for [Casdoor](https://casdoor.org), providing a powerful and intuitive way to manage your Casdoor identity and access management system directly from the terminal.
 
-GitHub repository: <https://github.com/casdoor/casdoor-cli>
+GitHub repository: `https://github.com/casdoor/casdoor-cli`
 
 ## Features
 
@@ -87,17 +87,16 @@ casdoor --help
 
 ## Configuration
 
-### Casdoor Server Setup
+### Casdoor server
 
-To use the CLI, you need a configured Casdoor application. You have two options:
+You need a Casdoor application for the CLI:
 
-1. **Using the provided bootstrap data**: An `init_data.json` file is included in the repository to quickly bootstrap Casdoor's configuration. Refer to the [Data Initialization documentation](/docs/deployment/data-initialization) for initialization instructions.
-
-2. **Manual configuration**: Create an application directly in your Casdoor admin panel and configure it according to your requirements.
+1. **Bootstrap data** — Use the repo’s `init_data.json` and follow [Data initialization](/docs/deployment/data-initialization).
+2. **Manual** — Create and configure an application in the Casdoor admin panel.
 
 ### CLI Configuration
 
-On first launch, `casdoor-cli` will prompt you to provide a `config.yaml` file containing your Casdoor connection details. See the included `config.yaml.example` file in the repository for reference.
+On first run, the CLI prompts for a `config.yaml` with your Casdoor connection details. Use the repo’s `config.yaml.example` as a template.
 
 **Required configuration fields:**
 

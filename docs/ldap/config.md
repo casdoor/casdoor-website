@@ -1,84 +1,42 @@
 ---
-title: Configuring and Syncing LDAP Users
-description: Configuring LDAP in Casdoor for user synchronization
+title: LDAP configuration and sync
+description: Configure LDAP per organization and sync users into Casdoor.
 keywords: [ldap, config, user, sync]
 authors: [WindSpiritSR]
 ---
 
-LDAP configurations are specific to each organization, as LDAP users will be synchronized into them.
+LDAP is configured per organization; synced users are created in that organization. Use a global admin to edit LDAP settings on the organization page.
 
-To modify the configuration, you need to use a global admin user. Enter the following information for LDAP user synchronization on the "organization" page.
 ![ldap_table](/img/ldap/ldap_table.png)
 
-## Configuring Connection to LDAP Server
+## Connecting to the LDAP server
 
 ![ldap_edit](/img/ldap/ldap_edit.png)
 
-### Server Name
-
-A friendly name that managers can use to identify different servers.
-
-> Example: `Example LDAP Server`
-
-### Server Host
-
-The host or IP address of the LDAP server.
-
-> Example: `example.com`
-
-### Server Port
-
-The port number of the LDAP server. Only numeric values are allowed.
-
-> Example: `389`
-
-### Base DN
-
-Casdoor uses Sub search mode by default when searching in LDAP. The Base DN is the basic distinguished name used for the search. Casdoor will return all users under the specified Base DN.
-
-The admin account configured in Casdoor should have at least read-only permissions at the Base DN.
-
-> Example: `ou=Example,dc=example,dc=com`
-
-### Search Filter
-
-Casdoor uses a search filter to query LDAP users.
-
-> Example: `(objectClass=posixAccount)`
-
-### Filter Fields
-
-Filter fields are the identifiers of the user in the LDAP server. When logging in to Casdoor as an LDAP user, the entered login username is regarded as the `uid` of the LDAP user. You can also configure other fields, such as `mail` or `mobile`.
+| Field | Description |
+|-------|-------------|
+| **Server name** | Friendly name for this server (e.g. `Example LDAP Server`). |
+| **Server host** | Host or IP of the LDAP server (e.g. `example.com`). |
+| **Server port** | Port number, numeric only (e.g. `389`). |
+| **Base DN** | Base distinguished name for search. Casdoor uses subtree search and returns all users under this DN. The admin account must have at least read access at this base (e.g. `ou=Example,dc=example,dc=com`). |
+| **Search filter** | LDAP filter for user search (e.g. `(objectClass=posixAccount)`). |
+| **Filter fields** | LDAP attributes used to identify the user (e.g. `uid`, `mail`, `mobile`). The value entered at Casdoor login is matched against these; typically `uid` is used as the login name. |
+| **Admin** | Bind DN or ID for the LDAP admin (depends on server; e.g. `cn=manager,dc=example,dc=com`). |
+| **Admin password** | Password for the admin account. |
+| **Auto sync** | `0` = disabled. Any other value = sync interval in minutes. |
 
 ![LDAP_field](/img/ldap/ldap_field.gif)
 
-### Admin
+## Syncing users
 
-An account that can log in to the specified LDAP server.
+The sync table lists users under the configured base DN. Already-synced users are shown with the checkbox disabled. Select users and sync to import them into the organization.
 
-The login method (DN or ID) depends on the LDAP server settings you want to connect to.
-
-> Example: `cn=manager,dc=example,dc=com`
-
-### Admin Password
-
-The password for the LDAP server Admin account.
-
-### Auto Sync
-
-Set to `0` to disable auto sync. Any other value means **Sync every few minutes**.
-
-## Synchronizing Users
-
-The sync table displays all the users obtained from the LDAP server within the specific `ou`. If the users have already been synced, the checkbox will be disabled. You can select the users by checking the box, and then sync the selected users from the LDAP server.
 ![ldap_sync](/img/ldap/ldap_sync.png)
 
 ## Default group
 
-Group to which users belong after synchronization.
+Group to assign to users after sync.
 
 :::caution
-
-If the `uid` of a user in the LDAP server is the same as the `name` of an existing user in the Casdoor organization, Casdoor will create a new user with a `name` that includes the `uid` and a random string. However, this user may not be able to log in because the name of the newly synced user does not exist in the LDAP server. Therefore, it is recommended to avoid this situation.
-
+If an LDAP user’s `uid` equals the `name` of an existing user in the organization, Casdoor creates a new user with a modified `name` (uid + random suffix). That user may not be able to sign in via LDAP because the LDAP server has no such `uid`. Avoid reusing existing Casdoor usernames as LDAP uids.
 :::

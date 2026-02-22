@@ -39,7 +39,7 @@ Each product card in the store is clickable. When a user clicks on a product, th
 
 From the Product Store, you have two options for each product:
 
-**Buy**: Clicking the "Buy" button takes you directly to the purchase flow where you can select a payment provider and complete the transaction immediately.
+**Buy**: Clicking the "Buy" button takes you directly to the purchase flow where a payment provider is selected and the transaction is completed.
 
 **Add to cart**: Available for regular products (not recharge or subscription items), this button adds the product to your personal shopping cart. Your cart persists across sessions, letting you collect multiple products before purchasing them together. Products with different currencies cannot be mixed in the same cart.
 

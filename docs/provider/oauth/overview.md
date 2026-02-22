@@ -1,13 +1,11 @@
 ---
 title: Overview
-description: Add OAuth providers to your application
-keywords: [OAuth]
+description: Add OAuth providers so users can sign in with Google, GitHub, and other identity providers.
+keywords: [OAuth, identity provider, sign-in]
 authors: [ErikQQY]
 ---
 
-Casdoor allows for the use of other OAuth applications as a sign-in method.
-
-Currently, Casdoor supports multiple OAuth application providers. The icons of these providers will be displayed on the login and signup pages once they have been added to Casdoor. The following are the providers that Casdoor supports:
+Casdoor can use external OAuth applications as sign-in methods. After adding a provider, its icon appears on the login and sign-up pages. Supported OAuth providers:
 
 | Provider      | Logo                                                                           | Provider    | Logo                                                                       | Provider     | Logo                                                                      | Provider     | Logo                                                                        |
 |:--------------|:-------------------------------------------------------------------------------|:------------|:---------------------------------------------------------------------------|:-------------|:--------------------------------------------------------------------------|:-------------|:----------------------------------------------------------------------------|
@@ -32,41 +30,30 @@ Currently, Casdoor supports multiple OAuth application providers. The icons of t
 | Yandex        | <img src="https://cdn.casbin.org/img/social_yandex.png" width="40" />          | Zoom        | <img src="https://cdn.casbin.org/img/social_zoom.png" width="40" />        | Email        | <img src="https://cdn.casbin.org/img/social_mail.png" width="40" />       | SMS          | <img src="https://cdn.casbin.org/img/social_msg.png" width="40" />          |
 | Battle.net    | <img src="https://cdn.casbin.org/img/social_battlenet.png" width="40" />       |             |                                                                             |              |                                                                            |              |                                                                              |
 
-We will show you how to apply for a third-party service and add it to Casdoor.
+## Registering with a third-party OAuth service
 
-## Apply to become a developer
+You need a **redirect URL** (your app’s URL after login, e.g. `https://forum.casbin.com/`), **scopes** (what you request from the user), and **Client ID / Client Secret** from the provider. Keep the client secret private.
 
-Before this, there are some general concepts you need to understand.
+## Adding an OAuth provider in Casdoor
 
-- **RedirectUrl**, Redirect address after authentication, fill in your application address, such as `https://forum.casbin.com/`
-- **Scope**, Permission granted to you by the user, such as basic profile, Email address and posts and others.
-- **ClientId/AppId**, **ClientKey/AppSecret**, This is the most important information, and it is what you need to get after you apply for a developer account. You **can not share** the key/secret with anyone.
+1. Open **Providers** in the sidebar and click **Add**.
+2. Set **Category** to **OAuth** and choose the **Type** (e.g. Google, GitHub).
+3. Enter **Client ID** and **Client Secret** from the provider’s developer console.
 
-## Add an OAuth provider
+## User field mapping
 
-1. Go to your Casdoor index page.
-2. Click on `Providers` in the top bar.
-3. Click on `Add`, and you will see a new provider added to the list at the top.
-4. Click on the new provider to make changes to it.
-5. In the `Category` section, select `OAuth`.
-6. Choose the specific OAuth provider that you require from the `Type` dropdown.
-7. Fill in the necessary information, such as `Client ID` and `Client Secret`.
+Use [User mapping](/docs/provider/oauth/user-mapping) to map OAuth claims (e.g. from Okta, Azure AD) to Casdoor user fields.
 
-## User Field Mapping
+## Automatic account linking
 
-OAuth providers often return additional user information beyond the standard profile fields. Casdoor's [User Mapping](/docs/provider/oauth/user-mapping) feature allows you to automatically populate user profile fields from OAuth claims returned by your identity provider. This is particularly useful when integrating with enterprise identity providers like Okta, Azure AD, or other custom OAuth services that provide rich user metadata.
+Casdoor can link OAuth logins to existing users by OAuth identity, email/phone (if enabled), or username (case-insensitive). That lets you add OAuth without manual linking.
 
-## Automatic Account Linking
+## Using the provider’s access token
 
-When users authenticate via OAuth, Casdoor automatically attempts to link accounts using multiple strategies: existing OAuth links, email/phone matching (if enabled), and case-insensitive username matching. This is particularly useful for enterprises with existing users who want to enable OAuth authentication without requiring manual account linking.
+After OAuth sign-in, Casdoor stores the provider’s access token on the user. Your app can read it via `/api/get-account` and call the provider’s API (e.g. GitHub, Google Drive) on behalf of the user. Only the user and org admins can see the token. See [OAuth docs](/docs/how-to-connect/oauth#accessing-oauth-provider-tokens).
 
-## OAuth Provider Token Access
+## Attaching the provider to an application
 
-After users authenticate through OAuth providers, Casdoor stores the provider's access token in the user object. Your application can retrieve this token via the `/api/get-account` API to make authenticated calls to the third-party provider's APIs (e.g., GitHub API, Google Drive API) on behalf of the user. The token is only visible to the user themselves or organization admins. See the [OAuth documentation](/docs/how-to-connect/oauth#accessing-oauth-provider-tokens) for details.
-
-## Application Setup
-
-1. Click on `Application` in the top bar and select the desired application to edit.
-2. Click on the provider add button and choose the newly added provider.
-3. Modify the provider's permissions, such as enabling registration, login, and unbinding.
-4. You're all set!
+1. Open **Applications**, edit the application.
+2. Add the provider and set its rules (e.g. enable for login, signup, unbind).
+3. Save.

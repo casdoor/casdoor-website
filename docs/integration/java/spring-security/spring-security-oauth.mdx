@@ -9,17 +9,7 @@ Casdoor can use the OIDC protocol as an IDP to connect various applications. In 
 
 ## Step 1: Deploy Casdoor
 
-First, you need to deploy Casdoor.
-
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
-
-After successfully deploying Casdoor, make sure:
-
-- The Casdoor server is running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**, where you will see the login page of Casdoor.
-- Verify that the login functionality is working fine by entering `admin` and `123`.
-
-Now, you can quickly implement a Casdoor-based login page in your own app by following the steps below.
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running and you can open the login page and sign in (e.g. `admin` / `123`).
 
 ## Step 2. Configure Casdoor application
 
@@ -28,9 +18,7 @@ Now, you can quickly implement a Casdoor-based login page in your own app by fol
    ![Casdoor Application Settings](/img/integration/appsetting_spring_security.png)
 3. Add the desired provider and fill in any additional settings.
 
-On the application settings page, you will find two values: `Client ID` and `Client secret`, as shown in the image above. We will use these values in the next step.
-
-Open your preferred browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**. Here, you will find the OIDC configuration of Casdoor.
+Note **Client ID** and **Client secret** from the application page for the next step. OIDC discovery: `http://<CASDOOR_HOSTNAME>/.well-known/openid-configuration`.
 
 ## Step 3. Configure Spring Security
 
@@ -39,9 +27,7 @@ Spring Security natively supports OIDC.
 You can customize the settings of Spring Security OAuth2 Client:
 
 :::caution
-
-You should replace the configuration with your own Casdoor instance, especially the `<Client ID>` and others.
-
+Replace the placeholders with your own Casdoor instance (Client ID, Client secret, etc.).
 :::
 
 ````mdx-code-block
@@ -265,7 +251,7 @@ All the web page templates should be placed under `resources/templates`.
 
 ## Step 5: Try the demo!
 
-Firstly, you can try opening your favorite browser and directly visiting `/foos`. It will automatically redirect you to Casdoor's login page. You can log in there or from the root page.
+Open `/foos` in a browser; you are redirected to Casdoor’s login page. Sign in there or from the root page.
 
 If you visit your root page, you will see the Casdoor Application Setting.
 ![Casdoor Application Setting](/img/integration/java/spring-security/spring_security_welcome.png)

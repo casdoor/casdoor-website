@@ -1,15 +1,13 @@
 ---
-title: Google Chat
-description: Using Google Chat as a notification provider for Casdoor
+title: Google Chat notification
+description: Use Google Chat as a notification provider via a service account.
 keywords: [Google Chat, notification, provider]
 authors: [UsherFall]
 ---
 
-## Step 1: Get Application Default Credentials
+Google Chat notifications use **Application Default Credentials** (service account JSON). See [How Application Default Credentials work](https://cloud.google.com/docs/authentication/application-default-credentials).
 
-In order to integrate notify with a Google Chat Application, `Application Credentials` must be supplied. For more information on Google Application credential JSON see: [How Application Default Credentials works](https://cloud.google.com/docs/authentication/application-default-credentials)
-
-The json will look like this:
+The credential JSON has this shape:
 
 ```json
 {
@@ -26,8 +24,8 @@ The json will look like this:
 }
 ```
 
-## Step 3: Configure Casdoor Google Chat Provider
+## Configure the provider in Casdoor
 
-Fill in the `Application credential` in the metadata.
+**Providers** → **Add**. Set **Category** to **Notification**, **Type** to **Google Chat**. Paste the full service account JSON into the **Application credential** / metadata field (as required by the provider form).
 
 ![google_chat_provider](/img/providers/notification/google_chat_provider.png)

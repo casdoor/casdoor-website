@@ -1,22 +1,20 @@
 ---
-title: Web UI
-description: Monitor runtime information on the Casdoor web page
-keywords: [monitor, CPU, API]
+title: Web UI monitoring
+description: View Casdoor runtime metrics in the web UI.
+keywords: [monitor, CPU, memory, API latency]
 authors: [OutOfEastGate]
 ---
 
-You can monitor the runtime information of Casdoor on the [Casdoor web page](https://door.casdoor.com/sysinfo), including CPU Usage, Memory Usage, API Latency, and API Throughput.
+Casdoor exposes runtime metrics on the **Sysinfo** page (e.g. [door.casdoor.com/sysinfo](https://door.casdoor.com/sysinfo)):
 
-On the UI, you can view the following information:
-
-- CPU Usage and Memory Usage
+- **CPU and memory usage**
 
   ![Usage Info](/img/monitoring/web-ui/usage_info.png)
 
-- API Latency, including count times and average latency
+- **API latency** — request counts and average latency per API
 
   ![API Latency](/img/monitoring/web-ui/api_latency.png)
 
-- API Throughput, including total throughput and throughput per API
+- **API throughput** — total and per-API throughput
 
   ![API Throughput](/img/monitoring/web-ui/api_throughput.png)

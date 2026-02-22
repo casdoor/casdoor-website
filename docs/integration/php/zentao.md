@@ -5,17 +5,11 @@ keywords: [Zentao, zentao-oidc]
 authors: [leo220yuyaodog]
 ---
 
-[Zentao](https://www.zentao.pm/) is an agile (scrum) project management system/tool, but it does not support OIDC itself.
-To integrate Zentao with Casdoor SSO, we need to use a 3rd-party OIDC module called [zentao-oidc](https://github.com/casdoor/zentao-oidc), and this document will show you how to do it.
+[Zentao](https://www.zentao.pm/) is an agile project management tool. It does not support OIDC natively; use the [zentao-oidc](https://github.com/casdoor/zentao-oidc) module to integrate Casdoor SSO.
 
 ## Step 1: Deploy Casdoor and Zentao
 
-Firstly, deploy [Casdoor](/docs/basic/server-installation) and
-[Zentao](https://www.zentao.pm/download/zentao-community-edition-release-164-1100.html).
-After a successful deployment, make sure:
-
-1. Casdoor can be logged in and used successfully.
-2. You can successfully log in and use Zentao.
+Deploy [Casdoor](/docs/basic/server-installation) and [Zentao](https://www.zentao.pm/download/zentao-community-edition-release-164-1100.html). Ensure both are running and you can sign in to each.
 
 ## Step 2: Integrate Zentao OIDC third-party module
 
@@ -25,7 +19,7 @@ Install [zentao-oidc](https://github.com/casdoor/zentao-oidc) by running the fol
 git clone https://github.com/casdoor/zentao-oidc.git
 ```
 
-Alternatively, you can download the ZIP and unzip it.
+Alternatively, download the ZIP and unzip it.
 
 This module is used to integrate Zentao with SSO for OpenId. Here's how to use it:
 
@@ -35,7 +29,7 @@ This module is used to integrate Zentao with SSO for OpenId. Here's how to use i
 2. Configure the filter.
 
    Since the Zentao framework filters the parameters in the URL and does not allow spaces,
-   you need to put the following code at the end of `/config/my.php`.
+   add the following at the end of `/config/my.php`.
 
    ```php
    $filter->oidc = new stdclass();
@@ -99,7 +93,7 @@ $oidc->setRedirectURL($path."/zentao/oidc-index.html");
 
 The URL here refers to calling the 'index' method in the 'oidc' module. You also need to set a variable separator.
 By default, the framework uses a dash ("-").
-Please refer to the official Zentao framework for more details.
+See the official Zentao framework docs for more details.
 ["zentaoPHP框架"](https://devel.easycorp.cn/book/zentaophphelp/about-10.html)
 
 :::

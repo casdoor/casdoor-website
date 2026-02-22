@@ -1,28 +1,31 @@
 ---
-title: Amazon SNS
-description: Using Amazon SNS as an SMS provider for Casdoor
+title: Amazon SNS SMS
+description: Use Amazon SNS as an SMS provider for verification codes.
 keywords: [Amazon SNS, SMS, provider]
 authors: [UsherFall]
 ---
 
-## Obtaining the necessary information in Amazon
+Create a **SMS** provider in Casdoor and set **Type** to **Amazon SNS**. You need: **Access Key**, **Secret Access Key**, **Region**, and **Template code**.
 
-There are four required fields: `Access Key`, `Secret Access Key`, `Region`, and `Template code`. I will show you how to obtain this information from Amazon SNS.
+| Casdoor field   | Amazon SNS / meaning     | Required |
+|-----------------|--------------------------|----------|
+| Client ID       | Access Key (IAM)         | Yes      |
+| Client secret   | Secret Access Key (IAM)  | Yes      |
+| Region          | AWS region for the topic | Yes      |
+| Template code   | Message template / body | Yes      |
 
-- Access Key and Secret Access Key
+## Get credentials in AWS
 
-In Identity and Access Management (IAM), you can create an `Access Key` and `Secret Access Key`.
+- **Access Key / Secret Access Key** — In [IAM](https://console.aws.amazon.com/iam/), create or copy an access key for the user that can publish to SNS.
 
 ![amazonAccess.png](/img/providers/sms/amazonAccess.png)
 
-- Region
-
-The `Region` is related to the topic you created.
+- **Region** — Use the region where your SNS topic (or SMS is configured) lives.
 
 ![amazonRegion.png](/img/providers/sms/amazonRegion.png)
 
-### Configuring the Casdoor provider
+## Configure and test in Casdoor
 
-The `Template code` is the message you want to send. Enter your phone number in the `SMS Test` to test.
+Fill in the provider fields. **Template code** is the message content (or template ID) to send. Use **SMS Test** with a phone number to verify.
 
 ![amazonProvider.png](/img/providers/sms/amazonProvider.png)

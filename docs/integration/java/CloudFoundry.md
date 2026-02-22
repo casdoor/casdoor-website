@@ -5,9 +5,7 @@ keywords: [OAuth, Cloud Foundry, integration]
 authors: [RanTao123]
 ---
 
-Before the integration, we need to deploy Casdoor locally.
-
-Then, we can quickly implement a Casdoor-based login page in our own app with the following steps.
+Deploy Casdoor first (see [Server installation](/docs/basic/server-installation)). Then configure the application and Cloud Foundry as below.
 
 ## Step 1: Configure Casdoor application
 
@@ -18,13 +16,13 @@ Then, we can quickly implement a Casdoor-based login page in our own app with th
 
 ## Step 2: Add a user in Casdoor
 
-Now that you have the application, but not a user, you need to create a user and assign the role.
+Create a user and assign a role to the application.
 
-Go to the "Users" page and click on "Add user" in the top-right corner. This opens a new page where you can add the new user.
+Go to the "Users" page and click on "Add user" in the top-right corner. This opens the new-user page.
 
 Save the user after adding a username and the organization "Cloud Foundry" (other details are optional).
 
-Now, you need to set up a password for your user, which you can do by clicking on "Manage your password".
+Set a password via "Manage your password".
 
 Choose a password for your user and confirm it.
 
@@ -42,7 +40,7 @@ Start the Cloud Foundry by following these steps.
 Now open another command line and input:
 
 ```bash
-curl '<http://localhost/oauth/authorize?response_type=token&client_id=app&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapp%2F>' -i -X GET \
+curl '`http://localhost/oauth/authorize?response_type=token&client_id=app&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapp%2F`' -i -X GET \
   -H 'Accept: application/x-www-form-urlencoded'
 ```
 

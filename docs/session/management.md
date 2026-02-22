@@ -1,57 +1,53 @@
 ---
-title: Session Management
-description: Managing user sessions in Casdoor
+title: Session management
+description: View and terminate user sessions in the Casdoor admin panel.
 keywords: [session, management, delete, multi-session, logout]
 authors: [hsluoyz]
 ---
 
-Casdoor provides tools to manage user sessions, including viewing active sessions and selectively terminating them. This gives administrators and users control over who can access their applications and from which devices.
+In the Casdoor admin panel, view active sessions and end them individually or in bulk. Admins and users can control which devices or browsers stay signed in.
 
-## Viewing Sessions
+## Viewing sessions
 
-Access the session management interface through the Casdoor admin panel:
+1. Open **Sessions** in the sidebar.
+2. You’ll see all active sessions for the organization, with user, application, creation time, and session IDs.
 
-1. Navigate to the **Sessions** page from the main menu
-2. View all active sessions across your organization
-3. See session details including user, application, creation time, and session IDs
+Each row is one user–application pair; multiple session IDs in a row mean the user is signed in from more than one device or browser.
 
-Each session record shows all active session IDs for that user-application combination. Multiple session IDs indicate the user has logged in from different devices or browsers.
+## Deleting a single session
 
-## Deleting Individual Sessions
-
-You can delete specific sessions to revoke access from particular devices or browsers while keeping other sessions active. This is particularly useful for:
+Ending a specific session revokes access from that device or browser only. Use this to:
 
 - Revoking access from a lost or stolen device
 - Terminating a suspicious login from an unfamiliar location
 - Managing sessions across multiple devices individually
 - Logging out from specific browsers while staying logged in elsewhere
 
-### How to Delete a Session
+### Steps
 
-In the Sessions list page, each session shows its associated session IDs as tags. To delete a specific session:
+On the Sessions list, each session’s IDs appear as tags. To remove one:
 
-1. Locate the session record for the user
-2. Find the session ID you want to terminate (shown as a tag)
-3. Click the close icon (×) on that session ID tag
-4. Confirm the deletion in the popup dialog
+1. Find the session row.
+2. Click the × on the session ID tag you want to end.
+3. Confirm in the dialog.
 
-The selected session will be immediately invalidated. The user will be logged out from that specific device or browser, but their other active sessions remain unaffected.
+That session is invalidated immediately; the user is signed out on that device or browser only.
 
-### Current Session Protection
+### Current session protection
 
-Casdoor prevents you from accidentally deleting your own active session. If you attempt to delete the session ID you're currently using, you'll receive an error message:
+The session you are currently using cannot be deleted. Attempting to delete it shows:
 
-> "session id {session-id} is the current session and cannot be deleted"
+> "session id {'{'}session-id{'}'} is the current session and cannot be deleted"
 
-This protection ensures you don't accidentally log yourself out while managing sessions. To log out from your current session, use the standard logout functionality instead.
+Use the normal logout flow to sign out of your current session.
 
-## Deleting All Sessions
+## Deleting all sessions
 
 When you delete a session record entirely (not just a single session ID), Casdoor handles it intelligently:
 
 - If the session record has multiple session IDs, deleting one ID removes just that session
 - If only one session ID remains and you delete it, the entire session record is removed
-- You can delete the entire session record at once using the delete button for that row
+- Delete the entire session record with the row's delete button
 
 Deleting all sessions for a user effectively logs them out from all devices and browsers simultaneously.
 
@@ -64,7 +60,7 @@ Developers can programmatically delete sessions using the Casdoor API:
 To delete a single session ID from a session record:
 
 ```bash
-POST /api/delete-session?sessionId={session-id}
+POST /api/delete-session?sessionId={'{'}session-id{'}'}
 Content-Type: application/json
 
 {
@@ -91,7 +87,7 @@ Content-Type: application/json
 }
 ```
 
-Omit the `sessionId` parameter to delete all sessions. However, you cannot delete your current active session this way - the API will return an error if you try.
+Omit the `sessionId` parameter to delete all sessions. The current active session cannot be deleted this way; the API returns an error.
 
 ## Session Cleanup
 

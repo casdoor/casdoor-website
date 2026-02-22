@@ -1,25 +1,23 @@
 ---
-title: AD FS
-description: Add AD FS as a third-party service to complete authentication.
+title: AD FS OAuth
+description: Add AD FS (Active Directory Federation Services) as an OAuth provider.
 keywords: [AD FS, ADFS, Active Directory Federation Services]
 authors: [ComradeProgrammer]
 ---
 
-To set up Active Directory Federation Service, please refer to the [AD FS documentation](https://docs.microsoft.com/en-us/windows-server/identity/active-directory-federation-services) for a basic understanding of ADFS, and consult the [AD FS Deployment Guide](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/deployment/ad-fs-deployment-guide) for instructions on setting up an AD FS server. Ensure that you have a fully operational AD FS server before proceeding to the next steps.
+You need a working AD FS server. See the [AD FS documentation](https://docs.microsoft.com/en-us/windows-server/identity/active-directory-federation-services) and [AD FS deployment guide](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/deployment/ad-fs-deployment-guide).
 
-### Step 1: Enabling OAuth via AD FS
+## Enable OAuth confidential client in AD FS
 
-For detailed instructions on creating an app step by step, refer to the [Enabling OAuth Confidential Clients with AD FS](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/development/enabling-oauth-confidential-clients-with-ad-fs) guide.
+Follow [Enabling OAuth Confidential Clients with AD FS](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/development/enabling-oauth-confidential-clients-with-ad-fs) to register an app and obtain a **client ID** and **client secret**.
 
-By the end of this step, you should have obtained a client ID and client secret as shown in the following screenshots:
+![AD FS confidential client](/img/providers/OAuth/adfsconfidential1.png)
+![AD FS confidential client](/img/providers/OAuth/adfsconfidential2.png)
 
-![Create Baidu APP](/img/providers/OAuth/adfsconfidential1.png)
-![Create Baidu APP](/img/providers/OAuth/adfsconfidential2.png)
+Use the client identifier as **Client ID** and the secret as **Client secret** in Casdoor.
 
-The client identifier in the first picture and the secret in the second picture should be used as the client ID and client secret in the OAuth setup.
+## Add the provider in Casdoor
 
-## Enabling Casdoor AD FS Provider
+**Providers** → **Add**. Set **Category** to **OAuth**, **Type** to **AD FS**. Enter the **Client ID** and **Client secret** from AD FS.
 
-Add an AD FS provider and enter the "Client ID" and "Client Secret" in your Casdoor settings.
-
-![Create Baidu APP](/img/providers/OAuth/adfscasdoor.png)
+![AD FS provider in Casdoor](/img/providers/OAuth/adfscasdoor.png)

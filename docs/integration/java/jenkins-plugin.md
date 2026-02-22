@@ -5,7 +5,7 @@ keywords: [plugin, Jenkins]
 authors: [Abingcbc]
 ---
 
-Casdoor provides a plugin that allows users to log in to Jenkins. Here, we will show you how to use the Casdoor plugin for Jenkins security.
+The Casdoor Jenkins plugin lets users sign in to Jenkins via Casdoor. This guide configures the plugin.
 
 The following are some of the configuration settings:
 
@@ -15,7 +15,7 @@ The following are some of the configuration settings:
 
 ## Step 1: Deploy Casdoor and Jenkins
 
-Firstly, deploy [Casdoor](/docs/basic/server-installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/).
+Deploy [Casdoor](/docs/basic/server-installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/).
 
 After a successful deployment, ensure the following:
 
@@ -32,13 +32,13 @@ After a successful deployment, ensure the following:
 ![Casdoor Application Setting](/img/integration/java/appseeting_jenkins.png)
 3. Add the desired provider and provide any additional settings.
 
-On the application settings page, you will find two values: `Client ID` and `Client secret`, as shown in the picture above. We will use these values in the next step.
+Note **Client ID** and **Client secret** from the application page for the next step.
 
 Open your favorite browser and visit **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** to view the OIDC configuration of Casdoor.
 
 ## Step 3: Configure Jenkins
 
-Now, you can install the Casdoor plugin from the marketplace or by uploading its `jar` file.
+Install the Casdoor plugin from the Jenkins marketplace or by uploading the plugin JAR.
 
 After the installation is complete, go to Manage Jenkins -> Configure Global Security.
 
@@ -50,9 +50,9 @@ After the installation is complete, go to Manage Jenkins -> Configure Global Sec
 2. In the Casdoor Endpoint field, enter the `CASDOOR_HOSTNAME` mentioned earlier.
 3. In the Client ID field, enter the `Client ID` mentioned earlier.
 4. In the Client secret field, enter the `Client secret` mentioned earlier.
-5. In the JWT Public Key field, provide the public key used to validate the JWT token. You can find the public key in Casdoor by clicking on `Cert` at the top. After clicking `edit` on your application, you can copy the public key from the following page.
+5. **JWT Public Key**: In Casdoor open **Cert**, edit your application’s cert, and copy the public key.
 ![JWT Public Key](/img/integration/java/jenkins-plugin/jenkins_cert.png)
-6. Organization Name and Application Name are optional. You can specify your organization and application to verify users in other organizations and applications. If these fields are left empty, the plugin will use the default organization and application.
+6. **Organization Name** and **Application Name** are optional; use them to restrict verification to specific orgs/apps. If empty, the plugin uses the default organization and application.
 7. In the Authorization section, check "Logged-in users can do anything". Disable "Allow anonymous read access".
 8. Click `Save`.
 

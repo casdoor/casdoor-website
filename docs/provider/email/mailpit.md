@@ -1,32 +1,27 @@
 ---
-title: Mailpit
-description: Using Mailpit as the SMTP server
+title: Mailpit email
+description: Use Mailpit as a local SMTP server for testing.
 keywords: [email, mailpit]
 authors: [Attack825]
 ---
 
-### Mailpit
+[Mailpit](https://github.com/axllent/mailpit) is a test SMTP server that catches outgoing mail. By default it listens on `127.0.0.1:1025` with no TLS or auth.
 
-In this guide, we will be using Mailpit as the SMTP server. [Mailpit](https://github.com/axllent/mailpit) is an email-testing tool that operates with a fake SMTP server.
+## 1. Run Mailpit
 
-### Step 1: Deploy the Mailpit service
-
-The IP address for the Mailpit service is `127.0.0.1`. By default, the Mailpit SMTP server listens on port 1025 and does not use encryption or authentication.
+Start the Mailpit service so the SMTP server is available at `127.0.0.1:1025` (or your configured host/port).
 
 ![Mailpit configuration](/img/providers/mailpit_conf.png)
 
-### Step 2: Create an email provider
+## 2. Create the email provider in Casdoor
 
-Provide the necessary information and save the settings.
+**Providers** → **Add**. Set **Category** to **Email**, **Type** to the appropriate SMTP option. Set **Host** and **Port** to match Mailpit (e.g. `127.0.0.1`, `1025`). Leave **Username** and **Password** empty if Mailpit has no auth. Save.
 
 ![Mailpit email provider](/img/providers/mailpit_email_provider_conf.png)
 
-### Step 3: Send a test email
+## 3. Test
 
-First, click on the `Test SMTP Connection` button. If you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the Mailpit service.
-
-Next, click on the `Send Testing Email` button. If you see `Email sent successfully`, it means that the test email has been sent successfully from the `From` address to the `Test Email`.
+Use **Test SMTP Connection**; you should see “SMTP connected successfully”. Use **Send Testing Email**; you should see “Email sent successfully” and the message in Mailpit’s UI.
 
 ![Sending a test email using Mailpit](/img/providers/mailpit_send_test_email.png)
-
 ![Receiving a test email using Mailpit](/img/providers/mailpit_recv_test_email.png)

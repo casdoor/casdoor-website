@@ -1,58 +1,32 @@
 ---
 title: Product
-description: Add products that you want to sell
-keywords: [products]
+description: Define products (or services) to sell and attach payment providers.
+keywords: [products, payment, recharge]
 authors: [leo220yuyaodog]
 ---
 
-You can add the product (or service) you want to sell. The following will guide you through the process of adding a product.
-
-## Configuring Product Attributes
-
-First, you need to understand the basic properties of the product:
-
-- Tag
-- Detail
-- Currency
-- Price
-- Quantity
-- Sold
-- Is recharge: When enabled, the product becomes a recharge type with custom pricing
+Add **products** (or services) you want to sell. Each product has: **Tag**, **Detail**, **Currency**, **Price**, **Quantity**, **Sold**, and **Is recharge** (for balance top-up products with custom amounts).
 
 ![product_field.png](/img/products/product_field.png)
 
-### Recharge Products
+### Recharge products
 
-Recharge products allow users to add amounts to their account balance. When you enable the "Is recharge" option, you can configure how users select recharge amounts:
+When **Is recharge** is enabled, the product is used to add funds to the user’s balance. You can configure:
 
-**Preset amounts**: Define specific recharge values (e.g., $10, $50, $100) that users can select. In the product store, these appear as clickable blue tags, making it easy for users to choose from your suggested amounts. The store displays up to three preset amounts. If you define more than three, a "+N" indicator shows how many additional options are available.
+- **Preset amounts** — Fixed options (e.g. $10, $50, $100) shown as clickable tags in the store (up to three visible; “+N” if more).
+- **Custom amount** — Let the user enter any amount; the store shows “Custom amount available”.
 
-**Custom amounts**: Allow users to enter any amount they wish to recharge. When enabled, the product store displays a "Custom amount available" indicator, letting users know they can specify their preferred amount during purchase.
+Offer both presets and custom amount, or disable custom amount so only presets are allowed (at least one required). After payment, the chosen amount is credited to the user’s balance.
 
-You can combine both approaches by providing preset amounts while allowing custom values. To restrict users to only your predefined amounts, disable the custom amount option.
+### Payment providers
 
-**Configuration options**:
-
-- Add multiple preset amounts in the product editor
-- Toggle "Disallow custom amount" to restrict users to preset values only
-- When custom amounts are disabled, at least one preset amount must be defined
-
-Upon successful payment, the selected amount is automatically added to the user's balance.
-
-## Payment Provider
-
-In addition to setting these properties, you also need to add payment providers to the product.
-Multiple payment providers can be added to a product.
-
-When adding payment providers, Casdoor validates that the product currency is compatible with each provider. For instance, if you configure a product priced in USD and add PayPal as a payment provider, the system ensures the currency match is valid. The system will prevent you from creating or updating products if there's a currency mismatch with any configured provider.
-
-To learn how to configure a payment provider, refer to [Payment Provider](/docs/provider/payment/overview)
+Attach one or more [payment providers](/docs/provider/payment/overview) to the product. Casdoor checks that the product’s **currency** matches each provider (e.g. USD product with PayPal); creation or update fails if there is a currency mismatch.
 
 ![product_provider.png](/img/products/product_provider.png)
 
 ### Success URL (Optional)
 
-If you need the provider to redirect users directly to a custom URL instead of the Casdoor callback page, you can fill in the **Success URL** field. When configured, Casdoor will append the payment owner and transaction name as query parameters to your provided URL.
+To redirect users to a custom URL after payment instead of the Casdoor callback, set **Success URL**. When configured, Casdoor will append the payment owner and transaction name as query parameters to your provided URL.
 
 For example, if you set the Success URL to `http://example.com/payment/success`, users will be redirected to:
 
@@ -60,7 +34,7 @@ For example, if you set the Success URL to `http://example.com/payment/success`,
 http://example.com/payment/success?transactionOwner={paymentOwner}&transactionName={paymentName}
 ```
 
-You can include additional query parameters in your Success URL, such as:
+Add optional query parameters to the Success URL, e.g.:
 
 ```text
 http://example.com/payment/success?customParam=value&transactionOwner={paymentOwner}&transactionName={paymentName}

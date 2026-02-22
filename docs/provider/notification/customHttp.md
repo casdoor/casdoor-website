@@ -1,30 +1,27 @@
 ---
-title: Custom HTTP
-description: Using Custom HTTP as a notification provider for Casdoor
-keywords: [custom, notification, provider]
+title: Custom HTTP notification
+description: Send notifications to an arbitrary HTTP endpoint.
+keywords: [custom, notification, provider, HTTP]
 authors: [UsherFall]
 ---
 
-:::note
+The **Custom HTTP** provider sends notification payloads to a URL you specify (GET or POST).
 
-Casdoor supports Custom HTTP Notification Provider. You can use it to send messages to specific HTTP addresses.
+## Configure the provider
 
-:::
+**Providers** → **Add**. Set **Category** to **Notification**, **Type** to **Custom HTTP**. Fill in:
 
-## Configure Casdoor Custom HTTP Provider
-
-There are three required fields: `Method`, `Parameter name`, `Content`, and `Chat ID`.
-
-| Name           | Description                                                         |
-|----------------|---------------------------------------------------------------------|
-| Method         | Select `GET` or `POST` method.                                      |
-| Parameter name | URL query parameter name or body parameter, depending on the `method`. |
-| Content        | The message you want to send.                                       |
-| Endpoint | Your HTTP address                                                    |
+| Field           | Description |
+|-----------------|-------------|
+| Method          | `GET` or `POST` |
+| Parameter name  | Query (GET) or body (POST) parameter name for the message |
+| Content         | Message content or template |
+| Endpoint        | Full HTTP(S) URL to call |
+| Chat ID         | Optional identifier |
 
 ![custom_http_provider](/img/providers/notification/custom_http_provider.png)
 
-In my example, when I click `Send Notification Message`, I receive this request:
+When you use **Send Notification Message**, Casdoor sends a request to **Endpoint** with the message in the chosen parameter. Example:
 
 ![custom_http_request](/img/providers/notification/custom_http_request.png)
 

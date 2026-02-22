@@ -1,15 +1,13 @@
 ---
-title: Overview
-description: Identity verification for users using ID Verification providers
+title: ID verification provider overview
+description: Verify user identity via third-party ID verification (KYC) providers.
 keywords: [ID Verification, identity, verification, KYC]
 authors: [hsluoyz]
 ---
 
-Casdoor's ID Verification providers enable real-world identity verification for your users. When configured, users can verify their identity by submitting their ID card information and real name, which gets validated through third-party verification services.
+**ID Verification** providers let users prove their identity (e.g. ID document + real name) through a third-party service. Once verified, the account is marked verified and sensitive fields are locked.
 
-## How It Works
-
-Identity verification in Casdoor follows a straightforward process:
+## How it works
 
 1. Users fill in their ID card information (type and number) and real name in their account settings
 2. They click the "Verify Identity" button to initiate verification
@@ -18,22 +16,16 @@ Identity verification in Casdoor follows a straightforward process:
 
 Once verified, users cannot modify their real name, ID card type, ID card number, or related identity information, ensuring data integrity and preventing fraud.
 
-## Setting Up a Provider
+## Add a provider
 
-To add an ID Verification provider:
-
-1. Navigate to **Providers** in the Casdoor admin panel
-2. Click **Add** to create a new provider
-3. Select **ID Verification** from the Category dropdown
-4. Choose your provider type
-5. Enter the required credentials
-6. Save the provider configuration
+1. **Providers** → **Add**.
+2. Set **Category** to **ID Verification**, choose the **Type**, enter credentials, and save.
 
 After creating the provider, add it to your application's provider list so users can access the verification feature.
 
 ## Configuring Account Fields
 
-For users to access the verification feature, you need to configure the relevant account fields in your organization:
+For users to access verification, configure the relevant account fields in your organization:
 
 1. Go to **Organizations** and edit your organization
 2. In the **Account items** section, ensure these fields are properly configured:
@@ -44,7 +36,7 @@ For users to access the verification feature, you need to configure the relevant
 
 The typical configuration sets these fields with "Public" view rule and "Self" modify rule, allowing users to manage their own identity information while keeping it visible to the system.
 
-See [Account Customization](/docs/organization/accountCustomization) for detailed information on configuring these fields.
+See [Account customization](/docs/organization/accountCustomization) for field configuration.
 
 ## User Verification
 

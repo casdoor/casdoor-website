@@ -9,24 +9,16 @@ Casdoor is one of the supported login methods for [Apache DolphinScheduler](http
 
 ## Step 1: Deploy Casdoor
 
-Firstly, Casdoor should be deployed. You can refer to the Casdoor official documentation for [Server Installation](https://casdoor.org/docs/basic/server-installation).
-
-After a successful deployment, please ensure that:
-
-* The Casdoor server is running successfully at <http://localhost:8000>.
-* Open your favorite browser and visit <http://localhost:7001>. You will see the login page of Casdoor.
-* Test the login functionality by inputting "admin" and "123".
-
-Once the deployment is completed, you can quickly implement a Casdoor-based login page in your own app by following the steps below.
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running (e.g. `http://localhost:8000`) and you can open the login page (e.g. `http://localhost:7001`) and sign in with `admin` / `123`.
 
 ## Step 2: Configure Casdoor Application
 
 1. Create a new Casdoor application or use an existing one.
-2. Add your redirect URL (You can find more details about how to obtain the redirect URL in the next section).
+2. Add your redirect URL (see the next section for how to obtain it).
    ![Casdoor Application Setting](/img/integration/java/spring_security/casdoor_setting.png)
 3. Add the desired provider and fill in other necessary settings.
 
-On the application settings page, you will find two important values: `Client ID` and `Client secret`, as shown in the picture above. We will use these values in the next step.
+Note **Client ID** and **Client secret** from the application page for the next step.
 
 Open your favorite browser and visit **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** to view the OIDC configuration of Casdoor.
 
@@ -44,7 +36,7 @@ casdoor:
   endpoint:
   client-id:
   client-secret:
-  # The certificate may be multi-line; you can use `|-` for ease
+  # Use `|-` for multi-line certificate
   certificate: 
   # The organization name you added in Casdoor
   organization-name:

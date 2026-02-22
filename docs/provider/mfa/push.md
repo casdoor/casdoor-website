@@ -11,23 +11,17 @@ Push notification MFA enables users to receive verification codes through mobile
 
 Push notification MFA uses notification providers to send verification codes. To add a notification provider:
 
-1. Navigate to the **Providers** page and click **Add**.
-
-2. Set the **Category** to **Notification** and choose your preferred **Type** (e.g., Telegram, Pushover, Custom HTTP).
-
-3. Configure the provider-specific settings based on your chosen notification service.
-
-4. Click **Save** to create the provider.
+1. **Providers** → **Add**.
+2. Set **Category** to **Notification** and **Type** to your preferred service (e.g. Telegram, Pushover, Custom HTTP).
+3. Fill in the provider’s required settings.
+4. Save.
 
 ## Use in Application
 
 After creating the notification provider, add it to your application:
 
-1. Go to your application's edit page.
-
-2. Add the notification provider to the **Providers** list.
-
-3. Users can now select push notification as their MFA method when configuring multi-factor authentication.
+1. Edit the application and add the notification provider to its **Providers** list.
+2. Users can then choose push notification as their MFA method.
 
 ## User Setup Flow
 

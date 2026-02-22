@@ -1,15 +1,15 @@
 ---
-title: Configuration File
-description: Configure Casdoor backend and frontend settings
+title: Configuration
+description: Configure the Casdoor backend and frontend via app.conf and Conf.js.
 keywords: [Casdoor, configuration, app.conf, Conf.js, backend, frontend]
 authors: [hsluoyz]
 ---
 
-Casdoor uses configuration files for both the backend and frontend. This page describes all available configuration options.
+Casdoor is configured through separate files for the backend and frontend. This page documents all supported options.
 
-## Backend Configuration (app.conf)
+## Backend configuration (app.conf)
 
-The backend is configured via a single file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf). As a beginner, you only need to modify `driverName` and `dataSourceName` based on your database (see [Configure Database](/docs/basic/server-installation#configure-database)). Below is a complete reference of all configuration options:
+The backend reads a single config file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf). For a minimal setup, set `driverName` and `dataSourceName` for your database (see [Configure database](/docs/basic/server-installation#configure-database)). The table below lists every option.
 
 | Parameter                   | Default Value                                                                        | Description                                                                                                                                          |
 |-----------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -51,25 +51,25 @@ The backend is configured via a single file: [**conf/app.conf**](https://github.
 | `initDataFile`              | `"./init_data.json"`                                                                 | Path to data initialization file. See [Data Initialization](/docs/deployment/data-initialization)                                                    |
 | `frontendBaseDir`           | `"../cc_0"`                                                                          | Base directory for frontend files (only for development)                                                                                             |
 
-### Configuration via Environment Variables
+### Environment variables
 
-All configuration items defined by Casdoor in the `app.conf` file can also be configured via environment variables, as well as some of the Beego configuration items (`httpport`, `appname`).
+Every Casdoor option in `app.conf` can be overridden with an environment variable of the same name. Some Beego options (e.g. `httpport`, `appname`) are also supported.
 
-For example, when you try to start Casdoor, you can use something like this to pass the configuration via environment variables:
+Example: starting Casdoor with config passed via environment variables:
 
 ```shell
 appname=casbin go run main.go
 ```
 
-In addition, `export` derivatives are also a possible method. The names of environment variables should exactly match the names you want to use in the `app.conf` file.
+Variables can also be `export`ed in the shell. Variable names must match the `app.conf` key names exactly.
 
 :::note
-Configurations in environment variables can override the configurations in the `app.conf` file.
+Environment variables override values in `app.conf`.
 :::
 
-## Frontend Configuration (Conf.js)
+## Frontend configuration (Conf.js)
 
-The frontend configuration is located at [**web/src/Conf.js**](https://github.com/casdoor/casdoor/blob/master/web/src/Conf.js). These settings control the behavior and appearance of the Casdoor web UI.
+The frontend is configured in [**web/src/Conf.js**](https://github.com/casdoor/casdoor/blob/master/web/src/Conf.js). These options control the Casdoor web UI behavior and appearance.
 
 | Parameter               | Default Value                                                                                     | Description                                                                                                                                 |
 |-------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
@@ -85,9 +85,9 @@ The frontend configuration is located at [**web/src/Conf.js**](https://github.co
 | `AiAssistantUrl`        | `"https://ai.casbin.com"`                                                                         | URL for the AI Assistant feature. Set to blank or `null` to hide the AI Assistant button                                                    |
 | `MaxItemsForFlatMenu`   | `7`                                                                                               | Maximum number of navbar items before switching from a flat menu to a grouped/dropdown menu                                                 |
 
-### Theme Configuration
+### Theme options
 
-The `ThemeDefault` object contains the following properties:
+The `ThemeDefault` object supports:
 
 | Property        | Type      | Description                                                              |
 |-----------------|-----------|--------------------------------------------------------------------------|
@@ -96,14 +96,12 @@ The `ThemeDefault` object contains the following properties:
 | `borderRadius`  | `number`  | Border radius in pixels for UI elements                                  |
 | `isCompact`     | `boolean` | Whether to use compact mode for denser UI                                |
 
-### Customizing the Frontend
+### Applying changes
 
-To customize these settings:
-
-1. Open the file `web/src/Conf.js` in your Casdoor installation.
-2. Modify the values according to your requirements.
-3. Rebuild the frontend with `yarn build` in the `web` directory.
+1. Edit `web/src/Conf.js` in your Casdoor tree.
+2. Adjust the values as needed.
+3. Rebuild the frontend: run `yarn build` in the `web` directory.
 
 :::tip
-If you are running in development mode, changes to `Conf.js` will take effect after restarting the development server with `yarn start`.
+In development, restart the dev server (`yarn start` in `web`) for `Conf.js` changes to apply.
 :::

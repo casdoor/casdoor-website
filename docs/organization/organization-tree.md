@@ -1,42 +1,36 @@
 ---
-title: Organization Tree
-description: User groups within an organization
+title: Organization tree
+description: User groups and group hierarchy within an organization.
 keywords: [user, group, organization, tree]
 authors: [leo220yuyaodog]
 ---
 
-Groups are a collection of users within an organization. A user can belong to multiple groups.
+**Groups** are collections of users in an organization. A user can be in multiple groups.
 
 ## Group properties
 
-- `Owner`: The organization that owns the group
-- `Name`: Unique group name
-- `displayName`
-- `CreatedTime`
-- `UpdatedTime`
-- `Type`: Groups can be classified as either `Physical` or `Virtual`. A user can only belong to one `Physical` group but can be in multiple `Virtual` groups.
-- `ParentGroup`: The parent group of a group (The parent group of the top-level groups in the organization is the organization itself)
+- **Owner** — Owning organization
+- **Name** — Unique group name
+- **DisplayName**, **CreatedTime**, **UpdatedTime**
+- **Type** — `Physical` or `Virtual`. A user can be in only one Physical group but multiple Virtual groups.
+- **ParentGroup** — Parent group (top-level groups use the organization as parent)
 
 ## Managing groups
 
-There are two ways to manage groups:
+Groups can be managed in two places:
 
-1. On the groups list page, you can view all the groups within the organization.
+1. **Groups list page** — View all groups in the organization.
 
-    ![groups list](/img/organization/organization_tree/groups_list.png)
+   ![groups list](/img/organization/organization_tree/groups_list.png)
 
-2. Click the **Groups** button on the organization list page.
+2. **Organization list** — Click **Groups** on an organization to open the group tree.
 
-    ![organization list](/img/organization/organization_tree/organization_tree_entry.png)
+   ![organization list](/img/organization/organization_tree/organization_tree_entry.png)
 
-    This will display the tree structure of the groups within the organization.
+   ![groups tree](/img/organization/organization_tree/groups_tree.png)
 
-    ![groups tree](/img/organization/organization_tree/groups_tree.png)
+   ![groups tree page](/img/organization/organization_tree/groups_tree.gif)
 
-    Here is a video that shows how to manage groups:
+You can also assign and edit groups from a user’s profile.
 
-    ![groups tree page](/img/organization/organization_tree/groups_tree.gif)
-
-    Groups can also be edited in a user's profile.
-
-    ![groups user](/img/organization/organization_tree/groups_user.png)
+![groups user](/img/organization/organization_tree/groups_user.png)

@@ -5,7 +5,7 @@ keywords: [Azure AD, SAML, Microsoft Entra]
 authors: [nomeguy]
 ---
 
-This guide shows you how to configure Azure AD (Microsoft Entra ID) as a SAML Identity Provider for Casdoor, allowing users to authenticate with their Azure AD accounts.
+Configure Azure AD (Microsoft Entra ID) as a SAML IdP so users can sign in with their Azure AD accounts.
 
 ## Create Enterprise Application in Azure AD
 

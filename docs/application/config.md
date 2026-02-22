@@ -1,7 +1,7 @@
 ---
 title: Application Configuration
-description: Configure your application's authentication
-keywords: [config, application]
+description: Configure authentication and callback URLs for your Casdoor applications.
+keywords: [config, application, redirect URL, callback]
 authors: [ErikQQY]
 ---
 
@@ -10,42 +10,43 @@ import styles from '../styles.module.css';
 import CasdoorCard from "@site/src/components/CasdoorCard"
 ```
 
-After you deploy Casdoor on your server and set up your organization, you can now configure your applications!
+After deploying Casdoor and creating an organization, configure applications and their authentication settings.
 
-Let's see how to configure your application's authentication using Casdoor.
+This page explains how to configure application authentication using Casdoor.
 
 :::note
 
-For example, I want to set up my Forum using [Casnode](https://casnode.org).
+**Example:** Configuring a forum application using [Casnode](https://casnode.org).
 
 :::
 
-I create my application and fill in the necessary configuration details.
+Create an application and fill in the required configuration.
 
-Select the organization I created so that users in this organization can access this application.
+Select the organization you created so that users in that organization can access this application.
 
 ![Organization](/img/application/config/organization.png)
 
-Since this organization is named `my_organization`, I choose it from the drop-down menu.
+If your organization is named `my_organization`, select it from the drop-down menu.
 
 ![Select Organization](/img/application/config/selectorganization.png)
 
-Next, I want my users to be able to use Casdoor for authentication when they sign up. I fill in the redirect URL here as **<https://your-site-url.com/callback>**.
+To allow users to authenticate via Casdoor when they sign up, set the **Redirect URL** to your application’s callback URL (e.g. **`https://your-site-url.com/callback`**).
 
 :::caution
 
-Please note that the `callback URL` in the provider application should be Casdoor's callback URL, while the `Redirect URL` in Casdoor should be your website's callback URL.
+**Callback URL vs Redirect URL**
 
-#### Further Understanding
-
-To make the authentication process work, the detailed steps are as follows:
-
-1. Users send a request to Casdoor.
-2. Casdoor uses the `Client ID` and `Client Secret` to authenticate with GitHub, Google, or other providers.
-3. If the authentication is successful, GitHub calls back to Casdoor to notify it about the successful authentication. Therefore, the GitHub authorization callback URL should be your Casdoor callback URL, which is **<http://your-casdoor-url.com/callback>**.
-4. Casdoor then informs the application about the authentication success. This means that the Casdoor callback URL should be your application's callback URL, which is **<http://your-site-url.com/callback>**.
+- The **callback URL** configured in the provider (e.g. GitHub, Google) must be Casdoor’s callback URL: **`http://your-casdoor-url.com/callback`**.
+- The **Redirect URL** configured in Casdoor must be your application’s callback URL: **`http://your-site-url.com/callback`**.
 
 :::
+
+#### How the flow works
+
+1. The user initiates sign-in and is sent to Casdoor.
+2. Casdoor uses the application’s **Client ID** and **Client Secret** to authenticate with the provider (e.g. GitHub, Google).
+3. After successful authentication, the provider redirects back to Casdoor. The provider’s **callback URL** must be Casdoor’s callback: **`http://your-casdoor-url.com/callback`**.
+4. Casdoor then redirects to your application with the auth result. Casdoor’s **Redirect URL** must be your app’s callback: **`http://your-site-url.com/callback`**.
 
 ```mdx-code-block
 <div className={styles.signingradientborder}>
@@ -55,10 +56,10 @@ To make the authentication process work, the detailed steps are as follows:
 
 ## Verification Code Settings
 
-You can configure the **Code resend timeout** to control how long users must wait before requesting another verification code via email or SMS. Set the value in seconds (default is 60). This setting determines the countdown timer duration shown to users on the login page. A value of 0 will use the global default.
+Use **Code resend timeout** to control how long users must wait before requesting another verification code (email or SMS). The value is in seconds (default: 60) and sets the countdown shown on the login page. Set to `0` to use the global default.
 
 :::tip
 
-If you want to do more personalized configuration of the application's sign-in methods, such as disabling a certain sign-in method or turning off a certain sign-in method, you can refer to the **[Signin Methods](./signin-methods.md)**
+For finer control over sign-in methods (e.g. disabling or enabling specific methods), see **[Sign-in methods](./signin-methods.md)**.
 
 :::

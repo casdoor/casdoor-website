@@ -15,12 +15,12 @@ The following are some of the names in the configuration:
 
 ## Step 1: Deploy Casdoor and JumpServer
 
-Firstly, deploy [Casdoor](/docs/basic/server-installation) and [JumpServer](https://github.com/jumpserver/jumpserver/).
+Deploy [Casdoor](/docs/basic/server-installation) and [JumpServer](https://github.com/jumpserver/jumpserver/).
 
 After successful deployment, ensure the following:
 
 1. Casdoor can be logged in and used normally.
-2. You can set CASDOOR_HOSTNAME to `http://localhost:8000` when deploying Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+2. For local `prod` mode, set CASDOOR_HOSTNAME to `http://localhost:8000`. See [production mode](/docs/basic/server-installation#production-mode).
 
 ## Step 2: Configure Casdoor application
 
@@ -28,7 +28,7 @@ After successful deployment, ensure the following:
 2. Find a redirect URL: `CASDOOR_HOSTNAME`/cas/`your organization`/`your application`/login.
 3. Add your redirect URL to the Casdoor application: `JumpServer_HOSTNAME`.
 
-For more information about [CAS](https://casdoor.org/docs/how-to-connect/cas), refer to the documentation.
+See [CAS](/docs/how-to-connect/cas).
 
 ## Step 3: Configure JumpServer
 
@@ -40,7 +40,7 @@ For more information about [CAS](https://casdoor.org/docs/how-to-connect/cas), r
 - `/serviceValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/serviceValidate`.
 - `/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/proxyValidate`.
 
-For more information about [CAS](https://casdoor.org/docs/how-to-connect/cas) and [JumpServer](https://docs.jumpserver.org/zh/master/admin-guide/authentication/cas/), refer to the documentation.
+See [CAS](/docs/how-to-connect/cas) and [JumpServer CAS](https://docs.jumpserver.org/zh/master/admin-guide/authentication/cas/).
 
 Log out of JumpServer and test SSO:
 ![Login](/img/integration/python/jumpServer/login.gif)

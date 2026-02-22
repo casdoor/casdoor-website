@@ -1,55 +1,44 @@
 ---
-title: Amazon S3
-description: Using Amazon S3 as a storage provider for Casdoor
+title: Amazon S3 storage
+description: Use Amazon S3 as a Casdoor storage provider.
 keywords: [Amazon S3, storage, provider]
 authors: [UsherFall]
 ---
 
-:::note
+Configure Casdoor to store files (e.g. avatars) in **Amazon S3**.
 
-This is an example of **Amazon S3**.
+## 1. Create credentials
 
-:::
+Create and save an **access key** and **secret access key** in the AWS console. See [Managing access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
-### Create security credentials
+## 2. Configure the bucket
 
-Follow the document: [Managing access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) to create and save your `access key` and `secret access key` in the Amazon console.
-
-### Configure your bucket
-
-In your bucket permissions options, uncheck the "block" option and save the changes.
+- In the bucket **Permissions**, turn off “Block all public access” (or configure a policy that allows Casdoor) and save.
+- In **Object Ownership**, enable **ACLs** and set ownership as needed.
 
 ![uncheck block](/img/providers/storage/amazonNoBlock.png)
-
-Edit the object ownership and check **ACLs enabled**.
-
 ![check ACLs enabled](/img/providers/storage/amazonOwnership.png)
 
-### Configure Casdoor
+## 3. Add the provider in Casdoor
 
-| Name                | Name in Amazon    | Is Required |
-|---------------------|-------------------|-------------|
-| Client ID           | Access key        | Required    |
-| Client secret       | Secret access key | Required    |
-| Endpoint            | Endpoint          | Required    |
-| Endpoint (intranet) | VPC endpoint      |             |
-| Bucket              | Bucket name       | Required    |
-| Path prefix         |                   |             |
-| Domain              | CloudFront domain |             |
-| Region ID           | AWS region        | Required    |
+| Casdoor field    | In AWS / S3      | Required |
+|------------------|-------------------|----------|
+| Client ID        | Access key        | Yes      |
+| Client secret    | Secret access key | Yes      |
+| Endpoint         | Endpoint          | Yes      |
+| Endpoint (intranet) | VPC endpoint   | No       |
+| Bucket           | Bucket name       | Yes      |
+| Path prefix      | —                 | No       |
+| Domain           | CloudFront domain | No       |
+| Region ID        | AWS region        | Yes      |
 
-Fill in the necessary information, including the `Client ID` and `Client Secret` obtained from the `access key` and `secret access key` in the previous step. You can refer to this documentation for information on the formatting of the `endpoint`: [Website endpoints](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html)
+Endpoint format: [Website endpoints](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html).
 
 ![Amazon S3 provider](/img/providers/storage/amazonProvider.png)
 
-### (Optional) Use VPC
+## Optional
 
-You can refer to the official documentation for configuration: [Access AWS services through AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-access-aws-services.html)
-
-### (Optional) Use CloudFront distribution
-
-Follow the document to configure CloudFront: [Configure CloudFront](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.SimpleDistribution.html)
-
-In the domain field, enter your distribution domain name.
+- **VPC access**: [Access AWS services through AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-access-aws-services.html).
+- **CloudFront**: [Create a distribution](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/GettingStarted.SimpleDistribution.html), then set **Domain** in the provider to the distribution domain.
 
 ![domain](/img/providers/storage/amazonCloudFront.png)

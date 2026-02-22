@@ -1,25 +1,21 @@
 ---
-title: Dynamic Client Registration
-description: Programmatically register OAuth applications using RFC 7591
+title: Dynamic client registration
+description: Register OAuth clients programmatically via RFC 7591 (DCR).
 keywords: [OAuth 2.0, DCR, dynamic registration, RFC 7591, MCP]
 authors: [hsluoyz]
 ---
 
-## What is Dynamic Client Registration?
+**Dynamic Client Registration (DCR)** lets your software register an OAuth client with Casdoor in one HTTP request instead of creating an application manually in the admin UI. That helps when you ship tools to end users: MCP clients, CLIs, or desktop apps can obtain client credentials at first run or install. Casdoor implements [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591).
 
-When you're building a tool that needs OAuth access to Casdoor, you typically create an application through the admin interface and manually configure the client credentials. Dynamic Client Registration (DCR) eliminates this manual step—your software can register itself on the fly by making a single HTTP request.
+## Registration endpoint
 
-This is especially valuable when you're distributing tools to end users. An MCP client doesn't need pre-configured credentials, a CLI tool can self-register when first run, and desktop apps can obtain their OAuth credentials during installation. Casdoor's implementation follows [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591), the OAuth 2.0 standard for dynamic registration.
-
-## Finding the Registration Endpoint
-
-Casdoor advertises its registration endpoint through OIDC Discovery. Query the `/.well-known/openid-configuration` endpoint to discover all available OAuth endpoints:
+The endpoint is advertised in OIDC discovery. Request `/.well-known/openid-configuration`:
 
 ```bash
 curl https://your-casdoor.com/.well-known/openid-configuration
 ```
 
-Look for the `registration_endpoint` field in the response—that's where you'll send registration requests:
+Use the `registration_endpoint` value (e.g. `/api/oauth/register`) for registration:
 
 ```json
 {
@@ -31,9 +27,9 @@ Look for the `registration_endpoint` field in the response—that's where you'll
 }
 ```
 
-## How to Register a Client
+## Registering a client
 
-Registration is straightforward. Send a POST request to `/api/oauth/register` with your application's metadata:
+POST to `/api/oauth/register` with JSON metadata:
 
 ```bash
 curl -X POST https://your-casdoor.com/api/oauth/register \
@@ -47,7 +43,7 @@ curl -X POST https://your-casdoor.com/api/oauth/register \
   }'
 ```
 
-Casdoor responds with your new client credentials:
+Response includes the new client credentials:
 
 ```json
 {

@@ -9,14 +9,9 @@ Alibaba Cloud (Aliyun) offers a financial-grade ID verification service that spe
 
 ## Getting Started
 
-You'll need an Alibaba Cloud account with the ID Verification service enabled. If you don't have one, register at [aliyun.com](https://www.aliyun.com/).
+You need an Alibaba Cloud account with the ID Verification (Real Person Verification) service enabled. Register at [aliyun.com](https://www.aliyun.com/) if needed.
 
-To obtain your credentials:
-
-1. Log in to your Alibaba Cloud console
-2. Navigate to the AccessKey management page
-3. Create an AccessKey pair - you'll get an Access Key ID and Secret Access Key
-4. Enable the Real Person Verification service in your account
+To get credentials: log in to the Alibaba Cloud console → AccessKey management → create an AccessKey pair (Access Key ID and Secret Access Key). Enable the Real Person Verification service for your account.
 
 The service uses the [Id2MetaVerify API](https://help.aliyun.com/zh/id-verification/financial-grade-id-verification/server-side-integration-2) to verify ID cards against government records.
 

@@ -4,9 +4,7 @@ metaTitle: "Hasura | Hasura Authentication Tutorial"
 metaDescription: "Learn how to integrate Casdoor with Hasura to secure your applications using JWT"
 ---
 
-Before the integration, we need to deploy Casdoor locally.
-
-Then we can quickly implement a Casdoor-based login page in our own app with the following steps.
+Deploy Casdoor first (see [Server installation](/docs/basic/server-installation)). Then configure the application and Hasura as below.
 
 ## Configure Casdoor application
 
@@ -17,15 +15,15 @@ Then we can quickly implement a Casdoor-based login page in our own app with the
 
 ## Add a user in Casdoor
 
-Now that you have the application, but not a user. That means you need to create a user and assign the role.
+Create a user and assign a role to the application.
 
-Go to the "Users" page and click on "Add user" in the top right corner. That opens a new page where you can add the new user.
+Go to **Users** → **Add user** to open the new-user page.
 
 ![Picture showing the users page](/img/integration/Haskell/Hasura/user.png)
 
 Save the user after adding a username and adding the organization Hasura (other details are optional).
 
-Now you need to set up a password for your user, which you can do by clicking "manage your password."
+Set a password via "Manage your password".
 
 Choose a password for your user and confirm it.
 
@@ -54,11 +52,11 @@ For testing purposes, add a dummy user. This is to ensure that when you use the 
 
 ![Picture showing how to add a table record in Hasura](https://graphql-engine-cdn.hasura.io/learn-hasura/assets/graphql-hasura-authentication/keycloak/hasura-dummy-user.png)
 
-Now you need to set the `JWT_SECRET` in Hasura.
+Set `JWT_SECRET` in Hasura.
 
 ## Configure Hasura with Casdoor
 
-In this step, you need to add the **HASURA_GRAPHQL_JWT_SECRET** to Hasura.
+Add **HASURA_GRAPHQL_JWT_SECRET** to Hasura.
 
 To do so, go to the Hasura docker-compose.yaml and then add the new `HASURA_GRAPHQL_JWT_SECRET` as below.
 
@@ -78,13 +76,13 @@ Save the change and reload the docker.
 
 ## Retrieve the JWT Token
 
-Since there is no client implementation, you can get your access token by making a request by the below URL:
+With no client implementation, obtain an access token by calling:
 
 ```url
 http://localhost:8000/login/oauth/authorize?client_id=<client ID>&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin&scope=read&state=app-built-in<public certificate>>
 ```
 
-Change `client ID` to the ID you copied before and input the public certificate of Casdoor, which you can find in Casdoor's Certs page.
+Change `client ID` to the ID you copied before and input the public certificate of Casdoor, from the Casdoor **Certs** page.
 
 Then input the username and password you created for Hasura before.
 
@@ -102,6 +100,6 @@ Copy the Access Token
 
 ![Access Token](/img/integration/Haskell/Hasura/access.png)
 
-Now you can use the access token to make the authenticated request. Hasura returned the appropriate user rather than returning all the users from the database.
+Use the access token for authenticated requests; Hasura returns the matching user instead of all users.
 
 ![Picture showing the access token from Casdoor being used in Hasura](/img/integration/Haskell/Hasura/hasura.png)

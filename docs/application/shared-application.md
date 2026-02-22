@@ -1,32 +1,30 @@
 ---
-title: Shared Application
-description: Shared application across organizations
-keywords: [shared, application]
+title: Shared application
+description: Use one application across multiple organizations with org-specific client IDs.
+keywords: [shared, application, multi-tenant]
 authors: [DacongDA]
 ---
 
-## Introduction
+A **shared application** can be used by multiple organizations. Only the **built-in** organization can create shared applications. Each organization uses the same application with an org-specific identifier: append `-org-<organizationName>` to the client ID or application name.
 
-If you want to create an application that can be shared with other organizations, you can enable Is Shared field in application(for safety reasons, only built-in organization can create shared application). To specify the organization, you should add `-org-` and organization name after clientId / application name. For example, the clientId of application is `2dc94ccbec09612c04ac`, your organization name is `casbin`, the clientId for your organization is `2dc94ccbec09612c04ac-org-casbin` and the login url for oauth is `https://door.casdoor.com/login/oauth/authorize?client_id=2dc94ccbec09612c04ac-org-casbin&response_type=code&redirect_uri=http://localhost:9000&scope=read&state=casdoor`.
+Example: application client ID `2dc94ccbec09612c04ac`, organization `casbin` → use client ID `2dc94ccbec09612c04ac-org-casbin`. OAuth authorize URL: `https://door.casdoor.com/login/oauth/authorize?client_id=2dc94ccbec09612c04ac-org-casbin&response_type=code&redirect_uri=...&scope=read&state=casdoor`.
 
 ## Configuration
 
-1. First create a new application.
-2. Enable Is Shared field.
-3. add `-org-` to split organization and clientId / application name.
+1. Create the application.
+2. Enable **Is Shared**.
+3. Use `-org-<orgName>` when referring to the app (e.g. in client_id or login URLs).
 
 ![shared application field](/img/application/shared-application/shared_application_field.png)
 
 ![shared application login link](/img/application/shared-application/shared_application_login_link.png)
 
-## Using Invitations with Shared Applications
+## Invitations
 
-When sending [invitations](/docs/invitation/overview) using a shared application, Casdoor automatically generates the correct organization-specific invitation links. The system appends the `-org-{orgName}` suffix to ensure users can successfully register through the invitation, even when the application is shared across multiple organizations.
+For [invitations](/docs/invitation/overview) with a shared application, Casdoor generates organization-specific links with the `-org-{orgName}` suffix so users register in the correct organization.
 
 :::caution
-
-Once you shared an application, it can be used by all organizations, and cannot be disabled for a particular organization.
-
+Once an application is shared, it is available to all organizations and cannot be restricted to a subset.
 :::
 
 Here is a demo video that shows how to use shared application:

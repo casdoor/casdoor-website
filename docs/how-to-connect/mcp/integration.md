@@ -1,11 +1,11 @@
 ---
-title: Integration Example
-description: Complete example of integrating with Casdoor's MCP server
+title: MCP integration example
+description: "Python example: scoped token and MCP tool calls."
 keywords: [MCP, integration, Python, example]
 authors: [hsluoyz]
 ---
 
-Here's a complete example showing how to connect to Casdoor's MCP server with scoped authorization:
+Example: obtain a scoped token, connect to the MCP server, and call tools (with scope error handling):
 
 ```python
 import requests

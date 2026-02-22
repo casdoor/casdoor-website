@@ -1,28 +1,30 @@
 ---
-title: Overview
-description: Using Casdoor as SAML IdP
+title: SAML IdP overview
+description: Use Casdoor as a SAML 2.0 identity provider.
 keywords: [SAML, IdP]
 ---
 
-Casdoor can now be used as a SAML IdP. Up to this point, Casdoor has supported the main features of SAML 2.0.
+Casdoor can act as a **SAML 2.0 IdP**. This page covers SP configuration, Casdoor IdP settings, and SAML attributes.
 
-### Configuration in SP
+### Configuration in the SP (service provider)
 
-In general, the SP requires three required fields: `Single Sign-On`, `Issuer`, and `Public Certificate`. Most SPs can obtain these fields by uploading the XML Metadata file or the XML Metadata URL for autocompletion.
+The SP typically needs **Single Sign-On URL**, **Issuer**, and **Public Certificate**. Most SPs can fill these from the Casdoor **XML Metadata URL** or by uploading the metadata file.
 
-The metadata of the SAML endpoint in Casdoor is `<Endpoint of casdoor>/api/saml/metadata?application=admin/<application name>`. Suppose the endpoint of Casdoor is `https://door.casdoor.com`, and it contains an application called `app-built-in`. The XML Metadata endpoint will be:
+Casdoor metadata URL format: `<casdoor-endpoint>/api/saml/metadata?application=admin/<application-name>`
+
+Example: if Casdoor is at `https://door.casdoor.com` and the application is `app-built-in`:
 
 ```text
 https://door.casdoor.com/api/saml/metadata?application=admin/app-built-in
 ```
 
-You can also find the metadata in the application edit page. Click the button to copy the URL and paste it into the browser to download the XML Metadata.
+The metadata URL is also on the application edit page; copy it and open in a browser to download the XML.
 
 ![metadata](/img/how-to-connect/saml/saml_metadata.png)
 
 ### Configuration in Casdoor IdP
 
-Casdoor supports both GET and POST `SAMLResponse`. Casdoor needs to know what types of requests the SP supports when Casdoor sends the `SAMLResponse` to the SP. You need to configure the application in Casdoor based on the `SAMLResponse` type supported by your SP.
+Casdoor supports both GET and POST `SAMLResponse`. Configure the application in Casdoor to match the `SAMLResponse` binding (GET or POST) that your SP supports.
 
 When integrating Casdoor as a SAML IdP with external identity providers (like Azure AD), the `/api/acs` endpoint receives SAML responses. This endpoint is configured to accept cross-origin POST requests, allowing IdPs from different domains to send authentication data.
 
@@ -42,15 +44,15 @@ If you fill in the `Reply URL`, Casdoor will send the `SAMLResponse` by **POST**
 
 ### SAML attributes
 
-Some SP will require you to provide external attributes in SAML Response, you can add those in SAML attributes table. And you can insert user's field to it.
+If the SP requires extra attributes in the SAML response, add them in the SAML attributes table and map user fields as needed.
 
-If your service provider only requires the NameID field and doesn't need additional user attributes (Email, Name, DisplayName, Roles), you can enable the **Disable SAML attributes** option in the application settings. When enabled, Casdoor will omit these attributes from the SAML response, which can help avoid XML namespace issues with certain SPs that have strict validation requirements.
+If the service provider only needs NameID and not extra user attributes (Email, Name, DisplayName, Roles), enable **Disable SAML attributes** in the application settings. When enabled, Casdoor will omit these attributes from the SAML response, which can help avoid XML namespace issues with certain SPs that have strict validation requirements.
 
 ### Assertion signature control
 
 SAML responses from Casdoor are always signed to ensure authenticity. However, some service providers may not support or require signed assertions within the response itself. Starting from version 2.81.0, Casdoor added assertion signatures following SAML 2.0 best practices, but this caused compatibility issues with certain SPs like Sentry.
 
-When you encounter login failures with service providers that don't handle signed assertions properly, you can disable assertion signatures while keeping the overall response signature intact. Toggle the **Enable SAML assertion signature** option in your application settings to control this behavior. When disabled, Casdoor will sign only the SAML response envelope, which maintains security while ensuring compatibility with a wider range of service providers.
+If a service provider does not handle signed assertions correctly, disable assertion signing while keeping the response envelope signed. Toggle the **Enable SAML assertion signature** option in your application settings to control this behavior. When disabled, Casdoor will sign only the SAML response envelope, which maintains security while ensuring compatibility with a wider range of service providers.
 
 For example
 
@@ -87,13 +89,13 @@ After successfully logging in, the user profile in the returned `SAMLResponse` f
 |    DisplayName     |  displayName  |
 |        Name        |     name      |
 
-See <https://en.wikipedia.org/wiki/SAML_2.0> for more information about SAML and its different versions.
+See `https://en.wikipedia.org/wiki/SAML_2.0` for more information about SAML and its different versions.
 
 ### An example
 
 [gosaml2](https://github.com/russellhaering/gosaml2) is a SAML 2.0 implementation for Service Providers based on etree and goxmldsig, a pure Go implementation of XML digital signatures. We use this library to test the SAML 2.0 in Casdoor as shown below.
 
-Suppose you can access Casdoor through `http://localhost:7001/`, and your Casdoor contains an application called `app-built-in`, which belongs to an organization called `built-in`. The URLs, `http://localhost:6900/acs/example` and `http://localhost:6900/saml/acs/example`, should be added to the Redirect URLs in `app-built-in`.
+Example: Casdoor at `http://localhost:7001/`, application `app-built-in` in org `built-in`. Add `http://localhost:6900/acs/example` and `http://localhost:6900/saml/acs/example` to **Redirect URLs** in `app-built-in`.
 
 ```go
 import (
@@ -236,6 +238,6 @@ Click the URL to authenticate, and the login page of Casdoor will be displayed.
 
 ![login](/img/how-to-connect/saml/saml_login.png)
 
-After authenticating, you will receive the response messages as shown below.
+After authentication, the response looks like the examples below.
 
 ![response](/img/how-to-connect/saml/saml_response.png)

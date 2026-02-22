@@ -1,31 +1,21 @@
 ---
 title: Grafana
-description: Using Casdoor for authentication in Grafana
-keywords: [Grafana]
+description: Use Casdoor as the OAuth provider for Grafana sign-in.
+keywords: [Grafana, OAuth]
 authors: [ComradeProgrammer]
 ---
 
-## Using Casdoor for authentication in Grafana
+[Grafana](https://grafana.com/oss/grafana/) supports generic OAuth. Use Casdoor as the IdP so users sign in to Grafana with their Casdoor accounts. Ensure Grafana is installed and running.
 
-[Grafana](https://grafana.com/oss/grafana/) supports authentication via OAuth. Therefore, it is extremely easy for users to use Casdoor to log in to Grafana. Only several steps and simple configurations are needed to achieve that.
+## Step 1: Create a Casdoor application for Grafana
 
-Here is a tutorial on how to use Casdoor for authentication in Grafana. Before you proceed, please ensure that you have Grafana installed and running.
-
-## Step 1: Create an app for Grafana in Casdoor
-
-Here is an example of creating an app in Casdoor:
+Create an application in Casdoor and add Grafana’s callback URL. Default Grafana OAuth callback path: `/login/generic_oauth`, so the full redirect URL is `https://<grafana-host>/login/generic_oauth`. Copy the **Client ID** and **Client Secret**.
 
 ![Create an application in Casdoor](/img/integration/go/grafana/grafana_1.png)
 
-Please copy the client secret and client ID for the next step.
+## Step 2: Configure Grafana
 
-Please add the callback URL of Grafana. By default, Grafana's OAuth callback is `/login/generic_oauth`. So please concatenate this URL correctly.
-
-## Step 2: Modify the configuration of Grafana
-
-By default, the configuration file for OAuth is located at `conf/defaults.ini` in the workdir of Grafana.
-
-Please find the section `[auth.generic_oauth]` and modify the following fields:
+Edit the Grafana config (e.g. `conf/defaults.ini` or your custom config). Find or add `[auth.generic_oauth]` and set:
 
 ```ini
 [auth.generic_oauth]
@@ -40,13 +30,13 @@ token_url = <Casdoor endpoint>/api/login/oauth/access_token
 
 ```
 
-### About HTTPS
+### HTTPS
 
-If you don't want HTTPS enabled for Casdoor or if you deploy Grafana without HTTPS enabled, please also set `tls_skip_verify_insecure = true`.
+If Casdoor or Grafana is not using HTTPS, set `tls_skip_verify_insecure = true`.
 
-### About redirectURI after Sign In With Casdoor  
+### Redirect after sign-in
 
-If the redirect URI is not correct after signing in with Casdoor in Grafana, you may want to configure [root_url](https://stackoverflow.com/a/69814805).  
+If the post-login redirect is wrong, set [root_url](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#root_url) in `[server]`:  
 
 ```ini
 [server]
@@ -74,7 +64,7 @@ role_attribute_strict = true
 allow_assign_grafana_admin = true
 ```
 
-The JMESPath expression after `role_attribute_path` is very important here. Please refer to the Grafana documentation.
+The JMESPath expression after `role_attribute_path` is important; see the [Grafana docs](https://grafana.com/docs/).
 
 ## Step 3: See if it works
 

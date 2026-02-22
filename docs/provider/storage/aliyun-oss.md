@@ -1,33 +1,23 @@
 ---
 title: Alibaba Cloud OSS
-description: Using Alibaba Cloud OSS as a storage provider for Casdoor
-keywords: [Alibaba Cloud OSS, storage, provider, RRSA, RAM roles]
+description: Use Alibaba Cloud OSS as a Casdoor storage provider (static credentials or RRSA).
+keywords: [Alibaba Cloud OSS, storage, RRSA, RAM]
 authors: [leo220yuyaodog]
 ---
 
-Casdoor supports Alibaba Cloud OSS (Object Storage Service) for file storage, offering two authentication methods: static credentials and RRSA (RAM Roles for Service Accounts).
+Casdoor supports **Alibaba Cloud OSS** with two auth options: **static credentials** (AccessKey) or **RRSA** (RAM Roles for Service Accounts) for environments that provide OIDC tokens (e.g. Alibaba Cloud ACK).
 
-## Authentication Methods
+## Static credentials
 
-### Using Static Credentials
-
-The traditional approach uses an AccessKey to authenticate with Alibaba Cloud API. This requires full account permissions and is suitable for most deployment scenarios.
-
-To create an AccessKey, follow the instructions in the [Alibaba Cloud workbench](https://help.aliyun.com/document_detail/53045.html).
-
-Create the OSS service:
+1. Create an AccessKey in the [Alibaba Cloud console](https://help.aliyun.com/document_detail/53045.html).
+2. In Casdoor, create a **Storage** provider, set **Type** to **Alibaba Cloud OSS**, and fill **Client ID** (AccessKey ID), **Client secret** (AccessKey Secret), **Endpoint**, **Bucket**, and **Region** as needed.
 
 ![Create OSS](/img/providers/createaliyunoss.png)
-
-Fill in the necessary information in Casdoor and save:
-
 ![OSS](/img/providers/storage/oss.png)
 
-### Using RRSA (RAM Roles for Service Accounts)
+## RRSA (no long-term credentials)
 
-RRSA enables zero-credential authentication by exchanging OIDC tokens for temporary STS credentials. This is particularly useful in Kubernetes environments where managing static credentials becomes cumbersome.
-
-When running Casdoor in an environment that provides OIDC tokens (like Alibaba Cloud ACK with RRSA enabled), you can authenticate without storing long-term credentials. Configure these environment variables with values from your Alibaba Cloud RAM console:
+In environments that provide OIDC tokens (e.g. ACK with RRSA), set these environment variables from your [RAM console](https://ram.console.aliyun.com/):
 
 ```bash
 ALIBABA_CLOUD_ROLE_ARN=acs:ram::YOUR_ACCOUNT_ID:role/YOUR_ROLE_NAME
@@ -35,16 +25,8 @@ ALIBABA_CLOUD_OIDC_PROVIDER_ARN=acs:ram::YOUR_ACCOUNT_ID:oidc-provider/YOUR_PROV
 ALIBABA_CLOUD_OIDC_TOKEN_FILE=/var/run/secrets/tokens/oidc-token
 ```
 
-Replace `YOUR_ACCOUNT_ID`, `YOUR_ROLE_NAME`, and `YOUR_PROVIDER_NAME` with your actual values from the [RAM console](https://ram.console.aliyun.com/). The token file path is typically mounted automatically by the Kubernetes service account system.
-
-In the Casdoor storage provider configuration, leave the Client ID and Client Secret fields empty. Casdoor will automatically detect the RRSA environment and handle authentication using the OIDC token.
-
-If RRSA credentials cannot be obtained, Casdoor gracefully falls back to static credentials, ensuring your application continues to work even during configuration changes.
+In the Casdoor storage provider, leave **Client ID** and **Client secret** empty. Casdoor will use the OIDC token to obtain temporary credentials. If RRSA is unavailable, it falls back to static credentials.
 
 :::tip
-
-For production deployments in Alibaba Cloud ACK, RRSA is the recommended approach as it eliminates credential management overhead and enhances security through short-lived tokens.
-
+For production on Alibaba Cloud ACK, RRSA is recommended: no stored secrets and short-lived tokens.
 :::
-
-You can now use Alibaba Cloud storage services in your application with improved security and flexibility.

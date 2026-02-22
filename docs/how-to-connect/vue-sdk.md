@@ -1,21 +1,17 @@
 ---
 title: Vue SDK
-description: Casdoor Vue SDK
+description: Use Casdoor in Vue 2 or Vue 3 with the official Vue SDK.
 keywords: [Vue, SDK]
 authors: [Nekotoxin]
 ---
 
-The Casdoor Vue SDK is designed for Vue 2 and Vue 3, making it very convenient to use.
+The **Casdoor Vue SDK** works with Vue 2 and Vue 3 and wraps [casdoor-js-sdk](/docs/how-to-connect/sdk) for easier integration. For more control, use the JS SDK directly.
 
-The Vue SDK is based on casdoor-js-sdk. You can also use the casdoor-js-sdk directly, which will allow for more customization.
+:::note
+This plugin is still in development. Questions or suggestions: [open an issue](https://github.com/casdoor/casdoor-vue-sdk/issues).
+:::
 
-Please note that this plugin is still in development. If you have any questions or suggestions, please feel free to contact us by opening an [issue](https://github.com/casdoor/casdoor-vue-sdk/issues).
-
-We will now show you the necessary steps below.
-
-> If you are still unsure how to use it after reading the README.md, you can refer to the example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example) for more details.
->
-> The example's front-end is built with casdoor-vue-sdk, while the back-end is built with casdoor-python-sdk. You can view the source code in the example.
+Full example (Vue frontend + Python backend): [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example).
 
 ## Installation
 
@@ -27,22 +23,22 @@ npm install casdoor-vue-sdk
 yarn add casdoor-vue-sdk
 ```
 
-## Initializing the SDK
+## Initialization
 
-To initialize the SDK, you will need to provide 5 string parameters in the following order:
+Provide these parameters (all strings):
 
-| Name             | Required | Description                                                  |
-| ---------------- | -------- | ------------------------------------------------------------ |
-| serverUrl        | Yes      | The URL of your Casdoor server.                              |
-| clientId         | Yes      | The Client ID of your Casdoor application.                   |
-| appName          | Yes      | The name of your Casdoor application.                        |
-| organizationName | Yes      | The name of the Casdoor organization linked to your Casdoor application. |
-| redirectPath     | No       | The path of the redirect URL for your Casdoor application. If not provided, it will default to `/callback`. |
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| **serverUrl** | Yes | Casdoor server URL. |
+| **clientId** | Yes | Application client ID. |
+| **appName** | Yes | Application name. |
+| **organizationName** | Yes | Organization name. |
+| **redirectPath** | No | Callback path; default `/callback`. |
 
-For Vue 3:
+**Vue 3:**
 
 ```javascript
-// in main.js
+// main.js
 import Casdoor from 'casdoor-vue-sdk'
 
 const config = {
@@ -57,10 +53,10 @@ const app = createApp(App)
 app.use(Casdoor, config)
 ```
 
-For Vue 2:
+**Vue 2:**
 
 ```javascript
-// in main.js
+// main.js
 import Casdoor from 'casdoor-vue-sdk'
 import VueCompositionAPI from '@vue/composition-api'
 
@@ -80,10 +76,9 @@ new Vue({
 }).$mount('#app')
 ```
 
-## Example
+## Usage example
 
 ```vue
-// in app.vue
 <script>
 export default {
   name: 'App',
@@ -99,12 +94,12 @@ export default {
 </script>
 ```
 
-Auto Fix
+## Redirect / Vue version issues
 
-If the `postinstall` hook does not get triggered or if you have updated the Vue version, try running the following command to resolve the redirecting issue:
+If the `postinstall` hook did not run or you changed the Vue version, fix redirect behavior with:
 
 ```shell
 npx vue-demi-fix
 ```
 
-For more information about switching Vue versions, please refer to the [vue-demi docs](https://github.com/vueuse/vue-demi).
+See [vue-demi](https://github.com/vueuse/vue-demi) for switching between Vue 2 and Vue 3.

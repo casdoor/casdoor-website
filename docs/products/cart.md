@@ -5,33 +5,33 @@ keywords: [cart, shopping cart, multi-product order]
 authors: [Copilot]
 ---
 
-The shopping cart lets you collect products before purchasing them in a single order. Instead of buying items one at a time, add them to your cart and complete the transaction when you're ready.
+The shopping cart collects products for purchase in a single order. Add items to the cart and complete the transaction when ready instead of buying one at a time.
 
-## Adding Products to Cart
+## Adding products to cart
 
-You'll find an "Add to cart" button on product pages and in the Product Store. When you add a product, it goes into your personal cart stored with your user account. The cart persists across sessions, so you can browse, add items, and come back later to complete your purchase.
+An **Add to cart** button appears on product pages and in the [Product Store](/docs/products/product-store). Added products are stored in the user's cart and persist across sessions, so users can add items and complete the purchase later.
 
-Regular products can be added directly to the cart at their listed price. For recharge products, you'll need to specify the amount first—either by selecting a preset value or entering a custom amount. The system validates that custom amounts are greater than zero before adding them.
+Regular products are added at their listed price. For recharge products, specify the amount first—either a preset value or a custom amount. The system validates that custom amounts are greater than zero before adding.
 
-Subscription products work differently and don't support cart functionality. These must be purchased individually through their dedicated pricing and plan flow.
+Subscription products do not support the cart; they are purchased individually through the pricing and plan flow.
 
-## Currency Consistency
+## Currency consistency
 
-All products in your cart must share the same currency. When adding a product with a different currency than existing cart items, the system prevents the addition and notifies you of the mismatch. This ensures the order total can be calculated accurately when you checkout.
+All items in the cart must use the same currency. Adding a product in a different currency than existing items is blocked, and the system reports the mismatch. This keeps the order total accurate at checkout.
 
-## Managing Your Cart
+## Managing the cart
 
-Access your cart through the **Carts** menu option in the Business & Payments section. The cart page displays:
+Open the cart via **Carts** in the Business & Payments section. The cart page shows:
 
 - Product name and display name
 - Product image
 - Price and currency
-- Quantity (automatically managed by the system)
+- Quantity (managed automatically)
 
-Each cart item shows a **Buy** button to purchase that product individually, or a **Delete** button to remove it from the cart. The system tracks quantities automatically—adding the same product at the same price increments the quantity counter rather than creating duplicate entries.
+Each item has a **Buy** button to purchase that product alone or a **Delete** button to remove it. Quantities are tracked automatically—adding the same product at the same price increases the quantity instead of creating duplicate rows.
 
-## Placing Orders from Cart
+## Placing orders from cart
 
-Currently, cart items are purchased individually. Click the "Buy" button next to a product to start the payment process for that item. The bulk "Place Order" functionality for purchasing all cart items together is under development.
+Cart items are purchased one at a time. Click **Buy** next to a product to start payment for that item. Bulk **Place Order** for all cart items is under development.
 
-When you successfully purchase an item, remove it from the cart manually or keep it for future reference. The cart provides a convenient way to track products you're interested in, even if you're not ready to buy them all at once.
+After purchasing an item, remove it from the cart manually or leave it for reference. The cart can also hold products of interest before purchase.

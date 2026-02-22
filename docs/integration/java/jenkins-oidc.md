@@ -1,23 +1,17 @@
 ---
-title: Jenkins OIDC
-description: Using the OIDC protocol as an IDP to connect various applications, like Jenkins
+title: Jenkins (OIDC)
+description: Use Casdoor as the OIDC IdP for Jenkins sign-in.
 keywords: [OIDC, Jenkins, IDP]
 authors: [Abingcbc]
 ---
 
-Casdoor can use the OIDC protocol as an IDP to connect various applications. In this example, we will use Jenkins to demonstrate how to use OIDC to connect to your applications.
+Use Casdoor as the OIDC identity provider for Jenkins so users sign in with their Casdoor accounts.
 
-The following are some of the names used in the configuration:
-
-- `CASDOOR_HOSTNAME`: The domain name or IP where the Casdoor server is deployed.
-
-- `JENKINS_HOSTNAME`: The domain name or IP where Jenkins is deployed.
+**Terms:** `CASDOOR_HOSTNAME` — Casdoor server URL; `JENKINS_HOSTNAME` — Jenkins server URL.
 
 ## Step 1: Deploy Casdoor and Jenkins
 
-Firstly, deploy [Casdoor](/docs/basic/server-installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/).
-
-After a successful deployment, ensure the following:
+[Deploy Casdoor](/docs/basic/server-installation) and [Jenkins](https://www.jenkins.io/doc/book/installing/). Then:
 
 1. Set the Jenkins URL (Manage Jenkins -> Configure System -> Jenkins Location) to `JENKINS_HOSTNAME`.
 ![Jenkins URL](/img/integration/java/jenkins_url.png)
@@ -29,20 +23,17 @@ After a successful deployment, ensure the following:
 
 ## Step 2: Configure the Casdoor application
 
-1. Create a new Casdoor application or use an existing one.
+1. Create or edit a Casdoor application.
+2. Add redirect URL: `http://JENKINS_HOSTNAME/securityRealm/finishLogin`.
+3. Add providers as needed. Note the **Client ID** and **Client secret** from the application page.
 
-2. Add a redirect URL: `http://JENKINS_HOSTNAME/securityRealm/finishLogin`
+OIDC discovery URL: `http://CASDOOR_HOSTNAME/.well-known/openid-configuration`
+
 ![Casdoor Application Setting](/img/integration/java/appseeting_jenkins.png)
-
-3. Add the provider you want and provide any additional settings.
-
-You will obtain two values from the application settings page: `Client ID` and `Client secret`. We will use these values in the next step.
-
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** to view the OIDC configuration of Casdoor.
 
 ## Step 3: Configure Jenkins
 
-First, we need to install [OpenId Connect Authentication](https://plugins.jenkins.io/oic-auth/) as Jenkins does not natively support OIDC.
+Install the [OpenId Connect Authentication](https://plugins.jenkins.io/oic-auth/) plugin (Jenkins does not support OIDC by default).
 
 After the installation is complete, go to **Manage Jenkins** -> **Configure Global Security**.
 ![jenkins global security](/img/integration/java/jenkins-oidc/jenkins_global_security.png)

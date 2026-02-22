@@ -5,11 +5,11 @@ keywords: [OIDC, FireZone, IDP]
 authors: [dingchenzy]
 ---
 
-[Casdoor](/docs/basic/server-installation) can use the OIDC protocol as the IDP to connect various applications. Here, we will use [FireZone](https://docs.firezone.dev/deploy/) as an example to show you how to use OIDC to connect to your applications.
+This guide configures [FireZone](https://docs.firezone.dev/deploy/) to use [Casdoor](/docs/basic/server-installation) as the OIDC IdP.
 
 ## Step 1: Deploy Casdoor and FireZone
 
-Firstly, Casdoor and FireZone should be deployed.
+Deploy Casdoor and FireZone.
 
 After a successful deployment, ensure the following:
 
@@ -19,7 +19,7 @@ After a successful deployment, ensure the following:
 
 2. Casdoor can be logged in and used normally.
 
-3. `CASDOOR_HOSTNAME`: <http://localhost:8000>, if you deploy Casdoor using the default `app.conf`.
+3. `CASDOOR_HOSTNAME`: `http://localhost:8000`, if you deploy Casdoor using the default `app.conf`.
 
 ## Step 2: Configure Casdoor application
 
@@ -31,7 +31,7 @@ After a successful deployment, ensure the following:
 
     ![REDIRECT_URL](/img/integration/java/firezone/Fire_RedirectURL.jpg)
 
-    Open your favorite browser and visit: `http://[CASDOOR_HOSTNAME]/.well-known/openid-configuration`, and you will see the OIDC configuration of Casdoor.
+    OIDC discovery: `http://<CASDOOR_HOSTNAME>/.well-known/openid-configuration`.
 
 3. Configure FireZone: Security -> Add OpenID Connect Provider
 
@@ -39,7 +39,7 @@ After a successful deployment, ensure the following:
 
     - `Discovery Document URI`: The FireZone Provider Discovery Document URI should be `https://[CASDOOR_HOST]/.well-known/openid-configuration`.
     - `Scopes`: `openid email profile`
-    - `ConfigID`: The ConfigID should be the PROVIDER_COONFIG_ID of the redirect URL and should correspond to the Casdoor redirect URL.
+    - **ConfigID**: Must match the provider config ID used in the redirect URL (e.g. if redirect URL is `.../auth/oidc/TEST/callback/`, use ConfigID `TEST`).
     - `Auto-create users`: Successful login will automatically create a user.
 
 ## Log out of FireZone and test SSO

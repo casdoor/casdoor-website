@@ -9,17 +9,17 @@ authors: [gzyzhy]
 
 This guide assumes that you have the following conditions:
 
-- Running Casdoor service. If you haven't installed Casdoor service yet, please refer to [Server Installation](https://casdoor.org/docs/basic/server-installation) or [Try with Docker](https://casdoor.org/docs/basic/try-with-docker).
-- Nginx open-source edition with `ngx_http_auth_request_module` module enabled at compile time. If you don't know how to enable the `ngx_http_auth_request_module` module, please refer to the [Nginx Module Document](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html).
+- Running Casdoor service. If you haven't installed Casdoor service yet, see [Server installation](/docs/basic/server-installation) or [Try with Docker](/docs/basic/try-with-docker).
+- Nginx open-source edition with `ngx_http_auth_request_module` module enabled at compile time. See the [Nginx auth_request module](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html) to enable it.
 - The website on which you want to enable authentication is successfully deployed on Nginx, with a **configured domain name** (instead of using an IP address), and can be accessed normally.
-- OAuth2-Proxy tool (currently, the following two popular projects with high stars are available on GitHub, and you need to choose one of them):
+- OAuth2-Proxy (choose one of the two popular options on GitHub):
 
 1. oauth2-proxy/oauth2-proxy (used in this article) [GitHub](https://github.com/oauth2-proxy/oauth2-proxy) OR [Official-Website](https://oauth2-proxy.github.io/oauth2-proxy)
 2. vouch/vouch-proxy [GitHub](https://github.com/vouch/vouch-proxy)
 
 ## I. Configure CasDoor
 
-**Note**: The operations in this article are based on the Casdoor GUI at the time of publication, but the Casdoor GUI may change depending on the version. Please follow the references provided in this article to configure your deployed Casdoor version.
+**Note**: The Casdoor GUI may differ by version; use this article as a reference and adapt to your build.
 
 **Note**: The keys, passwords, usernames, and other confidential information mentioned in this article are all examples. For security reasons, you must replace them with your own relevant content when deploying.
 
@@ -44,20 +44,20 @@ This guide assumes that you have the following conditions:
 
     ![ConfigureRole](/img/integration/C++/NGINX_Community/ConfigureRole.png)
 
-7. (Optional) In the top bar, select "User Management" > "Users", and then add new users based on your needs. If the users you need already exist, you can skip this step. In this article, we create an example user named "user".
+7. (Optional) In the top bar, select "User Management" > "Users", and then add new users based on your needs. If the users already exist, skip this step. In this article, we create an example user named "user".
 
-8. Go back to the "Roles" page mentioned in step 5, edit the `nginx_role` role, and add the users you need to the "Included Users" option. In this article, we add the previously created `builtin/user` here.
+8. Go back to the "Roles" page mentioned in step 5, edit the `nginx_role` role, and add the required users to **Included Users** (e.g. the previously created `builtin/user`).
 
 ## II. Configure Oauth2-Proxy
 
-**Note**: This article uses the Oauth2-Proxy project as an example. If you want to use Vouch instead of Oauth2-Proxy, please refer to their official documentation on [GitHub](https://github.com/vouch/vouch-proxy).
+**Note**: For Vouch instead of OAuth2-Proxy, see [vouch-proxy on GitHub](https://github.com/vouch/vouch-proxy).
 
-**Note**: This article assumes that your site is configured with a trusted SSL certificate and only allows HTTPS access, or that you have set up automatic redirection from HTTP visitors to HTTPS. This helps maximize the protection of cookies and prevents malicious reading of login tokens. If your site needs to be accessed via the insecure HTTP protocol, please modify the relevant commands accordingly. For more help with deploying via HTTP, please refer to the official documentation of Oauth2-Proxy on [GitHub](https://github.com/oauth2-proxy/oauth2-proxy).
+**Note**: This guide assumes HTTPS (or HTTP→HTTPS redirect). For HTTP-only deployment, adjust the commands and see [OAuth2-Proxy docs](https://github.com/oauth2-proxy/oauth2-proxy).
 
 **Tips**: [OAuth2-Proxy](https://github.com/oauth2-proxy/oauth2-proxy) provides various deployment methods (such as source code compilation, Docker installation, etc.). For ease of explanation, this article uses the "pre-built binary" for deployment.
 
 1. Go to the [GitHub Releases](https://github.com/oauth2-proxy/oauth2-proxy/releases) page and download the binary package corresponding to your operating system and CPU architecture.
-   As of January 1, 2024, the latest release version of OAuth-Proxy is `V7.5.1`. If you want to download the binary package for this version, you can execute the following command for Linux with AMD64:
+   As of January 1, 2024, the latest release version of OAuth-Proxy is `V7.5.1`. To download the binary for this version on Linux AMD64, run:
 
    ```bash
    wget -O oauth2-proxy-linux.tar.gz https://github.com/oauth2-proxy/oauth2-proxy/releases/download/v7.5.1/oauth2-proxy-v7.5.1.linux-amd64.tar.gz
@@ -92,7 +92,7 @@ This guide assumes that you have the following conditions:
    oauth2-proxy --version
    ```
 
-6. Run oauth2-proxy with command-line parameters. Parameters marked with [required] must be configured according to your specific situation, while parameters marked with [optional] can optimize performance but can also be omitted. To ensure that oauth2-proxy can run in the background, you can use process monitoring tools like `Screen` or `Supervisor` or terminal tools.
+6. Run oauth2-proxy with command-line parameters. Parameters marked with [required] must be configured according to your specific situation, while parameters marked with [optional] can optimize performance but can also be omitted. To run oauth2-proxy in the background, use a process manager such as `Screen`, `Supervisor`, or a terminal multiplexer.
 
     ```bash
     oauth2-proxy \ 
@@ -104,26 +104,26 @@ This guide assumes that you have the following conditions:
     --scope=email+profile+groups+openid \ #[required] Obtained from Casdoor: user email, user profile, groups, and login authentication
     --cookie-domain=project.yourdomain.com \ #[required] Domain name of the project you want to protect
     --whitelist-domain=project.yourdomain.com \ #[required] Domain name of the project you want to protect
-    --cookie-secret=abc123456def \ #[required] Please generate a random string of numbers and letters and fill it in here
+    --cookie-secret=abc123456def \ #[required] Use a random string (letters and numbers)
     --email-domain=* \ #[required] List of acceptable user email domains (* means accept all domains). If the user's email suffix is not in this list, a 403 error will be returned even if the login is successful.
     --insecure-oidc-allow-unverified-email=true \ #[required] Whether to accept users with unverified email addresses
-    --http-address=http://127.0.0.1:65534 \ #[required] Address that oauth2-proxy listens on. The port number here can be set arbitrarily. Please record the value you set, as it will be needed for configuring Nginx later.
+    --http-address=http://127.0.0.1:65534 \ #[required] Address oauth2-proxy listens on; note this for the Nginx config later.
     --cookie-expire=24h0m0s \ #[optional] Cookie expiration time. After this period, users will need to log in again.
     --custom-sign-in-logo=https://cdn.yourdomain.com/pic/proj.png \ #[optional] Icon displayed on the login page. It is recommended to use a rectangular image rather than a square one.
-    --session-store-type=redis \ #[optional] Use Redis cache. If you don't need Redis, you can delete this item.
-    --redis-connection-url=redis://127.0.0.1:6379/0 \ #[optional] Redis URL. If you don't need Redis, you can delete this item.
-    --redis-password=123456 #[optional] Redis connection password. If you don't need Redis or Redis has no password, you can delete this item.
+    --session-store-type=redis \ #[optional] Use Redis cache. Omit if not using Redis.
+    --redis-connection-url=redis://127.0.0.1:6379/0 \ #[optional] Redis URL. Omit if not using Redis.
+    --redis-password=123456 #[optional] Redis password. Omit if not using Redis or if Redis has no password.
     ```
 
 ## III. Configure Nginx
 
-**Note**: Please confirm again that your Nginx has enabled the `ngx_http_auth_request_module` module when compiling and installing from source code (the compilation command includes `--with_http_auth_request_module`). If you don't know how to enable the `ngx_http_auth_request_module` module, please refer to the [Nginx Module Document](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html).
+**Note:** If building Nginx from source, ensure `ngx_http_auth_request_module` is enabled (add `--with_http_auth_request_module`). See the [Nginx auth_request module](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html).
 
 **Tips**: Nginx installed using the Baota panel tool does not enable this module by default.
 
 1. Open the configuration file of the website you have already deployed and want to protect, and make the following modifications:
 
-    **Note**: You need to adjust this configuration file according to your specific situation. Due to Nginx versions and other factors, this configuration file may not work smoothly on all Nginx instances. Please adjust the relevant content based on your own Nginx information.
+    **Note**: Adjust the config for your setup; Nginx version and environment may require changes.
 
     ```nginx
     server {
@@ -202,12 +202,12 @@ This guide assumes that you have the following conditions:
 
 ## Testing
 
-- Next, you can test your implementation.
+- Next, test your implementation.
 - In normal circumstances, your users will go through the following process when logging in to your service:
 - Open the URL `project.yourdomain.com` in a browser -> Only see a page requiring login, including a button named "Sign in with OpenID Connect" -> Click the button and be redirected to your Casdoor address, where they will be asked to log in -> Users enter their username and password, and Casdoor verifies their credentials -> Automatically redirect back to your URL `project.yourdomain.com` -> Successfully access your service -> Users will be asked to log in again when the `--cookie-expire` time you set expires.
 
 ## Troubleshooting
 
-- If your project is not running as expected, please check your Nginx configuration and Oauth2-Proxy configuration parameters for correctness.
-- You can also refer to the official documentation of Oauth2-Proxy on [GitHub](https://github.com/oauth2-proxy/oauth2-proxy).
-- If you find any errors in this document, please feel free to request edits on GitHub.
+- If it does not run as expected, check your Nginx and OAuth2-Proxy configuration.
+- See [OAuth2-Proxy documentation](https://github.com/oauth2-proxy/oauth2-proxy).
+- To suggest fixes for this doc, open an issue or PR on GitHub.

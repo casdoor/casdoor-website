@@ -1,34 +1,32 @@
 ---
-title: Slack
-description: Using Slack as a notification provider for Casdoor
+title: Slack notification
+description: Send Casdoor notifications to a Slack channel.
 keywords: [Slack, notification, provider]
 authors: [UsherFall]
 ---
 
-## Step 1: Config Slack App
+## 1. Create a Slack app
 
-First, you need to create an app on [Slack API](https://api.slack.com/apps). Give your bot/app the following OAuth permission scopes: `chat:write`, `chat:write.public`
+At [Slack API](https://api.slack.com/apps), create an app and add the OAuth scopes **chat:write** and **chat:write.public** for the bot.
 
 ![slack_app](/img/providers/notification/slack_app.png)
 
-## Step 2: Get Bot User OAuth Access Token and Channel ID
+## 2. Get token and channel ID
 
-Copy your `Bot User OAuth Access Token` for usage below.
+- Copy the **Bot User OAuth Access Token** from **OAuth & Permissions**.
+- Get the **Channel ID**: right-click the channel in Slack and choose **Copy link** (or “copy name”); the ID is in the URL or you can use Slack’s channel details.
 
 ![slack_token](/img/providers/notification/slack_token.png)
-
-Copy the Channel ID of the channel you want to post a message to. You can grab the Channel ID by right clicking a channel and selecting `copy name`
-
 ![slack_channel](/img/providers/notification/slack_channel.png)
 
-## Step 3: Configure Casdoor Slack Provider
+## 3. Configure the provider in Casdoor
 
-There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Slack is as follows:
+Create a **Notification** provider, set **Type** to **Slack**, and fill in:
 
-| Name       | Name in Slack |
-|------------|---------------|
-| Secret key | Access Token  |
-| Chat ID    | Channel ID    |
-| Content    |               |
+| Casdoor field | Value        |
+|---------------|--------------|
+| Secret key    | Access Token |
+| Chat ID       | Channel ID   |
+| Content       | Message template (optional) |
 
 ![slack_provider](/img/providers/notification/slack_provider.png)

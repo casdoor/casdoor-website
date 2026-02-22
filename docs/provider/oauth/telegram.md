@@ -9,7 +9,7 @@ Telegram Login Widget provides a secure way to authenticate users through their 
 
 ## Create a Telegram Bot
 
-To use Telegram authentication, you need to create a bot through BotFather:
+Create a bot via [@BotFather](https://t.me/BotFather):
 
 1. Open Telegram and search for [@BotFather](https://t.me/BotFather)
 2. Send `/newbot` and follow the prompts to create your bot
@@ -47,10 +47,6 @@ With the setup completed, users can now log in with Telegram.
 
 <video src="/video/provider/oauth/telegram_login.mp4" controls="controls" width="100%"></video>
 
-## Authentication Flow
+## Authentication flow
 
-When users choose to sign in with Telegram, Casdoor redirects them to a dedicated widget page where they authenticate through Telegram's official login widget. After clicking the login button, users verify their identity through the Telegram app or website. Once authorized, Telegram returns their profile information to Casdoor's callback endpoint.
-
-The authentication data undergoes strict validation - Casdoor verifies the cryptographic HMAC-SHA256 signature and checks the timestamp to prevent replay attacks. This follows [Telegram's security specification](https://core.telegram.org/widgets/login#checking-authorization) to ensure the data hasn't been tampered with. The system also handles edge cases like empty authorization codes gracefully, automatically prompting users to retry if needed.
-
-Telegram provides basic profile information including user ID, first and last name, username (if set), and profile photo (if available). Note that Telegram does not provide email addresses through the Login Widget. If your application requires email verification, you'll need to collect this separately after the initial authentication.
+Users sign in via Telegram’s login widget; Casdoor validates the HMAC-SHA256 signature and timestamp per [Telegram’s spec](https://core.telegram.org/widgets/login#checking-authorization). Profile data includes user ID, name, username, and optional photo. Telegram does not provide email via the widget; collect email separately if needed.

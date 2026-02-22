@@ -1,13 +1,13 @@
 ---
-title: Facebook
-description: Add the Facebook OAuth provider to your application.
+title: Facebook OAuth
+description: Add Facebook as an OAuth provider.
 keywords: [Facebook, OAuth]
 authors: [ErikQQY]
 ---
 
-To set up the Facebook OAuth provider, please go to the [Facebook Developer](https://developers.facebook.com/apps/) website and create a new app.
+## Create a Facebook app
 
-Select the type of app you are going to create.
+Go to [Facebook Developers](https://developers.facebook.com/apps/) and create a new app. Choose the app type (e.g. Consumer).
 
 ![Facebook select](/img/providers/OAuth/facebookselect.png)
 
@@ -23,30 +23,20 @@ Choose the Web platform for this app:
 
 ![Facebook web](/img/providers/OAuth/facebookweb.png)
 
-After filling in the website URL, go to **Facebook Login > Settings** and enter valid OAuth Redirect URIs.
+Under **Facebook Login** → **Settings**, set **Valid OAuth Redirect URIs** to **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
 
 ![Redirect URIs](/img/providers/OAuth/facebookredirecturl.png)
 
-:::info Set authorized redirect URLs correctly
-
-In the Facebook OAuth configuration, the `Valid OAuth Redirect URIs` must be **your Casdoor's callback URL**, and the `Redirect URL` in Casdoor should be **your application's callback URL**.
-
-For more details, please read the [App Configuration](/docs/application/config#further-understanding) section.
-
-:::
-
-The basic app configuration is almost complete!
-
-Switch the mode from **In development** to **Live** in the top bar of the dashboard.
+Switch the app from **In development** to **Live** in the dashboard top bar.
 
 ![Top bar](/img/providers/OAuth/facebooktopbar.png)
 
-Now you can use your `App ID` and `App Secret` in Casdoor.
+Copy **App ID** and **App Secret** from **Settings** → **Basic**.
 
 ![Facebook app](/img/providers/OAuth/facebookappclient.png)
 
-Add the Facebook OAuth provider and fill in the `Client ID` and `Client Secret` with the `App ID` and `App Secret` from your Casdoor.
+## Add the provider in Casdoor
+
+Create an **OAuth** provider, set **Type** to **Facebook**, and enter **App ID** as **Client ID** and **App Secret** as **Client Secret**.
 
 ![Facebook Client](/img/providers/OAuth/facebookclient.png)
-
-You can now use Facebook as a third-party service for authentication!

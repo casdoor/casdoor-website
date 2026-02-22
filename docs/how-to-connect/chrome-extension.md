@@ -1,35 +1,21 @@
 ---
-title: Chrome Extension
-description: Using Casdoor in Chrome extension
+title: Chrome extension
+description: Integrate Casdoor OAuth in a Chrome extension.
 keywords: [chrome extension, browser extension, oauth]
 authors: [hsluoyz]
 ---
 
-[casdoor-chrome-extension](https://github.com/casdoor/casdoor-chrome-extension) is an example of how to integrate Casdoor in a Chrome browser extension. We will guide you through the steps below.
+The [casdoor-chrome-extension](https://github.com/casdoor/casdoor-chrome-extension) repo shows how to integrate Casdoor in a Chrome extension. Summary of steps:
 
 ## Step 1: Deploy Casdoor
 
-Firstly, Casdoor should be deployed.
+Deploy Casdoor in [production mode](/docs/basic/server-installation). Confirm the login page at `http://localhost:8000` works (e.g. sign in with `admin` / `123` in dev).
 
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation). Please deploy your Casdoor instance in **production mode**.
+## Step 2: Configure the application
 
-After a successful deployment, make sure the following:
-
-- Open your favorite browser and visit **<http://localhost:8000>**. You will see the login page of Casdoor.
-- Test the login functionality by entering `admin` as the username and `123` as the password.
-
-After that, you can quickly implement a Casdoor-based login page in your Chrome extension using the following steps.
-
-## Step 2: Configure Casdoor Application
-
-Before using Casdoor for authentication in your Chrome extension, you need to configure a Casdoor application:
-
-1. Go to your Casdoor instance and navigate to **Applications**.
-2. Create a new application or use an existing one.
-3. Configure the application settings:
-   - Set the **Redirect URLs** to include your Chrome extension URL. For example: `https://<extension-id>.chromiumapp.org/` or `http://localhost:3000/callback` for development.
-   - Note down the **Client ID** and **Client Secret**.
-   - Make sure the application has proper OAuth settings enabled.
+1. In Casdoor, go to **Applications** and create or edit an application.
+2. Add **Redirect URLs** for the extension (e.g. `https://<extension-id>.chromiumapp.org/` or `http://localhost:3000/callback` for dev).
+3. Note the **Client ID** and **Client Secret** and enable the OAuth options you need.
 
 ## Step 3: Set Up Chrome Extension
 
@@ -357,9 +343,7 @@ async function getValidAccessToken() {
 }
 ```
 
-## What's More
-
-You can explore the following projects/docs to learn more about integrating Casdoor with Chrome extensions:
+## See also
 
 - [casdoor-chrome-extension](https://github.com/casdoor/casdoor-chrome-extension) - Official example repository
 - [Casdoor OAuth Documentation](/docs/how-to-connect/oauth)

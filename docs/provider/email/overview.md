@@ -1,67 +1,54 @@
 ---
-title: Overview
-description: Using Email for authentication
-keywords: [email]
+title: Email provider overview
+description: Configure SMTP for verification emails and password reset.
+keywords: [email, SMTP, verification]
 authors: [kininaru]
 ---
 
-## Adding an Email provider
+## Add an email provider
 
-1. Click on `Add` to add a new provider.
-2. Select `Email` under the `Category` section.
+1. Click **Add** and choose **Email** under **Category**.
+2. Enter **Username**, **Password**, **Host**, and **Port** for your SMTP server.
+3. Set **Email Title** and **Email Content** (templates), then save.
 
-    ![Email provider](/img/providers/emailprovider.png)
+![Email provider](/img/providers/emailprovider.png)
+![Email Config](/img/providers/emailconfig.png)
 
-3. Fill in the fields for `Username`, `Password`, `Host`, and `Port` for your SMTP service.
+## Proxy
 
-    ![Email Config](/img/providers/emailconfig.png)
+If the Casdoor server cannot reach the SMTP server directly (e.g. Gmail from a restricted network), enable **Enable proxy**. Email is then sent via the SOCKS5 proxy defined in Casdoor’s config.
 
-4. Customize the `Email Title` and `Email Content`, then save the changes.
+## Email content and placeholders
 
-## Proxy configuration
+Templates support placeholders and the `<reset-link>` block for password reset.
 
-If your server cannot directly access the SMTP service (such as Gmail), you can enable the proxy option. When enabled, email traffic will be routed through the SOCKS5 proxy configured in Casdoor's configuration file.
-
-To enable proxy support, toggle the `Enable proxy` switch in the provider settings. This is particularly useful when connecting to external email services from restricted network environments.
-
-## Modify email content
-
-You can customize email templates using placeholders and special tags to create dynamic content.
-
-### Available placeholders
-
-**`%{user.friendlyName}`** - Displays the user's display name or friendly name in the email.
-
-**`%s`** - Replaced with the verification code when sending authentication emails.
-
-**`%link`** - The password reset link that allows users to reset their password directly from the email. This placeholder must be used within `<reset-link>` tags.
+| Placeholder | Description |
+|-------------|-------------|
+| **%{'{'}user.friendlyName{'}'}** | User’s display or friendly name. |
+| **%s** | Verification code (for auth emails). |
+| **%link** | Password reset URL. Use only inside `<reset-link>...</reset-link>`. |
 
 ### Password reset link
 
-The password reset link feature enables users to reset their password by clicking a link in the email instead of manually entering a verification code. This provides a smoother user experience for password recovery.
+To let users reset the password by clicking a link in the email:
 
-To enable password reset links in your email template:
+1. Put the link text and `%link` inside `<reset-link>` tags.
+2. The block is shown only in password-reset emails; it is removed for signup/login verification.
 
-1. Wrap the link content with `<reset-link>` tags
-2. Use the `%link` placeholder where you want the actual reset URL to appear
-3. The content inside `<reset-link>` tags will only appear in password reset emails
-
-**Example with plain text:**
+**Plain text example:**
 
 ```text
 You have requested a verification code at Casdoor. Here is your code: %s, please enter in 5 minutes. <reset-link>Or click %link to reset</reset-link>
 ```
 
-When used for password reset, users will see both the verification code and a clickable link. For other verification scenarios (signup, login), only the code will be shown.
-
-**Example with HTML template:**
+**HTML example:**
 
 ```html
 <!DOCTYPE html>
 <html>
 <body>
     <h2>Password Reset Request</h2>
-    <p>Hello %{user.friendlyName},</p>
+    <p>Hello %{'{'}user.friendlyName{'}'},</p>
     <p>Your verification code is: <strong>%s</strong></p>
     <p>This code will expire in 5 minutes.</p>
     <reset-link>
@@ -74,4 +61,4 @@ When used for password reset, users will see both the verification code and a cl
 
 ![Html template](/img/providers/email/email-template.png)
 
-The `<reset-link>` block is automatically removed from emails sent for other purposes like signup or login verification, ensuring the reset link only appears when appropriate.
+The `<reset-link>` block is omitted for non–password-reset emails (signup, login verification).

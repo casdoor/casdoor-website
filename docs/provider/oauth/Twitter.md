@@ -1,23 +1,18 @@
 ---
-title: Twitter
-description: Add Twitter OAuth provider to your application
-keywords: [Twitter, OAuth]
+title: Twitter OAuth
+description: Add Twitter (X) as an OAuth provider (developer account required).
+keywords: [Twitter, OAuth, X]
 authors: [Marvelousp4]
 ---
 
-## Twitter (Work in Progress 🚧)
+:::caution
+Twitter’s developer signup and app review can be strict. Approval may take time.
+:::
 
-> Applying for a developer account on Twitter can be a bit cumbersome due to the strict official restrictions. It may be more challenging compared to other third-party platforms.
+1. Go to the [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard) and create or open a project and app.
+2. In **Authentication settings**:
+   - Enable **3-legged OAuth** (required for “Sign in with Twitter” and posting on behalf of users).
+   - Enable **Request email address from users** if you need email.
+3. Set the **Callback URL** to your Casdoor callback URL and save.
 
-To get started, visit the [Developer Portal](https://developer.twitter.com/en/portal/dashboard) and create an account if you don't have one. Twitter requires you to provide detailed information about your application for a developer account. Make sure to fill in the information accurately to avoid any issues during the review process.
-
-Once your application is approved, you can proceed to create an application. You need to complete two important tasks in the **Authentication settings** section:
-
-1. Manually enable **3-legged OAuth**. This is necessary for features such as "Sign in with Twitter" and posting Tweets on behalf of other accounts.
-2. Enable **Request email address from users** to obtain the user's email address.
-
-Make sure to carefully fill in the callback address and other required information for your application.
-
-### PKCE Security
-
-Twitter OAuth uses PKCE (Proof Key for Code Exchange) to enhance security. Casdoor automatically generates a unique code verifier for each authentication flow, protecting against authorization code interception attacks. The verifier is temporarily stored client-side during the OAuth flow and securely transmitted to Twitter during token exchange.
+Casdoor uses **PKCE** (Proof Key for Code Exchange) for Twitter OAuth: a code verifier is generated per flow and sent during token exchange to reduce authorization-code interception risks.

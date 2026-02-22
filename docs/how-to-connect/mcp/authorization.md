@@ -1,6 +1,6 @@
 ---
-title: Authorization and Scopes
-description: Scope-based authorization for MCP tools
+title: MCP authorization and scopes
+description: Scope-based access control for MCP tools.
 keywords: [MCP, OAuth, scopes, authorization, permissions]
 authors: [hsluoyz]
 ---
@@ -132,7 +132,7 @@ To configure custom scopes:
 3. Your MCP server validates these scopes from the access token's `scope` claim
 4. The scopes appear in the OIDC discovery endpoint and consent screen
 
-For detailed instructions on configuring custom scopes, see the [Custom Scopes](/docs/application/scopes) documentation.
+See [Custom scopes](/docs/application/scopes) for configuration.
 
 **Example custom scopes for a file management MCP server:**
 
@@ -172,4 +172,4 @@ To use Casbin with your MCP server:
 3. Configure policies that map users, roles, and scopes to specific actions
 4. Your MCP server enforces these policies by checking permissions after validating scopes
 
-Casbin authorization runs in addition to scope validation. A request must pass both scope checking and Casbin policy enforcement to succeed. For more information, see the [Permissions](/docs/permission/overview) documentation.
+Casbin authorization runs in addition to scope validation. A request must pass both scope checking and Casbin policy enforcement to succeed. See [Permissions](/docs/permission/overview) for Casbin integration.

@@ -1,15 +1,15 @@
 ---
-title: Jumio
-description: Integrate Jumio for identity verification
+title: Jumio ID verification
+description: Use Jumio as an ID verification (KYC) provider in Casdoor.
 keywords: [Jumio, ID Verification, identity, KYC]
 authors: [hsluoyz]
 ---
 
-Jumio is a leading identity verification platform that uses AI-powered technology to verify government-issued IDs and authenticate users. This guide explains how to configure Jumio as an ID Verification provider in Casdoor.
+[Jumio](https://www.jumio.com/) verifies government-issued IDs and supports KYC flows. Configure it as an **ID Verification** provider in Casdoor.
 
 ## Prerequisites
 
-Before integrating Jumio with Casdoor, you'll need:
+You need:
 
 - A Jumio account with API access
 - API credentials (Client ID and Client Secret)
@@ -17,37 +17,24 @@ Before integrating Jumio with Casdoor, you'll need:
 
 If you don't have a Jumio account, visit [jumio.com](https://www.jumio.com/) to sign up.
 
-## Configuration Steps
+## Configuration
 
-### Step 1: Obtain Jumio Credentials
+### 1. Get Jumio credentials
 
-1. Log in to your Jumio account dashboard
-2. Navigate to the API credentials section
-3. Generate or locate your API Token (Client ID) and API Secret (Client Secret)
-4. Note your API endpoint URL (e.g., `https://api.jumio.com`)
+In the Jumio dashboard, open the API credentials section. Note your **API Token** (Client ID), **API Secret** (Client Secret), and **API endpoint URL** (e.g. `https://api.jumio.com`).
 
-### Step 2: Create Provider in Casdoor
+### 2. Create the provider in Casdoor
 
-1. Go to the Casdoor admin console
-2. Click **Providers** in the top navigation
-3. Click **Add** to create a new provider
-4. Configure the provider:
-   - **Name**: Choose a descriptive name (e.g., "Jumio-Production")
-   - **Category**: Select "ID Verification"
-   - **Type**: Select "Jumio"
-   - **Client ID**: Enter your Jumio API Token
-   - **Client Secret**: Enter your Jumio API Secret
-   - **Endpoint**: Enter your Jumio API endpoint URL
+**Providers** → **Add**. Set **Category** to **ID Verification**, **Type** to **Jumio**, and fill in:
+- **Client ID** — Jumio API Token  
+- **Client Secret** — Jumio API Secret  
+- **Endpoint** — Jumio API URL  
 
-5. Click **Save**
+Save the provider.
 
-### Step 3: Add Provider to Application
+### 3. Add to your application
 
-1. Navigate to your application's edit page
-2. Scroll to the Providers section
-3. Click **Add** to add a new provider row
-4. Select your newly created Jumio provider
-5. Save the application configuration
+Edit the application, add the Jumio provider in the Providers section, and save.
 
 ## How Verification Works
 

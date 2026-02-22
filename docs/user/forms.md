@@ -1,34 +1,30 @@
 ---
 title: Forms
-description: A tool for customizing list page displays of system entities.
-keywords: [forms, column management]
+description: Customize list-page columns and layout for core entities.
+keywords: [forms, column management, list page]
 authors: [Attack825]
 ---
 
-The Forms feature is a tool, built to customize the display and configuration of list pages for the system’s core entities.Administrators use the Forms feature to configure list page layouts and preview their final appearance.
+**Forms** let admins customize how list pages for core entities (users, providers, etc.) are displayed: which columns appear, their order, labels, and widths.
 
-1. Forms Overview
+## Overview
 
-    The initial landing page of the Forms feature provides a comprehensive overview of all existing Forms in the system.
+The Forms entry page lists all existing forms. Select a **Form type** (e.g. User list, Provider list) to edit the layout for that entity’s list page.
 
-    ![Forms Inventory Overview](/img/user/forms.png)  
+![Forms Inventory Overview](/img/user/forms.png)
 
-2. Form Type Selection
+![Form Type Selection](/img/user/form_type.png)
 
-    To customize a specific list page, administrators first select the relevant `Form Type`—a classification that maps directly to the entity’s list page (e.g., "User List Page", "Provider List Page").
+## Form items
 
-    ![Form Type Selection](/img/user/form_type.png)  
+- **Edit items** — Change **Label** (e.g. "User ID" → "Employee ID"), **Width**, and **Visible** (show/hide column).
+- **Remove items** — Delete columns you don’t need.
+- **Reorder** — Use "Move Up" / "Move Down" to set column order.
 
-3. Form Items Management
+![Form Items Editor](/img/user/form_items.png)
 
-    - **Modify Existing Form Items**: Update properties like `Label` (e.g., rename "User ID" to "Employee ID"), `Width` (adjust pixel column width), and `Visible` (toggle column display on/off).
-    - **Delete Unneeded Form Items**: Remove irrelevant columns to declutter the list page.
-    - **Reorder Form Items**: Use "Move Up" or "Move Down" controls to adjust the left-to-right sequence of columns on the list page.
+## Preview
 
-    ![Form Items Editor](/img/user/form_items.png)  
+The preview matches the live list page so you can confirm column order, labels, widths, and visibility before saving.
 
-4. Form Preview
-
-    The preview page mirrors the live system’s list page layout, ensuring that column order, labels, widths, and visibility align with requirements before finalizing changes.
-
-    ![Form Preview Page](/img/user/form_preview.png)  
+![Form Preview Page](/img/user/form_preview.png)

@@ -1,23 +1,21 @@
 ---
-title: Connect Cursor
-description: Step-by-step guide to connect Cursor IDE to Casdoor's MCP server
-keywords: [MCP, Cursor, IDE, OAuth, PKCE, MCP client]
+title: Connect Cursor to MCP
+description: Connect Cursor IDE to Casdoor’s MCP server with OAuth.
+keywords: [MCP, Cursor, IDE, OAuth, PKCE]
 authors: [hsluoyz]
 ---
 
-This guide shows you how to connect Cursor IDE to Casdoor's MCP server, enabling AI-powered code assistance with direct access to manage your Casdoor applications, users, and resources.
+Connect Cursor IDE to Casdoor’s MCP server so you can manage applications, users, and resources from the editor.
 
 ## Prerequisites
-
-Before you begin, ensure you have:
 
 - A running Casdoor instance (HTTPS recommended for production)
 - [Cursor IDE](https://cursor.sh/) installed on your computer
 - Admin access to your Casdoor instance to create applications
 
-## Step 1: Create an Application in Casdoor
+## Step 1: Create an application in Casdoor
 
-Configure a Casdoor application that Cursor will use for OAuth authentication:
+Create a Casdoor application for Cursor’s OAuth:
 
 1. Log in to your Casdoor admin panel
 2. Navigate to **Applications** and click **Add**
@@ -44,12 +42,12 @@ Configure a Casdoor application that Cursor will use for OAuth authentication:
 8. **(Optional) Category**: Set to `MCP` for better organization
 
    :::info
-   Application categories help organize your apps. See [Application Categories](/docs/application/categories) for more details.
+   See [Application categories](/docs/application/categories) for Category and Type options.
    :::
 
-9. Click **Save** and note down your **Client ID** (you'll need it in the next step)
+9. Click **Save** and note the **Client ID** for the next step.
 
-## Step 2: Configure Cursor MCP Settings
+## Step 2: Configure Cursor MCP settings
 
 Cursor supports MCP server configuration through its settings. You can configure it either through the UI or by directly editing the configuration file.
 

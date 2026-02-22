@@ -1,13 +1,13 @@
 ---
-title: Error Handling
-description: Understanding MCP server error responses
+title: MCP error handling
+description: JSON-RPC error codes and responses from the MCP server.
 keywords: [MCP, errors, JSON-RPC, troubleshooting]
 authors: [hsluoyz]
 ---
 
-## Error Codes
+## Error codes
 
-The MCP server returns standard JSON-RPC 2.0 error codes:
+The MCP server uses standard JSON-RPC 2.0 error codes:
 
 - **-32700**: Parse error - Invalid JSON
 - **-32600**: Invalid Request - Missing required fields

@@ -1,15 +1,15 @@
 ---
-title: MCP Server Overview
-description: Introduction to Casdoor's Model Context Protocol (MCP) server
+title: MCP server overview
+description: Use Casdoor’s MCP server for programmatic access via JSON-RPC 2.0.
 keywords: [MCP, Model Context Protocol, API, automation, JSON-RPC]
 authors: [hsluoyz]
 ---
 
-Casdoor provides a Model Context Protocol (MCP) server at `/api/mcp` that enables programmatic management of applications and other resources through a standardized JSON-RPC 2.0 interface. MCP servers expose tools that AI assistants and other clients can use to interact with your Casdoor instance.
+Casdoor exposes a **Model Context Protocol (MCP)** server at `/api/mcp`. Clients (e.g. AI assistants or automation tools) can call it over JSON-RPC 2.0 to manage applications, users, and other resources without using Casdoor’s REST API directly.
 
 ## What is MCP?
 
-The Model Context Protocol is a JSON-RPC 2.0 protocol that defines a standard way for clients (like AI assistants or automation tools) to discover and invoke tools provided by servers. Casdoor's MCP implementation allows clients to manage applications, users, and other resources without needing to understand Casdoor's specific REST API structure.
+MCP is a JSON-RPC 2.0 protocol for discovering and calling tools provided by a server. Casdoor’s MCP server exposes tools so clients can manage Casdoor resources in a standard way.
 
 ## Getting Started
 

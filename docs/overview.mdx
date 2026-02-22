@@ -1,4 +1,4 @@
----
+﻿---
 title: Overview
 description: Casdoor Overview
 keywords: [casdoor, OAuth 2.0]
@@ -46,7 +46,7 @@ Casdoor serves both the web UI and the login requests from application users.
 
 ### Step 0 (Pre-knowledge)
 
-1. Casdoor follows the authorization process built upon the OAuth 2.0 protocol. We highly recommend gaining a brief understanding of how OAuth 2.0 works. You can refer to this [introduction](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) to OAuth 2.0.
+1. Casdoor uses OAuth 2.0 for authorization. For a short intro to OAuth 2.0, see [An introduction to OAuth 2](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2).
 
 ![image](/img/oauth.png)
 
@@ -58,11 +58,9 @@ Your Application (which could be a website or any other application) should comp
 
 How to fill out the `xxx` parts?
 
-+ For `client_id`: you can find this under each individual Application.
-
-+ For `redirect_uri`: you should set this to your own Application's callback URL. Casdoor will use this information to send the response back after authorization.
-
-+ For `state`: you should fill this out with your Application name.
++ **client_id**: From the Application settings in Casdoor.
++ **redirect_uri**: Your application’s callback URL; Casdoor redirects here after authorization.
++ **state**: Your application name (or any value you use to correlate the request).
 
 :::
 
@@ -128,7 +126,7 @@ Global admin login:
 Casbin-OA is one of the Casbin web apps. It uses Casdoor for authentication.
 
 + [Casbin-OA](https://oa.casbin.com)
-+ Source code: <https://github.com/casbin/casbin-oa>
++ Source code: `https://github.com/casbin/casbin-oa`
 
 ### Casnode
 
@@ -137,7 +135,7 @@ Casnode is the official forum developed by the Casbin community.
 It uses Casdoor as the authentication platform and manages members.
 
 + [Casnode](https://casnode.org)
-+ Source code: <https://github.com/casbin/casnode>
++ Source code: `https://github.com/casbin/casnode`
 
 ## Architecture
 
@@ -145,5 +143,5 @@ Casdoor consists of two parts:
 
 Name | Description | Language | Source code
 ----|------|----|----
-Frontend | Web frontend UI for Casdoor | JavaScript + React | <https://github.com/casdoor/casdoor/tree/master/web>
-Backend | RESTful API backend for Casdoor | Golang + Beego + SQL | <https://github.com/casdoor/casdoor>
+Frontend | Web frontend UI for Casdoor | JavaScript + React | `https://github.com/casdoor/casdoor/tree/master/web`
+Backend | RESTful API backend for Casdoor | Golang + Beego + SQL | `https://github.com/casdoor/casdoor`

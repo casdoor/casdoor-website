@@ -1,7 +1,7 @@
 ---
 title: Providers
-description: Configure different providers
-keywords: [providers]
+description: Attach providers to your application and set rules (signup, login, forgot password, MFA, etc.).
+keywords: [providers, OAuth, email, SMS, MFA]
 authors: [zhuying]
 ---
 
@@ -9,21 +9,21 @@ authors: [zhuying]
 import styles from '../styles.module.css';
 ```
 
-You can also add third-party apps for sign up by adding providers and setting their properties.
+Add **providers** to your application so users can sign up or sign in with third-party identity, email, or SMS. For each provider you choose a **rule** that defines when it is used:
 
 ![Select providers](/img/application/config/selectproviders.png)
 
-Our provider can differentiate between different scenarios, and you can choose different providers for different functionalities by choosing rules. For a detailed explanation of each rule item, please refer to the table below.
+Rule reference:
 
-|      Rule       | Description                                                                                                                                                                                        |
-|:---------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|     Signup      | For the registration scenario, you can choose the "signup" rule for the provider to send the corresponding SMS or Email template.                                                                  |
-|      Login      | For the login scenario, you can choose the "login" rule for the provider.                                                                                                                          |
-| Forget Password | When selecting a provider for the "Forget Password" scenario in your application, you can choose the "Forget Password" rule. Email providers can send password reset links in addition to verification codes. See [Email Provider](/docs/provider/email/overview#password-reset-link) for details. |
-| Reset Password  | When selecting a provider for the "Reset Password" scenario in your application, you can choose the "Reset Password" rule.                                                                         |
-|     Set MFA     | For MFA Setup Verification scenario, you can choose the "Set MFA" rule.                                                                                                                            |
-|    MFA Auth     | For MFA Auth Verification scenario, you can choose the "MFA Auth" rule. For more information about mfa, you can refer to the **[MFA](user/multi-factor-authentication.md)**                        |
-|       all       | If you want to use a single provider for all functionalities, you can choose the "all" rule. This means that the same provider will be used for all scenarios mentioned above in your application. |
+| Rule | Use |
+|------|-----|
+| **Signup** | Send SMS/email templates during registration. |
+| **Login** | Use this provider for sign-in. |
+| **Forget Password** | Send reset links or codes. See [Email provider](/docs/provider/email/overview#password-reset-link) for reset links. |
+| **Reset Password** | Use when the user resets their password. |
+| **Set MFA** | Send codes during MFA setup. |
+| **MFA Auth** | Use for MFA verification at login. See [MFA](/docs/user/multi-factor-authentication). |
+| **all** | Use this provider for every scenario above. |
 
 ![Select rules](/img/application/providers/choose_providers.png)
 

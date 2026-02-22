@@ -1,15 +1,15 @@
 ---
-title: WeCom
-description: Using WeCom Syncer to synchronize users from WeCom
+title: WeCom syncer
+description: Sync users from WeCom (企业微信) to Casdoor via the WeCom API.
 keywords: [syncer, wecom, wechat work]
 authors: [UsherFall]
 ---
 
-WeCom Syncer allows you to automatically import users from your WeCom (企业微信) organization into Casdoor. The syncer fetches user information from all departments in your WeCom organization through the WeCom API and keeps the user data synchronized.
+The **WeCom syncer** imports users from your WeCom organization into Casdoor. It uses the WeCom API to fetch users from all departments and keeps data in sync.
 
 ## Configuration
 
-The following fields are required:
+Required fields:
 
 - **Organization**: The Casdoor organization where users will be imported
 - **Name**: A unique name for this syncer

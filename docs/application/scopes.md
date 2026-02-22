@@ -1,33 +1,31 @@
 ---
-title: Custom Scopes
-description: Configure custom OAuth scopes for Agent applications
-keywords: [scopes, oauth, oidc, agent, MCP, permissions]
+title: Custom scopes
+description: Define custom OAuth scopes for Agent applications (e.g. MCP servers).
+keywords: [scopes, OAuth, OIDC, agent, MCP, permissions]
 authors: [copilot]
 ---
 
-Custom scopes allow Agent applications to define specific permissions or capabilities they expose through OAuth. These scopes work alongside standard OIDC scopes and appear in the application's OIDC discovery endpoint.
+**Custom scopes** let Agent applications define permissions or capabilities exposed via OAuth. They are added to the app’s OIDC discovery and used alongside standard OIDC scopes.
 
-## When to Use Custom Scopes
+## When to use custom scopes
 
-Custom scopes are available for applications with the **Agent** category. They're particularly useful for:
+Available for applications with category **Agent**. Useful for:
 
 - MCP servers that need to define granular permissions for different resources
 - API services that want to control access to specific endpoints or features
 - Applications implementing fine-grained authorization models
 
-Default applications use the standard OIDC scopes (`openid`, `email`, `profile`, `address`, `phone`, `offline_access`) and don't need custom scopes.
+Default (non-Agent) applications use only standard OIDC scopes and do not need custom scopes.
 
-## Configuring Scopes
+## Configuring scopes
 
-For Agent applications, you can add custom scopes from the application edit page. Each scope has three components:
+On the application edit page, add scopes. Each has:
 
-**Name**: The scope identifier used in OAuth flows. Use a descriptive format like `resource:action` (e.g., `files:read`, `messages:write`).
+- **Name** — Scope identifier in OAuth (e.g. `files:read`, `messages:write`).
+- **Display name** — Shown to the user during consent (e.g. “Read files”).
+- **Description** — What the scope allows (e.g. “Allow reading your files”).
 
-**Display Name**: A human-readable name shown during authorization. Keep it short and clear (e.g., "Read Files", "Send Messages").
-
-**Description**: Explains what the scope allows. This helps users understand what they're granting access to (e.g., "Allow reading your files and documents").
-
-## How Scopes Work
+## How scopes work
 
 When you configure custom scopes for an Agent application:
 

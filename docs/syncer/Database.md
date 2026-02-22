@@ -1,84 +1,70 @@
 ---
-title: Database
-description: Using Database Syncer to synchronize databases
+title: Database syncer
+description: Sync user data from an external database into Casdoor.
 keywords: [syncer, database]
 authors: [Marvelousp4]
 ---
 
-## Database Syncer
-
-The database syncer connects to external databases to synchronize user data with Casdoor. The users table we created as a demo is imported from the [template XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx).
+The **database syncer** connects to an external database and syncs user data into Casdoor. A demo users table can be imported from the [template XLSX](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx).
 
 ![Table](/img/syncer/Database/syncer_database_table.png)
 
-To create a new syncer, go to the **Syncers** tab and fill in all the required information as shown below. Then, save the changes.
+## Create a syncer
+
+Go to **Syncers** and create a new syncer with the following. Save when done.
 
 ![edit](/img/syncer/Database/syncer_database_edit.png)
 
 :::tip
-
-In general, you need to fill in at least the `ID` and `Name` in the Casdoor columns. Other important fields include `createdTime`, `Password`, and `DisplayName`.
-
+Fill at least **ID** and **Name** in the Casdoor column mapping. Other useful fields include `createdTime`, `Password`, and `DisplayName`.
 :::
 
-The following fields are required:
+### Required fields
 
-- `Organization`: The organization that the user will be imported to
-- `Name`: The syncer name
-- `Type`: Select "database"
-- `Host`: The original database host
-- `Port`: The original database port
-- `User`: The original database username
-- `Password`: The original database password
-- `Database type`: All Xorm-supported databases such as MySQL, PostgreSQL, SQL Server, Oracle, and SQLite
-- `Database`: The original database name
-- `Table`: The original user table name
-- `Table columns`
-- `Column name`: The original user column name
-- `Column type`: The original user column type
-- `Casdoor Column`: The Casdoor user column name
+| Field | Description |
+|-------|-------------|
+| **Organization** | Organization to import users into. |
+| **Name** | Syncer name. |
+| **Type** | `database`. |
+| **Host**, **Port**, **User**, **Password** | Source database connection. |
+| **Database type** | MySQL, PostgreSQL, SQL Server, Oracle, or SQLite (Xorm-supported). |
+| **Database** | Source database name. |
+| **Table** | Source user table name. |
+| **Table columns** | **Column name** (source), **Column type** (source), **Casdoor Column** (Casdoor user field). |
 
-Optional fields:
+### Optional fields
 
-- `Is hashed`: Whether to calculate hash value. When this option is enabled, the syncer will only synchronize the user if the field of the user in the origin table is updated. If this option is disabled, the syncer will still synchronize the user even if only the field is updated. In short, the user will not be synchronized until the fields involved in the hash calculation (enabled "Is hashed") are updated.
-- `Is key`: Whether it is the primary key of the user in the origin table and the user in the Casdoor table. When synchronizing the database, it is determined based on the field whose "Is key" option is selected. At least one of the "Is key" buttons for fields should be selected. If none are selected, the first "Is key" option is selected by default.
-- `Avatar base URL`: When syncing users, if the **Avatar base URL** is not empty and the origin **user.avatar** does not have the prefix "http", the new **user.avatar** will be replaced by **Avatar base URL + user.avatar**.
-- `Affiliation table`: It is used to sync the affiliation of the user from this table in the database. Since the affiliation may be a code of type int in the "Affiliation table", it needs to be mapped to a string. Refer to [getAffiliationMap()](https://github.com/casdoor/casdoor/blob/9f3ee275a8b747f914f0e74e897a79abeff96ccb/object/syncer_affiliation.go#L32). Casdoor has some redundant fields to borrow, so [here](https://github.com/casdoor/casdoor/blob/9f3ee275a8b747f914f0e74e897a79abeff96ccb/object/syncer_util.go#L65) we use `score` to map the int code to a string name.
+| Field | Description |
+|-------|-------------|
+| **Is hashed** | If enabled, sync runs only when fields included in the hash change; other field-only changes do not trigger sync. |
+| **Is key** | Marks the primary key used to match source and Casdoor users. At least one column must be key; if none is set, the first is used. |
+| **Avatar base URL** | If set and source `user.avatar` does not start with `http`, Casdoor stores `Avatar base URL + user.avatar`. |
+| **Affiliation table** | Table used to sync user affiliation. Int codes can be mapped to names; see [getAffiliationMap()](https://github.com/casdoor/casdoor/blob/9f3ee275a8b747f914f0e74e897a79abeff96ccb/object/syncer_affiliation.go#L32) and [syncer_util](https://github.com/casdoor/casdoor/blob/9f3ee275a8b747f914f0e74e897a79abeff96ccb/object/syncer_util.go#L65) (e.g. `score` for int→string mapping). |
 
-Once you have configured the syncer, enable the **Is enable** option and save. The syncer will start working.
+Enable **Is enable** and save; the syncer will run. You can also trigger a sync with the **Sync** button.
 
 ![users](/img/syncer/Database/syncer_database_users.png)
 
-You can also use the "Sync" button for database synchronization.
+## Update
 
-**Update**
+With **Table columns** configured for key mapping, differences on the key between source and Casdoor trigger updates:
 
-When the `Table columns` are set as shown in the following figure, the update operation is performed.
-
-![table_columns](/img/syncer/Database/syncer_database_table_columns.png)
-
-If the data in the two tables is different for the key, you can synchronize the data between the two tables based on the primary key.
-
-- Update user in the original table
+- **Update in source table** — changes sync to Casdoor.
 
 <video src="/video/syncer/update_user.mp4" controls="controls" width="100%"></video>
 
-- Update user in the Casdoor table
+- **Update in Casdoor** — changes sync back to source.
 
 <video src="/video/syncer/update_casdoor.mp4" controls="controls" width="100%"></video>
 
-**Add**
+## Add
 
-When the `Table columns` are set as shown in the following figure, the add operation is performed.
+When row counts differ, the syncer adds rows to the table with fewer rows, using the key to match:
 
-![table_columns](/img/syncer/Database/syncer_database_table_columns.png)
-
-If the number of data between the two tables is different, add the data to the table with the lower number of data based on the primary key.
-
-- Add user in the original table
+- **Add user in source table**:
 
 <video src="/video/syncer/add_user.mp4" controls="controls" width="100%"></video>
 
-- Add user in the Casdoor table
+- **Add user in Casdoor table**:
 
 <video src="/video/syncer/add_casdoor.mp4" controls="controls" width="100%"></video>

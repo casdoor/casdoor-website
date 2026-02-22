@@ -1,71 +1,66 @@
 ---
 title: Overview
-description: Managing invitations in casdoor
-keywords: [invitations]
+description: Restrict sign-up to users who have a valid invitation code.
+keywords: [invitations, invitation code, sign-up]
 authors: [HGZ-20]
 ---
 
-Currently casdoor already supports a more flexible invitation code method for user registration. Once the administrator opens the registration page with the invitation code as a mandatory option, users can only register if they have a valid invitation code.
+Casdoor supports invitation-based registration. When an administrator makes the invitation code required on the sign-up page, only users with a valid invitation code can register.
 
 ![Add Invitation Code to sign up item](/img/invitation/signup-add-invitation-code.png)
 
-There are two main ways to use invitation codes, the default added is a random string code, composed of random numbers and letters. In order to be more flexible, the invitation code also supports regular matching to match multiple different invitation codes.
+Invitation codes can be a **random string** (default) or a **regular expression** that matches multiple codes.
+
 ![Invitations](/img/invitation/invitations.png)
 
-## Invitation Properties
+## Invitation properties
 
-Casdoor manages invitations through the following properties
+Each invitation has:
 
-- `Organization`: The organization that owns the invitation
-- `Name`: The unique invitation name
-- `Display name`: Displayed Invitation Name
-- `Code`: Invitation code, you can fill in the specific invitation code string, you can also fill in the regular expression
-- `Default code`: Used to populate the default invitation code in the invitation link. For randomly generated invitation codes, the default code is the same as the invitation code. For code in regular expression form, you need to fill in the default code by yourself that matches the regular expression rule in the code
-- `Quota`: Maximum number of times an invitation code can be used
-- `Used count`: Number of times the invitation code has been used
-- `Application`: Allow applications that use this invitation code. Selecting `ALL` makes it available to all apps under the organization. For [shared applications](/docs/application/shared-application), the invitation system automatically handles organization-specific links
-- `Username`: Specific username required when registering with this invitation
-- `Email`: Specific email required when registering with this invitation
-- `Phone`: Specific phone required when registering with this invitation
-- `State`: Status of invitation
+- **Organization** — Organization that owns the invitation
+- **Name** — Unique invitation name
+- **Display name** — Label shown in the UI
+- **Code** — The invitation code (literal string or regex)
+- **Default code** — Value used in the invitation link. For random codes it matches the code; for regex, you must set a value that matches the regex
+- **Quota** — Maximum number of uses
+- **Used count** — Current use count
+- **Application** — Applications that can use this code; `ALL` = all apps in the organization. [Shared applications](/docs/application/shared-application) get organization-specific handling
+- **Username / Email / Phone** — Optional fixed values required when registering with this invitation
+- **State** — Invitation status (e.g. active, suspended)
 
-## Default Invitation
+## Default invitation
 
-The invitation code in the default invitation is a randomly generated string of numbers and letters, and with `Quota` set to 1, it can only be used once. Application are set to `ALL` by default, which means that all apps under the organization corresponding to this invitation can use this invitation code.
+By default, the code is a random alphanumeric string and **Quota** is 1 (single use). **Application** is `ALL` (all apps in the organization).
 
 ![Default Invitation](/img/invitation/default-invitation.png)
 
-If the invitation code is set for a specific user and you want the user to register with the given `username`, `email`, `phone` and `invitation code`, you can restrict the user's registration by filling in the corresponding fields. If the fields are empty or if they are not configured on the registration page, casdoor does not force validation of these fields
+To tie an invitation to a specific user, set **Username**, **Email**, or **Phone**. If those fields are empty or not shown on the sign-up form, Casdoor does not enforce them.
 
 ![Configure the user information corresponding to the invitation code](/img/invitation/invitation-with-user-information.png)
 
-When it is necessary to reuse an invitation code, you can set `Quota` to a larger value, for example, if you want this invitation code to be used 10 times, then you can set `Quota` to 10. When you wish to stop registering with this invitation code, you can also do this by modifying the status of the invitation to `Suspended`.
+To allow reuse, set **Quota** higher (e.g. 10). To stop new sign-ups with this code, set the invitation **State** to **Suspended**.
 
 ![Invitation quota and state](/img/invitation/invitation-quota-state.png)
 
 :::caution
-
-When `username`, `email`, or `phone` is configured in the invitation, the `quota` should not be greater than one. This is because the user's `username`, `email`, and `phone` should be unique, and multiple users should not be able to register using the same `username`, `email`, or `phone`.
-
+If an invitation has **Username**, **Email**, or **Phone** set, keep **Quota** at 1. Those fields must be unique per user, so only one registration per invitation is allowed.
 :::
 
-## Regular Match Invitation
+## Regex-based invitations
 
-Sometimes there is a need for a large number of invitation codes for user registration, and generating invitation codes one by one can be very inefficient. Casdoor supports validating invitation codes through regular expression matching. For example, by setting the `Code` as `"[a-z]2333"`, any invitation code that matches this regular expression will be successfully matched as a valid invitation code.
+For many invitation codes without creating each one manually, use a **regular expression** for **Code**. For example, with `Code` set to `[a-z]2333`, any code matching that pattern (e.g. `a2333`, `b2333`) is accepted.
 
 ![Regular Match Invitation](/img/invitation/regular-match-invitation.png)
 
 :::note
-
-When using regular expressions to validate invitation codes, each invitation code that matches the regular expression can only be used once, and the `Quota` can still limit the number of usages. For example, when the `Code` is `"[a-z]2333"` and the `Quota` is 2, only a maximum of two invitation codes that match the regular expression can be successfully used.
-
+With regex codes, each distinct matching code can be used once. **Quota** limits total uses. For example, `Code` = `[a-z]2333` and **Quota** = 2 means at most two successful sign-ups with any matching code.
 :::
 
-## Invitation Link
+## Invitation link
 
-Casdoor supports copying the invitation link corresponding to an invitation. The invitation code in the invitation link corresponds to the Default code field. Therefore, for invitations that use regular expressions, the Default code must be manually filled in to generate the correct invitation link. Additionally, when registering using an invitation link, the registration page will automatically populate certain field information set by the invitation corresponding to the invitation code.
+Copy an invitation link for an invitation. The code in the link comes from **Default code**; for regex-based invitations, set **Default code** to a value that matches the regex. When users open the link, the sign-up form can be pre-filled from the invitation.
 
-When sending invitations for [shared applications](/docs/application/shared-application), the system automatically generates organization-specific links with the correct `-org-{orgName}` suffix, ensuring users can successfully complete registration through the invitation.
+For [shared applications](/docs/application/shared-application), invitation links are generated with the correct `-org-{orgName}` suffix so registration completes in the right organization.
 
 ![Invitation Link](/img/invitation/invitation-link-copy.png)
 

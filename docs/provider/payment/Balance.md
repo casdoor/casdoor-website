@@ -1,36 +1,27 @@
 ---
-title: Balance
-description: Pay with account balance in Casdoor
+title: Balance payment
+description: Let users pay with their Casdoor account balance (wallet).
 keywords: [Balance, payment, wallet]
 authors: [Copilot]
 ---
 
-The Balance payment provider allows users to pay for products using their account balance instead of external payment gateways. This creates a wallet-like experience where users first recharge their account, then spend from that balance.
+The **Balance** payment provider lets users pay for products from their account balance instead of an external gateway. Casdoor deducts the price from the user’s balance; no redirect to a third party.
 
-## How It Works
+Users need sufficient balance before they can pay. Create a **recharge** product (enable **Is recharge**) and attach external providers (e.g. Stripe, PayPal). When users buy that product, the amount is added to their balance. Then they can use **Balance** to pay for other products.
 
-When a user purchases a product with the Balance provider, Casdoor deducts the product price from the user's balance field. The payment completes instantly without redirecting to any external service.
+## Create the provider
 
-Before users can pay with balance, they need to have sufficient funds. You can set up a recharge product (with the "Is recharge" option enabled) that uses traditional payment providers like Stripe or PayPal. When users pay for the recharge product, the amount is added to their balance.
+In Casdoor **Providers** → **Add**:
 
-## Create a Balance Payment Provider
+| Field    | Value        |
+|----------|--------------|
+| Category | **Payment**  |
+| Type     | **Balance**  |
 
-To set up the Balance payment provider in Casdoor:
+No Client ID or secret; Balance uses the built-in user balance.
 
-| Name     | Value              |
-| -------- | ------------------ |
-| Category | Choose `Payment`   |
-| Type     | Choose `Balance`   |
+## Use in products
 
-No additional configuration is required since Balance uses the built-in user balance system.
+Add the Balance provider to your product’s payment provider list. Users will see “Balance” at checkout when they have enough funds.
 
-## Add the Provider to Your Product
-
-After creating the Balance payment provider, add it to your product's payment provider list. Users will then see Balance as a payment option when purchasing that product.
-
-For the complete user journey, you'll typically want to:
-
-1. Create a recharge product with external payment providers (Stripe, PayPal, etc.)
-2. Create regular products with the Balance provider
-
-This way, users can top up their balance first, then make quick purchases from their wallet without entering payment details each time.
+Typical setup: one recharge product (Stripe/PayPal) so users can top up, and regular products that accept Balance so users can pay from their wallet without re-entering payment details.

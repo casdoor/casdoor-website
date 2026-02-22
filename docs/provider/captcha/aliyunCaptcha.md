@@ -5,7 +5,7 @@ keywords: [Alibaba Cloud Captcha]
 authors: [Resulte]
 ---
 
-Alibaba Cloud Captcha is a captcha service provided by Alibaba Cloud. It offers two ways to verify captcha: "Sliding Validation" and "Intelligent Validation". You can find more details about it in this [link](https://help.aliyun.com/product/28308.html).
+Alibaba Cloud Captcha is a captcha service provided by Alibaba Cloud. It offers two ways to verify captcha: "Sliding Validation" and "Intelligent Validation". See [Alibaba Cloud Captcha](https://help.aliyun.com/product/28308.html) for details.
 
 ## Add Captcha Configuration in Alibaba Cloud
 
@@ -21,7 +21,7 @@ Fill in all the required information and submit the form.
 
 ![Alibaba Cloud Captcha console open](/img/providers/captcha/aliyunCaptcha_console_add_form.png)
 
-Now, you can view the `Scene` and `App key` in your console.
+View the `Scene` and `App key` in your console.
 
 ![Alibaba Cloud Captcha console open](/img/providers/captcha/aliyunCaptcha_console_info.png)
 
@@ -33,11 +33,11 @@ Also, the `Access key` and `Secret access key` can be found in your profile.
 
 Create a new provider in Casdoor.
 
-Select the category as **Captcha**, and the type as **hCaptcha**. Then, choose the sub-type: "Sliding Validation" or "Intelligent Validation". Make sure to fill in the `Access key`, `Secret access key`, `Scene`, and `App key` that you created in the previous step.
+Set **Category** to **Captcha**, **Type** to **Alibaba Cloud Captcha**. Choose the sub-type: "Sliding Validation" or "Intelligent Validation". Make sure to fill in the `Access key`, `Secret access key`, `Scene`, and `App key` that you created in the previous step.
 
 ![Alibaba Cloud Captcha provider](/img/providers/captcha/aliyunCaptcha_provider.png)
 
-You can click on the **Preview** button to see the style of this captcha.
+Use **Preview** to check the captcha style.
 
 The following image shows the preview of "Sliding Validation":
 

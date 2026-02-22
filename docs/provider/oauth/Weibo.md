@@ -1,14 +1,8 @@
 ---
-title: Weibo
-description: Add Weibo OAuth provider to your application
+title: Weibo OAuth
+description: Add Weibo as an OAuth provider.
 keywords: [Weibo, OAuth]
 authors: [Marvelousp4]
 ---
 
-## Weibo ✔️
-
-Applying for a developer account with Weibo is not difficult, but the process can be slow, taking about 2-3 days.
-
-To get started, visit the [Developer Website](https://open.weibo.com/developers/basicinfo) and fill in the required basic information. Then, you will need to wait for a thorough review...
-
-Once your application is approved, you will receive the Client Id and Client Secret.
+Apply at the [Weibo Open Platform](https://open.weibo.com/developers/basicinfo): complete basic info and submit for review. Approval often takes about 2–3 days. After approval you receive **Client ID** and **Client Secret**. Create an **OAuth** provider in Casdoor, set **Type** to **Weibo**, and enter these values. Set the application’s **Redirect URL** in Casdoor to your app’s callback URL; in Weibo, the authorization callback URL must be Casdoor’s callback URL (see [Application config](/docs/application/config#further-understanding)).

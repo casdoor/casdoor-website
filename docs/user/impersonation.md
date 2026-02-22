@@ -1,55 +1,47 @@
 ---
-title: User Impersonation
-description: Impersonate users in Casdoor for troubleshooting and support
-keywords: [user impersonation, master password, admin login, simulate user]
+title: User impersonation
+description: Sign in as another user for support and testing without knowing their password.
+keywords: [impersonation, master password, admin, support]
 ---
 
-User impersonation allows administrators to temporarily view and interact with the system as another user. This capability helps with troubleshooting, testing permissions, and providing support without needing access to users' actual credentials.
+**Impersonation** lets admins act as another user temporarily—useful for support, testing permissions, and debugging.
 
-## Overview
+Casdoor supports two methods:
 
-Casdoor provides two ways for administrators to impersonate users in their organization:
+1. **Session-based** — One-click from the Users page (no password).
+2. **Master password** — Sign in with an org-wide master password as any user.
 
-1. **Session-based impersonation** - A one-click approach from the admin interface
-2. **Master password** - A password-based login method
+Both give you the same access as the impersonated user.
 
-Both methods give administrators the same level of access as the impersonated user, allowing them to see exactly what that user sees and experiences.
+## Session-based impersonation
 
-## Session-Based Impersonation
-
-This method lets administrators start an impersonation session directly from the user management interface without needing any passwords.
-
-### Starting an impersonation session
-
-Navigate to the Users page in your Casdoor admin panel. Each user row includes an "Impersonation" button. Clicking this button immediately switches your session to that user's context - you'll see the interface exactly as they do, with their permissions and access rights.
+Start from the **Users** page: each row has an **Impersonation** button. Click it to switch your session to that user; the UI and permissions match theirs.
 
 ![enter impersonation](/img/user/user_impersonation.png)
 
-During impersonation, you remain logged in with the impersonated user's identity until you explicitly exit. Your session remembers both your admin identity and the impersonated user, so Casdoor knows you're in an impersonation context.
+You stay in the impersonated user’s context until you exit. Casdoor tracks that you’re impersonating so it can restore your admin session.
 
-### Exiting impersonation
+### Exiting
 
-When you're ready to return to your admin account, click your user menu in the top right corner. Instead of the usual "Logout" option, you'll see "Exit impersonation." Selecting this returns you to your admin session without logging out completely.
+Open the user menu (top right). Choose **Exit impersonation** (instead of Logout) to return to your admin session.
 
 ![exit impersonation](/img/user/exit_user_impersonation.png)
 
-:::tip Admin-only feature
-
-Only users with administrator privileges can impersonate other users. Regular users won't see impersonation buttons in the interface.
-
+:::tip
+Only administrators can impersonate; normal users do not see the impersonation button.
 :::
 
-## Master Password Method
+## Master password
 
-The master password approach provides an alternative impersonation method through the standard login flow. When configured, administrators can use a special organization-wide password to sign in as any user.
+Impersonation is also available at login: set an organization **master password**; admins can then sign in as any user in that org by entering the master password instead of the user’s password.
 
-### How master password works
+### Behavior
 
-During login, Casdoor checks credentials in a specific order: first against the organization's master password, then against the user's individual password. If the master password matches, authentication succeeds regardless of the user's actual password.
+On login, Casdoor checks the organization’s master password first, then the user’s password. If the master password matches, login succeeds for that user without their real password.
 
 ### Setting up master password
 
-To configure this feature, open your Organization settings and locate the Master Password field. Enter a strong password and save. From that point forward, you can use this password at the login screen with any username from your organization to sign in as that user.
+To configure this feature, open your Organization settings and locate the Master Password field. Enter a strong password and save. From then on, use this password at the login screen with any username in that organization to sign in as that user.
 
 ![master password](/img/user/master_password.png)
 
@@ -73,7 +65,7 @@ For an organization called "my-company", visit `https://your-casdoor-domain.com/
 
 Impersonation becomes valuable when you need to see the system through a user's eyes. Support teams often use it to reproduce reported issues - seeing exactly what the user sees makes debugging much faster. Testing permission configurations also benefits from impersonation, letting you verify access controls work correctly for different roles without creating test accounts.
 
-Emergency situations sometimes require immediate access to a user's data when they're unavailable. Similarly, investigating security concerns or unusual account activity becomes more effective when you can navigate the system with that user's context.
+Emergency situations sometimes require immediate access to a user's data when they're unavailable. Similarly, investigating security concerns or unusual account activity becomes more effective when navigating the system in that user's context.
 
 ## Security considerations
 

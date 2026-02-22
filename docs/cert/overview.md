@@ -1,15 +1,15 @@
 ---
 title: Overview
-description: Managing Certificates in Casdoor
+description: Use certificates in Casdoor for JWT signing, SAML, and payment provider security.
 keywords: [cert, certificate, JWT, RSA, ECDSA, SAML, payment]
 authors: [copilot]
 ---
 
-Certificates (Certs) in Casdoor are used for signing and verifying tokens, as well as for securing communications in various integrations. They contain cryptographic keys that are essential for authentication and encryption processes.
+Certificates in Casdoor hold cryptographic keys used to sign and verify tokens (e.g. JWT) and to secure integrations (SAML, payment providers).
 
-## Certificate Properties
+## Certificate properties
 
-Each certificate in Casdoor has the following properties:
+Each certificate has:
 
 - **Owner**: The organization that owns the certificate
 - **Name**: The unique name of the certificate
@@ -23,29 +23,29 @@ Each certificate in Casdoor has the following properties:
 - **Certificate**: The public certificate content
 - **PrivateKey**: The private key content (stored securely)
 
-## Certificate Scopes
+## Certificate scopes
 
-Certificates in Casdoor serve different purposes based on their scope:
+Certificates are used differently depending on their scope:
 
-### JWT Certificates
+### JWT certificates
 
-JWT certificates are used to sign and verify JSON Web Tokens (JWT) for authentication. When a user logs in through Casdoor, the access token is signed using the private key of the JWT certificate.
+JWT certificates sign and verify JSON Web Tokens. When a user signs in, the access token is signed with the JWT certificate’s private key.
 
-Casdoor supports both RSA and ECDSA signing algorithms for JWT tokens. While RSA (RS256, RS384, RS512) has been the traditional choice, ECDSA algorithms (ES256, ES384, ES512) offer smaller signature sizes and faster signature verification with equivalent security levels. This is particularly beneficial when you need to reduce token size for mobile applications or improve performance in high-throughput scenarios.
+Casdoor supports both RSA and ECDSA signing algorithms for JWT tokens. While RSA (RS256, RS384, RS512) has been the traditional choice, ECDSA algorithms (ES256, ES384, ES512) offer smaller signature sizes and faster signature verification with equivalent security levels. This helps reduce token size on mobile or improve performance in high-throughput scenarios.
 
-When configuring JWT certificates, you can choose between RSA and ECDSA based on your security requirements and compatibility needs. The JWT public key is required when configuring Casdoor SDK in your application. You can find and download the public key from the certificate edit page.
+For JWT certificates, choose RSA or ECDSA based on security and compatibility. When configuring the Casdoor SDK, use the public key from the certificate edit page (copy or download).
 
 ![Certs Management](/img/how-to-connect/sdk/howto_cert_list.png)
 
 ![Certs Edit](/img/how-to-connect/sdk/howto_cert_edit.png)
 
-Once you have created a JWT certificate, you can select it in your application settings:
+After creating a JWT certificate, select it in your application settings:
 
 ![Certs Select](/img/how-to-connect/sdk/howto_cert_select.png)
 
-### SAML Certificates
+### SAML certificates
 
-SAML certificates are used for signing and encrypting SAML assertions in Single Sign-On (SSO) integrations.
+SAML certificates sign and encrypt SAML assertions in SSO integrations.
 
 **Use cases:**
 
@@ -53,13 +53,13 @@ SAML certificates are used for signing and encrypting SAML assertions in Single 
 - Signing SAML responses
 - Encrypting SAML assertions for security
 
-When configuring SAML, you need to create certificates for both the Identity Provider (IdP) and Service Provider (SP) to ensure secure communication.
+For SAML, create certificates for both the Identity Provider (IdP) and Service Provider (SP) to secure communication.
 
 For more information about SAML configuration, see the [SAML documentation](/docs/how-to-connect/saml/overview).
 
-### Payment Certificates
+### Payment certificates
 
-Payment certificates are used to secure payment transactions with payment providers like Alipay and WeChat Pay.
+Payment certificates secure communication with payment providers (e.g. Alipay, WeChat Pay).
 
 **Use cases:**
 
@@ -67,18 +67,18 @@ Payment certificates are used to secure payment transactions with payment provid
 - Signing payment requests
 - Verifying payment callbacks
 
-For example, when integrating with Alipay, you need to create certificates for:
+For example, for Alipay create certificates for:
 
 - **App Cert**: Contains the application's public certificate and private key
 - **Root Cert**: Contains the payment provider's certificates
 
 ![Alipay App Cert](/img/providers/payment/alipay_app_cert.png)
 
-For more details, refer to the [Alipay Payment Provider](/docs/provider/payment/Alipay) and [WeChat Pay Provider](/docs/provider/payment/WeChatPay) documentation.
+See [Alipay](/docs/provider/payment/Alipay) and [WeChat Pay](/docs/provider/payment/WeChatPay) for details.
 
-## Creating a Certificate
+## Creating a certificate
 
-To create a new certificate in Casdoor:
+To add a certificate:
 
 1. Navigate to the **Certs** page in the Casdoor admin console
 2. Click the **Add** button to create a new certificate
@@ -90,15 +90,15 @@ To create a new certificate in Casdoor:
    - **Crypto Algorithm**: Choose the cryptographic algorithm (e.g., RS256 for RSA, ES256 for ECDSA). For JWT certificates, both RSA and ECDSA algorithms are supported
    - **Bit Size**: Set the key size (typically 2048 or 4096 bits)
    - **Expire In Years**: Set the expiration period
-4. You can either:
+4. Either:
    - Generate a new certificate automatically by saving the form
    - Upload an existing certificate and private key
 
-## Using Certificates
+## Using certificates
 
-### In Applications
+### In applications
 
-After creating a JWT certificate, you need to associate it with your application:
+After creating a JWT certificate, associate it with your application:
 
 1. Go to the **Applications** page
 2. Edit your application
@@ -107,9 +107,9 @@ After creating a JWT certificate, you need to associate it with your application
 
 The certificate will now be used to sign all tokens issued by that application.
 
-### In SDK Configuration
+### In SDK configuration
 
-When configuring Casdoor SDK in your backend application, you need to provide the public key from the JWT certificate:
+When configuring the Casdoor SDK in your backend, provide the public key from the JWT certificate:
 
 ```go
 var CasdoorEndpoint = "https://door.casdoor.com"
@@ -126,13 +126,13 @@ func init() {
 }
 ```
 
-You can download the public key from the certificate edit page in Casdoor.
+Download the public key from the certificate edit page in Casdoor.
 
 For more information about SDK configuration, see the [SDK documentation](/docs/how-to-connect/sdk).
 
-### In Payment Providers
+### In payment providers
 
-When setting up payment providers, you need to configure the appropriate certificates:
+When setting up payment providers, configure the appropriate certificates:
 
 1. Create the required certificates (e.g., App Cert and Root Cert for Alipay)
 2. Go to the **Providers** page
@@ -140,18 +140,18 @@ When setting up payment providers, you need to configure the appropriate certifi
 4. In the **Cert** field, select the certificate you created
 5. Save the provider
 
-## Best Practices
+## Best practices
 
-- **Key Size**: Use at least 2048-bit keys for RSA certificates. For higher security, consider 4096-bit keys.
-- **Expiration**: Set appropriate expiration periods. For production environments, 1-5 years is typical.
-- **Security**: Keep private keys secure and never expose them in client-side code or public repositories.
-- **Rotation**: Regularly rotate certificates before they expire to maintain security.
-- **Backup**: Keep secure backups of your certificates and private keys.
-- **Separate Certificates**: Use different certificates for different purposes (JWT, SAML, Payment) to limit the impact of potential key compromise.
+- **Key size:** Use at least 2048-bit keys for RSA; 4096-bit for higher security.
+- **Expiration:** Set a reasonable lifetime (e.g. 1–5 years in production).
+- **Security:** Never expose private keys in client code or public repos.
+- **Rotation:** Rotate certificates before they expire.
+- **Backup:** Store secure backups of certificates and private keys.
+- **Separation:** Use separate certificates for JWT, SAML, and payment to limit blast radius if a key is compromised.
 
-## Certificate Management
+## Certificate management
 
-You can manage certificates through:
+Manage certificates via:
 
 - **Web UI**: The Casdoor admin console provides a user-friendly interface for certificate management
 - **API**: Use the [Casdoor REST API](https://door.casdoor.com/swagger/) to programmatically manage certificates

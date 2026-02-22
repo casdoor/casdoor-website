@@ -5,11 +5,11 @@ keywords: [GitLab]
 authors: [Steve0x2a]
 ---
 
-Casdoor can use the OIDC protocol to link to a self-deployed GitLab server, and this document will show you how to do it.
+This guide configures a self-hosted GitLab instance to use Casdoor as the OIDC provider.
 
 :::caution
 
-As the [GitLab docs](https://docs.gitlab.com/ee/administration/auth/oidc.html#configure-keycloak) state, GitLab only works with OpenID providers that use HTTPS, so you need to deploy Casdoor with HTTPS, such as putting Casdoor behind an NGINX reverse proxy with an SSL certificate setup. Casdoor itself only listens on port 8000 by default via HTTP and has no HTTPS-related functionality.
+As the [GitLab docs](https://docs.gitlab.com/ee/administration/auth/oidc.html#configure-keycloak) state, GitLab only works with OpenID providers that use HTTPS, deploy Casdoor over HTTPS (e.g. behind an NGINX reverse proxy with SSL). Casdoor itself only listens on port 8000 by default via HTTP and has no HTTPS-related functionality.
 
 :::
 
@@ -21,9 +21,7 @@ The following are some of the names mentioned in the configuration:
 
 ## Step 1: Deploy Casdoor and GitLab
 
-Firstly, Casdoor and GitLab should be deployed.
-
-After a successful deployment, you need to ensure:
+Deploy Casdoor and GitLab. After deployment, ensure:
 
 1. Casdoor can be logged into and used normally.
 2. Set Casdoor's `origin` value (conf/app.conf) to `CASDOOR_HOSTNAME`.
@@ -36,13 +34,13 @@ After a successful deployment, you need to ensure:
 3. Add the provider you want and supplement other settings.
 
 ![Application Setting](/img/integration/ruby/gitlab/appsetting_gitlab.png)
-Notably, you can get two values on the application settings page: `Client ID` and `Client secret` (see the picture above), and we will use them in the next step.
+On the application settings page, note `Client ID` and `Client secret` (see the picture above); use them in the next step.
 
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration**, where you will see the OIDC configuration of Casdoor.
+OIDC discovery: `http://<CASDOOR_HOSTNAME>/.well-known/openid-configuration`.
 
 ## Step 3: Configure GitLab
 
-You can follow the steps below to set this up, or make custom changes according to [this document](https://docs.gitlab.com/ee/administration/auth/oidc.html#casdoor) (e.g., if you are installing GitLab using source code rather than the Omnibus).
+Follow the steps below, or adapt from [GitLab OIDC docs](https://docs.gitlab.com/ee/administration/auth/oidc.html#casdoor) (e.g. for source installs).
 
 1. On your GitLab server, open the configuration file.
 
@@ -79,5 +77,5 @@ You can follow the steps below to set this up, or make custom changes according 
 4. Each registered user can open **`GITLAB_HOSTNAME`/-/profile/account** and connect the Casdoor account.
     ![GitLab connect](/img/integration/ruby/gitlab/gitlab_connect.png)
 5. Finish.
-    Now, you can log in to your own GitLab using Casdoor.
+    You can now log in to your GitLab instance via Casdoor.
     ![GitLab login](/img/integration/ruby/gitlab/gitlab_login.png)

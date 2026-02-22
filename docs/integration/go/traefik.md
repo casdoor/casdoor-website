@@ -1,19 +1,13 @@
 ---
 title: Traefik
-description: Using Casdoor for authentication with Traefik reverse proxy
+description: Protect services behind Traefik with Casdoor auth (SSO).
 keywords: [Traefik, middleware, authentication]
 authors: [casdoor]
 ---
 
-## Using Casdoor for authentication with Traefik
-
-[Traefik](https://traefik.io/) is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy. This document shows how to use Casdoor as an authentication provider with Traefik using the [traefik-casdoor-auth](https://github.com/casdoor/traefik-casdoor-auth) middleware.
-
-The Traefik Casdoor Auth middleware allows you to protect your services behind Traefik with Casdoor authentication, providing a seamless Single Sign-On (SSO) experience.
+Use [Traefik](https://traefik.io/) with the [traefik-casdoor-auth](https://github.com/casdoor/traefik-casdoor-auth) middleware to protect routes with Casdoor authentication and SSO.
 
 ## Prerequisites
-
-Before you begin, ensure you have:
 
 - Traefik v2.x or v3.x installed and running
 - A Casdoor instance deployed and accessible
@@ -21,20 +15,16 @@ Before you begin, ensure you have:
 
 ## Step 1: Deploy Casdoor
 
-First, deploy Casdoor if you haven't already.
-
-You can refer to the Casdoor official documentation for [Server Installation](/docs/basic/server-installation).
-
-After a successful deployment, make sure that:
+[Deploy Casdoor](/docs/basic/server-installation) if needed. Then confirm:
 
 - The Casdoor server is running and accessible
 - You can log in to the Casdoor admin interface
 - Test the login functionality by entering `admin` and `123`
 
-## Step 2: Configure Casdoor Application
+## Step 2: Configure the Casdoor application
 
-1. Create a new Casdoor application or use an existing one.
-2. Add your redirect URL. The redirect URL should be in the format:
+1. Create or edit a Casdoor application.
+2. Add a redirect URL in the form:
 
    ```text
    http://<your-domain>/callback

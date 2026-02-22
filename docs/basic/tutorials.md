@@ -1,14 +1,14 @@
 ---
 title: Tutorials
-description: Tutorials about Casdoor
-keywords: [Tutorial]
+description: Third-party product docs and articles that use Casdoor for SSO or auth.
+keywords: [tutorial, integration, SSO, OAuth]
 authors: [nomeguy]
 ---
 
-## Product Documentation
+## Product documentation
 
-| Product                                                                                                 | Technologies                    | Docs                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|---------------------------------------------------------------------------------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Product | Stack | Documentation |
+|--------|--------|----------------|
 | [Dashboard](https://github.com/pingcap/tidb-dashboard) of [PingCAP TiDB](https://www.pingcap.com/tidb/) | React + TypeScript + Go + Gin   | [Use Casdoor for TiDB Dashboard SSO sign-in](https://docs.pingcap.com/tidb/stable/dashboard-session-sso#example-3-use-casdoor-for-tidb-dashboard-sso-sign-in) (other languages: [Chinese](https://docs.pingcap.com/zh/tidb/stable/dashboard-session-sso#%E7%A4%BA%E4%BE%8B%E4%B8%89%E4%BD%BF%E7%94%A8-casdoor-%E8%BF%9B%E8%A1%8C-tidb-dashboard-sso-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81)) |
 | [GitLab](https://about.gitlab.com/)                                                                     | Vue + Ruby + Rails              | [OpenID Connect OmniAuth provider](https://docs.gitlab.com/ee/administration/auth/oidc.html#casdoor)                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | [Apache Shenyu](https://shenyu.apache.org/)                                                             | Java                            | [Casdoor Plugin](https://shenyu.apache.org/docs/next/plugin-center/security/casdoor/) (other languages: [Chinese](https://shenyu.apache.org/zh/docs/next/plugin-center/security/casdoor/))                                                                                                                                                                                                                                                                                                                                 |

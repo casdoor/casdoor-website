@@ -9,13 +9,13 @@ Enable OpenID Connect-based single sign-on for applications proxied by NGINX Plu
 
 This guide explains how to enable single sign-on (SSO) for applications that are being proxied by NGINX Plus. The solution uses OpenID Connect as the authentication mechanism, with [Casdoor](https://casdoor.org/) as the identity provider (IdP), and NGINX Plus as the relying party.
 
-> See Also: You can find more information about the NGINX Plus OpenID Connect integration in the project’s GitHub repository.
+> See also: [NGINX Plus OpenID Connect](https://github.com/nginxinc/nginx-openid-connect) on GitHub.
 
 ## Prerequisites
 
 The instructions assume that you have the following:
 
-- A running Casdoor server. Refer to the Casdoor documentation for [Server Installation](https://casdoor.org/docs/basic/server-installation) and [Try with Docker](https://casdoor.org/docs/basic/try-with-docker).
+- A running Casdoor server. See [Server installation](/docs/basic/server-installation) and [Try with Docker](/docs/basic/try-with-docker).
 - An NGINX Plus subscription and NGINX Plus R15 or later. For installation instructions, see the [NGINX Plus Admin Guide](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/).
 - The [NGINX JavaScript module](https://www.nginx.com/blog/introduction-nginscript/), which is required for handling the interaction between NGINX Plus and the IdP. After installing NGINX Plus, install the module using the appropriate command for your operating system.
 
@@ -41,7 +41,7 @@ The instructions assume that you have the following:
 
 To create a Casdoor client for NGINX Plus in the Casdoor GUI, follow these steps:
 
-1. Log in to your Casdoor account at **<http://your-casdoor-url.com/login/>**.
+1. Log in to your Casdoor account at **`http://your-casdoor-url.com/login/`**.
 2. In the top navigation column, click **Application**. On the **Application** page that opens, click the **Add** button in the upper left corner.
 
     ![addApp](/img/integration/C++/NGINX_Plus/addApp.png)
@@ -59,7 +59,7 @@ To create a Casdoor client for NGINX Plus in the Casdoor GUI, follow these steps
     - For production, we strongly recommend that you use SSL/TLS (port 443).
     - The port number is mandatory even when you’re using the default port for HTTP (80) or HTTPS (443).
 
-4. Record the values in the **Client ID** and **Client Secret** fields. You will copy them into the NGINX Plus configuration file in [Step 4 of *Configuring NGINX Plus*](#jump1).<span id="jump3"></span>
+4. Record the **Client ID** and **Client Secret**; you will use them in [Step 4 of *Configuring NGINX Plus*](#jump1).<span id="jump3"></span>
 
     ![Client](/img/integration/C++/NGINX_Plus/Client.png)
 
@@ -144,4 +144,4 @@ Open a browser and enter the address of your NGINX Plus instance. Then, attempt 
 
 ## Troubleshooting
 
-Please refer to the **[Troubleshooting](https://github.com/nginxinc/nginx-openid-connect#troubleshooting)** section in the **nginx-openid-connect** repository on GitHub.
+See the [Troubleshooting](https://github.com/nginxinc/nginx-openid-connect#troubleshooting) section in the nginx-openid-connect repository.

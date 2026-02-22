@@ -1,13 +1,13 @@
 ---
-title: .NET MAUI App
-description: A .NET MAUI App example for Casdoor
-keywords: [.NET, SDK]
+title: .NET MAUI app
+description: Integrate Casdoor in a .NET MAUI app (Android, Windows, etc.) with OpenID Connect.
+keywords: [.NET, MAUI, SDK]
 authors: [RVShershnev]
 ---
 
-[This repository contains a .NET MAUI app and .NET MAUI library](https://github.com/RVShershnev/casdoor-dotnet-maui-example) for demonstrating Casdoor authentication by OpenID Connect.
+The [casdoor-dotnet-maui-example](https://github.com/RVShershnev/casdoor-dotnet-maui-example) includes a .NET MAUI app and library for Casdoor authentication via OpenID Connect.
 
-## Demonstration
+## Demo
 
 ### Android
 
@@ -19,21 +19,21 @@ authors: [RVShershnev]
 
 ## Requirements
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0) installed on your machine
-- The required assets needed for your target platform(s), as described [here](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app)
-- Visual Studio 2022 for Windows 17.3  or Visual Studio 2022 for Mac 17.4 (optional)
+- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+- Target platform assets — see [MAUI first app](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app)
+- Visual Studio 2022 (Windows 17.3 or Mac 17.4) optional
 
-## Getting Started
+## Get started
 
-### Step 1: Create a MAUI Application
+### 1. Create a MAUI app
 
-Create your [MAUI Application](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app).
+Create a [MAUI application](https://docs.microsoft.com/en-us/dotnet/maui/get-started/first-app).
 
-### Step 2: Add a Reference
+### 2. Add reference
 
-Add a reference to the `Casdoor.MauiOidcClient` in your project.  
+Add a reference to `Casdoor.MauiOidcClient`.
 
-### Step 3: Add the Casdoor Client
+### 3. Register the Casdoor client
 
 Add `CasdoorClient` as a singleton in the services.
 
@@ -52,9 +52,7 @@ builder.Services.AddSingleton(new CasdoorClient(new()
 }));
 ```
 
-### Step 4: Design the UI
-
-Add code to the `MainPage` file.
+### 4. UI (MainPage)
 
 **MainPage.xaml**
 

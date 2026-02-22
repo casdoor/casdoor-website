@@ -11,23 +11,11 @@ The code for connecting Casdoor has already been added to Pulsar Manager, so we 
 
 ## Step 1: Deploy Casdoor
 
-First, deploy Casdoor.
-
-You can refer to the official Casdoor documentation for the [Server Installation](/docs/basic/server-installation).
-
-After a successful deployment, ensure the following:
-
-- The Casdoor server is running successfully at **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**. You should see the login page of Casdoor.
-- Test the login functionality by entering `admin` and `123`.
-
-Now, you can quickly implement a Casdoor-based login page in your own app using the following steps.
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running and you can sign in at the Casdoor login page (e.g. `admin` / `123`).
 
 ## Step 2: Configure Casdoor
 
-To configure Casdoor, refer to [Casdoor](https://door.casdoor.com/login) (it is recommended to use a different browser than your development browser).
-
-You should also configure an organization and an application. You can refer to [Casdoor](https://door.casdoor.com/login) for detailed instructions.
+Configure an organization and an application in Casdoor (see [Application](/docs/application/config) and [Organization](/docs/organization/overview)).
 
 ### Step 2.1: Create an organization
 
@@ -41,7 +29,7 @@ You should also configure an organization and an application. You can refer to [
 
 Enable this switch to send code and state to the back-end.
 
-You can find the switch on line 80 of `pulsar-manager/front-end/src/router/index.js`.
+The switch is on line 80 of `pulsar-manager/front-end/src/router/index.js`.
 
 ![frontSwitch](/img/integration/java/Pulsar-manager/frontSwitch.png)
 

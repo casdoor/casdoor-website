@@ -5,26 +5,24 @@ keywords: [oauth2, Thingsboard, integration]
 authors: [RanTao123]
 ---
 
-Before the integration, we need to deploy Casdoor locally.
-
-Then, we can quickly implement a Casdoor-based login page in our own app by following these steps.
+Deploy Casdoor first (see [Server installation](/docs/basic/server-installation)). Then configure the application and Thingsboard as below.
 
 ## Step 1: Configure Casdoor application
 
 1. Create a new Casdoor application or use an existing one.
 2. Add a redirect URL: `http://CASDOOR_HOSTNAME/login`
    ![Casdoor Application Setting](/img/integration/java/Thingsboard/img_6.png)
-3. Copy the client ID and client secret. We will need them in the following steps.
+3. Note the **Client ID** and **Client secret** for the following steps.
 
 ## Step 2: Add a user in Casdoor
 
-Now that you have the application, you need to create a user and assign a role.
+Create a user and assign a role to the application.
 
-Go to the "Users" page and click on "Add user" in the top right corner. This will open a new page where you can add the new user.
+Go to **Users** → **Add user** to open the new-user page.
 
 Save the user after adding a username and selecting the organization "Thingsboard" (other details are optional).
 
-Next, you need to set up a password for the user. You can do this by clicking on "Manage your password".
+Set a password via "Manage your password".
 
 Choose a password for the user and confirm it.
 
@@ -32,7 +30,7 @@ Choose a password for the user and confirm it.
 
 First of all, Thingsboard only supports Java 11 (OpenJDK).
 
-You can download it from the following link:
+Download from:
 
 [JDK Download Page](https://adoptium.net/zh-CN/)
 
@@ -47,9 +45,9 @@ To start Thingsboard, follow these steps (for Windows system):
 
 ## Step 4: Integrate Casdoor
 
-Now open <http://localhost:8080/> and log in to the admin account:
+Now open `http://localhost:8080/` and log in to the admin account:
 
-Account: <sysadmin@thingsboard.org> / Password: sysadmin
+Account: `sysadmin@thingsboard.org` / Password: sysadmin
 
 After successfully logging in, click the OAuth2 button at the bottom left of the page.
 
@@ -59,10 +57,10 @@ Fill in the blanks as follows:
 
 ![Casdoor Application Setting](/img/integration/java/Thingsboard/img_2.png)
 
-You can get these values from the following link:
+Obtain these values from:
 [OIDC discovery URL](https://casdoor.org/docs/how-to-connect/oidc-client#oidc-discovery/)
 ![Casdoor Application Setting](/img/integration/java/Thingsboard/img_1.png)
 
-After filling in these blanks, you have successfully integrated Casdoor with Thingsboard. When you log in to <http://localhost:8080/>, you should see the following:
+After filling in these blanks, you have successfully integrated Casdoor with Thingsboard. When you log in to `http://localhost:8080/`, you should see the following:
 
 ![Casdoor Application Setting](/img/integration/java/Thingsboard/integrate.gif)

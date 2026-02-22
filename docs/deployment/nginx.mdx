@@ -1,17 +1,15 @@
 ---
-title: Deploying to NGINX
-description: Use Nginx to reverse proxy your backend Go program and quickly start the Casdoor service.
-keywords: [Nginx]
+title: Deploying behind Nginx
+description: Put Nginx in front of the Casdoor backend to serve and proxy traffic.
+keywords: [Nginx, reverse proxy, deployment]
 authors: [ErikQQY]
 ---
 
-Though Casdoor follows a front-end back-end separation architecture, in a production environment, the back-end program still provides static file services for front-end files. Hence, you can employ reverse proxy software like [Nginx](https://www.nginx.com/) to proxy all traffic for the Casdoor domain and redirect it to the port monitored by the backend Go program.
+In production, the Casdoor backend serves the frontend static files and the API. You can put [Nginx](https://www.nginx.com/) in front of it to proxy all traffic for your domain to the backend port.
 
-In this chapter, you will learn how to use Nginx to reverse proxy your backend Go program and quickly start the Casdoor service.
+## 1. Build frontend static files
 
-## 1. Build front end static files
-
-Assuming you have downloaded Casdoor and completed the necessary configuration (if not, refer to the **Get started** section), you only need to build the static files as follows:
+With Casdoor cloned and configured (see [Server installation](/docs/basic/server-installation)), build the frontend:
 
 ````mdx-code-block
 
@@ -46,25 +44,21 @@ npm install && npm run build
 
 ````
 
-## 2. Run the back-end program
+## 2. Run the backend
 
 ```sh
 go run main.go
 ```
 
-Or, build it first:
+Or build and run:
 
 ```sh
-go build && ./main
+go build && ./casdoor
 ```
 
-## 3. Configure and run Nginx
+## 3. Configure Nginx
 
-```bash
-vim /path/to/nginx/nginx.conf
-```
-
-Then, add a server:
+Edit your Nginx config and add a `server` block:
 
 ```nginx
 server {

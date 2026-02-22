@@ -1,32 +1,30 @@
 ---
-title: Discord
-description: Using Discord as a notification provider for Casdoor
+title: Discord notification
+description: Use Discord as a notification provider (webhook-style).
 keywords: [Discord, notification, provider]
 authors: [UsherFall]
 ---
 
-## Step 1: Get Token from Discord
+## 1. Get bot token
 
-First, sign up for the Discord Developer portal, create a new application, navigate to the “Bot” tab to configure it.
-
-Copy your Bot `token`
+In the [Discord Developer Portal](https://discord.com/developers/applications), create an application and open the **Bot** tab. Create or copy the bot **token**.
 
 ![discord_token](/img/providers/notification/discord_token.png)
 
-## Step 2: Get Channel ID
+## 2. Get channel ID
 
-Copy the Channel ID of the channel you want to post a message to. You can grab the Channel ID by right clicking a channel and selecting `Copy Channel ID`
+In Discord, right-click the channel where messages should be sent and choose **Copy Channel ID**.
 
 ![discord_channel](/img/providers/notification/discord_channel.png)
 
-## Step 3: Configure Casdoor Discord Provider
+## 3. Configure the provider in Casdoor
 
-There are three required fields: `App Key`, `Content`, and `Chat ID`. The relationship between the fields and Discord is as follows:
+**Providers** → **Add**. Set **Category** to **Notification**, **Type** to **Discord**. Map:
 
-| Name       | Name in Slack |
-|------------|---------------|
-| Secret key | Token         |
-| Chat ID    | Channel ID    |
-| Content    |               |
+| Casdoor    | Discord     |
+|------------|-------------|
+| Secret key | Bot token   |
+| Chat ID    | Channel ID  |
+| Content    | (optional)  |
 
 ![discord_provider](/img/providers/notification/discord_provider.png)

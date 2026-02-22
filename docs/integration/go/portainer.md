@@ -5,11 +5,7 @@ keywords: [Portainer]
 authors: [UsherFall]
 ---
 
-## Using Casdoor for authentication in Portainer
-
-[Portainer](https://www.portainer.io/) supports authentication via OAuth. Therefore, it is easy for users to use Casdoor to log in to Portainer. Only several steps and simple configurations are needed to achieve that.
-
-Here is a tutorial on how to use Casdoor for authentication in Grafana. Before you proceed, please ensure that you have Portainer installed and running.
+[Portainer](https://www.portainer.io/) supports OAuth for sign-in. This guide configures Casdoor as the identity provider. Ensure Portainer is installed and running.
 
 The following are the configuration names:
 
@@ -35,13 +31,13 @@ Expand the **Settings** from the left navigation bar, click on the **Authenticat
 
 2. Fill in the necessary information as follows: ![portainer_3](/img/integration/go/portainer/portainer_3.png)
 
-- `Authorization URL`: **https://<CASDOOR_HOST>/login/oauth/authorize**
+- `Authorization URL`: **https://`CASDOOR_HOST`/login/oauth/authorize**
 
-- `Access token URL`: **https://<CASDOOR_HOST>/api/login/oauth/access_token**
+- `Access token URL`: **https://`CASDOOR_HOST`/api/login/oauth/access_token**
 
-- `Resource URL`: **https://<CASDOOR_HOST>/api/userinfo**
+- `Resource URL`: **https://`CASDOOR_HOST`/api/userinfo**
 
-- `Redirect URL`: **https://<PORTAINER_HOST>**
+- `Redirect URL`: **https://`PORTAINER_HOST`**
 
 Log out of Portainer and test.
 

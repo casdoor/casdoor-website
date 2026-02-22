@@ -1,37 +1,33 @@
----
-title: Server Installation
-description: Install and configure Casdoor server
+﻿---
+title: Server installation
+description: Install and configure the Casdoor server from source or pre-built binaries.
 keywords: [Casdoor server, installation, configuration]
 authors: [hsluoyz]
 ---
 
 ## Requirements
 
-### Operating System
+### Operating system
 
-All major operating systems are supported, including Windows, Linux, and macOS.
+Windows, Linux, and macOS are supported.
 
-### Environment
+### Build environment
 
 - [Go 1.21+](https://go.dev/dl/)
 - [Node.js LTS (20)](https://nodejs.org)
 - [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install)
 
 :::info
-
-We strongly recommend using [Yarn 1.x](https://classic.yarnpkg.com/en/docs/install) to run and build the Casdoor frontend. Using NPM might cause UI styling issues. For more details, see: [casdoor#294](https://github.com/casdoor/casdoor/issues/294).
-
+Use **Yarn 1.x** for the frontend; NPM can cause UI styling issues ([casdoor#294](https://github.com/casdoor/casdoor/issues/294)).
 :::
 
 :::caution
-
-If your network fails to directly sync Go dependency packages successfully, you need to use a Go proxy by configuring the GOPROXY environment variable. We strongly recommend using: <https://goproxy.cn/>
-
+If Go dependencies fail to download, set **GOPROXY** (e.g. `https://goproxy.cn/`).
 :::
 
 ### Database
 
-Casdoor uses [XORM](https://xorm.io/) to communicate with the database. Based on [Xorm Drivers Support](https://xorm.io/docs/chapter-01/readme/), Casdoor currently provides support for the following databases:
+Casdoor uses [XORM](https://xorm.io/) and supports these databases ([Xorm drivers](https://xorm.io/docs/chapter-01/readme/)):
 
 - `MySQL`
 - `MariaDB`
@@ -44,19 +40,11 @@ Casdoor uses [XORM](https://xorm.io/) to communicate with the database. Based on
 
 ## Download
 
-### Pre-built Binaries
+### Pre-built binaries
 
-Starting from recent releases, Casdoor provides pre-built binaries for all major platforms. This is the fastest way to get started if you don't need to modify the source code.
+[GitHub Releases](https://github.com/casdoor/casdoor/releases) provide binaries for Linux (x86_64, arm64), macOS (x86_64, arm64), and Windows (x86_64, arm64). Extract the archive and run the `casdoor` binary. It includes the web frontend and a sample `conf/app.conf`; set the database connection before first run (see [Configure database](#configure-database)).
 
-Download the latest release from [GitHub Releases](https://github.com/casdoor/casdoor/releases). Each release includes binaries for:
-
-- **Linux**: x86_64 and arm64 (`.tar.gz`)
-- **macOS**: x86_64 and arm64 (`.tar.gz`)
-- **Windows**: x86_64 and arm64 (`.zip`)
-
-After downloading, extract the archive and run the `casdoor` executable. The binaries include the web frontend and a sample configuration file (`conf/app.conf`). You'll need to configure the database connection before running (see [Configure Database](#configure-database)).
-
-:::tip Quick Start with Binaries
+:::tip Quick start with binaries
 
 ```bash
 # Linux/macOS example
@@ -68,16 +56,16 @@ cd casdoor_Linux_x86_64
 
 :::
 
-### Build from Source
+### Build from source
 
-The source code of Casdoor is hosted on GitHub: <https://github.com/casdoor/casdoor>. Both the Go backend code and React frontend code are contained in a single repository.
+Repository: `https://github.com/casdoor/casdoor` (backend and frontend in one repo).
 
-| Name     | Description                     | Language              | Source code                                          |
-|----------|---------------------------------|-----------------------|------------------------------------------------------|
-| Frontend | Web frontend UI for Casdoor     | JavaScript + React    | <https://github.com/casdoor/casdoor/tree/master/web> |
-| Backend  | RESTful API backend for Casdoor | Golang + Beego + XORM | <https://github.com/casdoor/casdoor>                 |
+| Part      | Description        | Stack                 |
+|-----------|--------------------|------------------------|
+| Frontend  | Web UI             | JavaScript + React    |
+| Backend   | REST API           | Go + Beego + XORM     |
 
-Casdoor supports `Go Modules`. To download the code, simply clone the code using git:
+Clone the repo (Go Modules are used):
 
 ```shell
 cd path/to/folder
@@ -86,13 +74,13 @@ git clone https://github.com/casdoor/casdoor
 
 ## Configuration
 
-### Configure Database
+### Configure database
 
-Casdoor supports MySQL, MSSQL, SQLite3, and PostgreSQL. By default, Casdoor uses MySQL.
+Casdoor supports MySQL, MariaDB, PostgreSQL, CockroachDB, SQL Server, Oracle, SQLite3, and TiDB. Default config uses MySQL.
 
 #### MySQL
 
-Casdoor stores user, node, and topic information in a MySQL database named `casdoor`. If the database does not exist, it must be created manually. The DB connection string can be specified at: <https://github.com/casdoor/casdoor/blob/master/conf/app.conf>
+Create a database named `casdoor` if it does not exist. Set the connection in `conf/app.conf` (see [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf)):
 
 ```ini
 driverName = mysql
@@ -102,9 +90,7 @@ dbName = casdoor
 
 #### PostgreSQL
 
-Before running Casdoor, you need to manually prepare a database for PostgreSQL, as Casdoor requires a database to be selected when opening Postgres with xorm.
-
-Assuming you have already prepared a database called `casdoor`, you should specify `app.conf` like this:
+Create a database (e.g. `casdoor`) before running; xorm requires it in the connection string. Example `app.conf`:
 
 ```ini
 driverName = postgres
@@ -140,31 +126,27 @@ dataSourceName = file:casdoor.db?cache=shared
 dbName = casdoor
 ```
 
-### Configuration Files
+### Config files
 
-Casdoor can be configured via configuration files for both the backend and frontend. For a complete reference of all configuration options, see the [Configuration File](/docs/basic/configuration) documentation.
-
-For basic setup, you typically only need to modify `driverName` and `dataSourceName` in the [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) file based on your database (see [Configure Database](#configure-database)).
+Backend and frontend options are documented in [Configuration](/docs/basic/configuration). For a minimal setup, set `driverName` and `dataSourceName` in [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf) (see [Configure database](#configure-database)).
 
 ## Run
 
-There are currently two methods to start, and you can choose one according to your situation.
-
-### Development Mode
+### Development mode
 
 #### Backend
 
-Casdoor's Go backend runs on port 8000 by default. You can start the Go backend with the following command:
+Start the Go backend (default port 8000):
 
 ```bash
 go run main.go
 ```
 
-After the server is successfully running, you can start the frontend part.
+Then start the frontend.
 
-#### Frontend
+#### Frontend <span id="frontend-1"></span>
 
-Casdoor's frontend is a very classic [**Create-React-App (CRA)**](https://create-react-app.dev/) project. It runs on port `7001` by default. Use the following commands to run the frontend:
+The frontend is a [Create React App](https://create-react-app.dev/) project and runs on port 7001 by default:
 
 ```bash
 cd web
@@ -172,18 +154,13 @@ yarn install
 yarn start
 ```
 
-Visit [**http://localhost:7001**](http://localhost:7001) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`.
+Open [http://localhost:7001](http://localhost:7001) and sign in as **built-in/admin** / **123**.
 
-```bash
-admin
-123
-```
-
-### Production Mode
+### Production mode <span id="production-mode"></span>
 
 #### Backend
 
-Build the Casdoor Go backend code into an executable and start it.
+Build and run the binary:
 
 For Linux:
 
@@ -201,7 +178,7 @@ casdoor.exe
 
 #### Frontend
 
-Build the Casdoor frontend code into static resources (.html, .js, .css files):
+Build static assets:
 
 ```bash
 cd web
@@ -209,33 +186,17 @@ yarn install
 yarn build
 ```
 
-Visit [**http://localhost:8000**](http://localhost:8000) in your browser. Log into the Casdoor dashboard with the default global admin account: `built-in/admin`.
-
-```bash
-admin
-123
-```
+Open [http://localhost:8000](http://localhost:8000) and sign in as **built-in/admin** / **123**.
 
 :::tip
-
-To use another port, please edit ```conf/app.conf``` and modify `httpport`, then restart the Go backend.
-
+To use a different port, set `httpport` in `conf/app.conf` and restart the backend.
 :::
 
-:::info Casdoor Port Details
+:::info Ports and URLs
+- **Dev:** Frontend runs on port 7001 (`yarn start`). Point apps at **http://localhost:7001** for the Casdoor login page.
+- **Prod:** Frontend is built and served by the backend on port 8000. Use **https://your-casdoor-domain** (or your reverse proxy URL).
+:::
 
-In the **dev** environment, the frontend is run by ```yarn run``` on port 7001, so if you want to go to the Casdoor login page, you need to set the Casdoor link as **<http://localhost:7001>**.
-
-In the **prod** environment, the frontend files are first built by ```yarn build``` and served on port 8000, so if you want to go to the Casdoor login page, you need to set the Casdoor link as **<https://your-casdoor-url.com:8000>** (If you are using a reverse proxy, you need to set the link as **your domain**).
-
-#### Take Our Official Forum Casnode as an Example
-
-[Casnode](https://casnode.org) uses Casdoor to handle authentication.
-
-When we are testing Casnode in the **dev** environment, we set the `serverUrl` as <http://localhost:7001>, so when we test the signin and signup functionality using Casdoor, it will go to localhost 7001, which is the Casdoor port.
-
-And when we put Casnode into the **prod** environment, we set the `serverUrl` as <https://door.casdoor.com>, so users can sign in or sign up using Casdoor.
+**Example:** [Casnode](https://casnode.org) uses Casdoor. In dev, set `serverUrl` to `http://localhost:7001`; in prod, set it to `https://door.casdoor.com`.
 
 ![Casnode Example](/img/basic/server-installation/casnodeexample.png)
-
-:::

@@ -1,15 +1,15 @@
 ---
-title: Active Directory
-description: Using Active Directory Syncer to synchronize users from Active Directory
+title: Active Directory syncer
+description: Sync users from Microsoft Active Directory to Casdoor via LDAP/LDAPS.
 keywords: [syncer, active directory, ad, ldap]
 authors: [nomeguy]
 ---
 
-Active Directory Syncer enables automatic user synchronization from Microsoft Active Directory to Casdoor. The syncer connects to Active Directory via LDAP/LDAPS protocol to retrieve user information and keep your user directory synchronized.
+The **Active Directory syncer** pulls users from Microsoft Active Directory into Casdoor over LDAP or LDAPS and keeps the directory in sync.
 
 ## Prerequisites
 
-To use the Active Directory syncer, you need:
+You need:
 
 - An Active Directory domain controller accessible via network
 - A service account with read permissions to the user directory
@@ -35,7 +35,7 @@ To create an Active Directory syncer in Casdoor:
 | Password | Password for the service account | your-password |
 | Base DN | Search base for users | DC=example,DC=com |
 
-Other database-related fields (Database type, Database, Table) are not used for Active Directory syncer and can be left empty.
+Leave database-related fields (Database type, Database, Table) empty for the Active Directory syncer.
 
 :::tip
 
@@ -61,21 +61,14 @@ The syncer automatically maps Active Directory user attributes to Casdoor user f
 | userAccountControl | IsForbidden | Account status |
 
 :::info
-
-The `userAccountControl` attribute is used to determine account status. Bit 2 of this value indicates if the account is disabled. Disabled accounts in Active Directory will be marked as forbidden in Casdoor.
-
+`userAccountControl` bit 2 indicates a disabled account; those users are marked as forbidden in Casdoor.
 :::
 
-## Running the Syncer
+## Running the syncer
 
-After configuration:
-
-1. Click **Test Connection** to verify connectivity and credentials
-2. Enable the syncer by toggling **Is enabled**
-3. Click **Sync** to trigger an immediate synchronization
-4. The syncer will automatically fetch all user accounts from the specified Base DN
-
-The syncer uses the LDAP filter `(&(objectClass=user)(objectCategory=person))` to retrieve only user accounts, excluding computer accounts and other AD objects.
+1. Click **Test Connection** to verify connectivity and credentials.
+2. Toggle **Is enabled** and click **Sync** for an immediate run.
+3. The syncer fetches all user accounts under the Base DN using the filter `(&(objectClass=user)(objectCategory=person))` (computers and other AD objects are excluded).
 
 ## Troubleshooting
 

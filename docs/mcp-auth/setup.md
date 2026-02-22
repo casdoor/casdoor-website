@@ -1,23 +1,21 @@
 ---
-title: Setting Up the Auth Provider
-description: Step-by-step guide to configure Casdoor as an OAuth provider for MCP servers
-keywords: [MCP, setup, configuration, OAuth, scopes, redirect URIs, consent, JWKS]
+title: MCP auth setup
+description: Configure Casdoor as the OAuth server for your MCP server.
+keywords: [MCP, setup, OAuth, scopes, redirect URIs, consent, JWKS]
 authors: [hsluoyz]
 ---
 
-This guide walks you through configuring Casdoor as the authorization server for your MCP server. You'll configure the Casdoor side (application settings, scopes, consent) and the MCP server side (Protected Resource Metadata, token validation).
+This guide configures Casdoor as the authorization server for an MCP server: application, scopes, and consent in Casdoor, then Protected Resource Metadata and token validation on the MCP server.
 
 ## Prerequisites
 
-- A running Casdoor instance (see [Server Installation](../basic/server-installation.mdx) or use [Casdoor Cloud](https://door.casdoor.com))
-- Admin access to Casdoor's management interface
-- Your MCP server's public URL (e.g., `https://your-mcp-server.com`)
+- A running Casdoor instance ([Server installation](/docs/basic/server-installation) or [Casdoor Cloud](https://door.casdoor.com))
+- Admin access to Casdoor
+- Your MCP server’s public URL (e.g. `https://your-mcp-server.com`)
 
-## Part 1: Casdoor Configuration
+## Part 1: Casdoor configuration
 
-### Step 1: Create an Application
-
-Navigate to the Casdoor admin panel and create a new application for your MCP server.
+### Step 1: Create an application
 
 1. Go to **Applications** → **Add Application**
 2. Fill in the basic details:
@@ -32,7 +30,7 @@ The Agent category with MCP type optimizes the application for programmatic acce
 
 ### Step 2: Configure Redirect URIs
 
-Redirect URIs are where Casdoor sends users after authorization. For MCP servers, you need to support both development and production environments.
+Redirect URIs are where Casdoor sends users after authorization. For MCP servers, add URIs for both development and production.
 
 1. In the application settings, find **Redirect URIs**
 2. Add development URIs for local testing:
@@ -134,7 +132,7 @@ Your MCP server will need these Casdoor URLs for token validation:
 - **OIDC Discovery**: `https://your-casdoor.com/.well-known/openid-configuration`
 - **JWKS Endpoint**: `https://your-casdoor.com/.well-known/jwks`
 
-You can verify these endpoints are working:
+Verify the endpoints:
 
 ```bash
 # Check OAuth metadata

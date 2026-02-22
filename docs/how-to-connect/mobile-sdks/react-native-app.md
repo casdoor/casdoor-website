@@ -1,82 +1,56 @@
 ---
-title: React Native App
-description: A React Native mobile app example for Casdoor
+title: React Native app
+description: Integrate Casdoor in a React Native app with the official SDK.
 keywords: [React Native, sdk]
 authors: [cwp0]
 ---
 
-There is a [Casdoor React Native mobile app example](https://github.com/casdoor/casdoor-react-native-sdk) to get you up to speed on how to use Casdoor in React Native.
+The [casdoor-react-native-example](https://github.com/casdoor/casdoor-react-native-example) and [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk) show how to use Casdoor in React Native.
 
-## How to Run the Example
+## Run the example
 
-### Quick Start
-
-- download the code
+### Quick start
 
 ```bash
- git clone git@github.com:casdoor/casdoor-react-native-example.git
-```
-
-- install dependencies
-
-```bash
- cd casdoor-react-native-example
- yarn install
- cd ios/
- pod install
-```
-
-- run on ios
-
-```bash
+git clone git@github.com:casdoor/casdoor-react-native-example.git
 cd casdoor-react-native-example
-react-native start
-react-native run-ios
+yarn install
+cd ios/ && pod install && cd ..
 ```
 
-- run on android
+**iOS:** `react-native start` then `react-native run-ios`  
+**Android:** `react-native start` then `react-native run-android`
 
-```bash
-cd casdoor-react-native-example
-react-native start
-react-native run-android
-```
-
-> Make sure to turn on the emulator or real device before running.
+Start an emulator or connect a device before running.
 
 ### Preview
-
-After running this react-native-example mobile application, the following window will be displayed on the emulator or real device.
 
 |                                                 **iOS**                                                  |                                                   **Android**                                                    |
 |:--------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
 | <img src="/img/how-to-connect/mobile-sdks/react-native-app/iOS-login.png" alt="iOS-login" width="250" /> | <img src="/img/how-to-connect/mobile-sdks/react-native-app/Android-login.png" alt="Android-login" width="250" /> |
 
-If you click the `Login with Casdoor` button, the Casdoor login window will appear on the screen.
+Click **Login with Casdoor** to open the Casdoor login screen.
 
 |                                                         **iOS**                                                          |                                                           **Android**                                                            |
 |:------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|
 | <img src="/img/how-to-connect/mobile-sdks/react-native-app/iOS-casdoor-login.png" alt="iOS-casdoor-login" width="250" /> | <img src="/img/how-to-connect/mobile-sdks/react-native-app/Android-casdoor-login.png" alt="Android-casdoor-login" width="250" /> |
 
-After a successful login, a user profile window will appear on your screen displaying your user information.
+After sign-in, the user profile is shown.
 
 |                                                       **iOS**                                                       |                                                           **Android**                                                            |
 |:-------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------:|
 | <img src="/img/how-to-connect/mobile-sdks/react-native-app/iOS-userInfo.png" alt="iOS-userInfo" width="250" /> | <img src="/img/how-to-connect/mobile-sdks/react-native-app/Android-userInfo.png" alt="Android-userInfo" width="250" /> |
 
-You can preview the entire process in the following GIF image.
 
 |                                                             **iOS**                                                              |                                 **Android**                                                                                              |
 |:--------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------:|
 | <img src="https://github.com/casdoor/casdoor-react-native-example/blob/master/iOS-gif.gif?raw=true" alt="iOS-gif" width="250" /> | <img src="https://github.com/casdoor/casdoor-react-native-example/blob/master/Android-gif.gif?raw=true" alt="Android-gif" width="250" /> |
 
-## How to Integrate
+## Integration
 
-The above example uses [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk), you can also integrate this sdk in your own project.
+The example uses [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk). To use it in your own project:
 
-The integration and use of the sdk is very simple, the following steps will show you how to integrate and use:
-
-### Step 1: Import SDK
+### 1. Install the SDK
 
 ```shell script
 # NPM
@@ -86,9 +60,9 @@ npm i casdoor-react-native-sdk
 yarn add casdoor-react-native-sdk
 ```
 
-### Step 2: Initialize SDK
+### 2. Initialize
 
-Initialization requires 7 parameters, which are all string type:
+Set these 7 string parameters (all required except `redirectPath` and `signinPath`):
 
 | Name (in order)  | Must | Description                                                                                    |
 |------------------|------|------------------------------------------------------------------------------------------------|
@@ -113,11 +87,9 @@ const sdkConfig = {
 const sdk = new SDK(sdkConfig)
 ```
 
-### Step 3: Use SDK
+### 3. Use the SDK
 
-Use the corresponding API interface of the sdk at the appropriate place.
-
-The simplest casdoor authorization and authentication process can be realized by using the following three APIs:
+Typical flow:
 
 ```javascript
 
@@ -131,4 +103,4 @@ getAccessToken(redirectUrl); // http://localhost:5000/callback?code=b75bc5c5ac65
 JwtDecode(jwtToken) 
 ```
 
-If you want to use other interfaces, please check [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk) for more help.
+See [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk) for the full API.

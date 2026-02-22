@@ -1,17 +1,15 @@
 ---
-title: Using Casdoor as a CAS Server
-description: How to use Casdoor as a CAS server
-keywords: [CAS, server]
+title: Casdoor as a CAS server
+description: Use Casdoor as a Central Authentication Service (CAS) server for CAS 1.0, 2.0, and 3.0.
+keywords: [CAS, server, SSO]
 authors: [ComradeProgrammer]
 ---
 
-## Using Casdoor as a CAS Server
+## Overview
 
-Casdoor can now be used as a CAS server. It currently supports CAS 3.0.
+Casdoor can act as a **CAS server** and supports CAS 1.0, 2.0, and 3.0.
 
-### Overview
-
-The CAS endpoint prefix in Casdoor is `<Casdoor endpoint>/cas/<organization name>/<application name>`. Here is an example using the endpoint `https://door.casdoor.com` with an application named `cas-java-app` under the organization `casbin`:
+The CAS URL prefix is: `<casdoor-host>/cas/<organization>/<application>`. Example for `https://door.casdoor.com`, org `casbin`, app `cas-java-app`:
 
 - `/login` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/login`
 - `/logout` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/logout`
@@ -23,17 +21,11 @@ The CAS endpoint prefix in Casdoor is `<Casdoor endpoint>/cas/<organization name
 - `/p3/proxyValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/p3/proxyValidate`
 - `/samlValidate` endpoint: `https://door.casdoor.com/cas/casbin/cas-java-app/samlValidate`
 
-For more information about CAS, its different versions, and parameters for these endpoints, refer to the [CAS Protocol Specification](https://apereo.github.io/cas/7.1.x/protocol/CAS-Protocol-Specification.html).
+See the [CAS protocol specification](https://apereo.github.io/cas/7.1.x/protocol/CAS-Protocol-Specification.html) for parameters and versions.
 
-### An Example
+### Example
 
-Here is an official example [GitHub Repository](https://github.com/apereo/cas-sample-java-webapp) that contains a web app and utilizes the official CAS Java client [GitHub Repository](https://github.com/apereo/java-cas-client). By going through this example, you can learn how to connect to Casdoor via CAS.
-
-:::note
-
-Note: Currently, Casdoor only supports all three versions of CAS: CAS 1.0, 2.0, and 3.0.
-
-:::
+The [Apereo CAS sample Java webapp](https://github.com/apereo/cas-sample-java-webapp) and [Java CAS client](https://github.com/apereo/java-cas-client) work with Casdoor. Point the client at your Casdoor CAS base URL.
 
 The CAS configuration is located in `src/main/webapp/WEB-INF/web.yml`.
 

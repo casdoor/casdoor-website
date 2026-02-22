@@ -1,42 +1,30 @@
 ---
 title: Plan
-description: Casdoor Plan Overview
-keywords: [Plan]
+description: Define a plan’s features and price; plans are tied to roles and products.
+keywords: [plan, pricing, role, product]
 authors: [isulimanov, Chinoholo0807]
 ---
 
-The `Plan` describes a list of features for an application, each with its own name and price.
-
-The features of a `Plan` depend on the Casdoor `Role`, which comes with a set of `Permissions`.
-
-This allows for the independent description of a `Plan`'s features, regardless of naming and pricing.
-
-For example, a `Plan` may have different prices depending on the country or date.
-
-The following picture illustrates the relationship between a `Plan` and a `Role`.
+A **Plan** describes a set of features for an application, with a name and price. Plan features are based on a Casdoor **Role** (and its permissions), so you can describe the plan independently of naming and pricing—e.g. different prices by country or date.
 
 ![plan](/img/pricing/plan.png)
 
-## Plan Properties
+## Plan properties
 
-Every `Plan` has the following properties:
-
-- `Organization`
-- `Name`
-- `CreatedTime`
-- `DisplayName`
-- `Role`
-- `PricePerMonth`
-- `Currency`
-- `PaymentProviders`: Users can purchase the `Plan` through the Payment providers. For information on how to configure a Payment provider, see [Payment provider](/docs/provider/payment/overview).
-- `IsEnabled`
+| Property | Description |
+|----------|-------------|
+| **Organization** | Owning organization. |
+| **Name** | Plan identifier. |
+| **CreatedTime** | Creation time. |
+| **DisplayName** | Display name. |
+| **Role** | Role that defines the plan’s permissions. |
+| **PricePerMonth** | Monthly price. |
+| **Currency** | Currency code. |
+| **PaymentProviders** | Providers through which users can pay. See [Payment provider](/docs/provider/payment/overview). |
+| **IsEnabled** | Whether the plan is active. |
 
 ![plan edit](/img/pricing/plan_edit.png)
 
-When a `Plan` is created through Casdoor, a related `Product` is automatically created.
-
-The information configured for the `Plan` will be automatically synchronized to the `Product`.
-
-When users buy a `Plan`, they are essentially purchasing the related `Product` of the selected `Plan`.
+Creating a Plan in Casdoor automatically creates a related **Product**. Plan data is synced to that product. When users buy a Plan, they purchase its related Product.
 
 ![related product](/img/pricing/related_product.png)

@@ -7,16 +7,7 @@ authors: [Wrapping-2000]
 
 ## Step 1: Deploy Casdoor
 
-Firstly, Casdoor should be deployed.
-
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation). Please deploy your Casdoor instance in **production mode**.
-
-After a successful deployment, ensure that:
-
-- Open your favorite browser and visit **<http://localhost:8000>**, you will see the login page of Casdoor.
-- Input `admin` and `123` to test the login functionality.
-
-Alternatively, you can use the [official Casdoor demo station](https://door.casdoor.com/) for a quick start.
+Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in (e.g. `admin` / `123`). For a quick start, use the [Casdoor demo](https://door.casdoor.com/).
 
 ## Step 2: Import Casdoor.Client
 
@@ -28,7 +19,7 @@ One optional method is as follows:
 - Run ConsoleApp in the Sample folder.
 - Get the `/casdoor-dotnet-sdk/src/Casdoor.Client/bin/Debug/net462` folder.
 
-Now, you can import the `net462` folder into your Unity project through the method shown in the figure below. Of course, you can also choose folders of other versions.
+Import the `net462` folder (or another target framework folder) into your Unity project as shown below.
 
 ![import-sdk](/img/integration/CSharp/Unity/import-sdk.png)
 
@@ -36,7 +27,7 @@ Now, you can import the `net462` folder into your Unity project through the meth
 
 Learn how to use the `Casdoor.Client` SDK for Unity 3D mobile development by looking at [casdoor-unity-example](https://github.com/casdoor/casdoor-unity-example).
 
-After running the casdoor-unity-example, you will see the following interfaces:
+After running the casdoor-unity-example, the following interfaces appear:
 
 - Login with username and password:
 

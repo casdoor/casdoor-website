@@ -1,83 +1,73 @@
 ---
 title: Overview
-description: Using Casbin to manage user access rights in organizations
-keywords: [permissions, Casbin]
+description: Use Casbin to manage fine-grained access control for users and resources in your organization.
+keywords: [permissions, Casbin, RBAC, access control]
 authors: [seriouszyx, MagicalSheep]
 ---
 
 ## Introduction
 
-All users associated with a single [Casdoor organization](/docs/organization/overview) share access to the organization's applications. However, there may be instances where you want to restrict user access to certain applications or specific resources within an application. In such cases, you can utilize the `Permission` feature provided by [Casbin](https://casbin.org/).
+Users in a [Casdoor organization](/docs/organization/overview) can access that organization’s applications by default. When you need to restrict access to specific applications or resources, use the **Permission** feature powered by [Casbin](https://casbin.org/).
 
-## Understanding Casbin Concepts
+## Casbin concepts
 
-Before delving deeper into the topic, it is important to have a basic understanding of how [Casbin](https://casbin.org/) works and its related concepts:
+To use permissions effectively, it helps to understand how [Casbin](https://casbin.org/) works:
 
-- **Model**: Defines the structure of your permission policies and the criteria for matching requests against these policies and their outcomes. You can configure models in the **Models** page in Casdoor.
-- **Policy**: Describes the specific permission rules (who can access what resources with what actions). You configure policies in the **Permissions** page in Casdoor.
-- **Adapter**: An abstraction layer that shields Casbin's executor from the source of the Policy, allowing the storage of Policies in various locations like files or databases. Learn more about [Adapters](/docs/permission/adapter).
+- **Model**: Defines the structure of your permission policies and how requests are matched and evaluated. Configure models on the **Models** page in Casdoor.
+- **Policy**: Defines concrete permission rules (who can do what on which resources). Configure policies on the **Permissions** page in Casdoor.
+- **Adapter**: Abstracts where policies are stored (e.g. files or a database). See [Adapters](/docs/permission/adapter) for details.
 
-:::tip Learn More About Casbin
+:::tip
 
-Visit the [Casbin documentation](https://casbin.org/docs/overview) to learn more about access control models and patterns. You can also use the [Casbin Online Editor](https://casbin.org/editor) to create and test Model and Policy files for your specific scenarios.
+For more on Casbin’s access control models and patterns, see the [Casbin documentation](https://casbin.org/docs/overview). Use the [Casbin Online Editor](https://casbin.org/editor) to create and test Model and Policy files.
 
 :::
 
-## Configuring Permissions in Casdoor
+## Configuring permissions in Casdoor
 
-### Where to Configure
+### Where to configure
 
-In the Casdoor Web UI, you'll work with two main pages:
+In the Casdoor web UI, use these two areas:
 
-1. **Models Page**: Navigate to **Models** in the sidebar to add or edit Models for your organization.
+1. **Models**: Open **Models** in the sidebar to add or edit models for your organization.
 
    ![Model Edit Page](/img/permission/overview/model_edit.png)
 
-2. **Permissions Page**: Navigate to **Permissions** in the sidebar to configure permission policies.
+2. **Permissions**: Open **Permissions** in the sidebar to configure permission policies.
 
    ![Permission Edit Page](/img/permission/permission_edit.png)
 
-### How Permissions Work
+### How permissions work
 
-Returning to the subject of permission configuration in Casdoor:
+1. **Add a model**: Create a model for your [organization](/docs/organization/overview) on the **Models** page.
+2. **Configure a policy**: Add a policy (permission rules) for that organization on the **Permissions** page.
 
-1. **Add a Model**: First, create a Model for your [organization](/docs/organization/overview) in the **Models** page within the Casdoor Web UI.
-2. **Configure a Policy**: Then, add a Policy (permission rules) for your organization in the **Permissions** page.
+Generate Model and Policy files in the [Casbin Online Editor](https://casbin.org/editor), then import the model into Casdoor via the web UI. For step-by-step policy configuration, see [Permission configuration](/docs/permission/permission-configuration).
 
-The [Casbin Online Editor](https://casbin.org/editor) can provide you with Model and Policy files tailored to your specific usage scenarios. You can effortlessly import the Model file into Casdoor through its Web UI for use by the built-in Casbin. For the Policy configuration (i.e., the **Permissions** page in the Casdoor Web UI), refer to the [Permission Configuration](/docs/permission/permission-configuration) guide for detailed instructions.
+## Using permissions from your application
 
-## Using Permissions with Your Application
+Casdoor uses its own Casbin model and policy to control access to its APIs. External applications cannot call Casbin directly; they must use the APIs that Casdoor exposes for the built-in Casbin engine.
 
-Just as your application needs to enforce permission control through Casdoor's built-in Casbin, Casdoor itself utilizes its own Model and Policy to regulate access permissions for the API interfaces through Casbin. Though Casdoor can call Casbin from internal code, external applications cannot.
+See [Exposed Casbin APIs](/docs/permission/exposed-casbin-apis) for API definitions and usage.
 
-As a solution, Casdoor exposes an API for external applications to call the built-in Casbin. See the [Exposed Casbin APIs](/docs/permission/exposed-casbin-apis) documentation for definitions of these API interfaces and instructions on how to use them.
+## Related features
 
-## Related Features
+### Account item permissions
 
-### Account Item Permissions
+On the **Edit Organization** page, control access to individual user account fields:
 
-Casdoor also provides fine-grained permission control at the user account field level through the **Edit Organization** page:
+- **View rule**: Who can view each field
+- **Modify rule**: Who can modify each field
 
-- **View rule**: Control who can view specific user account fields
-- **Modify rule**: Control who can modify specific user account fields
+Options: **Public** (everyone), **Self** (only the user), or **Admin** (administrators only). See [Account customization](/docs/organization/accountCustomization) for details.
 
-These rules can be set to:
+### Role-based access control
 
-- **Public**: Everyone has permission
-- **Self**: Each user has their own permission
-- **Admin**: Only administrators have permission
+Casdoor supports [roles](/docs/user/roles): assign roles to users and attach permission policies to roles so access is managed at the role level instead of per user.
 
-Learn more in the [Account Customization](/docs/organization/accountCustomization) documentation.
+## Next steps
 
-### Role-Based Access Control
-
-Casdoor supports role-based permissions where you can assign [roles](/docs/user/roles) to users and configure permission policies for these roles. This allows you to manage permissions at the role level rather than individual user level.
-
-## Next Steps
-
-- [Permission Configuration](/docs/permission/permission-configuration): Learn how to configure each field in the Permission page
-- [Exposed Casbin APIs](/docs/permission/exposed-casbin-apis): Use Casbin APIs in your external applications
-- [Adapters](/docs/permission/adapter): Configure adapters for policy storage
-- [Account Customization](/docs/organization/accountCustomization): Configure field-level permissions for user accounts
-
-Let's get started!
+- [Permission configuration](/docs/permission/permission-configuration) — Configure each field on the Permissions page
+- [Exposed Casbin APIs](/docs/permission/exposed-casbin-apis) — Call Casbin from your application
+- [Adapters](/docs/permission/adapter) — Configure where policies are stored
+- [Account customization](/docs/organization/accountCustomization) — Field-level permissions for user accounts

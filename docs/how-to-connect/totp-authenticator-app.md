@@ -1,98 +1,70 @@
 ---
-title: Casdoor Authenticator App
-description: Store TOTP code in Casdoor
-keywords: [authenticator, 2fa, password manager, totp, multi-factor authentication]
+title: Casdoor Authenticator app
+description: TOTP authenticator app for iOS and Android, synced with Casdoor.
+keywords: [authenticator, 2fa, TOTP, MFA]
 authors: [IZUMI-Zu]
 ---
 
-## Overview
+**Casdoor Authenticator** ([app.casdoor.org](https://app.casdoor.org/)) is an open-source TOTP app ([GitHub](https://github.com/casdoor/casdoor-authenticator)) similar to Google Authenticator or Microsoft Authenticator. It provides MFA with time-based one-time passwords (TOTP) on iOS and Android and can sync accounts with Casdoor.
 
-Casdoor-Authenticator ([https://app.casdoor.org/](https://app.casdoor.org/)) is an open-source authenticator App (source code: [https://github.com/casdoor/casdoor-authenticator](https://github.com/casdoor/casdoor-authenticator)) like Google Authenticator, Microsoft Authenticator or Authy. It provides Multi-Factor Authentication (MFA) with TOTP for both iOS and Android. This app allows users to store Time-based One-Time Password (TOTP) securely in the App, which is cloud-synced with Casdoor, offering a comprehensive solution for managing Two-Factor Authentication (2FA) needs directly from mobile devices.
+### Features
 
-### Key Features
+- **MFA** — Generate TOTP codes for 2FA.
+- **Offline** — Codes work without internet.
+- **Sync** — Accounts sync across devices via Casdoor.
+- **Privacy** — Data encrypted and stored securely.
+- **UI** — Simple, intuitive interface.
 
-- **Multi-Factor Authentication (MFA)**: Generate secure TOTP-based codes for enhanced account protection.
-- **Offline mode**: Generate TOTP codes without an internet connection.
-- **Account synchronization**: Securely sync your accounts across multiple devices.
-- **Privacy-focused**: All data is encrypted and stored securely.
-- **Friendly UI**: Simple and intuitive design for easy navigation.
-
-| Android                                             | iOS                                         |
-|-----------------------------------------------------|---------------------------------------------|
+| Android | iOS |
+|---------|-----|
 | ![android](/img/totp-authenticator-app/android.png) | ![ios](/img/totp-authenticator-app/ios.png) |
 
 ## What is TOTP?
 
-TOTP stands for Time-based One-Time Passwords and is a common form of two-factor authentication (2FA). Unique numeric passwords are generated with a standardized [algorithm](https://tools.ietf.org/html/rfc6238) that uses the current time as an input. These time-based passwords:
+**TOTP** (Time-based One-Time Password) is a standard 2FA method. Codes are generated from a shared secret and the current time ([RFC 6238](https://tools.ietf.org/html/rfc6238)): they change every 30 seconds, work offline, and are widely supported.
 
-- Change every 30 seconds for enhanced security
-- Are available offline
-- Are widely supported by many services and apps
-- Provide user-friendly, increased account security as a second factor
+## Using the app
 
-## How to use the Casdoor Authenticator App?
+### Step 0: Install
 
-### Step 0: Install the Casdoor Authenticator App
+- **Android**: [Releases](https://github.com/casdoor/casdoor-authenticator/releases) or [app.casdoor.org](https://app.casdoor.org).
+- **iOS**: See [app.casdoor.org](https://app.casdoor.org) and the [repo](https://github.com/casdoor/casdoor-authenticator).
+- **Build from source**: [Casdoor Authenticator – Building from source](https://github.com/casdoor/casdoor-authenticator#building-from-source).
 
-Casdoor-Authenticator is currently available for Android devices. You can download the app from the following sources:
+### Step 1: Enable MFA account storage (optional)
 
-1. Homepage: [https://app.casdoor.org](https://app.casdoor.org)
-2. Source code: [https://github.com/casdoor/casdoor-authenticator](https://github.com/casdoor/casdoor-authenticator)
-3. Binary release: [https://github.com/casdoor/casdoor-authenticator/releases](https://github.com/casdoor/casdoor-authenticator/releases)
-
-For developers interested in building the app from source, you can find the source code and build instructions in the [Casdoor Authenticator GitHub Repository](https://github.com/casdoor/casdoor-authenticator#building-from-source).
-
-### Step 1: Enable Totp Account storage in Casdoor Server (Optional)
-
-This setup is optional for users who want to store their TOTP codes in the Casdoor server. Before using the Casdoor Authenticator App, you need to make sure that the MFA accounts setting is enabled in the Casdoor server.
+To store TOTP accounts in Casdoor, enable the **MFA accounts** setting on the Casdoor server.
 
 ![Mfa account setting](/img/totp-authenticator-app/mfa-account-setting.png)
 
-### Step 2: Log in to the Casdoor Authenticator App
+### Step 2: Connect to Casdoor
 
-After installing the Casdoor Authenticator App and enabling the MFA accounts setting in the Casdoor server, you have three convenient ways to connect to your Casdoor server:
+After installing the app (and enabling MFA accounts if you use sync), connect in one of these ways:
 
-1. **Manual Configuration**
-   - Tap "Enter Server Manually"
-   - Enter your server URL, client ID, and organization name
-   - Log in with your Casdoor account credentials
-
-2. **QR Code Scan**
-   - Tap "Scan QR Code"
-   - Use your device's camera to scan the QR code from your Casdoor server
-   - The QR code can be found in "My Account" -> "MFA accounts" section
-   - The app will automatically configure the connection
-
-3. **Demo Server**
-   - Tap "Try Demo Server" to connect to a pre-configured demo instance
-   - Useful for testing the app's functionality without setting up your own server
+| Method | Steps |
+|--------|--------|
+| **Manual** | Tap **Enter Server Manually**, enter server URL, client ID, and organization name, then sign in. |
+| **QR code** | Tap **Scan QR Code**, scan the QR from **My Account** → **MFA accounts** on the Casdoor server. |
+| **Demo** | Tap **Try Demo Server** to use the preconfigured demo instance. |
 
 ![Login](/img/totp-authenticator-app/login.png)
 
-Once connected, you can view your TOTP codes and manage your 2FA settings directly from the Casdoor Authenticator App like other authenticator apps.
+You can then view TOTP codes and manage 2FA accounts in the app.
 
-## Migration from Other Authenticator Apps
+## Migration from other authenticators
 
-### Migration from Google Authenticator
+### From Google Authenticator
 
-Select the "Transfer Accounts" option in the menu of Google Authenticator and choose the accounts you want to transfer. Then, click the "Export" button to generate a QR code.
+In Google Authenticator: **Menu** → **Transfer accounts** → select accounts → **Export** (QR code). In Casdoor Authenticator, scan that QR to import.
 
 ![Export TOTP data](/img/totp-authenticator-app/google-export.png)
-
-In the Casdoor Authenticator App, scan the QR code generated by Google Authenticator to import your TOTP data. The app will automatically add the accounts to your Casdoor Authenticator App, allowing you to manage your TOTP codes securely.
-
 ![Import TOTP data from Google Authenticator](/img/totp-authenticator-app/import-totp-google.gif)
 
-### Migration from Microsoft Authenticator (requires root access)
+### From Microsoft Authenticator (Android, root required)
 
-If you are using Microsoft Authenticator, you can migrate your TOTP data to the Casdoor Authenticator App using the Microsoft Authenticator's database backup. Here's how:
-
-1. On your Android device with Microsoft Authenticator installed, locate the app's data directory:
-   `/data/data/com.azure.authenticator/databases/`
-2. You will need root access to extract the `PhoneFactor` database file.
-3. In the Casdoor Authenticator App, go to the import section
-4. Select "Import from Microsoft Authenticator"
-5. Choose the extracted `PhoneFactor` database file
-6. The app will automatically import all your TOTP accounts from Microsoft Authenticator
+1. On the device with Microsoft Authenticator, the app data is under `/data/data/com.azure.authenticator/databases/`. Root access is required to read it.
+2. Copy the `PhoneFactor` database file.
+3. In Casdoor Authenticator: import → **Import from Microsoft Authenticator** → select the `PhoneFactor` file.
+4. The app imports the TOTP accounts.
 
 ![Import TOTP data from Microsoft Authenticator](/img/totp-authenticator-app/import-totp-microsoft.gif)

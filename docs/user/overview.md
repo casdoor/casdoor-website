@@ -1,13 +1,13 @@
 ---
 title: Overview
-description: Managing Users in Casdoor
-keywords: [user, properties, import]
+description: User model, properties, roles, permissions, and bulk import in Casdoor.
+keywords: [user, properties, roles, permissions, import]
 authors: [sh1luo]
 ---
 
-## User Properties
+## User properties
 
-As an authentication platform, Casdoor manages user accounts. Every user has the following properties:
+Casdoor manages user accounts. Each user has the following properties:
 
 - `Owner`: The organization that owns the user
 - `Name`: The unique username for the user (must be unique within the organization)
@@ -85,9 +85,9 @@ Unique IDs for social platform logins:
 - `Steam`: User's unique identifier from Steam OAuth login
 - `Ldap`: User's unique identifier from LDAP authentication
 
-## Organization Admin Privileges
+## Organization admin privileges
 
-Users with `IsAdmin` set to true have administrator privileges within their organization:
+Users with `IsAdmin` enabled are administrators of their organization:
 
 - Full access to manage users, applications, and resources within their organization
 - Access to verification code records sent to users in their organization
@@ -95,22 +95,22 @@ Users with `IsAdmin` set to true have administrator privileges within their orga
 
 Organization admins have elevated permissions but are scoped to their organization only. Global admins (`built-in` organization users) have full access across all organizations in the Casdoor instance.
 
-## User Tags
+## User tags
 
-The `Tag` field allows you to categorize users for different purposes. You can assign a single tag or multiple tags separated by commas (e.g., `"developer,qa,reviewer"`). When checking application access, each tag is evaluated separately.
+The `Tag` field categorizes users. Use a single tag or several comma-separated tags (e.g. `"developer,qa,reviewer"`). Application access checks evaluate each tag separately.
 
-Casdoor uses specific tag values for special user types:
+Reserved tag values:
 
 - `normal-user`: Standard users with full authentication capabilities
 - `guest-user`: Temporary users created through [guest authentication](/docs/how-to-connect/guest-auth) without initial credentials
   - Automatically upgrade to `normal-user` when they set a proper username or password
   - Cannot sign in directly until they upgrade their account
 
-You can also define custom tags to restrict application access. See [Application Tags](/docs/application/tags) for more information.
+Custom tags can restrict application access. See [Application Tags](/docs/application/tags).
 
-## Identity Verification
+## Identity verification
 
-Casdoor supports real-world identity verification through ID Verification providers. Users can verify their identity by submitting their ID card information and real name, which gets validated through third-party services like Jumio.
+Casdoor supports identity verification via ID Verification providers. Users can verify their identity by submitting their ID card information and real name, which gets validated through third-party services like Jumio.
 
 When a user completes identity verification:
 
@@ -121,9 +121,9 @@ When a user completes identity verification:
 
 This feature is useful for applications that require KYC (Know Your Customer) compliance or need to ensure user identity authenticity. See [ID Verification Providers](/docs/provider/idv/overview) for more information on configuring identity verification.
 
-## Email Normalization
+## Email normalization
 
-Casdoor normalizes all email addresses to lowercase to ensure uniqueness and prevent duplicate accounts. This means that `user@example.com`, `User@Example.com`, and `USER@EXAMPLE.COM` are treated as the same email address, complying with RFC 5321 standards.
+Casdoor normalizes all email addresses to lowercase for uniqueness and to avoid duplicate accounts. This means that `user@example.com`, `User@Example.com`, and `USER@EXAMPLE.COM` are treated as the same email address, complying with RFC 5321 standards.
 
 This normalization happens automatically during:
 
@@ -131,32 +131,27 @@ This normalization happens automatically during:
 - User login and authentication
 - Email duplicate checking
 
-## Understanding Roles and Permissions Fields
+## Roles and permissions (extended fields)
 
-The `Roles` and `Permissions` fields in the User object are **extended fields** that are dynamically populated when retrieving user data. These fields are not stored directly in the User table but are collected from the Roles and Permissions resources through the `ExtendUserWithRolesAndPermissions()` function.
+The `Roles` and `Permissions` fields on the User object are **extended**: they are filled when user data is fetched, not stored on the User table. They are built from the Roles and Permissions resources via `ExtendUserWithRolesAndPermissions()`.
 
-**Important:** You cannot update roles and permissions through the `/api/update-user` endpoint, even when using the `columns` parameter. To manage user roles and permissions, you must use the dedicated APIs for Roles and Permissions resources.
+**Important:** You cannot change roles or permissions with `/api/update-user` (including via the `columns` parameter). Use the [Roles](/docs/user/roles#managing-roles-via-api) and [Permissions](/docs/user/permissions#managing-permissions-via-api) APIs and their management pages (e.g. **Roles** and **Permissions** in the sidebar) to assign and manage them.
 
-To assign roles or permissions to users:
+## Using the Properties field
 
-- **Roles**: Use the Roles API endpoints to create and assign roles. Visit the Roles management page (e.g., `https://door.casdoor.com/roles`) or use the [roles API](/docs/user/roles#managing-roles-via-api).
-- **Permissions**: Use the Permissions API endpoints to create and assign permissions. Visit the Permissions management page (e.g., `https://door.casdoor.com/permissions`) or use the [permissions API](/docs/user/permissions#managing-permissions-via-api).
-
-## Using the Properties Field
-
-The `Properties` field is a flexible key-value map (`map[string]string`) that allows you to store custom attributes for users beyond the predefined fields in the User schema. This is particularly useful when you need to:
+The `Properties` field is a key-value map (`map[string]string`) for custom user attributes not covered by the built-in schema. Use it to:
 
 - Store organization-specific user attributes
 - Add custom metadata that doesn't fit into standard fields
 - Extend user profiles without modifying the core schema
 
-## Importing Users from XLSX File
+## Importing users from XLSX
 
-You can add new users or update existing Casdoor users by uploading an XLSX file containing user information.
+Add or update users by uploading an XLSX file.
 
-### Getting Started
+### Getting started
 
-In the Admin Console, navigate to the Users page. You'll find two buttons for bulk user operations:
+On the **Users** page in the admin console you’ll see:
 
 - **Download template**: Generates an XLSX template with all available user fields and their localized column headers
 - **Upload (.xlsx)**: Opens the upload dialog to import users from your XLSX file
@@ -165,30 +160,25 @@ In the Admin Console, navigate to the Users page. You'll find two buttons for bu
 
 The template file includes headers in the format `Display Name#field_name` (e.g., `Organization#owner`), where the display name is localized to your language and the field name after `#` is used for import mapping. The comment prefix (everything before `#`) is automatically removed during import.
 
-### Upload Process
+### Upload process
 
-When you select an XLSX file, Casdoor displays a preview modal showing all the data to be imported. This allows you to review and verify the information before final submission. Once you confirm, click the upload button to import the users.
-
-We also provide a [sample XLSX file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) named `user_test.xlsx` in the `xlsx` folder with 5 test users for reference.
+After you choose an XLSX file, Casdoor shows a preview of the data. Review it and confirm to start the import. A [sample file](https://github.com/casdoor/casdoor/blob/master/xlsx/user_test.xlsx) (`xlsx/user_test.xlsx`) with 5 test users is available for reference.
 
 ![Import Successful](/img/user/import_success.png)
 
-### Upload Permissions
+### Upload permissions
 
-User upload permissions depend on your admin role:
+Who can upload depends on your role:
 
 - **Global admins** (users in the `built-in` organization with `IsGlobalAdmin` set to true) can upload users to any organization. The target organization is determined by the `Owner` field in the XLSX file.
 - **Organization admins** (users with `IsAdmin` set to true) can only upload users to their own organization. The system ensures that duplicate checking and user creation are scoped to the correct organization.
 
-## Bypass password encryption
+## Bypassing password encryption on import
 
-When migrating users from an external database to Casdoor, there might be situations where you want to bypass or control the default encryption method provided by `organization` default Password type method.
+When migrating users from another system, you may need to preserve existing password hashes instead of re-hashing with the organization’s default password type. Use the `passwordType` field during user import to tell Casdoor the format of the stored password.
 
-This can be achieved by using the `passwordType` field during user import.
-
-:::note User with Bycrypt password
-
-Below is an example of a POST body request for the API route `/api/add-user`.
+:::note Example: bcrypt password
+Example POST body for `/api/add-user`:
 
 ```json
 {
@@ -202,6 +192,6 @@ Below is an example of a POST body request for the API route `/api/add-user`.
 }
 ```
 
-Here, the user's password is already encrypted using the bcrypt algorithm, so we specify the `passwordType` as "bcrypt" to inform Casdoor not to encrypt it again.
+The password is already bcrypt-hashed, so `passwordType` is set to `"bcrypt"` so Casdoor does not hash it again.
 
 :::

@@ -1,27 +1,18 @@
 ---
-title: Dummy
-description: Use the Dummy payment provider for testing and development
+title: Dummy payment
+description: Mock payment provider for testing and development.
 keywords: [Dummy, payment, testing, development]
 authors: [hsluoyz]
 ---
 
-The Dummy payment provider is a mock payment provider designed for testing and development. It simulates the payment flow without connecting to any real payment gateway, making it ideal for testing your product purchase flow before integrating with production payment providers.
+The **Dummy** provider simulates payment: no real gateway is called. Use it to test the purchase flow before going live.
 
-## How It Works
+**Behavior:** A purchase with Dummy is marked successful immediately and the user is redirected to the result page. No money is charged.
 
-When a user initiates a purchase with the Dummy provider, the payment is immediately marked as successful and the user is redirected to the payment result page. No actual money transaction occurs.
+## Create the provider
 
-## Create a Dummy Payment Provider
+**Providers** → **Add**. Set **Category** to **Payment**, **Type** to **Dummy**. No API keys or secrets are required.
 
-To set up the Dummy payment provider in Casdoor:
+## Use in a product
 
-|    Name       |   Value            |
-|      ----     |   ----             |
-|Category       |   Choose `Payment` |
-|Type           |   Choose `Dummy`   |
-
-No additional configuration like API keys or secrets is required.
-
-## Add the Provider to Your Product
-
-After creating the Dummy payment provider, add it to your product so users can "purchase" the product during testing. When you're ready to go live, simply replace it with a real payment provider like Stripe or PayPal.
+Add the Dummy provider to the product so test users can complete “purchases.” For production, replace it with a real provider (e.g. Stripe or PayPal).

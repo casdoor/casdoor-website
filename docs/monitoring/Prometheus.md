@@ -1,26 +1,26 @@
 ---
 title: Prometheus
-description: Use Prometheus to collect information about running Casdoor.
-keywords: [Prometheus]
+description: Scrape Casdoor metrics with Prometheus.
+keywords: [Prometheus, metrics]
 authors: [OutOfEastGate]
 ---
 
-To collect Casdoor's runtime metrics, such as API Throughput, API Latency, CPU Usage, Memory Usage, and more, you need to configure your Prometheus profile.
+Configure Prometheus to scrape Casdoor for runtime metrics (API throughput, latency, CPU, memory, etc.). Add a scrape job for the Casdoor backend:
 
 ```yml
 global:
-  scrape_interval: 10s # The time interval for fetching metrics
+  scrape_interval: 10s
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: 'casdoor' # Name of the application to be monitored 
+  - job_name: 'casdoor'
     static_configs:
-      - targets: ['localhost:8000'] # Back-end address of Casdoor deployment
-    metrics_path: '/api/metrics' # Path for collecting indicators
+      - targets: ['localhost:8000']   # Casdoor backend address
+    metrics_path: '/api/metrics'
 ```
 
-After successful configuration, you will find the following information in Prometheus:
+After Prometheus is running and scraping, you can query and visualize Casdoor metrics (e.g. in Grafana).
 
 ![info](/img/monitoring/prometheus/info.png)

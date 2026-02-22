@@ -18,7 +18,7 @@ Both are created when purchasing a product, but subscriptions use a different fl
 
 ## Creating Orders
 
-When a user purchases a product, the system creates an order and displays immediate feedback. You'll see a success notification as soon as the order is created, before being redirected to the payment page. If order creation fails, an error message explains what went wrong so you can address the issue.
+When a user purchases a product, the system creates an order and shows immediate feedback. A success notification appears when the order is created, before redirecting to the payment page. If order creation fails, an error message explains the issue.
 
 ## Order Structure
 
@@ -31,7 +31,7 @@ Each order contains:
 - **State Management**: Current state and optional status message
 - **Duration**: Optional start and end times for time-limited purchases (e.g., 1-year cloud instance)
 
-Orders can include multiple products, making it possible to purchase several items in a single transaction. When the order is created, the system captures a snapshot of each product's current information—including its display name, image, detail, and price. This snapshot preserves what you actually bought, even if the product details change later in the system.
+Orders can include multiple products, making it possible to purchase several items in a single transaction. When the order is created, the system captures a snapshot of each product's current information—including its display name, image, detail, and price. This snapshot preserves what was purchased even if product details change later.
 
 The total order price automatically sums up all individual product prices. For products priced in different currencies, all items in a single order must use the same currency to ensure accurate total calculation.
 
@@ -52,14 +52,14 @@ When payment providers notify Casdoor about transaction results, the system upda
 
 ## Viewing Orders
 
-Navigate to the Orders page to view all purchases. Regular users see only their own orders, while administrators can view all orders in their organization or across all organizations when the default organization is selected.
+Open the **Orders** page to view purchases. Regular users see only their own orders; administrators see all orders in their organization or, when the default organization is selected, across all organizations.
 
 The order list includes a **Products** column showing all items in each order. For orders with multiple products, each product appears as a separate line with a link to its details. The **Payment** column links directly to the associated payment record for tracking transaction status.
 
-You can search orders by payment name, product name, user, or other fields. Filtering by state and sorting by various columns helps locate specific transactions quickly.
+Search orders by payment name, product name, user, or other fields. Filter by state and sort by column to find specific transactions.
 
 ## Managing Orders
 
-Click on an order to view or edit its details. The order editor displays the products in a multi-select dropdown, allowing you to add or remove items from the order. When you modify the product list, the system automatically recalculates the total price based on the stored product information snapshots.
+Click an order to view or edit it. The order editor lists products in a multi-select dropdown; add or remove items there. When the product list changes, the system recalculates the total from the stored product snapshots.
 
-You can also update the order state, add messages, or modify duration settings. The product snapshots preserve historical pricing even if current product prices have changed.
+The editor also allows updating the order state, adding messages, and changing duration. Product snapshots preserve historical pricing even when current product prices change.

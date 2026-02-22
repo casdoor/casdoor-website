@@ -1,11 +1,11 @@
 ---
-title: Troubleshooting
-description: Common MCP OAuth issues and debugging techniques
+title: MCP troubleshooting
+description: Common MCP and OAuth issues and how to debug them.
 keywords: [MCP, OAuth, troubleshooting, debugging, errors]
 authors: [hsluoyz]
 ---
 
-This guide covers common issues when using Casdoor with MCP servers, whether you're connecting to Casdoor's built-in MCP server or using Casdoor as an OAuth provider for your own MCP server.
+This page covers common problems when using Casdoor’s built-in MCP server or when Casdoor is the OAuth provider for your own MCP server.
 
 ## Common Errors
 
@@ -150,7 +150,7 @@ For MCP servers acting as resource servers, use the `oauth-protected-resource` e
    }
    ```
 
-For more details, see the [Dynamic Client Registration](/docs/application/dynamic-client-registration) documentation.
+See [Dynamic client registration](/docs/application/dynamic-client-registration) for details.
 
 ### Consent Screen Not Showing
 
@@ -211,7 +211,7 @@ The consent screen displays requested scopes with their display names and descri
      -d "scope=read:application write:application"
    ```
 
-For available scopes, see the [Authorization and Scopes](/docs/how-to-connect/mcp/authorization) documentation.
+See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the scope reference.
 
 ### invalid_target / Resource Error
 
@@ -442,10 +442,10 @@ Use browser DevTools or network analysis tools:
 
 3. **Wireshark** for low-level packet analysis
 
-## Related Documentation
+## See also
 
-- [Authorization and Scopes](/docs/how-to-connect/mcp/authorization) - Complete scope reference
-- [Error Handling](/docs/how-to-connect/mcp/error-handling) - JSON-RPC error codes
-- [Authentication](/docs/how-to-connect/mcp/authentication) - OAuth flows and token management
-- [Custom Scopes](/docs/application/scopes) - Configuring custom scopes for Agent applications
-- [Dynamic Client Registration](/docs/application/dynamic-client-registration) - DCR setup and configuration
+- [Authorization and scopes](/docs/how-to-connect/mcp/authorization) — Scope reference
+- [Error handling](/docs/how-to-connect/mcp/error-handling) — JSON-RPC error codes
+- [Authentication](/docs/how-to-connect/mcp/authentication) — OAuth and tokens
+- [Custom scopes](/docs/application/scopes) — Agent application scopes
+- [Dynamic client registration](/docs/application/dynamic-client-registration) — DCR setup

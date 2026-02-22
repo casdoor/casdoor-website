@@ -1,22 +1,22 @@
 ---
-title: Qt Desktop App
-description: A Qt desktop app example for Casdoor
-keywords: [qt, sdk]
+title: Qt desktop app
+description: Integrate Casdoor in a Qt (C++) desktop app with WebEngine.
+keywords: [qt, sdk, C++]
 authors: [cs1137195420]
 ---
 
-A [Qt desktop app example](https://github.com/casdoor/casdoor-cpp-qt-example) for Casdoor.
+The [casdoor-cpp-qt-example](https://github.com/casdoor/casdoor-cpp-qt-example) shows Casdoor sign-in in a Qt desktop app.
 
-## How to Run the Example
+## Run the example
 
 ### Prerequisites
 
-- [Qt6 SDK](https://www.qt.io/download)
-- [OpenSSL toolkit](https://www.openssl.org/source/)
+- [Qt 6](https://www.qt.io/download)
+- [OpenSSL](https://www.openssl.org/source/)
 
 ### Initialization
 
-You need to initialize 7 string parameters:
+Set these 7 string parameters:
 
 | Name           | Description                                                                                             | File                  |
 | -------------- | ------------------------------------------------------------------------------------------------------- | --------------------- |
@@ -28,11 +28,11 @@ You need to initialize 7 string parameters:
 | app_name       | The name of your Casdoor application                                                                    | `mainwindow.h` |
 | redirect_url   | The path of the callback URL for your Casdoor application, will be `http://localhost:8080/callback` if not provided | `mainwindow.h` |
 
-If you don't set the `endpoint` parameter, this project will use [http://localhost:8000](http://localhost:8000) as the default Casdoor server.
+Default endpoint: `http://localhost:8000` if not set.
 
-### Running the Application
+### Running
 
-#### Using Qt Creator
+**Qt Creator**
 
 1. Open `casdoor-cpp-qt-example.pro`
 2. Set the `INCLUDEPATH` of OpenSSL in `casdoor-cpp-qt-example.pro`
@@ -40,25 +40,17 @@ If you don't set the `endpoint` parameter, this project will use [http://localho
 
 ### Preview
 
-After running this Qt desktop application, a new window will be shown on your desktop.
-
 ![index](/img/how-to-connect/desktop-sdks/qt-app/index.png)
 
-If you click the `Sign In` button, a login window will be shown on your desktop.
+Click **Sign In** to open the login window. After sign-in, the user profile is shown.
 
 ![login](/img/how-to-connect/desktop-sdks/qt-app/login.png)
-
-After a successful login, a user profile window will be shown on your desktop, displaying your user information.
-
 ![user profile](/img/how-to-connect/desktop-sdks/qt-app/userprofile.png)
-
-You can preview the entire process in the following GIF image.
-
 ![preview gif](/img/how-to-connect/desktop-sdks/qt-app/preview.gif)
 
-## How to Integrate
+## Integration
 
-### Opening the Login Window
+### Open the login window
 
 ```cpp
 // Load and display the login page of Casdoor
@@ -66,7 +58,7 @@ m_webview->page()->load(*m_signin_url);
 m_webview->show();
 ```
 
-### Listening to the Open Application Event
+### Listen for the callback (TCP)
 
 ```cpp
 // Initialize the TcpServer object and listen on port 8080

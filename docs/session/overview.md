@@ -5,11 +5,11 @@ keywords: [session, authentication, token, login]
 authors: [hsluoyz]
 ---
 
-Casdoor manages user authentication through sessions, which represent active login states for users across applications. Each session tracks a user's authenticated connection to one or more applications within your organization.
+Casdoor manages authentication through sessions, which represent active login states across applications. Each session tracks a user's authenticated connection to one or more applications in an organization.
 
-## What is a Session?
+## What is a session?
 
-A session in Casdoor represents an authenticated user state. When a user logs into an application, Casdoor creates a session record that includes:
+A session represents an authenticated user state. When a user signs in to an application, Casdoor creates a session record that includes:
 
 - **Session ID**: A unique identifier for each login instance
 - **User information**: The authenticated user's identity
@@ -19,19 +19,19 @@ A session in Casdoor represents an authenticated user state. When a user logs in
 
 Users can have multiple active sessions simultaneously - for example, logging in from different devices or browsers. Each session is tracked independently, allowing granular control over user access.
 
-## Session Lifecycle
+## Session lifecycle
 
-Sessions follow a clear lifecycle from creation to termination:
+Sessions move from creation to termination as follows:
 
-**Creation**: When a user successfully authenticates through any supported method (OAuth, SAML, username/password, etc.), Casdoor generates a new session and assigns it a unique session ID.
+**Creation**: When a user authenticates successfully (OAuth, SAML, username/password, etc.), Casdoor creates a new session and assigns a unique session ID.
 
-**Active State**: While active, the session allows the user to access protected resources without re-authenticating. The session is validated on each request to ensure it hasn't expired or been revoked.
+**Active**: While active, the session grants access to protected resources without re-authenticating. Each request validates the session so expired or revoked sessions are rejected.
 
-**Expiration**: Sessions automatically expire after a configurable period of inactivity or when reaching their maximum lifetime. Expired sessions are cleaned up automatically by Casdoor.
+**Expiration**: Sessions expire after a configurable period of inactivity or at maximum lifetime. Casdoor cleans up expired sessions automatically.
 
-**Termination**: Sessions can be explicitly terminated through logout actions, either by the user or administratively. When terminated, all associated session IDs are invalidated immediately.
+**Termination**: Sessions can be ended by logout (user or admin). When terminated, all associated session IDs are invalidated immediately.
 
-## Multi-Session Support
+## Multi-session support
 
 Casdoor supports multiple concurrent sessions per user. This is useful when:
 
@@ -41,7 +41,7 @@ Casdoor supports multiple concurrent sessions per user. This is useful when:
 
 Each session is tracked separately with its own session ID. This allows users to selectively terminate specific sessions without affecting their other active logins - for example, logging out from a work computer while staying logged in on a mobile device.
 
-## Session Storage
+## Session storage
 
 Session data is stored in Casdoor's database and is associated with:
 
@@ -51,9 +51,9 @@ Session data is stored in Casdoor's database and is associated with:
 
 Session IDs are stored as arrays, allowing a single session record to track multiple concurrent logins for the same user-application pair.
 
-## Related Topics
+## Related topics
 
-- [Session Management](/docs/session/management): Learn how to view and manage user sessions
-- [Single Sign-On](/docs/session/single-sign-on): Configure SSO across multiple applications
-- [Single Sign-Out](/docs/session/single-sign-out): Implement logout across all sessions
-- [Tokens](/docs/token/overview): Understand the relationship between sessions and access tokens
+- [Session management](/docs/session/management): View and manage user sessions
+- [Single sign-on](/docs/session/single-sign-on): SSO across multiple applications
+- [Single sign-out](/docs/session/single-sign-out): Logout across all sessions
+- [Tokens](/docs/token/overview): Sessions and access tokens

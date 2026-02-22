@@ -1,13 +1,13 @@
 ---
-title: Authentication
-description: Authenticating with Casdoor's MCP server
+title: MCP authentication
+description: OAuth discovery and authentication methods for the MCP server.
 keywords: [MCP, authentication, OAuth, access token]
 authors: [hsluoyz]
 ---
 
-## Discovering Casdoor's OAuth Configuration
+## OAuth discovery
 
-Casdoor implements [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) OAuth 2.0 Protected Resource Metadata, enabling MCP clients to automatically discover authentication requirements. Query the well-known endpoint to retrieve Casdoor's authorization server details:
+Casdoor supports [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) OAuth 2.0 Protected Resource Metadata so MCP clients can discover auth requirements. Query the well-known endpoint:
 
 ```bash
 curl https://your-casdoor.com/.well-known/oauth-protected-resource
@@ -34,7 +34,7 @@ This returns metadata scoped to that specific application, useful when different
 
 ## Authentication Methods
 
-MCP requests require authentication using any of the methods described in the [Public API authentication](/docs/basic/public-api) documentation. The authentication method you choose affects which tools you can access.
+MCP requests must use one of the auth methods in [Public API authentication](/docs/basic/public-api). The authentication method you choose affects which tools you can access.
 
 **Using an access token with scopes** (recommended for automation):
 

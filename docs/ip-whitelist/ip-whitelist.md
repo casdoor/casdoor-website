@@ -1,37 +1,32 @@
 ---
-title: Overview
-description: Restrict access to entry pages by IP address.
-keywords: [ip, allowlist, ip allowlist]
+title: IP allowlist
+description: Restrict access to login, sign-up, and forgot-password pages by client IP.
+keywords: [ip, allowlist, whitelist, CIDR]
 authors: [ZhaoYP-2001]
 ---
 
-Casdoor supports the ip whitelist function of the entry page. When a user accesses the entry page (login/signup/forget-password), Casdoor will decide whether to allow the user to access the entry page based on whether the client IP is in the whitelist. Here, we will show you how to enable the option to specify the ip whitelist function of the entry page at the user, application and organization levels.
+Casdoor can restrict entry pages (login, sign-up, forgot-password) by client IP. Access is allowed only if the client IP is in the configured allowlist. Allowlists can be set at **user**, **application**, and **organization** levels; all applicable levels are checked.
 
 ## Configuration
 
-### User Level
+### User level
 
-Casdoor will first determine whether the client address meets the user-level ip whitelist requirements.
+Casdoor checks the user-level allowlist first.
 
-If you want to specify user-level ip whitelist, you first need to add the "IP whitelist" account item on the edit page of the organization to which the user belongs. Then specify your ip whitelist by filling in the comma separated CIDR list, such as 192.168.1.0/24,25.112.0.0/16. If the ip whitelist is empty, it means there is no restriction on the client IP address.
+1. Add the **IP allowlist** account item on the organization’s edit page (see [Account customization](/docs/organization/accountCustomization)).
+2. For each user, set the allowlist as a comma-separated list of CIDR ranges (e.g. `192.168.1.0/24,25.112.0.0/16`). Leave empty for no IP restriction.
 
 ![user_ip_whitelist](/img/ip-whitelist/user_ip_whitelist.png)
 
-:::info
+### Application level
 
-If you forget how to customize users' **account items**, Please refer to the **[Account Customization](organization/accountCustomization.md)**
-
-:::
-
-### Application Level
-
-If the client IP address passes the user-level check, Casdoor will proceed to perform application-level check. You can specify the ip whitelist through the `IP whitelist` configuration option on the application edit page.
+If the request passes the user-level check, Casdoor then checks the application allowlist. Configure **IP allowlist** on the application edit page.
 
 ![app_ip_whitelist](/img/ip-whitelist/app_ip_whitelist.png)
 
-### Organization Level
+### Organization level
 
-Organization-level check will be performed last. You can use the `IP whitelist` configuration option on the organization edit page to specify organization-level ip whitelist.
+The last check is at the organization level. Set **IP allowlist** on the organization edit page.
 
 ![org_ip_whitelist](/img/ip-whitelist/org_ip_whitelist.png)
 

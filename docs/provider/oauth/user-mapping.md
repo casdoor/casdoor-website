@@ -1,15 +1,15 @@
 ---
-title: User Mapping
-description: Map OAuth provider claims to Casdoor user fields
+title: OAuth user mapping
+description: Map OAuth provider claims to Casdoor user fields.
 keywords: [OAuth, user mapping, claims, IDP, identity provider]
 authors: [nomeguy]
 ---
 
-When users sign in through OAuth providers, Casdoor automatically captures their basic profile information like username, email, and avatar. However, identity providers often return additional claims in their OAuth responses that contain valuable user data. The User Mapping feature allows you to map these extra claims to specific user profile fields in Casdoor.
+Casdoor captures basic profile data (username, email, avatar) from OAuth sign-in. **User mapping** lets you map additional IdP claims to Casdoor user fields (phone, name, region, etc.).
 
 ## Supported Fields
 
-You can map OAuth provider claims to the following user fields:
+Supported user fields for mapping:
 
 - **phone** - Phone number
 - **countryCode** - Country calling code
@@ -33,12 +33,10 @@ Standard fields (id, username, displayName, email, avatarUrl) are handled automa
 
 ## Configuration
 
-To configure user mapping for an OAuth provider:
+To configure user mapping:
 
-1. Navigate to **Providers** in the top menu
-2. Select or create an OAuth provider (e.g., Okta, Azure AD B2C, Google)
-3. Scroll to the **User mapping** section
-4. Add mappings by specifying:
+1. Open **Providers** and select or create an OAuth provider (e.g. Okta, Azure AD B2C, Google).
+2. Scroll to **User mapping** and add entries:
    - **User field**: The Casdoor user field you want to populate
    - **Claim name**: The exact claim name from your OAuth provider's response
 
@@ -92,7 +90,7 @@ region → officeLocation
 
 ### Social Login Enhancement
 
-Social providers like Google or Facebook provide basic profile data, but you can capture additional details:
+Social providers (e.g. Google, Facebook) provide basic profile data; additional details can be captured as follows:
 
 ```text
 location → location

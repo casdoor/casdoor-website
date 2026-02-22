@@ -1,34 +1,30 @@
 ---
-title: Customizing Themes
-description: Learn how to customize themes for organizations and applications within an organization
-keywords: [theme]
+title: Customize theme
+description: Set primary color and border radius at global, organization, or application level.
+keywords: [theme, organization, application]
 authors: [leo220yuyaodog]
 ---
 
-Casdoor allows you to customize themes to meet the UI diversity requirements of businesses or brands, including primary color and border radius.
+Themes control primary color and border radius so you can match your brand. Casdoor supports three levels:
 
-Within Casdoor, themes can be customized at the global, organization, and application levels.
+| Level | Where to set | Applies to |
+|-------|----------------|------------|
+| **Global** | In Casdoor source only (no UI). | Any org that uses the global theme. |
+| **Organization** | Organization edit page. | All Casdoor after-login pages for that org, and entry pages (sign-in, sign-up, forgot password, etc.) of applications that follow the org theme. |
+| **Application** | Application edit page. | Entry pages of that application only. |
 
-1. Global scope: This is the default theme of Casdoor and is applied to any organization that chooses to follow the global theme. Modifications can only be made in the Casdoor source code and cannot be modified in the web UI.
+## Organization theme
 
-2. Organization scope: The theme for an organization can be customized on the organization edit page. This theme applies to all Casdoor after-login pages for users within the organization, as well as the entry pages (signup, signin, forget password, etc.) of applications that follow the organization theme.
-
-3. Application scope: The theme for an application can be customized on the application edit page. This theme applies to the entry pages (signup, signin, forget password, etc.) of the specific application.
-
-## Customizing the Organization Theme
-
-We provide a demo to demonstrate how to configure the theme for an organization:
+Edit the organization and use the theme controls (primary color, border radius, etc.). Changes apply to that organization’s pages and to applications following the org theme.
 
 ![edit theme](/img/organization/edit_theme.gif)
 
 :::info
-
-If your account organization is the same as the organization you are editing, the configuration changes will take effect immediately as shown in the video above. However, if they are different, you will need to log in to the organization to see the changes.
-
+If you are editing the same organization you are logged in as, changes apply immediately. Otherwise, sign in to that organization to see the updated theme.
 :::
 
-## Customizing the Application Theme
+## Application theme
 
-Applications can customize themes using the same theme editor as the organization. Additionally, you can preview the theme conveniently in the preview panel.
+Applications use the same theme editor. You can preview the theme in the application’s preview panel.
 
 ![preview](/img/organization/application_preview.png)

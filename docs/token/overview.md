@@ -1,15 +1,15 @@
 ---
 title: Overview
-description: Introduction to tokens in Casdoor
-keywords: [token, OAuth]
+description: How Casdoor uses OAuth tokens, JWT formats, and token lifecycle.
+keywords: [token, OAuth, JWT, access token, refresh token]
 authors: [sh1luo]
 ---
 
-Casdoor is built on OAuth and utilizes tokens as users' OAuth tokens.
+Casdoor is built on OAuth and uses tokens for user authentication and authorization.
 
-## Access Token and ID Token
+## Access token and ID token
 
-In Casdoor, the `access_token` and `id_token` are **identical**. Both tokens contain the same JWT payload with user information and claims. This is a design choice in Casdoor that simplifies token management.
+In Casdoor, **`access_token` and `id_token` are the same**. Both contain the same JWT payload (user info and claims). This design keeps token handling simple.
 
 This approach means:
 
@@ -18,9 +18,9 @@ This approach means:
 - The token format and expiration settings apply to both tokens equally
 - You cannot configure separate claims for `access_token` and `id_token`
 
-## Token Fields
+## Token fields
 
-The following are the available token fields in Casdoor:
+Casdoor tokens include these fields:
 
 - `Owner`
 - `Name`
@@ -34,15 +34,15 @@ The following are the available token fields in Casdoor:
 - `Scope` (Scope of authorization)
 - `TokenType` (e.g., `Bearer` type)
 
-## Token Lifecycle and Invalidation
+## Token lifecycle and invalidation
 
-Tokens in Casdoor follow a specific lifecycle from creation through invalidation. When a user logs in, Casdoor generates both an access token and a refresh token. The access token is used for authentication, while the refresh token allows obtaining new access tokens without requiring the user to log in again.
+When a user signs in, Casdoor issues an access token and a refresh token. The access token is used for API authentication; the refresh token is used to obtain new access tokens without re-authenticating.
 
-During SSO logout, Casdoor invalidates tokens by setting their `ExpiresIn` field to 0 or a negative value. Both the token introspection endpoint and the refresh token endpoint validate this field before processing requests. If a token has `ExpiresIn <= 0`, it's considered invalid and rejected with an error, even if the token itself is structurally valid and hasn't reached its original expiration time. This approach ensures that refresh tokens cannot be used to obtain new access tokens after logout, providing complete session termination across all token types.
+On SSO logout, Casdoor invalidates tokens by setting `ExpiresIn` to 0 or a negative value. The token introspection and refresh endpoints check this field and reject tokens with `ExpiresIn <= 0`, so refresh tokens cannot be used after logout. This gives full session termination across all token types.
 
-## Token Format Options
+## Token format options
 
-After logging into the application, there are three options to generate a JWT Token:
+When issuing JWTs, choose among four formats:
 
 - `JWT`
 - `JWT-Empty`
@@ -53,7 +53,7 @@ The token format options behave as follows:
 
 - **JWT**: includes all User fields in the token payload
 - **JWT-Empty**: includes only non-empty User fields
-- **JWT-Custom**: includes the custom User Token fields you select (you can choose attributes in the Token fields)
+- **JWT-Custom**: includes the custom User Token fields you select (choose attributes in the Token fields)
 - **JWT-Standard**: includes standard OIDC claims (email, phone, gender, address) in OIDC-compliant format
 
 :::info
@@ -129,7 +129,7 @@ The `email_verified` claim enables external applications using Casdoor as an ide
 
 ## Custom Token Attributes
 
-When using JWT-Custom format, you can define custom attributes with their data types. Each attribute has a **Type** field that controls how values are included in the JWT:
+With JWT-Custom format, define custom attributes and their data types. Each attribute has a **Type** field that controls how values are included in the JWT:
 
 - **Array**: The attribute value will always be returned as an array, even if it contains a single element. This ensures compatibility with OIDC clients that expect array types for fields like roles, groups, or permissions.
 - **String**: The attribute value will be returned as a single string (the first element if multiple values exist).

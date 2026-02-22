@@ -1,29 +1,27 @@
 ---
-title: MailHog
-description: Using MailHog as the SMTP server
+title: MailHog email
+description: Use MailHog as a local SMTP server for testing.
 keywords: [email, mailhog]
 authors: [Chinoholo0807]
 ---
 
-In this guide, we will be using MailHog as the SMTP server. [MailHog](https://github.com/mailhog/MailHog) is an email-testing tool that operates with a fake SMTP server.
+[MailHog](https://github.com/mailhog/MailHog) is a test SMTP server that captures outgoing mail. Use your MailHog host and port (e.g. `192.168.24.128:1025`).
 
-### Step 1: Deploy the MailHog service
+### 1. Run MailHog
 
-The IP address for the MailHog service is `192.168.24.128`, and the SMTP service port is `1025`.
+Start the MailHog service so the SMTP server is reachable from Casdoor (e.g. `192.168.24.128`, port `1025`).
 
 ![MailHog configuration](/img/providers/mailhog_conf.png)
 
-### Step 2: Create an email provider
+### 2. Create the email provider in Casdoor
 
-Provide the necessary information and save the settings.
+**Providers** → **Add**. Set **Category** to **Email** and the type to the appropriate SMTP option. Set **Host** and **Port** to your MailHog address. No auth by default. Save.
 
 ![MailHog email provider](/img/providers/mailhog_email_provider_conf.png)
 
-### Step 3: Send a test email
+### 3. Test
 
-First, click on the `Test SMTP Connection` button. If you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the MailHog service.
-
-Next, click on the `Send Testing Email` button. If you see `Email sent successfully`, it means that the test email has been sent successfully from the `From` address to the `Test Email`.
+Use **Test SMTP Connection**; you should see “SMTP connected successfully”. Use **Send Testing Email**; you should see “Email sent successfully” and the message in MailHog’s UI.
 
 ![Sending a test email using MailHog](/img/providers/mailhog_send_test_email.png)
 

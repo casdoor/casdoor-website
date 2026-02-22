@@ -1,4 +1,4 @@
----
+﻿---
 title: Spring Boot
 description: Using Casdoor in a Spring Boot project
 keywords: [Spring Boot]
@@ -9,16 +9,7 @@ authors: [seriouszyx]
 
 ## Step 1: Deploy Casdoor
 
-Firstly, Casdoor should be deployed.
-
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation). Please deploy your Casdoor instance in **production mode**.
-
-After a successful deployment, make sure the following:
-
-- Open your favorite browser and visit **<http://localhost:8000>**. You will see the login page of Casdoor.
-- Test the login functionality by entering `admin` as the username and `123` as the password.
-
-Now, you can quickly implement a Casdoor-based login page in your own app using the following steps.
+Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in (e.g. `admin` / `123`).
 
 ## Step 2: Import casdoor-spring-boot-starter
 
@@ -128,9 +119,9 @@ Replace the configuration values with your own Casdoor instance, especially the 
 
 ## Step 4: Redirect to the Login Page
 
-When you need to authenticate users who access your app, you can send the target URL and redirect to the login page provided by Casdoor.
+To authenticate users, redirect them to Casdoor’s login page (with the target URL as needed).
 
-Make sure you have added the callback URL (e.g. **<http://localhost:8080/login>**) in the application configuration beforehand.
+Make sure you have added the callback URL (e.g. **`http://localhost:8080/login`**) in the application configuration beforehand.
 
 ```java
 @Resource

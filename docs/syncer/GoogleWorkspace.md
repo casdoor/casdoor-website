@@ -1,15 +1,15 @@
 ---
-title: Google Workspace
-description: Using Google Workspace Syncer to synchronize users from Google Workspace
+title: Google Workspace syncer
+description: Sync users from Google Workspace to Casdoor via the Admin SDK Directory API.
 keywords: [syncer, google workspace, google admin]
 authors: [nomeguy]
 ---
 
-Google Workspace Syncer enables automatic user synchronization from Google Workspace (formerly G Suite) to Casdoor. The syncer uses the Google Admin SDK Directory API to retrieve user information and keep your user directory synchronized.
+The **Google Workspace syncer** imports users from Google Workspace (formerly G Suite) into Casdoor using the Google Admin SDK Directory API.
 
 ## Prerequisites
 
-Before configuring the syncer, you need to set up a Google Cloud service account with domain-wide delegation and the Admin SDK enabled.
+Set up a Google Cloud service account with domain-wide delegation and the Admin SDK enabled before configuring the syncer.
 
 ### Step 1: Create a Service Account
 
@@ -71,10 +71,10 @@ To create a Google Workspace syncer in Casdoor:
 | Organization | The Casdoor organization where users will be imported |
 | Name | A unique identifier for this syncer |
 | Type | Select "Google Workspace" |
-| Admin Email | Email address of a Google Workspace admin user (e.g., <admin@yourdomain.com>) |
+| Admin Email | Email address of a Google Workspace admin user (e.g., `admin@yourdomain.com`) |
 | Service Account Key | Paste the complete JSON content of the service account key file |
 
-Other database-related fields (Database type, Port, Database, Table) are not used for Google Workspace syncer and can be left empty.
+Leave database-related fields (Database type, Port, Database, Table) empty for the Google Workspace syncer.
 
 ## Field Mappings
 
@@ -92,18 +92,11 @@ The syncer automatically maps Google Workspace user attributes to Casdoor user f
 | suspended | IsForbidden | Account suspension status |
 
 :::info
-
-The `suspended` field maps directly to `IsForbidden`. When a user is suspended in Google Workspace (`suspended: true`), they will be marked as forbidden in Casdoor (`IsForbidden: true`).
-
+Google Workspace `suspended: true` is mapped to Casdoor `IsForbidden: true`.
 :::
 
-## Running the Syncer
+## Running the syncer
 
-After configuration:
-
-1. Click **Test Connection** to verify your credentials and permissions
-2. Enable the syncer by toggling **Is enabled**
-3. Click **Sync** to trigger an immediate synchronization
-4. The syncer will automatically fetch all users from your Google Workspace domain
-
-The syncer handles pagination automatically, retrieving all users regardless of the total count.
+1. Click **Test Connection** to verify credentials and permissions.
+2. Toggle **Is enabled** and click **Sync** for an immediate run.
+3. The syncer fetches all users from the domain and handles pagination automatically.

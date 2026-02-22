@@ -1,67 +1,44 @@
 ---
-title: Enabling Single Sign-On
-description: Enable Single Sign-On 
-keywords: [SSO, Single Sign-On]
+title: Single sign-on (SSO)
+description: Let users sign in once and access all apps in the organization without signing in again.
+keywords: [SSO, single sign-on, auto sign-in, silent sign-in]
 authors: [leo220yuyaodog]
 ---
 
-## Introduction
+## Overview
 
-You have connected Casdoor and configured more than one application in an organization. You want users to sign in once to any app in the organization and then be able to sign in when they go to another app without any extra clicks.
+With multiple applications in one organization, enable **single sign-on (SSO)** so users sign in once and are automatically signed in for other apps in the same org.
 
-We offer this single sign-on feature. To enable it, you just need to:
+To enable SSO:
 
-- Enable the Auto Sign-In button.
-- Fill in the URL for the home page.
-- Add a **Silent Sign-In** function to the application home page.
+1. Set the **Home** URL (application home or login page).
+2. Enable **Auto Sign-In** on the application.
+3. Implement **Silent Sign-In** on your app’s home page so it can complete login when opened with the SSO link.
 
 :::note
-
-The basic sign-in process provided by Casdoor allows users to log in to other applications in the organization by selecting the user who is currently logged in or using another account.
-
-After enabling auto sign-in, the selection box will not be displayed, and the logged-in user will log in directly.
-
+Without auto sign-in, users see a picker to choose the current user or another account. With auto sign-in, the already-signed-in user is used and the picker is skipped.
 :::
 
 ## Configuration
 
-1. Fill in the "home" field. It can be the application's home page or the login page.
+1. Set **Home** to your application’s home page or login URL.
 
 ![sso_home.png](/img/how-to-connect/single-sign-on/sso_home.png)
-2. Enable the Auto Sign-In button.
+2. Enable **Auto Sign-In**.
 
 ![sso_signin.png](/img/how-to-connect/single-sign-on/sso_signin.png)
 
-## Add Silent Sign-In
+## Silent sign-in
 
-In fact, we implement auto login by carrying parameters in the URL. Therefore, your applications need to have a method to trigger the login after jumping to the URL. We provide the [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk) to help you quickly implement this feature. You can see the details in [use-in-react](https://github.com/casdoor/casdoor-react-sdk#use-in-react).
-
-:::info
-
-How it works
-
-1. In the URL to the application home page, we will carry the `silentSignin` parameter.
-2. In your home page, determine whether you need to log in silently (automatically) by checking the `silentSignin` parameter. If `silentSignin === 1`, the function should return the `SilentSignin` component, which will help you initiate a login request. Since you have auto-login enabled, users will log in automatically without clicking.
-3. The silent sign-in flow ensures proper context matching—it only triggers when the account's organization matches the current application context, preventing duplicate login attempts and unintended automatic sign-ins.
-
-:::
-
-## Add Popup Sign-In
-
-The "popup sign-in" feature will open a small window. After logging in to Casdoor in the child window, it will send authentication information to the main window and then close automatically. We implement this feature by carrying parameters in the URL.
+SSO works by opening your app’s home URL with a query parameter. Your app must detect that and trigger login. The [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk) provides a `SilentSignin` component; see [use-in-react](https://github.com/casdoor/casdoor-react-sdk#use-in-react).
 
 :::info
-
-How to use
-
-Use the `popupSignin()` method in the [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk) to quickly implement this feature. You can see a demo in [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example).
-
-How it works
-
-1. In the URL to the application home page, we will carry the `popup` parameter.
-2. When `popup=1` is in the login parameters, Casdoor will send `code` and `state` as a message to the main window and finish getting the `token` in the main window using the SDK.
-
+**Flow:** The link to your home page includes `silentSignin=1`. On load, if `silentSignin === 1`, render the `SilentSignin` component so it starts the login; with auto sign-in enabled, the user is signed in without extra clicks. Silent sign-in only runs when the user’s organization matches the application, avoiding duplicate or wrong sign-ins.
 :::
+
+## Popup sign-in
+
+**Popup sign-in** opens a small window for Casdoor login; after success it posts the auth result to the opener and closes. Use `popupSignin()` from [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk); demo: [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example). The home URL is called with `popup=1`; Casdoor sends `code` and `state` to the opener, and the main window exchanges them for a token via the SDK.
 
 ## Using SSO
 
@@ -73,7 +50,7 @@ Make sure your application can redirect to the user's profile page. The [getMyPr
 
 :::
 
-Open the profile page and go to the "Home" page (`/` URL path). You will see the application list provided by the organization. It's worth noting that only users in organizations other than "built-in" can see the application list on the "Home" page. All the global administrators (those in the "built-in" organization) cannot see it.
+Open the profile page and go to **Home** (`/`). The application list for the organization is shown there. It's worth noting that only users in organizations other than "built-in" can see the application list on the "Home" page. All the global administrators (those in the "built-in" organization) cannot see it.
 
 ![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
 

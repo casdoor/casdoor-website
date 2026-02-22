@@ -7,7 +7,7 @@ authors: [jakiuncle]
 
 [Casdoor](/docs/basic/server-installation) can use OIDC protocol as an IDP to connect various applications. In this guide, we will use [Confluence](https://www.atlassian.com/software/confluence) as an example to demonstrate how to use OIDC to connect your applications.
 
-To start, make sure you have deployed Casdoor and Confluence successfully. Here are a few configuration names you need to remember:
+Deploy Casdoor and Confluence. Note these variables:
 
 - `CASDOOR_HOSTNAME`: Domain name or IP where Casdoor server is deployed.
 - `Confluence_HOSTNAME`: Domain name or IP where Confluence is deployed.
@@ -21,7 +21,7 @@ After successful deployment, ensure the following:
 1. Set Confluence URL to `Confluence_HOSTNAME`.
    ![Confluence URL](/img/integration/java/confluence/Confluence_HOSTNAME.png)
 2. Casdoor can be logged in and used normally.
-3. You can set `CASDOOR_HOSTNAME` to `http://localhost:8000` if you deploy Casdoor in `prod` mode. Refer to the [production mode](https://casdoor.org/docs/basic/server-installation#production-mode) for more details.
+3. For local `prod` mode, set `CASDOOR_HOSTNAME` to `http://localhost:8000`. See [production mode](/docs/basic/server-installation#production-mode).
 
 ## Step 2: Configure Casdoor application
 
@@ -32,13 +32,11 @@ After successful deployment, ensure the following:
    ![Confluence Application](/img/integration/java/confluence/Confluence_Config.png)
 4. Add the desired provider and configure other settings accordingly.
 
-On the application settings page, you will find two values: `Client ID` and `Client Secret`. We will need these in the next step.
-
-Open your favorite browser and visit: **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** to see the OIDC configuration of Casdoor.
+Note **Client ID** and **Client Secret** for the next step. OIDC discovery: `http://<CASDOOR_HOSTNAME>/.well-known/openid-configuration`.
 
 ## Step 3: Configure Confluence
 
-1. Install the [miniOrange](https://www.miniorange.com) app to support OAuth. You can find this app in:
+1. Install the [miniOrange](https://www.miniorange.com) OAuth app. In Confluence:
    ![Confluence App](/img/integration/java/confluence/Confluence_App.png)
 2. Configure the app:
    ![Confluence Config](/img/integration/java/confluence/Confluence_Config2.png)
@@ -52,7 +50,7 @@ Configure the following settings for Confluence:
 - `UserInfo server URL`: **http://`CASDOOR_HOSTNAME`/api/get-account**
 - `Scopes`: `address phone openid profile offline_access email`
 
-You can configure more advanced authorization settings later. For now, check if OpenID actually works.
+Configure advanced authorization later if needed; first verify that OpenID sign-in works.
 
 Log out of Confluence and test SSO:
 ![Confluence Login](/img/integration/java/confluence/confluence.gif)

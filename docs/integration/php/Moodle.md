@@ -19,15 +19,15 @@ First, deploy [Casdoor](/docs/basic/server-installation) and [Moodle](https://gi
 After successful deployment, ensure the following:
 
 1. Casdoor can be logged in and used without issues.
-2. You can set `CASDOOR_HOSTNAME` as `http://localhost:8000` when deploying Casdoor in `prod` mode. See [production mode](https://casdoor.org/docs/basic/server-installation#production-mode).
+2. You can set `CASDOOR_HOSTNAME` as `http://localhost:8000` when deploying Casdoor in `prod` mode. See [production mode](/docs/basic/server-installation#production-mode).
 
 ## Step 2: Configure Casdoor Application
 
 1. Create a new Casdoor application or use an existing one.
-2. Find the redirect URL: `Moddle_HOSTNAME`/admin/oauth2callback.php.
+2. Find the redirect URL: `<Moodle_HOSTNAME>/admin/oauth2callback.php`.
 3. Add the redirect URL to the Casdoor application.
 
-For more information on OAuth, refer to [OAuth](https://casdoor.org/docs/how-to-connect/oauth).
+See [OAuth](/docs/how-to-connect/oauth).
 
 ## Step 3: Configure Moodle
 
@@ -38,7 +38,7 @@ For more information on OAuth, refer to [OAuth](https://casdoor.org/docs/how-to-
 5. Enable the OAuth2 plugin ![Enable](/img/integration/php/Moodle/Enable.png).
 6. If you want to prevent the editing of Casdoor's email ![Fields](/img/integration/php/Moodle/Fields.png).
 
-For more information on Moodle, refer to [Moodle](https://docs.moodle.org/402/en/OAuth_2_authentication) and [Fields mapping](https://casdoor.org/docs/how-to-connect/oidc-client).
+See [Moodle OAuth](https://docs.moodle.org/402/en/OAuth_2_authentication) and [Fields mapping](/docs/how-to-connect/oidc-client).
 
 Log out of Moodle and test SSO.
 ![Login](/img/integration/php/Moodle/login.gif)

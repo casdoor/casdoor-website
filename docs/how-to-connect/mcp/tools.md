@@ -1,13 +1,13 @@
 ---
-title: Tools and API Reference
-description: Available MCP tools and their usage
+title: MCP tools reference
+description: List and call MCP tools (applications and more).
 keywords: [MCP, tools, API, application management]
 authors: [hsluoyz]
 ---
 
-## Discovering Available Tools
+## List tools
 
-To discover available tools, call the `tools/list` method:
+Call `tools/list` to discover tools:
 
 ```json
 POST /api/mcp
@@ -18,7 +18,7 @@ POST /api/mcp
 }
 ```
 
-The tools returned depend on your authentication. Without credentials, you see all available tools for discovery purposes. With session authentication, you get the complete list. When using a scoped OAuth token, the response includes only tools your scopes permit.
+The response depends on auth: unauthenticated requests see all tools (for discovery); session auth returns the full list; a scoped token returns only tools allowed by that token’s scopes.
 
 The server returns tool definitions with input schemas:
 

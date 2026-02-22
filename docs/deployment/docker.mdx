@@ -1,6 +1,6 @@
 ---
-title: Deploying to Docker
-description: Deploying Casdoor with Docker
+title: Deploying with Docker
+description: Run Casdoor with Docker or Docker Compose and optional reverse proxies.
 keywords: [Docker, Docker Compose, Traefik, Nginx, Caddy]
 authors: [BeardedTek]
 ---
@@ -8,19 +8,15 @@ authors: [BeardedTek]
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-In this chapter, you will learn how to deploy Casdoor using Docker and Docker Compose with various reverse proxy configurations.
+This page describes deploying Casdoor with Docker or Docker Compose, with optional reverse proxy (Traefik, Nginx, Caddy) configs.
 
 ## Prerequisites
 
-Before starting, ensure you have:
+- Docker
+- Docker Compose (for the compose method)
+- A domain pointing to your server (for reverse proxy setups)
 
-- Docker installed on your system
-- Docker Compose installed (for compose method)
-- A domain name pointing to your server (for reverse proxy configurations)
-
-## Docker Deployment Methods
-
-Choose your preferred deployment method:
+## Deployment options
 
 ````mdx-code-block
 

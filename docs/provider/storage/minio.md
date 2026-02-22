@@ -1,50 +1,35 @@
 ---
-title: MinIO
-description: Using MinIO as a storage provider for Casdoor
-keywords: [MinIO, storage, provider]
+title: MinIO storage
+description: Use MinIO as a Casdoor storage provider.
+keywords: [MinIO, storage, provider, S3]
 authors: [Chinoholo0807]
 ---
 
-:::note
+[MinIO](https://github.com/minio/minio) is S3-compatible object storage. Use it as a Casdoor storage provider for file uploads (e.g. avatars).
 
-This is an example of how to configure a **MinIO** provider.
+## 1. Deploy MinIO
 
-:::
-
-[MinIO](https://github.com/minio/minio) is a high-performance object storage service that is API compatible with Amazon S3 cloud storage service.
-
-### Step 1: Deploy the MinIO service
-
-First, deploy the MinIO service with TLS enabled. You can obtain the `API address` from the console.
+Deploy MinIO with TLS enabled. From the MinIO console note the **API address**, create an **Access Key** and **Secret Key**, and create a **Bucket**.
 
 ![Deploy service](/img/providers/storage/minio_deploy.png)
-
-Second, create the `Access Key` and `Secret key`.
-
 ![Create access key](/img/providers/storage/minio_create_key.png)
-
-Third, create the `Bucket`.
-
 ![Create bucket](/img/providers/storage/minio_create_bucket.png)
 
-### Step 2: Create a MinIO provider in Casdoor
+## 2. Add the provider in Casdoor
 
-Now create a MinIO provider in Casdoor. Fill in the necessary information.
+Create a **Storage** provider, set **Type** to **MinIO**, and fill in:
 
-|    Name       |   Name in MinIO |
-|      ----     |   ----          |  
-|Category       |   choose `Storage`                   |
-|Type           |   choose `MinIO`                     |
-|Client ID      |   `Access Key` obtained from Step 1   |
-|Client secret  |   `Secret Key` obtained from Step 1   |
-|Endpoint       |   `API address` obtained from Step 1  |
-|Bucket         |   `Bucket` obtained from Step 1       |
-<!-- ![Create a MinIO provider](/img/providers/storage/minio_provider_conf.png) -->
+| Casdoor field   | Value from MinIO   |
+|-----------------|--------------------|
+| Client ID       | Access Key         |
+| Client secret   | Secret Key         |
+| Endpoint        | API address        |
+| Bucket          | Bucket name        |
 
 ![Create a MinIO provider](/img/providers/storage/minio_provider_conf_detail.png)
 
-### Step 3: Use MinIO storage service in your application
+## 3. Use in your application
 
-Now you can use the MinIO storage service in your application.
+Attach the provider to your application; uploads will go to MinIO.
 
 <video src="/video/provider/storage/use_minio_in_app.mp4" controls="controls" width="100%"></video>

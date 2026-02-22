@@ -1,39 +1,35 @@
 ---
-title: Standard OIDC Client
-description: Using OIDC discovery to migrate to Casdoor
-keywords: [OIDC, discovery, client]
+title: Standard OIDC client
+description: Connect to Casdoor with any OIDC client using discovery endpoints.
+keywords: [OIDC, discovery, client, migration]
 authors: [nomeguy]
 ---
 
-## OIDC Discovery
+## OIDC discovery
 
-Casdoor has fully implemented the OIDC protocol. If your application is already using a standard OIDC client library to connect to another OAuth 2.0 identity provider, and you want to migrate to Casdoor, using OIDC discovery will make it very easy for you to switch.
+Casdoor is a full OIDC implementation. If your app already uses a standard OIDC client against another IdP, you can switch to Casdoor by pointing the client at Casdoor’s discovery URL.
 
-### Discovery Endpoints
+### Discovery endpoints
 
-Casdoor provides metadata through both OpenID Connect and OAuth 2.0 discovery endpoints. Most modern clients automatically discover server capabilities through these standardized endpoints, eliminating manual configuration.
+Casdoor exposes metadata at both OpenID Connect and OAuth 2.0 discovery URLs. Most clients use these to auto-configure endpoints and capabilities.
 
-#### OpenID Connect Discovery
-
-The OIDC discovery endpoint is available at:
+#### OpenID Connect discovery
 
 ```url
 <your-casdoor-backend-host>/.well-known/openid-configuration
 ```
 
-#### OAuth 2.0 Authorization Server Metadata
-
-Following RFC 8414, Casdoor also exposes OAuth 2.0 server metadata at:
+#### OAuth 2.0 authorization server metadata (RFC 8414)
 
 ```url
 <your-casdoor-backend-host>/.well-known/oauth-authorization-server
 ```
 
-This endpoint is particularly useful for OAuth 2.0 clients that don't require OpenID Connect features. Both endpoints return identical metadata, so you can use whichever fits your client library's expectations.
+Use this if your client only needs OAuth 2.0. Both discovery URLs return the same metadata.
 
-### Metadata Response
+### Example response
 
-For example, both the OIDC discovery endpoint at <https://door.casdoor.com/.well-known/openid-configuration> and the OAuth 2.0 metadata endpoint at <https://door.casdoor.com/.well-known/oauth-authorization-server> return the same metadata:
+Both `https://door.casdoor.com/.well-known/openid-configuration` and `https://door.casdoor.com/.well-known/oauth-authorization-server` return metadata like:
 
 ```json
 {
@@ -129,7 +125,7 @@ The `code_challenge_methods_supported` field indicates that Casdoor supports PKC
 
 ### Application-Specific OIDC Endpoints
 
-Besides the global discovery endpoint, you can use application-specific OIDC discovery endpoints. Each application gets its own isolated OIDC configuration with a unique issuer. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
+Besides the global discovery endpoint, application-specific OIDC discovery endpoints are available. Each application gets its own isolated OIDC configuration with a unique issuer. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
 
 The application-specific discovery URLs follow these patterns:
 
@@ -147,7 +143,7 @@ https://door.casdoor.com/.well-known/app-example/oauth-authorization-server
 
 The main difference is that the `issuer` and `jwks_uri` fields in the discovery response contain the application path. The `issuer` becomes `https://door.casdoor.com/.well-known/app-example` instead of just `https://door.casdoor.com`, and the `jwks_uri` points to `/.well-known/app-example/jwks`. Everything else, including the authorization and token endpoints, stays the same.
 
-You can also access the JWKS and WebFinger endpoints for each application:
+JWKS and WebFinger are also available per application:
 
 ```url
 <your-casdoor-backend-host>/.well-known/<application-name>/jwks
@@ -184,13 +180,13 @@ Here is a list of some OIDC client libraries for languages like Go and Java:
 
 | OIDC client library | Language | Link                                                   |
 |---------------------|----------|--------------------------------------------------------|
-| go-oidc             | Go       | <https://github.com/coreos/go-oidc>                      |
-| pac4j-oidc          | Java     | <https://www.pac4j.org/docs/clients/openid-connect.html> |
+| go-oidc             | Go       | `https://github.com/coreos/go-oidc`                      |
+| pac4j-oidc          | Java     | `https://www.pac4j.org/docs/clients/openid-connect.html` |
 
-Please note that the above table is not exhaustive. For a full list of OIDC client libraries, you can find more details at:
+The table above is not exhaustive. For more OIDC client libraries, see:
 
-1. <https://oauth.net/code/>
-2. <https://openid.net/certified-open-id-developer-tools/>
+1. `https://oauth.net/code/`
+2. `https://openid.net/certified-open-id-developer-tools/`
 
 ## OIDC UserInfo Fields
 
@@ -214,4 +210,4 @@ The `/api/userinfo` endpoint returns the `address` claim as a **plain string** t
 
 :::
 
-You can see the definition of UserInfo [here](https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185).
+UserInfo is defined [here](https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185).

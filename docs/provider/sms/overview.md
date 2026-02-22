@@ -1,27 +1,21 @@
 ---
-title: Overview
-description: Using SMS for authentication
-keywords: [SMS]
+title: SMS provider overview
+description: Configure SMS providers for verification codes using go-sms-sender.
+keywords: [SMS, verification, Twilio, Alibaba, Tencent]
 authors: [kininaru]
 ---
 
-We use [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender) to send SMS for Casdoor. The `go-sms-sender` library currently supports Twilio, Submail, SmsBao, Alibaba Cloud, Tencent Cloud, Huawei Cloud, and Volc SMS APIs. If you want to add support for other SMS providers, you can either raise an issue or submit a pull request.
+Casdoor sends SMS via [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender). Supported providers include Twilio, Submail, SmsBao, Alibaba Cloud, Tencent Cloud, Huawei Cloud, and Volc. To add another provider, open an issue or submit a PR in that repo.
 
-## Adding an SMS provider
+## Add an SMS provider
 
-1. Click on `Add` to add a new provider.
-2. Select `SMS` in the `Category` section.
+1. Click **Add** and select **SMS** under **Category**.
+2. Choose the provider **Type** (e.g. Twilio, Alibaba Cloud).
+3. Get credentials from the SMS provider and fill the required fields.
 
-   ![Select Category](/img/providers/sms/selectCategory.png)
+![Select Category](/img/providers/sms/selectCategory.png)
+![Select Type](/img/providers/sms/selecttype.png)
 
-3. Choose the type of your provider.
+## Proxy
 
-   ![Select Type](/img/providers/sms/selecttype.png)
-
-4. Retrieve the necessary information from your SMS provider and fill out the corresponding fields.
-
-## Proxy configuration
-
-For SMS providers that use HTTP APIs (such as Custom HTTP SMS), you can enable proxy support if your server cannot directly access the SMS service. When enabled, SMS traffic will be routed through the SOCKS5 proxy configured in Casdoor's configuration file.
-
-To enable proxy support, toggle the `Enable proxy` switch in the provider settings. This option is available for Custom HTTP SMS providers and helps when operating in restricted network environments.
+For HTTP-based SMS providers (e.g. Custom HTTP SMS), you can enable **Enable proxy** so traffic goes through the SOCKS5 proxy set in Casdoor’s config. Useful when the server cannot reach the SMS API directly.

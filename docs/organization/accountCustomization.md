@@ -1,19 +1,15 @@
 ---
-title: Account Customization
-description: Customizing users' account items
-keywords: [account customization]
+title: Account customization
+description: Control visibility and edit permissions for each user account field.
+keywords: [account customization, view rule, modify rule]
 authors: [leo220yuyaodog]
 ---
 
-## Introduction
+You can customize **account items** per organization: whether each field is visible and who can view or modify it. These settings apply to every member’s profile/home page in that organization.
 
-In an organization, you can customize users' **account items**. This includes whether each item is **visible** and its **view rule** and **modify rule**.
+## Configuring account items
 
-When you customize account items in an organization, this configuration takes effect on the home page of all members of that organization.
-
-## How to Customize?
-
-Account items have four attributes:
+Each account item has four settings:
 
 | Column Name | Selectable Value | Description |
 | :---------: | :--------------: | ----------- |
@@ -22,18 +18,14 @@ Account items have four attributes:
 |  ViewRule  |    Rule Items    | Select a rule to use when viewing the account item. Controls who can **view** this field. |
 | ModifyRule |    Rule Items    | Select a rule to use when modifying the account item. Controls who can **edit** this field. |
 
-### Understanding View Rule and Modify Rule
+### View rule and modify rule
 
-**View rule** and **Modify rule** provide field-level permission control for user account items:
+- **View rule** — Who can see this field (e.g. email, phone).
+- **Modify rule** — Who can edit this field.
 
-- **View rule**: Determines who can **see** the value of this account field (e.g., email, phone number, address)
-- **Modify rule**: Determines who can **change** the value of this account field
+This is separate from [Permissions](/docs/permission/overview), which control access to applications and resources; view/modify rules apply to individual profile fields.
 
-This is different from the broader [Permission](/docs/permission/overview) feature, which controls access to applications and resources. View rule and Modify rule specifically control access to individual user profile fields.
-
-### Configuration Steps
-
-To customize account items, follow these steps:
+### Steps
 
 1. Navigate to **Organizations** in the Casdoor sidebar
 2. Click on your organization to open the **Edit Organization** page
@@ -41,29 +33,23 @@ To customize account items, follow these steps:
 
    ![account_customize.png](/img/organization/account_customize.png)
 
-4. Casdoor provides simple operations to configure account items:
+4. For each item you can:
 
-   **a. Set item visibility**
-
-   Control whether this account item is shown on the user home page:
+   - **Set visibility** — Show or hide the field on the user home page.
 
    ![account_visible.png](/img/organization/account_visible.png)
 
-   **b. Set viewing and modifying rules**
-
-   Configure who can view and modify each field:
+   - **Set view and modify rules** — Who can view or edit the field.
 
    ![account_rule.png](/img/organization/account_rule.png)
 
-### Available Rules
+### Rule options
 
-There are 3 rules available for both View rule and Modify rule:
+- **Public** — Anyone can view or modify this field for any user.
+- **Self** — Users can only view or modify their own value (matched by user ID, or by org + username if ID is missing).
+- **Admin** — Only organization admins can view or modify this field.
 
-- **Public**: Everyone has permission. Any user can view/modify this field for any user.
-- **Self**: Each user has their own permission. Users can only view/modify their own field values. The system identifies users by comparing their ID fields first, and if unavailable, falls back to matching the combination of organization owner and username. This ensures the rule works correctly even for users created before the ID field was introduced.
-- **Admin**: The administrator has permission. Only organization administrators can view/modify this field for users.
-
-### Example Use Cases
+### Example patterns
 
 Here are some common configuration patterns:
 
@@ -89,7 +75,7 @@ These field-level permissions work in conjunction with the broader [Permission s
 
 ## Account Table
 
-Below are all the fields in the account item. For descriptions, you can refer to [user](/docs/user/overview).
+Below are all the fields in the account item. For field descriptions, see [User](/docs/user/overview).
 
 - `Organization`
 - `ID`

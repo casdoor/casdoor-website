@@ -1,47 +1,40 @@
 ---
-title: Custom
-description: Configure your SAML Custom Provider
+title: Custom SAML
+description: Connect any SAML 2.0 IdP to Casdoor as the SP.
 keywords: [SAML, Custom]
 authors: [Chinoholo0807]
 ---
 
-Casdoor supports configuring SAML Custom Provider, and you can use Casdoor as a Service Provider (SP) to connect any Identity Provider (IDP) that support SAML 2.0 protocol.
+Casdoor can act as a Service Provider (SP) and connect to any SAML 2.0 Identity Provider (IdP).
 
-## Step1. Configure your Identity Provider
+## 1. Configure your IdP
 
-When setting up your Identity Provider (such as Google Workspace, Azure AD, Okta, or any other SAML 2.0 compatible IdP), you'll need to provide the following Casdoor SP information:
+In your IdP (e.g. Google Workspace, Azure AD, Okta), register Casdoor as an SP with:
 
-- **ACS URL (Assertion Consumer Service URL)**: `https://<your-casdoor-domain>/api/acs`
-  - Example: `https://door.example.com/api/acs`
-  - This endpoint only accepts POST requests
+- **ACS URL**: `https://<your-casdoor-domain>/api/acs` (e.g. `https://door.example.com/api/acs`). This endpoint accepts **POST** only.
+- **Entity ID (SP Entity ID)**: use the same URL as the ACS URL.
 
-- **Entity ID (SP Entity ID)**: `https://<your-casdoor-domain>/api/acs`
-  - Use the same URL as your ACS URL
+Replace `<your-casdoor-domain>` with your Casdoor host (e.g. `http://localhost:8000` → `http://localhost:8000/api/acs`).
 
-Replace `<your-casdoor-domain>` with your actual Casdoor domain. For example, if your Casdoor instance is running at `http://localhost:8000`, use `http://localhost:8000/api/acs` for both values.
+## 2. Get IdP metadata
 
-## Step2. Get the metadata of IDP
+From your IdP, obtain the metadata XML (EntityID, SSO endpoint, etc.). Some IdPs (e.g. [Keycloak](/docs/provider/saml/keycloak)) need SP details before providing metadata.
 
-After configuring your IdP, obtain the metadata, which is an XML document that describes the configuration information of the services provided by the IdP. It needs to include information such as `EntityID`, `SSO Endpoint`, etc.
+## 3. Configure the SAML Custom provider in Casdoor
 
-Some IDPs, such as Keycloak, require SP information to provide metadata. You can refer to the document [Keycloak](/docs/provider/saml/keycloak).
+**Providers** → **Add**. Set **Category** to **SAML**, **Type** to **Custom**. Set **Favicon URL** (IdP logo) and paste the IdP **Metadata**. Click **Parse** to fill **Endpoint**, **IdP**, **Issuer URL**, **SP ACS URL**, and **SP Entity ID**. Save.
 
-## Step3. Configure SAML Custom Provider
-
-After obtaining the metadata from your IdP, create a SAML Custom Provider in Casdoor and fill in the necessary information.
-
-| Field | Description |
-| ---- | ---- |
-| Category | Choose `SAML` |
-| Type | Choose `Custom` |
-| Favicon.URL | The URL of the IDP logo |
-| Metadata | The metadata of IDP |
-
-Then click `Parse` button, and fields `Endpoint`, `IdP`, `Issuer URL`, `SP ACS URL` and `SP Entity ID` will be automatically parsed.
+| Field       | Description        |
+|------------|--------------------|
+| Category   | SAML               |
+| Type       | Custom             |
+| Favicon URL| IdP logo URL       |
+| Metadata   | IdP metadata XML   |
 
 ![configure saml custom provider](/img/providers/SAML/custom_provider.png)
 
-Finally, add the SAML Custom Provider to `Providers` of the application.
+Add the SAML provider to the application’s **Providers** list.
+
 ![add saml custom provider to application](/img/providers/SAML/custom_provider_add.png)
 
 <video src="/video/provider/saml/custom_provider.mp4" controls="controls" width="100%"></video>

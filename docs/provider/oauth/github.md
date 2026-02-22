@@ -1,40 +1,31 @@
 ---
-title: GitHub
-description: Add GitHub OAuth provider to your application
+title: GitHub OAuth
+description: Add GitHub as an OAuth provider (web or device flow).
 keywords: [GitHub, OAuth]
 authors: [ErikQQY]
 ---
 
-GitHub OAuth supports both the web application flow and device flow. Please continue reading to obtain OAuth credentials.
+GitHub OAuth supports both the web application flow and the device flow. Use a **GitHub App** (not a legacy OAuth App) so you can configure multiple redirect URIs for test and production. See [GitHub: Migrating OAuth Apps to GitHub Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/migrating-oauth-apps-to-github-apps).
 
-First, please visit the [GitHub developer settings](https://github.com/settings/apps/new) to register a new GitHub App.
+## Register a GitHub App
 
-:::caution
-
-**Tricks:** We recommend that you use GitHub Apps to replace OAuth Apps because GitHub Apps can add multiple redirect URIs, which can bring convenience when deploying test and production environments. The [GitHub](https://docs.github.com/en/developers/apps/getting-started-with-apps/migrating-oauth-apps-to-github-apps) official also recommends using GitHub Apps instead of OAuth Apps.
-
-![githubapps](/img/providers/OAuth/githubapps.png)
-
-:::
-
-Then fill in the **GitHub App name**, **Homepage URL**, **description**, and **Callback URL**.
+1. Go to [GitHub Developer Settings](https://github.com/settings/apps/new) and create a new **GitHub App**.
+2. Set **GitHub App name**, **Homepage URL**, **Description**, and **Callback URL**.
 
 ![GitHub](/img/providers/OAuth/github.png)
 
-:::info Set the authorization callback URL correctly
-
-In the GitHub App config, the `Callback URL` must be **your Casdoor's callback URL**, and the `Redirect URL` in Casdoor should be **your application's callback URL**.
-
-For more details, please read [App config](/docs/application/config#further-understanding).
-
+:::info
+In the GitHub App, **Callback URL** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your app’s callback URL. See [Application config](/docs/application/config#further-understanding).
 :::
 
-After registering your GitHub App, you can now generate your `Client Secret`!
+3. After creating the app, generate the **Client secret** (under the app settings).
 
 ![GitHub Client ID](/img/providers/OAuth/githubclient.png)
 
-Add a GitHub OAuth provider and fill in the `Client ID` and `Client Secret` in your Casdoor.
+## Add the provider in Casdoor
+
+Create an **OAuth** provider, set **Type** to **GitHub**, and enter the **Client ID** and **Client Secret** from the GitHub App.
 
 ![Github Provider](/img/providers/OAuth/githubprovider.png)
 
-Now you can use GitHub as a third-party service to complete authentication.
+![githubapps](/img/providers/OAuth/githubapps.png)

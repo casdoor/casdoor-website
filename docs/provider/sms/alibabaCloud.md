@@ -1,43 +1,36 @@
 ---
-title: Alibaba Cloud
-description: Using Alibaba Cloud as an SMS provider for Casdoor
+title: Alibaba Cloud SMS
+description: Use Alibaba Cloud as an SMS provider for verification codes.
 keywords: [Alibaba Cloud, SMS, provider]
 authors: [UsherFall]
 ---
 
-## Fill in the necessary information in Casdoor
+Create a **SMS** provider in Casdoor and set **Type** to **Alibaba Cloud**. Map fields as follows:
 
-There are four required fields: `Client ID`, `Client secret`, `Sign Name`, and `Template code`. The corresponding relationship with the Alibaba Cloud account is as follows:
+| Casdoor field   | Alibaba Cloud   | Required |
+|-----------------|-----------------|----------|
+| Client ID       | AccessKey ID    | Yes      |
+| Client secret   | AccessKey Secret| Yes      |
+| Sign Name       | Signature       | Yes      |
+| Template code   | Template code   | Yes      |
 
-| Name          | Name in Alibaba  | is required |
-|---------------|------------------|------------|
-| Client ID     | AccessKey ID     | required   |
-| Client secret | AccessKey Secret | required   |
-| Sign Name     | Signature        | required   |
-| Template code | Template code    | required   |
+## Get credentials in Alibaba Cloud
 
-### Alibaba information
-
-- AccessKey ID and AccessKey Secret
-
-After logging into my Alibaba Cloud workbench, I click on "AccessKey" to create an ID and Secret.
+- **AccessKey ID / AccessKey Secret** — In the [Alibaba Cloud console](https://ram.console.aliyun.com/manage/ak), create or copy an AccessKey.
 
 ![Alibaba Cloud workbench](/img/providers/sms/aliyunsms.png)
-
-By creating an AccessKey, I obtain my AccessKey ID and AccessKey Secret:
-
 ![AccessKey](/img/providers/sms/accesskey.png)
 
-- Signature
+- **Signature** — Configure in the SMS service console.
 
 ![Alibaba Signature](/img/providers/sms/alibabaSign.png)
 
-- Template code
+- **Template code** — Create or select an SMS template and use its code.
 
 ![Alibaba Template Code](/img/providers/sms/alibabaCode.png)
 
-### Configure Casdoor provider
+## Configure and test in Casdoor
 
-Enter your phone number in the `SMS Test` field to test.
+Fill in the provider fields and use **SMS Test** with a phone number to verify.
 
 ![Alibaba Provider Configuration](/img/providers/sms/alibabaProvider.png)

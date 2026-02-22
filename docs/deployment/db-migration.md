@@ -1,23 +1,21 @@
 ---
-title: Database Migration
-description: Handling DB Migration in Casdoor
-keywords: [deployment, Database, Migration]
+title: Database migration
+description: How Casdoor handles database schema and data migrations.
+keywords: [deployment, database, migration, xorm]
 authors: [forestmgy]
 ---
 
-When upgrading the database, there is a risk of data loss, such as when deleting an old field. Luckily, Casdoor utilizes [xorm](https://xorm.io/), which assists with many database migration problems. However, some schema and data migrations must still be handled manually, such as when a field name is changed.
+Casdoor uses [xorm](https://xorm.io/) for database access. Xorm handles many schema changes automatically, but **renaming columns** and some data migrations must be done manually via the [xorm migrate](https://pkg.go.dev/xorm.io/xorm/migrate) package.
 
 :::note
-
-Refer to the [xorm docs](https://xorm.io/docs/chapter-03/readme/) for a better understanding of xorm's schema operations.
-
+See the [xorm documentation](https://xorm.io/docs/chapter-03/readme/) for schema operation details.
 :::
 
-## How it Works
+## How it works
 
-As mentioned earlier, xorm is unable to handle field name changes. To address this, xorm provides a [migrate](https://pkg.go.dev/xorm.io/xorm/migrate) package that can assist with this problem.
+Xorm does not rename columns automatically. To rename a field (e.g. `p_type` → `ptype`), you add a migration that copies data and then drops the old column.
 
-To handle field renaming, you can write code like this:
+Example migration:
 
 ```go
 migrations := []*migrate.Migration{
@@ -37,8 +35,4 @@ migrations := []*migrate.Migration{
     m.Migrate()
 ```
 
-Our objective is to **rename `p_type` to `ptype`**. However, since xorm **does not support field renaming**, we must resort to a more intricate approach: assigning the value of `p_type` to `ptype`, and subsequently deleting the `p_type` field.
-
-The `ID` field uniquely identifies the migration being performed. After `m.Migrate()` runs, the value of `ID` will be added to the migrations table of the database.
-
-Upon starting the project again, the database will check for any existing `ID` field in the table and refrain from performing any operations associated with the same `ID`.
+Here the goal is to rename `p_type` to `ptype`: copy values into `ptype`, then drop `p_type` (handled elsewhere). The migration **ID** is stored in the database; on subsequent starts, migrations with an existing ID are skipped.

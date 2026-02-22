@@ -1,11 +1,11 @@
 ---
-title: Core Concepts
-description: Learn about the core concepts of Casdoor.
+title: Core concepts
+description: Organizations, users, applications, and providers—the main building blocks of Casdoor.
 keywords: [core concepts, organization, user, application, provider]
 authors: [hsluoyz]
 ---
 
-As a Casdoor administrator, you should be familiar with at least four core concepts: `Organization`, `User`, `Application`, and `Provider`.
+Casdoor is built around four core concepts: **Organization**, **User**, **Application**, and **Provider**. Understanding these will help you configure and operate Casdoor effectively.
 
 ```mermaid
 flowchart LR;
@@ -67,14 +67,12 @@ flowchart LR;
 ```
 
 :::tip
-
-In the following parts, we will use the demo site <https://door.casdoor.com> as an example.
-
+Examples in this section use the demo site `https://door.casdoor.com`.
 :::
 
 ## Organization
 
-In Casdoor, an organization is a container for users and applications. For example, all the employees of a company or all the customers of a business can be abstracted as one organization. The `Organization` class definition is shown below:
+An **organization** is a container for users and applications—for example, a company’s employees or a product’s customers. The `Organization` struct in code looks like this:
 
 ```go
 type Organization struct {
@@ -100,20 +98,18 @@ type Organization struct {
 
 ## User
 
-In Casdoor, a user can log into an application. Each user can belong to only one organization but can log into multiple applications owned by the organization. Currently, there are two types of users in Casdoor:
+A **user** can sign in to applications. Each user belongs to exactly one organization but can sign in to any application in that organization. Casdoor has two user types:
 
-- `built-in` organization users, such as `built-in/admin`: global administrators who have full administrative power on the Casdoor platform.
-- Other organizations' users, such as `my-company/alice`: normal users who can sign up, sign in, sign out, change their own profile, etc.
+- **Built-in users** (e.g. `built-in/admin`): Global administrators with full control over the Casdoor instance.
+- **Organization users** (e.g. `my-company/alice`): Regular users who can sign up, sign in, sign out, and manage their own profile.
 
-In the Casdoor API, a user is typically identified as `<organization_name>/<username>`. For example, the default administrator of Casdoor is denoted as `built-in/admin`. Additionally, the `User` class definition includes an `id` property, which is a UUID like `d835a48f-2e88-4c1f-b907-60ac6b6c1b40` and can be chosen as a user's ID by an application.
+In the API, a user is identified as `<organization_name>/<username>`. The default admin is `built-in/admin`. The `User` struct also has an `id` field (a UUID such as `d835a48f-2e88-4c1f-b907-60ac6b6c1b40`) that applications can use as a stable user ID.
 
 :::tip
-
-For applications that are only for one organization, it's possible to use `<username>` instead of `<organization_name>/<username>` as the user ID across the application for simplicity.
-
+For single-organization applications, use `<username>` instead of `<organization_name>/<username>` as the user ID to keep things simple.
 :::
 
-Here's the `User` class definition:
+The `User` struct:
 
 ```go
 type User struct {
@@ -183,14 +179,12 @@ type User struct {
 ```
 
 :::tip
-
-The `Properties` field is a flexible key-value map for storing custom user attributes. See the [User Properties documentation](/docs/user/overview#using-the-properties-field) for detailed usage examples and best practices.
-
+The `Properties` field is a key-value map for custom user attributes. See [User overview](/docs/user/overview#using-the-properties-field) for usage and best practices.
 :::
 
 ## Application
 
-An **application** represents a web service that needs to be protected by Casdoor, such as a forum site, an OA system, or a CRM system.
+An **application** is a web service that uses Casdoor for authentication—for example, a forum, an internal OA system, or a CRM.
 
 ```go
 type Application struct {
@@ -226,43 +220,43 @@ type Application struct {
 }
 ```
 
-Each application can have its own customized sign-up page, sign-in page, and more. The root login page `/login` (e.g., <https://door.casdoor.com/login>) is the sign-in page only for Casdoor's built-in application: `app-built-in`.
+Each application can have its own sign-up and sign-in pages. The root path `/login` (e.g. `https://door.casdoor.com/login`) is the sign-in page for Casdoor’s built-in application, `app-built-in`.
 
-An application is a "portal" or "interface" for a user to log into Casdoor. A user must go through one application's sign-in page to log into Casdoor.
+An application is the entry point through which users sign in to Casdoor; users always sign in via an application’s sign-in page.
 
 | Application   | Sign-up page URL                           | Sign-in page URL                                                                                                                                                                      |
 |---------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| app-built-in  | <https://door.casdoor.com/signup>           | <https://door.casdoor.com/login>                                                                                                                                                         |
-| app-casnode   | <https://door.casdoor.com/signup/app-casnode>| <https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor> |
-| app-casbin-oa | <https://door.casdoor.com/signup/app-casbin-oa> | <https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor>  |
+| app-built-in  | `https://door.casdoor.com/signup`           | `https://door.casdoor.com/login`                                                                                                                                                         |
+| app-casnode   | `https://door.casdoor.com/signup/app-casnode`| `https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor` |
+| app-casbin-oa | `https://door.casdoor.com/signup/app-casbin-oa` | `https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor`  |
 
 ### Login URLs
 
-It's very easy to log into Casdoor via Casdoor's built-in application; simply visit Casdoor server homepage (e.g., <https://door.casdoor.com> for demo site) and it will automatically redirect you to `/login`. But how do you get the URLs for other applications in frontend and backend code? You can either concatenate strings manually or call some utility functions provided by Casdoor SDKs to get the URLs:
+Signing in via the built-in application is straightforward: open the Casdoor server URL (e.g. `https://door.casdoor.com`) and you are redirected to `/login`. For other applications, build sign-in and sign-up URLs in two ways:
 
-#### 1. Manually concatenating strings
+#### 1. Build URLs manually
 
-- Sign-up page URL
-  - Signup for the specified application: `<your-casdoor-hostname>/signup/<your-application-name>`
-  - Signup by OAuth: `<your-casdoor-hostname>/signup/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
-  - Signup automatically: `<your-casdoor-hostname>/auto-signup/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
-- Sign-in page URL
-  - Sign-in for the specified organization: `<your-casdoor-hostname>/login/<your-organization-name>`
-  - Sign-in by OAuth: `<your-casdoor-hostname>/login/oauth/authorize?client_id=<client-id-for-your-application>&response_type=code&redirect_uri=<redirect-uri-for-your-application>&&scope=read&state=casdoor`
+- **Sign-up**
+  - By application: `<casdoor-host>/signup/<application-name>`
+  - By OAuth: `<casdoor-host>/signup/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=casdoor`
+  - Auto sign-up: `<casdoor-host>/auto-signup/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=casdoor`
+- **Sign-in**
+  - By organization: `<casdoor-host>/login/<organization-name>`
+  - By OAuth: `<casdoor-host>/login/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=casdoor`
 
-#### 2. Using frontend SDK (for frontend JavaScript code using React, Vue, or Angular)
+#### 2. Frontend SDK (React, Vue, Angular)
 
-`getSignupUrl()` and `getSigninUrl()`: [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63)
+Use `getSignupUrl()` and `getSigninUrl()` from [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63).
 
-#### 3. Using backend SDK (for backend code using Go, Java, etc.)
+#### 3. Backend SDK (Go, Java, etc.)
 
-`GetSignupUrl()` and `GetSigninUrl()`: [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39)
+Use `GetSignupUrl()` and `GetSigninUrl()` from [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39).
 
 ## Provider
 
-Casdoor is a federated single sign-on system that supports multiple identity providers via OIDC, OAuth, and SAML. Casdoor can also send verification codes or other notifications to users via email or SMS. Casdoor uses the concept of `Provider` to manage all these third-party connectors.
+Casdoor acts as a federated SSO platform: it supports multiple identity providers (OIDC, OAuth, SAML) and can send verification codes and notifications via email or SMS. All such integrations are represented as **providers**.
 
-A list of all providers supported by Casdoor can be found at **[provider/overview](/docs/provider/overview)**.
+See **[Providers overview](/docs/provider/overview)** for the full list of supported provider types.
 
 ```go
 type Provider struct {
@@ -303,18 +297,16 @@ type Provider struct {
 }
 ```
 
-## How does Casdoor manage itself?
+## How Casdoor manages itself
 
-Upon running Casdoor for the first time, some built-in objects are created to facilitate its management:
+On first run, Casdoor creates default objects:
 
-- A built-in organization named `built-in`.
-- A user named `admin` in the `built-in` organization.
-- A built-in application named `app-built-in`, administered by the `built-in` organization, representing Casdoor itself.
+- **Organization:** `built-in`
+- **User:** `admin` in `built-in`
+- **Application:** `app-built-in` (the Casdoor UI), owned by `built-in`
 
-All users under the `built-in` organization, including `admin`, will have full administrator privileges on the Casdoor platform. Therefore, if there are multiple administrators, it is advisable to create new accounts under the `built-in` organization. Alternatively, the sign-up channel for the `app-built-in` application should be closed to prevent unwanted access.
+All users in the `built-in` organization (including `admin`) have full admin rights. For multiple admins, create additional accounts under `built-in`, or disable sign-up for `app-built-in` to avoid unwanted accounts.
 
 :::caution
-
-It is not possible to rename or delete the built-in objects via both the web UI or the RESTful API. Casdoor has hardcoded these reserved names in many places; attempting to rename or delete them by modifying the DB may cause the entire system to crash.
-
+The built-in organization, `admin` user, and `app-built-in` application **cannot be renamed or deleted** via the UI or API. Their names are hardcoded; changing or removing them in the database can break the system.
 :::

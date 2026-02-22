@@ -1,49 +1,49 @@
 ---
-title: Password Obfuscator
-description: Supporting different password obfuscator options.
-keywords: [password, obfuscator]
+title: Password obfuscator
+description: Encrypt password parameters in login and set-password APIs.
+keywords: [password, obfuscator, AES, DES]
 authors: [ZhaoYP-2001]
 ---
 
-Here, we will show you how to enable the option to specify the password obfuscator for password parameters in the login and set-password APIs.
+The **Password obfuscator** option encrypts password parameters for the login and set-password APIs before they are sent to the server. You choose the algorithm and (optionally) the key at the organization level.
 
 ## Configuration
 
-On the organization edit page, you can find the `Password obfuscator` configuration option. You can select the encryption algorithm from the dropdown list.
+On the organization edit page, set **Password obfuscator**:
 
 ![password_obfuscator](/img/organization/password_obfuscator/password_obfuscator.png)
 
-- Plain: Password parameters will be transmitted directly in plain text.
-- AES: Password parameters will first be encrypted using the AES algorithm and then transmitted in ciphertext form.
-- DES: Password parameters will first be encrypted using the DES algorithm and then transmitted in ciphertext form.
+| Option | Behavior |
+|--------|----------|
+| **Plain** | Passwords are sent in plain text. |
+| **AES** | Passwords are encrypted with AES before transmission. |
+| **DES** | Passwords are encrypted with DES before transmission. |
 
-Each time you update the encryption algorithm other than Plain, Casdoor will randomly generate an encryption key for you and populate it into the `Password obf key` configuration option. If you want to specify the encryption key for the encryption algorithm, you can modify the key in `Password obf key` configuration option:
+When you switch to AES or DES, Casdoor generates a key and fills **Password obf key**. You can override it with your own key:
 
 ![password_obf_key](/img/organization/password_obfuscator/password_obf_key.png)
 
 :::note
-
-If your key does not meet the encryption algorithm requirements, Casdoor will prompt you with the regular expression that the key should meet in the error message.
-
+If the key does not match the algorithm’s requirements, Casdoor shows an error with the expected key format (regex).
 :::
 
-## API Support
+## API support
 
-Password obfuscation is supported by the following APIs:
+| API | Encrypted fields |
+|-----|------------------|
+| **Login** (`/api/login`) | `password` |
+| **Set password** (`/api/set-password`) | `oldPassword`, `newPassword` |
 
-- **Login API** (`/api/login`): Encrypts the password field during authentication
-- **Set Password API** (`/api/set-password`): Encrypts both `oldPassword` and `newPassword` fields when changing passwords
+With obfuscation enabled, the Casdoor frontend encrypts these fields before sending; the backend decrypts with the configured key and algorithm, then processes them as usual.
 
-When password obfuscation is enabled, Casdoor's frontend automatically encrypts password values before sending them to the server. The backend decrypts these values using the configured key and algorithm, then processes them normally.
+### Backward compatibility
 
-### Backward Compatibility
+The set-password API accepts both obfuscated and plaintext passwords. If obfuscation is not configured or decryption fails, it falls back to plaintext. This keeps compatibility with:
 
-The set-password API maintains full backward compatibility. If obfuscation is not configured or decryption fails, the API automatically falls back to accepting plaintext passwords. This ensures compatibility with:
+- SDKs that do not yet support obfuscation
+- Direct API calls using plaintext
+- Existing integrations
 
-- Casdoor SDKs that may not support obfuscation yet
-- Direct HTTP API calls using plaintext passwords
-- Legacy integrations
-
-Here is a demo video that shows how to use password obfuscator:
+Demo:
 
 <video src="/img/organization/password_obfuscator/password_obfuscator.mp4" controls="controls" width="100%"></video>

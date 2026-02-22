@@ -1,36 +1,33 @@
 ---
 title: Overview
-description: Use Casdoor as SCIM service provider
-keywords: [SCIM]
+description: Provision and manage users in Casdoor via the SCIM 2.0 API.
+keywords: [SCIM, provisioning, user management]
 authors: [Chinoholo0807]
 ---
 
-The SCIM protocol is a HTTP-based protocol for provisioning and managing identity data specified through SCIM schemas.
-You can use Casdoor as a SCIM service provider.
+[SCIM](https://datatracker.ietf.org/doc/html/rfc7644) is an HTTP-based standard for provisioning and managing identity data. Casdoor can act as a **SCIM service provider** so external systems can create, read, update, and delete users via SCIM.
 
-## Use Casdoor as SCIM service provider
+## Supported resources
 
-Currently Casdoor only support `User Resource Schema`, you can manage users through SCIM User operations.
-You can interact with the Casdoor through the following endpoints:
+Casdoor currently supports the **User** resource only. You manage users with these endpoints:
 
-| Endpoint          | Method  | Description |
-| ------------- | ------------- | ------------- |
-| /scim/ServiceProviderConfig | GET | Provide details about the features of the SCIM standard that are supported, for example, the resources that are supported. |
-| /scim/Schemas | GET | Provide details about the service provider schemas. |
-| /scim/ResourceTypes | GET | Specifie metadata about each resource. |
-| /scim/Users/:id | GET | Retrieve a user with resource identifier `id`. |
-| /scim/Users | GET | Query users with query parameters (currently only support `startIndex` and `count`). |
-| /scim/Users | POST | Create a user. |
-| /scim/Users/:id | PUT | Update a user with resource identifier `id`. |
-| /scim/Users/:id | PATCH | Modify a user with resource identifier `id` by PATCH operation. |
-| /scim/Users/:id | DEL | Delete a user with resource identifier `id`. |
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/scim/ServiceProviderConfig` | GET | Supported SCIM features and resources |
+| `/scim/Schemas` | GET | Service provider schemas |
+| `/scim/ResourceTypes` | GET | Resource type metadata |
+| `/scim/Users/:id` | GET | Get user by id |
+| `/scim/Users` | GET | List users (query params: `startIndex`, `count`) |
+| `/scim/Users` | POST | Create user |
+| `/scim/Users/:id` | PUT | Replace user |
+| `/scim/Users/:id` | PATCH | Partial update |
+| `/scim/Users/:id` | DELETE | Delete user |
 
-For more details, please refer to [rfc7644](https://datatracker.ietf.org/doc/html/rfc7644).
+See [RFC 7644](https://datatracker.ietf.org/doc/html/rfc7644) for the full SCIM spec.
 
-## User Resource
+## User attribute mapping
 
-Casdoor implements the mapping between `User Resource Schema` (SCIM) and `User` (Casdoor).
-The mapping relationship between attributes is as follows:
+SCIM User attributes map to Casdoor User fields as follows:
 
 | User Resource Schema (SCIM)          | User (Casdoor)  |
 | ------------- | -------------------------------------- |

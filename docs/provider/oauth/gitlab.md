@@ -1,34 +1,27 @@
 ---
-title: GitLab
-description: Add GitLab OAuth provider to your application
+title: GitLab OAuth
+description: Add GitLab (or self-hosted GitLab) as an OAuth provider.
 keywords: [GitLab, OAuth]
 authors: [hsluoyz]
 ---
 
-To set up the GitLab OAuth provider, please go to the [GitLab Applications](https://gitlab.com/-/profile/applications) page (or your self-hosted GitLab instance's equivalent page at `https://your-gitlab-instance/-/profile/applications`).
+Use the [GitLab Applications](https://gitlab.com/-/profile/applications) page (or `https://<your-gitlab>/-/profile/applications` for self-hosted) to create an OAuth application.
 
-Create a new application by clicking on **"Add new application"** and fill in the following information:
+## Create the GitLab application
 
-1. **Name**: Enter a name for your application (e.g., "Casdoor")
-2. **Redirect URI**: Enter your Casdoor callback URL
-3. **Scopes**: Select the required scopes
+1. Click **Add new application**.
+2. Set **Name** (e.g. "Casdoor"), **Redirect URI**, and **Scopes**.
 
-:::caution Required Scopes
-
-Casdoor's GitLab OAuth provider requires the following scopes: **read_user** and **profile**. Make sure to check these scopes when creating your GitLab application; otherwise, authentication may fail.
-
+:::caution
+Enable scopes **read_user** and **profile**. Without them, authentication can fail.
 :::
 
-:::info Set the redirect URI correctly
-
-In the GitLab OAuth config, the `Redirect URI` must be **your Casdoor's callback URL**, and the `Redirect URL` in Casdoor should be **your application's callback URL**.
-
-For more details, please read the [App config](/docs/application/config#further-understanding) guide.
-
+:::info
+In GitLab, **Redirect URI** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
 :::
 
-After creating the GitLab application, you can obtain the **Application ID** and **Secret** from the application details page.
+3. After creating the app, copy **Application ID** and **Secret** from the app details.
 
-Add a GitLab OAuth provider in Casdoor and enter the **Application ID** as `Client ID` and **Secret** as `Client Secret`.
+## Add the provider in Casdoor
 
-Now you can use GitLab as a third-party service to complete authentication!
+Create an **OAuth** provider, set **Type** to **GitLab**, and enter **Application ID** as **Client ID** and **Secret** as **Client Secret**.

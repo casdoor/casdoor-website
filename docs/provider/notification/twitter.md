@@ -1,35 +1,30 @@
 ---
-title: Twitter
-description: Using Twitter as a notification provider for Casdoor
-keywords: [Twitter, notification, provider]
+title: Twitter (X) notification
+description: Use Twitter (X) as a notification provider.
+keywords: [Twitter, notification, provider, X]
 authors: [UsherFall]
 ---
 
-## Step 1: Get the configuration items from twitter
+## 1. Get Twitter app credentials
 
-First, sign up for a Twitter developer account, create a Twitter App within the developer portal refer to the documentation: [Authentication](https://developer.twitter.com/en/docs/authentication/oauth-1-0a/api-key-and-secret#:~:text=The%20API%20Key%20and%20Secret,App%20requests%20are%20coming%20from.)
-
-Copy your `API Key` and `API Secret`, `Access Token` and `Access Token Secret`
+Sign up for a [Twitter developer account](https://developer.twitter.com/) and create an app. See [API Key and Secret](https://developer.twitter.com/en/docs/authentication/oauth-1-0a/api-key-and-secret). Copy **API Key**, **API Secret**, **Access Token**, and **Access Token Secret**.
 
 ![twitter_items](/img/providers/notification/twitter_items.png)
 
-## Step 2: Get Twitter ID
+## 2. Get Twitter ID
 
-`Twitter ID` can't be obtained directly, you can get it from some third-party tools.
+The **Twitter ID** (numeric user ID) is not shown in the app UI; use [TweeterID](https://tweeterid.com/) or [Twiteridfinder](https://twiteridfinder.com/) to get it.
 
-- [TweeterID](https://tweeterid.com/)
-- [Twiteridfinder](https://twiteridfinder.com/)
+## 3. Configure the provider in Casdoor
 
-## Step 3: Configure Casdoor Twitter Provider
+**Providers** → **Add**. Set **Category** to **Notification**, **Type** to **Twitter**. Map:
 
-There are five required fields: `Client ID`, `Client secret`, `Client ID 2`, `Client secret 2` and `Chat ID`. The relationship between the fields and Twitter is as follows:
-
-| Name            | Name in Twitter     |
-|-----------------|---------------------|
-| Client ID       | API Key             |
-| Client secret   | API Secret          |
-| Client ID 2     | Access Token        |
+| Casdoor       | Twitter           |
+|---------------|-------------------|
+| Client ID     | API Key           |
+| Client secret | API Secret        |
+| Client ID 2   | Access Token      |
 | Client secret 2 | Access Token Secret |
-| Chat ID         | Twitter ID          |
+| Chat ID       | Twitter ID        |
 
 ![twitter_provider](/img/providers/notification/twitter_provider.png)

@@ -1,34 +1,35 @@
 ---
-title: Azure ACS
-description: Using ACS as an SMS provider for Casdoor
-keywords: [ACS, SMS, provider]
+title: Azure Communication Services SMS
+description: Use Azure Communication Services (ACS) as an SMS provider.
+keywords: [ACS, SMS, provider, Azure]
 authors: [UsherFall]
 ---
 
-## Obtaining the necessary information in Azure
+Create a **SMS** provider in Casdoor and set **Type** to **Azure ACS**. You need: **Client secret**, **Sender number**, **Provider Url**, and **Template code**.
 
-There are four required fields: `Client secret`, `Sender number`, `Template code`, and `Provider Url`. I will show you how to obtain this information from Azure ACS.
+| Casdoor field   | Azure ACS / meaning      | Required |
+|-----------------|--------------------------|----------|
+| Client secret   | User Access Token (Communication Service) | Yes  |
+| Sender number   | Phone number from Communication Service   | Yes  |
+| Provider Url    | Communication Service endpoint            | Yes  |
+| Template code   | Message template / body  | Yes  |
 
-- `Client secret`
+## Get credentials in Azure
 
-In Communication Service, you can create a User Access Token, which is the `Client secret` in Casdoor.
+- **Client secret** — In your Communication Service, create a **User Access Token** and use it as **Client secret** in Casdoor.
 
 ![azureToken.png](/img/providers/sms/azureToken.png)
 
-- Sender number
-
-The `Sender number` is the phone number you create in Communication Service.
+- **Sender number** — Use a phone number provisioned in the Communication Service.
 
 ![azurePhone.png](/img/providers/sms/azurePhone.png)
 
-- Provider Url
-
-The `Provider Url` is the endpoint in Communication Service.
+- **Provider Url** — Use the Communication Service **endpoint** URL.
 
 ![azureUrl.png](/img/providers/sms/azureUrl.png)
 
-### Configure Casdoor provider
+## Configure and test in Casdoor
 
-The `template code` is the message you want to send. Enter your phone number in `SMS Test` to test.
+Fill in the provider fields. **Template code** is the message (or template) to send. Use **SMS Test** with a phone number to verify.
 
 ![azureProvider.png](/img/providers/sms/azureProvider.png)

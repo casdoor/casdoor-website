@@ -1,54 +1,35 @@
 ---
-title: Custom OAuth
-description: Add your custom OAuth provider to Casdoor
+title: Custom OAuth provider
+description: Integrate any OAuth 2.0–compliant IdP (Custom through Custom10).
 keywords: [Custom Provider, OAuth, Casdoor]
 authors: [halozhy]
 ---
 
 :::note
-
-Casdoor supports custom providers. However, the custom providers must follow the standard process of 3-legged OAuth, and the return values of `Token URL` and `UserInfo URL` must conform to the format specified by Casdoor.
-
+Custom providers must use standard 3-legged OAuth. Responses from **Token URL** and **UserInfo URL** must match the formats below.
 :::
 
-## Overview
+Use **Custom** OAuth to connect Casdoor to any OAuth 2.0–compliant service: internal IdPs, self-hosted auth, or third-party services not yet built-in. You can add up to **10** custom providers: **Custom**, **Custom2**, … **Custom10**, each with its own config.
 
-Custom OAuth providers allow you to integrate any OAuth 2.0 compliant authentication service with Casdoor, even if it's not officially supported. This is useful when you want to integrate with:
+## Create a custom provider
 
-- Internal enterprise OAuth servers
-- Self-hosted authentication systems
-- Third-party services not yet officially supported by Casdoor
-
-## Multiple Custom Providers Support
-
-Casdoor supports up to **10 different custom OAuth providers** simultaneously. When creating custom providers, you can choose from the following types:
-
-- **Custom** - The first custom provider
-- **Custom2** through **Custom10** - Additional custom providers
-
-This allows you to integrate multiple custom OAuth services without conflicts. Each custom provider maintains its own separate configuration and user data fields.
-
-## Creating a Custom Provider
-
-To create a new custom provider, navigate to the provider page of Casdoor, and select one of the custom types ("Custom", "Custom2", "Custom3", etc.) in the Type field. You will then need to fill in `Client ID`, `Client Secret`, `Auth URL`, `Scope`,`Token URL`, `UserInfo URL`, and `Favicon`.
+In Casdoor **Providers** → **Add**, set **Type** to one of Custom, Custom2, … Custom10. Fill in **Client ID**, **Client Secret**, **Auth URL**, **Scope**, **Token URL**, **UserInfo URL**, and **Favicon**.
 
 ![image-20220418100744005](/img/providers/OAuth/customprovider.png)
 
-- `Auth URL` is the custom provider's OAuth login page address.
-
-  If you fill in `https://door.casdoor.com/login/oauth/authorize` as the `Auth URL`, then, when a user logs in with this custom provider, the browser will first redirect to
+- **Auth URL** — OAuth authorization endpoint. Example: with `https://door.casdoor.com/login/oauth/authorize`, the browser is sent to
 
   ```url
   https://door.casdoor.com/login/oauth/authorize?client_id={ClientID}&redirect_uri=https://{your-casdoor-hostname}/callback&state={State_generated_by_Casdoor}&response_type=code&scope={Scope}` 
   ```
 
-  When PKCE is enabled, Casdoor automatically appends the necessary security parameters:
+  With **Enable PKCE** on, Casdoor adds:
 
   ```url
   &code_challenge={code_challenge}&code_challenge_method=S256
   ```
 
-  After authorization is completed, the custom provider should redirect to
+  The IdP must then redirect to
 
   ```url
   https://{your-casdoor-hostname}/callback?code={code}
@@ -56,15 +37,11 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
 
   After this step, Casdoor will recognize the code parameter in the URL.
 
-- `Scope` is the scope parameter carried when accessing the `Auth URL`, and you should fill it in as per the custom provider's requirements.
+- **Scope** — Scope string sent to the Auth URL (per your IdP’s docs).
 
-- `Enable PKCE` controls whether to use Proof Key for Code Exchange (PKCE) when authenticating with your custom provider. PKCE adds an extra security layer by proving that the client requesting the token is the same one that initiated the authorization flow. When enabled, Casdoor generates a unique cryptographic code verifier for each authentication attempt and includes the corresponding `code_challenge` (SHA-256 hash of the verifier) and `code_challenge_method=S256` in the authorization request. The code verifier is then sent to your provider's token endpoint during token exchange. Enable this if your OAuth provider requires or recommends PKCE.
+- **Enable PKCE** — When on, Casdoor sends `code_challenge`/`code_challenge_method=S256` in the auth request and `code_verifier` in the token request. Enable if your IdP requires or supports PKCE.
 
-- `Token URL` is the API endpoint for obtaining the accessToken.
-
-  Once you obtain the code in the previous step, Casdoor should use it to get the accessToken.
-
-  If you fill in `https://door.casdoor.com/api/login/oauth/access_token` as the `Token URL`, then Casdoor will access it using the following command
+- **Token URL** — Token endpoint. Casdoor calls it with the code to get an access token. Example:
 
   ```bash
   curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback" https://door.casdoor.com/api/login/oauth/access_token
@@ -76,7 +53,7 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
   curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback&code_verifier={code_verifier}" https://door.casdoor.com/api/login/oauth/access_token
   ```
 
-  The custom provider should return at least the following information:
+  Response must include at least:
 
   ```json
   {
@@ -88,15 +65,13 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
   }
   ```
 
-- `UserInfo URL` is the API endpoint for obtaining user information via the accessToken.
-
-  If you fill in `https://door.casdoor.com/api/userinfo` as the `UserInfo URL`, then Casdoor will access it using the following command
+- **UserInfo URL** — API to get user info with the access token. Casdoor calls it like:
 
   ```bash
   curl -X GET -H "Authorization: Bearer {accessToken}" https://door.casdoor.com/api/userinfo
   ```
 
-  The custom provider should return at least the following information:
+  Response must include at least:
 
   ```json
   {
@@ -108,8 +83,6 @@ To create a new custom provider, navigate to the provider page of Casdoor, and s
   }
   ```
 
-  The `phone` field is optional. If provided, it will be automatically saved to the user's phone number in Casdoor.
+  `phone` is optional; if present, it is stored as the user’s phone in Casdoor.
 
-- `Favicon` is the logo URL of a custom provider.
-
-  This logo will be displayed on Casdoor's login page together with other third-party login providers.
+- **Favicon** — URL of the provider logo shown on the Casdoor login page.

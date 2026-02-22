@@ -1,50 +1,40 @@
 ---
-title: Google
-description: Add the Google OAuth provider to your application
+title: Google OAuth
+description: Add Google as an OAuth provider.
 keywords: [Google, OAuth]
 authors: [ErikQQY]
 ---
 
-To set up the Google OAuth provider, please go to the [Google API console](https://console.developers.google.com) and log in using your Google account.
+Configure Google OAuth in the [Google API Console](https://console.developers.google.com).
+
+## Configure in Google Cloud
+
+1. Create or select a project. Open **APIs & Services** → **OAuth consent screen** and configure the consent screen.
+2. Go to **Credentials** → **Create credentials** → **OAuth client ID**. Choose application type (e.g. Web application) and set **Authorized redirect URIs**.
 
 ![Setting up the project](/img/providers/OAuth/googlenewproject.png)
-
-Next, navigate to the **OAuth consent screen** tab to configure the OAuth consent screen.
-
 ![Configure consent](/img/providers/OAuth/oauthconsentscreen.png)
-
-Register your Google app by following these steps:
-
 ![Registering the app](/img/providers/OAuth/appregistration.png)
-
-Afterward, go to the **Credential** tab.
-
 ![Credentials](/img/providers/OAuth/credential.png)
-
-Create a credential for your app:
-
 ![Creating a credential](/img/providers/OAuth/createcredential.png)
 
-:::info Ensure that you set the Authorized redirect URIs correctly
-
-In the Google OAuth configuration, the `Authorized redirect URIs` must be set to **your Casdoor's callback URL**, while the `Redirect URL` in Casdoor should be set to **your application's callback URL**.
-
-For more details, please refer to the [App configuration](/docs/application/config#further-understanding).
-
+:::info
+**Authorized redirect URIs** in Google must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
 :::
 
-After creating the Client ID, you will obtain the `Client ID` and `Client Secret`.
+3. After creating the client, copy the **Client ID** and **Client Secret**.
 
 ![Client](/img/providers/OAuth/googleclient.png)
 
-Add the Google OAuth provider and enter the `Client ID` and `Client Secret` in your Casdoor.
+## Add the provider in Casdoor
+
+Create an **OAuth** provider, set **Type** to **Google**, and enter the **Client ID** and **Client Secret**.
 
 ![Google Provider](/img/providers/OAuth/googleprovider.png)
 
-If Get password is enabled, you should enable google people api first and add scope `https://www.googleapis.com/auth/user.phonenumbers.read`
+### Optional: phone number scope
+
+If you enable **Get password** (or need the user’s phone number), enable the [Google People API](https://console.cloud.google.com/apis/library/people.googleapis.com) and add the scope `https://www.googleapis.com/auth/user.phonenumbers.read` to the provider.
 
 ![Google People Api](/img/providers/OAuth/googleproviderpeopleapi.png)
-
 ![Google Provider Scope](/img/providers/OAuth/googleproviderscope.png)
-
-You can now use Google as a third-party service to complete authentication.

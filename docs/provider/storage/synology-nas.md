@@ -1,32 +1,22 @@
 ---
-title: Synology NAS
-description: Using Synology NAS as a storage provider for Casdoor
+title: Synology NAS storage
+description: Use Synology NAS as a storage provider (S3-compatible).
 keywords: [Synology, NAS, storage, provider]
 authors: [xiao-kong-long]
 ---
 
-:::note
+Configure Synology NAS (or its S3-compatible API) as the backend. You need **Client ID**, **Client secret**, and **Endpoint** at minimum.
 
-This is an example of **Synology NAS**.
+| Casdoor field | Synology / meaning | Required |
+|---------------|--------------------|----------|
+| Client ID     | SecretId (access key) | Yes   |
+| Client secret | SecretKey          | Yes      |
+| Endpoint      | S3 API endpoint    | Yes      |
+| Bucket        | Bucket name        | No       |
+| Path prefix   | Path prefix        | No       |
+| Domain        | Custom domain      | No       |
+| Region ID     | Region             | No       |
 
-:::
-
-### Fill in the necessary information in Casdoor
-
-There are five required fields: `Client ID`, `Client secret` and `Endpoint`. The corresponding relationship to the Synology NAS account is as follows:
-
-| Name                | Name in Tencent | Required |
-|---------------------|-----------------|----------|
-| Client ID           | SecretId        | Yes      |
-| Client secret       | SecretKey       | Yes      |
-| Endpoint            | Endpoint        | Yes      |
-| Bucket              |                 |          |
-| Path prefix         |                 |          |
-| Domain              |                 |          |
-| Region ID           |                 |          |
-
-#### Configure Casdoor provider
+See [Synology developer documentation](https://www.synology.cn/zh-cn/support/developer#tool) for creating and configuring the S3-compatible endpoint and keys.
 
 ![synologyConfig.png](/img/providers/storage/synologyConfig.png)
-
-You can refer to the official documentation for configuration: [link](https://www.synology.cn/zh-cn/support/developer#tool)

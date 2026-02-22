@@ -1,15 +1,13 @@
 ---
 title: Payment
-description: View the transaction information of the products in Payment
+description: View payment records, states, and issue invoices.
 keywords: [payment, invoice, multi-product payment]
 authors: [leo220yuyaodog]
 ---
 
-After the payment is successfully processed, you will be able to view the transaction information in the **Payment** section. This information includes details such as the organization, user, purchase time, and the products purchased.
+The **Payment** section lists transaction records after payments are processed. Each record includes organization, user, purchase time, and the products purchased.
 
-Payments can cover multiple products in a single transaction. The payment record lists all products by name and stores their combined display name for reference. When you navigate to view a payment, the **Products** column shows each product as a separate line item with links to their details.
-
-When viewing a payment, you can navigate directly to the related order using the **View Order** button. After completing a payment, the system offers quick actions to either view the order details or return to the order list, streamlining your workflow.
+A single payment can include multiple products. The payment record lists each product by name and stores a combined display name. On the payment detail page, the **Products** column shows each product as a line item with links to product details. Use **View Order** to open the related order; after payment you can go to the order or back to the order list.
 
 ## Payment States and Notifications
 
@@ -23,12 +21,6 @@ Transaction records are automatically linked to the user's signup application, p
 
 ## Invoice
 
-To issue an invoice, navigate to the edit screen:
+Open the payment edit screen and fill in the invoice fields. Two invoice types are available: **individual** and **organization**. Click **Issue invoice** to generate the invoice.
 
-![payment_edit.png](/img/products/payment_edit.png).
-
-On the edit screen, you will need to fill in the relevant invoice information. There are two invoice types available: `individual` and `organization`.
-
-To complete the process, simply click on the "**issue invoice**" button.
-
-Please let us know if you have any further questions or concerns.
+![payment_edit.png](/img/products/payment_edit.png)

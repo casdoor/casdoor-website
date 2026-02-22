@@ -1,27 +1,21 @@
 ---
 title: OAuth 2.0
-description: Using Access Token to authenticate clients
-keywords: [OAuth 2.0, access token, refresh token]
+description: Obtain, verify, and use access tokens with Casdoor’s OAuth 2.0 endpoints.
+keywords: [OAuth 2.0, access token, refresh token, grant types]
 authors: [nomeguy]
 ---
 
-## Introduction
+Casdoor issues **access tokens** for authenticating clients. This page describes how to get a token via the API, verify it, and use it. Alternatively use [Casdoor SDKs](/docs/how-to-connect/sdk) to handle the flow.
 
-Casdoor supports using Access Token to authenticate clients. In this section, we will show you how to obtain an Access Token, how to verify an Access Token, and how to use an Access Token.
+**Supported grant types:** [Authorization Code](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), [Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4), [Refresh Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6), [Device Authorization](https://datatracker.ietf.org/doc/html/rfc8628), [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693).
 
-## How to Get an Access Token
-
-There are two ways to obtain an Access Token: you can use the [Casdoor SDKs](/docs/how-to-connect/sdk). For detailed information, please refer to the SDK documentation. Here, we will mainly show you how to use the API to get the Access Token.
-
-Casdoor supports standard OAuth 2.0 grant types including [Authorization Code Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), [Client Credentials Grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4), [Refresh Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6), [Device Authorization Grant](https://datatracker.ietf.org/doc/html/rfc8628), and [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693).
-
-For security reasons, the Casdoor app has the authorization code mode turned on by default. If you need to use other modes, please go to the appropriate app to set it.
+Authorization code is enabled by default for security. Enable other grant types on the application edit page if needed.
 
 ![Grant Types](/img/how-to-connect/oauth/accesstoken_grant_types.png)
 
-### Authorization Code Grant <span id="1"></span>
+### Authorization code grant <span id="1"></span>
 
-First, redirect your users to:
+Redirect the user to:
 
 ```url
 https://<CASDOOR_HOST>/login/oauth/authorize?
@@ -32,19 +26,18 @@ scope=openid&
 state=STATE
 ```
 
-#### Available scopes
+#### Scopes
 
-|  Name |  Description  |
-|---|---|
-| openid (no scope)  | sub (user's id), iss (issuer), and aud (audience)   |
-| profile  | user profile info, including name, displayName, and avatar   |
-| email  | user's email address   |
-| address  | user's address — returned as an OIDC address object in **JWT-Standard** tokens; see [OIDC Address Claim](/docs/token/overview#oidc-address-claim) for details  |
-| phone |  user's phone number  |
+| Scope | Description |
+|-------|-------------|
+| openid (default) | `sub`, `iss`, `aud` |
+| profile | name, displayName, avatar |
+| email | email address |
+| address | address (OIDC object in **JWT-Standard**; see [OIDC address claim](/docs/token/overview#oidc-address-claim)) |
+| phone | phone number |
 
 :::info
-
-Your OAuth Application can request the scopes in the initial redirection. You can specify multiple scopes by separating them with a space using %20:
+Request scopes in the authorize URL. Separate multiple scopes with `%20`:
 
 ```text
 https://<CASDOOR_HOST>/login/oauth/authorize?
@@ -52,23 +45,22 @@ client_id=...&
 scope=openid%20email
 ```
 
-For more details, please see the [OIDC standard](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse)
-
+See the [OIDC spec](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse) for details.
 :::
 
-After your user has authenticated with Casdoor, Casdoor will redirect them to:
+After the user signs in, Casdoor redirects to:
 
 ```url
 https://REDIRECT_URI?code=CODE&state=STATE
 ```
 
-Now that you have obtained the authorization code, make a POST request to:
+Exchange the code for tokens with a POST to:
 
 ```url
 https://<CASDOOR_HOST>/api/login/oauth/access_token
 ```
 
-in your backend application:
+Request body:
 
 ```json
 {
@@ -79,7 +71,7 @@ in your backend application:
 }
 ```
 
-You will get the following response:
+Example response:
 
 ```json
 {
@@ -144,7 +136,7 @@ Your application doesn't need any changes to support this. The authorization par
 
 ### Implicit Grant
 
-Maybe your application doesn't have a backend, and you need to use Implicit Grant. First, you need to make sure you have Implicit Grant enabled, then redirect your users to:
+For apps without a backend, use **Implicit Grant**. Enable it on the application, then redirect users to:
 
 ```url
 https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE
@@ -160,7 +152,7 @@ Casdoor also supports the [id_token](https://openid.net/specs/oauth-v2-multiple-
 
 ### Device Grant
 
-Maybe your devices have limited input capabilities or lack a suitable browser, and you need to use Device Grant. First, you need to make sure you have Device Grant enabled, the request `device_authorization_endpoint` in OIDC discover, then use QR code or text to show `verification_uri` and lead user to enter login page.
+For devices with limited input or no browser, use **Device Grant**. Enable it on the application, request `device_authorization_endpoint` from OIDC discovery, then show `verification_uri` (e.g. via QR or text) so the user can complete login.
 
 Second, you should request `token endpoint` to get Access Token with parameter define in [rfc8628](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
 
@@ -168,7 +160,7 @@ Second, you should request `token endpoint` to get Access Token with parameter d
 
 If your application doesn't have a frontend that redirects users to Casdoor, then you may need this.
 
-First, you need to make sure you have Password Credentials Grant enabled and send a POST request to:
+Enable **Password Credentials Grant** on the application, then send a POST request to:
 
 ```url
 https://<CASDOOR_HOST>/api/login/oauth/access_token
@@ -184,7 +176,7 @@ https://<CASDOOR_HOST>/api/login/oauth/access_token
 }
 ```
 
-You will get the following response:
+Example response:
 
 ```json
 {
@@ -199,9 +191,9 @@ You will get the following response:
 
 ### Client Credentials Grant
 
-You can also use Client Credentials Grant when your application does not have a frontend.
+Use Client Credentials Grant when the application has no frontend.
 
-First, you need to make sure you have Client Credentials Grant enabled and send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+Enable **Client Credentials Grant** on the application and send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
 
 ```json
 {
@@ -211,7 +203,7 @@ First, you need to make sure you have Client Credentials Grant enabled and send 
 }
 ```
 
-You will get the following response:
+Example response:
 
 ```json
 {
@@ -228,9 +220,9 @@ It is important to note that the AccessToken obtained in this way differs from t
 
 ### Refresh Token
 
-Maybe you want to update your Access Token, then you can use the `refreshToken` you obtained above.
+To refresh the access token, use the `refreshToken` obtained above.
 
-First, you need to set the expiration time of the Refresh Token in the application (default is 0 hours), and send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/refresh_token`
+Set the **Refresh Token** expiration in the application (default 0 hours), then send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/refresh_token`
 
 ```json
 {
@@ -242,7 +234,7 @@ First, you need to set the expiration time of the Refresh Token in the applicati
 }
 ```
 
-You will get a response like this:
+Example response:
 
 ```json
 {
@@ -257,7 +249,7 @@ You will get a response like this:
 
 ### Token Exchange Grant
 
-Token Exchange (RFC 8693) lets you swap an existing token for a new one with different characteristics—particularly useful when one service needs to call another on behalf of a user, or when you need to narrow down a token's scope for a specific downstream service.
+Token Exchange (RFC 8693) lets you swap an existing token for a new one with different characteristics—particularly useful when one service needs to call another on behalf of a user, or to narrow a token's scope for a specific downstream service.
 
 To exchange a token, send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
 
@@ -309,7 +301,7 @@ Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
 token=ACCESS_TOKEN&token_type_hint=access_token
 ```
 
-You will receive the following response:
+Example response:
 
 ```json
 {
@@ -330,20 +322,20 @@ You will receive the following response:
 
 ## How to Use `AccessToken`
 
-You can use AccessToken to access Casdoor APIs that require authentication.
+Use the access token to call Casdoor APIs that require authentication.
 
 For example, there are two different ways to request `/api/userinfo`.
 
 Type 1: Query parameter
 
-`https://<CASDOOR_HOST>/api/userinfo?accessToken=<your_access_token>`
+`https://CASDOOR_HOST/api/userinfo?accessToken=your_access_token`
 
 Type 2: HTTP Bearer token
 
-`https://<CASDOOR_HOST>/api/userinfo` with the header: "Authorization: Bearer <your_access_token>"
+`https://CASDOOR_HOST/api/userinfo` with the header: "Authorization: Bearer `your_access_token`"
 
 Casdoor will parse the access_token and return corresponding user information according to the `scope`.
-You will receive the same response, which looks like this:
+The response has the same shape:
 
 ```json
 {
@@ -357,7 +349,7 @@ If you expect more user information, add `scope` when obtaining the AccessToken 
 
 ## Accessing OAuth Provider Tokens
 
-When users authenticate through OAuth providers (GitHub, Google, etc.), you can access the provider's original access token to make API calls to the third-party service on their behalf. This token is stored in the user's `originalToken` field.
+When users sign in via OAuth providers (GitHub, Google, etc.), the provider's access token is available to call the third-party API on their behalf; it is stored in the user's `originalToken` field.
 
 The token is available through the `/api/get-account` endpoint:
 
@@ -378,6 +370,6 @@ This allows your application to interact with third-party APIs (e.g., GitHub API
 
 ## Differences between the `userinfo` and `get-account` APIs
 
-- `/api/userinfo`: This API returns user information as part of the OIDC protocol. It provides limited information, including only the basic information defined in OIDC standards. For a list of available scopes supported by Casdoor, please refer to the [available scopes](#available-scopes) section.
+- `/api/userinfo`: This API returns user information as part of the OIDC protocol. It provides limited information, including only the basic information defined in OIDC standards. For a list of available scopes supported by Casdoor, see the [available scopes](#available-scopes) section.
 
 - `/api/get-account`: This API retrieves the user object for the currently logged-in account. It is a Casdoor-specific API that allows you to obtain all the information of the [user](/docs/basic/core-concepts#user) in Casdoor, including the OAuth provider's access token when applicable.

@@ -1,29 +1,23 @@
 ---
-title: WordPress
-description: Integrating CAS (Central Authentication Service) into WordPress using Casdoor (identity provider) and the wp-cassify plugin.
-keywords: [WordPress, wp-cassify, CAS Authentication]
+title: WordPress (CAS SSO)
+description: Use Casdoor as CAS IdP for WordPress with the wp-cassify plugin.
+keywords: [WordPress, wp-cassify, CAS, SSO]
 authors: [Attack825]
 ---
 
-This guide walks you through configuring **CAS-based single sign-on (SSO)** for WordPress, using:
-
-- [wp-cassify](https://wordpress.org/plugins/wp-cassify/): A WordPress plugin that enables CAS authentication, allowing users to log into WordPress via a CAS server (e.g., Casdoor).
+This guide configures **CAS-based SSO** for WordPress using [wp-cassify](https://wordpress.org/plugins/wp-cassify/) and Casdoor as the CAS server.
 
 ## Step 1: Deploy Casdoor and WordPress
 
-First, deploy Casdoor (as the CAS server) and WordPress.
+### Deploy Casdoor
 
-### 1.1 Deploy Casdoor
-
-Refer to the official Casdoor installation guide: [Casdoor Server Installation](https://casdoor.org/docs/basic/server-installation).  
-
-After deployment:
+[Install Casdoor](/docs/basic/server-installation). After deployment:
 
 1. Access the Casdoor web UI via its public/private URL (e.g., `http://<casdoor-server-ip>:8000`).
 2. Log in with the default admin credentials (or your custom credentials set during deployment).
-3. Confirm you can navigate the dashboard (e.g., access "Applications", "Users")—this ensures Casdoor is ready to act as a CAS IdP.
+3. Confirm the dashboard works (e.g. open **Applications**, **Users**) so Casdoor is ready as the CAS IdP.
 
-### 1.2 Deploy WordPress
+### Deploy WordPress
 
 Deploy WordPress using your preferred method:
 
@@ -34,9 +28,9 @@ Deploy WordPress using your preferred method:
 2. Complete the initial WordPress setup (create an admin account, site title).
 3. Log in to the WordPress Admin Dashboard (`http://<wordpress-server-ip>/wp-admin`) to confirm functionality.
 
-## Step 2: Create a Casdoor Application
+## Step 2: Create a Casdoor application
 
-Casdoor requires an "Application" to act as a bridge between the CAS server and WordPress. Follow these steps to create one:
+Create an application in Casdoor to act as the CAS bridge for WordPress:
 
 1. Log in to the Casdoor Admin Dashboard.
 2. Navigate to **Applications** > **Add Application**
@@ -44,18 +38,16 @@ Casdoor requires an "Application" to act as a bridge between the CAS server and 
 
 ![Add Application](/img/integration/php/WordPress/add_application.png)
 
-## Step 3: Configure the wp-cassify Plugin
+## Step 3: Configure wp-cassify
 
-The wp-cassify plugin connects WordPress to your Casdoor CAS server. Follow these steps to install and configure it:
-
-### 3.1 Install wp-cassify
+### Install the plugin
 
 1. Log in to the WordPress Admin Dashboard (`http://<wordpress-server-ip>/wp-admin`).
 2. Navigate to **Plugins** > **Add New**.
 3. In the search bar, type "wp-cassify" and select the plugin by "wp-cassify".
 4. Click **Install Now**, then **Activate** to enable the plugin.
 
-### 3.2 Configure wp-cassify Settings
+### Configure settings
 
 1. In the WordPress Admin Dashboard, navigate to **Settings** > **WP-Cassify** (the plugin’s configuration page).
 
@@ -72,7 +64,7 @@ The wp-cassify plugin connects WordPress to your Casdoor CAS server. Follow thes
 
    | WordPress User Field | Casdoor Attribute Name | Example Value          |
    |----------------------|------------------------|------------------------|
-   | `user_email`              | `email`                | <user@example.org>       |
+   | `user_email`              | `email`                | `user@example.org`       |
    | `user_nickname`       | `displayName`          | John Doe               |
    | `display_name`       | `displayName`          | John Doe               |
 

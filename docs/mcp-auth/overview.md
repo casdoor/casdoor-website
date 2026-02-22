@@ -9,9 +9,9 @@ The Model Context Protocol (MCP) specification requires servers to implement OAu
 
 **Casdoor solves this problem.** As a full-featured, open-source identity platform, Casdoor provides all the OAuth 2.1 infrastructure your MCP server needs. Point your server's Protected Resource Metadata to Casdoor, and it handles user authentication, consent, token issuance, and validation—while you focus on building your MCP tools.
 
-## The Problem: OAuth 2.1 is Complex
+## Why use Casdoor for MCP auth?
 
-The MCP specification (June 2025 revision) explicitly separates the authorization server from the resource server. While this separation allows MCP servers to delegate authentication to external providers, it also requires implementing:
+The MCP spec separates the authorization server from the resource server. While this separation allows MCP servers to delegate authentication to external providers, it also requires implementing:
 
 - **OAuth 2.1 endpoints**: Authorization, token, and introspection endpoints
 - **Dynamic Client Registration (DCR)**: RFC 7591 for automatic client registration
@@ -21,9 +21,9 @@ The MCP specification (June 2025 revision) explicitly separates the authorizatio
 - **Resource indicators**: RFC 8707 for audience-restricted tokens
 - **Metadata discovery**: RFC 8414 and OIDC Discovery for endpoint advertising
 
-Most MCP server developers don't have the time or expertise to build and maintain this infrastructure.
+Building and maintaining this yourself is a large effort. Casdoor provides it out of the box.
 
-## The Solution: Delegate to Casdoor
+## Using Casdoor as the MCP auth provider
 
 Instead of building your own authorization server, configure your MCP server to use Casdoor as its OAuth provider. Casdoor provides:
 

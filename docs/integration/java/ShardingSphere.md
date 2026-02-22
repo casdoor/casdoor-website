@@ -5,35 +5,25 @@ keywords: [ShardingSphere]
 authors: [jakiuncle]
 ---
 
-[shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui) has integrated Casdoor. You can use it after configuring it.
+[shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui) includes Casdoor; configure it as below.
 
 ## Step 1: Deploy Casdoor
 
-Firstly, Casdoor should be deployed.
-
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
-
-After a successful deployment, make sure:
-
-- The Casdoor server is successfully running on **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>**. You will see the login page of Casdoor.
-- Input `admin` and `123` to test if the login functionality is working fine.
-
-Then, you can quickly implement a Casdoor-based login page in your own app with the following steps.
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running and you can sign in at the Casdoor login page (e.g. `admin` / `123`).
 
 ## Step 2: Configure Casdoor application and configure application in ShardingSphere
 
 1. **Create or use an existing Casdoor application**
 ![img](/img/integration/java/ShardingSphere/casdoorConfig.png)
-The RedirectURLs depend on the URL you need to redirect to. The selected data will be used in the next step.
+Set **Redirect URLs** to where your app should redirect after login; note the chosen values for the next step.
 
-2. **On the certificate editing page, you can see your `Certificate`**
+2. **On the certificate editing page, copy your `Certificate`**
 
     ![img](/img/integration/java/ShardingSphere/cert.png)
 
 3. **Configure the application in ShardingSphere**
 
-    First, we need to find the application.properties that we need to configure.
+    Locate the `application.properties` (or equivalent) to configure.
 
     ![img](/img/integration/java/ShardingSphere/list.png)
 

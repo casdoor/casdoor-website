@@ -1,28 +1,31 @@
 ---
-title: Sign-in Items Table
-description: Configure the signin items table to create a custom signin page
+title: Sign-in items table
+description: Configure signin items to build a custom sign-in page.
 keywords: [signin, items, table]
 authors: [DacongDA]
 ---
 
-On the application configuration page, we can configure the signin items table to create a customized registration page. We can add or delete any signin item on this signin items table.
+On the application configuration page, use the **Sign-in items** table to define which elements appear on the sign-in page. Add, remove, or reorder items to customize the form.
 
 ![Signin Items Table](/img/application/signin-items-table/signin-items-table.png)
 
-For a detailed explanation of each signin item, please refer to the table below.
+## Column reference
 
-| Column Name | Selectable Value | Description                                                                                                                                                 |
-|:-----------:|:----------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    Name     |        -         | The name of the signin item.                                         |
-|   Visible   | `True` / `False` | Select whether this signin item is visible on the registration page.                                                                                        |
-| Label HTML  | - | If this signin item is added as a custom item, Label should be the html code for this field.   |
-| Custom CSS  | - | CSS code for this signin item.  |
-|    Placeholder     |        -         | The placeholder of the signin item.                                         |
-|    Rule     |  `Rule Items`   | Select a rule to customize this signin item. Detailed rules are described in the table below. |
-|   Action    |        -         | Users can perform actions such as moving this signin item up, moving it down, or deleting it.                            |
+| Column | Values | Description |
+|--------|--------|-------------|
+| **Name** | — | Name of the signin item. |
+| **Visible** | `True` / `False` | Show or hide on the sign-in page. |
+| **Label HTML** | — | For custom items, HTML used as the field label. |
+| **Custom CSS** | — | CSS for this signin item. |
+| **Placeholder** | — | Placeholder text for the field. |
+| **Rule** | Rule items | Rule that customizes this item (see below). |
+| **Action** | — | Move up, move down, or delete. |
 
-The Captcha signin item supports configuration rules to control how verification is presented to users.
+## Captcha rules
 
-| Item Name | Selectable Rules | Description                                                                                                        |
-|:---------:|:----------------:|--------------------------------------------------------------------------------------------------------------------|
-| Captcha   | `Normal` / `Inline` | Choose how captcha verification is displayed. `Normal` shows a modal dialog when sending verification codes. `Inline` displays the captcha directly on the signin page, streamlining the verification process. |
+The **Captcha** item supports rules that control how verification is shown:
+
+| Rule | Description |
+|------|-------------|
+| **Normal** | Captcha is shown in a modal when sending verification codes. |
+| **Inline** | Captcha is shown directly on the sign-in page. |

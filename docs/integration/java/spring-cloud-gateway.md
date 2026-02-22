@@ -9,18 +9,11 @@ The [casdoor-springcloud-gateway-example](https://github.com/casdoor/casdoor-spr
 
 ## Step 1: Deploy Casdoor
 
-Firstly, Casdoor should be deployed. You can refer to the official Casdoor documentation for the [Server Installation](/docs/basic/server-installation). Please deploy your Casdoor instance in **production mode**.
-
-After a successful deployment, you need to ensure the following:
-
-- Open your favorite browser and visit **<http://localhost:8000>**. You will see the login page of Casdoor.
-- Input `admin` and `123` to test if the login functionality is working fine.
-
-After that, you can quickly implement a Casdoor-based login page in your own app using the following steps.
+Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in at the login page (e.g. `admin` / `123`).
 
 ## Step 2: Initialize a Spring Cloud Gateway
 
-You can use the code from this example directly or combine it with your own business code.
+Use the example code as-is or adapt it to your application.
 
 You need a gateway service and at least one business service. In this example, `casdoor-gateway` is the gateway service and `casdoor-api` is the business service.
 
@@ -59,7 +52,7 @@ Initialization requires 6 parameters, all of which are of type string.
 | organizationName | Yes      | Application.organization                            |
 | applicationName  | No       | Application.name                                    |
 
-You can use Java properties or YAML files to initialize these parameters.
+Initialize these parameters via Java properties or YAML.
 
 For properties:
 
@@ -84,7 +77,7 @@ casdoor:
   application-name: app-built-in
 ```
 
-In addition, you need to configure Gateway Routing. For YAML:
+Configure gateway routing as well. For YAML:
 
 ```yaml
 spring:
@@ -134,16 +127,16 @@ public class CasdoorAuthFilter implements GlobalFilter, Ordered {
 
 Now provide 5 services: `CasdoorAuthService`, `CasdoorUserService`, `CasdoorEmailService`, `CasdoorSmsService`, and `CasdoorResourceService`.
 
-You can create them as follows in the Gateway project.
+Create them in the Gateway project as follows.
 
 ```java
 @Resource
 private CasdoorAuthService casdoorAuthService;
 ```
 
-When you require authentication for accessing your app, you can send the target URL and redirect to the login page provided by Casdoor.
+When the app requires authentication, redirect to Casdoor's login page with the target URL.
 
-Please make sure that you have added the callback URL (e.g., <http://localhost:9090/callback>) in the application configuration in advance.
+Add the callback URL (e.g. `http://localhost:9090/callback`) to the Casdoor application in advance.
 
 ```java
 @RequestMapping("login")
@@ -152,9 +145,9 @@ public Mono<String> login() {
 }
 ```
 
-After successful verification by Casdoor, it will be redirected back to your application with a code and state. You can get the code and call the `getOAuthToken` method to parse out the JWT token.
+After Casdoor verifies the user, the app is redirected back with a code and state; use the code and `getOAuthToken` to obtain the JWT.
 
-`CasdoorUser` contains the basic information about the user provided by Casdoor. You can use it as a keyword to set the session in your application.
+`CasdoorUser` holds the user info from Casdoor; use it to establish the session in your app.
 
 ```java
 @RequestMapping("callback")
@@ -199,25 +192,25 @@ Examples of the APIs are shown below.
 
 ## Step 7: Restart the project
 
-After starting the project, open your favorite browser and visit **<http://localhost:9090>**. Then click any button that requests resources from `casdoor-api`.
+After starting the project, open your favorite browser and visit **`http://localhost:9090`**. Then click any button that requests resources from `casdoor-api`.
 
 ![index](/img/integration/java/spring_cloud_gateway/index.png)
 
-The gateway authentication logic will be triggered. Since you are not logged in, you will be redirected to the login interface. Click the Login button.
+The gateway triggers auth; unauthenticated users are redirected to the login page. Click **Login**.
 
 ![toLogin](/img/integration/java/spring_cloud_gateway/toLogin.png)
 
-You can see the unified login platform of Casdoor.
+The Casdoor login page is shown.
 
 ![login](/img/integration/java/spring_cloud_gateway/login.png)
 
-After a successful login, you will be redirected to the main interface. Now you can click any button.
+After login, you are redirected to the main interface; you can proceed to use the app.
 
 ![index-ok](/img/integration/java/spring_cloud_gateway/index-ok.png)
 
 ## What's more
 
-You can explore the following projects/docs to learn more about the integration of Java with Casdoor.
+For more on Java integration, see the following projects and docs.
 
 - [casdoor-java-sdk](https://github.com/casdoor/casdoor-java-sdk)
 - [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter)

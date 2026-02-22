@@ -1,24 +1,22 @@
 ---
 title: Overview
-description: Upload resources in Casdoor
-keywords: [resource, upload, file]
+description: Upload and manage files and images as resources using a storage provider.
+keywords: [resource, upload, file, storage]
 authors: [leo220yuyaodog]
 ---
 
-You can upload resources in Casdoor. Before uploading resources, you need to configure a storage provider.
-Please refer to the [Storage Provider](/docs/provider/storage/overview) section for more information.
+Casdoor can store **resources** (files, images) in [storage providers](/docs/provider/storage/overview). Configure at least one storage provider and add it to your **application**, then users can upload and manage resources.
 
-Once you have configured at least one **storage provider** and added it to your **application**, you can proceed.
 ![resource_addProvider.png](/img/resources/resource_addProvider.png)
 
-Great! Now let's take a look at an example of how to **upload** and **delete** resources.
+### Uploading
 
-### Uploading Resources
+Users upload files or images to the [storage](/docs/provider/storage/overview) configured for the application.
 
-Users can upload various types of resources, such as files and images, to the [cloud storage](/docs/provider/storage/overview) that you have configured.
 ![resource_upload.png](/img/resources/resource_upload.png)
 
-### Deleting Resources
+### Deleting
 
-If you no longer need a particular resource, you can choose to delete it by clicking the "Delete" button.
+To remove a resource, open it and click **Delete**.
+
 ![resource_delete.png](/img/resources/resource_delete.png)

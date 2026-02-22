@@ -1,13 +1,12 @@
 ---
-title: Overview
-description: Add Payment providers to your application
-keywords: [Payment]
+title: Payment provider overview
+description: Add payment providers so users can pay for products.
+keywords: [Payment, product]
 authors: [Chinoholo0807]
 ---
 
-If you want to use payment services in Casdoor, you need to create a Payment provider and add it to your products.
+To accept payments in Casdoor, create **Payment** providers and attach them to your [products](/docs/products/product). Users can then choose a payment method when purchasing.
 
 ![Add payment provider](/img/providers/payment/add_payment_provider.png)
 
-To learn how to configure a product, refer to [Product](/docs/products/product).
-After configuring a product, you can add Payment providers for the product so that users can purchase the product through the Payment providers.
+After configuring a product, add one or more Payment providers to it so users can complete purchases through those providers.

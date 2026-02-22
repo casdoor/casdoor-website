@@ -1,44 +1,38 @@
 ---
-title: Password Complexity
-description: Supporting different password complexity options.
+title: Password complexity
+description: Configure password strength rules per organization.
 keywords: [password, complexity]
 authors: [leoil]
 ---
 
-Casdoor supports customizing password complexity options for user passwords in each organization.
+Each organization can enforce password complexity rules for user passwords.
 
-## Supported Complexity Options
+## Options
 
-We currently support five options:
+| Option | Requirement |
+|--------|-------------|
+| **AtLeast6** | At least 6 characters. |
+| **AtLeast8** | At least 8 characters. |
+| **Aa123** | At least one uppercase letter, one lowercase letter, and one digit. |
+| **SpecialChar** | At least one special character. |
+| **NoRepeat** | No repeated characters. |
 
-- `AtLeast6`: The password must have at least six characters.
-- `AtLeast8`: The password must have at least eight characters.
-- `Aa123`: The password must contain at least one uppercase letter, one lowercase letter, and one digit.
-- `SpecialChar`: The password must contain at least one special character.
-- `NoRepeat`: The password must not contain any repeated characters.
+Multiple options can be enabled; all selected rules apply.
 
-If you want to use multiple options, you can select them on the organization edit page:
+## Configuration
 
-1. Click the **Edit** button on the organization list page.
+1. Open the organization list and click **Edit** for the organization.
+2. In **Password complexity options**, select the options to enforce.
 
-    ![org edit](/img/organization/password_complexity/org_edit.png)
+![org edit](/img/organization/password_complexity/org_edit.png)
+![option selection](/img/organization/password_complexity/select_password_option.png)
 
-2. Then select the option you need in the `Password complexity options` column.
+## Where validation applies
 
-    ![option selection](/img/organization/password_complexity/select_password_option.png)
+- **Sign-up page** — new passwords must satisfy the rules.
+- **Forgot password page** — reset passwords must satisfy the rules.
+- **User edit page** — password changes must satisfy the rules.
 
-## Password Complexity Validation
-
-We support password complexity validation on the following pages:
-
-1. Sign up page.
-
-    ![signup page check](/img/organization/password_complexity/sign_up_demo.gif)
-
-2. Forget password page.
-
-    ![forget page check](/img/organization/password_complexity/forget_demo.gif)
-
-3. User edit page.
-
-    ![user-edit page check](/img/organization/password_complexity/user_edit_demo.gif)
+![signup page check](/img/organization/password_complexity/sign_up_demo.gif)
+![forget page check](/img/organization/password_complexity/forget_demo.gif)
+![user-edit page check](/img/organization/password_complexity/user_edit_demo.gif)

@@ -1,62 +1,41 @@
 ---
-title: Configuring Permissions
-description: Using exposed Casbin APIs to manage users' access rights in an organization
-keywords: [permissions, Casbin]
+title: Permission configuration
+description: Configure Casbin permission policies and each field on the Edit Permission page.
+keywords: [permissions, Casbin, policy, model]
 authors: [MagicalSheep]
 ---
 
-This page explains each field in the **Edit Permission** page where you configure permission policies for your [organization](/docs/organization/overview).
+This page describes the fields on the **Edit Permission** form, where you define permission policies for an [organization](/docs/organization/overview).
 
-## Accessing the Permission Configuration
+## Opening the form
 
-To access the permission configuration page:
-
-1. Log in to your Casdoor instance
-2. Navigate to **Permissions** in the sidebar
-3. Click **Add** to create a new permission or click on an existing permission to edit it
+1. Sign in to Casdoor.
+2. Go to **Permissions** in the sidebar.
+3. Click **Add** for a new policy or open an existing one to edit.
 
 ![Permission Edit Page](/img/permission/permission_edit.png)
 
-## Configuration Fields
+## Fields
 
-### Basic Information
+### Basic information
 
-#### Organization
+**Organization** — The [organization](/docs/organization/overview) that owns this policy. One org can have multiple permission policies. Choose from the dropdown.
 
-The name of the [organization](/docs/organization/overview) to which the policy belongs. An organization can have multiple permission policy files. You can select the organization from the dropdown menu in the **Edit Permission** page.
+**Name** — Unique identifier for the policy inside the organization. Must be unique; it is used when calling [Casbin APIs](/docs/permission/exposed-casbin-apis).
 
-#### Name
+**Display name** — Label shown in the UI.
 
-The globally unique name of the permission policy in the organization. It is used to identify the policy file.
+### Model and storage
 
-- Must be unique within the organization
-- Used as the identifier when calling [Casbin APIs](/docs/permission/exposed-casbin-apis)
+**Model** — The model that defines how this policy is evaluated (ACL, RBAC, ABAC, etc.). Create and edit models on the **Models** page. Examples:
 
-#### Display name
-
-A user-friendly name for the permission policy. This is shown in the Casdoor Web UI for better readability.
-
-### Model and Storage Configuration
-
-#### Model
-
-The name of the model file that describes the structure and matching patterns of the permission policy. You can configure models in the **Edit Model** page.
-
-Models define how permission checks are performed. For example:
-
-- Simple ACL (Access Control List)
-- RBAC (Role-Based Access Control)
-- ABAC (Attribute-Based Access Control)
-
-Learn more about models in the [Casbin documentation](https://casbin.org/docs/supported-models).
+- ACL, RBAC, ABAC — see [Casbin supported models](https://casbin.org/docs/supported-models).
 
 :::tip
-
-Use the [Casbin Online Editor](https://casbin.org/editor) to create and test your model before adding it to Casdoor.
-
+Design and test models in the [Casbin Online Editor](https://casbin.org/editor), then add them in Casdoor.
 :::
 
-#### Adapter
+**Adapter**
 
 This field specifies the database table name where the permission policy rules are stored.
 
@@ -98,7 +77,7 @@ These fields define **who** the permission policy applies to.
 
 #### Sub users
 
-Which [users](/docs/user/overview) will the permission policy be applied to. You can select specific users from the **Edit Permission** page.
+Which [users](/docs/user/overview) the permission applies to; select them on the **Edit Permission** page.
 
 Examples:
 
@@ -107,7 +86,7 @@ Examples:
 
 #### Sub roles
 
-If the RBAC (Role-Based Access Control) model is used, you can select which [roles](/docs/user/roles) will be applied to the permission policy. You configure roles in the **Edit Role** page.
+For RBAC, select which [roles](/docs/user/roles) apply to this permission on the **Edit Role** page.
 
 This will add permission policies such as `g, user, role` for every user in this role.
 
@@ -137,7 +116,7 @@ These fields define **what** resources and **what actions** are controlled by th
 
 #### Resource type
 
-In the current version, Casdoor does not use this field for external applications that want to authenticate. You can ignore it for now or use it for your own categorization purposes.
+Casdoor does not use this field for external app authentication; you can ignore it or use it for your own categorization.
 
 #### Resources
 
@@ -145,7 +124,7 @@ This field describes the resources for which you wish to enforce permission cont
 
 :::note
 
-Note that the resources here are **not** those configured in the **Resources** page of the Casdoor Web UI. You can add any string you want here, such as:
+These resources are **not** the ones on the **Resources** page in the Casdoor UI. Use any string here, e.g.:
 
 - A URL: `/api/users`, `/admin/dashboard`
 - A file name: `document.pdf`, `config.yaml`
@@ -153,7 +132,7 @@ Note that the resources here are **not** those configured in the **Resources** p
 
 :::
 
-You can add multiple resources, and Casdoor will create permission rules for each combination of resource and action.
+Add multiple resources; Casdoor creates permission rules for each resource–action combination.
 
 #### Actions
 
@@ -165,7 +144,7 @@ This field describes the actions to operate on resources. Similar to resources, 
 
 :::caution
 
-Please note that Casdoor will **convert all these strings to lowercase** before storing them. Additionally, Casdoor will **apply all actions to each resource**. You cannot specify that an action only takes effect on certain resources in this configuration page.
+Casdoor **converts all these strings to lowercase** before storing them. Additionally, Casdoor will **apply all actions to each resource**. You cannot specify that an action only takes effect on certain resources in this configuration page.
 
 :::
 
@@ -185,7 +164,7 @@ If you want an external application to enforce permission controls using the int
 
 ## Example Configuration
 
-As you can see, this configuration page is almost tailor-made for the `(sub, obj, act)` model, which is one of the most common permission models.
+This page is tailored to the `(sub, obj, act)` model, one of the most common permission models.
 
 Here's an example configuration:
 

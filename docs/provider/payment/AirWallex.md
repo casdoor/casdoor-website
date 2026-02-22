@@ -1,40 +1,30 @@
 ---
 title: AirWallex
-description: Add AirWallex payment provider to your application
+description: Use AirWallex as a payment provider.
 keywords: [AirWallex, payment]
 authors: [Cutsin]
 ---
 
-:::note
+## 1. Get credentials
 
-This is an example of how to configure a **AirWallex** payment provider.
-
-:::
-
-## Step 1. Get Client ID and API Key
-
-First, you need to have an account at [AirWallex](https://www.airwallex.com/).
-After creating an AirWallex account, log in to the [Developer Dashboard](https://www.airwallex.com/app/account/apiKeys) using your account credentials.
-You can find the `CLIENT ID` and `API KEY` under the `API Keys` tab, or add a new custom permission key.
+Create an account at [AirWallex](https://www.airwallex.com/) and sign in to the [Developer Dashboard](https://www.airwallex.com/app/account/apiKeys). Under **API Keys**, copy **CLIENT ID** and **API KEY** (or create a new custom permission key).
 
 ![AirWallex API Keys](/img/providers/payment/airwallex_api_keys.png)
 
-## Step 2. Create an AirWallex Payment provider
+## 2. Create the provider in Casdoor
 
-Next, create an AirWallex Payment provider in Casdoor by filling in the necessary information.
+**Providers** → **Add**. Set **Category** to **Payment**, **Type** to **AirWallex**. Map:
 
-| Name          | Name in AirWallex                      |
-| ------------- | -------------------------------------- |
-| Category      | choose `Payment`                       |
-| Type          | choose `AirWallex`                     |
-| Client ID     | `CLIENT ID` obtained from Step 1 |
-| Client secret | `API KEY` obtained from Step 1      |
+| Casdoor       | AirWallex   |
+|---------------|-------------|
+| Client ID     | CLIENT ID   |
+| Client secret | API KEY     |
 
 ![AirWallex provider](/img/providers/payment/airwallex_provider.png)
 
-## Step 3. Add the AirWallex Payment provider for your product
+## 3. Attach to a product
 
-Finally, add the AirWallex Payment provider for your product so that users can purchase the product using AirWallex.
+Add the AirWallex provider to the product so users can pay with AirWallex.
 
 ![Add AirWallex payment provider for product](/img/providers/payment/airwallex_product.png)
 

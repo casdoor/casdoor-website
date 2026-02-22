@@ -1,34 +1,27 @@
 ---
-title: User Roles
-description: Roles assigned to users
-keywords: [user, roles, API]
+title: User roles
+description: Assign and manage roles for users; use roles with permission policies.
+keywords: [user, roles, RBAC, API]
 authors: [Resulte]
 ---
 
-Each user can have multiple roles.
-You can view the roles assigned to a user on their profile.
+Users can have multiple **roles**. You see a user’s roles on their profile page.
 
 ![user roles](/img/user/users_roles.png)
 
-## Role Properties
+## Role properties
 
-Every role has the following properties:
+Each role has:
 
-* `Owner`
-* `Name`
-* `CreatedTime`
-* `DisplayName`
-* `IsEnabled`
-* `Users`: An array of sub users belonging to this role
-* `Roles`: An array of sub roles belonging to this role
+- **Owner**, **Name**, **CreatedTime**, **DisplayName**, **IsEnabled**
+- **Users** — list of users in this role
+- **Roles** — list of child roles (for role hierarchy)
 
-## Managing Roles via API
+## Managing roles
 
-Roles are managed as separate resources in Casdoor. When you retrieve a user object, the `Roles` field is populated dynamically by extending the user data with information from the Roles resource.
+Roles are separate resources. The user’s `Roles` field is filled when you load the user (it is not stored on the user record). To assign or change roles, use the **Roles** API, not the User API.
 
-To assign or update roles for users, use the Roles API endpoints rather than the User API. You can manage roles through:
+- **Web UI:** Open the **Roles** page (e.g. `https://door.casdoor.com/roles`).
+- **API:** Use the role endpoints in the [Casdoor API reference](https://door.casdoor.com/swagger).
 
-1. **Web UI**: Navigate to the Roles management page (e.g., `https://door.casdoor.com/roles`)
-2. **API**: Use the role-specific endpoints documented in the [Casdoor API reference](https://door.casdoor.com/swagger)
-
-The Role resource allows you to define roles with specific users assigned to them. When a user is added to a role's `Users` array, that role will automatically appear in the user's `Roles` field when retrieving user data.
+When you add a user to a role’s **Users** array, that role shows up in the user’s `Roles` when you fetch the user.

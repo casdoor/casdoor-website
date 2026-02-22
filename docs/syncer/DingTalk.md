@@ -1,15 +1,15 @@
 ---
-title: DingTalk
-description: Using DingTalk Syncer to synchronize users from DingTalk
+title: DingTalk syncer
+description: Sync users from DingTalk (钉钉) to Casdoor via the DingTalk API.
 keywords: [syncer, dingtalk]
 authors: [mserico]
 ---
 
-DingTalk Syncer automatically imports users from your DingTalk (钉钉) organization into Casdoor. The syncer retrieves user information across all departments through the DingTalk API and maintains synchronized user data.
+The **DingTalk syncer** imports users from your DingTalk organization into Casdoor. It uses the DingTalk API to fetch users from all departments and keeps data in sync.
 
 ## Configuration
 
-The syncer requires these fields:
+Required fields:
 
 - **Organization**: Target Casdoor organization for imported users
 - **Name**: Unique identifier for this syncer

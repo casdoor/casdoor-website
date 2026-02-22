@@ -1,27 +1,23 @@
 ---
-title: Version Information
-description: How Casdoor tracks and reports its version
+title: Version information
+description: How Casdoor reports its version for binaries, Docker, and git builds.
 keywords: [version, git, release, docker]
 authors: [dacongda]
 ---
 
-Casdoor provides version information through its `/api/get-version-info` endpoint, making it easy to verify which version is currently running. The version tracking system adapts to different deployment scenarios, ensuring you always know exactly what code you're running.
+Casdoor exposes its version via the `/api/get-version-info` API so the running version can be checked in any environment.
 
-## How it Works
+## How it works
 
-When you run Casdoor, the version information comes from one of two sources depending on your environment.
+Version data comes from one of two places:
 
-### Development and Git Environments
+### From git (development or source builds)
 
-If you're running Casdoor from a cloned git repository, version information is extracted directly from git. The system reads the latest tag, commit hash, and commit offset automatically. This means developers and contributors always get accurate version details without any manual configuration.
+When Casdoor runs from a clone that has a `.git` directory, it reads the current tag, commit hash, and commit offset from git. For example, three commits after `v1.500.0` yields version `v1.500.0`, offset `3`, and the current commit hash.
 
-For example, if you're three commits ahead of version `v1.500.0`, Casdoor will report the version as `v1.500.0` with a commit offset of `3` and show the current commit hash.
+### From embedded values (releases and Docker)
 
-### Official Releases and Docker Images
-
-For official binary releases and Docker images, git isn't available since these distributions don't include the `.git` folder. To solve this, the build process embeds version information directly into the code during compilation.
-
-When creating a release, the CI pipeline extracts version details from git and writes them to a Go source file (`util/variable.go`). This file contains three variables:
+Official binaries and Docker images do not ship with `.git`. The release pipeline writes version data into `util/variable.go` at build time:
 
 ```go
 var (
@@ -31,17 +27,17 @@ var (
 )
 ```
 
-These values are then compiled into the binary, making the version information permanently available even without git. Whether you download a binary from GitHub Releases or pull the Docker image from DockerHub, the version API returns the exact same information as if you were running from the original git repository.
+Those values are compiled into the binary, so the version API works the same for GitHub binaries and Docker images as for a git checkout.
 
-## Accessing Version Information
+## Checking the version
 
-To check your Casdoor version, simply call the API endpoint:
+Call the API:
 
 ```bash
 curl http://localhost:8000/api/get-version-info
 ```
 
-The response includes the version tag, commit ID, and commit offset:
+Response format:
 
 ```json
 {
@@ -51,4 +47,4 @@ The response includes the version tag, commit ID, and commit offset:
 }
 ```
 
-This works identically whether you're running from source, a binary release, or a Docker container. The monitoring page in Casdoor's web UI also displays this version information, giving administrators quick visibility into what's deployed.
+The same endpoint is used for source, binary, and Docker. The web UI monitoring page also shows this version.

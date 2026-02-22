@@ -1,27 +1,21 @@
 ---
-title: Tags
-description: Configure your application tags
-keywords: [tags, tag, application]
+title: Application tags
+description: Restrict sign-in to users whose tags match the application’s tags.
+keywords: [tags, application, access control]
 authors: [Chinoholo0807]
 ---
 
-Application tags control which users can access your application. When you configure tags on an application, only users whose tags match at least one of the application's tags can sign in. Admin and global admin users bypass this restriction entirely.
+**Application tags** limit who can sign in: only users with at least one tag that matches the application’s tags can access it. Admins and global admins are not restricted.
 
-For example, if your `dev_app` application has tags `dev` and `staging`, users need either the `dev` tag or the `staging` tag to access it. Users can have multiple tags separated by commas, like `"dev,qa,staging"`. When a user has multiple tags, Casdoor checks each one individually—if any tag matches the application's tags, authentication succeeds.
+Example: if the application has tags `dev` and `staging`, users must have `dev` or `staging` (or both). User tags are comma-separated (e.g. `"dev,qa,staging"`); Casdoor checks each tag and allows access if any match. The reserved tag `guest-user` is for [guest authentication](/docs/how-to-connect/guest-auth); those users become `normal-user` when they set credentials.
 
-Casdoor uses specific tag values for special user types. The `guest-user` tag identifies temporary users created through guest authentication. These users automatically upgrade to `normal-user` when they set credentials. See [Guest Authentication](/docs/how-to-connect/guest-auth) for details.
+## Multiple tags per user
 
-## Working with Multiple Tags
-
-Users often need access to multiple applications or environments. Instead of creating separate user accounts, you can assign multiple tags to a single user by separating them with commas.
-
-Consider a user who needs access to both development and staging environments. Set their tag field to `"dev,staging"`. When this user tries to sign in to your development application (which has the `dev` tag), Casdoor splits their tags and finds that `dev` matches. The same user can also access your staging application (tagged with `staging`) without any additional configuration.
-
-This approach works seamlessly with existing single-tag users. A user with just `"prod"` as their tag continues to work exactly as before, while users with comma-separated tags like `"prod,monitoring"` gain access to both production and monitoring applications.
+Assign several tags to one user (e.g. `"dev,staging"`) so they can access multiple apps or environments. Casdoor splits the user’s tags and matches against the application’s tags. Single-tag users (e.g. `"prod"`) behave as before.
 
 ## Configuration
 
-On the application edit page, you can find the `Tags` configuration section where you can add tags.
+On the application edit page, use the **Tags** section to add the tags that are allowed to sign in.
 
 ![configure_tags](/img/application/tags/configure_app_tags.png)
 

@@ -1,84 +1,70 @@
 ---
-title: LDAP Server
-description: How to connect LDAP client in Casdoor
-keywords: [LDAP server]
+title: LDAP server
+description: Use Casdoor as an LDAP server for bind and search.
+keywords: [LDAP, server, bind, search]
 authors: [forestmgy]
 ---
 
-Many systems, like `Nexus`, support LDAP authentication. Casdoor also implements a simple LDAP server, which supports bind and search operations.
+Casdoor can act as a simple LDAP server for systems (e.g. Nexus) that use LDAP for authentication. It supports **bind** and **search** with Simple Authentication.
 
-This document describes how to connect to the LDAP server in Casdoor and implement simple login authentication.
+## Port
 
-### LDAP Server Port
+The LDAP server listens on port **389** by default. Change it via `ldapServerPort` in [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf#L27).
 
-The LDAP server listens on port `389` by default. You can change the default port by modifying the `ldapServerPort` value in [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf#L27).
+## Behavior
 
-### How it Works
-
-Similar to the LDAP client in Casdoor, the users in the LDAP server are all subclasses of `posixAccount`.
-
-When the server receives a set of data transmitted by the LDAP, it will parse the `cn` and `ou`, where `cn` represents the username and `ou` represents the organization name. The `dc` does not matter.
-
-If it is a bind operation, the server will use Casdoor to verify the username and password and grant the user permission in Casdoor.
-
-If it is a search operation, the server will check whether the search operation is legal, according to the permissions granted to the client by the bind operation, and return a response.
+- User entries follow the **posixAccount** style.
+- **Bind**: The server parses `cn` (username) and `ou` (organization). `dc` is ignored. It verifies the user with Casdoor and grants access for subsequent operations.
+- **Search**: The server checks that the client has permission (from the bind) and returns results accordingly.
 
 :::info
-
-We only support **Simple Authentication**.
-
+Only **Simple Authentication** is supported.
 :::
 
-### How to Bind
+## Bind
 
-In Casdoor LDAP server, we only recognize `DN` similar to this format: `cn=admin,ou=built-in,dc=example,dc=com`.
+Use a DN in this form: `cn=<username>,ou=<organization>,dc=example,dc=com`.
 
-Please set the `DN` of the admin user to the above format. Then, you can use this `DN` to bind to the LDAP server with the user's password to log in to Casdoor for verification. If the server verification is successful, the user will be granted authority in Casdoor.
+Example: `cn=admin,ou=built-in,dc=example,dc=com`. Set the admin’s DN to this format, then bind with that DN and the user’s password. On success, the client is authorized for search.
 
-### How to Search
+## Search
 
-Once the bind operation completes successfully, you can perform the search operation. There are some differences between search and bind operations.
+After a successful bind:
 
-- To search for a certain user, such as `Alice` under the `built-in` organization, you should use a `DN` like this: `ou=built-in,dc=example,dc=com`, and add `cn=Alice` in the Filter field.
-- To search for all users under a certain organization, such as all users in `built-in`, you should use a `DN` like this: `ou=built-in,dc=example,dc=com`, and add `cn=*` in the Filter field.
-- To search for all users in all organizations (assuming the user has sufficient permissions), you should use a `DN` like this: `ou=*,dc=example,dc=com`, and add `cn=*` in the Filter field.
-- To search for all users in a specific group, you should use a filter query like this: `(memberOf=organization_name/group_name)` in the Filter field.
+- **One user** (e.g. Alice in `built-in`): Base DN `ou=built-in,dc=example,dc=com`, filter `cn=Alice`.
+- **All users in an org** (e.g. `built-in`): Base DN `ou=built-in,dc=example,dc=com`, filter `cn=*`.
+- **All users in all orgs** (if permitted): Base DN `ou=*,dc=example,dc=com`, filter `cn=*`.
+- **Users in a group**: Use a filter such as `(memberOf=organization_name/group_name)`.
 
-#### User Attributes
+### User attributes
 
-When searching for users, the LDAP server returns the following attributes for each user entry:
+| Attribute | Description | Source |
+|-----------|-------------|--------|
+| `cn` | Common name | User name |
+| `uid` | User ID | User id |
+| `homeDirectory` | Home directory | `/home/{username}` |
+| `mail` | Email | User email |
+| `mobile` | Phone | User phone |
+| `sn` | Surname | User last name |
+| `givenName` | Given name | User first name |
+| `memberOf` | Groups | User’s groups |
 
-| Attribute | Description | Mapped from |
-|-----------|-------------|-------------|
-| `cn` | Common name | User's name |
-| `uid` | User ID | User's unique identifier |
-| `homeDirectory` | Home directory path | `/home/{username}` |
-| `mail` | Email address | User's email |
-| `mobile` | Mobile phone number | User's phone |
-| `sn` | Surname (last name) | User's last name |
-| `givenName` | Given name (first name) | User's first name |
-| `memberOf` | Group memberships | User's groups |
+## RFC-style features
 
-### Supported RFC-Style Features
+### Root DSE (baseDN="")
 
-#### Partial Root DSE Query Support
+- **namingContexts**: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "" -s base "(objectClass=*)" namingContexts` — returns visible organization DNs.
+- **subschemaSubentry**: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "" -s base "(objectClass=*)" subschemaSubentry` — returns `subschemaSubentry: cn=Subschema`.
 
-The Root DSE (baseDN="") provides directory capabilities.
+### Schema
 
-- Query namingContexts (organization list): `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "" -s base "(objectClass=*)" namingContexts`  
-  Returns visible organization DNs.
+Query objectClasses: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "cn=Subschema" -s base "(objectClass=*)" objectClasses` — returns posixAccount and posixGroup definitions.
 
-- Query subschemaSubentry: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "" -s base "(objectClass=*)" subschemaSubentry`  
-  Returns `subschemaSubentry: cn=Subschema`.
+### POSIX filters
 
-#### Schema Query Support
+- `(objectClass=posixAccount)` — user list.
+- `(objectClass=posixGroup)` — group list for an org (e.g. `-b "ou=<org>" "(objectClass=posixGroup)"`).
 
-Query objectClasses: `ldapsearch -x -H ldap://<casdoor-host>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "cn=Subschema" -s base "(objectClass=*)" objectClasses`  
-Returns definitions for posixAccount and posixGroup.
-
-#### POSIX Filters
-
-- `(objectClass=posixAccount)` returns user list.  
-- `(objectClass=posixGroup)` returns group list under organization (e.g., `ldapsearch -x -H ldap://<casdoor-server>:389 -D "cn=admin,ou=built-in" -w <passwd> -b "ou=<org>" "(objectClass=posixGroup)"`).  
-
-Note: `(objectClass=posixGroup)` Does not support combined searches like `(&(objectClass=posixGroup)(cn=<group>))`. Please use `memberOf` for searching members in a group.
+:::note
+`(objectClass=posixGroup)` does not support combined filters like `(&(objectClass=posixGroup)(cn=<group>))`. Use `memberOf` to find members of a group.
+:::

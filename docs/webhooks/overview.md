@@ -1,25 +1,23 @@
 ---
-title: Webhooks Overview
-description: Configuring Webhooks in Casdoor
+title: Webhooks
+description: Send Casdoor events to your application via HTTP webhooks for real-time integration.
 authors: [huang-yilong]
 keywords: [webhook, event-driven, API, integration]
 ---
 
-## Overview
+Casdoor can notify your application when events occur by sending HTTP `POST` requests with a JSON payload to a URL you configure. Use webhooks to react to sign-ups, logins, logouts, profile updates, and many other events.
 
-Casdoor provides an event-driven system that allows you to integrate with external applications using webhooks. Webhooks enable real-time communication by sending HTTP `POST` requests with a JSON payload to a configured endpoint whenever a specified event occurs. This allows your application to react to Casdoor events such as user sign-ups, logins, logouts, and profile updates.
+## How webhooks work
 
-## How Webhooks Work
-
-When an event is triggered in Casdoor:
+When an event occurs in Casdoor:
 
 1. Casdoor sends a `POST` request to the specified webhook URL.
 2. The request contains a JSON payload with event details.
 3. Your application processes the payload and executes relevant actions based on the event type.
 
-### Supported Events
+### Supported events
 
-Casdoor webhooks support a comprehensive range of events across authentication, resource management, and system operations. Events are categorized by their functional area:
+Webhooks can be subscribed to a wide set of events, grouped by area:
 
 #### Authentication & Session Events
 
@@ -63,24 +61,16 @@ Standard CRUD operations (`add-*`, `update-*`, `delete-*`) are available for all
 
 Each event includes contextual information in the webhook payload, allowing you to implement custom logic based on the specific action that triggered the webhook.
 
-## Setting Up a Webhook
+## Setting up a webhook
 
-To configure a webhook in Casdoor:
+1. In your Casdoor instance, go to **Settings** → **Webhooks**.
+2. Click **Add Webhook**.
+3. Enter the **Webhook URL** that will receive events.
+4. Select one or more events to subscribe to.
+5. (Optional) Add custom headers (e.g. for authentication).
+6. Save. Casdoor will send events to the URL from then on.
 
-1. **Navigate to the Casdoor Webhooks Section:**
-   - Open your Casdoor instance.
-   - Go to **Settings** > **Webhooks**.
-
-2. **Create a New Webhook:**
-   - Click on **Add Webhook**.
-   - Enter the **Webhook URL** where Casdoor should send event data.
-   - Select one or more events from the comprehensive list of available triggers.
-   - (Optional) Add custom headers for authentication or additional context.
-
-3. **Save the Webhook Configuration:**
-   - Once saved, Casdoor will start sending event notifications to the specified endpoint.
-
-## Filtering Webhook Payloads
+## Filtering webhook payloads
 
 When working with webhooks, you might not always need the complete record data. Casdoor allows you to filter the payload by configuring **ObjectFields** for each webhook. This feature is particularly valuable when you have privacy concerns, bandwidth constraints, or when your endpoint only processes specific fields.
 
@@ -88,9 +78,9 @@ The ObjectFields configuration accepts either "All" to receive the complete reco
 
 If you configure multiple webhooks with different ObjectFields settings, each webhook operates independently. For example, one webhook might receive only user IDs and timestamps, while another receives full user profiles. Casdoor ensures that the filtering applied to one webhook doesn't affect the data sent to others, even when they're triggered by the same event.
 
-## Example Webhook Payload
+## Example payload
 
-Here’s an example of a JSON payload sent to your webhook when a user logs in:
+Example JSON sent to your webhook on login:
 
 ```json
 {
@@ -106,21 +96,21 @@ Here’s an example of a JSON payload sent to your webhook when a user logs in:
 
 Your application should parse this payload and perform necessary actions, such as logging the event or notifying another service.
 
-## Testing Your Webhook
+## Testing webhooks
 
-Before deploying your webhook integration, you can test it using tools like:
+Before production, test with:
 
 - **[Beeceptor](https://beeceptor.com/)** – Allows you to create a custom webhook URL and inspect incoming requests.
 - **[Webhook.site](https://webhook.site/)** – Provides an instant webhook endpoint for testing.
 
-### Example Test with Beeceptor
+### Example with Beeceptor
 
-1. Visit [Beeceptor](https://beeceptor.com/) and create a new endpoint.
-2. Copy the generated webhook URL and configure it in Casdoor.
-3. Trigger a test event (e.g., log in to Casdoor).
-4. Check Beeceptor’s dashboard to inspect the received request.
+1. Create an endpoint at [Beeceptor](https://beeceptor.com/).
+2. Copy the URL and set it as the webhook URL in Casdoor.
+3. Trigger an event (e.g. sign in to Casdoor).
+4. Inspect the request in Beeceptor’s dashboard.
 
-## Handling Webhooks in Your Application
+## Handling webhooks in your application
 
 Your server should be able to process incoming webhook requests. Below is a simple example in Node.js:
 
@@ -138,8 +128,4 @@ app.post('/webhook', (req, res) => {
 app.listen(3000, () => console.log('Server running on port 3000'));
 ```
 
-## Conclusion
-
-Casdoor webhooks provide a powerful way to integrate with external applications by enabling event-driven interactions. Whether you need to sync user data, trigger notifications, or update external systems, webhooks allow seamless automation.
-
-To ensure a smooth integration, always validate incoming requests and test your webhooks with tools like Beeceptor or Webhook.site before deploying them in production.
+Validate incoming webhook requests (e.g. signatures or shared secrets) and test with Beeceptor or Webhook.site before using webhooks in production.

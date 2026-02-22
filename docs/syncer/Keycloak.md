@@ -1,14 +1,12 @@
 ---
-title: Keycloak
-description: Using Keycloak Syncer to synchronize Keycloak
-keywords: [Keycloak, Syncer]
+title: Keycloak syncer
+description: Sync users from Keycloak to Casdoor with automatic schema mapping.
+keywords: [Keycloak, syncer]
 authors: [Marvelousp4]
 ---
 
-## Keycloak Syncer
+The **Keycloak syncer** extends the [database syncer](/docs/syncer/Database) with preset configuration for Keycloak’s schema, so you can migrate users from Keycloak to Casdoor without manual column mapping.
 
-The Keycloak syncer extends the [database syncer](/docs/syncer/Database) with automatic configuration for Keycloak's schema. It simplifies the process of migrating users from Keycloak to Casdoor.
-
-The syncer automatically fetches data from multiple Keycloak tables (`credential`, `keycloak_group`, `user_group_membership`) since user information in Keycloak is distributed across these tables.
+User data in Keycloak is spread across several tables (`credential`, `keycloak_group`, `user_group_membership`, etc.). The syncer reads from these tables and maps them into Casdoor users.
 
 ![edit](/img/syncer/Keycloak/syncer_keycloak_edit.png)

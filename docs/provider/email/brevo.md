@@ -1,32 +1,32 @@
 ---
-title: Brevo
-description: Using Brevo as the SMTP server
-keywords: [email, Brevo]
+title: Brevo email
+description: Use Brevo (Sendinblue) as the SMTP provider for Casdoor.
+keywords: [email, Brevo, SMTP]
 authors: [UsherFall]
 ---
 
-In this guide, we will be using Brevo as the SMTP server.
+## 1. Enable Brevo SMTP
 
-### Step 1: Request the activation of your Brevo SMTP account
-
-Refer to the documentation to activate Brevo SMTP: [Send transactional emails using Brevo SMTP](https://help.brevo.com/hc/en-us/articles/7924908994450)
-
-In my case, when I created a ticket to activate my smtp account, I got this reply:
+Activate SMTP for your Brevo account. See [Send transactional emails using Brevo SMTP](https://help.brevo.com/hc/en-us/articles/7924908994450). You may need to request activation via support.
 
 ![brevo_smtp](/img/providers/brevo_smtp.png)
 
-### Step 2: Get Brevo SMTP configuration
+## 2. Get SMTP settings
 
-In your Brevo dashboard, find **SMTP&API**, get `SMTP Server`, `Port`, `Login`, `SMTP key value`
+In the Brevo dashboard, open **SMTP & API** and note:
+
+- **SMTP Server**
+- **Port**
+- **Login**
+- **SMTP key** (password)
 
 ![brevo_conf](/img/providers/brevo_conf.png)
 
-### Step 3: Configure Casdoor email Provider
+## 3. Configure the provider in Casdoor
 
-Now create an email provider in Casdoor. Fill in the necessary information.
+Create an **Email** provider, set **Type** to the appropriate SMTP option, and enter **Host**, **Port**, **Username**, and **Password** (SMTP key). Set **From** to your verified sender.
 
 ![brevo_provider](/img/providers/brevo_provider.png)
 
-Click on the `Test SMTP Connection` button. If you see `provider: SMTP connected successfully`, it means that your Casdoor service can access the Brevo service.
-
-Next, click on the `Send Testing Email` button. If you see `Email sent successfully`, it means that the test email has been sent successfully from the `From` address to the `Test Email`.
+- Use **Test SMTP Connection**; you should see “SMTP connected successfully”.
+- Use **Send Testing Email**; you should see “Email sent successfully” and receive the test at the **Test Email** address.

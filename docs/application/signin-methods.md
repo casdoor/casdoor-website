@@ -1,48 +1,40 @@
 ---
-title: Sign-in Methods
-description: Configure the login method and the display order of the login methods
-keywords: [signin, method]
+title: Sign-in methods
+description: Configure which sign-in methods are available and their order on the login page.
+keywords: [signin, method, password, verification code, WebAuthn, LDAP]
 authors: [HGZ-20]
 ---
 
-On the Application Configuration page, we can configure the sign-in item table. We can add and remove sign-in items from the table.
+On the application edit page, configure the **sign-in items** table: add, remove, and reorder methods. Supported methods: **Password**, **Verification code**, **WebAuthn**, and **LDAP**.
 
 ![Signin Methods](/img/application/signin-methods/signin-methods.png)
 
-For a detailed explanation of each sign-in item, please refer to the table below. Currently, only `Password`, `verification code`, `WebAuthn` and `LDAP` login methods are available.
+Field reference:
 
-| Column Name | Selectable Value | Description                                                                                                                                                 |
-|:-----------:|:----------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    Name     |        -         | The name of the sign-in method.                                                                                                                                           |
-|   DisplayName   | - | The name which the sign-in method displays to the public.                                                                                        |
-|    Rule     |  `Rule Items`   | Select a rule to customize this sign-in method. Detailed rules are described in the table below. |
-|   Action    |        -         | Users can perform actions such as moving this sign-in method up, moving it down, or deleting it.                            |
+| Column       | Description |
+|-------------|-------------|
+| Name        | Sign-in method name. |
+| DisplayName | Label shown to users. |
+| Rule        | Rule that customizes this method (see table below). |
+| Action      | Move up, move down, or delete. |
 
-At present, configuration rules are only supported for the `Password` and `Verification code` sign-in methods.
+Rules are supported for **Password** and **Verification code** only.
 
-| Sign-in Method Name |              Selectable Rules               | Description                                                                                                                                                                                                                                                                        |
-|:-------------------:|:-------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|      Password       |         `All(default)`/ `Non-LDAP`          | Select the sign-in methods available to the user. Choosing `All`, then LDAP users can also sign-in. Choosing `Non-LDAP`, then LDAP users are prohibited from sign-in.                                                                                                              |
-|  Verification code  | `All(default)`/ `Email only` / `Phone only` | Select the sign-in methods available to the user. Choosing `All`, then both email and phone numbers can be verified for sign-in. Choosing `Email only` , then only eamil login is allowed. Choosing `Phone only`, then only the phone number is allowed to authenticate the login. |
+| Method            | Rules | Description |
+|-------------------|-------|-------------|
+| Password          | `All` (default), `Non-LDAP` | `All` — LDAP users can sign in with password. `Non-LDAP` — LDAP users cannot use password sign-in. |
+| Verification code | `All` (default), `Email only`, `Phone only` | Which channel to use for the code: both, email only, or phone only. |
 
 :::note
-
-For example, we want users to prioritize logging in with their email, and then consider logging in with a password if they can't use their email.
-
+**Example:** Prefer email sign-in, then password. Add **Verification code** first and **Password** second; set the verification code rule to **Email only** so the code is sent only by email. Optionally set a clear display name for the verification code method (e.g. “Email login”).
 :::
 
-First, we configure two login options, `Verification Code` and `Password`, and `Verification Code` is the first login option. Then we change the `verification code` rule to `Email only`, so that the user can only receive the login verification code by email.
-
 ![Signin Methods](/img/application/signin-methods/signin-methods-demo-config.png)
-
-To make it easier for users to understand, we can change the display name of the `Verification code` login method so that users can easily understand that it is an email login.
 
 ![Signin Methods](/img/application/signin-methods/signin-methods-demo-page.png)
 
 :::tip
-
-All login options, except for LDAP, are enabled by default. And it is required that at least one sign-in method be added.
-
+All methods except LDAP are available by default. At least one sign-in method must be configured.
 :::
 
 Here is a video of how the sign-in method works:

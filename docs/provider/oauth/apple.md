@@ -1,11 +1,11 @@
 ---
-title: Apple
-description: Add the Apple Sign in OAuth provider to your application.
+title: Sign in with Apple
+description: Add Apple as an OAuth provider (Sign in with Apple).
 keywords: [Apple, OAuth, Sign in with Apple]
 authors: [People257]
 ---
 
-To set up the Apple Sign in provider, please go to the [Apple Developer](https://developer.apple.com/account) website. An active **Apple Developer Program membership** is required.
+You need an [Apple Developer](https://developer.apple.com/account) account and an **Apple Developer Program** membership.
 
 ### Step 1: Configure App ID
 
@@ -46,9 +46,9 @@ After registering the Key, note down the **Key ID** and **download the `.p8` fil
 
 **Important:** Find and note down your **Team ID** from the **Membership** page on the Apple Developer Portal.
 
-### Step 5: Configure Casdoor Provider
+### Step 5: Add the provider in Casdoor
 
-1. **Client ID**: Enter the Apple **Services ID `Identifier`** you created earlier.
+1. **Client ID** — The **Services ID** (Identifier) you created in Step 2.
 2. **Team ID**: Enter your Apple **Team ID** (found on the Membership page).
 3. **Key ID**: Enter the Apple **Key ID** you noted down.
 4. **Key Text**: Open the downloaded `.p8` file with a text editor. Copy its **entire content** (including the `-----BEGIN...` and `-----END...` lines) and paste it here.

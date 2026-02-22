@@ -1,33 +1,24 @@
 ---
-title: Login UI Customization
-description: Customize the login page UI for your application
-keywords: [UI, login, application]
+title: Login UI customization
+description: "Customize the sign-in page: background, panel style, position, and side panel."
+keywords: [UI, login, application, customization]
 authors: [leo220yuyaodog]
 ---
 
-You have created the application. Now, let me show you how to customize the login page UI of your application. In this guide, we will create a customized login page for your application.
+This guide walks through customizing your application’s sign-in page: background image, login panel style, position, and optional side panel.
 
 ![step4_result2.png](/img/application/ui-customization/step4_result2.png)
 
-Let's get started!
+## 1. Background image
 
-## Part 1: Add a background image
-
-First, let's add a background image. The default background is white, which looks very simple.
+The default background is white. Set **Background URL** to an image URL; the preview updates when the URL is valid.
 
 ![step1_start.png](/img/application/ui-customization/step1_start.png)
-
-To add a background image, fill in the `Background URL` with the URL of the image you like. The preview area will display the image if the URL is valid.
-
 ![step1_backgroune_url.gif](/img/application/ui-customization/step1_backgroune_url.gif)
 
-## Part 2: Customize the login panel
+## 2. Login panel style
 
-Here's where you were at the end of the first part:
-
-![step1_end.png](/img/application/ui-customization/step1_end.png)
-
-To make the panel look nice, you need to add some CSS code to it. Copy the code below and paste it into the `Form CSS` field.
+Use **Form CSS** to style the login panel. Example:
 
 ```html
 <style>
@@ -43,34 +34,25 @@ To make the panel look nice, you need to add some CSS code to it. Copy the code 
 ![step2_form_css.gif](/img/application/ui-customization/step2_form_css.gif)
 
 :::tip
-
-When editing the `Form CSS`, if the value is empty, the editor will show the default value. However, you still need to copy the content and paste it into the field.
-
+If **Form CSS** is empty, the editor may show a default; copy the content and paste it into the field, then save.
 :::
-
-After filling the `Form CSS`, don't forget to save the configuration at the bottom. Now, let's see the effect.
 
 ![step2_end.png](/img/application/ui-customization/step2_end.png)
 
-## Part 3: Select the panel position
+## 3. Panel position
 
-Now, the login page looks much prettier than before. We also provide three buttons for you to decide the position of the panel.
+Use the position buttons to place the panel on the **Left**, **Center**, or **Right**.
 
 ![step3_position.png](/img/application/ui-customization/step3_position.png)
-
-For example, let's select the **Right** button:
-
 ![step3_end.png](/img/application/ui-customization/step3_end.png)
 
-## Part 4: Enable the side panel
+## 4. Side panel
 
-Next, let's see how to enable a side panel and customize its style.
-
-First, select the button. In the **Enable Side Panel** mode, the panel will be centered.
+Enable **Enable Side Panel** so the form is centered with a side area. Edit **Side panel HTML** for the side content; start from the default template or customize it.
 
 ![enable_side_panel.png](/img/application/ui-customization/step4_enable_side_panel.png)
 
-Then, edit the `Side panel HTML`, which determines the content that will be shown in the side panel. We provide a default template, so you can simply copy and paste it.
+Example **Side panel HTML**:
 
 ```html
 <style>
@@ -110,15 +92,7 @@ Then, edit the `Side panel HTML`, which determines the content that will be show
 </div>
 ```
 
-Let's see the effect. The side panel with a logo and image is shown, but the result is not satisfactory.
-
-![step4_result1.png](/img/application/ui-customization/step4_result1.png)
-
-To improve the look, you need to modify and add some CSS in the `Form CSS`.
-
-![step4_modify_CSS.gif](/img/application/ui-customization/step4_modify_CSS.gif)
-
-The final code is as follows.
+Refine the layout with **Form CSS** (e.g. `.login-panel`, `.login-form`):
 
 ```html
 <style>
@@ -133,24 +107,18 @@ The final code is as follows.
 </style>
 ```
 
+![step4_modify_CSS.gif](/img/application/ui-customization/step4_modify_CSS.gif)
+
 :::info
-
-`.login-panel` and `.login-form` are the class names of div elements. They correspond to different areas of the page. If you want to customize the login page further, you can write CSS code here, targeting these class names.
-
+`.login-panel` and `.login-form` are the main container classes; target them in **Form CSS** for further customization.
 :::
-
-Finally, we have a beautiful login page!
 
 ![step4_result2.png](/img/application/ui-customization/step4_result2.png)
 
-## Review
+## Summary
 
-To summarize, we have added a background image, customized the login panel style, and enabled the side panel.
+Set **Background URL**, style **Form CSS**, choose **panel position**, and optionally enable and style **Side panel HTML**. See also:
 
-Here are some additional resources about application customization in Casdoor:
-
-- [Customize Theme](/docs/organization/customize-theme): Customize the theme, including the primary color and border radius.
-- [Signup Items Table](/docs/application/signup-items-table)
-- [Application Config](/docs/application/config)
-
-Thank you for reading!
+- [Customize theme](/docs/organization/customize-theme) — primary color and border radius
+- [Sign-up items table](/docs/application/signup-items-table)
+- [Application config](/docs/application/config)

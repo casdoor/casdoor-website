@@ -1,50 +1,47 @@
 ---
-title: SendGrid
-description: Using SendGrid as an Email Provider
+title: SendGrid email
+description: Use SendGrid as an email provider for verification and notifications.
 keywords: [email, SendGrid]
 authors: [UsherFall]
 ---
 
-In this guide, we will use SendGrid as an email provider.
+## 1. Create an API key
 
-## Step 1: Create an API Key for Your SendGrid Account
-
-Expand **Settings** from the left navigation bar, then click on **API Keys**. Here, you will see all previously generated API keys. To create a new one, click on **Create API Key** and configure the necessary permissions.
+In the [SendGrid](https://sendgrid.com/) dashboard, go to **Settings** → **API Keys**. Click **Create API Key** and set the permissions you need.
 
 ![sendgrid_apikey](/img/providers/sendgrid_apikey.png)
 
-## Step 2: Sender Verification
+## 2. Verify sender
 
-To verify your email sender, choose between **Single Sender Verification** or **Domain Authentication** by referring to the official documentation:  
-[Sender Identity](https://docs.sendgrid.com/for-developers/sending-email/sender-identity)
+Verify your sender via **Single Sender Verification** or **Domain Authentication**. See [Sender Identity](https://docs.sendgrid.com/for-developers/sending-email/sender-identity).
 
-## Step 3: Configure Casdoor as an Email Provider
+## 3. Configure the provider in Casdoor
 
-Create a SendGrid email provider in Casdoor and fill in the following fields:
+Create an **Email** provider, set **Type** to **SendGrid**, and fill in:
 
-### Required Fields
+**Required**
 
-| Field         | Description                                |
-|--------------|--------------------------------------------|
-| Secret Key   | Your SendGrid API key                     |
-| From Address | Your verified email address (or domain)   |
+| Field         | Description                    |
+|---------------|--------------------------------|
+| Secret Key    | Your SendGrid API key          |
+| From Address  | Verified sender email or domain |
 
-### Default Fields
+**Defaults** (can override)
 
-| Field    | Description                          |
-|---------|--------------------------------------|
-| Endpoint | Default: `/v3/mail/send`            |
-| Host     | Default: `https://api.sendgrid.com` |
+| Field    | Default                     |
+|----------|-----------------------------|
+| Endpoint | `/v3/mail/send`             |
+| Host     | `https://api.sendgrid.com`  |
 
-### Email Fields
+**Optional**
 
-| Field         | Description                               |
-|--------------|-------------------------------------------|
-| From Name    | The display name of the email sender     |
-| Email Title  | The subject of the email                 |
-| Email Content | Supports HTML templates                 |
-| Test Email   | The recipient's email address for testing |
+| Field          | Description                    |
+|----------------|--------------------------------|
+| From Name      | Sender display name            |
+| Email Title    | Subject                        |
+| Email Content  | Body (HTML supported)          |
+| Test Email     | Recipient for **Send Testing Email** |
 
 ![sendgrid_email_provider_fields](/img/providers/sendgrid_email_provider_fields.png)
 
-Finally, click on the **Send Testing Email** button and check your `Test Email` address for the test email.
+Use **Send Testing Email** and check the **Test Email** inbox to confirm delivery.

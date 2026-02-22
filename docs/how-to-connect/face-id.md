@@ -1,44 +1,41 @@
 ---
 title: Face ID
-description: Use Face ID to log in in Casdoor
-keywords: [face id, signin]
+description: Sign in with Face ID using face-api.js.
+keywords: [face id, signin, biometric]
 authors: [HGZ-20]
 ---
 
-## Overview
+Casdoor supports **Face ID** sign-in using face-api.js. Users register facial data in their account and can sign in by scanning their face on the login page.
 
-We've now incorporated `Face ID` login into Casdoor by leveraging face-api.js.
+## Enable Face ID
 
-## Activation method
+### 1. Add Face ID to account items
 
-### Add the Face ID option in the organization's Account items
-
-`User Management` -> `Organizations` -> Choose an organization -> Locate the `Account items` section and incorporate `Face ID`
+**User Management** → **Organizations** → select organization → **Account items** → add **Face ID**.
 
 ![Face ID](/img/application/face-id/organization-face-id.png)
 
-### Afterwards, you'll find the Face ID option under User, where users can upload their facial data to be used for logging in
+### 2. Let users add facial data
 
-`User Management` -> `Users` -> Choose a user -> Find `Face Ids`, and add facial data. You can add up to 5 facial data entries, and you can give each facial data a custom name.
+**User Management** → **Users** → select user → **Face Ids**. Users can add up to 5 face entries and give each a name.
 
 ![Face ID](/img/application/face-id/user-face-id.png)
 
-### Third step: Incorporate Face ID as a login option under the Signin methods section of the application
+### 3. Add Face ID to sign-in methods
 
-`Identity` -> `Applications` -> Choose an application -> Go to the `Signin methods` section and incorporate `Face ID` as a login option.
+**Identity** → **Applications** → select application → **Signin methods** → add **Face ID**.
 
 ![Face ID](/img/application/face-id/signin-methods-face-id.png)
 
-### Finally, you can log in using the Face ID method on the login page
+### 4. Sign in with Face ID
 
-1. On the login page, select the `Face ID` login method.
-2. Enter the username, click on `Sign in with Face ID`.
-3. Once you grant permission to access your camera, you'll be able to log in using `Face ID`.
+1. On the login page, choose the **Face ID** method.
+2. Enter the username and click **Sign in with Face ID**.
+3. Allow camera access when prompted, then complete face verification.
 
 ![Face ID](/img/application/face-id/face-id-signin.png)
-
 ![Face ID](/img/application/face-id/face-recognition.png)
 
-Here is a video demonstrating how to configure Face ID login:
+Demo video:
 
 <video src="/video/application/face-id-demo.mp4" controls="controls" width="100%"></video>

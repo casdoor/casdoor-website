@@ -9,43 +9,23 @@ Casdoor can be easily integrated with RuoYi-cloud.
 
 ## Step 1: Deploy Casdoor
 
-First, deploy Casdoor.
-
-You can refer to the Casdoor official documentation for the [Server Installation](/docs/basic/server-installation).
-
-After successful deployment, ensure the following:
-
-- The Casdoor server is running at **<http://localhost:8000>**.
-- Open your favorite browser and visit **<http://localhost:7001>** to access the Casdoor login page.
-- Test the login functionality by entering `admin` and `123`.
-
-Next, you can quickly implement a Casdoor-based login page in your own app following these steps.
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running (e.g. `http://localhost:8000`) and you can open the login page (e.g. `http://localhost:7001`) and sign in with `admin` / `123`.
 
 ## Step 2: Configure Casdoor
 
-To configure Casdoor, please follow these steps:
+Configure an organization, an application, and the Synchronizer in Casdoor. Notes:
 
-1. Open Casdoor in a browser by clicking [here](https://door.casdoor.com/login). It is recommended to use a different browser than your development browser.
-
-2. Configure an organization, an application, and the Synchronizer in Casdoor. You can find detailed instructions on how to do this [here](https://door.casdoor.com/login).
-
-Here are some additional points to keep in mind:
-
-1. When editing the syncer, make sure to check the table columns: ![Table Columns](/img/integration/java/RuoYi/tableColumns.png).
-
-2. When editing the organization, make sure to select the correct password type: ![Password Type](/img/integration/java/RuoYi/passwordType.png).
-
-3. Lastly, ensure that you have enabled soft deletion.
-
-Please make sure to follow these instructions carefully to properly configure Casdoor.
+1. When editing the syncer, check the table columns: ![Table Columns](/img/integration/java/RuoYi/tableColumns.png).
+2. When editing the organization, select the correct password type: ![Password Type](/img/integration/java/RuoYi/passwordType.png).
+3. Enable soft deletion.
 
 ## Step 3. Reform your front-end
 
 ### 3.1 Jump to Casdoor's login page
 
-We can use a front-end SDK, taking vue-sdk as an example here. After you initialize vue-sdk, you can obtain the Casdoor login page URL by using the getSigninUrl() function.
+Use a frontend SDK (e.g. vue-sdk). After initializing it, get the Casdoor login URL with `getSigninUrl()`.
 
-You can link it in the way you prefer, and feel free to delete any original code from Ruoyi-Cloud that is no longer necessary, such as the original account and password el-input.
+Wire the link as needed and remove any redundant RuoYi-Cloud login UI (e.g. account/password inputs).
 
 ### 3.2 Accept the code and state returned by Casdoor
 
@@ -121,7 +101,7 @@ The RuoYi back-end already has a well-implemented login and registration functio
 
     ![login button](/img/integration/java/RuoYi/loginButton.png)
     ![data loginForm](/img/integration/java/RuoYi/loginForm.png)
-    Here, I have written the URL, but you can obtain it using the Casdoor-Vue-SDK or Casdoor-SpringBoot-SDK.
+    The URL can also be obtained from Casdoor-Vue-SDK or Casdoor-SpringBoot-SDK.
 
 5. Since we are no longer using the original login method, delete the cookie and checkcode methods.
 

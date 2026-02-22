@@ -1,39 +1,42 @@
 ---
 title: Deploying to Kubernetes
-description: Learn how to deploy Casdoor in a Kubernetes cluster
+description: Deploy Casdoor in a Kubernetes cluster using the example manifests.
 keywords: [k8s, Kubernetes, Casdoor, deployment]
 authors: [ComradeProgrammer]
 ---
 
-## Deploy Casdoor in Kubernetes (k8s)
+## Deploy Casdoor on Kubernetes
 
-We provide a basic example of deploying Casdoor in a Kubernetes cluster. In the root folder of Casdoor, you will find a file named "k8s.yaml". This file contains an example configuration for deploying Casdoor in Kubernetes, including a deployment and a service.
+The Casdoor repo includes an example manifest `k8s.yaml` in the project root, with a Deployment and a Service. For production or custom setups, consider using the [Helm chart](/docs/basic/try-with-helm) instead.
 
-Before starting the deployment, ensure that you have modified the `conf/app.conf` file so that Casdoor can connect to the database successfully and that the database itself is running. Also, make sure that Kubernetes is able to pull the necessary images.
+Before deploying:
 
-To deploy Casdoor, run the following command:
+1. Update `conf/app.conf` so Casdoor can connect to your database.
+2. Ensure the database is running and the cluster can pull the Casdoor image.
+
+Deploy with:
 
 ```shell
 kubectl apply -f k8s.yaml
 ```
 
-You can check the deployment status by running the command `kubectl get pods`.
+Check deployment status with `kubectl get pods`.
 
 Here is the content of `k8s.yaml`:
 
 ```yaml
-# this is only an EXAMPLE of deploying casddor in kubernetes
-# please modify this file according to your requirements
+# Example: deploying Casdoor on Kubernetes
+# Adjust this file for your environment
 apiVersion: v1
 kind: Service
 metadata:
-  #EDIT IT: if you don't want to run casdoor in default namespace, please modify this field
+  # EDIT: set namespace if not using default
   #namespace: casdoor
   name: casdoor-svc
   labels:
     app: casdoor
 spec:
-  #EDIT IT: if you don't want to run casdoor in default namespace, please modify this filed
+  # EDIT: set namespace if not using default
   type: NodePort
   ports:
     - port: 8000
@@ -43,13 +46,13 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  #EDIT IT: if you don't want to run casdoor in default namespace, please modify this field
+  # EDIT: set namespace if not using default
   #namespace: casdoor
   name: casdoor-deployment
   labels:
     app: casdoor
 spec:
-  #EDIT IT: if you don't use redis, casdoor should not have multiple replicas
+  # EDIT: use 1 replica if not using Redis
   replicas: 1
   selector:
     matchLabels:
@@ -81,7 +84,7 @@ spec:
 
 ```
 
-Please note that this file is only an example. You can make various modifications as per your requirements, such as using a different namespace, service type, or a ConfigMap to mount the configuration file. Using a ConfigMap is a recommended approach in Kubernetes for mounting configuration files in a production environment.
+This file is only an example. Adjust as needed (namespace, service type, ConfigMap for config). Using a ConfigMap for the config file is recommended in production.
 
 ## Exposing Casdoor with Ingress
 

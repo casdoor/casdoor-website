@@ -1,46 +1,24 @@
 ---
 title: Paddle
-description: Add Paddle payment provider to your application
+description: Use Paddle as a payment provider for digital products and subscriptions.
 keywords: [Paddle, payment]
 authors: [hsluoyz]
 ---
 
-:::note
+[Paddle](https://www.paddle.com/) handles payments, tax, and subscriptions for digital products.
 
-This is an example of how to configure a **Paddle** payment provider.
+## 1. Get API key
 
-:::
+Sign in at [Paddle](https://www.paddle.com/). In [Developer Tools → Authentication](https://sandbox-vendors.paddle.com/authentication-v2), create an API key with permission to create transactions. Copy the key.
 
-Paddle is a comprehensive payment infrastructure platform designed for digital product businesses. It handles payment processing, tax compliance, and subscription management in a single solution.
+## 2. Create the provider in Casdoor
 
-## Step 1. Get Your API Key
+**Providers** → **Add**. Set **Category** to **Payment**, **Type** to **Paddle**. Put the API key in **Client secret**. **Client ID** is not used for Paddle.
 
-Create an account at [Paddle](https://www.paddle.com/) and access your dashboard.
+## 3. Attach to a product
 
-Navigate to the [Developer Tools > Authentication](https://sandbox-vendors.paddle.com/authentication-v2) section. Generate an API key with permissions to create transactions.
-
-Copy the API key for the next step.
-
-## Step 2. Create a Paddle Payment Provider
-
-Create a Paddle payment provider in Casdoor:
-
-|    Name       |   Name in Paddle            |
-|      ----     |   ----                      |  
-|Category       |   Choose `Payment`          |
-|Type           |   Choose `Paddle`           |
-|Client secret  |   API key obtained from Step 1   |
-
-The Client ID field is not required for Paddle.
-
-## Step 3. Add the Provider to Your Product
-
-Add the Paddle payment provider to your product in Casdoor. When users purchase your product, they'll be redirected to Paddle's checkout page to complete the transaction.
-
-Paddle creates transactions dynamically without requiring pre-configured products in your dashboard, making it straightforward to set up new products.
+Add the Paddle provider to the product in Casdoor. Checkout redirects users to Paddle. Paddle creates transactions dynamically; you do not need to pre-create products in Paddle.
 
 :::note
-
-Paddle automatically uses sandbox mode for development and production mode for live environments based on your Casdoor configuration (`runmode` in `conf/app.conf`).
-
+Sandbox vs production is determined by Casdoor’s `runmode` in `conf/app.conf`.
 :::

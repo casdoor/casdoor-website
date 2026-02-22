@@ -1,29 +1,23 @@
 ---
-title: Twilio
-description: Using Twilio as an SMS provider for Casdoor
+title: Twilio SMS
+description: Use Twilio as an SMS provider for verification codes.
 keywords: [Twilio, SMS, provider]
 authors: [UsherFall]
 ---
 
-## Fill in the necessary information in Casdoor
+Configure a **SMS** provider in Casdoor with **Type** set to **Twilio**. Map Twilio values to Casdoor fields:
 
-There are four required fields: `Client ID`, `Client secret`, `Sender number`, and `Template code`. The corresponding relationship to the Twilio account is as follows:
+| Casdoor field   | Twilio              | Required |
+|-----------------|---------------------|----------|
+| Client ID       | Account SID         | Yes      |
+| Client secret   | Auth Token         | Yes      |
+| Sender number   | Twilio phone number | Yes      |
+| Template code   | Your SMS template   | Yes      |
 
-| Name          | Name in Twilio      | Required   |
-|---------------|---------------------|------------|
-| Client ID     | Account SID         | Required   |
-| Client secret | Auth Token          | Required   |
-| Sender number | Twilio phone number | Required   |
-| Template code |                     | Required   |
-
-### Twilio information
-
-- Account SID, Auth Token, and Twilio phone number
+Get **Account SID**, **Auth Token**, and the **Twilio phone number** from the [Twilio Console](https://console.twilio.com/).
 
 ![twilioInfo.png](/img/providers/sms/twilioInfo.png)
 
-### Configure Casdoor provider
-
-You can configure the `template code` to suit your requirements, and then enter your phone number in `SMS Test` to test.
+Set the **Template code** to match your Twilio template, then use **SMS Test** with a phone number to verify.
 
 ![twilioProvider.png](/img/providers/sms/twilioProvider.png)

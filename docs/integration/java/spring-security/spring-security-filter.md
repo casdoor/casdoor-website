@@ -1,41 +1,38 @@
 ---
-title: Spring Security Filter with OIDC Integration for Casdoor
-description: This article explains how to use Spring Security Filter to connect your application with Casdoor using OIDC.
-keywords: [OIDC, Spirng Security, Spring Security Filter, Filter, Casdoor]
+title: Spring Security Filter (OIDC)
+description: Integrate Casdoor with Spring Security using OIDC.
+keywords: [OIDC, Spring Security, Filter, Casdoor]
 authors: [wenxuan70]
 ---
 
-Casdoor is an open-source IDP that supports OIDC and various other protocols. In this article, we will see how to integrate Casdoor with your application using Spring Security Filter and OIDC.
+This guide integrates Casdoor with your application using **Spring Security Filter** and OIDC.
 
 ## Step 1: Deploy Casdoor
 
-First, you need to deploy the Casdoor server. Refer to the [official documentation](/docs/basic/server-installation) for server installation instructions. After successful deployment, ensure that:
+[Deploy the Casdoor server](/docs/basic/server-installation). After deployment, confirm:
 
-- The Casdoor server is running at **<http://localhost:8000>**.
-- You can see the Casdoor login page at **<http://localhost:7001>**.
-- You can test the login functionality by logging in with the credentials `admin` and `123`.
+- The Casdoor server is running at **`http://localhost:8000`**.
+- The Casdoor login page is at **`http://localhost:7001`**.
+- Test login with credentials `admin` and `123`.
 
 After verifying these steps, follow the steps below to integrate Casdoor with your application.
 
-## Step 2: Configure Casdoor Application
+## Step 2: Configure the Casdoor application
 
-- Create a new Casdoor application or use an existing one.
-- Add your redirect URL. You can find more information about obtaining the redirect URL in the next section.
+- Create or edit a Casdoor application and add your redirect URL (see next section for how to get it).
    ![Casdoor Application Setting](/img/integration/java/spring_security/casdoor_setting.png)
 - Obtain your `Certificate` on the certificate editing page.
    ![Casdoor Certification Setting](/img/integration/java/spring_security/casdoor_certification.png)
 - Add the provider and other settings as needed.
 
-You can obtain the values for `Application Name`, `Organization Name`, `Redirect URL`, `Client ID`, `Client Secret`, and `Certificate` on the application settings page. We will use them in the next step.
+Note **Application Name**, **Organization Name**, **Redirect URL**, **Client ID**, **Client Secret**, and **Certificate** from the application page for the next step.
 
 ## Step 3: Configure Spring Security
 
-You can customize the settings of the Spring Security filters to process tokens:
+Customize the Spring Security filter to process tokens:
 
 :::caution
-
-Make sure you replace the configuration values with your own Casdoor instance, especially `<Client ID>` and the others.
-
+Replace the placeholders with your own Casdoor instance (Client ID, Client secret, etc.).
 :::
 
 ```yml
@@ -53,13 +50,13 @@ casdoor:
 
 :::caution
 
-For frontend applications, the default value of `<FRONTEND_HOSTNAME>` is `localhost:3000`. In this demo, the redirect URL is `http://localhost:3000/callback`. Make sure to configure this in your `casdoor` application.
+Default `<FRONTEND_HOSTNAME>` is `localhost:3000`; redirect URL is `http://localhost:3000/callback`. Add this redirect URL in the Casdoor application.
 
 :::
 
 ## Step 4: Configure Frontend
 
-You need to install `casdoor-js-sdk` and configure the SDK as follows:
+Install `casdoor-js-sdk` and configure it as follows:
 
 1. Install `casdoor-js-sdk`.
 
@@ -230,7 +227,7 @@ You need to install `casdoor-js-sdk` and configure the SDK as follows:
 
 ## Step 6: Try the Demo
 
-You can access the frontend application through your browser. If you are not logged in, you will see a login button. Click on it, and you will be redirected to the Casdoor login page.
+Open the frontend in a browser. When not logged in, a login button is shown; clicking it redirects to the Casdoor login page.
 
 If you visit your root page,
 ![welcome](/img/integration/java/spring_security/spring_security_filter_welcome.png)
@@ -238,5 +235,5 @@ If you visit your root page,
 Click the `Casdoor Login` button, and the page will redirect to Casdoor's login page.
 ![casdoor](/img/integration/java/spring_security/spring_security_filter_casdoor.png)
 
-After logging in, you will be redirected to `/`.
+After login, the app redirects to `/`.
 ![resource](/img/integration/java/spring_security/spring_security_filter_resource.png)

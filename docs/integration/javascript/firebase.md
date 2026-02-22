@@ -5,7 +5,7 @@ keywords: [Firebase, web, OIDC, IdP]
 authors: [leo220yuyaodog]
 ---
 
-Firebase supports OIDC as an Identity Provider, you can use Casdoor as an OIDC provider for Firebase web app.
+Firebase supports OIDC; use Casdoor as the OIDC provider for a Firebase web app.
 
 ## 1. Create a Firebase project
 
@@ -15,13 +15,13 @@ Go to [Firebase Console](https://console.firebase.google.com/) to create a proje
 
 ![provider](/img/integration/javascript/firebase/provider.png)
 
-You need to enable "Identity Platform" feature first to enable OIDC integration on Firebase.
+Enable the **Identity Platform** feature in Firebase first to use OIDC.
 
 Select `OpenID Connect` in Custom providers, fill in the following information:
 
 | Name (in order) | Description                           | Example value                                        |
 |-----------------|---------------------------------------|------------------------------------------------------|
-| Name            | Any be any string you would like      | casdoor                                              |
+| Name            | Any string (e.g. provider name)       | casdoor                                              |
 | Client ID       | Client ID for the Casdoor application | 294b09fbc17f95daf2fe                                 |
 | Issuer (URL)    | Casdoor server URL                    | [https://door.casdoor.com](https://door.casdoor.com) |
 | Client Secret   | Client secret for Casdoor application | dd8982f7046ccba1bbd7851d5c1ece4e52bf039d             |
@@ -40,5 +40,4 @@ Add Callback URL to Casdoor application Redirect URLs:
 
 ![oidc_config3](/img/integration/javascript/firebase/oidc_config3.png)
 
-Here we provide an example [casdoor-firebase-example](https://github.com/casdoor/casdoor-firebase-example) for you to use Casdoor authentication in your app.
-To see more details for how to use Casdoor authentication in your app, please refer to [Firebase document](https://firebase.google.com/docs/auth).
+Example: [casdoor-firebase-example](https://github.com/casdoor/casdoor-firebase-example). For using Casdoor auth in your app, see [Firebase Auth](https://firebase.google.com/docs/auth).

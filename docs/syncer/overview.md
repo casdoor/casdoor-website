@@ -1,17 +1,15 @@
 ---
 title: Overview
-description: Synchronizing users in Casdoor
-keywords: [users, sync, syncer]
+description: Sync users from external systems (databases, Azure AD, Keycloak, etc.) into Casdoor.
+keywords: [users, sync, syncer, import, migration]
 authors: [leo220yuyaodog]
 ---
 
-As an authentication platform, Casdoor can easily manage users stored in databases.
+Casdoor stores users in its **user** table. When you adopt Casdoor, you don’t have to migrate users manually—use a **syncer** to import and keep user data in sync from your existing source.
 
-## Syncer
+## Supported syncers
 
-Casdoor stores users in the **user** table. So, when you plan to use Casdoor as an authentication platform, there is no need to worry about migrating your application's user data into Casdoor. Casdoor provides a **syncer** to quickly help you synchronize user data to Casdoor.
-
-Casdoor supports multiple syncer types to import users from different sources:
+Casdoor supports these syncer types:
 
 - **Database**: Synchronize users from any database supported by Xorm (MySQL, PostgreSQL, SQL Server, Oracle, SQLite). See [database syncer](/docs/syncer/Database).
 - **Azure AD**: Synchronize users from Azure Active Directory using Microsoft Graph API. See [Azure AD syncer](/docs/syncer/AzureAD).
@@ -21,14 +19,12 @@ Casdoor supports multiple syncer types to import users from different sources:
 - **WeCom**: Fetch users from WeCom organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
 - **DingTalk**: Import users from DingTalk organizations via API. See [DingTalk syncer](/docs/syncer/DingTalk).
 
-Each syncer type implements a common interface, making it straightforward to add new syncer types or extend existing ones without affecting other parts of the system.
+All syncers share a common interface, so new sources can be added without changing the rest of the system.
 
-## Supported User Attributes
+## Supported user attributes
 
-Syncers support a comprehensive range of user attributes including basic profile information, authentication credentials (passwords, WebAuthn, MFA settings), security configurations (IP whitelist, verification status), and user activity tracking (login history, password changes). Complex data structures like WebAuthn credentials and Face ID data are automatically handled through JSON serialization.
+Syncers can map a wide set of attributes: profile data, credentials (passwords, WebAuthn, MFA), security settings (IP allowlist, verification), and activity (login history, password changes). Complex data (e.g. WebAuthn credentials, Face ID) is stored as JSON.
 
-## Synchronization hash
+## Sync and change detection
 
-Casdoor uses a hash function to determine how to update a user. This hash value is calculated for each user in the table, using information such as the password or mobile phone number.
-
-If the calculated hash value of a user with a specific `Id` changes compared to the original value, Casdoor confirms that the user table has been updated. Subsequently, the database updates the old information, thereby achieving **bilateral synchronization** between the Casdoor user table and the original user table.
+Casdoor computes a **hash** per user from fields such as password and phone. When the hash for a given user `Id` changes, Casdoor treats that user as updated and applies the change. This allows **two-way sync** between the Casdoor user table and the source system.
