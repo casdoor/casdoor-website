@@ -140,7 +140,7 @@ This endpoint requires the user to be authenticated. Use any authentication meth
 - **Session cookie**: Use the session cookie that was set during login
 - **Client credentials**: Use the application's client ID and secret for machine-to-machine scenarios
 
-For more details on authentication methods, see the [Casdoor Public API](/docs/basic/public-api#how-to-authenticate-with-casdoor-public-api) documentation.
+For more details on authentication methods, see the [Casdoor Public API](/docs/basic/public-api#how-to-authenticate) documentation.
 
 ### Request Examples
 

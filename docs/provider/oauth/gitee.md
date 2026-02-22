@@ -10,7 +10,7 @@ authors: [ErikQQY]
 ![Gitee Workbench](/img/providers/OAuth/giteebench.png)
 ![Gitee](/img/providers/OAuth/gitee.png)
 
-Set **name**, **description**, **homepage**, and **authorization callback URL**. The callback URL must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding). Grant the permissions you need; enable **email** so Casdoor can read the user’s email.
+Set **name**, **description**, **homepage**, and **authorization callback URL**. The callback URL must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works). Grant the permissions you need; enable **email** so Casdoor can read the user’s email.
 
 :::info
 **Callback URL:** In Gitee use Casdoor’s callback URL; in Casdoor use your application’s redirect URL.

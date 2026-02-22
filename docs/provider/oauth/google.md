@@ -19,7 +19,7 @@ Configure Google OAuth in the [Google API Console](https://console.developers.go
 ![Creating a credential](/img/providers/OAuth/createcredential.png)
 
 :::info
-**Authorized redirect URIs** in Google must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
+**Authorized redirect URIs** in Google must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 :::
 
 3. After creating the client, copy the **Client ID** and **Client Secret**.

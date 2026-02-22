@@ -59,7 +59,7 @@ To create a Casdoor client for NGINX Plus in the Casdoor GUI, follow these steps
     - For production, we strongly recommend that you use SSL/TLS (port 443).
     - The port number is mandatory even when you’re using the default port for HTTP (80) or HTTPS (443).
 
-4. Record the **Client ID** and **Client Secret**; you will use them in [Step 4 of *Configuring NGINX Plus*](#jump1).<span id="jump3"></span>
+4. Record the **Client ID** and **Client Secret**; you will use them in [Step 4 of *Configuring NGINX Plus*](#configuring-nginx-plus).<span id="jump3"></span>
 
     ![Client](/img/integration/C++/NGINX_Plus/Client.png)
 
@@ -119,19 +119,19 @@ To configure NGINX Plus as the OpenID Connect relying party, follow these steps:
     ```
 
 4. Open **/etc/nginx/conf.d/openid_connect_configuration.conf** using your preferred text editor. Modify the "default" parameter value for each of the following [map](https://nginx.org/en/docs/http/ngx_http_map_module.html#map) directives with the specified values:<span id="jump2"></span>
-    - `map $host $oidc_authz_endpoint` – Use the value of the `authorization_endpoint` from [Step 3](#jump1) (in this guide, `https://<casdoor-server-address>/login/oauth/authorize`)
-    - `map $host $oidc_token_endpoint` – Use the value of the `token_endpoint` from [Step 3](#jump1) (in this guide, `http://<casdoor-server-address>/api/login/oauth/access_token`)
-    - `map $host $oidc_client` – Use the value in the **Client ID** field from [Step 4 of *Configuring Casdoor*](#jump3)
-    - `map $host $oidc_client_secret` – Use the value in the **Client Secret** field from [Step 2 of *Configuring Casdoor*](#jump3)
+    - `map $host $oidc_authz_endpoint` – Use the value of the `authorization_endpoint` from [Step 3](#configuring-nginx-plus) (in this guide, `https://<casdoor-server-address>/login/oauth/authorize`)
+    - `map $host $oidc_token_endpoint` – Use the value of the `token_endpoint` from [Step 3](#configuring-nginx-plus) (in this guide, `http://<casdoor-server-address>/api/login/oauth/access_token`)
+    - `map $host $oidc_client` – Use the value in the **Client ID** field from [Step 4 of *Configuring Casdoor*](#configuring-casdoor)
+    - `map $host $oidc_client_secret` – Use the value in the **Client Secret** field from [Step 2 of *Configuring Casdoor*](#configuring-casdoor)
     - `map $host $oidc_hmac_key` – Use a unique, long, and secure phrase
 
 5. Configure the JWK file based on the version of NGINX Plus being used:
-    - In NGINX Plus R17 and later, NGINX Plus can directly read the JWK file from the URL specified as `jwks_uri` in [Step 3](#jump2). Make the following changes to **/etc/nginx/conf.d/frontend.conf**:
+    - In NGINX Plus R17 and later, NGINX Plus can directly read the JWK file from the URL specified as `jwks_uri` in [Step 3](#configuring-nginx-plus). Make the following changes to **/etc/nginx/conf.d/frontend.conf**:
         1. Comment out (or remove) the [auth_jwt_key_file](http://nginx.org/en/docs/http/ngx_http_auth_jwt_module.html#auth_jwt_key_file) directive.
         2. Uncomment the [auth_jwt_key_request](http://nginx.org/en/docs/http/ngx_http_auth_jwt_module.html#auth_jwt_key_request) directive. (The parameter `/_jwks_uri` refers to the value of the `$oidc_jwt_keyfile` variable, which will be set in the next step.)
-        3. Update the "default" parameter of the `map $host $oidc_jwt_keyfile` directive to the value obtained from the `jwks_uri` field in [Step 3](#jump2) (in this guide, `http://<casdoor-server-address>/.well-known/jwks`).
+        3. Update the "default" parameter of the `map $host $oidc_jwt_keyfile` directive to the value obtained from the `jwks_uri` field in [Step 3](#configuring-nginx-plus) (in this guide, `http://<casdoor-server-address>/.well-known/jwks`).
     - In NGINX Plus R16 and earlier, or if preferred, the JWK file must be located on the local disk. Follow these steps:
-        1. Copy the JSON contents from the JWK file specified in the `jwks_uri` field in [Step 3](#jump2) (in this guide, `http://<casdoor-server-address>/.well-known/jwks`) to a local file (e.g., `/etc/nginx/my_casdoor_jwk.json`).
+        1. Copy the JSON contents from the JWK file specified in the `jwks_uri` field in [Step 3](#configuring-nginx-plus) (in this guide, `http://<casdoor-server-address>/.well-known/jwks`) to a local file (e.g., `/etc/nginx/my_casdoor_jwk.json`).
         2. In **/etc/nginx/conf.d/openid_connect_configuration.conf**, change the "default" parameter of the `map $host $oidc_jwt_keyfile` directive to the path of the local file.
 
 6. Ensure that the user specified in the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive within the NGINX Plus configuration file (usually **/etc/nginx/nginx.conf**) has read permissions for the JWK file.

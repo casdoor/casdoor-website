@@ -17,7 +17,7 @@ authors: [ErikQQY]
 Verification must be done by the company page administrator.
 :::
 
-3. In the app, enable **Sign In with LinkedIn** and add **Authorized redirect URLs**: use **Casdoor’s callback URL**. In Casdoor, set the application **Redirect URL** to your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
+3. In the app, enable **Sign In with LinkedIn** and add **Authorized redirect URLs**: use **Casdoor’s callback URL**. In Casdoor, set the application **Redirect URL** to your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 
 ![LinkedIn sign in](/img/providers/OAuth/linkedinsignin.png)
 ![LinkedIn Redirect](/img/providers/OAuth/linkedinredirecturl.png)

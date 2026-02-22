@@ -15,7 +15,7 @@ GitHub OAuth supports both the web application flow and the device flow. Use a *
 ![GitHub](/img/providers/OAuth/github.png)
 
 :::info
-In the GitHub App, **Callback URL** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your app’s callback URL. See [Application config](/docs/application/config#further-understanding).
+In the GitHub App, **Callback URL** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your app’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 :::
 
 3. After creating the app, generate the **Client secret** (under the app settings).

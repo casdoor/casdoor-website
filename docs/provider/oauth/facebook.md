@@ -23,7 +23,7 @@ Choose the Web platform for this app:
 
 ![Facebook web](/img/providers/OAuth/facebookweb.png)
 
-Under **Facebook Login** → **Settings**, set **Valid OAuth Redirect URIs** to **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
+Under **Facebook Login** → **Settings**, set **Valid OAuth Redirect URIs** to **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 
 ![Redirect URIs](/img/providers/OAuth/facebookredirecturl.png)
 

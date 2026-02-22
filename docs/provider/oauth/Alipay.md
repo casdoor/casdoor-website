@@ -36,7 +36,7 @@ In Casdoor **Certs**, create two certs:
 | Private key | content of `alipayRootCert.crt` |
 
 :::info
-In Alipay, the callback URL must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
+In Alipay, the callback URL must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 :::
 
 ## 2. Create the Alipay OAuth provider in Casdoor

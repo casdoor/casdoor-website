@@ -8,7 +8,7 @@ authors: [leo220yuyaodog]
 Frontend assets (e.g. `.js` and `.css`) live in `web/build/static/`. Upload them to a CDN via a Casdoor storage provider; a script in the repo automates this.
 
 :::note
-Build the frontend first. See [Server installation](/docs/basic/server-installation#frontend-1) if needed.
+Build the frontend first. See [Server installation](/docs/basic/server-installation#frontend) if needed.
 :::
 
 ## Preparation

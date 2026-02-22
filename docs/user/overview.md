@@ -135,7 +135,7 @@ This normalization happens automatically during:
 
 The `Roles` and `Permissions` fields on the User object are **extended**: they are filled when user data is fetched, not stored on the User table. They are built from the Roles and Permissions resources via `ExtendUserWithRolesAndPermissions()`.
 
-**Important:** You cannot change roles or permissions with `/api/update-user` (including via the `columns` parameter). Use the [Roles](/docs/user/roles#managing-roles-via-api) and [Permissions](/docs/user/permissions#managing-permissions-via-api) APIs and their management pages (e.g. **Roles** and **Permissions** in the sidebar) to assign and manage them.
+**Important:** You cannot change roles or permissions with `/api/update-user` (including via the `columns` parameter). Use the [Roles](/docs/user/roles#managing-roles) and [Permissions](/docs/user/permissions#managing-permissions) APIs and their management pages (e.g. **Roles** and **Permissions** in the sidebar) to assign and manage them.
 
 ## Using the Properties field
 

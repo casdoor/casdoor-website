@@ -345,7 +345,7 @@ The response has the same shape:
 }
 ```
 
-If you expect more user information, add `scope` when obtaining the AccessToken in step [Authorization Code Grant](#1).
+If you expect more user information, add `scope` when obtaining the AccessToken in step [Authorization code grant](#authorization-code-grant).
 
 ## Accessing OAuth Provider Tokens
 
@@ -370,6 +370,6 @@ This allows your application to interact with third-party APIs (e.g., GitHub API
 
 ## Differences between the `userinfo` and `get-account` APIs
 
-- `/api/userinfo`: This API returns user information as part of the OIDC protocol. It provides limited information, including only the basic information defined in OIDC standards. For a list of available scopes supported by Casdoor, see the [available scopes](#available-scopes) section.
+- `/api/userinfo`: This API returns user information as part of the OIDC protocol. It provides limited information, including only the basic information defined in OIDC standards. For a list of available scopes supported by Casdoor, see the [Scopes](#scopes) section.
 
 - `/api/get-account`: This API retrieves the user object for the currently logged-in account. It is a Casdoor-specific API that allows you to obtain all the information of the [user](/docs/basic/core-concepts#user) in Casdoor, including the OAuth provider's access token when applicable.

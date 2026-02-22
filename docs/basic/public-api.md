@@ -11,7 +11,7 @@ The Casdoor web UI is a React [SPA](https://developer.mozilla.org/en-US/docs/Glo
 - Casdoor SDKs (e.g. casdoor-go-sdk)
 - Your own applications and scripts
 
-**API reference:** [https://door.casdoor.com/swagger](https://door.casdoor.com/swagger). To regenerate the Swagger spec, see [Developer guide – Swagger](/docs/developer-guide/swagger/#how-to-generate-the-swagger-file).
+**API reference:** [https://door.casdoor.com/swagger](https://door.casdoor.com/swagger). To regenerate the Swagger spec, see [Developer guide – Swagger](/docs/developer-guide/swagger#generate-swagger-files).
 
 ## Response language
 

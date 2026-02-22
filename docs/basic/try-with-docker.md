@@ -59,7 +59,7 @@ docker run \
 
 :::
 
-Create `conf/app.conf` (copy from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf)); see [Via Ini file](/docs/basic/server-installation#via-ini-file) for options. Then run:
+Create `conf/app.conf` (copy from [conf/app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf)); see [Config files](/docs/basic/server-installation#config-files) for options. Then run:
 
 ```bash
 docker run -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
@@ -73,7 +73,7 @@ In short: **mount your `app.conf` at `/conf/app.conf`** and start the container.
 
 ### Option 3: Docker Compose
 
-Place `app.conf` in a `conf/` directory next to `docker-compose.yml` (copy from [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf); see [Via Ini file](/docs/basic/server-installation#via-ini-file)). Start Casdoor and the database with:
+Place `app.conf` in a `conf/` directory next to `docker-compose.yml` (copy from [app.conf](https://github.com/casdoor/casdoor/blob/master/conf/app.conf); see [Config files](/docs/basic/server-installation#config-files)). Start Casdoor and the database with:
 
 ```bash
 docker-compose up

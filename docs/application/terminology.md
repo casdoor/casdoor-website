@@ -76,7 +76,7 @@ authors: [ErikQQY]
 ## Security and access control
 
 - **DefaultGroup** — Default group for new users.
-- **IpRestriction**, **IpWhitelist** — IP allowlist (see [IP allowlist](/docs/ip-whitelist/ip-whitelist)).
+- **IpRestriction**, **IpWhitelist** — IP allowlist (see [IP allowlist](../ip-whitelist/ip-whitelist)).
 - **FailedSigninLimit** — Failed attempts before lockout.
 - **FailedSigninFrozenTime** — Lockout duration (seconds).
 

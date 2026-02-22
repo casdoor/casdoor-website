@@ -17,7 +17,7 @@ Enable scopes **read_user** and **profile**. Without them, authentication can fa
 :::
 
 :::info
-In GitLab, **Redirect URI** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#further-understanding).
+In GitLab, **Redirect URI** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 :::
 
 3. After creating the app, copy **Application ID** and **Secret** from the app details.

@@ -76,7 +76,7 @@ Security Assertion Markup Language (SAML) is an open standard that lets identity
 
 Casdoor can act as a **SAML 2.0 IdP** and supports the main SAML 2.0 features. See **[SAML](/docs/how-to-connect/saml/overview)** for details.
 
-**Example:** [Casdoor as a SAML IdP in Keycloak](/docs/how-to-connect/saml/keycloak#casdoor-as-a-saml-idp-in-keycloak)
+**Example:** [Casdoor as a SAML IdP in Keycloak](/docs/how-to-connect/saml/keycloak#add-the-saml-idp-in-keycloak)
 
 **When to use SAML:** SAML is mature and widely used in enterprise SSO, but the protocol is large and has many optional parts. For new applications, OAuth 2.0 / OIDC is usually simpler; choose SAML when you must interoperate with existing SAML-based systems.
 

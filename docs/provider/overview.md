@@ -41,7 +41,7 @@ A provider must be added to an application before it can be used. Steps:
 
    ![provider_overview_select](/img/providers/provider_overview_select.png)
 
-3. For **OAuth** and **Captcha** providers, further configure how they are used. See [OAuth](/docs/provider/oauth/overview/#applied-in-application) and [Captcha](/docs/provider/captcha/default#applied-in-application).
+3. For **OAuth** and **Captcha** providers, further configure how they are used. See [OAuth](/docs/provider/oauth/overview#attaching-the-provider-to-an-application) and [Captcha](/docs/provider/captcha/default#configure-in-casdoor).
 
    ![provider_overview_config](/img/providers/provider_overview_config.png)
 
