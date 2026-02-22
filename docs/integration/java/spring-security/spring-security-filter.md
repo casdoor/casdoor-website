@@ -1,5 +1,5 @@
 ---
-title: Spring Security Filter (OIDC)
+title: Spring Security filter (OIDC)
 description: Integrate Casdoor with Spring Security using OIDC.
 keywords: [OIDC, Spring Security, Filter, Casdoor]
 authors: [wenxuan70]

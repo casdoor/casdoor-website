@@ -1,5 +1,5 @@
 ---
-title: Application Configuration
+title: Application configuration
 description: Configure authentication and callback URLs for your Casdoor applications.
 keywords: [config, application, redirect URL, callback]
 authors: [ErikQQY]

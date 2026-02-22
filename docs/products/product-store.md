@@ -1,5 +1,5 @@
 ---
-title: Product Store
+title: Product store
 description: Publish products to a storefront where users can browse and purchase
 keywords: [product store, storefront, published products, buy products]
 authors: [Copilot]

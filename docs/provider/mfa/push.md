@@ -1,5 +1,5 @@
 ---
-title: Push Notification
+title: Push notification
 description: Configure push notification provider for MFA
 keywords: [Push Notification, MFA, provider, authentication]
 authors: [nomeguy]

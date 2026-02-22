@@ -13,7 +13,7 @@ module.exports = {
   tutorialSidebar: [
     {
       type: "category",
-      label: "The Basics",
+      label: "The basics",
       link: {type: "generated-index"},
       items: [
         "overview",
@@ -98,7 +98,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "MCP Server",
+          label: "MCP server",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -120,7 +120,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Developer Guide",
+      label: "Developer guide",
       link: {type: "generated-index"},
       items: [
         "developer-guide/frontend",
@@ -166,7 +166,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "MCP Authorization",
+      label: "MCP authorization",
       link: {type: "generated-index"},
       items: [
         "mcp-auth/overview",
@@ -359,7 +359,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Identity Verification",
+          label: "Identity verification",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -380,7 +380,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "SaaS Management",
+      label: "SaaS management",
       link: {type: "generated-index"},
       items: [
         "pricing/overview",
@@ -397,7 +397,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Multi-Factor Authentication",
+      label: "Multi-factor authentication",
       link: {type: "generated-index"},
       items: [
         "user/multi-factor-authentication",
@@ -405,7 +405,7 @@ module.exports = {
         "how-to-connect/totp-authenticator-app",
         {
           type: "category",
-          label: "MFA Providers",
+          label: "MFA providers",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -437,7 +437,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "IP Allowlist",
+      label: "IP allowlist",
       link: {type: "generated-index"},
       items: [
         "ip-whitelist/ip-whitelist",

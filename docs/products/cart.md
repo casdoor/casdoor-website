@@ -1,5 +1,5 @@
 ---
-title: Shopping Cart
+title: Shopping cart
 description: Collect multiple products before purchasing them together
 keywords: [cart, shopping cart, multi-product order]
 authors: [Copilot]

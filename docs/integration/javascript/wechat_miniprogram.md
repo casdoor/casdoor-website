@@ -1,5 +1,5 @@
 ---
-title: WeChat Mini Program
+title: WeChat mini program
 description: Integrate Casdoor sign-in in a WeChat Mini Program (no OAuth redirect).
 keywords: [WeChat, Mini Program]
 authors: [Steve0x2a]

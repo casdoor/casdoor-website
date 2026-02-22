@@ -1,5 +1,5 @@
 ---
-title: Using the miniOrange Plugin
+title: Using the miniOrange plugin
 description: Connect casdoor and Jira using the OIDC protocol as the IDP
 keywords: [OIDC, Jira, IDP]
 authors: [jakiuncle]

@@ -1,5 +1,5 @@
 ---
-title: Pulsar Manager
+title: Pulsar manager
 description: Using Casdoor in Pulsar Manager
 keywords: [Pulsar Manager]
 authors: [jakiuncle]

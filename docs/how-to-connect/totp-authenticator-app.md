@@ -1,5 +1,5 @@
 ---
-title: Casdoor Authenticator app
+title: Casdoor authenticator app
 description: TOTP authenticator app for iOS and Android, synced with Casdoor.
 keywords: [authenticator, 2fa, TOTP, MFA]
 authors: [IZUMI-Zu]

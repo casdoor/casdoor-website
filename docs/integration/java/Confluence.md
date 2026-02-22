@@ -1,5 +1,5 @@
 ---
-title: Connecting Applications with OIDC Protocol - Confluence
+title: Connecting applications with OIDC protocol - Confluence
 description: Learn how to use OIDC protocol as IDP to connect Confluence and other applications.
 keywords: [OIDC, Confluence, IDP]
 authors: [jakiuncle]

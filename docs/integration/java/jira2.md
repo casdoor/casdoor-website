@@ -1,5 +1,5 @@
 ---
-title: Via Built-in SSO
+title: Via built-in SSO
 description: Using the OIDC protocol as an IDP to connect various applications, such as Jira
 keywords: [OIDC, Jira, IDP]
 authors: [jakiuncle]

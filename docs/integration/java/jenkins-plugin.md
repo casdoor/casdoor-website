@@ -1,5 +1,5 @@
 ---
-title: Jenkins Plugin
+title: Jenkins plugin
 description: Using the Casdoor plugin for Jenkins security
 keywords: [plugin, Jenkins]
 authors: [Abingcbc]

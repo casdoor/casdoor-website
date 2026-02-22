@@ -1,5 +1,5 @@
 ---
-title: Using Casdoor as an OAuth2 Server in ShowDoc
+title: Using Casdoor as an OAuth2 server in ShowDoc
 description: Using Casdoor as an OAuth2 server in ShowDoc
 keywords: [ShowDoc, Casdoor, OAuth2, authentication]
 authors: [leo220yuyaodog]
