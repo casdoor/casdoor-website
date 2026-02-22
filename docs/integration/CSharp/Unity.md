@@ -30,7 +30,7 @@ One optional method is as follows:
 
 Now, you can import the `net462` folder into your Unity project through the method shown in the figure below. Of course, you can also choose folders of other versions.
 
-![import-sdk](/img/integration/C%23/Unity/import-sdk.png)
+![import-sdk](/img/integration/CSharp/Unity/import-sdk.png)
 
 ## Step 3: Usage
 
