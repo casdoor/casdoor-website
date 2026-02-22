@@ -199,7 +199,7 @@ function ContentInterface() {
             <p className={styles.sectionLead}>
               <Translate description="Help page forum" values={{
                 docLink: (
-                  <Link href="/docs/category/how-to-connect-to-casdoor">
+                  <Link href="/docs/category/connecting-to-casdoor">
                     <Translate>How to Connect to Casdoor</Translate>
                   </Link>
                 ),

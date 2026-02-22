@@ -3,3 +3,6 @@
     base = "./"
     publish = "build/"
     command = "yarn build --locale en"
+
+[build.environment]
+    NODE_VERSION = "20"

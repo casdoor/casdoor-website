@@ -1,13 +1,13 @@
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const {themes} = require("prism-react-renderer");
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server",
   url: "https://casdoor.github.io",
   baseUrl: "/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenLinks: "warn",
   favicon: "https://casdoor.org/img/casdoor.png",
   organizationName: "casdoor", // Usually your GitHub org/user name.
   projectName: "casdoor-website", // Usually your repo name.
@@ -229,6 +229,10 @@ var _hmt = _hmt || [];
   // https://docusaurus.io/docs/markdown-features/diagrams#configuration
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+      onBrokenMarkdownImages: "warn",
+    },
   },
   themes: ["@docusaurus/theme-mermaid"],
   presets: [

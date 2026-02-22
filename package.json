@@ -22,19 +22,19 @@
   },
   "dependencies": {
     "@crowdin/cli": "^3.7.10",
-    "@docusaurus/core": "^2.4.3",
-    "@docusaurus/preset-classic": "^2.4.3",
-    "@docusaurus/theme-mermaid": "^2.4.3",
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/preset-classic": "^3.9.2",
+    "@docusaurus/theme-mermaid": "^3.9.2",
     "@giscus/react": "^2.2.4",
-    "@mdx-js/react": "^1.6.21",
+    "@mdx-js/react": "^3.0.0",
     "@popperjs/core": "^2.11.8",
     "axios": "^0.27.2",
     "clsx": "^1.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-sass": "^0.2.1",
-    "prism-react-renderer": "^1.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "prism-react-renderer": "^2.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-popper": "^2.3.0",
     "sass": "^1.37.5"
   },
@@ -67,5 +67,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=20.0"
   }
 }
