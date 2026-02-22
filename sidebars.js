@@ -84,6 +84,7 @@ module.exports = {
         {
           type: "category",
           label: "SAML",
+          key: "saml-how-to-connect",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
@@ -288,6 +289,7 @@ module.exports = {
         {
           type: "category",
           label: "SAML",
+          key: "saml-provider",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
