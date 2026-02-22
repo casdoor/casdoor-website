@@ -91,8 +91,8 @@ function HomepageHeader() {
             src="https://landscape.cncf.io/images/logo_header.svg"
             alt="CNCF Landscape"
             className={styles.cncfBadgeIcon}
-            width={200}
-            height={44}
+            width={260}
+            height={56}
           />
           <span><Translate>Casdoor is part of CNCF Landscape</Translate></span>
         </Link>
