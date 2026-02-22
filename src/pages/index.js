@@ -83,10 +83,8 @@ function HomepageHeader() {
             <Translate>Online Demo</Translate>
           </Link>
         </div>
-        <a
-          href="https://landscape.cncf.io/"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to="/blog/casdoor-joins-cncf-landscape"
           className={styles.cncfBadge}
           aria-label="CNCF Landscape">
           <img
@@ -97,7 +95,7 @@ function HomepageHeader() {
             height={44}
           />
           <span><Translate>Casdoor is part of CNCF Landscape</Translate></span>
-        </a>
+        </Link>
       </div>
       <HeroLoginCarousel className={styles.headerborder} />
     </header>
