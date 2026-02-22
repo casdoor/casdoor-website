@@ -2,7 +2,7 @@
 title: Custom scopes
 description: Define custom OAuth scopes for Agent applications (e.g. MCP servers).
 keywords: [scopes, OAuth, OIDC, agent, MCP, permissions]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 **Custom scopes** let Agent applications define permissions or capabilities exposed via OAuth. They are added to the app’s OIDC discovery and used alongside standard OIDC scopes.

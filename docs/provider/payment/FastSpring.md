@@ -2,7 +2,7 @@
 title: FastSpring
 description: Use FastSpring as a payment provider for digital products and subscriptions.
 keywords: [FastSpring, payment]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 [FastSpring](https://fastspring.com/) handles payments, subscriptions, and tax for software and digital products.

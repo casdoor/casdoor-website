@@ -2,7 +2,7 @@
 title: Overview
 description: Use certificates in Casdoor for JWT signing, SAML, and payment provider security.
 keywords: [cert, certificate, JWT, RSA, ECDSA, SAML, payment]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 Certificates in Casdoor hold cryptographic keys used to sign and verify tokens (e.g. JWT) and to secure integrations (SAML, payment providers).

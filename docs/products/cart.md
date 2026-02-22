@@ -2,7 +2,7 @@
 title: Shopping cart
 description: Collect multiple products before purchasing them together
 keywords: [cart, shopping cart, multi-product order]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 The shopping cart collects products for purchase in a single order. Add items to the cart and complete the transaction when ready instead of buying one at a time.

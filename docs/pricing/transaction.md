@@ -2,7 +2,7 @@
 title: Transaction
 description: Track payments and balance changes for users and organizations.
 keywords: [transaction, balance, purchase, recharge]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 **Transactions** record financial activity for users and organizations: purchases, recharges, and balance updates. They are created automatically when users pay or top up; balances update in real time.

@@ -2,7 +2,7 @@
 title: Balance payment
 description: Let users pay with their Casdoor account balance (wallet).
 keywords: [Balance, payment, wallet]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 The **Balance** payment provider lets users pay for products from their account balance instead of an external gateway. Casdoor deducts the price from the user’s balance; no redirect to a third party.

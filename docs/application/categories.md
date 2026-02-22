@@ -2,7 +2,7 @@
 title: Application categories
 description: Default (user-facing) vs Agent (M2M) applications and their types.
 keywords: [application, category, type, agent, MCP, A2A]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 Casdoor uses **categories** and **types** to support both user-facing apps and machine-to-machine (M2M) apps. The category determines which protocol types and features are available.

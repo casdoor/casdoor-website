@@ -2,7 +2,7 @@
 title: Order
 description: Track and manage product purchases with orders
 keywords: [order, product, purchase, payment]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 Orders track product purchases in Casdoor. When a user buys a product, an order is automatically created to record the purchase details and track its lifecycle.

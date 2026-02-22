@@ -2,7 +2,7 @@
 title: Product store
 description: Publish products to a storefront where users can browse and purchase
 keywords: [product store, storefront, published products, buy products]
-authors: [Copilot]
+authors: [hsluoyz]
 ---
 
 The Product Store provides a public storefront where users can discover and purchase your published products. Think of it as your product catalog—only items you've marked as "Published" appear here.

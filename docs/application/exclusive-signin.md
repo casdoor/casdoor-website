@@ -2,7 +2,7 @@
 title: Exclusive sign-in
 description: Allow only one active session per user per application.
 keywords: [exclusive signin, session, single session]
-authors: [copilot]
+authors: [hsluoyz]
 ---
 
 **Exclusive sign-in** limits each user to one active session per application. A new sign-in from another device or browser ends all previous sessions for that user and application.
