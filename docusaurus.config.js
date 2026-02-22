@@ -62,11 +62,11 @@ module.exports = {
           to: "/docs/how-to-connect/totp-authenticator-app",
           position: "left",
         },
-        // {
-        //   label: "Blog",
-        //   to: "/blog",
-        //   position: "left",
-        // },
+        {
+          label: "Blog",
+          to: "/blog",
+          position: "left",
+        },
         {
           label: "Help",
           to: "/help",
@@ -74,12 +74,7 @@ module.exports = {
         },
         {
           href: "https://casdoor.com",
-          label: "Enterprise Version",
-          position: "left",
-        },
-        {
-          href: "https://casdoor.com",
-          label: "SaaS",
+          label: "For Enterprise",
           position: "left",
         },
         {
