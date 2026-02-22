@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="shield-bg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="shield-highlight" x1="30%" y1="20%" x2="70%" y2="80%">
+      <stop offset="0%" style="stop-color:#93c5fd;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:transparent"/>
+    </linearGradient>
+    <filter id="shield-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <path d="M60 22 L22 40 v28 c0 22 15 38 38 46 23-8 38-24 38-46 V40 L60 22 z" fill="url(#shield-bg)" filter="url(#shield-shadow)" stroke="#1e40af" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M60 22 L22 40 v28 c0 22 15 38 38 46 23-8 38-24 38-46 V40 L60 22 z" fill="url(#shield-highlight)"/>
+  <path d="M60 48 L44 58 v18 c0 10 8 16 16 20 8-4 16-10 16-20 V58 L60 48 z" fill="none" stroke="#fbbf24" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M56 64 L60 58 L64 64 L60 72 Z" fill="#fbbf24"/>
+</svg>

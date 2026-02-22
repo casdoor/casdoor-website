@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="building-roof" x1="50%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" style="stop-color:#0d9488"/>
+      <stop offset="100%" style="stop-color:#14b8a6"/>
+    </linearGradient>
+    <linearGradient id="building-body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#64748b"/>
+      <stop offset="50%" style="stop-color:#475569"/>
+      <stop offset="100%" style="stop-color:#334155"/>
+    </linearGradient>
+    <linearGradient id="building-glass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7dd3fc"/>
+      <stop offset="100%" style="stop-color:#0ea5e9"/>
+    </linearGradient>
+    <filter id="building-shadow" x="-15%" y="-5%" width="130%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <!-- Main body -->
+  <path d="M28 108 V52 L60 28 L92 52 V108 Z" fill="url(#building-body)" filter="url(#building-shadow)" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Roof accent -->
+  <path d="M60 28 L92 52 L60 52 L28 52 Z" fill="url(#building-roof)" stroke="#0f766e" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Left window column -->
+  <rect x="38" y="62" width="14" height="14" rx="2" fill="url(#building-glass)" stroke="#0c4a6e" stroke-width="1"/>
+  <rect x="38" y="82" width="14" height="14" rx="2" fill="url(#building-glass)" stroke="#0c4a6e" stroke-width="1"/>
+  <rect x="38" y="102" width="14" height="14" rx="2" fill="url(#building-glass)" stroke="#0c4a6e" stroke-width="1"/>
+  <!-- Right window column -->
+  <rect x="68" y="62" width="14" height="14" rx="2" fill="url(#building-glass)" stroke="#0c4a6e" stroke-width="1"/>
+  <rect x="68" y="82" width="14" height="14" rx="2" fill="url(#building-glass)" stroke="#0c4a6e" stroke-width="1"/>
+  <rect x="68" y="102" width="14" height="14" rx="2" fill="url(#building-glass)" stroke="#0c4a6e" stroke-width="1"/>
+  <!-- Door -->
+  <rect x="52" y="88" width="16" height="28" rx="2" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="64" cy="100" r="1.5" fill="#f59e0b"/>
+</svg>

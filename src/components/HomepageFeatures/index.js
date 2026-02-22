@@ -8,14 +8,12 @@ import {useColorMode} from "@docusaurus/theme-common";
 const MCP_ICON_LIGHT = "/img/mcp-icon-light.svg";
 const MCP_ICON_DARK = "/img/mcp-icon-dark.svg";
 
-// Multicolor icons from Twemoji (CC-BY 4.0), via jsDelivr CDN (jdecked/twemoji)
-// 1f6e1=shield 1f3e2=office building 1f4c8=chart increasing
-const TWEMOJI_CDN = "https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/svg";
+// Local feature icons (same pattern as MCP: /img/...)
 const FEATURE_ICON_SRC = [
   null,  // AI & MCP uses MCP icon (iconSrcLight/iconSrcDark) instead
-  `${TWEMOJI_CDN}/1f6e1.svg`,  // Enterprise / Shield
-  `${TWEMOJI_CDN}/1f3e2.svg`,  // Architecture / Office building
-  `${TWEMOJI_CDN}/1f4c8.svg`,  // SaaS / Chart increasing
+  "/img/feature-shield.svg",   // Enterprise
+  "/img/feature-building.svg", // Architecture
+  "/img/feature-chart.svg",    // SaaS
 ];
 
 const FeatureList = [
@@ -77,7 +75,7 @@ const FeatureList = [
 
 function Feature({title, description, iconSrc, iconSrcLight, iconSrcDark}) {
   const {colorMode} = useColorMode();
-  const src = iconSrcLight !== null && iconSrcDark !== null
+  const src = (iconSrcLight && iconSrcDark)
     ? (colorMode === "dark" ? iconSrcDark : iconSrcLight)
     : iconSrc;
   return (
