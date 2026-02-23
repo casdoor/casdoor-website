@@ -179,8 +179,7 @@ Your MCP server must serve a JSON document at `/.well-known/oauth-protected-reso
 
 **Example implementations**:
 
-<details>
-<summary><strong>Python (Flask)</strong></summary>
+#### Python (Flask)
 
 ```python
 from flask import Flask, jsonify
@@ -197,10 +196,7 @@ def protected_resource_metadata():
     })
 ```
 
-</details>
-
-<details>
-<summary><strong>Node.js (Express)</strong></summary>
+#### Node.js (Express)
 
 ```javascript
 const express = require('express');
@@ -216,10 +212,7 @@ app.get('/.well-known/oauth-protected-resource', (req, res) => {
 });
 ```
 
-</details>
-
-<details>
-<summary><strong>Go (net/http)</strong></summary>
+#### Go (net/http)
 
 ```go
 package main
@@ -253,8 +246,6 @@ func main() {
     http.ListenAndServe(":8080", nil)
 }
 ```
-
-</details>
 
 ### Step 2: Return 401 Challenges on Unauthorized Requests
 
