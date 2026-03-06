@@ -669,6 +669,7 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/python/JumpServer",
+            "integration/python/fastapi",
           ],
         },
       ],
