@@ -16,6 +16,7 @@ WeCom supports OAuth so users can sign in from the WeCom client. You can use **i
 | Agent ID        | Application **AgentId** |
 
 :::info
+
 - **Silent:** User clicks the link and is redirected to `redirect_URI?code=CODE&state=STATE`.
 - **Normal:** A consent page is shown; after the user authorizes, redirect to `redirect_uri?code=CODE&state=STATE`.
 

@@ -16,11 +16,11 @@ Set **name**, **description**, **homepage**, and **authorization callback URL**.
 **Callback URL:** In Gitee use Casdoor’s callback URL; in Casdoor use your application’s redirect URL.
 :::
 
-2. After creating the app, copy **Client ID** and **Client Secret**.
+1. After creating the app, copy **Client ID** and **Client Secret**.
 
 ![Gitee Client](/img/providers/OAuth/giteeclient.png)
 
-3. In Casdoor add an **OAuth** provider, set **Type** to **Gitee**, and enter **Client ID** and **Client secret**.
+1. In Casdoor add an **OAuth** provider, set **Type** to **Gitee**, and enter **Client ID** and **Client secret**.
 
 ![Gitee Provider](/img/providers/OAuth/giteeprovider.png)
 

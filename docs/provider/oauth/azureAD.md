@@ -13,18 +13,18 @@ authors: [leo220yuyaodog]
 
 ![azuread_register.png](/img/providers/OAuth/azuread_register.png)
 
-2. Create a **client secret** and save the value (it is shown only once).
+1. Create a **client secret** and save the value (it is shown only once).
 
 ![azuread_secret.png](/img/providers/OAuth/azuread_secret.png)
 
-3. Under **Authentication**, add **Redirect URIs** for Casdoor (e.g. `https://your-casdoor.com/callback`).
+1. Under **Authentication**, add **Redirect URIs** for Casdoor (e.g. `https://your-casdoor.com/callback`).
 
 ![azuread_uri.png](/img/providers/OAuth/azuread_uri.png)
 
-4. Under **API permissions**, add the scopes you need (e.g. `User.Read`). Click **Grant admin consent**.
+1. Under **API permissions**, add the scopes you need (e.g. `User.Read`). Click **Grant admin consent**.
 
 ![azuread_permission.png](/img/providers/OAuth/azuread_permission.png)
 
-5. In Casdoor, create an **OAuth** provider, set **Type** to **Azure AD**, and enter the **Client ID** and **Client Secret** from the Azure app.
+1. In Casdoor, create an **OAuth** provider, set **Type** to **Azure AD**, and enter the **Client ID** and **Client Secret** from the Azure app.
 
 ![azuread_casdoor.png](/img/providers/OAuth/azuread_casdoor.png)

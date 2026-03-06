@@ -13,7 +13,7 @@ Authorization code is enabled by default for security. Enable other grant types 
 
 ![Grant Types](/img/how-to-connect/oauth/accesstoken_grant_types.png)
 
-### Authorization code grant <span id="1"></span>
+### Authorization code grant
 
 Redirect the user to:
 

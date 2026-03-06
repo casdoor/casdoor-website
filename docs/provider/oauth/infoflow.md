@@ -18,7 +18,7 @@ authors: [Steve0x2a]
 ![Permission](/img/providers/OAuth/infoflowpermission2.png)
 ![Permission](/img/providers/OAuth/infoflowsecret.png)
 
-5. In Casdoor add an **OAuth** provider, set **Type** to **Infoflow**, and fill in:
+1. In Casdoor add an **OAuth** provider, set **Type** to **Infoflow**, and fill in:
 
 | Casdoor       | Infoflow   |
 |---------------|------------|

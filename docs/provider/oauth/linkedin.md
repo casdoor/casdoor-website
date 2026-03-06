@@ -9,7 +9,7 @@ authors: [ErikQQY]
 
 ![LinkedIn](/img/providers/OAuth/linkedin.png)
 
-2. Verify the LinkedIn page linked to the app. Only a company page admin can verify and grant permissions.
+1. Verify the LinkedIn page linked to the app. Only a company page admin can verify and grant permissions.
 
 ![LinkedIn Verify](/img/providers/OAuth/linkedin-verify.png)
 
@@ -17,15 +17,15 @@ authors: [ErikQQY]
 Verification must be done by the company page administrator.
 :::
 
-3. In the app, enable **Sign In with LinkedIn** and add **Authorized redirect URLs**: use **Casdoor’s callback URL**. In Casdoor, set the application **Redirect URL** to your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
+1. In the app, enable **Sign In with LinkedIn** and add **Authorized redirect URLs**: use **Casdoor’s callback URL**. In Casdoor, set the application **Redirect URL** to your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
 
 ![LinkedIn sign in](/img/providers/OAuth/linkedinsignin.png)
 ![LinkedIn Redirect](/img/providers/OAuth/linkedinredirecturl.png)
 
-4. Copy **Client ID** and **Client Secret** from the app.
+1. Copy **Client ID** and **Client Secret** from the app.
 
 ![LinkedIn Client](/img/providers/OAuth/linkedinclient.png)
 
-5. In Casdoor add an **OAuth** provider, set **Type** to **LinkedIn**, and enter **Client ID** and **Client secret**.
+1. In Casdoor add an **OAuth** provider, set **Type** to **LinkedIn**, and enter **Client ID** and **Client secret**.
 
 ![LinkedIn Provider](/img/providers/OAuth/linkedinprovider.png)

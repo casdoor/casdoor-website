@@ -40,6 +40,7 @@ This guide configures Casdoor as a SAML identity provider for **Tencent Cloud** 
 
 :::info
 Replace placeholders using:
+
 - **{'{'}AccountID{'}'}**: Tencent Cloud account ID — [Account Information](https://console.cloud.tencent.com/developer)
 - **{'{'}RoleName{'}'}**: Role name — [Roles](https://console.cloud.tencent.com/cam/role)
 - **{'{'}ProviderName{'}'}**: SAML identity provider name — [Identity Providers](https://console.cloud.tencent.com/cam/idp)
