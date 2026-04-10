@@ -72,16 +72,7 @@ Add your Casdoor MCP server configuration:
 {
   "mcpServers": {
     "casdoor": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-oauth",
-        "https://your-casdoor.com/api/mcp"
-      ],
-      "env": {
-        "OAUTH_CLIENT_ID": "your-client-id",
-        "OAUTH_SCOPES": "read:application write:application openid profile email"
-      }
+      "url": "https://your-casdoor.com/api/mcp"
     }
   }
 }
@@ -90,10 +81,9 @@ Add your Casdoor MCP server configuration:
 Replace the following placeholders:
 
 - `your-casdoor.com` → Your Casdoor instance domain
-- `your-client-id` → The Client ID from Step 1
 
 :::note
-The `@modelcontextprotocol/server-oauth` package handles OAuth flows automatically. Cursor will open your browser to complete authentication.
+Cursor natively supports remote HTTP-based MCP servers via the `url` field. OAuth flows are handled automatically — Cursor will open your browser to complete authentication using the callback URL `cursor://anysphere.cursor-mcp/oauth/callback`.
 :::
 
 ### Configuring Scopes

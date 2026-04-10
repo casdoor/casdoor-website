@@ -140,34 +140,34 @@ If ChatGPT doesn't support direct MCP server connections or you need more contro
 
 ### Using a Cloud MCP Proxy
 
-1. Deploy an MCP proxy service (e.g., using the `@modelcontextprotocol/server-oauth` package) on a cloud platform
-2. Configure the proxy to connect to your Casdoor instance
+1. Deploy an MCP proxy service on a cloud platform that forwards requests to your Casdoor instance
+2. Configure the proxy with your Casdoor OAuth credentials
 3. Add the proxy URL to ChatGPT instead of the direct Casdoor URL
 
-### Example: Deploying MCP Proxy on Vercel
+### Example: Deploying MCP Proxy with `@modelcontextprotocol/sdk`
+
+Use the official [`@modelcontextprotocol/sdk`](https://www.npmjs.com/package/@modelcontextprotocol/sdk) to build a proxy server:
 
 ```bash
-# Install the MCP OAuth server
-npm install -g @modelcontextprotocol/server-oauth
+npm install @modelcontextprotocol/sdk express
+```
 
-# Create a simple server wrapper
-cat > server.js << 'EOF'
-const { createServer } = require('@modelcontextprotocol/server-oauth');
+```javascript
+// server.js
+const express = require('express');
+const app = express();
 
-const server = createServer({
-  targetUrl: process.env.CASDOOR_URL + '/api/mcp',
-  clientId: process.env.OAUTH_CLIENT_ID,
-  clientSecret: process.env.OAUTH_CLIENT_SECRET,
-  scopes: process.env.OAUTH_SCOPES.split(' ')
+// Forward MCP requests to Casdoor with OAuth token injection
+app.use('/mcp', async (req, res) => {
+  const targetUrl = process.env.CASDOOR_URL + '/api/mcp';
+  // Implement token forwarding logic here using @modelcontextprotocol/sdk
+  // Refer to the MCP SDK documentation for transport and auth options
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`MCP proxy listening on port ${PORT}`);
 });
-EOF
-
-# Deploy to your preferred platform
 ```
 
 Set environment variables:
