@@ -14,7 +14,7 @@ In your IdP (e.g. Google Workspace, Azure AD, Okta), register Casdoor as an SP w
 - **ACS URL**: `https://<your-casdoor-domain>/api/acs` (e.g. `https://door.example.com/api/acs`). This endpoint accepts **POST** only.
 - **Entity ID (SP Entity ID)**: use the same URL as the ACS URL.
 
-Replace `<your-casdoor-domain>` with your Casdoor host (e.g. `http://localhost:8000` → `http://localhost:8000/api/acs`).
+Replace `<your-casdoor-domain>` with your Casdoor host. For example, `http://localhost:8000` becomes `http://localhost:8000/api/acs`.
 
 ## 2. Get IdP metadata
 

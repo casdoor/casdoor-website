@@ -227,6 +227,7 @@ var _hmt = _hmt || [];
   },
   // https://docusaurus.io/docs/markdown-features/diagrams#configuration
   markdown: {
+    format: "detect",
     mermaid: true,
     hooks: {
       onBrokenMarkdownLinks: "warn",
