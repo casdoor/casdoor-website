@@ -5,7 +5,7 @@ keywords: [tags, application, access control]
 authors: [Chinoholo0807]
 ---
 
-**Application tags** limit who can sign in: only users with at least one tag that matches the application’s tags can access it. Admins and global admins are not restricted.
+**Application tags** limit who can sign in: only users with at least one tag that matches the application’s tags can access it. Admins and global admins are not restricted. Users and applications in `built-in` organization are also not restricted.
 
 Example: if the application has tags `dev` and `staging`, users must have `dev` or `staging` (or both). User tags are comma-separated (e.g. `"dev,qa,staging"`); Casdoor checks each tag and allows access if any match. The reserved tag `guest-user` is for [guest authentication](/docs/how-to-connect/guest-auth); those users become `normal-user` when they set credentials.
 
