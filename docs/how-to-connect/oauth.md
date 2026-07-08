@@ -363,6 +363,40 @@ Example response:
 }
 ```
 
+## DPoP (sender-constrained tokens)
+
+Casdoor supports [DPoP (Demonstrating Proof of Possession, RFC 9449)](https://datatracker.ietf.org/doc/html/rfc9449), which binds an access token to a client-held key so that a leaked token cannot be used without the matching private key.
+
+To request a DPoP-bound token, send a `DPoP` header containing a DPoP proof JWT with your token request:
+
+```http
+POST /api/login/oauth/access_token
+DPoP: <DPoP proof JWT>
+```
+
+When a valid proof is supplied, Casdoor binds the issued token to the proof's public key (its JWK thumbprint, `jkt`) and returns `token_type` as `DPoP` instead of `Bearer`:
+
+```json
+{
+    "access_token": "eyJhb...",
+    "token_type": "DPoP",
+    "expires_in": 10080,
+    "scope": "openid"
+}
+```
+
+The same `DPoP` header is also accepted on the refresh token request. An invalid proof is rejected with the `invalid_dpop_proof` error.
+
+The supported proof signing algorithms are advertised in the OpenID Connect discovery document (`/.well-known/openid-configuration`) under `dpop_signing_alg_values_supported`:
+
+```json
+{
+    "dpop_signing_alg_values_supported": ["RS256", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512"]
+}
+```
+
+The [token introspection](#how-to-verify-access-token) response also exposes the key binding through the `cnf.jkt` claim (RFC 9449 §8).
+
 ## How to Verify Access Token
 
 Casdoor currently supports the [token introspection](https://datatracker.ietf.org/doc/html/rfc7662) endpoint. This endpoint is protected by Basic Authentication (ClientId:ClientSecret).
