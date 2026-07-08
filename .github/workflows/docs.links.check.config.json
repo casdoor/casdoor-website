@@ -50,6 +50,18 @@
         },
         {
             "pattern": "^https://stackoverflow.com/"
+        },
+        {
+            "pattern": "^https://gitlab.com/-/profile/applications"
+        },
+        {
+            "pattern": "^https://www.jumio.com/"
+        },
+        {
+            "pattern": "^https://console.cloud.google.com/"
+        },
+        {
+            "pattern": "^https://openclaw.io"
         }
     ]
 }

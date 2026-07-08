@@ -26,6 +26,7 @@ Users can sign in with MetaMask. Demo:
 <video src="/video/provider/web3/login_with_metamask.mp4" controls="controls" width="100%"></video>
 
 :::tip
+
 - Authorize only one Ethereum address per user; Casdoor binds one address per account.
 - To use a different address, disconnect the current one in Casdoor first, then sign in again with the new address.
 

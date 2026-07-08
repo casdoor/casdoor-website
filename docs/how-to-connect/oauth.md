@@ -24,7 +24,7 @@ Enable non-default grant types on the application edit page.
 
 ![Grant Types](/img/how-to-connect/oauth/accesstoken_grant_types.png)
 
-### Authorization code grant <span id="1"></span>
+### Authorization code grant
 
 Redirect the user to:
 

@@ -52,7 +52,7 @@ After the SPNEGO token is validated, Casdoor looks up a user in the organization
 
 ## Endpoint
 
-```
+```http
 GET /api/kerberos-login?application=<application-name>
 ```
 

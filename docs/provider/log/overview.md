@@ -22,7 +22,8 @@ Records every non-GET API call that passes through Casdoor's authorization filte
 No configuration fields are required.
 
 **Entry format:**
-```
+
+```text
 [info]    sub=<owner>/<user> method=<METHOD> url=<path> objOwner=<org> allowed=true
 [warning] sub=<owner>/<user> method=<METHOD> url=<path> objOwner=<org> allowed=false
 ```

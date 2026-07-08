@@ -12,19 +12,19 @@ Configure Google OAuth in the [Google API Console](https://console.developers.go
 1. Create or select a project. Open **APIs & Services** → **OAuth consent screen** and configure the consent screen.
 2. Go to **Credentials** → **Create credentials** → **OAuth client ID**. Choose application type (e.g. Web application) and set **Authorized redirect URIs**.
 
-![Setting up the project](/img/providers/OAuth/googlenewproject.png)
-![Configure consent](/img/providers/OAuth/oauthconsentscreen.png)
-![Registering the app](/img/providers/OAuth/appregistration.png)
-![Credentials](/img/providers/OAuth/credential.png)
-![Creating a credential](/img/providers/OAuth/createcredential.png)
+   ![Setting up the project](/img/providers/OAuth/googlenewproject.png)
+   ![Configure consent](/img/providers/OAuth/oauthconsentscreen.png)
+   ![Registering the app](/img/providers/OAuth/appregistration.png)
+   ![Credentials](/img/providers/OAuth/credential.png)
+   ![Creating a credential](/img/providers/OAuth/createcredential.png)
 
-:::info
-**Authorized redirect URIs** in Google must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
-:::
+   :::info
+   **Authorized redirect URIs** in Google must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
+   :::
 
 3. After creating the client, copy the **Client ID** and **Client Secret**.
 
-![Client](/img/providers/OAuth/googleclient.png)
+   ![Client](/img/providers/OAuth/googleclient.png)
 
 ## Add the provider in Casdoor
 

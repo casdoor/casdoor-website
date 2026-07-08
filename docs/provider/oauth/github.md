@@ -12,15 +12,15 @@ GitHub OAuth supports both the web application flow and the device flow. Use a *
 1. Go to [GitHub Developer Settings](https://github.com/settings/apps/new) and create a new **GitHub App**.
 2. Set **GitHub App name**, **Homepage URL**, **Description**, and **Callback URL**.
 
-![GitHub](/img/providers/OAuth/github.png)
+   ![GitHub](/img/providers/OAuth/github.png)
 
-:::info
-In the GitHub App, **Callback URL** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your app’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
-:::
+   :::info
+   In the GitHub App, **Callback URL** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your app’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
+   :::
 
 3. After creating the app, generate the **Client secret** (under the app settings).
 
-![GitHub Client ID](/img/providers/OAuth/githubclient.png)
+   ![GitHub Client ID](/img/providers/OAuth/githubclient.png)
 
 ## Add the provider in Casdoor
 
