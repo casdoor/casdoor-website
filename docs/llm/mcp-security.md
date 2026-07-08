@@ -64,7 +64,7 @@ Authorization controls tell you what *should* happen. Observability tells you wh
 
 Enable a [Casdoor Permission Log provider](/docs/provider/log/overview#casdoor-permission-log) on your organization. Casdoor then records every non-GET API call as a permission entry:
 
-```
+```text
 [info]    sub=org/user  method=POST  url=/api/update-application  allowed=true
 [warning] sub=org/user  method=DELETE  url=/api/delete-user  allowed=false
 ```

@@ -189,9 +189,9 @@ Create a key on the **Keys** page in the Casdoor admin sidebar. Select the appro
 
 **Query parameters:**
 
-    ```shell
-    /page?accessKey=<access key>&accessSecret=<access secret>"
-    ```
+```shell
+/page?accessKey=<access key>&accessSecret=<access secret>"
+```
 
 Example: `https://door.casdoor.com/api/get-global-providers?accessKey=...&accessSecret=...`
 
@@ -209,9 +209,9 @@ Username format: `<organization>/<username>`. API calls run as that user.
 
 **Query parameters:**
 
-    ```shell
-    /page?username=<The user's organization name>/<The user name>&password=<the user's password>"
-    ```
+```shell
+/page?username=<The user's organization name>/<The user name>&password=<the user's password>"
+```
 
 ## SSO logout
 

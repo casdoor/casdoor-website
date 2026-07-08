@@ -26,6 +26,7 @@ In the Jumio dashboard, open the API credentials section. Note your **API Token*
 ### 2. Create the provider in Casdoor
 
 **Providers** → **Add**. Set **Category** to **ID Verification**, **Type** to **Jumio**, and fill in:
+
 - **Client ID** — Jumio API Token  
 - **Client Secret** — Jumio API Secret  
 - **Endpoint** — Jumio API URL  

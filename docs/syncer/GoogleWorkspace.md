@@ -101,7 +101,7 @@ The Google Workspace syncer can also sync groups and their memberships into Casd
 
 To enable group syncing, the service account needs an additional OAuth scope granted in the Google Workspace Admin Console:
 
-```
+```text
 https://www.googleapis.com/auth/admin.directory.group.readonly
 ```
 
