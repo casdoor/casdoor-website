@@ -5,6 +5,7 @@ on:
         - master
 jobs:
   build-and-deploy:
+    if: github.repository == 'casdoor/casdoor-website'
     env:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     runs-on: ubuntu-latest
