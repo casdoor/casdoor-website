@@ -35,3 +35,7 @@ Supported providers: **Default**, **Cloudflare Turnstile**, **reCAPTCHA**, **hCa
 :::tip
 For captcha, **None** means verification is disabled. This is different from SMS/Email providers where "None" can mean "apply to all scenarios".
 :::
+
+:::caution
+Each application may have **at most one** captcha provider. Adding a second captcha provider to the same application is rejected when saving. Remove the existing captcha provider first before switching to a different one.
+:::

@@ -7,9 +7,20 @@ authors: [nomeguy]
 
 Casdoor issues **access tokens** for authenticating clients. This page describes how to get a token via the API, verify it, and use it. Alternatively use [Casdoor SDKs](/docs/how-to-connect/sdk) to handle the flow.
 
-**Supported grant types:** [Authorization Code](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1), [Implicit](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2), [Resource Owner Password](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3), [Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4), [Refresh Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6), [Device Authorization](https://datatracker.ietf.org/doc/html/rfc8628), [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693).
+**Supported grant types:**
 
-Authorization code is enabled by default for security. Enable other grant types on the application edit page if needed.
+| Grant Type | RFC | Use Case |
+|------------|-----|----------|
+| [Authorization Code](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1) | RFC 6749 §4.1 | Default; web/mobile apps with a backend. Enabled by default. |
+| [Implicit](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2) | RFC 6749 §4.2 | Frontend-only apps without a backend. |
+| [Resource Owner Password](https://datatracker.ietf.org/doc/html/rfc6749#section-4.3) | RFC 6749 §4.3 | Apps with no frontend redirect; user credentials sent directly. |
+| [Client Credentials](https://datatracker.ietf.org/doc/html/rfc6749#section-4.4) | RFC 6749 §4.4 | Service-to-service calls with no user involved. |
+| [Refresh Token](https://datatracker.ietf.org/doc/html/rfc6749#section-6) | RFC 6749 §6 | Renew an access token without re-authenticating. |
+| [Device Authorization](https://datatracker.ietf.org/doc/html/rfc8628) | RFC 8628 | Devices with limited input or no browser. |
+| [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) | RFC 8693 | Swap an existing token for one with different scope or audience. |
+| [JWT Bearer](https://datatracker.ietf.org/doc/html/rfc7523) | RFC 7523 | Service auth using a signed JWT assertion instead of a client secret. |
+
+Enable non-default grant types on the application edit page.
 
 ![Grant Types](/img/how-to-connect/oauth/accesstoken_grant_types.png)
 
@@ -128,6 +139,24 @@ When you exchange the authorization code for tokens, include the same `resource`
 
 The resulting access token will have its `aud` (audience) claim set to your resource URI instead of the client ID. Your backend service can then verify that tokens were issued specifically for it by checking the audience claim. The resource must match exactly between the authorization and token requests.
 
+The `resource` parameter is preserved through browser-based login flows. If a user needs to complete an interactive login (e.g. password entry, MFA, or WebAuthn), the parameter is carried through the entire redirect chain and included when the authorization code is issued.
+
+#### provider_hint parameter
+
+To skip the Casdoor login page and send the user directly to a specific OAuth provider, add `provider_hint=<provider-name>` to the authorize URL:
+
+```url
+https://<CASDOOR_HOST>/login/oauth/authorize?
+client_id=CLIENT_ID&
+redirect_uri=REDIRECT_URI&
+response_type=code&
+scope=openid&
+state=STATE&
+provider_hint=github
+```
+
+Casdoor serves a lightweight redirect page (without loading the full React app) that immediately bounces the user to that provider's OAuth flow. This reduces time-to-redirect on constrained devices or slow connections.
+
 #### Signup Flow with OAuth
 
 When users sign up through the OAuth authorization flow, they are automatically redirected to your application's callback URL with the authorization code, just like the sign-in flow. Previously, users had to manually click through intermediate pages after creating their account. Now the signup process matches the streamlined experience of signing in—once registration completes, Casdoor immediately generates the authorization code and redirects to your `redirect_uri`.
@@ -137,6 +166,12 @@ Your application doesn't need any changes to support this. The authorization par
 ### Implicit Grant
 
 For apps without a backend, use **Implicit Grant**. Enable it on the application, then redirect users to:
+
+:::caution
+
+The Implicit Grant token endpoint requires a valid `username` and `password`. Pure OAuth users (accounts created exclusively via a third-party provider with no local password set) cannot use this flow and will receive `invalid_grant`. Use the Authorization Code flow for social-login users.
+
+:::
 
 ```url
 https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE
@@ -286,6 +321,81 @@ The response returns a new token tied to the same user as your subject token:
 ```
 
 For example, an API gateway might exchange a broad-scoped access token for a narrower one before forwarding requests to a downstream microservice. This pattern—called scope downscoping—ensures each service gets only the permissions it needs, rather than inheriting full access from the original token.
+
+**Audience binding:** Casdoor validates the `subject_token` using the certificate of its issuing application (identified by the `azp` claim), not the requesting client's certificate. If the requesting client differs from the token's issuer, the token's `aud` claim must include the requesting client's ID; otherwise the exchange is rejected with `invalid_grant`. This prevents one application from exchanging another application's tokens without explicit audience authorization (RFC 8693 §2.1).
+
+### JWT Bearer Grant
+
+JWT Bearer (RFC 7523) allows a client to obtain an access token by presenting a signed JWT assertion instead of a client secret. This is useful for service-to-service calls where the client holds a private key and wants to authenticate without sharing a long-lived secret.
+
+Enable **JWT Bearer** on the application, then upload the client's certificate in the **Client cert** field under the Security tab. Casdoor uses the public key from that certificate to verify the JWT assertion.
+
+Send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+
+```json
+{
+    "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+    "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+    "client_assertion": "<signed-JWT>",
+    "client_id": "CLIENT_ID"
+}
+```
+
+The JWT assertion (`client_assertion`) must be signed with the client's private key and contain:
+
+| Claim | Description |
+|-------|-------------|
+| `iss` | Issuer — the `client_id` of the application |
+| `sub` | Subject — the `client_id` of the application |
+| `aud` | Audience — the Casdoor token endpoint URL |
+| `exp` | Expiry time (Unix timestamp) |
+
+Casdoor verifies the signature against the public key in the application's **Client cert**, checks the standard JWT claims, and—if valid—returns an access token tied to the application (same behavior as the Client Credentials grant).
+
+Example response:
+
+```json
+{
+    "access_token": "eyJhb...",
+    "token_type": "Bearer",
+    "expires_in": 10080,
+    "scope": "openid"
+}
+```
+
+## DPoP (sender-constrained tokens)
+
+Casdoor supports [DPoP (Demonstrating Proof of Possession, RFC 9449)](https://datatracker.ietf.org/doc/html/rfc9449), which binds an access token to a client-held key so that a leaked token cannot be used without the matching private key.
+
+To request a DPoP-bound token, send a `DPoP` header containing a DPoP proof JWT with your token request:
+
+```http
+POST /api/login/oauth/access_token
+DPoP: <DPoP proof JWT>
+```
+
+When a valid proof is supplied, Casdoor binds the issued token to the proof's public key (its JWK thumbprint, `jkt`) and returns `token_type` as `DPoP` instead of `Bearer`:
+
+```json
+{
+    "access_token": "eyJhb...",
+    "token_type": "DPoP",
+    "expires_in": 10080,
+    "scope": "openid"
+}
+```
+
+The same `DPoP` header is also accepted on the refresh token request. An invalid proof is rejected with the `invalid_dpop_proof` error.
+
+The supported proof signing algorithms are advertised in the OpenID Connect discovery document (`/.well-known/openid-configuration`) under `dpop_signing_alg_values_supported`:
+
+```json
+{
+    "dpop_signing_alg_values_supported": ["RS256", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512"]
+}
+```
+
+The [token introspection](#how-to-verify-access-token) response also exposes the key binding through the `cnf.jkt` claim (RFC 9449 §8).
 
 ## How to Verify Access Token
 

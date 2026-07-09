@@ -14,13 +14,13 @@ Use the [GitLab Applications](https://gitlab.com/-/profile/applications) page (o
 1. Click **Add new application**.
 2. Set **Name** (e.g. "Casdoor"), **Redirect URI**, and **Scopes**.
 
-:::caution
-Enable scopes **read_user** and **profile**. Without them, authentication can fail.
-:::
+   :::caution
+   Enable scopes **read_user** and **profile**. Without them, authentication can fail.
+   :::
 
-:::info
-In GitLab, **Redirect URI** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
-:::
+   :::info
+   In GitLab, **Redirect URI** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
+   :::
 
 3. After creating the app, copy **Application ID** and **Secret** from the app details.
 

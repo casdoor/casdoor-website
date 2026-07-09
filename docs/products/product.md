@@ -20,7 +20,13 @@ Offer both presets and custom amount, or disable custom amount so only presets a
 
 ### Payment providers
 
-Attach one or more [payment providers](/docs/provider/payment/overview) to the product. Casdoor checks that the product’s **currency** matches each provider (e.g. USD product with PayPal); creation or update fails if there is a currency mismatch.
+Attach one or more [payment providers](/docs/provider/payment/overview) to the product. **Currency** is required—products without a currency cannot be saved. Casdoor checks that the selected currency matches each attached provider (e.g. a USD product with PayPal); creation or update fails if there is a mismatch.
+
+If no payment provider is explicitly added, Casdoor automatically assigns one from the available providers in the **Payment** category. This means a newly created product is immediately purchasable without manual provider configuration, as long as at least one payment provider exists in the organization.
+
+:::note
+Alipay is restricted to CNY only. Selecting Alipay for a product in any other currency will fail validation.
+:::
 
 ![product_provider.png](/img/products/product_provider.png)
 
@@ -47,6 +53,14 @@ http://example.com/payment/success?customParam=value&transactionOwner={paymentOw
 Call the API endpoint: `api/notify-payment/{paymentOwner}/{paymentName}` using the parameters provided in the Success URL query string.
 
 :::
+
+## API
+
+### buy-product (deprecated)
+
+The `/api/buy-product` endpoint is retained for backwards compatibility with integrations built against older Casdoor versions. It internally calls `place-order` followed by `pay-order` and returns the same payment response.
+
+**New integrations should call `place-order` and `pay-order` separately.** The two-step flow gives you more control: you can inspect the order before initiating payment and handle each step's errors independently.
 
 ## Access Controls
 

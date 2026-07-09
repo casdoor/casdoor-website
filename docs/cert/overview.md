@@ -23,6 +23,21 @@ Each certificate has:
 - **Certificate**: The public certificate content
 - **PrivateKey**: The private key content (stored securely)
 
+### SSL certificate fields
+
+Certificates with **Type: SSL** have additional fields for ACME-based auto-renewal:
+
+| Field | Description |
+|-------|-------------|
+| **ExpireTime** | Expiry timestamp of the current certificate (read-only, populated automatically) |
+| **DomainExpireTime** | Expiry timestamp of the domain registration (read-only, from WHOIS lookup) |
+| **Provider** | DNS provider used for DNS-01 ACME challenge: `Aliyun` or `GoDaddy` |
+| **Account** | ACME account email address |
+| **AccessKey** | DNS provider API key / access key ID |
+| **AccessSecret** | DNS provider API secret |
+
+When you click **Renew** on an SSL certificate, Casdoor contacts the ACME service, completes the DNS-01 challenge via the configured DNS provider, and stores the issued certificate and private key automatically.
+
 ## Certificate scopes
 
 Certificates are used differently depending on their scope:

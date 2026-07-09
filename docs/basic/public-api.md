@@ -177,13 +177,13 @@ This approach allows you to delegate organization management to your customers w
 
 :::
 
-### 3. Access key and Access secret (user context)
+### 3. Access key and Access secret
 
-A user can have an **access key** and **access secret** (set in the account settings by the user or an admin, or via the `update-user` API). Requests using them run as that user.
+Casdoor supports API authentication via **access key / access secret** pairs. These are managed through the [Keys](/docs/key/overview) page and can be scoped to an organization, application, or user. Requests authenticated this way run with the permissions of the associated scope.
 
 #### Setup
 
-Create a key pair on the user’s account settings page.
+Create a key on the **Keys** page in the Casdoor admin sidebar. Select the appropriate **Type** (`Organization`, `Application`, or `User`) and save. Copy the generated access secret immediately — it is not shown again.
 
 #### Sending them
 
@@ -195,10 +195,8 @@ Create a key pair on the user’s account settings page.
 
 Example: `https://door.casdoor.com/api/get-global-providers?accessKey=...&accessSecret=...`
 
-![User Api Key](/img/basic/user_api_key.png)
-
 ```bash
-curl --location 'http://door.casdoor.com/api/user?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796&accessSecret=79911517-fc36-4093-b115-65a9741f6b14'
+curl --location ‘http://door.casdoor.com/api/user?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796&accessSecret=79911517-fc36-4093-b115-65a9741f6b14’
 ```
 
 ### 4. Username and password

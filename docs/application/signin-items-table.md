@@ -21,6 +21,19 @@ On the application configuration page, use the **Sign-in items** table to define
 | **Rule** | Rule items | Rule that customizes this item (see below). |
 | **Action** | — | Move up, move down, or delete. |
 
+## Forgot password visibility
+
+Setting the **Forgot password?** item to `Visible: False` disables the feature at both the UI and API levels. When hidden, the backend `/api/send-verification-code` endpoint rejects password-reset requests with an error, preventing clients from bypassing the UI restriction by calling the API directly.
+
+## Language selector rules
+
+The **Languages** item supports a **Rule** that changes how the language picker is rendered on the sign-in and sign-up pages:
+
+| Rule | Description |
+|------|-------------|
+| (empty) | Globe icon dropdown (default behavior). |
+| **Label** | A labeled Select component is shown instead of the icon dropdown. |
+
 ## Captcha rules
 
 The **Captcha** item supports rules that control how verification is shown:

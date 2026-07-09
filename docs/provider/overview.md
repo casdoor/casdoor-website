@@ -21,6 +21,7 @@ Casdoor supports the following provider types:
 | **Captcha** | Protect sign-in and sign-up with captcha (Default, reCAPTCHA, hCaptcha, Cloudflare Turnstile, Alibaba Cloud, etc.). |
 | **Identity verification** | Verify user identity via third-party services (e.g. Jumio) using ID documents. |
 | **MFA** | Second-factor authentication (e.g. RADIUS) for multi-factor authentication. |
+| **Log** | Forward permission audit events to an external logging backend (e.g. syslog) or store them as Casdoor Entry records. See [Log providers](/docs/provider/log/overview). |
 
 ## Scope and permissions
 
@@ -28,6 +29,10 @@ Only administrators can add and configure providers. Visibility of providers dep
 
 - **Global administrators**: Users in the `built-in` organization or with `IsGlobalAdmin` enabled. Providers they create can be used by **all** applications.
 - **Organization administrators**: Users with `IsAdmin` enabled. Providers they create can be used **only** by applications in the same organization (behavior may evolve in future releases).
+
+## Auto-naming
+
+When creating a new provider, the **Name** and **Display name** fields are auto-populated as you select the Category and Type. The name follows the pattern `provider_{category}_{type}` (slugified), and the display name is `{Category} {Type}`. These are updated automatically as long as you haven't manually edited the fields. Once you type in either field, auto-fill stops for that field.
 
 ## Adding a provider to an application
 

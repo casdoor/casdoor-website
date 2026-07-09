@@ -39,7 +39,7 @@ In Casdoor **Providers** → **Add**, set **Type** to one of Custom, Custom2, �
 
 - **Scope** — Scope string sent to the Auth URL (per your IdP’s docs).
 
-- **Enable PKCE** — When on, Casdoor sends `code_challenge`/`code_challenge_method=S256` in the auth request and `code_verifier` in the token request. Enable if your IdP requires or supports PKCE.
+- **Enable PKCE** — When on, Casdoor generates a fresh cryptographically random code verifier for each login attempt, computes the S256 challenge from it, and appends `code_challenge`/`code_challenge_method=S256` to the auth request. The verifier is stored in `localStorage` keyed by the OAuth state and automatically cleared after use. The `code_verifier` is included in the token exchange request, as required by [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636). Enable this if your IdP requires or supports PKCE.
 
 - **Token URL** — Token endpoint. Casdoor calls it with the code to get an access token. Example:
 

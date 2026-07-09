@@ -176,6 +176,14 @@ go build
 casdoor.exe
 ```
 
+To load a config file from a non-default path, pass the `--config` flag:
+
+```bash
+./casdoor --config /etc/casdoor/app.conf
+```
+
+The `--config` flag accepts an absolute or relative path and fully replaces the default `conf/app.conf` lookup.
+
 #### Frontend
 
 Build static assets:
@@ -194,8 +202,8 @@ To use a different port, set `httpport` in `conf/app.conf` and restart the backe
 
 :::info Ports and URLs
 
-- **Dev:** Frontend runs on port 7001 (`yarn start`). Point apps at `http://localhost:7001` for the Casdoor login page.
-- **Prod:** Frontend is built and served by the backend on port 8000. Use `https://your-casdoor-domain` (or your reverse proxy URL).
+- **Dev:** Frontend runs on port 7001 (`yarn start`). Point apps at **`http://localhost:7001`** for the Casdoor login page.
+- **Prod:** Frontend is built and served by the backend on port 8000. Use **`https://your-casdoor-domain`** (or your reverse proxy URL).
 :::
 
 **Example:** [Casnode](https://casnode.org) uses Casdoor. In dev, set `serverUrl` to `http://localhost:7001`; in prod, set it to `https://door.casdoor.com`.

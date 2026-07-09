@@ -14,6 +14,18 @@ authors: [kininaru]
 ![Email provider](/img/providers/emailprovider.png)
 ![Email Config](/img/providers/emailconfig.png)
 
+## SSL mode
+
+The **SSL mode** setting controls how the SMTP connection negotiates TLS:
+
+| Value | Behavior |
+|-------|----------|
+| **Auto** (default) | Lets gomail decide based on port. Port 465 uses implicit SSL; other ports attempt STARTTLS. |
+| **Enable** | Forces SSL/TLS on regardless of port. Use this when your server requires implicit TLS on a non-standard port. |
+| **Disable** | Disables SSL/TLS. Use only for servers on trusted internal networks. |
+
+Existing providers that had **Disable SSL** checked are treated as `Disable` automatically; no manual migration is needed.
+
 ## Proxy
 
 If the Casdoor server cannot reach the SMTP server directly (e.g. Gmail from a restricted network), enable **Enable proxy**. Email is then sent via the SOCKS5 proxy defined in Casdoor’s config.

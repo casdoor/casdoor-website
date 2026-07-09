@@ -5,7 +5,7 @@ keywords: [SMS, verification, Twilio, Alibaba, Tencent]
 authors: [kininaru]
 ---
 
-Casdoor sends SMS via [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender). Supported providers include Twilio, Submail, SmsBao, Alibaba Cloud, Tencent Cloud, Huawei Cloud, and Volc. To add another provider, open an issue or submit a PR in that repo.
+Casdoor sends SMS via [casdoor/go-sms-sender](https://github.com/casdoor/go-sms-sender). Supported providers include Twilio, Amazon SNS, Azure ACS, Alibaba Cloud, Alibaba Cloud PNVS, Tencent Cloud, Huawei Cloud, Submail, SmsBao, and Volc. To add another provider, open an issue or submit a PR in that repo.
 
 ## Add an SMS provider
 

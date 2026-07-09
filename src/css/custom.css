@@ -355,3 +355,8 @@ html[data-theme="dark"] .theme-doc-sidebar-container div[title="Expand sidebar"]
     --ifm-spacing-horizontal: 1rem;
   }
 }
+
+/* MCP navbar icon: show light/dark variant based on theme */
+.mcp-nav-icon--dark { display: none; }
+[data-theme="dark"] .mcp-nav-icon--light { display: none; }
+[data-theme="dark"] .mcp-nav-icon--dark { display: inline; }

@@ -32,6 +32,14 @@ For algorithms that use salts (`salt`, `md5-salt`, `pbkdf2-salt`), set the **Pas
 
 **Recommendation:** Use per-user salt for new deployments to strengthen protection against rainbow-table attacks. Salts are stored with the password hash and managed by Casdoor.
 
+## Permanent avatar storage
+
+By default, when a user signs in via an OAuth provider (GitHub, Google, etc.), Casdoor stores the provider-hosted avatar URL directly. If the provider changes or removes that URL later, the avatar breaks.
+
+Enable **Use permanent avatar** on the organization edit page to have Casdoor download the avatar from the OAuth provider and re-upload it to Casdoor's configured [storage provider](/docs/provider/storage/overview). The stored URL is then stable and independent of the original provider.
+
+When this setting is on, Casdoor checks whether a permanent avatar already exists for the user before uploading. Only new or changed avatars trigger an upload.
+
 ## Use email as username
 
 Organizations can enable **Use email as username** so that the user’s email is used as their username when the username field is not shown at sign-up. This simplifies registration by avoiding a separate username.

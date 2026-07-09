@@ -63,14 +63,9 @@ Open this file in a text editor and add your Casdoor MCP server configuration:
     "casdoor": {
       "command": "npx",
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-oauth",
+        "mcp-remote",
         "https://your-casdoor.com/api/mcp"
-      ],
-      "env": {
-        "OAUTH_CLIENT_ID": "your-client-id",
-        "OAUTH_SCOPES": "read:application write:application openid profile email"
-      }
+      ]
     }
   }
 }
@@ -79,10 +74,9 @@ Open this file in a text editor and add your Casdoor MCP server configuration:
 Replace the following placeholders:
 
 - `your-casdoor.com` → Your Casdoor instance domain
-- `your-client-id` → The Client ID from Step 1
 
 :::note
-The `@modelcontextprotocol/server-oauth` package handles OAuth flows automatically. Claude Desktop will open your browser to complete authentication.
+The [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) package bridges Claude Desktop (which uses stdio transport) to remote HTTP-based MCP servers. It handles OAuth flows automatically — Claude Desktop will open your browser to complete authentication.
 :::
 
 ### Configuring Scopes

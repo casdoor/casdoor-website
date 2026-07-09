@@ -59,6 +59,9 @@ Casdoor manages user accounts. Each user has the following properties:
 - `LastSigninIp`: The IP address from the user's last sign-in
 - `Roles`: An array of the user's roles (extended field, read-only via User API)
 - `Permissions`: An array of the user's permissions (extended field, read-only via User API)
+- `OriginalRefreshToken`: The refresh token from the most recent social login (legacy single-provider field, kept for backward compatibility). Masked as `***` in API responses.
+- `Properties["oauth_<ProviderType>_accessToken"]` / `Properties["oauth_<ProviderType>_refreshToken"]`: Per-provider OAuth tokens stored in the `Properties` map. When a user signs in via multiple OAuth providers, each provider's tokens are stored independently under its own key (e.g. `oauth_GitHub_accessToken`). Both fields are masked as `***` in API responses.
+- `Addresses`: A list of structured address entries. Each address has a **Tag** (Home, Work, Other), **Line 1**, **Line 2**, **City**, **State**, **Zip code**, and **Region**. Users can manage their addresses from the account profile page.
 
 Unique IDs for social platform logins:
 
@@ -84,6 +87,7 @@ Unique IDs for social platform logins:
 - `Slack`: User's unique identifier from Slack OAuth login
 - `Steam`: User's unique identifier from Steam OAuth login
 - `Ldap`: User's unique identifier from LDAP authentication
+- `Telegram`: User's unique identifier from Telegram OAuth login
 
 ## Organization admin privileges
 

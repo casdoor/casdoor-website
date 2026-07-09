@@ -129,3 +129,25 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 ```
 
 Validate incoming webhook requests (e.g. signatures or shared secrets) and test with Beeceptor or Webhook.site before using webhooks in production.
+
+## Delivery tracking and retry
+
+Casdoor persists every webhook delivery attempt as a **Webhook Event** record. Navigate to **Webhook Events** in the sidebar to see the delivery history for all webhooks in your organization.
+
+Each event record includes:
+
+| Field | Description |
+|-------|-------------|
+| **Status** | `pending`, `success`, `failed`, or `retrying` |
+| **Attempt count** | How many delivery attempts have been made |
+| **Last status code** | HTTP response code from the most recent attempt |
+| **Last response / error** | Response body or error message from the most recent attempt |
+| **Next retry time** | When the next automatic retry will occur (if applicable) |
+
+### Automatic retry
+
+Failed deliveries are retried automatically by a background worker that runs every 30 seconds. The default maximum retries per event is 3. After all retries are exhausted the event status is set to `failed` and no further attempts are made automatically.
+
+### Manual replay
+
+To re-deliver an event, open it in the **Webhook Events** list and click **Replay**. This creates a new delivery attempt regardless of the current retry count or status. Use this to recover from temporary endpoint outages or to re-process an event after fixing a bug in your handler.

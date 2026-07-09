@@ -16,8 +16,12 @@ Casdoor supports these syncer types:
 - **Active Directory**: Synchronize users from Microsoft Active Directory via LDAP. See [Active Directory syncer](/docs/syncer/ActiveDirectory).
 - **Google Workspace**: Synchronize users from Google Workspace using Admin SDK API. See [Google Workspace syncer](/docs/syncer/GoogleWorkspace).
 - **Keycloak**: Import users directly from Keycloak databases. See [Keycloak syncer](/docs/syncer/Keycloak).
+- **Okta**: Synchronize users from Okta via the Okta Users API. See [Okta syncer](/docs/syncer/Okta).
+- **SCIM**: Pull users from any SCIM 2.0-compliant identity provider. See [SCIM syncer](/docs/syncer/SCIM).
+- **AWS IAM**: Import users and groups from an AWS account via the IAM API. See [AWS IAM syncer](/docs/syncer/AWSIAM).
 - **WeCom**: Fetch users from WeCom organizations via API. See [WeCom syncer](/docs/syncer/WeCom).
 - **DingTalk**: Import users from DingTalk organizations via API. See [DingTalk syncer](/docs/syncer/DingTalk).
+- **Lark**: Import users from Lark (Feishu) organizations via the Lark Open Platform API. See [Lark syncer](/docs/syncer/Lark).
 
 All syncers share a common interface, so new sources can be added without changing the rest of the system.
 
@@ -28,3 +32,7 @@ Syncers can map a wide set of attributes: profile data, credentials (passwords, 
 ## Sync and change detection
 
 Casdoor computes a **hash** per user from fields such as password and phone. When the hash for a given user `Id` changes, Casdoor treats that user as updated and applies the change. This allows **two-way sync** between the Casdoor user table and the source system.
+
+## Password handling
+
+When the remote source does not provide a password value for a user (the field is empty or not mapped), the syncer skips the password column entirely and leaves the existing password in Casdoor unchanged. This prevents remote systems from accidentally clearing passwords that users have set directly in Casdoor.

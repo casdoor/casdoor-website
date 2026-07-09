@@ -213,6 +213,8 @@ Response:
 
 Runs Casbin CLI commands (Java, Go, Node.js, Python, etc.) via Casdoor and returns the output. Results are cached in memory for 5 minutes; identical requests return the cached result.
 
+**Access control:** Requires admin privileges outside of demo mode. In demo mode, the endpoint is publicly accessible.
+
 **Query parameters:**
 
 - **language** — Casbin CLI language (`go`, `java`, `node`, `python`, etc.)

@@ -27,10 +27,10 @@ Two images are available on Docker Hub:
 
 | Image | Contents | Use case |
 |-------|----------|----------|
-| [casdoor-all-in-one](https://hub.docker.com/r/casbin/casdoor-all-in-one) | Casdoor + embedded MySQL | Quick try-out only; **not for production** |
+| [casdoor-all-in-one](https://hub.docker.com/r/casbin/casdoor-all-in-one) | Casdoor + embedded SQLite | Quick try-out only; **not for production** |
 | [casdoor](https://hub.docker.com/r/casbin/casdoor) | Casdoor only | Connect to your own database; suitable for production |
 
-**casdoor-all-in-one** includes the Casdoor binary, a MySQL database, and default config so Casdoor can be run with one or two commands. Use it only for testing.
+**casdoor-all-in-one** includes the Casdoor binary and a file-based SQLite database with default config, so Casdoor can be run with a single command and no external dependencies. Use it only for testing.
 
 ### Option 1: All-in-one (toy database)
 
@@ -40,7 +40,7 @@ Expose port `8000` and run the all-in-one image. It will be pulled automatically
 docker run -p 8000:8000 casbin/casdoor-all-in-one
 ```
 
-Open [**http://localhost:8000**](http://localhost:8000) and sign in with the default admin: **built-in/admin** / **123**.
+Open `http://localhost:8000` and sign in with the default admin: **built-in/admin** / **123**.
 
 ### Option 2: Standard image with your config
 
@@ -69,7 +69,7 @@ docker run -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
 Casdoor runs as uid/gid 1000. When using volume mounts (e.g. for SQLite or other file-based storage), ensure the mounted path is writable by uid 1000 to avoid `permission denied` errors.
 :::
 
-In short: **mount your `app.conf` at `/conf/app.conf`** and start the container. Then open [**http://localhost:8000**](http://localhost:8000) and sign in as **built-in/admin** / **123**.
+In short: **mount your `app.conf` at `/conf/app.conf`** and start the container. Then open `http://localhost:8000` and sign in as **built-in/admin** / **123**.
 
 ### Option 3: Docker Compose
 
@@ -79,7 +79,7 @@ Place `app.conf` in a `conf/` directory next to `docker-compose.yml` (copy from 
 docker-compose up
 ```
 
-Then open [**http://localhost:8000**](http://localhost:8000) and sign in as **built-in/admin** / **123**.
+Then open `http://localhost:8000` and sign in as **built-in/admin** / **123**.
 
 :::note
 The `RUNNING_IN_DOCKER` environment variable in `docker-compose.yml` is used because the database service is reachable at `localhost` on the host but not inside the Casdoor container. When `RUNNING_IN_DOCKER` is set, Casdoor uses `host.docker.internal` so it can connect to the database without editing `app.conf`.

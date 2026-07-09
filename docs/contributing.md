@@ -116,6 +116,31 @@ This regenerates `web/src/locales/**/data.json`. New keys are filled with Englis
 Do not translate into a language you are not confident in; leave the default (English) as is.
 :::
 
+### Namespace conventions
+
+Translation keys are organized into namespaces. Use the most specific namespace for a key—do **not** put domain-specific strings in `general:`.
+
+| Namespace | Scope |
+|-----------|-------|
+| `general` | Truly generic UI words (e.g. Save, Cancel) |
+| `auth` | Sign-in, sign-up, MFA, password flows |
+| `provider` | OAuth, SAML, LDAP, and other providers |
+| `payment` | Products, orders, payments, subscriptions |
+| `subscription` | Subscription-specific strings |
+
+When adding a new key, check whether it already exists in a more specific namespace before adding it to `general`.
+
+### Deduplication tests
+
+The `i18n/` directory contains tests that catch duplicate keys across namespaces:
+
+```shell
+cd i18n && go test -run TestDeduplicateFrontendI18n
+cd i18n && go test -run TestDeduplicateBackendI18n
+```
+
+`TestDeduplicateFrontendI18n` scans `web/src/locales/` and `TestDeduplicateBackendI18n` scans the backend locale files. Both fail if a key appears in `general` when a more specific namespace already defines it. Run these before submitting a PR that touches translation files.
+
 ## License
 
 By contributing, you agree that your contributions are licensed under the Apache License.

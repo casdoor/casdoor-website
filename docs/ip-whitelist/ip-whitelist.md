@@ -33,3 +33,7 @@ The last check is at the organization level. Set **IP allowlist** on the organiz
 Here is a demo video that shows how to use ip whitelist:
 
 <video src="/img/ip-whitelist/ip_whitelist.mp4" controls="controls" width="100%"></video>
+
+## Verification code rate limiting
+
+To protect SMS and email verification code endpoints from brute-force abuse, Casdoor enforces a per-IP rate limit on verification code checks. If the same IP address submits 5 incorrect codes for the same destination (phone number or email address), that IP is blocked from further attempts for 10 minutes. The block is applied per IP+destination pair, so a single IP is only frozen for the specific destination it abused.

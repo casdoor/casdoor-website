@@ -83,19 +83,34 @@ function HomepageHeader() {
             <Translate>Online Demo</Translate>
           </Link>
         </div>
-        <Link
-          to="/blog/casdoor-joins-cncf-landscape"
-          className={styles.cncfBadge}
-          aria-label="CNCF Landscape">
-          <img
-            src="https://landscape.cncf.io/images/logo_header.svg"
-            alt="CNCF Landscape"
-            className={styles.cncfBadgeIcon}
-            width={260}
-            height={56}
-          />
-          <span><Translate>Casdoor is part of CNCF Landscape</Translate></span>
-        </Link>
+        <div className={styles.heroBadges}>
+          <Link
+            to="/blog/casdoor-joins-cncf-landscape"
+            className={styles.cncfBadge}
+            aria-label="CNCF Landscape">
+            <img
+              src="https://landscape.cncf.io/images/logo_header.svg"
+              alt="CNCF Landscape"
+              className={styles.cncfBadgeIcon}
+              width={260}
+              height={56}
+            />
+            <span><Translate>Casdoor is part of CNCF Landscape</Translate></span>
+          </Link>
+          <Link
+            to="/docs/llm/openclaw"
+            className={styles.openclawBadge}
+            aria-label="OpenClaw LLM Protection">
+            <img
+              src="https://openclaw.ai/apple-touch-icon.png"
+              alt="OpenClaw"
+              className={styles.openclawLogo}
+              width={56}
+              height={56}
+            />
+            <span><Translate>OpenClaw Security Guardrails by Casdoor</Translate></span>
+          </Link>
+        </div>
       </div>
       <HeroLoginCarousel className={styles.headerborder} />
     </header>
@@ -181,6 +196,54 @@ function MCPSection() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OpenClawSection() {
+  return (
+    <section className={styles.contentinterface}>
+      <div className="container text--center">
+        <h2 className={styles.sectionTitle}><Translate>LLM Agent Protection with OpenClaw</Translate></h2>
+        <div className={clsx("row", styles.rowAlignCenter)}>
+          <div className="col" style={{margin: "auto", maxWidth: "42rem"}}>
+            <p className={styles.sectionLead}>
+              <Translate>
+                {"The "}
+              </Translate>
+              <Link href="https://openclaw.io"><Translate>OpenClaw</Translate></Link>
+              <Translate>
+                {" agent collects OpenTelemetry traces, metrics, and logs from your LLM applications and pushes them to Casdoor over OTLP. Every tool call, agent-to-agent interaction, and LLM invocation is recorded as a structured entry — giving you a full audit trail of what your agents actually did at runtime."}
+              </Translate>
+            </p>
+            <p className={styles.sectionLead}>
+              <Translate description="OpenClaw docs link" values={{
+                docLink: (
+                  <Link href="/docs/llm/openclaw">
+                    <Translate>OpenClaw documentation</Translate>
+                  </Link>
+                ),
+              }}>
+                {"Point OpenClaw at your Casdoor instance and traces appear immediately under Entries — no extra infrastructure needed. See the {docLink} for setup instructions."}
+              </Translate>
+            </p>
+          </div>
+          <TabList>
+            <TabItem value="openclaw.yaml">
+              <CodeCard language="yaml">
+                {`exporters:
+  otlphttp:
+    endpoint: https://your-casdoor.com
+    headers:
+      Content-Type: application/x-protobuf
+
+# Casdoor stores traces, metrics, and logs
+# as Entries — inspect span trees in the UI`}
+              </CodeCard>
+            </TabItem>
+          </TabList>
         </div>
       </div>
     </section>
@@ -350,6 +413,7 @@ export default function Home() {
         <HomepageFeatures />
         <LearnHowTo />
         <MCPSection />
+        <OpenClawSection />
         <ContentInterface />
         <ContentLogin />
         <ContentSignup />

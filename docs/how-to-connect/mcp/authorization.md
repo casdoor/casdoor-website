@@ -13,8 +13,8 @@ Session-based authentication (using cookies) bypasses scope checking and grants 
 
 Each MCP tool requires a specific OAuth scope. For application management tools, the mapping is straightforward:
 
-- `read:application` grants access to `get_applications` and `get_application`
-- `write:application` grants access to `add_application`, `update_application`, and `delete_application`
+- `application:read` grants access to `get_applications` and `get_application`
+- `application:write` grants access to `add_application`, `update_application`, and `delete_application`
 
 When you request a token from Casdoor, include the scopes you need in your authorization request. The MCP server filters available tools based on these granted scopes, ensuring that automated processes can only perform actions they're explicitly authorized for.
 
@@ -33,8 +33,8 @@ When you try to use a tool without the required scope, the server responds with 
     "message": "insufficient_scope",
     "data": {
       "tool": "add_application",
-      "granted_scopes": ["read:application"],
-      "required_scope": "write:application"
+      "granted_scopes": ["application:read"],
+      "required_scope": "application:write"
     }
   }
 }
@@ -51,7 +51,7 @@ curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
   -d "grant_type=client_credentials" \
   -d "client_id=YOUR_CLIENT_ID" \
   -d "client_secret=YOUR_CLIENT_SECRET" \
-  -d "scope=read:application"
+  -d "scope=application:read"
 ```
 
 For automation that needs to create and update applications, request the write scope:
@@ -61,10 +61,10 @@ curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
   -d "grant_type=client_credentials" \
   -d "client_id=YOUR_CLIENT_ID" \
   -d "client_secret=YOUR_CLIENT_SECRET" \
-  -d "scope=write:application"
+  -d "scope=application:write"
 ```
 
-You can request multiple scopes by separating them with spaces: `scope=read:application write:application` (or `scope=read:application%20write:application` when URL-encoded). The token will then have access to all tools covered by those scopes.
+You can request multiple scopes by separating them with spaces: `scope=application:read application:write` (or `scope=application:read%20application:write` when URL-encoded). The token will then have access to all tools covered by those scopes.
 
 Some operations have additional requirements beyond scope authorization. Creating applications checks against your organization's application quota. IP whitelist validation runs for applications with restricted access. Demo mode applies additional constraints to prevent modifications to the demonstration instance.
 
@@ -76,50 +76,50 @@ Casdoor's built-in MCP server supports scopes across multiple resource types. Ea
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:application` | `get_applications`, `get_application` | View application configurations and settings |
-| `write:application` | `add_application`, `update_application`, `delete_application` | Create, modify, and delete applications |
+| `application:read` | `get_applications`, `get_application` | View application configurations and settings |
+| `application:write` | `add_application`, `update_application`, `delete_application` | Create, modify, and delete applications |
 
 ### User Scopes
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:user` | `get_users`, `get_user` | View user profiles and information |
-| `write:user` | `add_user`, `update_user`, `delete_user` | Create, modify, and delete user accounts |
+| `user:read` | `get_users`, `get_user` | View user profiles and information |
+| `user:write` | `add_user`, `update_user`, `delete_user` | Create, modify, and delete user accounts |
 
 ### Organization Scopes
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:organization` | `get_organizations`, `get_organization` | View organization details and settings |
-| `write:organization` | `add_organization`, `update_organization`, `delete_organization` | Create, modify, and delete organizations |
+| `organization:read` | `get_organizations`, `get_organization` | View organization details and settings |
+| `organization:write` | `add_organization`, `update_organization`, `delete_organization` | Create, modify, and delete organizations |
 
 ### Role Scopes
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:role` | `get_roles`, `get_role` | View role definitions and assignments |
-| `write:role` | `add_role`, `update_role`, `delete_role` | Create, modify, and delete roles |
+| `role:read` | `get_roles`, `get_role` | View role definitions and assignments |
+| `role:write` | `add_role`, `update_role`, `delete_role` | Create, modify, and delete roles |
 
 ### Permission Scopes
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:permission` | `get_permissions`, `get_permission` | View permission configurations |
-| `write:permission` | `add_permission`, `update_permission`, `delete_permission` | Create, modify, and delete permissions |
+| `permission:read` | `get_permissions`, `get_permission` | View permission configurations |
+| `permission:write` | `add_permission`, `update_permission`, `delete_permission` | Create, modify, and delete permissions |
 
 ### Provider Scopes
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:provider` | `get_providers`, `get_provider` | View OAuth, SMS, email, and other provider configurations |
-| `write:provider` | `add_provider`, `update_provider`, `delete_provider` | Create, modify, and delete provider integrations |
+| `provider:read` | `get_providers`, `get_provider` | View OAuth, SMS, email, and other provider configurations |
+| `provider:write` | `add_provider`, `update_provider`, `delete_provider` | Create, modify, and delete provider integrations |
 
 ### Token Scopes
 
 | Scope | Mapped Tools | Description |
 |-------|-------------|-------------|
-| `read:token` | `get_tokens`, `get_token` | View access tokens and their metadata |
-| `write:token` | `refresh_token`, `revoke_token` | Refresh and revoke access tokens |
+| `token:read` | `get_tokens`, `get_token` | View access tokens and their metadata |
+| `token:write` | `delete_token` | Delete access tokens |
 
 ## Custom Scopes for Third-Party MCP Servers
 

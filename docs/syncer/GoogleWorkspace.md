@@ -95,8 +95,20 @@ The syncer automatically maps Google Workspace user attributes to Casdoor user f
 Google Workspace `suspended: true` is mapped to Casdoor `IsForbidden: true`.
 :::
 
+## Group sync
+
+The Google Workspace syncer can also sync groups and their memberships into Casdoor. Group sync runs automatically alongside user sync—there is no separate configuration step.
+
+To enable group syncing, the service account needs an additional OAuth scope granted in the Google Workspace Admin Console:
+
+```text
+https://www.googleapis.com/auth/admin.directory.group.readonly
+```
+
+Add this scope under **Manage Domain Wide Delegation** in the same way as the user scope. Once it is authorized, the syncer will fetch all groups from the domain and assign memberships to the corresponding Casdoor users.
+
 ## Running the syncer
 
 1. Click **Test Connection** to verify credentials and permissions.
 2. Toggle **Is enabled** and click **Sync** for an immediate run.
-3. The syncer fetches all users from the domain and handles pagination automatically.
+3. The syncer fetches all users and groups from the domain and handles pagination automatically.

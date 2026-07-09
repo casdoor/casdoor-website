@@ -28,6 +28,15 @@ module.exports = {
     },
     {
       type: "category",
+      label: "LLM",
+      link: {type: "generated-index"},
+      items: [
+        "llm/openclaw",
+        "llm/mcp-security",
+      ],
+    },
+    {
+      type: "category",
       label: "Deployment",
       link: {type: "generated-index"},
       items: [
@@ -80,6 +89,7 @@ module.exports = {
         "how-to-connect/nuxt",
         "how-to-connect/oauth",
         "how-to-connect/guest-auth",
+        "how-to-connect/kerberos",
         "how-to-connect/cas",
         {
           type: "category",
@@ -172,6 +182,7 @@ module.exports = {
         "mcp-auth/overview",
         "mcp-auth/setup",
         "mcp-auth/third-party-integration",
+        "mcp-auth/mcp-registry",
       ],
     },
     {
@@ -234,6 +245,7 @@ module.exports = {
           items: [
             "provider/email/overview",
             "provider/email/sendgrid",
+            "provider/email/resend",
             "provider/email/azureACS",
             "provider/email/brevo",
             "provider/email/mailhog",
@@ -251,6 +263,7 @@ module.exports = {
             "provider/sms/amazonSns",
             "provider/sms/acs",
             "provider/sms/alibabaCloud",
+            "provider/sms/pnvs",
           ],
         },
         {
@@ -368,6 +381,24 @@ module.exports = {
             "provider/idv/alibaba-cloud",
           ],
         },
+        {
+          type: "category",
+          label: "Log",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/log/overview",
+          ],
+        },
+        {
+          type: "category",
+          label: "Scan",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/scan/overview",
+          ],
+        },
       ],
     },
     {
@@ -376,6 +407,14 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "resources/overview",
+      ],
+    },
+    {
+      type: "category",
+      label: "Keys",
+      link: {type: "generated-index"},
+      items: [
+        "key/overview",
       ],
     },
     {
@@ -445,6 +484,22 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Sites",
+      link: {type: "generated-index"},
+      items: [
+        "site/overview",
+      ],
+    },
+    {
+      type: "category",
+      label: "Rules",
+      link: {type: "generated-index"},
+      items: [
+        "rule/overview",
+      ],
+    },
+    {
+      type: "category",
       label: "Syncer",
       link: {type: "generated-index"},
       items: [
@@ -454,8 +509,12 @@ module.exports = {
         "syncer/ActiveDirectory",
         "syncer/GoogleWorkspace",
         "syncer/Keycloak",
+        "syncer/Okta",
+        "syncer/SCIM",
+        "syncer/AWSIAM",
         "syncer/WeCom",
         "syncer/DingTalk",
+        "syncer/Lark",
       ],
     },
     {
@@ -672,6 +731,22 @@ module.exports = {
             "integration/python/casbin-fastapi",
           ],
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "Agents",
+      link: {type: "generated-index"},
+      items: [
+        "agent/overview",
+      ],
+    },
+    {
+      type: "category",
+      label: "Entries",
+      link: {type: "generated-index"},
+      items: [
+        "entry/overview",
       ],
     },
     {

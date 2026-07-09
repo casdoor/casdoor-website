@@ -28,8 +28,7 @@ Each order contains:
 - **Product References**: One or more products included in the order
 - **Product Info Snapshots**: Stored details (name, display name, image, price) of products at purchase time
 - **User & Payment**: References to the buyer and associated payment
-- **State Management**: Current state and optional status message
-- **Duration**: Optional start and end times for time-limited purchases (e.g., 1-year cloud instance)
+- **State Management**: Current state, optional status message, and an **Update time** recording when the state last changed
 
 Orders can include multiple products, making it possible to purchase several items in a single transaction. When the order is created, the system captures a snapshot of each product's current information—including its display name, image, detail, and price. This snapshot preserves what was purchased even if product details change later.
 
@@ -41,14 +40,14 @@ Orders progress through these states based on payment status:
 
 - **Created**: Order initialized but payment not yet completed
 - **Paid**: Payment successfully processed
-- **PaymentFailed**: Payment attempt failed with an error
+- **Failed**: Payment attempt failed with an error
 - **Canceled**: Payment or order was cancelled
 - **Timeout**: Payment timed out before completion
 - **Delivered**: Product or service delivered to the user
 - **Completed**: Order fully fulfilled
 - **Expired**: Order expired (for time-limited products)
 
-When payment providers notify Casdoor about transaction results, the system updates order states automatically. This synchronization ensures that orders always reflect the current payment status, whether the payment succeeded, failed, was cancelled, or timed out.
+When payment providers notify Casdoor about transaction results, the system updates order states automatically and records the transition time in **Update time**. This field is shown on the order detail page with a label that reflects the final state—for example, "Payment time" for a paid order or "Cancel time" for a cancelled one. This synchronization ensures that orders always reflect the current payment status, whether the payment succeeded, failed, was cancelled, or timed out.
 
 ## Viewing Orders
 

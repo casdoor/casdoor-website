@@ -66,6 +66,16 @@ For [shared applications](/docs/application/shared-application), invitation link
 
 ![Registration page corresponding to the invitation link](/img/invitation/signup-with-invitation-code.png)
 
+## OAuth provider signup
+
+Invitation codes work with OAuth-based registration (e.g., "Sign in with Google") in addition to password-based sign-up. When a user completes OAuth signup with a valid invitation code:
+
+- The invitation code and invitation name are recorded on the user.
+- If the invitation has a **signup group** configured, the user is assigned to that group—taking priority over any default group set on the OAuth provider itself.
+- The invitation's **Used count** is incremented after the user is created successfully.
+
+This makes it possible to control group membership through invitation links even when users register via third-party OAuth providers.
+
 ## Demo
 
 <video src="/video/invitation/invitation.mp4" controls="controls" width="100%"></video>

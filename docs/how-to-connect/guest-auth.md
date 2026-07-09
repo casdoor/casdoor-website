@@ -7,6 +7,15 @@ authors: [nomeguy]
 
 **Guest authentication** creates temporary users with no username or password. Users can use the app immediately; require full registration later if needed.
 
+## Prerequisites
+
+Before using guest authentication, ensure the following settings are enabled on the application:
+
+- **Enable signup** — Guest user creation requires signup to be allowed.
+- **Enable guest signin** — The explicit toggle that permits the `guest-user` code flow. Without it, the token endpoint returns `invalid_grant`.
+
+Both settings are found on the application edit page under the **Authentication** tab. Guest authentication is not available for the `built-in` organization.
+
 ## Creating a guest user
 
 POST to the token endpoint with the special code `guest-user`:

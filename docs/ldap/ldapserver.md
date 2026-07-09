@@ -48,6 +48,26 @@ After a successful bind:
 | `sn` | Surname | User last name |
 | `givenName` | Given name | User first name |
 | `memberOf` | Groups | User’s groups |
+| `loginShell` | Login shell | `user.Properties["loginShell"]`, defaults to `/bin/bash` |
+| `gecos` | GECOS (full name) | `user.DisplayName`, falls back to `user.Name` |
+| `sshPublicKey` | SSH public key | `user.Properties["sshPublicKey"]`, omitted if empty |
+
+All entries also carry `objectClass: posixAccount`, which is required by PAM and NSS for Linux authentication.
+
+## Linux machine login
+
+Casdoor’s LDAP server exposes `posixAccount`-compatible entries, so Linux hosts can authenticate users directly against Casdoor via standard tools such as `sssd`, `nss-ldap`, or `pam_ldap`.
+
+To configure per-user values for `loginShell` and `sshPublicKey`, set them in the user’s **Properties** field (key-value map):
+
+```json
+{
+  "loginShell": "/bin/zsh",
+  "sshPublicKey": "ssh-ed25519 AAAA..."
+}
+```
+
+If `loginShell` is not set, `/bin/bash` is used. If `sshPublicKey` is absent, the attribute is omitted from the LDAP entry entirely.
 
 ## RFC-style features
 

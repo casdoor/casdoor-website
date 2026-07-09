@@ -14,6 +14,14 @@ WeCom supports OAuth so users can sign in from the WeCom client. You can use **i
 | Client ID       | Enterprise **CorpID** |
 | Client secret   | Enterprise **CorpSecret** |
 | Agent ID        | Application **AgentId** |
+| Scope           | `snsapi_userinfo` (default) or `snsapi_privateinfo` |
+
+### Scope
+
+- **`snsapi_userinfo`** — Returns basic profile info. Email is not available with this scope.
+- **`snsapi_privateinfo`** — Requests additional user data including the email address. Requires the WeCom app to have the **member sensitive information** permission granted by the enterprise admin.
+
+Use `snsapi_privateinfo` if you need to populate the user's email from WeCom during OAuth sign-in.
 
 :::info
 

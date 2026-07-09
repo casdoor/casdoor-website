@@ -13,7 +13,9 @@ A single payment can include multiple products. The payment record lists each pr
 
 Payments progress through several states during processing. When payment providers send notifications about completed transactions, Casdoor updates both the payment and its related order atomically to keep them synchronized.
 
-The system prevents duplicate processing by checking whether a payment has already reached a terminal state (Paid, Error, Canceled, or Timeout) before applying updates. This ensures that even if a payment provider sends multiple notifications, your data remains accurate.
+The system prevents duplicate processing by checking whether a payment has already reached a terminal state (Paid, Error, Canceled, or Timeout) before applying updates. If a provider sends the same notification more than once with no state change, the update is skipped entirely—no duplicate webhook events are emitted and the database record is not touched again. This ensures that even if a payment provider sends multiple notifications, your data and downstream integrations remain consistent.
+
+The `notify-payment` webhook event includes the full payment response data from the provider callback, so your webhook handler has access to the payment status at the time of notification.
 
 For transactions with external payment providers, Casdoor creates transaction records only after receiving successful payment notifications. This approach guarantees that transactions reflect actual payments rather than just payment attempts. Balance-based payments work differently—they create transactions immediately since the balance check confirms payment success upfront.
 

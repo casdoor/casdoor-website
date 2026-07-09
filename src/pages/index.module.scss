@@ -56,11 +56,19 @@
   align-items: center;
 }
 
+.heroBadges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
 .cncfBadge {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  margin-top: 2rem;
   padding: 12px 24px;
   background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.45);
@@ -78,6 +86,37 @@
     transform: translateY(-1px);
     text-decoration: none;
   }
+}
+
+.openclawBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 32px;
+  color: #e3e3e3;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+}
+
+.openclawLogo {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  vertical-align: middle;
 }
 
 .cncfBadgeIcon {

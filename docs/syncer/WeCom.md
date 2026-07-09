@@ -66,6 +66,10 @@ The syncer automatically handles user account status based on WeCom's status and
 - **Activated users** (status=1, enable=1): Normal Casdoor users
 - **Disabled, not activated, or quit users** (status=2/4/5 or enable=0): Marked as forbidden in Casdoor
 
+## OAuth login binding
+
+When a user is synced from WeCom, their WeCom `userid` is stored in the `wecom` field on the Casdoor user. This means synced users can sign in directly through the WeCom OAuth provider without needing a separate account link step—the provider ID set during sync is used to match the OAuth identity at login.
+
 ## Running the Syncer
 
 After configuration, you can:
