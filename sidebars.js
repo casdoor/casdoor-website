@@ -390,6 +390,15 @@ module.exports = {
             "provider/log/overview",
           ],
         },
+        {
+          type: "category",
+          label: "Scan",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/scan/overview",
+          ],
+        },
       ],
     },
     {
