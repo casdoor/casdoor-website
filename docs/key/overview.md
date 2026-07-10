@@ -27,6 +27,7 @@ authors: [hsluoyz]
 - **Organization** — Key is valid for all operations within the organization.
 - **Application** — Key is scoped to a specific application within the organization.
 - **User** — Key is tied to a specific user and carries that user's permissions.
+- **Prometheus** — Key that authorizes scraping the [Prometheus metrics endpoint](/docs/monitoring/prometheus) (`/api/metrics`).
 
 ## Managing keys
 

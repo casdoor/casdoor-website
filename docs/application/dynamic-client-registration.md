@@ -77,15 +77,20 @@ Applications created through DCR get a 7-day token expiration and are tagged wit
 
 ## Controlling DCR Per Organization
 
-Organizations can control whether DCR is available through the `dcrPolicy` setting in the organization configuration page. When set to "disabled", registration requests will fail with an error. The default is "open", allowing anyone to register applications.
+Organizations control whether DCR is available through the `dcrPolicy` setting on the organization configuration page. Two values are supported:
 
-This gives you flexibility: enable DCR for developer-friendly organizations while keeping it locked down for production environments that require manual oversight.
+- **`disabled`** (default) — registration requests are rejected with an error. An unset/empty `dcrPolicy` is also treated as disabled, so DCR is **off unless you explicitly opt in**. Casdoor's built-in organization ships with DCR disabled.
+- **`open`** — anyone can register an application in this organization without authentication.
+
+This gives you flexibility: turn DCR on for developer-friendly organizations while keeping it locked down for production environments that require manual oversight. Because the default is closed, an unauthenticated registration endpoint is never exposed until you deliberately enable it.
 
 ## Security Model
 
-DCR intentionally requires no authentication—this is by design for public clients like mobile apps and desktop tools that can't securely store credentials before registration. The model trades off unrestricted registration for the ability to support these client types.
+The registration endpoint itself requires no authentication—this is by design for public clients like mobile apps and desktop tools that can't securely store credentials before registration. To keep that unauthenticated surface from being exposed by accident, DCR is **disabled by default** and must be turned on per organization (see [Controlling DCR Per Organization](#controlling-dcr-per-organization)).
 
-Applications created through DCR belong to the organization's admin account and appear in your application list with a `dcr` tag. Client secrets never expire by default, but you can revoke any application through the admin interface at any time. For production deployments, consider whether your organization actually needs unauthenticated registration. Many scenarios work fine with manual app creation, and disabling DCR removes a potential abuse vector.
+Applications created through DCR belong to the organization's admin account and appear in your application list with a `dcr` tag. This tag is not just a label: DCR-registered applications run under a restricted `app-dcr` role and can only reach the OAuth/OIDC endpoints they need for the login flow (`/api/login/oauth/*`, `/api/get-oauth-token`, `/api/userinfo`, `/api/get-application`). They cannot use the client credentials to call other management APIs, which limits the blast radius of a self-registered client.
+
+Client secrets never expire by default, but you can revoke any application through the admin interface at any time. For production deployments, consider whether your organization actually needs unauthenticated registration. Many scenarios work fine with manual app creation, and leaving DCR disabled removes a potential abuse vector.
 
 ## Complete Example: MCP Client
 

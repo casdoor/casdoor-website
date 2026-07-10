@@ -66,6 +66,8 @@ Casdoor can also act as an MCP client and connect to external MCP servers. Navig
 | **Token** | Bearer token used to authenticate with the external server |
 | **Tools** | List of tools fetched from the server; each tool can be individually allowed or blocked |
 
+If the external server trusts Casdoor as its OAuth provider, you don't have to paste a token by hand. Once you've selected an **Application**, click the **Get access token** button next to the **Token** field: Casdoor issues an OAuth access token for the currently signed-in user against that application and fills it into the field automatically. The button is disabled until an application is chosen, since the token is minted in that application's auth context. You can still enter a token manually if the server uses credentials issued elsewhere.
+
 When you save the configuration, Casdoor automatically fetches the tool list from the remote server and stores it. Use the **Sync** button on the server edit page to refresh the tool list at any time without re-saving the full configuration. The sync operation preserves the `IsAllowed` setting for any tools that already exist; new tools discovered during sync are enabled by default. Use the **Clear** button (next to Sync) to remove all stored tools for the server without fetching new ones—useful when you want to reset the tool list before re-syncing or decommissioning a server.
 
 After initialization, send a notification to indicate the client is ready:

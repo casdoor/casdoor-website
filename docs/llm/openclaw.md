@@ -26,7 +26,8 @@ All three expect `Content-Type: application/x-protobuf`. Casdoor stores each pay
 1. Go to **Providers** → **Add**.
 2. Set **Category** to `Log` and **Type** to `Agent (OpenClaw)`.
 3. In the **Host** field, enter the IP address of the machine running the OpenClaw agent. Leave it empty to accept from any IP.
-4. Save. Casdoor is now ready to receive data.
+4. (Optional) In the **Storage provider** field, pick which Storage provider should hold the raw session transcripts (see [Raw session transcripts](#raw-session-transcripts)). Leave it empty to let Casdoor choose automatically.
+5. Save. Casdoor is now ready to receive data.
 
 The **Host** field is an IP allowlist for this provider. Requests from any other address are rejected with `403 Forbidden`, which prevents unauthorized agents from writing entries into your organization.
 
@@ -52,6 +53,32 @@ Once data is flowing, navigate to **Entries** in the Casdoor sidebar. Each incom
 - **Metrics and log entries** store the raw OTLP JSON in the `Message` field, which you can inspect directly or export for use in other tools.
 
 Entries are scoped to an organization, so data from different teams or environments can be separated by placing them under different organizations with their own Log providers.
+
+## Raw session transcripts
+
+Beyond the parsed trace view, Casdoor can keep the **raw JSONL transcript** of each OpenClaw session—the exact line-delimited log the agent produced. This is useful when you need the unmodified record for debugging, auditing, or replay.
+
+### Where transcripts are stored
+
+When the OpenClaw provider syncs a session, Casdoor uploads that session's `.jsonl` file to a [Storage provider](/docs/provider/storage/overview) and records it as a resource. It picks the target storage as follows:
+
+1. If you set the **Storage provider** field on the Log provider, that provider is used (it must be an enabled `Storage` provider in the same organization).
+2. Otherwise, Casdoor uses the first enabled Storage provider in the organization.
+3. If none exists, Casdoor automatically creates a default local Storage provider named `openclaw-transcript-storage`.
+
+Re-syncing a session overwrites its stored transcript rather than creating duplicates.
+
+### Viewing a transcript
+
+Open an OpenClaw session in the graph viewer. When a raw transcript is available, a **Raw JSONL** button appears in the viewer's toolbar; clicking it opens the transcript page for that session.
+
+The viewer streams a preview of the file rather than the whole thing—up to 2&nbsp;MB. For larger transcripts the response is marked as truncated so you know more content exists in the stored file. Behind the UI, the preview is served by:
+
+```text
+GET /api/get-openclaw-session-transcript?id=<owner>/<session-name>
+```
+
+which returns the file name, total size, the number of bytes loaded, a `truncated` flag, and the transcript `content`.
 
 ## Connecting to Casdoor agents
 
