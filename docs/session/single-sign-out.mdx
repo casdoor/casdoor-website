@@ -116,6 +116,12 @@ To receive logout notifications, configure a notification provider (such as Cust
 
 Your application can then verify the signature, check the timestamp to prevent replay attacks, and use the session IDs and token hashes to perform targeted logout operations. For more details on configuring notification providers, see the [Notification Providers](/docs/provider/notification/overview) documentation.
 
+## OIDC Back-Channel Logout
+
+Casdoor supports [OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html). When a user logs out (RP-initiated logout), Casdoor sends a signed **logout token** to every application that has an active session for the user, so each application can end its own session server-to-server.
+
+To enable it, set the application's **Backchannel logout URI** (`backchannelLogoutUri`) to the endpoint that receives the logout token. Casdoor sends an HTTP `POST` with a `logout_token` (a JWT containing the `sub`, `sid`, and the `http://schemas.openid.net/event/backchannel-logout` event) to that URI. Applications that do not set a backchannel logout URI are skipped.
+
 ## SSO Logout API
 
 ### Endpoint
