@@ -40,6 +40,8 @@ SSO works by opening your app’s home URL with a query parameter. Your app must
 
 **Popup sign-in** opens a small window for Casdoor login; after success it posts the auth result to the opener and closes. Use `popupSignin()` from [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk); demo: [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example). The home URL is called with `popup=1`; Casdoor sends `code` and `state` to the opener, and the main window exchanges them for a token via the SDK.
 
+By default Casdoor posts the result to `window.opener` (equivalent to `popup_type=window`). To embed the login inside an **iframe** instead of opening a separate window, add `popup_type=iframe` to the URL: Casdoor then posts the `code`/`state` message to `window.parent` (the embedding page's origin) rather than to `window.opener`.
+
 ## Using SSO
 
 The configuration is complete. Below, we will show you how to use auto login.
