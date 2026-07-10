@@ -115,9 +115,22 @@ Refine the layout with **Form CSS** (e.g. `.login-panel`, `.login-form`):
 
 ![step4_result2.png](/img/application/ui-customization/step4_result2.png)
 
+## Export and import the UI customization
+
+Once you have styled an application, you can move its look-and-feel to the same application on another Casdoor instance (for example from a staging to a production deployment) using the **Export JSON** and **Import JSON** buttons at the bottom of the application edit page. They appear only when editing an existing application, not when adding a new one.
+
+Only the login-UI and theme customization fields are transferred — **Logo**, **Favicon**, **Background URL** (and its mobile variant), **Form CSS** (and its mobile variant), panel position/offset, **Side panel HTML**, theme data, and the header, footer, sign-up, and sign-in HTML snippets. Secrets, providers, and other application settings are not included.
+
+- **Export JSON** copies a JSON document with these fields (plus the application's `name` and `organization`) to your clipboard.
+- **Import JSON** opens a dialog where you paste that JSON. Click **OK** to apply the fields to the form, then **Save** to persist the change.
+
+:::note
+The `name` and `organization` in the pasted JSON must match the application you are importing into, otherwise the import is rejected. This is why import targets the *same* application across instances rather than copying a design into a different application.
+:::
+
 ## Summary
 
-Set **Background URL**, style **Form CSS**, choose **panel position**, and optionally enable and style **Side panel HTML**. See also:
+Set **Background URL**, style **Form CSS**, choose **panel position**, and optionally enable and style **Side panel HTML**. Reuse a finished design on another instance with **Export JSON** / **Import JSON**. See also:
 
 - [Customize theme](/docs/organization/customize-theme) — primary color and border radius
 - [Sign-up items table](/docs/application/signup-items-table)
