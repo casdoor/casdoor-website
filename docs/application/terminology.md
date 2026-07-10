@@ -62,6 +62,7 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 - **SAML reply URL** — Assertion Consumer Service (ACS) URL where Casdoor posts the SAML response.
 - **Enable SAML compression** — Compress SAML requests and responses.
 - **Enable SAML C14N10** — Use C14N 1.0 canonicalization when signing SAML documents.
+- **SAML C14N prefix** — Namespace prefix list used for the C14N 1.0 canonicalization (applies when **Enable SAML C14N10** is on; default `xs`).
 - **Use Email as NameID** — Use the user's email address as the SAML `NameID` instead of username.
 - **Enable SAML POST binding** — Use HTTP POST binding instead of Redirect binding.
 - **SAML hash algorithm** — Signature hash algorithm: SHA1, SHA256, or SHA512.

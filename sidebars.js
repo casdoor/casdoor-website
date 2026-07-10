@@ -397,6 +397,8 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "provider/scan/overview",
+            "provider/scan/mcp",
+            "provider/scan/security",
           ],
         },
       ],
