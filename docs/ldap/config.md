@@ -52,7 +52,7 @@ Leave the list empty to return all attributes (default behavior).
 
 ## Default group
 
-Group to assign to users after sync.
+One or more groups to assign to users after sync. You can select multiple default groups; every synced user is added to all of them.
 
 :::caution
 If an LDAP user’s `uid` equals the `name` of an existing user in the organization, Casdoor creates a new user with a modified `name` (uid + random suffix). That user may not be able to sign in via LDAP because the LDAP server has no such `uid`. Avoid reusing existing Casdoor usernames as LDAP uids.

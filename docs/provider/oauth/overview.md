@@ -57,3 +57,7 @@ After OAuth sign-in, Casdoor stores the provider’s access token on the user. Y
 1. Open **Applications**, edit the application.
 2. Add the provider and set its rules (e.g. enable for login, signup, unbind).
 3. Save.
+
+## Routing through a proxy
+
+Enable **Enable proxy** on the provider to route its outbound HTTP requests (the OAuth login API calls) through Casdoor's configured SOCKS5 proxy (`socks5Proxy` in `conf/app.conf`). This is useful when the provider is only reachable through a proxy. Some provider types always use the proxy regardless of this option.

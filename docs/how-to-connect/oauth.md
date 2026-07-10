@@ -189,6 +189,8 @@ Casdoor also supports the [id_token](https://openid.net/specs/oauth-v2-multiple-
 
 For devices with limited input or no browser, use **Device Grant**. Enable it on the application, request `device_authorization_endpoint` from OIDC discovery, then show `verification_uri` (e.g. via QR or text) so the user can complete login.
 
+Casdoor provides a built-in device login page at the `verification_uri` where the user enters the user code and signs in — no custom UI is required. Device login can also be enabled as a sign-in method on the application's **Signin methods** table.
+
 Second, you should request `token endpoint` to get Access Token with parameter define in [rfc8628](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
 
 ### Resource Owner Password Credentials Grant
