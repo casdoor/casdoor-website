@@ -432,6 +432,7 @@ module.exports = {
         "pricing/pricing",
         "pricing/subscription",
         "pricing/transaction",
+        "pricing/coupon",
       ],
     },
     {
