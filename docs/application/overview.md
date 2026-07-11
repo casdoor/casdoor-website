@@ -16,3 +16,9 @@ Application configuration is flexible:
 - Customize sign-up fields and sign-in options per application
 
 This section walks you through creating and configuring your first application.
+
+## Partial updates with the `columns` parameter
+
+`/api/update-application` accepts an optional `columns` query parameter to perform a **partial update**: only the listed fields are written, and every other field on the application is left untouched. Omit it (or leave it empty) to update the full application object.
+
+Field names in `columns` may be written in either **camelCase** or **snake_case** — both are accepted and map to the same underlying column. For example, `columns=displayName,logo` and `columns=display_name,logo` are equivalent.

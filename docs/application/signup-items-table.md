@@ -41,6 +41,10 @@ Items that support **rules**: ID, Display name, Email, Agreement, Languages.
 Example: to show an email field without verification, add the Email signup item and set its rule to **No verification**.
 :::
 
+:::note
+The **Tag** signup item adds a drop-down that lets the user pick their own [tag](/docs/application/tags) during registration. It is hidden by default; make it **Visible** to show it. The options come from the item's own **Options** if set, otherwise from the application's **Tags**. A tag the user selects here takes priority over the application's **Default tag**, which is only applied when the user does not choose one.
+:::
+
 ![Signup Items Table](/img/application/signup-items-table/signup-items-table-demo-config.png)
 
 ![Signup Items Table](/img/application/signup-items-table/signup-items-table-demo-page.png)

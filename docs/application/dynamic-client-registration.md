@@ -90,7 +90,12 @@ The registration endpoint itself requires no authentication—this is by design 
 
 Applications created through DCR belong to the organization's admin account and appear in your application list with a `dcr` tag. This tag is not just a label: DCR-registered applications run under a restricted `app-dcr` role and can only reach the OAuth/OIDC endpoints they need for the login flow (`/api/login/oauth/*`, `/api/get-oauth-token`, `/api/userinfo`, `/api/get-application`). They cannot use the client credentials to call other management APIs, which limits the blast radius of a self-registered client.
 
-So that end users can actually sign in to a self-registered app, DCR-registered applications have password sign-in enabled and inherit the OAuth/OIDC providers and sign-in methods of the organization's default application.
+So that end users can actually sign in to a self-registered app, DCR-registered applications have password sign-in enabled and inherit a set of fields from the organization's default application:
+
+- **Providers and sign-in methods** — so there is at least one working sign-in method out of the box.
+- **Branding** — the logo (only when the request omits `logo_uri`), theme, footer HTML, and form CSS, so the login page matches the rest of the organization.
+- **Sign-in items** — the same sign-in form layout as the default application.
+- **`EnableSigninSession` and `EnableWebAuthn`** — the default application's session and WebAuthn settings.
 
 Client secrets never expire by default, but you can revoke any application through the admin interface at any time. For production deployments, consider whether your organization actually needs unauthenticated registration. Many scenarios work fine with manual app creation, and leaving DCR disabled removes a potential abuse vector.
 
