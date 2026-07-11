@@ -101,6 +101,15 @@ Using roles is a powerful way to manage permissions at scale. Instead of assigni
 
 :::
 
+#### Sub groups
+
+Which groups the permission applies to; select them on the **Edit Permission** page. Every user who is a member of a selected group inherits the permission. Use `*` to match all groups in the organization.
+
+Examples:
+
+- Select groups like `dev-team`, `qa-team`
+- Leave empty to not restrict by group
+
 #### Sub domains
 
 Which domains will the permission policy be applied to. This is useful for multi-tenant scenarios.
