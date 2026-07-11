@@ -125,7 +125,7 @@ The `code_challenge_methods_supported` field indicates that Casdoor supports PKC
 
 ### Application-Specific OIDC Endpoints
 
-Besides the global discovery endpoint, application-specific OIDC discovery endpoints are available. Each application gets its own isolated OIDC configuration with a unique issuer. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
+Besides the global discovery endpoint, application-specific OIDC discovery endpoints are available. Each application gets its own isolated OIDC configuration — its own `jwks_uri` and, when configured, its own signing certificate. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
 
 The application-specific discovery URLs follow these patterns:
 
@@ -141,7 +141,13 @@ https://door.casdoor.com/.well-known/app-example/openid-configuration
 https://door.casdoor.com/.well-known/app-example/oauth-authorization-server
 ```
 
-The main difference is that the `issuer` and `jwks_uri` fields in the discovery response contain the application path. The `issuer` becomes `https://door.casdoor.com/.well-known/app-example` instead of just `https://door.casdoor.com`, and the `jwks_uri` points to `/.well-known/app-example/jwks`. Everything else, including the authorization and token endpoints, stays the same.
+The main difference is that the `jwks_uri` field in the discovery response points to the application-specific path, `/.well-known/app-example/jwks`. Everything else, including the `issuer`, authorization, and token endpoints, stays the same.
+
+:::note
+
+The `issuer` field is **the same** as the global issuer (`https://door.casdoor.com`), even on the application-specific discovery endpoint. This is intentional: the `iss` claim in the JWT tokens that Casdoor issues is always the backend host, so the discovery `issuer` must match it for standard OIDC clients to validate tokens correctly. Earlier versions returned an application-specific issuer (`https://door.casdoor.com/.well-known/app-example`) here, which did not match the token's `iss` claim and caused token validation to fail in strict clients.
+
+:::
 
 JWKS and WebFinger are also available per application:
 
@@ -163,11 +169,11 @@ Here's what the responses look like. The global endpoint returns:
 }
 ```
 
-While the application-specific endpoint for `app-example` returns:
+While the application-specific endpoint for `app-example` returns the same `issuer`, but an application-specific `jwks_uri`:
 
 ```json
 {
-  "issuer": "https://door.casdoor.com/.well-known/app-example",
+  "issuer": "https://door.casdoor.com",
   "jwks_uri": "https://door.casdoor.com/.well-known/app-example/jwks",
   "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
   ...
