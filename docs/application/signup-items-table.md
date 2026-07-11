@@ -27,7 +27,7 @@ Applications created via the Casdoor SDK get default signup items (ID, Username,
 | **Rule** | Rule items | Rule that customizes this item (see table below). |
 | **Action** | — | Move up, move down, or delete. |
 
-Items that support **rules**: ID, Display name, Email, Agreement.
+Items that support **rules**: ID, Display name, Email, Agreement, Languages.
 
 | Item | Rules | Description |
 |------|-------|-------------|
@@ -35,6 +35,7 @@ Items that support **rules**: ID, Display name, Email, Agreement.
 | **Display name** | `None` / `Real name` / `First, last` | How to show the display name; `First, last` shows first and last name separately. |
 | **Email** | `Normal` / `No verification` | `Normal` = require email verification; `No verification` = skip verification. |
 | **Agreement** | `None` / `Signin` / `Signin (Default True)` | Terms of use: none, require confirmation, or default to confirmed. |
+| **Languages** | `None` / `Label` | Adds a language selector to the sign-up page. `None` = show the selector on its own; `Label` = show it with a text label. |
 
 :::note
 Example: to show an email field without verification, add the Email signup item and set its rule to **No verification**.

@@ -18,23 +18,25 @@ The default background is white. Set **Background URL** to an image URL; the pre
 
 ## 2. Login panel style
 
-Use **Form CSS** to style the login panel. Example:
+Use **Form CSS** to style the login panel. Enter **raw CSS** — Casdoor wraps the field in a `<style>` tag for you, so do **not** add a `<style>` wrapper yourself. Example:
 
-```html
-<style>
+```css
 .login-panel{
     padding: 40px 30px 0 30px;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.20);
 }
-</style>
 ```
 
 ![step2_form_css.gif](/img/application/ui-customization/step2_form_css.gif)
 
 :::tip
 If **Form CSS** is empty, the editor may show a default; copy the content and paste it into the field, then save.
+:::
+
+:::note
+Enter plain CSS rules only. Casdoor renders **Form CSS** (and its mobile variant) inside a `<style>` tag automatically, so wrapping your rules in `<style>...</style>` would break them. This applies only to **Form CSS**; the **Side panel HTML** field below is still raw HTML and keeps its own `<style>` tag.
 :::
 
 ![step2_end.png](/img/application/ui-customization/step2_end.png)
@@ -92,19 +94,17 @@ Example **Side panel HTML**:
 </div>
 ```
 
-Refine the layout with **Form CSS** (e.g. `.login-panel`, `.login-form`):
+Refine the layout with **Form CSS** (e.g. `.login-panel`, `.login-form`). As above, enter raw CSS without a `<style>` wrapper:
 
-```html
-<style>
-  .login-panel{
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.20);
-  }
-  .login-form {
-    padding: 30px;
-  }
-</style>
+```css
+.login-panel{
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.20);
+}
+.login-form {
+  padding: 30px;
+}
 ```
 
 ![step4_modify_CSS.gif](/img/application/ui-customization/step4_modify_CSS.gif)

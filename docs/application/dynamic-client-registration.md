@@ -90,6 +90,8 @@ The registration endpoint itself requires no authentication—this is by design 
 
 Applications created through DCR belong to the organization's admin account and appear in your application list with a `dcr` tag. This tag is not just a label: DCR-registered applications run under a restricted `app-dcr` role and can only reach the OAuth/OIDC endpoints they need for the login flow (`/api/login/oauth/*`, `/api/get-oauth-token`, `/api/userinfo`, `/api/get-application`). They cannot use the client credentials to call other management APIs, which limits the blast radius of a self-registered client.
 
+So that end users can actually sign in to a self-registered app, DCR-registered applications have password sign-in enabled and inherit the OAuth/OIDC providers and sign-in methods of the organization's default application.
+
 Client secrets never expire by default, but you can revoke any application through the admin interface at any time. For production deployments, consider whether your organization actually needs unauthenticated registration. Many scenarios work fine with manual app creation, and leaving DCR disabled removes a potential abuse vector.
 
 ## Complete Example: MCP Client
