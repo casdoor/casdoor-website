@@ -52,6 +52,23 @@ When enabled:
 
 To enable it, check **Use email as username** on the organization edit page.
 
+## Navbar items
+
+You can control which pages appear in the Casdoor navigation bar for members of an organization. On the organization edit page there are two independent trees:
+
+- **Admin navbar items** (`navItems`) — the navigation shown to administrators. Defaults to **all** items.
+- **User navbar items** (`userNavItems`) — the navigation shown to regular (non-admin) users in the user portal. Defaults to **none**, so by default regular users only see their own account pages.
+
+Check or uncheck entries in the tree to choose the visible pages (Applications, Providers, Resources, Keys, Products, Orders, Webhooks, and so on). Selecting **all** shows every page.
+
+When a regular user opens the Casdoor home page (`/`), they are redirected to the first page that is enabled for them, in this order:
+
+1. **Apps** (`/apps`) if it is enabled (or if all items are enabled),
+2. otherwise **Shortcuts** (`/shortcuts`) if it is enabled,
+3. otherwise their **Account** page (`/account`).
+
+This ensures users are never redirected to a page they are not allowed to see.
+
 :::tip
 
 Besides signing in through an application (which redirects to Casdoor for SSO), users can sign in directly on an organization’s login page: `/login/<organization_name>` (e.g. `https://door.casdoor.com/login/casbin` on the demo site).

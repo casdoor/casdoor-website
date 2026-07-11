@@ -40,6 +40,17 @@ When a user signs in, Casdoor issues an access token and a refresh token. The ac
 
 On SSO logout, Casdoor invalidates tokens by setting `ExpiresIn` to 0 or a negative value. The token introspection and refresh endpoints check this field and reject tokens with `ExpiresIn <= 0`, so refresh tokens cannot be used after logout. This gives full session termination across all token types.
 
+### Automatic cleanup of expired tokens
+
+Casdoor automatically deletes token records that have been expired for a while, so the `token` table does not grow without bound. A token is removed once it has been expired for longer than a retention interval of **30 days** (counted from the token's own expiry time).
+
+The cleanup job runs:
+
+- **once at startup** (in the background, so it does not delay server start), and
+- **daily** at midnight (server time).
+
+The cleanup only affects already-expired tokens past the retention window; active tokens are never touched. This behavior is built in and requires no configuration.
+
 ## Token format options
 
 When issuing JWTs, choose among four formats:

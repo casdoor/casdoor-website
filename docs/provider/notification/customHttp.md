@@ -26,3 +26,18 @@ When you use **Send Notification Message**, Casdoor sends a request to **Endpoin
 ![custom_http_request](/img/providers/notification/custom_http_request.png)
 
 <video src="/video/provider/notification/use_custom_http_as_notification_provider.mp4" controls="controls" width="100%"></video>
+
+## Recipient forwarding
+
+The `send-notification` API accepts an optional `recipient` field in its request body:
+
+```json
+{
+  "content": "Your message",
+  "recipient": "user@example.com"
+}
+```
+
+When a `recipient` is provided, the Custom HTTP provider forwards it to your **Endpoint** as an additional `recipient` request parameter — a query parameter for `GET`, or a form field for `POST` — alongside the message in your configured **Parameter name**. The `recipient` parameter is only sent when it is non-empty, so requests without a recipient are unchanged.
+
+Notification providers that do not support recipient-aware sending simply ignore the `recipient` value, so their behavior is unchanged.

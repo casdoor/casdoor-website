@@ -24,6 +24,8 @@ Webhooks can be subscribed to a wide set of events, grouped by area:
 - `signup`, `login`, `logout` - User authentication flows
 - `sso-logout`, `unlink` - Single sign-on and account unlinking
 - `new-user` - Custom event for new user creation
+- `new-user-ldap` - Custom event fired when a new user is created through an LDAP sync
+- `new-user-syncer` - Custom event fired when a new user is created through a database syncer
 
 #### Resource Management Events
 
