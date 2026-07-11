@@ -135,6 +135,12 @@ This normalization happens automatically during:
 - User login and authentication
 - Email duplicate checking
 
+## Partial updates with the `columns` parameter
+
+`/api/update-user` accepts an optional `columns` query parameter to perform a **partial update**: only the listed fields are written, and every other field on the user is left untouched. Omit it (or leave it empty) to update the full user object.
+
+Field names in `columns` may be written in either **camelCase** or **snake_case** — both are accepted and map to the same underlying column. For example, `columns=displayName,avatar` and `columns=display_name,avatar` are equivalent.
+
 ## Roles and permissions (extended fields)
 
 The `Roles` and `Permissions` fields on the User object are **extended**: they are filled when user data is fetched, not stored on the User table. They are built from the Roles and Permissions resources via `ExtendUserWithRolesAndPermissions()`.

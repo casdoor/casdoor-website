@@ -32,6 +32,8 @@ LDAP is configured per organization; synced users are created in that organizati
 
 The sync table lists users under the configured base DN. Already-synced users are shown with the checkbox disabled. Select users and sync to import them into the organization.
 
+Syncing is not restricted to global admins: an administrator of the organization can also list and sync that organization's LDAP users. Editing the LDAP server settings above still requires a global admin.
+
 ![ldap_sync](/img/ldap/ldap_sync.png)
 
 ## Group and OU sync
@@ -39,6 +41,8 @@ The sync table lists users under the configured base DN. Already-synced users ar
 When **Enable groups** is turned on, Casdoor queries the LDAP directory for group objects before syncing users. It searches the base DN for entries with any of the following object classes: `groupOfNames`, `groupOfUniqueNames`, `posixGroup`, and (for Active Directory) `group`. Each matching entry is created as a Casdoor group. Users are then assigned to the groups their `memberOf` attribute lists.
 
 Group sync runs before user sync in each auto-sync cycle so that groups exist before user membership is evaluated. If a group lookup fails, the error is logged and the rest of the sync continues.
+
+Syncing a user adds them to their LDAP groups without removing groups they already belong to that are not managed by LDAP, so manually assigned groups are preserved.
 
 ## LDAP server attribute filtering
 

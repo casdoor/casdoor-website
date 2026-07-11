@@ -28,6 +28,7 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 
 - **Cookie expire** — Session cookie lifetime in hours (default: 720). Without "Remember me", the session is capped at 24 h regardless.
 - **Default group** — Group automatically assigned to new users signing up through this application, including both direct sign-up and OAuth-based registration. Providers and invitations can override this per-signup: the effective group follows the priority **invitation SignupGroup > provider SignupGroup > application Default group**.
+- **Default tag** — Tag automatically assigned to new users who sign up through this application.
 - **Enable signup** — Allow self sign-up. When off, only admins can create accounts.
 - **Disable signin** — Disable all sign-in for this application.
 - **Enable guest signin** — Allow unauthenticated guest access by presenting `code=guest-user` to the token endpoint. Requires **Enable signup** to be on as well. Not available for the `built-in` organization. See [Guest authentication](/docs/how-to-connect/guest-auth).
@@ -46,7 +47,7 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 - **Client secret** — OAuth 2.0 client secret.
 - **Redirect URLs** — Allowed post-login redirect URIs. Matching is URL-based: scheme, port, and path must match exactly, and the host may be the configured host or any subdomain of it (e.g. configuring `https://example.com/callback` also allows `https://api.example.com/callback`). Entries that are not valid URLs are matched as anchored regular expressions.
 - **Forced redirect origin** — When set, Casdoor forces all redirects to this origin.
-- **Grant types** — Enabled OAuth grant types: Authorization Code, Password, Client Credentials, Token, ID Token, Refresh Token, Device Code, JWT Bearer.
+- **Grant types** — Enabled OAuth grant types: Authorization Code, Password, Client Credentials, Token, ID Token, Refresh Token, Device Code, Token Exchange, JWT Bearer.
 - **Scopes** — Custom scopes for Agent-category apps (name, display name, description); exposed in OIDC discovery.
 - **Token format** — `JWT`, `JWT-Empty`, `JWT-Custom`, or `JWT-Standard`. See [Token overview](/docs/token/overview).
 - **Token signing method** — Signing algorithm: RS256, RS512, ES256, ES384, or ES512.
@@ -93,6 +94,7 @@ Each OAuth / Web3 / SAML provider entry in the provider table has additional per
 - **Signin methods** — Ordered list of sign-in methods shown on the login page (e.g. Password, Verification code, WebAuthn).
 - **Signup HTML** — Custom HTML injected into the sign-up page. Embedded `<script>` tags are executed, so only use trusted content.
 - **Signin HTML** — Custom HTML injected into the sign-in page. Embedded `<script>` tags are executed, so only use trusted content.
+- **Page HTML** — Custom HTML injected into the page `<head>` (e.g. meta tags, analytics snippets, or custom styles/scripts) for all of the application's pages.
 - **Signin items** — Configure which fields and controls appear on the sign-in form.
 - **Signup items** — Configure the registration form fields (visible only when **Enable signup** is on).
 - **Background URL** — Desktop login page background image (URL + preview).

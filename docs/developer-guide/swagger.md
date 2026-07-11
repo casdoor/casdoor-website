@@ -7,6 +7,10 @@ authors: [ComradeProgrammer]
 
 Casdoor is built on **beego**, which uses the **bee** CLI to generate Swagger files. The default bee does not group APIs by tag; Casdoor uses a [modified bee](https://github.com/casbin/bee) that supports the `@Tag` label so APIs are grouped in the generated docs.
 
+:::note
+The built-in Swagger UI at `/swagger` is only served when Casdoor runs in **dev** run mode (`runmode = dev` in `conf/app.conf`). It is not exposed in production.
+:::
+
 ## Comment format
 
 Use the same comment style as standard bee; the only extra requirement is **@Tag** so APIs are grouped. Example:
