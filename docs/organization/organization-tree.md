@@ -14,6 +14,7 @@ authors: [leo220yuyaodog]
 - **DisplayName**, **CreatedTime**, **UpdatedTime**
 - **Type** — `Physical` or `Virtual`. A user can be in only one Physical group but multiple Virtual groups.
 - **ParentGroup** — Parent group (top-level groups use the organization as parent)
+- **Properties** — Arbitrary key/value metadata attached to the group
 
 ## Managing groups
 

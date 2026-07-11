@@ -46,7 +46,7 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 - **Client secret** — OAuth 2.0 client secret.
 - **Redirect URLs** — Allowed post-login redirect URIs. Matching is URL-based: scheme, port, and path must match exactly, and the host may be the configured host or any subdomain of it (e.g. configuring `https://example.com/callback` also allows `https://api.example.com/callback`). Entries that are not valid URLs are matched as anchored regular expressions.
 - **Forced redirect origin** — When set, Casdoor forces all redirects to this origin.
-- **Grant types** — Enabled OAuth grant types: Authorization Code, Password, Client Credentials, Token, ID Token, Refresh Token, Device Code, JWT Bearer.
+- **Grant types** — Enabled OAuth grant types: Authorization Code, Password, Client Credentials, Token, ID Token, Refresh Token, Device Code, Token Exchange, JWT Bearer.
 - **Scopes** — Custom scopes for Agent-category apps (name, display name, description); exposed in OIDC discovery.
 - **Token format** — `JWT`, `JWT-Empty`, `JWT-Custom`, or `JWT-Standard`. See [Token overview](/docs/token/overview).
 - **Token signing method** — Signing algorithm: RS256, RS512, ES256, ES384, or ES512.

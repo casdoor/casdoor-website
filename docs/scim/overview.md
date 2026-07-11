@@ -9,7 +9,7 @@ authors: [Chinoholo0807]
 
 ## Supported resources
 
-Casdoor currently supports the **User** resource only. You manage users with these endpoints:
+Casdoor supports the **User** and **Group** resources. Manage them with these endpoints:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -22,6 +22,12 @@ Casdoor currently supports the **User** resource only. You manage users with the
 | `/scim/Users/:id` | PUT | Replace user |
 | `/scim/Users/:id` | PATCH | Partial update |
 | `/scim/Users/:id` | DELETE | Delete user |
+| `/scim/Groups/:id` | GET | Get group by id |
+| `/scim/Groups` | GET | List groups (query params: `startIndex`, `count`) |
+| `/scim/Groups` | POST | Create group |
+| `/scim/Groups/:id` | PUT | Replace group |
+| `/scim/Groups/:id` | PATCH | Partial update |
+| `/scim/Groups/:id` | DELETE | Delete group |
 
 See [RFC 7644](https://datatracker.ietf.org/doc/html/rfc7644) for the full SCIM spec.
 
