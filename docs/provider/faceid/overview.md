@@ -11,5 +11,7 @@ Casdoor supports Face ID as a sign-in method. Only enable it when you can ensure
 
 1. Open the Casdoor admin UI → **Providers** → **Add**.
 2. Set **Category** to **Face ID**.
-3. Choose the **Type** (e.g. Alibaba Cloud FaceBody).
-4. Fill in the required fields (e.g. **Client ID**, **Client Secret**, **Endpoint** as needed) and save.
+3. Choose the **Type**:
+   - **Alibaba Cloud Facebody** — cloud face recognition (requires the provider's credentials/endpoint).
+   - **Local UniFace** — on-device face recognition using the [UniFace](https://github.com/yakhyo/uniface) model, with no external service.
+4. Fill in the required fields (e.g. **Client ID**, **Client Secret**, **Endpoint** for cloud types) and save.
