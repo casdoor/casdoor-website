@@ -75,6 +75,14 @@ Your registration request needs at least one redirect URI. Everything else is op
 
 Applications created through DCR get a 7-day token expiration and are tagged with `dcr` for easy identification in the admin interface.
 
+## Managing a registered client
+
+Casdoor also implements [RFC 7592](https://datatracker.ietf.org/doc/html/rfc7592) so a client can read, update, or delete its own registration at `/api/oauth/register/{client_id}`:
+
+- `GET /api/oauth/register/{client_id}` — read the client's current metadata.
+- `PUT /api/oauth/register/{client_id}` — update the client's metadata.
+- `DELETE /api/oauth/register/{client_id}` — delete the client.
+
 ## Controlling DCR Per Organization
 
 Organizations control whether DCR is available through the `dcrPolicy` setting on the organization configuration page. Two values are supported:
