@@ -91,8 +91,8 @@ Each OAuth / Web3 / SAML provider entry in the provider table has additional per
 
 - **Org choice mode** — How users select their organization at sign-in: `None`, `Select` (dropdown), or `Input` (text field).
 - **Signin methods** — Ordered list of sign-in methods shown on the login page (e.g. Password, Verification code, WebAuthn).
-- **Signup HTML** — Custom HTML injected into the sign-up page.
-- **Signin HTML** — Custom HTML injected into the sign-in page.
+- **Signup HTML** — Custom HTML injected into the sign-up page. Embedded `<script>` tags are executed, so only use trusted content.
+- **Signin HTML** — Custom HTML injected into the sign-in page. Embedded `<script>` tags are executed, so only use trusted content.
 - **Signin items** — Configure which fields and controls appear on the sign-in form.
 - **Signup items** — Configure the registration form fields (visible only when **Enable signup** is on).
 - **Background URL** — Desktop login page background image (URL + preview).
