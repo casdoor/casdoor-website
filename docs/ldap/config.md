@@ -40,6 +40,8 @@ When **Enable groups** is turned on, Casdoor queries the LDAP directory for grou
 
 Group sync runs before user sync in each auto-sync cycle so that groups exist before user membership is evaluated. If a group lookup fails, the error is logged and the rest of the sync continues.
 
+Syncing a user adds them to their LDAP groups without removing groups they already belong to that are not managed by LDAP, so manually assigned groups are preserved.
+
 ## LDAP server attribute filtering
 
 By default, Casdoor's built-in LDAP server exposes all standard attributes for each user entry. You can restrict which attributes are returned by setting **LDAP attributes** on the organization edit page.
