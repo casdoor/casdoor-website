@@ -60,6 +60,7 @@ module.exports = {
         "how-to-connect/sdk",
         "session/single-sign-on",
         "session/single-sign-out",
+        "session/rp-initiated-logout",
         "how-to-connect/vue-sdk",
         {
           type: "category",
@@ -546,6 +547,7 @@ module.exports = {
         "session/management",
         "session/single-sign-on",
         "session/single-sign-out",
+        "session/rp-initiated-logout",
       ],
     },
     {

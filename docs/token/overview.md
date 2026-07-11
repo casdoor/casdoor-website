@@ -62,6 +62,21 @@ The token format options behave as follows:
 
 :::
 
+## Restricting fields with Token fields
+
+The **Token fields** setting on the application (used to pick custom user attributes for the `JWT-Custom` format) also acts as a **whitelist for the `/userinfo` endpoint**.
+
+- When **Token fields is empty**, no whitelist is applied: the token payload and the `/userinfo` response include their full default set of fields. This is the default behavior.
+- When **Token fields lists one or more fields**, only those fields are returned. Any user attribute not in the list is omitted from **both** the `JWT-Custom` token payload and the `/userinfo` response.
+
+The whitelist is matched against the underlying user-property names. For example, to expose the display name, email, and avatar through `/userinfo`, add `Name`, `Email`, and `Avatar` to Token fields. Fields still respect the requested OAuth scopes — for instance `Email` is only returned when the `email` scope is granted, `Location` (the `address` claim) only with the `address` scope, and `Phone` only with the `phone` scope. The `sub` and `aud` claims are always returned regardless of the whitelist.
+
+:::caution
+
+Configuring Token fields restricts `/userinfo`, not only the token. If you previously relied on `/userinfo` returning every field, adding entries here will start filtering that response. Leave Token fields empty to keep the full response.
+
+:::
+
 ## OIDC Address Claim
 
 The [OIDC specification](https://openid.net/specs/openid-connect-core-1_0.html#AddressClaim) defines the `address` claim as a JSON object with the following fields:

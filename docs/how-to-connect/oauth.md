@@ -193,6 +193,14 @@ Casdoor provides a built-in device login page at the `verification_uri` where th
 
 Second, you should request `token endpoint` to get Access Token with parameter define in [rfc8628](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
 
+:::info Multi-replica deployments
+
+The pending device-authorization requests (the mapping between the device code and the user code) are held in an in-memory store by default. In a multi-replica / horizontally-scaled deployment, the polling request from the device and the browser confirmation may land on different replicas, so an in-memory store causes the device flow to fail intermittently.
+
+To make the device flow work across replicas, configure `redisEndpoint` in `conf/app.conf`. When it is set, Casdoor automatically backs the device-authorization store with Redis so all replicas share the same state. No extra configuration key is needed — the same `redisEndpoint` value used for shared sessions is reused (format: `host:port[,db[,password]]`). If Redis cannot be reached at startup, Casdoor logs a warning and falls back to the in-memory store. See [Configuration](/docs/basic/configuration).
+
+:::
+
 ### Resource Owner Password Credentials Grant
 
 If your application doesn't have a frontend that redirects users to Casdoor, then you may need this.

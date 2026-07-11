@@ -50,3 +50,9 @@ With the setup completed, users can now log in with Telegram.
 ## Authentication flow
 
 Users sign in via Telegram’s login widget; Casdoor validates the HMAC-SHA256 signature and timestamp per [Telegram’s spec](https://core.telegram.org/widgets/login#checking-authorization). Profile data includes user ID, name, username, and optional photo. Telegram does not provide email via the widget; collect email separately if needed.
+
+:::note Users without a Telegram username
+
+A Telegram username (`@handle`) is optional, so some accounts do not have one. When a user without a public username signs in, Casdoor generates a stable fallback username of the form `telegram_<user_id>` (for example `telegram_123456789`), derived from the account's numeric Telegram ID. Because the ID is stable, the same person keeps the same generated username across logins.
+
+:::

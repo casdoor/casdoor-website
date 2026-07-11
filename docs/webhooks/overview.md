@@ -96,6 +96,23 @@ Example JSON sent to your webhook on login:
 
 Your application should parse this payload and perform necessary actions, such as logging the event or notifying another service.
 
+### Sign-in failure classification
+
+Every sign-in attempt is stored as a record (visible under **Records** in the admin console and delivered with the webhook payload). When a sign-in **fails**, Casdoor fills the record's `detail` field with a stable, machine-readable reason so you can classify failures without parsing localized error messages.
+
+Possible reasons are:
+
+| `detail` | Meaning |
+|---|---|
+| `user-not-found` | No matching user for the supplied identifier. |
+| `account-disabled` | The user account is disabled (forbidden). |
+| `account-frozen` | The user account is frozen/locked. |
+| `wrong-password` | The password did not match. |
+| `password-expired` | The password has expired and must be reset. |
+| `mfa-failed` | Multi-factor authentication verification failed. |
+
+Successful sign-ins leave `detail` empty. Use these values to build audit dashboards, alerting (for example, spikes in `wrong-password`), or lockout logic keyed on a specific failure reason.
+
 ## Testing webhooks
 
 Before production, test with:

@@ -51,7 +51,7 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 - **Scopes** — Custom scopes for Agent-category apps (name, display name, description); exposed in OIDC discovery.
 - **Token format** — `JWT`, `JWT-Empty`, `JWT-Custom`, or `JWT-Standard`. See [Token overview](/docs/token/overview).
 - **Token signing method** — Signing algorithm: RS256, RS512, ES256, ES384, or ES512.
-- **Token fields** — Additional user fields included in the token payload (available when format is `JWT-Custom`).
+- **Token fields** — User fields included in the token payload (available when format is `JWT-Custom`). This list also acts as a whitelist for the `/userinfo` endpoint: when non-empty, only the listed fields are returned. Leave empty to include the full set. See [Token overview](/docs/token/overview#restricting-fields-with-token-fields).
 - **Token attributes** — Custom claims added to the token (available when format is `JWT-Custom`). Each row has a **Category**, **Value**, and **Type**:
   - **Category: Static Value** — the Value field is a template string (supports `${user.xxx}` substitution). Type controls whether the claim is a `String` or `Array`.
   - **Category: Existing Field** — the Value field is a dropdown of known user fields (`Owner`, `Name`, `Id`, `DisplayName`, `Email`, `Phone`, `Tag`, `Roles`, `Permissions`, `Groups`, etc.). Casdoor reads the field directly from the user object at token issuance. Properties sub-fields are referenced as `Properties.<key>`.
