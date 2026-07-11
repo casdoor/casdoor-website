@@ -32,6 +32,8 @@ LDAP is configured per organization; synced users are created in that organizati
 
 The sync table lists users under the configured base DN. Already-synced users are shown with the checkbox disabled. Select users and sync to import them into the organization.
 
+Syncing is not restricted to global admins: an administrator of the organization can also list and sync that organization's LDAP users. Editing the LDAP server settings above still requires a global admin.
+
 ![ldap_sync](/img/ldap/ldap_sync.png)
 
 ## Group and OU sync

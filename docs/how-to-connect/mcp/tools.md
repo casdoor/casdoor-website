@@ -144,6 +144,18 @@ The MCP server currently provides these application management tools:
 }
 ```
 
+## User Management Tools
+
+The MCP server also provides user management tools, mirroring the application tools:
+
+- **get_users** — List all users in an organization (argument: `owner`).
+- **get_user** — Get one user by `id`, or by `owner` + `email`, or `owner` + `phone`.
+- **add_user** — Create a user (argument: `user` object).
+- **update_user** — Modify an existing user (arguments: `id` and `user` object).
+- **delete_user** — Delete a user (argument: `user` object).
+
+They are called the same way as the application tools — via `tools/call` with the tool `name` and `arguments`. As with the other tools, results are subject to the caller's auth and scopes.
+
 ## Response Format
 
 Tool calls return results in a structured format:
