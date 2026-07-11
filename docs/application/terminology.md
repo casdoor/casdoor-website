@@ -28,6 +28,7 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 
 - **Cookie expire** — Session cookie lifetime in hours (default: 720). Without "Remember me", the session is capped at 24 h regardless.
 - **Default group** — Group automatically assigned to new users signing up through this application, including both direct sign-up and OAuth-based registration. Providers and invitations can override this per-signup: the effective group follows the priority **invitation SignupGroup > provider SignupGroup > application Default group**.
+- **Default tag** — Tag automatically assigned to new users who sign up through this application.
 - **Enable signup** — Allow self sign-up. When off, only admins can create accounts.
 - **Disable signin** — Disable all sign-in for this application.
 - **Enable guest signin** — Allow unauthenticated guest access by presenting `code=guest-user` to the token endpoint. Requires **Enable signup** to be on as well. Not available for the `built-in` organization. See [Guest authentication](/docs/how-to-connect/guest-auth).
