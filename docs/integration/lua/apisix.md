@@ -5,64 +5,90 @@ keywords: [APISIX]
 authors: [Steve0x2a]
 ---
 
-Currently, there are 2 methods to use Casdoor to connect to APISIX via APISIX plugins and protect the APIs behind APISIX: using APISIX's Casdoor plugin or using APISIX's OIDC plugin.
+You can use Casdoor to protect APIs behind Apache APISIX in two ways:
+
+- Use APISIX's dedicated `authz-casdoor` plugin for a browser-based OAuth 2.0 authorization code flow and session-based authentication.
+- Use APISIX's `openid-connect` plugin with Casdoor's OpenID Connect discovery endpoint when you need standard OIDC features or explicit identity and token propagation.
 
 ## Connect Casdoor via APISIX's Casdoor plugin
 
-This plugin, `authz-casdoor`, can protect APIs behind APISIX, forcing every single request to get authenticated without modifying the code of the API.
+The `authz-casdoor` plugin redirects unauthenticated browser requests to Casdoor and allows authenticated sessions to access the upstream API. APISIX handles the OAuth 2.0 callback, so the upstream application does not need to implement the authorization code flow.
 
-### How to enable it
+### Prerequisites
 
-Specify this plugin when creating the route and fill the required fields. Example:
+Before configuring the plugin, prepare:
+
+- A running Casdoor deployment and an Apache APISIX release that includes `authz-casdoor`.
+- A Casdoor application whose Redirect URL is exactly the URL that you will configure as `callback_url`.
+- The Casdoor application's Client ID and Client Secret.
+- An APISIX Route whose URI matches both the protected path and the callback path.
+
+### Enable the plugin
+
+Store the APISIX Admin API key in an environment variable, then create a Route with `authz-casdoor` enabled. Replace the example hostnames and credentials with values from your environment.
 
 ```shell
-curl "http://127.0.0.1:9180/apisix/admin/routes/1" -H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -X PUT -d '
+export APISIX_ADMIN_KEY="<APISIX_ADMIN_KEY>"
+
+curl "http://127.0.0.1:9180/apisix/admin/routes/1" \
+  -H "X-API-KEY: ${APISIX_ADMIN_KEY}" \
+  -H "Content-Type: application/json" \
+  -X PUT \
+  --data '
 {
   "methods": ["GET"],
   "uri": "/anything/*",
   "plugins": {
     "authz-casdoor": {
-        "endpoint_addr":"http://localhost:8000",
-        "callback_url":"http://localhost:9080/anything/callback",
-        "client_id":"7ceb9b7fda4a9061ec1c",
-        "client_secret":"3416238e1edf915eac08b8fe345b2b95cdba7e04"
+      "endpoint_addr": "https://casdoor.example.com",
+      "callback_url": "https://gateway.example.com/anything/callback",
+      "client_id": "<CASDOOR_CLIENT_ID>",
+      "client_secret": "<CASDOOR_CLIENT_SECRET>"
     }
   },
   "upstream": {
+    "scheme": "https",
     "type": "roundrobin",
     "nodes": {
-      "httpbin.org:80": 1
+      "<UPSTREAM_HOST>:443": 1
     }
   }
 }'
 ```
 
-In this example, we created a route "/anything/*" pointed to "httpbin.org:80" using APISIX's admin API, with the "authz-casdoor" plugin enabled. This route is now under the authentication protection of Casdoor.
+This example protects `/anything/*` and sends authorized requests to a user-controlled HTTPS upstream after you replace `<UPSTREAM_HOST>`. The callback path `/anything/callback` is covered by the same Route, allowing the plugin to handle Casdoor's authorization response.
+
+:::caution Production configuration
+
+Use HTTPS for `endpoint_addr` and `callback_url`. Do not commit the APISIX Admin API key or Casdoor Client Secret to source control, and redact authorization codes, tokens, and session cookies from logs.
+
+Use a trusted HTTPS upstream. The plugin does not add Casdoor token or identity headers, but the browser's original `Cookie` header, including the APISIX Session Cookie, can continue to the upstream unless it is removed. Remove or filter that header before proxying when the upstream application does not need it.
+
+Before using the plugin in production, validate the complete login, callback, and session flow with the exact APISIX release and worker topology that you deploy. Session behavior can vary between releases.
+
+:::
 
 ### Attributes
 
-| Name            | Type   | Requirement | Default | Valid | Description                                      |
-| --------------- | ------ | ----------- | ------- | ----- | ------------------------------------------------ |
-| endpoint_addr   | string | required    |         |       | The URL of Casdoor.                              |
-| client_id       | string | required    |         |       | The client ID in Casdoor.                        |
-| client_secret   | string | required    |         |       | The client secret in Casdoor.                    |
-| callback_url    | string | required    |         |       | The callback URL which is used to receive state and code. |
+| Name          | Type   | Requirement | Description                                              |
+| ------------- | ------ | ----------- | -------------------------------------------------------- |
+| endpoint_addr | string | required    | Base URL of the Casdoor deployment.                      |
+| client_id     | string | required    | Client ID of the Casdoor application.                    |
+| client_secret | string | required    | Client Secret of the Casdoor application.                |
+| callback_url  | string | required    | Callback URL used to receive the authorization response. |
 
-*endpoint_addr and callback_url should not end with '/'*
+`endpoint_addr` and `callback_url` must not end with `/`. The path in `callback_url` must be matched by the APISIX Route because the plugin handles the callback before proxying the request upstream.
 
-The "authz-casdoor" plugin has four parameters.
+If [encrypted storage fields](https://apisix.apache.org/docs/apisix/plugin-develop/#encrypted-storage-fields) are enabled in APISIX, the plugin's `client_secret` is stored encrypted in etcd.
 
-The first one is "callback_url". This is the callback URL in OAuth2. It should be emphasized that this callback URL **must belong to the "uri" you specified for the route**. For example, in this example, `http://localhost:9080/anything/callback` obviously belongs to "/anything/*". Only by this way, the visit toward the callback_url can be intercepted and utilized by the plugin (so that the plugin can get the code and state in OAuth2). The logic of the callback_url is implemented completely by the plugin, so there is no need to modify the server to implement this callback.
+### Understand the authorization flow
 
-The second parameter "endpoint_addr" is obviously the URL of Casdoor. The third and fourth parameters are "client_id" and "client_secret", obtained from Casdoor when registering an application.
+1. When an unauthenticated browser requests the protected Route, the plugin creates a session, stores the original request path and a state value, and redirects the browser to Casdoor.
+2. After authentication, Casdoor redirects the browser to `callback_url` with `code` and `state` parameters. The plugin validates the state and exchanges the authorization code for an access token.
+3. The plugin stores the access token in the APISIX session and redirects the browser to the original request path. The plugin stores the path, not the original query string, so applications should not rely on query parameters being restored after login.
+4. A subsequent request with a valid session can reach the upstream API without another login redirect.
 
-### How it works?
-
-Suppose a new user who has never visited this route before is going to visit it (`http://localhost:9080/anything/d?param1=foo&param2=bar`). Considering that "authz-casdoor" is enabled, this visit would be processed by the "authz-casdoor" plugin first. After checking the session and confirming that this user hasn't been authenticated, the visit will be intercepted. With the original URL the user wants to visit kept, they will be redirected to the login page of Casdoor.
-
-After successfully logging in with a username and password (or whatever method they use), Casdoor will redirect this user to the "callback_url" with GET parameters "code" and "state" specified. Because the "callback_url" is known by the plugin, when the visit toward the "callback_url" is intercepted this time, the logic of the "Authorization code Grant Flow" in OAuth2 will be triggered. This means that the plugin will request the access token to confirm whether this user is really logged in. After this confirmation, the plugin will redirect this user to the original URL they want to visit, which was kept by us previously. The logged-in status will also be kept in the session.
-
-Next time this user wants to visit the URL behind this route (for example, `http://localhost:9080/anything/d`), after discovering that this user has been authenticated previously, this plugin won't redirect this user anymore. This way, the user can visit whatever they want under this route without being interfered.
+The `authz-casdoor` plugin uses the access token to establish the APISIX session. It does not automatically add the Casdoor Access Token, ID Token, or user identity to upstream request headers. Use the `openid-connect` integration below if the upstream service requires explicit token or identity propagation.
 
 ## Connect Casdoor via APISIX's OIDC plugin
 
@@ -85,12 +111,12 @@ Deploy [Casdoor](/docs/basic/server-installation) and [APISIX](https://apisix.ap
 ### Step 2: Configure Casdoor application
 
 1. Create a new Casdoor application or use an existing one.
-2. Add a redirect URL: `http://APISIX_HOSTNAME/REDIRECTWHATYOUWANT`, and replace `REDIRECTWHATYOUWANT` with the desired redirect URL.
+2. Add a redirect URL: `https://APISIX_HOSTNAME/REDIRECTWHATYOUWANT`, and replace `REDIRECTWHATYOUWANT` with the desired redirect URL.
 3. Select "JWT-Empty" for the Token format option.
 4. Add the desired provider and configure other settings.
 
 ![Application Setting](/img/integration/lua/apisix/casdoor_jwtempty.png)
-Note **Client ID** and **Client Secret** for the next step. OIDC discovery: `http://<CASDOOR_HOSTNAME>/.well-known/openid-configuration`.
+Note **Client ID** and **Client Secret** for the next step. OIDC discovery: `https://<CASDOOR_HOSTNAME>/.well-known/openid-configuration`.
 
 ### Step 3: Configure APISIX
 
@@ -99,35 +125,41 @@ APISIX has official [OIDC](https://apisix.apache.org/docs/apisix/plugins/openid-
 Customize settings per [APISIX OIDC](https://apisix.apache.org/docs/apisix/plugins/openid-connect/). Example routing:
 
 ```bash
-# Use your own X-Api-Key
-$ curl -X POST APISIX_HOSTNAME/apisix/admin/routes -H "X-Api-Key: edd1c9f034335f136f87ad84b625c8f1" -d '{
+export APISIX_ADMIN_KEY="<APISIX_ADMIN_KEY>"
+
+curl "http://127.0.0.1:9180/apisix/admin/routes" \
+  -H "X-API-KEY: ${APISIX_ADMIN_KEY}" \
+  -H "Content-Type: application/json" \
+  -X POST \
+  --data '
+{
   "uri": "/get",
   "name": "apisix_casdoor_test",
   "plugins": {
     "openid-connect": {
-      "client_id": "Client ID",
-      "client_secret": "Client Secret",
-      "discovery": "http://CASDOOR_HOSTNAME/.well-known/openid-configuration",
+      "client_id": "<CASDOOR_CLIENT_ID>",
+      "client_secret": "<CASDOOR_CLIENT_SECRET>",
+      "discovery": "https://CASDOOR_HOSTNAME/.well-known/openid-configuration",
       "introspection_endpoint_auth_method": "client_secret_basic",
       "logout_path": "/logout",
       "realm": "master",
-      "redirect_uri": "http://APISIX_HOSTNAME/REDIRECTWHATYOUWANT",
+      "redirect_uri": "https://APISIX_HOSTNAME/REDIRECTWHATYOUWANT",
       "bearer_only": false,
       "set_id_token_header": false,
       "access_token_in_authorization_header": true,
       "set_access_token_header": true,
-      "set_userinfo_header": false,
-      "realm": "master"
+      "set_userinfo_header": false
     }
   },
   "upstream": {
+    "scheme": "https",
     "type": "roundrobin",
     "nodes": {
-      "httpbin.org:80": 1
+      "<UPSTREAM_HOST>:443": 1
     }
   }
 }'
 ```
 
-Visit `http://APISIX_HOSTNAME/get`; the browser redirects to the Casdoor login page. After login, the request is forwarded to httpbin.org as in the screenshot.
+This OIDC configuration forwards an access token to the upstream, so replace `<UPSTREAM_HOST>` with a trusted HTTPS service. Visit `https://APISIX_HOSTNAME/get`; the browser redirects to the Casdoor login page. After login, the request is forwarded to the configured upstream. The following screenshot shows an example response.
 ![APISIX_Result](/img/integration/lua/apisix/apisix_result.png)
