@@ -4,6 +4,7 @@ import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 import styles from "./index.module.scss";
 import HomepageFeatures from "../components/HomepageFeatures";
+import Sponsors from "../components/Sponsors";
 // eslint-disable-next-line unused-imports/no-unused-imports
 import Translate, {translate} from "@docusaurus/Translate";
 import CasdoorCard from "../components/CasdoorCard";
@@ -411,6 +412,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <Sponsors />
         <LearnHowTo />
         <MCPSection />
         <OpenClawSection />
