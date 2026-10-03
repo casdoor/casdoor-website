@@ -5,10 +5,10 @@ const darkCodeTheme = themes.dracula;
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server",
-  url: "https://casdoor.github.io",
+  url: "https://casdoor.ai",
   baseUrl: "/",
   onBrokenLinks: "warn",
-  favicon: "https://casdoor.org/img/casdoor.png",
+  favicon: "img/casdoor.png",
   organizationName: "casdoor", // Usually your GitHub org/user name.
   projectName: "casdoor-website", // Usually your repo name.
   i18n: {
