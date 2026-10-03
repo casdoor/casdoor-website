@@ -7,6 +7,7 @@ module.exports = {
   title: "Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server",
   url: "https://casdoor.ai",
   baseUrl: "/",
+  trailingSlash: true,
   onBrokenLinks: "warn",
   favicon: "img/casdoor.png",
   organizationName: "casdoor", // Usually your GitHub org/user name.
