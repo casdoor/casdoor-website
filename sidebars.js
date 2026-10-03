@@ -28,6 +28,17 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Comparisons",
+      link: {type: "doc", id: "comparison/overview"},
+      items: [
+        "comparison/casdoor-vs-keycloak",
+        "comparison/casdoor-vs-authentik",
+        "comparison/casdoor-vs-auth0",
+        "comparison/casdoor-vs-logto",
+      ],
+    },
+    {
+      type: "category",
       label: "LLM",
       link: {type: "generated-index"},
       items: [

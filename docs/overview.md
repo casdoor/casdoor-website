@@ -145,3 +145,7 @@ Name | Description | Language | Source code
 ----|------|----|----
 Frontend | Web frontend UI for Casdoor | JavaScript + React | `https://github.com/casdoor/casdoor/tree/master/web`
 Backend | RESTful API backend for Casdoor | Golang + Beego + SQL | `https://github.com/casdoor/casdoor`
+
+## Comparing Casdoor with other identity providers
+
+Evaluating Casdoor against Keycloak, Authentik, Auth0, or Logto? See [Casdoor vs. alternatives](/docs/comparison/overview).

@@ -266,7 +266,22 @@ var _hmt = _hmt || [];
       },
     ],
   ],
-  plugins: ["docusaurus-plugin-sass", "docusaurus-plugin-hotjar"],
+  plugins: [
+    "docusaurus-plugin-sass",
+    "docusaurus-plugin-hotjar",
+    [
+      require.resolve("./src/plugins/llms-txt"),
+      {
+        title: "Casdoor",
+        summary: "Casdoor is an open-source, UI-first Identity and Access Management (IAM) and Single Sign-On (SSO) platform written in Go. It supports OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, TOTP, MFA, RADIUS and Kerberos, includes an MCP server, and acts as an OAuth 2.1 authorization server for MCP servers and AI agents.",
+        links: [
+          {title: "Source code", url: "https://github.com/casdoor/casdoor", description: "Casdoor server and web UI (Apache-2.0)"},
+          {title: "Online demo", url: "https://door.casdoor.com", description: "Public demo instance, sign in with admin / 123"},
+          {title: "Casdoor Cloud", url: "https://www.casdoor.com", description: "Hosted Casdoor and commercial support"},
+        ],
+      },
+    ],
+  ],
   scripts: [
     {
       src: "/js/isMainland.js",
