@@ -1,6 +1,6 @@
 ---
 title: Connecting applications with OIDC protocol - Confluence
-description: Learn how to use OIDC protocol as IDP to connect Confluence and other applications.
+description: "Connect Atlassian Confluence to Casdoor with OpenID Connect so users sign in to Confluence through Casdoor single sign-on."
 keywords: [OIDC, Confluence, IDP]
 authors: [jakiuncle]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Spring Cloud
-description: Using Casdoor in Spring Cloud
+description: "Add Casdoor authentication to Spring Cloud microservices, at the gateway or in individual services with casdoor-spring-boot-starter."
 keywords: [Spring Cloud]
 authors: [leo220yuyaodog]
 ---

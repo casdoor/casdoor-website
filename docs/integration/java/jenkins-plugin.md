@@ -1,6 +1,6 @@
 ---
 title: Jenkins plugin
-description: Using the Casdoor plugin for Jenkins security
+description: "Install and configure the Casdoor plugin for Jenkins so users sign in to Jenkins with Casdoor single sign-on."
 keywords: [plugin, Jenkins]
 authors: [Abingcbc]
 ---

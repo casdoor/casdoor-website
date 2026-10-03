@@ -1,6 +1,6 @@
 ﻿---
 title: Overview
-description: Casdoor Overview
+description: "Casdoor is an open-source, UI-first IAM and SSO platform written in Go, supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, MFA and RADIUS. See how it works."
 keywords: [casdoor, OAuth 2.0]
 authors: [kininaru]
 ---

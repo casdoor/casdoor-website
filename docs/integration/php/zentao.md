@@ -1,6 +1,6 @@
 ---
 title: Zentao
-description: Using Casdoor for authentication in Zentao
+description: "Add Casdoor single sign-on to the ZenTao project management tool with the zentao-oidc module."
 keywords: [Zentao, zentao-oidc]
 authors: [leo220yuyaodog]
 ---

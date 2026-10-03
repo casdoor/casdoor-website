@@ -1,6 +1,6 @@
 ---
 title: GitLab
-description: Using Casdoor for authentication in a self-developed GitLab server
+description: "Configure self-managed GitLab to use Casdoor as its OpenID Connect provider for single sign-on."
 keywords: [GitLab]
 authors: [Steve0x2a]
 ---

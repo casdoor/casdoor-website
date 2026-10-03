@@ -1,6 +1,6 @@
 ---
 title: Moodle
-description: Using OAuth to connect Moodle
+description: "Configure Moodle to use Casdoor as an OAuth identity provider for single sign-on."
 keywords: [OAuth, Moodle, IDP]
 authors: [jakiuncle]
 ---

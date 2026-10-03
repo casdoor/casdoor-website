@@ -1,6 +1,6 @@
 ---
 title: Spring Cloud Gateway
-description: Using Casdoor in Spring Cloud Gateway
+description: "Authenticate requests at a Spring Cloud Gateway with Casdoor, using casdoor-spring-boot-starter in the gateway service."
 keywords: [Spring Cloud Gateway]
 authors: [conghuhu]
 ---

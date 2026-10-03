@@ -1,6 +1,6 @@
 ---
 title: Apache IoTDB
-description: Using Casdoor with Apache IoTDB
+description: "Enable Casdoor sign-in for the Apache IoTDB Web Workbench, which includes built-in Casdoor support."
 keywords: [Apache IoTDB]
 authors: [jakiuncle]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Via built-in SSO
-description: Using the OIDC protocol as an IDP to connect various applications, such as Jira
+description: "Connect Jira to Casdoor over OpenID Connect with Jira's built-in SSO, a free method that requires HTTPS."
 keywords: [OIDC, Jira, IDP]
 authors: [jakiuncle]
 ---

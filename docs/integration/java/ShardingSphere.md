@@ -1,6 +1,6 @@
 ---
 title: ShardingSphere
-description: Using Casdoor in ShardingSphere
+description: "Enable Casdoor sign-in for the Apache ShardingSphere ElasticJob UI, which includes built-in Casdoor support."
 keywords: [ShardingSphere]
 authors: [jakiuncle]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Overview
-description: Understanding sessions in Casdoor
+description: "How Casdoor sessions track each user's login state across the applications of an organization, what a session records, and how sessions are managed."
 keywords: [session, authentication, token, login]
 authors: [hsluoyz]
 ---

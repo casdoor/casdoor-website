@@ -1,6 +1,6 @@
 ---
 title: Nginx community edition
-description: Using Casdoor with Nginx (Not Nginx-Plus) and Oauth2-Proxy
+description: "Add Casdoor single sign-on to applications behind open-source Nginx (not NGINX Plus) with OAuth2 Proxy and auth_request."
 keywords: [nginx, OAuth2-Proxy, nginx-community-version]
 authors: [gzyzhy]
 ---

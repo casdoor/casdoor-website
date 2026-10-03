@@ -1,6 +1,6 @@
 ---
 title: APISIX
-description: Using Casdoor in APISIX
+description: "Protect APIs behind Apache APISIX with Casdoor, using either the authz-casdoor plugin or the openid-connect plugin."
 keywords: [APISIX]
 authors: [Steve0x2a]
 ---

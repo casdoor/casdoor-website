@@ -1,6 +1,6 @@
 ---
 title: JumpServer
-description: Using CAS to connect JumpServer
+description: "Connect the JumpServer bastion host to Casdoor over CAS so users sign in with Casdoor single sign-on."
 keywords: [CAS, JumpServer, IDP]
 authors: [jakiuncle]
 ---

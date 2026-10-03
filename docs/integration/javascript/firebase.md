@@ -1,6 +1,6 @@
 ---
 title: Firebase
-description: Firebase project using Casdoor as Identity Provider
+description: "Use Casdoor as an OpenID Connect provider in Firebase Authentication, so users of a Firebase web app sign in with Casdoor."
 keywords: [Firebase, web, OIDC, IdP]
 authors: [leo220yuyaodog]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Envoy
-description: Using Casdoor in Envoy
+description: "Protect services behind the Envoy proxy with Casdoor single sign-on, using Envoy's OAuth2 filter and a Casdoor application."
 keywords: [envoy]
 authors: [SkipperQ]
 ---

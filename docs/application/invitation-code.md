@@ -1,6 +1,6 @@
 ---
 title: Invitation codes
-description: Restrict application sign-up to users with a valid invitation code.
+description: "Restrict sign-up to invited users with Casdoor invitation codes - create codes per application and require a valid code on the sign-up page."
 keywords: [application, signup, invitation code]
 authors: [leo220yuyaodog]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Pulsar manager
-description: Using Casdoor in Pulsar Manager
+description: "Enable Casdoor sign-in for Apache Pulsar Manager - configure application.yml on the back end and turn on the Casdoor switch in the front end."
 keywords: [Pulsar Manager]
 authors: [jakiuncle]
 ---

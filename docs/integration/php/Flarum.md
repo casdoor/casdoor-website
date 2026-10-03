@@ -1,6 +1,6 @@
 ---
 title: Flarum
-description: Using OAuth2 to connect various applications, like Flarum
+description: "Add Casdoor OAuth 2.0 sign-in to a Flarum forum with the FoF Passport extension."
 keywords: [OAuth2, Flarum, IDP]
 authors: [jakiuncle]
 ---

@@ -1,6 +1,6 @@
 ---
 title: BookStack
-description: Using Casdoor for authentication in BookStack
+description: "Set up Casdoor as the OAuth sign-in provider for BookStack, the open-source wiki and documentation platform."
 keywords: [BookStack]
 authors: [leo220yuyaodog]
 ---

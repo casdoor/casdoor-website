@@ -1,6 +1,6 @@
 ---
 title: Thingsboard
-description: Learn how to integrate Casdoor with Thingsboard to secure your applications
+description: "Use Casdoor as the OAuth 2.0 / OIDC identity provider for the ThingsBoard IoT platform, with Casdoor and ThingsBoard settings."
 keywords: [oauth2, Thingsboard, integration]
 authors: [RanTao123]
 ---

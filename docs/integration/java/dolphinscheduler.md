@@ -1,6 +1,6 @@
 ---
 title: Apache DolphinScheduler
-description: Using Casdoor for DolphinScheduler SSO login
+description: "Enable Casdoor single sign-on for Apache DolphinScheduler, which supports Casdoor as a built-in login method."
 keywords: [DolphinScheduler]
 authors: [Abingcbc]
 ---

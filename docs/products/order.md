@@ -1,6 +1,6 @@
 ---
 title: Order
-description: Track and manage product purchases with orders
+description: "Casdoor orders record each product purchase and track it through its lifecycle, separately from the payments made for it."
 keywords: [order, product, purchase, payment]
 authors: [hsluoyz]
 ---

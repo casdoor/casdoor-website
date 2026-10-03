@@ -1,6 +1,6 @@
 ﻿---
 title: ELK
-description: Overview of casdoor/elk-auth-casdoor
+description: "Put Casdoor single sign-on in front of Kibana with elk-auth-casdoor, a reverse proxy that adds authentication to the ELK stack without X-Pack."
 keywords: [ELK]
 authors: [ComradeProgrammer]
 ---

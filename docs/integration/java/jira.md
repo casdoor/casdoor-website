@@ -1,6 +1,6 @@
 ---
 title: Using the miniOrange plugin
-description: Connect casdoor and Jira using the OIDC protocol as the IDP
+description: "Connect Jira to Casdoor over OpenID Connect with the miniOrange OAuth / OIDC SSO plugin."
 keywords: [OIDC, Jira, IDP]
 authors: [jakiuncle]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Shopping cart
-description: Collect multiple products before purchasing them together
+description: "The Casdoor shopping cart collects several products so users can buy them together in one order and one payment."
 keywords: [cart, shopping cart, multi-product order]
 authors: [hsluoyz]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Google One Tap
-description: Learn how to add Google One Tap support to your application
+description: "Enable Google One Tap sign-in on Casdoor login pages by setting the Google OAuth provider rule to One Tap."
 keywords: [Google, Google One Tap, OAuth]
 authors: [Chinoholo0807]
 ---

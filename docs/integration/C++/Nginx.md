@@ -1,6 +1,6 @@
 ---
 title: Nginx
-description: Using Casdoor with Nginx
+description: "Enable OpenID Connect single sign-on for applications proxied by NGINX Plus, using Casdoor as the identity provider."
 keywords: [nginx, plus, nginx-plus]
 authors: [SkipperQ]
 ---

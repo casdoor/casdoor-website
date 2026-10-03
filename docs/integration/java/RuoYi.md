@@ -1,6 +1,6 @@
 ---
 title: RuoYi
-description: Using Casdoor in RuoYi-Cloud
+description: "Integrate Casdoor single sign-on into RuoYi-Cloud, the Spring Cloud admin framework, using the Casdoor Java SDK."
 keywords: [RuoYi]
 authors: [jakiuncle]
 ---

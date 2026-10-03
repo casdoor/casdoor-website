@@ -1,6 +1,6 @@
 ---
 title: Push notification
-description: Configure push notification provider for MFA
+description: "Send MFA verification codes through push notification services such as Duo and Pushover, using Casdoor notification providers."
 keywords: [Push Notification, MFA, provider, authentication]
 authors: [nomeguy]
 ---

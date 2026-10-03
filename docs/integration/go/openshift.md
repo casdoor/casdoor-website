@@ -1,6 +1,6 @@
 ---
 title: OpenShift
-description: Using Casdoor for authentication in OpenShift
+description: "Configure Casdoor as an OpenID Connect identity provider for OpenShift so users sign in to the console and CLI with their Casdoor accounts."
 keywords: [OpenShift]
 authors: [UsherFall]
 ---

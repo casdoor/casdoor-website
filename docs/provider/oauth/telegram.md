@@ -1,6 +1,6 @@
 ---
 title: Telegram
-description: Add Telegram OAuth provider to your application
+description: "Add Telegram sign-in to Casdoor with the Telegram Login Widget - create a Telegram bot, then add and configure the provider."
 keywords: [Telegram, OAuth]
 authors: [hsluoyz,oxkrypton]
 ---

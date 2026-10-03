@@ -1,6 +1,6 @@
 ---
 title: Alibaba Cloud
-description: Integrate Alibaba Cloud for ID card verification
+description: "Verify users' national ID cards against government records with Alibaba Cloud ID verification as a Casdoor identity verification provider."
 keywords: [Alibaba Cloud, ID Verification, identity, KYC]
 authors: [hsluoyz]
 ---

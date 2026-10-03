@@ -1,6 +1,6 @@
 ---
 title: Portainer
-description: Using Casdoor for authentication in Portainer
+description: "Configure Portainer OAuth sign-in with Casdoor as the identity provider, so users log in to Portainer with their Casdoor accounts."
 keywords: [Portainer]
 authors: [UsherFall]
 ---

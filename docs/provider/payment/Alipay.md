@@ -1,6 +1,6 @@
 ---
 title: Alipay
-description: Add Alipay payment provider to your application
+description: "Accept Alipay payments in Casdoor - prepare an Alipay Open Platform merchant app, configure keys and certificates, and add the provider."
 keywords: [Alipay, payment]
 authors: [Chinoholo0807]
 ---

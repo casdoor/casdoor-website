@@ -1,6 +1,6 @@
 ---
 title: FireZone
-description: Using the OIDC protocol as the IDP to connect various applications, such as FireZone
+description: "Configure Firezone to use Casdoor as its OpenID Connect identity provider for user sign-in."
 keywords: [OIDC, FireZone, IDP]
 authors: [dingchenzy]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Cloud Foundry
-description: Learn how to integrate Casdoor with Cloud Foundry to secure your applications.
+description: "Use Casdoor as the OIDC identity provider for applications on Cloud Foundry, with step-by-step Casdoor and Cloud Foundry configuration."
 keywords: [OAuth, Cloud Foundry, integration]
 authors: [RanTao123]
 ---

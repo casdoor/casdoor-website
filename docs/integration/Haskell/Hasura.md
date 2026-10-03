@@ -1,5 +1,6 @@
 ---
 title: "Hasura"
+description: "Secure Hasura GraphQL Engine with JWTs issued by Casdoor - configure the Casdoor application, Hasura JWT secret and claims mapping."
 metaTitle: "Hasura | Hasura Authentication Tutorial"
 metaDescription: "Learn how to integrate Casdoor with Hasura to secure your applications using JWT"
 ---

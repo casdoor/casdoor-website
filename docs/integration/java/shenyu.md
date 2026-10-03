@@ -1,6 +1,6 @@
 ---
 title: Using Casdoor in ShenYu
-description: How to use Casdoor with ShenYu
+description: "Protect APIs behind the Apache ShenYu gateway with Casdoor using ShenYu's Casdoor plugin."
 keywords: [ShenYu, Casdoor]
 authors: [jakiuncle]
 ---
