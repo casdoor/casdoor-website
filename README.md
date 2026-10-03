@@ -1,8 +1,8 @@
-# [casdoor.org](https://casdoor.org) [![Build and Deploy](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml/badge.svg)](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml)
+# [casdoor.ai](https://casdoor.ai) [![Build and Deploy](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml/badge.svg)](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml)
 
-The configuration and documentation of Casdoor website: <https://casdoor.org/>.
+The configuration and documentation of Casdoor website: <https://casdoor.ai/>.
 
-Casdoor website is built using [Docusaurus](https://docusaurus.io/), you can get the PDF at [casdoor.org/pdf](https://casdoor.org/pdf) or [GitHub Action](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml).
+Casdoor website is built using [Docusaurus](https://docusaurus.io/) and deployed by [GitHub Actions](https://github.com/casdoor/casdoor-website/actions/workflows/master.yml).
 
 ## Get Started
 
