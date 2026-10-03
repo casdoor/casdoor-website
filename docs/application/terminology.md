@@ -114,7 +114,7 @@ Each OAuth / Web3 / SAML provider entry in the provider table has additional per
 - **Failed signin limit** — Number of consecutive failed sign-in attempts before the account is locked. This limit also applies to the `/api/verify-code` OTP endpoint: too many wrong verification codes will temporarily block that user+destination combination using the same counter and freeze time.
 - **Failed signin frozen time** — Lock duration in minutes after hitting the failed sign-in limit.
 - **Code resend timeout** — Seconds a user must wait before requesting another verification code (default: 60; set to 0 for the global default).
-- **IP whitelist** — Comma-separated list of allowed IP addresses or CIDR ranges. Overrides the organization-level whitelist. See [IP allowlist](/docs/ip-whitelist/ip-whitelist).
+- **IP whitelist** — Comma-separated list of allowed IP addresses or CIDR ranges. Overrides the organization-level whitelist. See [IP allowlist](/docs/ip-whitelist).
 - **Terms of Use** — URL or path to the terms-of-use page (up to 200 characters). An HTML file can be uploaded directly and the resulting URL is filled in automatically.
 
 ## Reverse Proxy

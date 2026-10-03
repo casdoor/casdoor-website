@@ -116,9 +116,9 @@ That's it. No user database, no password hashing, no session management, no OAut
 
 To use Casdoor as your MCP authorization provider:
 
-1. **[Deploy Casdoor](../basic/server-installation.mdx)** or use [Casdoor Cloud](https://door.casdoor.com)
-2. **[Configure your application](./setup.md)** in Casdoor with MCP category and custom scopes
-3. **[Integrate your MCP server](./third-party-integration.md)** using code examples in Python, Node.js, or Go
+1. **[Deploy Casdoor](../basic/server-installation.md)** or use [Casdoor Cloud](https://door.casdoor.com)
+2. **[Configure your application](./setup.mdx)** in Casdoor with MCP category and custom scopes
+3. **[Integrate your MCP server](./third-party-integration.mdx)** using code examples in Python, Node.js, or Go
 
 ## SEO: Why This Matters
 
@@ -134,8 +134,8 @@ If you're searching for:
 
 ## Next Steps
 
-- **[Auth Provider Setup →](./setup.md)**: Configure Casdoor and your MCP server step-by-step
-- **[Integration Examples →](./third-party-integration.md)**: Copy-paste working code for Python, Node.js, and Go
+- **[Auth Provider Setup →](./setup.mdx)**: Configure Casdoor and your MCP server step-by-step
+- **[Integration Examples →](./third-party-integration.mdx)**: Copy-paste working code for Python, Node.js, and Go
 - **[Dynamic Client Registration →](../application/dynamic-client-registration.md)**: Learn how DCR works in Casdoor
 - **[Custom Scopes →](../application/scopes.md)**: Define granular permissions for your tools
 - **[Casdoor's MCP Server →](../how-to-connect/mcp/overview.md)**: Use Casdoor's built-in MCP tools

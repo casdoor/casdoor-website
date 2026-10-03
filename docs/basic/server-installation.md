@@ -156,7 +156,7 @@ yarn start
 
 Open [http://localhost:7001](http://localhost:7001) and sign in as **built-in/admin** / **123**.
 
-### Production mode <span id="production-mode"></span>
+### Production mode {#production-mode}
 
 #### Backend
 
