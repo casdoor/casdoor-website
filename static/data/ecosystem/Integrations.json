@@ -408,6 +408,16 @@
     "image": "/img/ecosystem/hasura.png"
   },
   {
+    "title": "FastAPI",
+    "url": "https://casdoor.org/docs/integration/python/FastAPI",
+    "description": "Casdoor sign-in and permission checks for FastAPI via casbin-fastapi-decorator",
+    "tags": [
+      "Integration",
+      "Python"
+    ],
+    "image": "/img/ecosystem/python.png"
+  },
+  {
     "title": "JumpServer",
     "url": "https://casdoor.org/docs/integration/python/JumpServer",
     "description": "",

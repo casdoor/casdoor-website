@@ -744,6 +744,7 @@ module.exports = {
           collapsed: true,
           link: {type: "generated-index"},
           items: [
+            "integration/python/FastAPI",
             "integration/python/JumpServer",
           ],
         },
