@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import clsx from "clsx";
 import Layout from "@theme/Layout";
+import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
 import styles from "./index.module.scss";
 import HomepageFeatures from "../components/HomepageFeatures";
@@ -404,11 +405,52 @@ function Showcase() {
   );
 }
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://casdoor.ai/#organization",
+      "name": "Casdoor",
+      "url": "https://casdoor.ai/",
+      "logo": "https://casdoor.ai/img/casdoor.png",
+      "sameAs": [
+        "https://github.com/casdoor/casdoor",
+        "https://www.casdoor.com/",
+        "https://hub.docker.com/r/casbin/casdoor",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://casdoor.ai/#website",
+      "name": "Casdoor",
+      "url": "https://casdoor.ai/",
+      "publisher": {"@id": "https://casdoor.ai/#organization"},
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Casdoor",
+      "url": "https://casdoor.ai/",
+      "description": "Open-source identity and access management (IAM) and single sign-on (SSO) platform for users and AI agents, with OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, MFA and a built-in MCP server.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Linux, Windows, macOS, Docker, Kubernetes",
+      "downloadUrl": "https://github.com/casdoor/casdoor/releases",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "isAccessibleForFree": true,
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "publisher": {"@id": "https://casdoor.ai/#organization"},
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <Layout
-      title={"Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server"}
-      description="Identity & Access Management for the AI Agent era. The first open-source IAM platform with native MCP server, OAuth 2.1 for AI agents, and full support for OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, MFA, and 100+ identity providers.">
+      title="Open-Source AI-Native IAM / SSO Platform with MCP Server"
+      description="Open-source IAM and SSO for users and AI agents: OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn and MFA, plus a built-in MCP server and OAuth 2.1 for MCP.">
+      <Head>
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+      </Head>
       <HomepageHeader />
       <main>
         <HomepageFeatures />

@@ -4,7 +4,7 @@ const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: "Casdoor · AI-Native Identity and Access Management (IAM) / SSO Platform with MCP Server",
+  title: "Casdoor",
   url: "https://casdoor.ai",
   baseUrl: "/",
   trailingSlash: true,
@@ -17,6 +17,7 @@ module.exports = {
     locales: ["en", "es", "fr", "de", "ja", "zh", "vi", "pt", "tr", "pl", "uk"],
   },
   themeConfig: {
+    image: "img/social-card.png",
     metadata: [{name: "Casdoor", content: "Identity & Access Management for the AI Agent era. The first open-source IAM platform with native MCP server, Model Context Protocol support, OAuth 2.1 for AI agent authentication, and full support for OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, MFA, and 100+ identity providers."}],
     algolia: {
       appId: "U9MEH3VSV1",
