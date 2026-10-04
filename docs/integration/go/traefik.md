@@ -230,4 +230,4 @@ casdoor-forward-auth was called `traefik-casdoor-auth` before v2 and needed a Tr
 
 - [casdoor-forward-auth on GitHub](https://github.com/casdoor/casdoor-forward-auth)
 - [Traefik forwardAuth middleware](https://doc.traefik.io/traefik/middlewares/http/forwardauth/)
-- [ELK](/docs/integration/go/elk): protecting Kibana with casdoor-forward-auth
+- [ELK](/docs/integration/go/elk): protecting Kibana with casdoor-forward-auth or elk-auth-casdoor

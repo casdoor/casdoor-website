@@ -1,7 +1,7 @@
 ---
 title: Plugins and middlewares
-description: Official Casdoor plugins for Spring Boot, WordPress, Odoo, Django, and Chrome.
-keywords: [plugin, middleware, Spring Boot, WordPress, Odoo, Django]
+description: Official Casdoor plugins for Spring Boot, WordPress, Odoo, Django, Kibana, and Chrome.
+keywords: [plugin, middleware, Spring Boot, WordPress, Odoo, Django, Kibana]
 authors: [hsluoyz]
 ---
 
@@ -14,6 +14,7 @@ Casdoor provides plugins or middlewares for popular platforms. For CLI usage, se
 | WordPress | PHP | [wordpress-casdoor-plugin](https://github.com/casdoor/wordpress-casdoor-plugin) |
 | Odoo | Python | [odoo-casdoor-oauth](https://github.com/casdoor/odoo-casdoor-oauth) |
 | Django | Python | [django-casdoor-auth](https://github.com/casdoor/django-casdoor-auth) |
+| Kibana (ELK) | Go | [elk-auth-casdoor](https://github.com/casdoor/elk-auth-casdoor), see [ELK](/docs/integration/go/elk) |
 | Chrome extension | JavaScript | [casdoor-chrome-extension](https://github.com/casdoor/casdoor-chrome-extension) |
 
 More official integrations: [Casdoor repositories](https://github.com/orgs/casdoor/repositories?q=sdk+in%3Areadme&type=all&language=&sort=).
