@@ -5,7 +5,7 @@ keywords: [authenticator, 2fa, TOTP, MFA]
 authors: [IZUMI-Zu]
 ---
 
-**Casdoor Authenticator** ([app.casdoor.org](https://app.casdoor.org/)) is an open-source TOTP app ([GitHub](https://github.com/casdoor/casdoor-authenticator)) similar to Google Authenticator or Microsoft Authenticator. It provides MFA with time-based one-time passwords (TOTP) on iOS and Android and can sync accounts with Casdoor.
+**Casdoor Authenticator** ([app.casdoor.ai](https://app.casdoor.ai/)) is an open-source TOTP app ([GitHub](https://github.com/casdoor/casdoor-authenticator)) similar to Google Authenticator or Microsoft Authenticator. It provides MFA with time-based one-time passwords (TOTP) on Android and iOS and can sync accounts with Casdoor.
 
 ### Features
 
@@ -27,8 +27,8 @@ authors: [IZUMI-Zu]
 
 ### Step 0: Install
 
-- **Android**: [Releases](https://github.com/casdoor/casdoor-authenticator/releases) or [app.casdoor.org](https://app.casdoor.org).
-- **iOS**: See [app.casdoor.org](https://app.casdoor.org) and the [repo](https://github.com/casdoor/casdoor-authenticator).
+- **Android**: [download the latest APK](https://github.com/casdoor/casdoor-authenticator/releases/latest/download/casdoor-authenticator.apk), or pick a version on the [Releases](https://github.com/casdoor/casdoor-authenticator/releases) page.
+- **iOS**: not on the App Store yet; build it from source (see below).
 - **Build from source**: [Casdoor Authenticator – Building from source](https://github.com/casdoor/casdoor-authenticator#building-from-source).
 
 ### Step 1: Enable MFA account storage (optional)
