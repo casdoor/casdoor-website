@@ -1,47 +1,92 @@
-﻿---
+---
 title: ELK
-description: "Put Casdoor single sign-on in front of Kibana with elk-auth-casdoor, a reverse proxy that adds authentication to the ELK stack without X-Pack."
-keywords: [ELK]
-authors: [ComradeProgrammer]
+description: "Put Casdoor single sign-on in front of Kibana with casdoor-forward-auth, without X-Pack's paid SSO features."
+keywords: [ELK, Kibana, Elasticsearch, forward auth]
+authors: [casdoor]
 ---
 
 ## Overview
 
-ELK (Elasticsearch, Logstash, Kibana) originally had no built-in auth; Kibana was open to anyone with the URL. X-Pack adds auth but advanced features (OAuth, OIDC, LDAP, SAML) are paid. [casdoor/elk-auth-casdoor](https://github.com/casdoor/elk-auth-casdoor) is a free, open-source reverse proxy that puts Casdoor (OAuth 2.0/OIDC) in front of the ELK/Kibana stack. Unauthenticated users are redirected to Casdoor; after sign-in, requests are forwarded to Kibana. Intercepted requests (including POST) are cached and replayed after login so users do not lose form data.
+Kibana's own SSO options (OAuth, OIDC, SAML, LDAP) belong to the paid subscriptions of the Elastic Stack. To protect Kibana with Casdoor for free, put [casdoor-forward-auth](https://github.com/casdoor/casdoor-forward-auth) in front of it: the reverse proxy asks casdoor-forward-auth about every request, sends users without a session to the Casdoor login page, and lets signed-in users through to Kibana.
 
-## How to run
+This page uses Nginx as the reverse proxy. With Traefik, follow the [Traefik](/docs/integration/go/traefik) guide and use Kibana as the protected service; with Caddy, see the [casdoor-forward-auth README](https://github.com/casdoor/casdoor-forward-auth#caddy).
 
-0. Install [Go](https://go.dev/).
+:::note
 
-1. Clone [casdoor/elk-auth-casdoor](https://github.com/casdoor/elk-auth-casdoor).
+casdoor-forward-auth replaces [elk-auth-casdoor](https://github.com/casdoor/elk-auth-casdoor), which earlier versions of this page used.
 
-2. In Casdoor, register the proxy as an application and note Client ID, Client Secret, application name, and organization.
+:::
 
-3. Edit the configuration.
+## Step 1: Configure the Casdoor application
 
-    The configuration file is located at "conf/app.conf". Here is an example, which you should customize based on your specific needs.
+1. Create or edit an application in Casdoor.
+2. Add the callback of casdoor-forward-auth to **Redirect URLs**, e.g., `https://auth.example.com/callback`.
+3. Note the **Client ID** and **Client secret**.
 
-    ```ini
-    appname = .
-    # port on which the reverse proxy shall be run
-    httpport = 8080
-    runmode = dev
-    # EDIT IT IF NECESSARY. The URL of this reverse proxy.
-    pluginEndpoint = "http://localhost:8080"
-    # EDIT IT IF NECESSARY. The URL of the Kibana.
-    targetEndpoint = "http://localhost:5601"
-    # EDIT IT. The URL of Casdoor.
-    casdoorEndpoint = "http://localhost:8000"
-    # EDIT IT. The clientID of your reverse proxy in Casdoor.
-    clientID = ceb6eb261ab20174548d
-    # EDIT IT. The clientSecret of your reverse proxy in Casdoor.
-    clientSecret = af928f0ef1abc1b1195ca58e0e609e9001e134f4
-    # EDIT IT. The application name of your reverse proxy in Casdoor.
-    appName = ELKProxy
-    # EDIT IT. The organization to which your reverse proxy belongs in Casdoor.
-    organization = built-in
-    ```
+In the examples below, Kibana is served at `https://kibana.example.com` and casdoor-forward-auth at `https://auth.example.com`.
 
-4. Visit `http://localhost:8080` (in the above example) and log in following the redirection guidance. You should then see Kibana protected and authenticated by Casdoor.
+## Step 2: Run casdoor-forward-auth
 
-5. If everything works well, don't forget to block external access to the original Kibana port by configuring your firewall (or another method). This ensures that outsiders can only access Kibana via this reverse proxy.
+```bash
+docker run -d --name casdoor-forward-auth -p 9999:9999 \
+  -e CASDOOR_ENDPOINT=https://door.casdoor.com \
+  -e CLIENT_ID=<client ID> \
+  -e CLIENT_SECRET=<client secret> \
+  -e EXTERNAL_URL=https://auth.example.com \
+  -e COOKIE_DOMAIN=example.com \
+  -e COOKIE_SECRET=<random string of at least 32 characters> \
+  ghcr.io/casdoor/casdoor-forward-auth:latest
+```
+
+`COOKIE_DOMAIN` must cover both `auth.example.com` and `kibana.example.com`, so the session cookie set after login is sent to Kibana's host. See [Configuration](/docs/integration/go/traefik#configuration) for all settings.
+
+## Step 3: Configure Nginx
+
+Nginx's [auth_request](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html) module calls `/verify` of casdoor-forward-auth for every request and redirects to the login on `401`:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name auth.example.com;
+    # ssl_certificate ...
+
+    location / {
+        proxy_pass http://127.0.0.1:9999;
+        proxy_set_header Host $host;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name kibana.example.com;
+    # ssl_certificate ...
+
+    location = /_casdoor_verify {
+        internal;
+        proxy_pass http://127.0.0.1:9999/verify;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+    }
+
+    location @casdoor_login {
+        return 302 https://auth.example.com/login?rd=$scheme://$http_host$request_uri;
+    }
+
+    location / {
+        auth_request /_casdoor_verify;
+        error_page 401 = @casdoor_login;
+
+        auth_request_set $casdoor_user $upstream_http_x_forwarded_user;
+        proxy_set_header X-Forwarded-User $casdoor_user;
+
+        proxy_pass http://127.0.0.1:5601;
+        proxy_set_header Host $host;
+    }
+}
+```
+
+Reload Nginx and open `https://kibana.example.com`. You are redirected to Casdoor, and after signing in you see Kibana.
+
+## Step 4: Block direct access to Kibana
+
+Kibana must only be reachable through Nginx. Bind it to localhost (`server.host: "127.0.0.1"` in `kibana.yml`) or block port `5601` in your firewall, otherwise anyone can bypass the login by connecting to Kibana directly.

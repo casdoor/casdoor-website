@@ -1,264 +1,233 @@
 ---
 title: Traefik
-description: Protect services behind Traefik with Casdoor auth (SSO).
-keywords: [Traefik, middleware, authentication]
+description: Protect services behind Traefik with Casdoor SSO using casdoor-forward-auth and Traefik's forwardAuth middleware.
+keywords: [Traefik, forwardAuth, forward auth, middleware, authentication]
 authors: [casdoor]
 ---
 
-Use [Traefik](https://traefik.io/) with the [traefik-casdoor-auth](https://github.com/casdoor/traefik-casdoor-auth) middleware to protect routes with Casdoor authentication and SSO.
+[casdoor-forward-auth](https://github.com/casdoor/casdoor-forward-auth) puts Casdoor single sign-on in front of any service behind [Traefik](https://traefik.io/), without changing the service. Traefik asks casdoor-forward-auth about every request through its built-in [forwardAuth](https://doc.traefik.io/traefik/middlewares/http/forwardauth/) middleware: signed-in users reach the service with their identity in request headers, everyone else is sent to the Casdoor login page first.
+
+The same service also works with [Caddy](https://github.com/casdoor/casdoor-forward-auth#caddy) (`forward_auth`) and [Nginx](https://github.com/casdoor/casdoor-forward-auth#nginx) (`auth_request`).
+
+## How it works
+
+1. Traefik calls `/auth` of casdoor-forward-auth for every request to a protected service.
+2. With a valid session cookie, `/auth` answers `200` with headers like `X-Forwarded-User`, which Traefik copies into the request to your service.
+3. Without a session, page loads are redirected to Casdoor. Other requests (`POST`, `PUT`, ...) get `401`, since they can't follow a login redirect.
+4. After the login, Casdoor redirects to `/callback`. casdoor-forward-auth checks the `state`, exchanges the authorization code, verifies the access token, stores the user in a signed `HttpOnly` session cookie and sends the user back to the page they asked for.
+
+casdoor-forward-auth keeps no state on the server, so you can run several replicas as long as they share the same cookie secret.
 
 ## Prerequisites
 
-- Traefik v2.x or v3.x installed and running
-- A Casdoor instance deployed and accessible
-- Docker and Docker Compose (if using the containerized approach)
+- Traefik v2 or v3
+- A Casdoor instance (see [Server Installation](/docs/basic/server-installation))
+- Two host names pointing to Traefik, e.g., `auth.example.com` for casdoor-forward-auth and `app.example.com` for the protected service. With only one host, see [Using a single host](#using-a-single-host).
 
-## Step 1: Deploy Casdoor
+## Step 1: Configure the Casdoor application
 
-[Deploy Casdoor](/docs/basic/server-installation) if needed. Then confirm:
-
-- The Casdoor server is running and accessible
-- You can log in to the Casdoor admin interface
-- Test the login functionality by entering `admin` and `123`
-
-## Step 2: Configure the Casdoor application
-
-1. Create or edit a Casdoor application.
-2. Add a redirect URL in the form:
+1. Create or edit an application in Casdoor.
+2. Add the callback of casdoor-forward-auth to **Redirect URLs**:
 
    ```text
-   http://<your-domain>/callback
+   https://auth.example.com/callback
    ```
 
-   For example: `http://localhost:8080/callback`
-
-3. Note down the following values from your application settings:
-   - **Client ID**
-   - **Client Secret**
-   - **Organization Name**
-   - **Application Name**
+3. Note the **Client ID** and **Client secret**.
 
 ![Casdoor Application Setting](/img/integration/appsetting_spring_security.png)
 
-1. Configure your application to use the appropriate authentication providers as needed.
+## Step 2: Deploy casdoor-forward-auth and Traefik
 
-## Step 3: Deploy traefik-casdoor-auth Middleware
-
-There are two ways to deploy the Traefik Casdoor Auth middleware:
-
-### Option 1: Using Docker Compose (Recommended)
-
-Create a `docker-compose.yml` file:
+Create a `docker-compose.yml`:
 
 ```yaml
-version: '3'
-
 services:
   traefik:
-    image: traefik:v2.10
-    container_name: traefik
-    restart: unless-stopped
+    image: traefik:v3.1
     command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
     ports:
       - "80:80"
-      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - traefik-network
 
-  casdoor-auth:
-    image: casbin/traefik-casdoor-auth:latest
-    container_name: casdoor-auth
-    restart: unless-stopped
+  casdoor-forward-auth:
+    image: ghcr.io/casdoor/casdoor-forward-auth:latest
     environment:
-      - CASDOOR_ENDPOINT=http://localhost:8000
-      - CLIENT_ID=<your-client-id>
-      - CLIENT_SECRET=<your-client-secret>
-      - CASDOOR_ORGANIZATION=<your-organization>
-      - CASDOOR_APPLICATION=<your-application>
-      - CALLBACK_URL=http://localhost/callback
+      CASDOOR_ENDPOINT: https://door.casdoor.com
+      CLIENT_ID: <client ID>
+      CLIENT_SECRET: <client secret>
+      EXTERNAL_URL: http://auth.example.com
+      COOKIE_DOMAIN: example.com
+      COOKIE_SECRET: <random string of at least 32 characters>
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.middlewares.casdoor-auth.forwardauth.address=http://casdoor-auth:8080/verify"
-      - "traefik.http.middlewares.casdoor-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
-    networks:
-      - traefik-network
+      - traefik.enable=true
+      - traefik.http.routers.casdoor-auth.rule=Host(`auth.example.com`)
+      - traefik.http.routers.casdoor-auth.entrypoints=web
+      - traefik.http.services.casdoor-auth.loadbalancer.server.port=9999
+      - traefik.http.middlewares.casdoor.forwardauth.address=http://casdoor-forward-auth:9999/auth
+      - traefik.http.middlewares.casdoor.forwardauth.authResponseHeaders=X-Forwarded-User,X-Forwarded-User-Id,X-Forwarded-Organization,X-Forwarded-Email,X-Forwarded-Groups,X-Forwarded-Roles
 
-  # Example protected service
+  # the protected service
   whoami:
     image: traefik/whoami
-    container_name: whoami
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`localhost`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
-      - "traefik.http.routers.whoami.middlewares=casdoor-auth@docker"
-    networks:
-      - traefik-network
-
-networks:
-  traefik-network:
-    driver: bridge
+      - traefik.enable=true
+      - traefik.http.routers.whoami.rule=Host(`app.example.com`)
+      - traefik.http.routers.whoami.entrypoints=web
+      - traefik.http.routers.whoami.middlewares=casdoor
 ```
 
-Replace the placeholder values:
+Replace the placeholders:
 
-- `<your-client-id>`: Your Casdoor application client ID
-- `<your-client-secret>`: Your Casdoor application client secret
-- `<your-organization>`: Your Casdoor organization name
-- `<your-application>`: Your Casdoor application name
+- `CASDOOR_ENDPOINT`: the URL of your Casdoor server
+- `CLIENT_ID` and `CLIENT_SECRET`: the values from Step 1
+- `EXTERNAL_URL`: the public URL of casdoor-forward-auth. `<EXTERNAL_URL>/callback` must be a Redirect URL of the application
+- `COOKIE_DOMAIN`: the parent domain of the protected hosts, so the session cookie is sent to all of them
+- `COOKIE_SECRET`: a random secret, e.g., from `openssl rand -hex 32`. Keep it stable: changing it signs everybody out
+
+Use `https://` URLs in production, so the cookies are only sent over HTTPS.
 
 Start the services:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
-### Option 2: Using Binary Deployment
+To protect another service, add `traefik.http.routers.<router>.middlewares=casdoor` to its router. Don't add the middleware to the router of casdoor-forward-auth itself.
 
-1. Download the latest release from the [traefik-casdoor-auth releases page](https://github.com/casdoor/traefik-casdoor-auth/releases).
+### Using the file provider
 
-2. Create a configuration file `config.yaml`:
-
-```yaml
-casdoor:
-  endpoint: "http://localhost:8000"
-  clientId: "<your-client-id>"
-  clientSecret: "<your-client-secret>"
-  organizationName: "<your-organization>"
-  applicationName: "<your-application>"
-
-server:
-  port: 8080
-  callbackUrl: "http://localhost/callback"
-```
-
-1. Run the middleware:
-
-```bash
-./traefik-casdoor-auth --config config.yaml
-```
-
-1. Configure Traefik to use the middleware. Add to your Traefik dynamic configuration:
+If you configure Traefik with files instead of Docker labels, define the middleware and routers in the dynamic configuration:
 
 ```yaml
 http:
   middlewares:
-    casdoor-auth:
+    casdoor:
       forwardAuth:
-        address: "http://localhost:8080/verify"
+        address: http://casdoor-forward-auth:9999/auth
         authResponseHeaders:
-          - "X-Forwarded-User"
+          - X-Forwarded-User
+          - X-Forwarded-User-Id
+          - X-Forwarded-Organization
+          - X-Forwarded-Email
+          - X-Forwarded-Groups
+          - X-Forwarded-Roles
 
   routers:
-    my-protected-service:
-      rule: "Host(`example.com`)"
+    casdoor-auth:
+      rule: Host(`auth.example.com`)
+      service: casdoor-auth
+    app:
+      rule: Host(`app.example.com`)
+      service: app
       middlewares:
-        - casdoor-auth
-      service: my-service
+        - casdoor
+
+  services:
+    casdoor-auth:
+      loadBalancer:
+        servers:
+          - url: http://casdoor-forward-auth:9999
+    app:
+      loadBalancer:
+        servers:
+          - url: http://app:8080
 ```
 
-## Step 4: Test the Integration
+casdoor-forward-auth can also run without Docker: `go install github.com/casdoor/casdoor-forward-auth@latest`, then start it with the same environment variables or a JSON config file (`casdoor-forward-auth -config config.json`, see [conf/config.json](https://github.com/casdoor/casdoor-forward-auth/blob/master/conf/config.json)).
 
-1. Access your protected service through Traefik (e.g., `http://localhost` if using the Docker Compose example).
+### Using a single host
 
-2. You should be redirected to the Casdoor login page.
-
-3. Log in with your Casdoor credentials.
-
-4. After successful authentication, you will be redirected back to your protected service.
-
-5. The middleware will set the `X-Forwarded-User` header with the authenticated user's information, which your backend service can use.
-
-## Configuration Options
-
-The traefik-casdoor-auth middleware supports the following environment variables:
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `CASDOOR_ENDPOINT` | URL of your Casdoor instance | Yes |
-| `CLIENT_ID` | Casdoor application client ID | Yes |
-| `CLIENT_SECRET` | Casdoor application client secret | Yes |
-| `CASDOOR_ORGANIZATION` | Casdoor organization name | Yes |
-| `CASDOOR_APPLICATION` | Casdoor application name | Yes |
-| `CALLBACK_URL` | OAuth callback URL | Yes |
-| `JWT_SECRET` | Secret for JWT token signing (auto-generated if not set) | No |
-| `SESSION_TIMEOUT` | Session timeout in seconds (default: 3600) | No |
-| `LOG_LEVEL` | Logging level: debug, info, warn, error (default: info) | No |
-
-## Advanced Configuration
-
-### Using HTTPS
-
-For production deployments, it's recommended to use HTTPS. Update your Traefik configuration to include TLS:
+With only one host name, mount casdoor-forward-auth under a path of the service, e.g., `EXTERNAL_URL=https://app.example.com/_auth` without `COOKIE_DOMAIN`. Route that path to casdoor-forward-auth without the middleware:
 
 ```yaml
-services:
-  traefik:
-    command:
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=your-email@example.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./letsencrypt:/letsencrypt
+  routers:
+    casdoor-auth:
+      rule: Host(`app.example.com`) && PathPrefix(`/_auth`)
+      service: casdoor-auth
+    app:
+      rule: Host(`app.example.com`)
+      service: app
+      middlewares:
+        - casdoor
 ```
 
-And update your service router configuration:
+Set the forwardAuth address to `http://casdoor-forward-auth:9999/_auth/auth`, and add `https://app.example.com/_auth/callback` to the Redirect URLs in Casdoor.
 
-```yaml
-labels:
-  - "traefik.http.routers.whoami.entrypoints=websecure"
-  - "traefik.http.routers.whoami.tls.certresolver=myresolver"
-```
+## Step 3: Test the integration
 
-### Customizing Session Behavior
+1. Open the protected service, e.g., `http://app.example.com`.
+2. You are redirected to the Casdoor login page.
+3. After signing in, you are back on the page you opened, and the service receives the identity headers. `traefik/whoami` prints them, so you can check them there.
 
-You can customize session timeout and other behaviors:
+## Identity headers
 
-```yaml
-environment:
-  - SESSION_TIMEOUT=7200  # 2 hours
-  - LOG_LEVEL=debug
-```
+| Header | Value |
+|----------|-------------|
+| `X-Forwarded-User` | User name, e.g., `alice` |
+| `X-Forwarded-User-Id` | User ID |
+| `X-Forwarded-Organization` | Organization of the user |
+| `X-Forwarded-Email` | Email address |
+| `X-Forwarded-Groups` | Comma-separated groups, e.g., `built-in/dev,built-in/ops` |
+| `X-Forwarded-Roles` | Comma-separated role names |
+
+casdoor-forward-auth always returns all of them, possibly empty, so Traefik replaces whatever the client sent in the same headers. Make sure the protected service is only reachable through Traefik, otherwise anyone can send these headers directly.
+
+## Configuration
+
+Every setting can be given as an environment variable or in a JSON config file:
+
+| Environment variable | Default | Description |
+|----------|-------------|-------------|
+| `CASDOOR_ENDPOINT` | required | URL of the Casdoor server |
+| `CLIENT_ID` | required | Client ID of the Casdoor application |
+| `CLIENT_SECRET` | required | Client secret of the Casdoor application |
+| `EXTERNAL_URL` | required | Public URL of casdoor-forward-auth, may include a path |
+| `COOKIE_SECRET` | required | Secret of at least 32 characters for signing the cookies |
+| `COOKIE_DOMAIN` | empty | Domain of the session cookie, e.g., `example.com` |
+| `COOKIE_NAME` | `casdoor_forward_auth` | Name of the session cookie |
+| `SESSION_TTL` | `24h` | Session lifetime, never longer than the access token from Casdoor |
+| `ALLOWED_REDIRECT_DOMAINS` | host of `EXTERNAL_URL` and `.<COOKIE_DOMAIN>` | Comma-separated domains users may be sent back to after login |
+| `CERTIFICATE` | empty | PEM certificate for verifying access tokens. By default it's looked up in Casdoor's `/.well-known/jwks` |
+| `LISTEN_ADDR` | `:9999` | Address to listen on |
+
+`/logout` clears the session of casdoor-forward-auth (with `?rd=<url>` to redirect afterwards). The user stays signed in to Casdoor.
 
 ## Troubleshooting
 
-### Redirect Loop
+### Casdoor shows "Redirect URI ... doesn't exist in the allowed Redirect URI list"
 
-If you experience a redirect loop:
+`<EXTERNAL_URL>/callback` is not in the Redirect URLs of the application. The scheme, host, port and path must match.
 
-1. Verify that the `CALLBACK_URL` matches the redirect URL configured in your Casdoor application.
-2. Check that cookies are enabled in your browser.
-3. Ensure the middleware can reach the Casdoor endpoint.
+### Redirected to the login page again after signing in
 
-### Authentication Fails
+The session cookie isn't sent to the protected host:
 
-If authentication fails:
+- Set `COOKIE_DOMAIN` to a domain that covers both `EXTERNAL_URL` and the protected hosts.
+- With `https://` in `EXTERNAL_URL` the cookie is `Secure`, so the protected service must be served over HTTPS as well.
 
-1. Check that the `CLIENT_ID` and `CLIENT_SECRET` are correct.
-2. Verify that the Casdoor organization and application names are correct.
-3. Check the middleware logs for detailed error messages: `docker logs casdoor-auth`
+### "the login state is missing or has expired"
 
-### 502 Bad Gateway
+The login took longer than 10 minutes, or the browser blocked the cookie set by `/login`. Open the protected page again to start a new login.
 
-If you see a 502 error:
+### Requests from the frontend get 401
 
-1. Ensure the casdoor-auth service is running: `docker ps`
-2. Check that all services are on the same Docker network.
-3. Verify the ForwardAuth address is correct in the Traefik configuration.
+Without a session, only `GET` and `HEAD` requests are redirected to the login. API calls with other methods get `401`; let the user reload the page to sign in.
+
+## Upgrading from traefik-casdoor-auth
+
+casdoor-forward-auth was called `traefik-casdoor-auth` before v2 and needed a Traefik plugin. To upgrade:
+
+- Remove the local plugin (`experimental.localPlugins` and `plugins-local`) and use the `forwardAuth` middleware shown above.
+- Rename the config keys: `casdoorClientId` → `clientId`, `casdoorClientSecret` → `clientSecret`, `pluginEndpoint` → `externalUrl`. `casdoorOrganization` and `casdoorApplication` are no longer needed, and `cookieSecret` is new and required.
+- The Redirect URL in Casdoor stays `<externalUrl>/callback`.
 
 ## Resources
 
-- [Traefik Casdoor Auth GitHub Repository](https://github.com/casdoor/traefik-casdoor-auth)
-- [Traefik ForwardAuth Middleware Documentation](https://doc.traefik.io/traefik/middlewares/http/forwardauth/)
-- [Casdoor Documentation](/docs/overview)
+- [casdoor-forward-auth on GitHub](https://github.com/casdoor/casdoor-forward-auth)
+- [Traefik forwardAuth middleware](https://doc.traefik.io/traefik/middlewares/http/forwardauth/)
+- [ELK](/docs/integration/go/elk): protecting Kibana with casdoor-forward-auth
