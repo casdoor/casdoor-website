@@ -5,6 +5,10 @@ keywords: [Casdoor, Docker, docker-compose]
 authors: [hsluoyz]
 ---
 
+:::tip Don't want to run it yourself?
+[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=try-with-docker) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
+:::
+
 ## Requirements
 
 ### Hardware

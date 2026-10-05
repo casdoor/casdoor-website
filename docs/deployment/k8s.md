@@ -5,6 +5,10 @@ keywords: [k8s, Kubernetes, Casdoor, deployment]
 authors: [ComradeProgrammer]
 ---
 
+:::tip Don't want to run it yourself?
+[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=deploy-k8s) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
+:::
+
 ## Deploy Casdoor on Kubernetes
 
 The Casdoor repo includes an example manifest `k8s.yaml` in the project root, with a Deployment and a Service. For production or custom setups, consider using the [Helm chart](/docs/basic/try-with-helm) instead.

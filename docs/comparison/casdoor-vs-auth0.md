@@ -12,7 +12,7 @@ Auth0, now part of Okta, is a managed identity service. Casdoor is an open-sourc
 | | Casdoor | Auth0 |
 |---|---|---|
 | Source | Open source, Apache-2.0 | Proprietary |
-| Deployment | Self-hosted anywhere, or [hosted](https://www.casdoor.com) | Auth0's cloud; private cloud on enterprise plans |
+| Deployment | Self-hosted anywhere, or [hosted](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) | Auth0's cloud; private cloud on enterprise plans |
 | Pricing basis | Free to self-host; hosted and enterprise plans are flat-rate | Monthly active users, with features gated by plan |
 | Data location | Your own database, in any region or on-premises | Auth0-managed regions |
 | OAuth 2.0, OIDC, SAML | Yes | Yes |
@@ -25,7 +25,7 @@ Auth0, now part of Okta, is a managed identity service. Casdoor is an open-sourc
 
 Auth0 bills by monthly active users. That is cheap for a prototype and can grow quickly: a consumer product with many occasional users pays for every one of them, and features such as enterprise connections, MFA options, or organizations depend on the plan.
 
-Casdoor has no per-user charge when you self-host. You pay for a server and a database. If you would rather not run it, the [hosted plans](https://www.casdoor.com) are priced per instance, not per user.
+Casdoor has no per-user charge when you self-host. You pay for a server and a database. If you would rather not run it, the [hosted plans](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) are priced per instance, not per user.
 
 ## Control and data residency
 

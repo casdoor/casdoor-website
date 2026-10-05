@@ -84,6 +84,12 @@ function HomepageHeader() {
             to="https://door.casdoor.com/">
             <Translate>Online Demo</Translate>
           </Link>
+          <Link
+            className="button button--secondary button--lg"
+            style={{marginTop: "2rem", marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}
+            to="https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=hero">
+            <Translate>Casdoor Cloud</Translate>
+          </Link>
         </div>
         <div className={styles.heroBadges}>
           <Link

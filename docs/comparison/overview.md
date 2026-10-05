@@ -44,7 +44,7 @@ The table describes each project as of 2026. Products change quickly; check the 
 
 ## When Casdoor is not the best fit
 
-- You need a vendor to run identity for you with a contractual SLA and you have no interest in self-hosting. A managed service such as Auth0 removes that work. Casdoor also has a [hosted offering](https://www.casdoor.com) if you want the product without the operations.
+- You need a vendor to run identity for you with a contractual SLA and you have no interest in self-hosting. A managed service such as Auth0 removes that work. Casdoor also has a [hosted offering](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) if you want the product without the operations.
 - Your organization already has deep Keycloak expertise, custom SPIs, and Red Hat support. Staying is reasonable.
 - You need relationship-based authorization at very large scale, in the style of Google Zanzibar. Casdoor's permissions are built on [Casbin](/docs/permission/overview), which runs in-process; a dedicated Zanzibar-style service may fit better.
 

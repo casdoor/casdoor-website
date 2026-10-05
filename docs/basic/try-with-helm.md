@@ -5,6 +5,10 @@ keywords: [Casdoor, Helm, Kubernetes, K8s, Gateway API, Ingress, Istio]
 authors: [nomeguy]
 ---
 
+:::tip Don't want to run it yourself?
+[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=try-with-helm) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
+:::
+
 This page describes how to deploy Casdoor on Kubernetes using Helm.
 
 ## Prerequisites

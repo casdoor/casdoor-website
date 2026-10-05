@@ -2,6 +2,9 @@ const {themes} = require("prism-react-renderer");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
+// Links to the hosted product carry UTM tags so casdoor.com's GA can tell which spot on casdoor.ai sent the visitor.
+const cloudUrl = (medium) => `https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=${medium}`;
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "Casdoor",
@@ -32,6 +35,11 @@ module.exports = {
     },
     hotjar: {
       applicationId: "1689986",
+    },
+    announcementBar: {
+      id: "casdoor-cloud",
+      content: `Don't want to run Casdoor yourself? <a target="_blank" rel="noopener" href="${cloudUrl("announcement")}"><b>Casdoor Cloud</b></a> gives you a dedicated, fully managed instance from $25/month.`,
+      isCloseable: true,
     },
     navbar: {
       title: "",
@@ -79,8 +87,8 @@ module.exports = {
           position: "left",
         },
         {
-          href: "https://casdoor.com",
-          label: "For Enterprise",
+          href: cloudUrl("navbar"),
+          label: "Casdoor Cloud",
           position: "left",
         },
         {
@@ -187,6 +195,10 @@ module.exports = {
               to: "/blog",
             },
             {
+              label: "Casdoor Cloud",
+              href: cloudUrl("footer"),
+            },
+            {
               html: `
                 <a href="https://github.com/casdoor/casdoor" target="_blank" rel="noopener noreferrer">
                   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/casdoor/casdoor?label=Casdoor&style=social">
@@ -278,7 +290,7 @@ var _hmt = _hmt || [];
         links: [
           {title: "Source code", url: "https://github.com/casdoor/casdoor", description: "Casdoor server and web UI (Apache-2.0)"},
           {title: "Online demo", url: "https://door.casdoor.com", description: "Public demo instance, sign in with admin / 123"},
-          {title: "Casdoor Cloud", url: "https://www.casdoor.com", description: "Hosted Casdoor and commercial support"},
+          {title: "Casdoor Cloud", url: "https://www.casdoor.com/pricing", description: "Hosted Casdoor and commercial support"},
         ],
       },
     ],
