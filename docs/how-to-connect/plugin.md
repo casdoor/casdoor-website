@@ -12,7 +12,7 @@ Casdoor provides plugins or middlewares for popular platforms. For CLI usage, se
 | Spring Boot | Java | [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) |
 | Spring Boot example | Java | [casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) |
 | WordPress | PHP | [wordpress-casdoor-plugin](https://github.com/casdoor/wordpress-casdoor-plugin) |
-| Odoo | Python | [odoo-casdoor-oauth](https://github.com/casdoor/odoo-casdoor-oauth) |
+| Odoo | Python | [odoo-casdoor-oauth](https://github.com/casdoor/odoo-casdoor-oauth), module `auth_casdoor` on [Odoo Apps](https://apps.odoo.com/apps/modules/19.0/auth_casdoor) |
 | Django | Python | [django-casdoor-auth](https://github.com/casdoor/django-casdoor-auth) |
 | Kibana (ELK) | Go | [elk-auth-casdoor](https://github.com/casdoor/elk-auth-casdoor), see [ELK](/docs/integration/go/elk) |
 | Chrome extension | JavaScript | [casdoor-chrome-extension](https://github.com/casdoor/casdoor-chrome-extension) |
