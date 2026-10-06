@@ -1,0 +1,80 @@
+{
+    "$schema": "https://fundingjson.org/schema/v1.1.0.json",
+    "version": "v1.0.0",
+    "entity": {
+        "type": "organisation",
+        "role": "owner",
+        "name": "Casdoor",
+        "email": "admin@casdoor.com",
+        "phone": "",
+        "description": "Casdoor is an open-source organisation that develops and maintains the Casdoor identity and access management (IAM) server, together with its official SDKs, plugins and documentation. All code is released under the Apache-2.0 license and developed in the open at https://github.com/casdoor.\n\nThe project started in October 2020 and is maintained by a small core team with the help of more than 300 code contributors. The legal entity behind the project that signs agreements and receives funds is Casbin Technologies Limited, a company registered in Hong Kong.",
+        "webpageUrl": {
+            "url": "https://casdoor.ai"
+        }
+    },
+    "projects": [
+        {
+            "guid": "casdoor",
+            "name": "Casdoor",
+            "description": "Casdoor is a self-hosted, UI-first identity and access management (IAM) and single sign-on (SSO) server written in Go with a React web console. It implements OAuth 2.0, OIDC, SAML, CAS, LDAP, RADIUS, SCIM, WebAuthn / passkeys, TOTP and MFA, connects to Google Workspace, Microsoft Entra ID, GitHub and many other identity providers, and can act as an auth gateway for MCP servers and AI agents.\n\nIt gives teams that cannot or do not want to depend on a proprietary identity cloud a complete login system they can run themselves: user and organisation management, sign-in pages, tokens, permissions and audit logs, deployable as a single binary or container on MySQL, PostgreSQL, SQL Server or SQLite.\n\nUsage: 14,500+ GitHub stars, 1,800+ forks, 300+ contributors, and more than 2.2 million Docker Hub pulls (casbin/casdoor and casbin/casdoor-all-in-one). Official SDKs exist for Go, Java, JavaScript, Python, PHP, .NET, Rust, C++, Dart / Flutter, Swift, Android and others. Open-source projects that ship with Casdoor as their login system include iFlytek astron-agent, OpenCSG CSGHub and AgentSociety from Tsinghua University. Releases are published continuously from the master branch.",
+            "webpageUrl": {
+                "url": "https://casdoor.ai"
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/casdoor/casdoor",
+                "wellKnown": "https://github.com/casdoor/casdoor/blob/master/.well-known/funding-manifest-urls"
+            },
+            "licenses": ["spdx:Apache-2.0"],
+            "tags": ["identity", "authentication", "sso", "iam", "oauth", "oidc", "saml", "security", "self-hosted", "golang"]
+        }
+    ],
+    "funding": {
+        "channels": [
+            {
+                "guid": "bank",
+                "type": "bank",
+                "address": "",
+                "description": "Bank transfer in USD to Casbin Technologies Limited (Hong Kong). Please e-mail us for account details and invoices."
+            },
+            {
+                "guid": "opencollective",
+                "type": "payment-provider",
+                "address": "https://opencollective.com/casdoor",
+                "description": "Open Collective (fiscal host: Open Source Collective). One-time or recurring contributions by card, with public and transparent accounting."
+            }
+        ],
+        "plans": [
+            {
+                "guid": "security-maintenance",
+                "status": "active",
+                "name": "Security and maintenance",
+                "description": "One year of security work on the Casdoor server: handling vulnerability reports and publishing advisories, keeping Go and npm dependencies patched, adding fuzz tests for the OAuth / OIDC / SAML / LDAP parsers and joining OSS-Fuzz, CodeQL and OpenSSF Scorecard fixes, signed releases, and preparing the code base for an independent security audit.",
+                "amount": 25000,
+                "currency": "USD",
+                "frequency": "yearly",
+                "channels": ["bank", "opencollective"]
+            },
+            {
+                "guid": "core-development",
+                "status": "active",
+                "name": "Core maintainer",
+                "description": "Funds one maintainer for a year to work on the open-source server instead of consulting: triaging and fixing issues, reviewing community pull requests, protocol conformance (OIDC certification, SAML, SCIM, WebAuthn / passkeys), database migration safety between releases, and keeping the documentation and the official SDKs in step with the server.",
+                "amount": 50000,
+                "currency": "USD",
+                "frequency": "yearly",
+                "channels": ["bank", "opencollective"]
+            },
+            {
+                "guid": "goodwill",
+                "status": "active",
+                "name": "Goodwill",
+                "description": "Any amount to support the project. Used for CI, demo and documentation hosting costs.",
+                "amount": 0,
+                "currency": "USD",
+                "frequency": "one-time",
+                "channels": ["opencollective", "bank"]
+            }
+        ],
+        "history": []
+    }
+}
