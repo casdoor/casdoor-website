@@ -20,16 +20,16 @@ This page describes how to deploy Casdoor on Kubernetes using Helm.
 
 ### Step 1: Install the Casdoor chart
 
-Install the Casdoor Helm chart ([available versions](https://hub.docker.com/r/casbin/casdoor-helm-charts/tags), [source](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor)):
+Install the Casdoor Helm chart ([Artifact Hub](https://artifacthub.io/packages/helm/casdoor/casdoor), [source](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor)):
 
 ```shell
-helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version <version>
+helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor --version <version>
 ```
 
 To install with a custom values file:
 
 ```shell
-helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts \
+helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor \
   --version <version> \
   -f my-values.yaml
 ```
@@ -208,8 +208,10 @@ gatewayApi:
 Upgrade:
 
 ```shell
-helm upgrade casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version <version>
+helm upgrade casdoor oci://ghcr.io/casdoor/helm-charts/casdoor --version <version>
 ```
+
+Charts up to 4.15.0 were published as `oci://registry-1.docker.io/casbin/casdoor-helm-charts`, which still receives every release. To move an existing release to the new chart, run the `helm upgrade` command above; resource names stay the same.
 
 Uninstall:
 
