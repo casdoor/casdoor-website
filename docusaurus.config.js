@@ -153,6 +153,27 @@ module.exports = {
           ],
         },
         {
+          title: "Compare",
+          items: [
+            {
+              label: "Casdoor vs. Keycloak",
+              to: "/docs/comparison/casdoor-vs-keycloak",
+            },
+            {
+              label: "Casdoor vs. Authentik",
+              to: "/docs/comparison/casdoor-vs-authentik",
+            },
+            {
+              label: "Casdoor vs. Auth0",
+              to: "/docs/comparison/casdoor-vs-auth0",
+            },
+            {
+              label: "Casdoor vs. Logto",
+              to: "/docs/comparison/casdoor-vs-logto",
+            },
+          ],
+        },
+        {
           title: "Community",
           items: [
             {
