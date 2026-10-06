@@ -55,6 +55,7 @@ module.exports = {
         "deployment/nginx",
         "deployment/k8s",
         "deployment/data-initialization",
+        "deployment/terraform",
         "deployment/deploy-cdn",
         "deployment/deploy-intranet",
         "deployment/db-migration",
