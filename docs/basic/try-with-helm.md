@@ -20,7 +20,7 @@ This page describes how to deploy Casdoor on Kubernetes using Helm.
 
 ### Step 1: Install the Casdoor chart
 
-Install the Casdoor [Helm chart](https://hub.docker.com/r/casbin/casdoor-helm-charts/tags):
+Install the Casdoor Helm chart ([available versions](https://hub.docker.com/r/casbin/casdoor-helm-charts/tags), [source](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor)):
 
 ```shell
 helm install casdoor oci://registry-1.docker.io/casbin/casdoor-helm-charts --version <version>
@@ -40,7 +40,7 @@ After installation, use the service URL provided by your cluster to access Casdo
 
 ## Customization
 
-Override [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/charts/casdoor/values.yaml) to customize the deployment. Key parameters:
+Override [values.yaml](https://github.com/casdoor/casdoor/blob/master/manifests/casdoor/values.yaml) to customize the deployment. Key parameters:
 
 | Parameter | Description | Default Value |
 |---|---|---|
@@ -49,7 +49,7 @@ Override [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/chart
 | `image.name` | Name of the Casdoor Docker image. | `casdoor` |
 | `image.pullPolicy` | Pull policy for the Casdoor Docker image. | `IfNotPresent` |
 | `image.tag` | Tag for the Casdoor Docker image. | `""` |
-| `config` | Configuration settings for the Casdoor application. | See [values.yaml](https://github.com/casdoor/casdoor-helm/blob/master/charts/casdoor/values.yaml) |
+| `config` | Configuration settings for the Casdoor application. | See [values.yaml](https://github.com/casdoor/casdoor/blob/master/manifests/casdoor/values.yaml) |
 | `database.driver` | Database driver to use (`mysql`, `postgres`, `cockroachdb`, `sqlite`). | `sqlite` |
 | `database.user` | Database username. | `""` |
 | `database.password` | Database password. | `""` |
