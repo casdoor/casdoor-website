@@ -19,6 +19,7 @@ Casdoor issues **access tokens** for authenticating clients. This page describes
 | [Device Authorization](https://datatracker.ietf.org/doc/html/rfc8628) | RFC 8628 | Devices with limited input or no browser. |
 | [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) | RFC 8693 | Swap an existing token for one with different scope or audience. |
 | [JWT Bearer](https://datatracker.ietf.org/doc/html/rfc7523) | RFC 7523 | Service auth using a signed JWT assertion instead of a client secret. |
+| [Verification Code](#verification-code-grant) | Casdoor extension | Native apps that sign users in (and up) with a code sent by SMS or email. |
 
 Enable non-default grant types on the application edit page.
 
@@ -193,6 +194,23 @@ Casdoor provides a built-in device login page at the `verification_uri` where th
 
 Meanwhile, the device polls the token endpoint with its `device_code` until the user has signed in, as described in [RFC 8628, section 3.4](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
 
+#### Scanning the website's QR code with your app
+
+The same flow lets users who are signed in to your native app sign in to your website by scanning a QR code, the way many apps do. Add **Device login** to the application's **Signin methods** with the rule **Login page**, and enable **Device Code** in **Grant types**. The login page then shows a QR code next to the form and finishes the sign-in by itself once it is approved.
+
+The QR code holds the `verification_uri`, for example `https://<CASDOOR_HOST>/login/oauth/device/ra91hy?cancelToken=...`. A phone camera opens it in the browser, where the user approves after signing in. Your app can instead approve it directly with the access token it already has: take the user code from the path (`ra91hy`), show the user what is being signed in to, and send a POST request to `https://<CASDOOR_HOST>/api/login` with the header `Authorization: Bearer <ACCESS_TOKEN>`:
+
+```json
+{
+    "application": ApplicationName,
+    "organization": OrganizationName,
+    "type": "device",
+    "userCode": "ra91hy"
+}
+```
+
+To reject the sign-in, send `userCode` and the `cancelToken` from the same URL to `https://<CASDOOR_HOST>/api/cancel-device-auth` as query parameters.
+
 :::info Multi-replica deployments
 
 The pending device-authorization requests (the mapping between the device code and the user code) are held in an in-memory store by default. In a multi-replica / horizontally-scaled deployment, the polling request from the device and the browser confirmation may land on different replicas, so an in-memory store causes the device flow to fail intermittently.
@@ -233,6 +251,45 @@ Example response:
     "scope": "openid"
 }
 ```
+
+### Verification Code Grant
+
+Native apps that sign users in with a phone number or email and a one-time code, without opening a browser, use this grant. It is a Casdoor extension grant (RFC 6749 section 4.5). An address that has no account yet is signed up in the same step when the application allows it.
+
+Enable **Verification Code** in the application's **Grant types** and add an SMS and/or email provider to the application. Then:
+
+1. Send the code with a POST request to `https://<CASDOOR_HOST>/api/send-verification-code` (form data):
+
+    | Field | Value |
+    |-------|-------|
+    | `applicationId` | `admin/<APPLICATION_NAME>` |
+    | `type` | `phone` or `email` |
+    | `dest` | The phone number or email |
+    | `countryCode` | The region of a phone number, e.g. `CN` or `US`. Not needed for an E.164 number like `+8613800000000` |
+    | `method` | `login` |
+    | `captchaType` | `none`, or the captcha type and `captchaToken` when the application's captcha provider asks for one |
+
+2. Exchange the code for tokens with a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+
+    ```json
+    {
+        "grant_type": "urn:casdoor:params:oauth:grant-type:verification-code",
+        "client_id": ClientId,
+        "username": "+8613800000000",
+        "code": "123456",
+        "scope": "openid profile"
+    }
+    ```
+
+    `username` is the phone number or email the code was sent to. For a phone number in the national format, also send `country_code`. No client secret is needed, so the grant works from a public client. The response is the same as for the other grants, with a `refresh_token` to keep the user signed in.
+
+**Signing up new users:** when no user has the phone number or email, the grant creates the user, the same as the signup page would, if all of these hold:
+
+- **Enable signup** is on for the application.
+- The application's **Signup items** require nothing but what the code proves: an item other than ID, Username, Display name, Password, Confirm password, Agreement, Signup button and Providers can't be required, and `Email` (or `Phone`) can only be required when signing up with an email (or a phone number). The default signup items require both, so make the other one optional.
+- For a phone number, its region is in the organization's **Supported country codes**.
+
+Otherwise `/api/send-verification-code` answers that the user does not exist, the same as before, and only existing users can sign in. Wrong codes count towards the application's **Failed signin limit**. Users who have MFA enabled are refused, use the authorization code flow for them.
 
 ### Client Credentials Grant
 
