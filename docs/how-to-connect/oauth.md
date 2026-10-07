@@ -285,7 +285,7 @@ Enable **Verification Code** in the application's **Grant types** and add an SMS
 
 **Signing up new users:** when no user has the phone number or email, the grant creates the user, the same as the signup page would, if all of these hold:
 
-- **Enable signup** is on for the application.
+- **Enable signup** is on for the application, and **Disable self signup** is off.
 - The application's **Signup items** require nothing but what the code proves: an item other than ID, Username, Display name, Password, Confirm password, Agreement, Signup button and Providers can't be required, and `Email` (or `Phone`) can only be required when signing up with an email (or a phone number). The default signup items require both, so make the other one optional.
 - For a phone number, its region is in the organization's **Supported country codes**.
 

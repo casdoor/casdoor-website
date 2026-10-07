@@ -29,7 +29,8 @@ The application edit page is split into eight tabs. Fields below are grouped by 
 - **Cookie expire** — Session cookie lifetime in hours (default: 720). Without "Remember me", the session is capped at 24 h regardless.
 - **Default group** — Group automatically assigned to new users signing up through this application, including both direct sign-up and OAuth-based registration. Providers and invitations can override this per-signup: the effective group follows the priority **invitation SignupGroup > provider SignupGroup > application Default group**.
 - **Default tag** — Tag automatically assigned to new users who sign up through this application.
-- **Enable signup** — Allow self sign-up. When off, only admins can create accounts.
+- **Enable signup** — Allow new accounts: on the signup page, by magic link or verification code, and on the first sign-in with one of the application's providers (whose **Can signup** is on). When off, only admins can create accounts.
+- **Disable self signup** — Shown when **Enable signup** is on. Users can no longer sign themselves up on the signup page, by magic link or by verification code, and the login page hides the signup link. The signup page still works with an [invitation code](/docs/invitation/overview) from an admin, and the first sign-in with a provider still creates the account. Use it to close public signup while keeping just-in-time accounts for SSO, e.g. new employees signing in with Lark or DingTalk for the first time.
 - **Disable signin** — Disable all sign-in for this application.
 - **Enable guest signin** — Allow unauthenticated guest access by presenting `code=guest-user` to the token endpoint. Requires **Enable signup** to be on as well. Not available for the `built-in` organization. See [Guest authentication](/docs/how-to-connect/guest-auth).
 - **Enable exclusive signin** — Enforce one active session per user.
