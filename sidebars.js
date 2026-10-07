@@ -31,6 +31,7 @@ module.exports = {
       label: "Comparisons",
       link: {type: "doc", id: "comparison/overview"},
       items: [
+        "comparison/feature-comparison",
         "comparison/casdoor-vs-keycloak",
         "comparison/casdoor-vs-authentik",
         "comparison/casdoor-vs-auth0",

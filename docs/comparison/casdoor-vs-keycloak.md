@@ -47,7 +47,7 @@ Both products cover OAuth 2.0, OIDC, and SAML as an identity provider and as a s
 
 - **CAS**: Casdoor is a [CAS server](/docs/how-to-connect/cas) out of the box. Keycloak needs a community extension.
 - **LDAP and RADIUS**: Casdoor can act as an [LDAP server](/docs/ldap/ldapserver) and a [RADIUS server](/docs/radius/overview), so legacy applications, VPNs, and network devices can authenticate against it. Keycloak consumes LDAP directories but does not serve LDAP or RADIUS.
-- **Fine-grained standards**: Keycloak has broader coverage of advanced OAuth profiles such as UMA 2.0, token exchange, and FAPI. If you depend on those, check Casdoor's current support before switching.
+- **Advanced OAuth profiles**: both support the device authorization grant, token exchange, and DPoP. Keycloak also covers UMA 2.0, FAPI, and pushed authorization requests (PAR); if you depend on those, Keycloak is the safer choice.
 
 ## AI agents and MCP
 

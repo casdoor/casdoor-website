@@ -14,6 +14,8 @@ People usually find Casdoor while evaluating an identity provider against one or
 | [Auth0](/docs/comparison/casdoor-vs-auth0) | want to stop paying per monthly active user, or need to self-host |
 | [Logto](/docs/comparison/casdoor-vs-logto) | are building a SaaS product or an AI agent and want modern OIDC with a good developer experience |
 
+To compare Casdoor, Keycloak, ZITADEL, and authentik row by row (SAML IdP, LDAP server, multi-tenancy, SCIM, forward auth, scaling), see the [feature comparison](/docs/comparison/feature-comparison).
+
 ## At a glance
 
 The table describes each project as of 2026. Products change quickly; check the other project's documentation before making a decision.

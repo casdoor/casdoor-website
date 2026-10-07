@@ -18,7 +18,7 @@ Authentik and Casdoor are both popular choices for self-hosted single sign-on, f
 | OAuth 2.0, OIDC, SAML | Yes | Yes |
 | CAS | Built in | No |
 | LDAP and RADIUS for legacy clients | Served by the Casdoor process | Served by separate outposts |
-| Protecting apps without their own login | [Sites](/docs/site/overview) reverse proxy, plus forward-auth integrations for Nginx, Traefik, and Envoy | Proxy provider with outposts |
+| Protecting apps without their own login | [Sites](/docs/site/overview) reverse proxy, plus [casdoor-forward-auth](/docs/integration/go/traefik) for Traefik, [Caddy](/docs/integration/go/caddy), and Nginx, and an [Envoy](/docs/integration/C++/Envoy) filter | Proxy provider with outposts |
 | AI agents and MCP | Built-in MCP server; OAuth 2.1 authorization server for MCP | Standard OAuth |
 
 ## Architecture and operations
