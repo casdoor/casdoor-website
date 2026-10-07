@@ -1,7 +1,7 @@
 ---
 title: Plugins and middlewares
-description: Official Casdoor plugins for Spring Boot, WordPress, Odoo, Django, Kibana, Chrome, and Terraform.
-keywords: [plugin, middleware, Spring Boot, WordPress, Odoo, Django, Kibana, Terraform]
+description: Official Casdoor plugins for Spring Boot, Quarkus, WordPress, Odoo, Django, Kibana, Chrome, and Terraform.
+keywords: [plugin, middleware, Spring Boot, Quarkus, WordPress, Odoo, Django, Kibana, Terraform]
 authors: [hsluoyz]
 ---
 
@@ -11,6 +11,7 @@ Casdoor provides plugins or middlewares for popular platforms. For CLI usage, se
 |--------|----------|------------|
 | Spring Boot | Java | [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) |
 | Spring Boot example | Java | [casdoor-spring-boot-example](https://github.com/casdoor/casdoor-spring-boot-example) |
+| Quarkus | Java | [quarkus-casdoor-auth](https://github.com/quarkiverse/quarkus-casdoor-auth), `io.quarkiverse.casdoor-auth:quarkus-casdoor-auth` on [Maven Central](https://central.sonatype.com/artifact/io.quarkiverse.casdoor-auth/quarkus-casdoor-auth), see [Quarkus](/docs/integration/java/quarkus) |
 | WordPress | PHP | [wordpress-casdoor-plugin](https://github.com/casdoor/wordpress-casdoor-plugin) |
 | Odoo | Python | [odoo-casdoor-oauth](https://github.com/casdoor/odoo-casdoor-oauth), module `auth_casdoor` on [Odoo Apps](https://apps.odoo.com/apps/modules/19.0/auth_casdoor) |
 | Django | Python | [django-casdoor-auth](https://github.com/casdoor/django-casdoor-auth) |

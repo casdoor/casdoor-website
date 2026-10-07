@@ -658,6 +658,7 @@ module.exports = {
             "integration/java/spring-boot",
             "integration/java/spring-cloud",
             "integration/java/spring-cloud-gateway",
+            "integration/java/quarkus",
             {
               type: "category",
               label: "Spring Security",
