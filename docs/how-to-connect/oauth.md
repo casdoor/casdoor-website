@@ -349,6 +349,12 @@ Example response:
 }
 ```
 
+**Rotation:** by default every refresh returns a new refresh token and revokes the one that was used, as recommended for public clients by [RFC 9700](https://datatracker.ietf.org/doc/html/rfc9700#section-4.14.2). Store the new one after each refresh. Presenting a used refresh token again fails with `invalid_grant`.
+
+When several processes share one refresh token, e.g. a CLI that runs parallel jobs with the token from an environment variable, the first refresh revokes it for all the others. For such clients turn on **Disable refresh token rotation** in the application's **OIDC/OAuth** settings. A refresh then returns the same refresh token, which keeps its original expiry, and the access tokens of earlier refreshes stay valid until they expire. Signing out still revokes the refresh token for everyone. This is less secure, a leaked refresh token can be used until it expires, so keep **Refresh token expire** short and prefer [DPoP](#dpop-sender-constrained-tokens) for public clients.
+
+Renaming a user doesn't break the user's refresh tokens.
+
 ### Token Exchange Grant
 
 Token Exchange (RFC 8693) lets you swap an existing token for a new one with different characteristics—particularly useful when one service needs to call another on behalf of a user, or to narrow a token's scope for a specific downstream service.
