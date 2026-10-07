@@ -643,6 +643,8 @@ module.exports = {
             "integration/go/grafana",
             "integration/go/minio",
             "integration/go/traefik",
+            "integration/go/caddy",
+            "integration/go/oauth2-proxy",
             "integration/go/portainer",
           ],
         },

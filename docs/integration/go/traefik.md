@@ -7,7 +7,7 @@ authors: [casdoor]
 
 [casdoor-forward-auth](https://github.com/casdoor/casdoor-forward-auth) puts Casdoor single sign-on in front of any service behind [Traefik](https://traefik.io/), without changing the service. Traefik asks casdoor-forward-auth about every request through its built-in [forwardAuth](https://doc.traefik.io/traefik/middlewares/http/forwardauth/) middleware: signed-in users reach the service with their identity in request headers, everyone else is sent to the Casdoor login page first.
 
-The same service also works with [Caddy](https://github.com/casdoor/casdoor-forward-auth#caddy) (`forward_auth`) and [Nginx](https://github.com/casdoor/casdoor-forward-auth#nginx) (`auth_request`).
+The same service also works with [Caddy](/docs/integration/go/caddy) (`forward_auth`) and [Nginx](https://github.com/casdoor/casdoor-forward-auth#nginx) (`auth_request`).
 
 ## How it works
 
