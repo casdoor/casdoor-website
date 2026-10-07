@@ -203,6 +203,39 @@ gatewayApi:
 | `gatewayApi.httpsRedirect.hostnames` | Hostnames for redirect route | `[]` |
 | `gatewayApi.httpsRedirect.parentRefs` | Override parentRefs for redirect route | `[]` |
 
+## Declarative configuration
+
+Organizations, applications, users, providers, roles and permissions can live in the values file next to the rest of the deployment. Casdoor applies them at startup and checks them for changes every 30 seconds, so a `helm upgrade` that changes them takes effect without restarting the pods:
+
+```yaml
+initData:
+  enabled: true
+  data:
+    organizations:
+      - owner: admin
+        name: acme
+        displayName: Acme
+        passwordType: bcrypt
+    applications:
+      - owner: admin
+        name: app-acme
+        organization: acme
+        displayName: Acme Portal
+        redirectUris:
+          - https://portal.acme.example.com/callback
+```
+
+An existing object only gets the fields written here; its other fields keep the values edited in the web UI. The data is stored in a Secret; to keep it out of the values file, create the Secret yourself and set `initData.existingSecret`.
+
+| Parameter | Description | Default |
+|---|---|---|
+| `initData.enabled` | Apply `initData.data` (or `initData.existingSecret`) | `false` |
+| `initData.merge` | Update existing objects with the given fields only; when `false`, they are deleted and re-created on every apply | `true` |
+| `initData.watchInterval` | Seconds between the checks for changes, `0` applies the data only at startup | `30` |
+| `initData.existingSecret` | Existing Secret holding the data, instead of `initData.data` | `""` |
+| `initData.existingSecretKey` | Key of the file in `existingSecret`, `.yaml`/`.yml` keys are read as YAML | `init_data.yaml` |
+| `initData.data` | The objects to apply, in the [init data](/docs/deployment/data-initialization#configuration-as-code) format | `{}` |
+
 ## Managing the deployment
 
 Upgrade:

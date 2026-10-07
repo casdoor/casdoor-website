@@ -62,6 +62,7 @@ Of the four, authentik has the most flexible sign-in flow engine, and Keycloak t
 | Kubernetes | [Helm chart](/docs/basic/try-with-helm) | Operator | Helm chart | Helm chart |
 | Horizontal scaling | Multiple replicas, with Redis for sessions | Clustering with Infinispan, multi-site | Stateless replicas | Multiple server and worker replicas |
 | Infrastructure as code | [Terraform provider](/docs/deployment/terraform) | Terraform provider | Terraform provider | Terraform provider |
+| Declarative config file | [Init data](/docs/deployment/data-initialization#configuration-as-code) (JSON or YAML, also as Helm values), applied again when it changes | Realm import (JSON) at startup | Setup steps for the first instance only | Blueprints (YAML), applied again when they change |
 | Audit log | Records of every API call, with retention settings and [webhooks](/docs/webhooks/overview) | Login and admin events | Event-sourced: every change is stored as an event | Events, with notification rules |
 
 ## Sources

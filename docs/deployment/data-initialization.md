@@ -1,11 +1,13 @@
 ---
 title: Data initialization
-description: Initialize or migrate Casdoor data using JSON config files.
-keywords: [data initialization, deployment, import, export]
+description: Initialize, migrate or declaratively manage Casdoor data with a JSON or YAML file.
+keywords: [data initialization, deployment, import, export, declarative configuration, configuration as code, GitOps]
 authors: [leo220yuyaodog]
 ---
 
-When shipping Casdoor as part of a larger product, preload organizations, applications, users, and other data so users get a working setup without manual configuration. Data initialization uses a JSON file that you provide or generate.
+When shipping Casdoor as part of a larger product, preload organizations, applications, users, and other data so users get a working setup without manual configuration. Data initialization uses a JSON or YAML file that you provide or generate.
+
+The same file can also be the source of truth for the configuration: Casdoor can watch it and apply every change without a restart, see [Configuration as code](#configuration-as-code).
 
 This page describes how to **import** and **export** configuration data.
 
@@ -17,7 +19,12 @@ By default, Casdoor looks for `init_data.json` in the project root at startup an
 initDataFile = /path/to/your/init_data.json
 ```
 
-A template is available at [init_data.json.template](https://github.com/casdoor/casdoor/blob/master/init_data.json.template). Copy and rename it to `init_data.json` and customize as needed.
+A template is available at [init_data.json.template](https://github.com/casdoor/casdoor/blob/master/init_data.json.template). Copy and rename it to `init_data.json` and customize as needed. A file ending in `.yaml` or `.yml` is read as YAML, with the same structure.
+
+By default, every object of the file that already exists is deleted and re-created from the file at each startup, so changes made in the web UI to those objects are lost on restart. Two settings change that:
+
+- `initDataNewOnly = true`: only objects that don't exist yet are added, existing ones are left untouched.
+- `initDataMerge = true`: existing objects are updated with only the fields written in the file, see [Configuration as code](#configuration-as-code).
 
 ### Docker
 
@@ -29,18 +36,24 @@ docker run ... -v /path/to/init_data.json:/init_data.json
 
 ### Kubernetes
 
-Store the file in a ConfigMap and mount it into the Casdoor pod:
+With the [Helm chart](/docs/basic/try-with-helm), put the objects under `initData.data` in your values file and set `initData.enabled: true`, see [Configuration as code](#configuration-as-code).
+
+Without the chart, store the file in a Secret (it usually holds passwords and client secrets) or a ConfigMap and mount it into the Casdoor pod:
 
 ```yaml
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
   name: casdoor-init-data
-data:
-  init_data.json:
+stringData:
+  init_data.yaml: |
+    organizations:
+      - owner: admin
+        name: acme
+        displayName: Acme
 ```
 
-Mount the ConfigMap in your Deployment, for example:
+Mount it as a directory and point `initDataFile` to the file in it:
 
 ```yaml
 apiVersion: apps/v1
@@ -52,15 +65,88 @@ spec:
     spec:
       containers:
       ...
+        env:
+        - name: initDataFile
+          value: /init-data/init_data.yaml
+        - name: initDataMerge
+          value: "true"
+        - name: initDataWatchInterval
+          value: "30"
         volumeMounts:
-        - mountPath: /init_data.json
+        - mountPath: /init-data
           name: casdoor-init-data-volume
-          subPath: init_data.json
+          readOnly: true
       volumes:
-      - configMap:
-          name: casdoor-init-data
+      - secret:
+          secretName: casdoor-init-data
         name: casdoor-init-data-volume
 ```
+
+Don't mount the file with `subPath`: Kubernetes doesn't update a `subPath` mount when the Secret or ConfigMap changes, so Casdoor would never see the new content.
+
+## Configuration as code
+
+To keep organizations, applications, users, providers, roles and permissions in Git and roll changes out like any other configuration, similar to authentik blueprints, let Casdoor apply the file continuously:
+
+```ini
+initDataFile = ./init_data.yaml
+initDataMerge = true
+initDataWatchInterval = 30
+```
+
+The settings can also be passed as environment variables of the same names.
+
+- **Merge**: an object that already exists is updated with only the fields written in the file. Its other fields keep their current values, so the file can manage a few settings of an object (e.g. the redirect URIs of an application) while the rest is edited in the web UI.
+- **Watch**: Casdoor checks the file every `initDataWatchInterval` seconds and applies it again when its content changed, without a restart.
+- A user's `password` is only used when the user is created, so users can change their own passwords afterwards. Organization secrets such as `masterPassword` are written on every apply when they are in the file.
+- Objects removed from the file are not deleted from Casdoor.
+- `records` and `sessions` are skipped in merge mode, they are runtime data.
+- If an object fails to apply, the error is logged once and Casdoor keeps running with the objects applied up to that point; the file is retried on every check until it applies.
+
+Example `init_data.yaml`:
+
+```yaml
+organizations:
+  - owner: admin
+    name: acme
+    displayName: Acme
+    passwordType: bcrypt
+applications:
+  - owner: admin
+    name: app-acme
+    organization: acme
+    displayName: Acme Portal
+    redirectUris:
+      - https://portal.acme.example.com/callback
+users:
+  - owner: acme
+    name: alice
+    displayName: Alice
+    password: change-me
+    signupApplication: app-acme
+roles:
+  - owner: acme
+    name: admins
+    displayName: Admins
+    users: [acme/alice]
+    isEnabled: true
+```
+
+With the Helm chart, the same objects go under `initData.data`; the chart stores them in a Secret and enables merge and watch by default:
+
+```yaml
+initData:
+  enabled: true
+  data:
+    organizations:
+      - owner: admin
+        name: acme
+        displayName: Acme
+```
+
+A `helm upgrade` that changes `initData.data` is applied by the running pods within `initData.watchInterval` seconds plus the time kubelet takes to update the mounted Secret (about a minute).
+
+If you prefer `terraform plan`, import of existing objects and drift detection, the [Terraform provider](/docs/deployment/terraform) manages the same objects through the API.
 
 ## Export
 
