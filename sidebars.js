@@ -59,6 +59,7 @@ module.exports = {
         "deployment/deploy-cdn",
         "deployment/deploy-intranet",
         "deployment/db-migration",
+        "deployment/upgrade-v3-to-v4",
         "deployment/version-info",
       ],
     },

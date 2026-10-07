@@ -5,7 +5,7 @@ keywords: [deployment, cdn, frontend, static]
 authors: [leo220yuyaodog]
 ---
 
-Frontend assets (e.g. `.js` and `.css`) live in `web/build/static/`. Upload them to a CDN via a Casdoor storage provider; a script in the repo automates this.
+Frontend assets (e.g. `.js` and `.css`) live in `web/build/assets/` (`web/build/static/` before v4). Upload them to a CDN via a Casdoor storage provider; a script in the repo automates this.
 
 :::note
 Build the frontend first. See [Server installation](/docs/basic/server-installation#frontend) if needed.
@@ -50,7 +50,7 @@ ok      github.com/casdoor/casdoor/deployment   2.951s
 
 The script:
 
-1. Uploads files under `css/` and `js/` to the storage provider (your CDN).
+1. Uploads the files under `web/build/assets/` to the storage provider (your CDN).
 2. Rewrites `.css` and `.js` URLs in `web/build/index.html` to point to the CDN.
 
 Serve `index.html` from the Casdoor backend as usual; the browser will load the static assets from the CDN using the URLs in `index.html`.
