@@ -1,0 +1,187 @@
+---
+slug: casdoor-on-kubernetes
+title: "Running Casdoor on Kubernetes: Official Helm Chart and Configuration as Code"
+authors: [hsluoyz]
+tags: [Casdoor, Kubernetes, Helm, GitOps, Configuration as Code, IAM, SSO]
+date: 2026-10-07
+---
+
+Casdoor has an official Helm chart. It lives in the main repository under [`manifests/casdoor`](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor), is published with every Casdoor release to GHCR, and is listed on [Artifact Hub](https://artifacthub.io/packages/helm/casdoor/casdoor). Starting with Casdoor v4.18.0, the chart can also hold your organizations, applications, users and providers as declarative configuration: change them in the values file, run `helm upgrade`, and the running pods apply the change without a restart.
+
+This post walks through a Kubernetes deployment from the first `helm install` to a setup you can keep in Git.
+
+<!-- truncate -->
+
+## Install
+
+You need Helm v3.8+ and a cluster:
+
+```shell
+helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor
+```
+
+The chart version is the Casdoor version, so `--version 4.18.0` installs Casdoor 4.18.0. Without an Ingress or Gateway, the service is only reachable inside the cluster. To try it, forward a port:
+
+```shell
+kubectl port-forward svc/casdoor 8000:8000
+```
+
+Then open `http://localhost:8000` and sign in with `admin` / `123`.
+
+## A production setup
+
+The defaults are meant for a quick try: Casdoor stores its data in SQLite inside the container, so it is lost when the pod is replaced. For a real deployment, put the settings below in a `values.yaml` file and install with `helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor -f values.yaml`.
+
+### External database
+
+```yaml
+database:
+  driver: postgres # or mysql, cockroachdb
+  host: postgres.db.svc.cluster.local
+  user: casdoor
+  password: change-me
+  databaseName: casdoor
+  sslMode: require
+```
+
+To keep the database password out of the values file, put the whole `app.conf` in a Secret and set `configFromSecret` to its name.
+
+### Exposing Casdoor
+
+The chart supports both a classic Ingress and the Gateway API. With an Ingress controller and cert-manager:
+
+```yaml
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: door.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: casdoor-tls
+      hosts:
+        - door.example.com
+```
+
+With the Gateway API (Istio, Envoy Gateway, Cilium, Kong, NGINX Gateway Fabric and others), attach an `HTTPRoute` to an existing Gateway:
+
+```yaml
+gatewayApi:
+  enabled: true
+  parentRefs:
+    - name: my-gateway
+      namespace: gateway-system
+  hostnames:
+    - door.example.com
+```
+
+The chart can also create the Gateway itself and add an HTTP to HTTPS redirect, see the [Helm guide](/docs/basic/try-with-helm#exposing-casdoor).
+
+### More than one replica
+
+Casdoor keeps sign-in sessions on local disk by default. Before running more than one replica, point all of them to the same Redis, so a user stays signed in whichever pod serves the request. Every `app.conf` setting can be passed as an environment variable, so the endpoint can come from a Secret:
+
+```yaml
+replicaCount: 3
+
+envFromSecret:
+  - name: redisEndpoint
+    secretName: casdoor-redis
+    key: endpoint # host:port, or host:port,db,password
+```
+
+The same Redis is used for the OAuth device flow state. Once Redis is in place, `autoscaling.enabled: true` adds a HorizontalPodAutoscaler.
+
+## Configuration as code
+
+Clicking organizations and applications together in the web UI is fine for a first test, but most teams want the setup of their identity provider reviewed and versioned like the rest of their infrastructure. The `initData` values do that:
+
+```yaml
+initData:
+  enabled: true
+  data:
+    organizations:
+      - owner: admin
+        name: acme
+        displayName: Acme
+        passwordType: bcrypt
+    applications:
+      - owner: admin
+        name: app-acme-portal
+        organization: acme
+        displayName: Acme Portal
+        redirectUris:
+          - https://portal.acme.example.com/callback
+    users:
+      - owner: acme
+        name: alice
+        displayName: Alice
+        password: change-me
+        signupApplication: app-acme-portal
+    roles:
+      - owner: acme
+        name: admins
+        displayName: Admins
+        users: [acme/alice]
+        isEnabled: true
+```
+
+The chart stores the data in a Secret and mounts it into the pods. Casdoor applies it at startup, then checks it every 30 seconds (`initData.watchInterval`). When you change the data and run `helm upgrade`, kubelet updates the mounted Secret and the running pods apply it without a restart.
+
+A few rules make this safe to use alongside the web UI:
+
+- **Only the fields you write are managed.** An object that already exists gets the fields set in the file; its other fields keep the values edited in the UI. You can manage just the redirect URIs of an application, and leave the rest to the admin console.
+- **Passwords are initial passwords.** A user's `password` is only used when the user is created, so users can change theirs afterwards.
+- **Nothing is deleted.** Removing an object from the file doesn't remove it from Casdoor.
+- **Errors don't take Casdoor down.** If an object fails to apply, the error is logged and Casdoor keeps serving; the data is retried on every check until it applies.
+
+The file format is the one Casdoor has always used for [data initialization](/docs/deployment/data-initialization): organizations, applications, users, providers, certs, roles, permissions, groups, LDAP servers, webhooks, plans, pricings and more, with the same field names as the REST API. A quick way to get started is to export an existing instance with `casdoor -export` and keep the objects you want to manage.
+
+To keep the data out of the values file, for example when it is managed by Sealed Secrets or External Secrets, create the Secret yourself:
+
+```yaml
+initData:
+  enabled: true
+  existingSecret: casdoor-init-data
+  existingSecretKey: init_data.yaml
+```
+
+The same feature works without Kubernetes. Mount a JSON or YAML file and set:
+
+```ini
+initDataFile = /init-data/init_data.yaml
+initDataMerge = true
+initDataWatchInterval = 30
+```
+
+## Or use Terraform
+
+If you prefer `terraform plan`, imports of existing objects and drift detection, the official [Terraform provider](https://registry.terraform.io/providers/casdoor/casdoor) manages the same objects through the Casdoor API:
+
+```terraform
+resource "casdoor_application" "portal" {
+  name          = "app-acme-portal"
+  organization  = "acme"
+  redirect_uris = ["https://portal.acme.example.com/callback"]
+}
+```
+
+Use the Helm values when the configuration should ship with the deployment, and Terraform when Casdoor is one of many systems you already manage with it. See the [Terraform guide](/docs/deployment/terraform).
+
+## Coming from the old chart
+
+Up to v4.15.0, the chart was published as `oci://registry-1.docker.io/casbin/casdoor-helm-charts`, and the separate `casdoor/casdoor-helm` repository is now archived. The Docker Hub chart still receives every release, but new installs should use the GHCR one. Moving an existing release over is a regular upgrade, and resource names stay the same:
+
+```shell
+helm upgrade casdoor oci://ghcr.io/casdoor/helm-charts/casdoor --version <version>
+```
+
+## Links
+
+- Helm chart: [Artifact Hub](https://artifacthub.io/packages/helm/casdoor/casdoor) · [source](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor)
+- Guides: [Try with Helm](/docs/basic/try-with-helm) · [Data initialization and configuration as code](/docs/deployment/data-initialization#configuration-as-code) · [Terraform](/docs/deployment/terraform)
+- Don't want to run it yourself? [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=blog&utm_content=kubernetes) gives you a dedicated Casdoor instance that we host and keep upgraded for you.
