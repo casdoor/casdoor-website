@@ -26,6 +26,7 @@ Each invitation has:
 - **Used count** — Current use count
 - **Application** — Applications that can use this code; `ALL` = all apps in the organization. [Shared applications](/docs/application/shared-application) get organization-specific handling
 - **Username / Email / Phone** — Optional fixed values required when registering with this invitation
+- **Expire time** — Optional time after which the code is rejected, in RFC 3339 format (e.g. `2026-12-31T23:59:59+08:00`). Empty means the invitation never expires
 - **State** — Invitation status (e.g. active, suspended)
 
 ## Default invitation
@@ -39,6 +40,8 @@ To tie an invitation to a specific user, set **Username**, **Email**, or **Phone
 ![Configure the user information corresponding to the invitation code](/img/invitation/invitation-with-user-information.png)
 
 To allow reuse, set **Quota** higher (e.g. 10). To stop new sign-ups with this code, set the invitation **State** to **Suspended**.
+
+To make an invitation valid only for a limited time, set **Expire time**. After that time, signing up with the code fails with "Invitation code expired", without changing the **State**. Through the API, set `expireTime` in `/api/add-invitation` or `/api/update-invitation`.
 
 ![Invitation quota and state](/img/invitation/invitation-quota-state.png)
 
