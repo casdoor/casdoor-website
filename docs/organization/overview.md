@@ -52,6 +52,12 @@ When enabled:
 
 To enable it, check **Use email as username** on the organization edit page.
 
+## Soft deletion
+
+**Soft deletion** is off by default: deleting a user removes it from the database.
+
+When **Soft deletion** is enabled on the organization edit page, deleting a user only marks it as deleted. The user stays in the user list with **Is deleted** checked and a **Deleted time**, can no longer sign in, and its tokens and sessions are revoked. To remove such a user permanently, delete it again: deleting a user that is already marked as deleted removes it from the database. To restore it instead, uncheck **Is deleted** on the user edit page.
+
 ## Navbar items
 
 You can control which pages appear in the Casdoor navigation bar for members of an organization. On the organization edit page there are two independent trees:
