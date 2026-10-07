@@ -117,21 +117,23 @@ docker compose up -d
 
 casdoor-forward-auth always returns all of them, possibly empty, so Caddy's `copy_headers` replaces whatever the client sent in the same headers. Make sure the protected service is only reachable through Caddy, otherwise anyone can send these headers directly.
 
-To let in only some users, check `X-Forwarded-Groups` or `X-Forwarded-Roles` in your service, or in Caddy with a [header matcher](https://caddyserver.com/docs/caddyfile/matchers#header) after `forward_auth`:
+## Restricting access
+
+By default every user who can sign in to the Casdoor application is let in. To let in only users with certain Casdoor roles or groups, add `roles` and/or `groups` (comma separated) to the `uri` of that site:
 
 ```text
 app.example.com {
     forward_auth casdoor-forward-auth:9999 {
-        uri /auth
-        copy_headers X-Forwarded-User X-Forwarded-Groups X-Forwarded-Roles
+        uri /auth?roles=admin,ops
+        copy_headers X-Forwarded-User X-Forwarded-User-Id X-Forwarded-Organization X-Forwarded-Email X-Forwarded-Groups X-Forwarded-Roles
     }
-
-    @notAdmin not header_regexp X-Forwarded-Roles (^|,)admin(,|$)
-    respond @notAdmin "Forbidden" 403
-
     reverse_proxy app:8080
 }
 ```
+
+A user passes with at least one of the listed roles and, if `groups` is given too (e.g., `groups=built-in/dev`), at least one of the listed groups. Everyone else who is signed in gets `403`. Each site can have its own rule; the `ALLOWED_ROLES` and `ALLOWED_GROUPS` environment variables set one rule for all sites.
+
+This also covers "sign up first, get access later": new users, e.g., from Google sign-up, have no role and get `403` until an admin assigns them one on the **Roles** page of Casdoor. Roles and groups are read at login, so after a change the user has to open `https://auth.example.com/logout` and sign in again, or wait for the session to end (`SESSION_TTL`).
 
 ## Configuration and logout
 

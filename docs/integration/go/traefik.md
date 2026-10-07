@@ -177,6 +177,18 @@ Set the forwardAuth address to `http://casdoor-forward-auth:9999/_auth/auth`, an
 
 casdoor-forward-auth always returns all of them, possibly empty, so Traefik replaces whatever the client sent in the same headers. Make sure the protected service is only reachable through Traefik, otherwise anyone can send these headers directly.
 
+## Restricting access
+
+By default every user who can sign in to the Casdoor application is let in. To let in only users with certain Casdoor roles or groups, add `roles` and/or `groups` (comma separated) to the address of the middleware. Define one middleware per rule:
+
+```yaml
+      - traefik.http.middlewares.casdoor-admin.forwardauth.address=http://casdoor-forward-auth:9999/auth?roles=admin,ops
+```
+
+A user passes with at least one of the listed roles and, if `groups` is given too (e.g., `groups=built-in/dev`), at least one of the listed groups. Everyone else who is signed in gets `403`. `ALLOWED_ROLES` and `ALLOWED_GROUPS` set one rule for all services.
+
+This also covers "sign up first, get access later": new users, e.g., from Google sign-up, have no role and get `403` until an admin assigns them one on the **Roles** page of Casdoor. Roles and groups are read at login, so after a change the user has to open `/logout` and sign in again, or wait for the session to end (`SESSION_TTL`).
+
 ## Configuration
 
 Every setting can be given as an environment variable or in a JSON config file:
@@ -192,6 +204,8 @@ Every setting can be given as an environment variable or in a JSON config file:
 | `COOKIE_NAME` | `casdoor_forward_auth` | Name of the session cookie |
 | `SESSION_TTL` | `24h` | Session lifetime, never longer than the access token from Casdoor |
 | `ALLOWED_REDIRECT_DOMAINS` | host of `EXTERNAL_URL` and `.<COOKIE_DOMAIN>` | Comma-separated domains users may be sent back to after login |
+| `ALLOWED_ROLES` | empty | Comma-separated Casdoor roles. Only users with at least one of them are let in, see [Restricting access](#restricting-access) |
+| `ALLOWED_GROUPS` | empty | Comma-separated Casdoor groups, e.g., `built-in/dev`. Only users in at least one of them are let in |
 | `CERTIFICATE` | empty | PEM certificate for verifying access tokens. By default it's looked up in Casdoor's `/.well-known/jwks` |
 | `LISTEN_ADDR` | `:9999` | Address to listen on |
 
