@@ -46,8 +46,6 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
-    environment:
-      - GIN_MODE=release
     volumes:
       - ./conf:/conf
       - ./logs:/logs
@@ -62,7 +60,7 @@ networks:
 Start the service:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 </TabItem>
@@ -80,7 +78,6 @@ docker run -d \
   -p 8000:8000 \
   -v $(pwd)/conf:/conf \
   -v $(pwd)/logs:/logs \
-  -e GIN_MODE=release \
   casbin/casdoor:latest
 ```
 
@@ -140,8 +137,6 @@ services:
     image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
-    environment:
-      - GIN_MODE=release
     volumes:
       - ./conf:/conf
       - ./logs:/logs
@@ -197,8 +192,6 @@ services:
     image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
-    environment:
-      - GIN_MODE=release
     volumes:
       - ./conf:/conf
       - ./logs:/logs
@@ -303,8 +296,6 @@ services:
     image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
-    environment:
-      - GIN_MODE=release
     volumes:
       - ./conf:/conf
       - ./logs:/logs
@@ -356,10 +347,10 @@ Initialize SSL certificates:
 mkdir -p certbot/conf certbot/www nginx/conf.d
 
 # Get initial certificate
-docker-compose run --rm certbot
+docker compose run --rm certbot
 
 # Add to crontab for renewal
-echo "0 12 * * * docker-compose run --rm certbot renew" | crontab -
+echo "0 12 * * * docker compose run --rm certbot renew" | crontab -
 ```
 
 </TabItem>
@@ -392,8 +383,6 @@ services:
     image: casbin/casdoor:latest
     container_name: casdoor
     restart: unless-stopped
-    environment:
-      - GIN_MODE=release
     volumes:
       - ./conf:/conf
       - ./logs:/logs
@@ -413,12 +402,7 @@ Create `caddy/Caddyfile`:
 
 ```caddyfile
 your-domain.com {
-    reverse_proxy casdoor:8000 {
-        header_up Host {host}
-        header_up X-Real-IP {remote}
-        header_up X-Forwarded-For {remote}
-        header_up X-Forwarded-Proto {scheme}
-    }
+    reverse_proxy casdoor:8000
 }
 ```
 
@@ -461,8 +445,8 @@ After deployment, visit your domain in your browser:
 ### Check container logs
 
 ```bash
-# For docker-compose
-docker-compose logs casdoor
+# For Docker Compose
+docker compose logs casdoor
 
 # For docker run
 docker logs casdoor

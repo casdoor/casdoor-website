@@ -5,11 +5,11 @@ keywords: [OpenClaw, observability, LLM, OTLP, OpenTelemetry, traces, agent]
 authors: [hsluoyz]
 ---
 
-[OpenClaw](https://openclaw.io) is an observability agent built for LLM applications. It collects traces, metrics, and logs from your AI agents and services, then pushes them to a backend over the OpenTelemetry (OTLP) protocol. Casdoor can act as that backend, storing each signal as an [Entry](/docs/entry/overview) and rendering traces in a structured viewer.
+[OpenClaw](https://openclaw.ai) is an open-source, self-hosted AI assistant: a gateway that connects chat apps to AI agents. Its `diagnostics-otel` plugin exports the agent's traces, metrics, and logs over OpenTelemetry (OTLP/HTTP). Casdoor can receive that data, store each payload as an [Entry](/docs/entry/overview), and show OpenClaw sessions as a graph, so you can see what your agents did next to who they act for.
 
 ## How it works
 
-OpenClaw runs alongside your application and instruments outbound LLM calls, tool invocations, and any other spans you configure. At collection intervals it serializes these as OTLP payloads and sends them to Casdoor's ingest endpoints:
+OpenClaw sends OTLP payloads to Casdoor's ingest endpoints:
 
 | Signal | Endpoint |
 |--------|----------|
@@ -25,25 +25,44 @@ All three expect `Content-Type: application/x-protobuf`. Casdoor stores each pay
 
 1. Go to **Providers** → **Add**.
 2. Set **Category** to `Log` and **Type** to `Agent (OpenClaw)`.
-3. In the **Host** field, enter the IP address of the machine running the OpenClaw agent. Leave it empty to accept from any IP.
-4. (Optional) In the **Storage provider** field, pick which Storage provider should hold the raw session transcripts (see [Raw session transcripts](#raw-session-transcripts)). Leave it empty to let Casdoor choose automatically.
-5. Save. Casdoor is now ready to receive data.
+3. In the **Host** field, enter the IP address of the machine running OpenClaw. Leave it empty to accept data from any IP.
+4. (Optional) **Agent ID** and **Path** tell Casdoor where to find the agent's session transcripts; see [Raw session transcripts](#raw-session-transcripts).
+5. (Optional) In the **Storage provider** field, pick which Storage provider should hold the raw session transcripts. Leave it empty to let Casdoor choose automatically.
+6. Save. Casdoor is now ready to receive data.
 
 The **Host** field is an IP allowlist for this provider. Requests from any other address are rejected with `403 Forbidden`, which prevents unauthorized agents from writing entries into your organization.
 
 ### 2. Configure OpenClaw
 
-Point OpenClaw at your Casdoor instance using the OTLP HTTP exporter. The exact configuration depends on your OpenClaw version, but the core settings are:
+Install and enable OpenClaw's `diagnostics-otel` plugin, then point its OTLP exporter at Casdoor. OpenClaw appends `/v1/traces`, `/v1/metrics`, and `/v1/logs` to the endpoint, so the endpoint is Casdoor's URL followed by `/api`:
 
-```yaml
-exporters:
-  otlphttp:
-    endpoint: https://your-casdoor.com
-    headers:
-      Content-Type: application/x-protobuf
+```bash
+openclaw plugins install clawhub:@openclaw/diagnostics-otel
 ```
 
-Refer to the [OpenClaw documentation](https://openclaw.io) for agent-specific options such as sampling rates, batch sizes, and which signals to enable.
+```json5
+{
+  plugins: {
+    allow: ["diagnostics-otel"],
+    entries: {
+      "diagnostics-otel": { enabled: true },
+    },
+  },
+  diagnostics: {
+    enabled: true,
+    otel: {
+      enabled: true,
+      endpoint: "https://your-casdoor.com/api",
+      protocol: "http/protobuf",
+      traces: true,
+      metrics: true,
+      logs: true,
+    },
+  },
+}
+```
+
+See [OpenTelemetry export](https://docs.openclaw.ai/gateway/opentelemetry) in the OpenClaw documentation for sampling, flush intervals, and what content is captured.
 
 ## Viewing collected data
 
@@ -57,6 +76,10 @@ Entries are scoped to an organization, so data from different teams or environme
 ## Raw session transcripts
 
 Beyond the parsed trace view, Casdoor can keep the **raw JSONL transcript** of each OpenClaw session—the exact line-delimited log the agent produced. This is useful when you need the unmodified record for debugging, auditing, or replay.
+
+### Where transcripts are read from
+
+Casdoor reads the transcripts from OpenClaw's state directory on the machine where Casdoor runs, so this feature needs OpenClaw on the same host (or its state directory mounted there). By default the directory is `~/.openclaw/agents/<Agent ID>/sessions`, where **Agent ID** defaults to `main`; `OPENCLAW_STATE_DIR` and `OPENCLAW_PROFILE` are honored as in OpenClaw. Set **Path** on the provider to use another directory.
 
 ### Where transcripts are stored
 

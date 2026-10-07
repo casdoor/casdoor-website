@@ -66,7 +66,7 @@ Repository: `https://github.com/casdoor/casdoor` (backend and frontend in one re
 
 | Part      | Description        | Stack                 |
 |-----------|--------------------|------------------------|
-| Frontend  | Web UI             | JavaScript + React    |
+| Frontend  | Web UI             | TypeScript + React (Vite) |
 | Backend   | REST API           | Go + Beego + XORM     |
 
 Clone the repo (Go Modules are used):
@@ -150,7 +150,7 @@ Then start the frontend.
 
 #### Frontend <span id="frontend-1"></span>
 
-The frontend is a [Create React App](https://create-react-app.dev/) project and runs on port 7001 by default:
+The frontend is a [Vite](https://vite.dev/) project and runs on port 7001 by default:
 
 ```bash
 cd web

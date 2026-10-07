@@ -191,7 +191,7 @@ For devices with limited input or no browser, use **Device Grant**. Enable it on
 
 Casdoor provides a built-in device login page at the `verification_uri` where the user enters the user code and signs in — no custom UI is required. Device login can also be enabled as a sign-in method on the application's **Signin methods** table.
 
-Second, you should request `token endpoint` to get Access Token with parameter define in [rfc8628](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
+Meanwhile, the device polls the token endpoint with its `device_code` until the user has signed in, as described in [RFC 8628, section 3.4](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
 
 :::info Multi-replica deployments
 

@@ -21,7 +21,7 @@ authors: [hsluoyz]
 
 ## OpenTelemetry data (OTLP)
 
-Casdoor accepts all three OTLP signal types pushed by an [OpenClaw](https://openclaw.io) agent:
+Casdoor accepts all three OTLP signal types pushed by an [OpenClaw](https://openclaw.ai) agent:
 
 | Endpoint | Type stored | Entry type |
 |----------|-------------|------------|

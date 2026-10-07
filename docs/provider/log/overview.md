@@ -46,7 +46,7 @@ No configuration fields are required. The provider checks at startup whether SEL
 
 ### Agent (OpenClaw)
 
-Receives OpenTelemetry data pushed by an [OpenClaw](https://openclaw.io) agent over HTTP. Casdoor accepts all three OTLP signal types: traces (`/api/v1/traces`), metrics (`/api/v1/metrics`), and logs (`/api/v1/logs`).
+Receives OpenTelemetry data pushed by an [OpenClaw](https://openclaw.ai) agent over HTTP. Casdoor accepts all three OTLP signal types: traces (`/api/v1/traces`), metrics (`/api/v1/metrics`), and logs (`/api/v1/logs`).
 
 Only requests from the configured IP are accepted; all other senders receive `403 Forbidden`.
 

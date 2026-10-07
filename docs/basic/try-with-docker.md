@@ -13,7 +13,7 @@ authors: [hsluoyz]
 
 ### Hardware
 
-- **Building the image:** At least **2 GB** RAM. The frontend is a React (npm) project and the build can fail with less memory.
+- **Building the image:** At least **2 GB** RAM. The frontend build (React and Vite) can fail with less memory.
 - **Running the pre-built image:** At least **100 MB** RAM.
 
 ### OS

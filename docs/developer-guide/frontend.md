@@ -1,4 +1,4 @@
-﻿---
+---
 title: Frontend
 description: Casdoor web UI source layout and how to run or customize it.
 keywords: [frontend, React, CRA, development]

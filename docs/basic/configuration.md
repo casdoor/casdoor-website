@@ -1,11 +1,11 @@
 ---
 title: Configuration
-description: Configure the Casdoor backend and frontend via app.conf and Conf.js.
-keywords: [Casdoor, configuration, app.conf, Conf.js, backend, frontend]
+description: Configure the Casdoor backend and web console via app.conf and environment variables.
+keywords: [Casdoor, configuration, app.conf, environment variables, backend, frontend]
 authors: [hsluoyz]
 ---
 
-Casdoor is configured through separate files for the backend and frontend. This page documents all supported options.
+Casdoor is configured with one file, `conf/app.conf`, whose options can also be set as environment variables. This page lists every option.
 
 ## Backend configuration (app.conf)
 
@@ -34,16 +34,18 @@ The backend reads a single config file: [**conf/app.conf**](https://github.com/c
 | `isUsernameLowered`         | `false`                                                                              | Whether to convert usernames to lowercase                                                                                                            |
 | `origin`                    | (empty)                                                                              | Backend origin URL (e.g., `https://door.casdoor.com`)                                                                                                |
 | `originFrontend`            | (empty)                                                                              | Frontend origin URL if different from backend                                                                                                        |
+| `trustedProxies`            | (empty)                                                                              | Comma-separated IPs or CIDR ranges of reverse proxies whose `X-Forwarded-For` and `X-Real-IP` headers are trusted for the client IP (`*` trusts any). When empty, loopback and private addresses are trusted |
 | `staticBaseUrl`             | `"https://cdn.casbin.org"`                                                           | CDN URL for static assets used during database initialization                                                                                        |
+| `frontendCdnUrl`            | (empty)                                                                              | Serve the frontend's JavaScript and CSS from a CDN, e.g. `https://cdn.jsdelivr.net/npm/{name}@{version}`. Only applies to a frontend installed from the `casdoor-web` npm package; files that fail to load from the CDN are loaded from Casdoor |
 | `isDemoMode`                | `false`                                                                              | Enable demo mode restrictions                                                                                                                        |
 | `batchSize`                 | `100`                                                                                | Batch size for bulk operations                                                                                                                       |
 | `showGithubCorner`          | `false`                                                                              | Show the GitHub corner ribbon on the UI                                                                                                              |
 | `forceLanguage`             | `""`                                                                                 | Force the UI to use a specific language (e.g. `"zh"`, `"en"`). Overrides the user's browser language. Empty means no override.                       |
 | `defaultLanguage`           | `"en"`                                                                               | Default UI language when no browser preference or force override is set                                                                              |
-| `aiAssistantUrl`            | `"https://ai.casbin.com"`                                                            | URL of the AI assistant service integrated into the Casdoor UI                                                                                       |
 | `defaultApplication`        | `"app-built-in"`                                                                     | Name of the application to redirect to after login when no specific application is requested                                                         |
 | `maxItemsForFlatMenu`       | `7`                                                                                  | Maximum number of items to show in a flat (non-grouped) sidebar menu. When the count exceeds this, the menu switches to a tree/grouped view           |
 | `enableErrorMask`           | `false`                                                                              | Whether to mask detailed error messages                                                                                                              |
+| `enableErrorMask2`          | `false`                                                                              | Replace every API error message with a generic one, so that responses don't reveal why a request failed                                                |
 | `enableGzip`                | `true`                                                                               | Accept and respond with gzip encoding when client supports it                                                                                        |
 | `inactiveTimeoutMinutes`    | (empty)                                                                              | Auto-logout timeout in minutes. Empty or ≤0 means no timeout                                                                                         |
 | `ldapServerPort`            | `389`                                                                                | Port for LDAP server                                                                                                                                 |
@@ -52,6 +54,10 @@ The backend reads a single config file: [**conf/app.conf**](https://github.com/c
 | `radiusServerPort`          | `1812`                                                                               | Port for RADIUS server                                                                                                                               |
 | `radiusDefaultOrganization` | `"built-in"`                                                                         | Default organization for RADIUS authentication                                                                                                       |
 | `radiusSecret`              | `"secret"`                                                                           | Shared secret for RADIUS authentication                                                                                                              |
+| `gatewayHttpPort`           | `80`                                                                                 | HTTP port of the reverse-proxy gateway for [Sites](/docs/site/overview). The gateway only starts when at least one site exists                         |
+| `gatewayHttpsPort`          | `443`                                                                                | HTTPS port of the reverse-proxy gateway for [Sites](/docs/site/overview)                                                                               |
+| `acmeEmail`                 | (empty)                                                                              | Email of the ACME (Let's Encrypt) account used to issue certificates for Sites                                                                         |
+| `acmePrivateKey`            | (empty)                                                                              | Private key (PEM) of that ACME account                                                                                                                 |
 | `quota`                     | `{"organization": -1, "user": -1, "application": -1, "provider": -1}`                | Resource quotas (-1 means unlimited)                                                                                                                 |
 | `logConfig`                 | `{"adapter":"file", "filename": "logs/casdoor.log", "maxdays":99999, "perm":"0770"}` | Logging configuration (adapter, file path, rotation, permissions)                                                                                    |
 | `initDataNewOnly`           | `false`                                                                              | Whether to initialize data only for new installations                                                                                                |
@@ -74,41 +80,18 @@ Variables can also be `export`ed in the shell. Variable names must match the `ap
 Environment variables override values in `app.conf`.
 :::
 
-## Frontend configuration (Conf.js)
+## Frontend configuration
 
-The frontend is configured in [**web/src/Conf.js**](https://github.com/casdoor/casdoor/blob/master/web/src/Conf.js). These options control the Casdoor web UI behavior and appearance.
+The web console reads a few settings from the backend at runtime, so you change them in `app.conf` (or with environment variables) and restart the backend; there is no need to rebuild the frontend:
 
-| Parameter               | Default Value                                                                                     | Description                                                                                                                                 |
-|-------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| `DefaultApplication`    | `"app-built-in"`                                                                                  | The default application used for login when none is specified                                                                               |
-| `CasvisorUrl`           | `""`                                                                                              | URL for Casvisor integration. Leave empty to disable                                                                                        |
-| `ShowGithubCorner`      | `false`                                                                                           | Whether to show a GitHub corner link in the UI                                                                                              |
-| `IsDemoMode`            | `false`                                                                                           | Whether to run the frontend in demo mode with restrictions                                                                                  |
-| `ForceLanguage`         | `""`                                                                                              | Force a specific language for all users. Leave empty to allow user selection                                                                |
-| `DefaultLanguage`       | `"en"`                                                                                            | Default language for the UI when no user preference is set                                                                                  |
-| `InitThemeAlgorithm`    | `true`                                                                                            | Whether to enable the theme algorithm for UI styling                                                                                        |
-| `ThemeDefault`          | `{themeType: "default", colorPrimary: "#5734d3", borderRadius: 6, isCompact: false}`              | Default theme settings including theme type, primary color, border radius, and compact mode                                                 |
-| `CustomFooter`          | `null`                                                                                            | Custom footer content. Set to `null` to use the default footer                                                                              |
-| `AiAssistantUrl`        | `"https://ai.casbin.com"`                                                                         | URL for the AI Assistant feature. Set to blank or `null` to hide the AI Assistant button                                                    |
-| `MaxItemsForFlatMenu`   | `7`                                                                                               | Maximum number of navbar items before switching from a flat menu to a grouped/dropdown menu                                                 |
+| `app.conf` option     | Effect on the web console                                                       |
+|-----------------------|---------------------------------------------------------------------------------|
+| `defaultApplication`  | Application whose sign-in page is shown when none is specified                  |
+| `showGithubCorner`    | Show the GitHub corner ribbon                                                   |
+| `isDemoMode`          | Restrict what the console allows, for public demo sites                         |
+| `forceLanguage`       | Use this language for every user, ignoring the browser language                 |
+| `defaultLanguage`     | Language used when the browser doesn't ask for a supported one                  |
+| `staticBaseUrl`       | Base URL of static images such as logos and avatars                             |
+| `maxItemsForFlatMenu` | Number of top menu items above which the menu is grouped                        |
 
-### Theme options
-
-The `ThemeDefault` object supports:
-
-| Property        | Type      | Description                                                              |
-|-----------------|-----------|--------------------------------------------------------------------------|
-| `themeType`     | `string`  | Theme type: `"default"`, `"dark"`, or `"compact"`                        |
-| `colorPrimary`  | `string`  | Primary color in hex format (e.g., `"#5734d3"`)                          |
-| `borderRadius`  | `number`  | Border radius in pixels for UI elements                                  |
-| `isCompact`     | `boolean` | Whether to use compact mode for denser UI                                |
-
-### Applying changes
-
-1. Edit `web/src/Conf.js` in your Casdoor tree.
-2. Adjust the values as needed.
-3. Rebuild the frontend: run `yarn build` in the `web` directory.
-
-:::tip
-In development, restart the dev server (`yarn start` in `web`) for `Conf.js` changes to apply.
-:::
+The compile-time defaults of these settings, plus the default theme (`ThemeDefault`) and an optional custom footer (`CustomFooter`), are in [**web/src/Conf.ts**](https://github.com/casdoor/casdoor/blob/master/web/src/Conf.ts). Changing that file requires rebuilding the frontend with `yarn build` in the `web` directory. Per-organization and per-application themes are set in the console instead; see [Customize theme](/docs/organization/customize-theme).

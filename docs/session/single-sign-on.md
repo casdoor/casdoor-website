@@ -44,19 +44,13 @@ By default Casdoor posts the result to `window.opener` (equivalent to `popup_typ
 
 ## Using SSO
 
-The configuration is complete. Below, we will show you how to use auto login.
+Users start from the Casdoor home page:
 
-:::info
-
-Make sure your application can redirect to the user's profile page. The [getMyProfileUrl(account, returnUrl)](https://github.com/casdoor/casdoor-js-sdk#get-my-profile-page-url) API is provided in our SDK for each language.
-
-:::
-
-Open the profile page and go to **Home** (`/`). The application list for the organization is shown there. It's worth noting that only users in organizations other than "built-in" can see the application list on the "Home" page. All the global administrators (those in the "built-in" organization) cannot see it.
+1. Make sure your application links to the user's Casdoor profile page; the SDKs provide [getMyProfileUrl(account, returnUrl)](https://github.com/casdoor/casdoor-js-sdk#get-my-profile-page-url) for this.
+2. On the profile page, the user opens **Home** (`/`), which lists the applications of their organization. Users of the `built-in` organization (global administrators) don't see this list.
+3. Clicking an application opens its **Home** URL with `?silentSignin=1`. If the application implements [silent sign-in](#silent-sign-in), the user is signed in to it in the background.
 
 ![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
-
-Click on a tile in the application list, and it will jump to the homepage URL of that application with the GET parameter `?silentSignin=1`. It will automatically log into the application if the application has integrated with Casdoor SSO (so it will recognize the `?silentSignin=1` parameter and perform a silent login in the background).
 
 ## SSO Logout
 
