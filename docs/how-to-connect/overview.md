@@ -53,7 +53,7 @@ Using an SDK takes a bit more setup than a generic OIDC client but gives you the
 
 ### Casdoor plugin
 
-**[Casdoor plugin](/docs/how-to-connect/plugin)** — If your app runs on a supported platform (e.g. Spring Boot, WordPress), use the official or community plugin or middleware. Plugins are the fastest way to add Casdoor to that platform.
+**[Casdoor plugin](/docs/how-to-connect/plugin)** — If your app runs on a supported platform (e.g. Spring Boot, Quarkus, WordPress), use the official or community plugin or middleware. Plugins are the fastest way to add Casdoor to that platform.
 
 **Plugins:**
 
@@ -63,6 +63,7 @@ Using an SDK takes a bit more setup than a generic OIDC client but gives you the
 **Middleware:**
 
 - [Spring Boot](https://github.com/casdoor/casdoor-spring-boot-starter)
+- [Quarkus](/docs/integration/java/quarkus)
 - [Django](https://github.com/casdoor/django-casdoor-auth)
 
 ## SAML
