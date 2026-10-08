@@ -1,123 +1,135 @@
 ---
-title: Casdoor CLI
-description: Using Casdoor's official command-line interface for managing users, groups, and permissions
+title: Manage Casdoor from the command line
+sidebar_label: Casdoor CLI
+description: Install the Casdoor CLI, connect it to your Casdoor instance, and manage users and groups from the terminal.
 keywords: [CLI, command-line, terminal, bash, shell, user management, groups, permissions, OAuth2]
 authors: [hsluoyz]
 ---
 
-**Casdoor CLI** is the official command-line interface for [Casdoor](https://casdoor.org), providing a powerful and intuitive way to manage your Casdoor identity and access management system directly from the terminal.
+This guide explains how to install [Casdoor CLI](https://github.com/casdoor/casdoor-cli), the official command-line interface of Casdoor, and how to manage users and groups with it.
 
-GitHub repository: `https://github.com/casdoor/casdoor-cli`
+---
 
-## Features
+#### Learning outcomes
 
-### OAuth2 Browser-Based Authentication
+- Build and install the CLI on macOS or Linux.
+- Connect the CLI to your Casdoor instance and sign in.
+- Manage users and groups from the terminal.
+- Set up a local environment to develop the CLI.
 
-The CLI uses a secure browser-based OAuth2 flow for authentication, ensuring your credentials are protected through Casdoor's standard authentication mechanism.
+#### What you need
 
-### Secure Token Storage
+- macOS or Linux. The CLI is tested on Debian 12 and macOS Sonoma.
+- Go 1.22.0 or later
+- A system keyring: GNOME Keyring on Linux, Keychain on macOS
+- A running Casdoor instance and an [application](/docs/application/overview) for the CLI
 
-Credentials are safely stored using your system's keyring interface (GNOME Keyring on Linux, Keychain on macOS), ensuring tokens never touch disk in plaintext.
-
-### User Management
-
-Create, update, and delete users with ease directly from the command line.
-
-### Permission Management
-
-Control user permissions through Casdoor's group feature with built-in roles:
-
-- `lector`: Read-only access
-- `editor`: Can create users, with limited modification rights
-- `administrator`: Full control over user creation, modification, and deletion
-
-### Group Management
-
-Create, modify, and delete user groups to organize users and manage permissions efficiently.
-
-## Installation
-
-### Prerequisites
-
-- Go 1.22.0 or higher
-- macOS or Linux operating system
-- GNOME Keyring (Linux) or Keychain (macOS) for secure credential storage
+---
 
 :::caution
-
-**Platform Support**: Currently supports macOS and Linux (tested on Debian 12 and macOS Sonoma). Windows support via WSL is not available as the CLI requires GNOME's Secret Service DBus interface (GNOME Keyring) for secure credential storage.
-
+The CLI doesn't run on Windows, including the Windows Subsystem for Linux (WSL). It stores credentials through the Secret Service DBus interface of GNOME Keyring, which WSL doesn't provide.
 :::
 
-### macOS
+## About the CLI
+
+| Feature | Description |
+|---|---|
+| Sign-in in the browser | The CLI signs you in with the OAuth 2.0 flow of Casdoor in your browser. It never sees your password |
+| Token storage | The CLI stores tokens in the system keyring. Tokens are never written to disk as plaintext |
+| User management | Create, update, and delete users |
+| Group management | Create, change, and delete groups |
+| Permissions | The CLI controls what a user may do through Casdoor groups, with three built-in roles |
+
+The built-in roles are:
+
+| Role | Rights |
+|---|---|
+| `lector` | Read-only access |
+| `editor` | Can create users, with limited rights to change them |
+| `administrator` | Can create, change, and delete users |
+
+## Install the CLI
+
+1. Clone [casdoor-cli](https://github.com/casdoor/casdoor-cli).
+1. Build and install the CLI.
+
+   On macOS:
+
+   ```bash
+   make build TARGET_OS=darwin && make install TARGET_OS=darwin
+   ```
+
+   On Linux:
+
+   ```bash
+   make build TARGET_OS=linux && make install TARGET_OS=linux
+   ```
+
+1. Add the install directory to your `PATH`.
+
+   In Bash:
+
+   ```bash
+   echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+   In Zsh:
+
+   ```bash
+   echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+1. Check that the CLI runs:
+
+   ```bash
+   casdoor --help
+   ```
+
+## Connect the CLI to Casdoor
+
+1. Create an application for the CLI in Casdoor in one of two ways:
+
+   - Load the `init_data.json` of the casdoor-cli repository. See [Initialize and manage data with a file](/docs/deployment/data-initialization).
+   - Create and configure the application by hand in the Casdoor admin console.
+
+1. Run the CLI. On its first run, it asks for a `config.yaml` with the connection details. Use `config.yaml.example` of the repository as a template. The required fields are:
+
+   ```yaml
+   application_name: your-app-name
+   casdoor_endpoint: https://your-casdoor-instance.com
+   certificate: |
+     -----BEGIN CERTIFICATE-----
+     Your certificate content here
+     -----END CERTIFICATE-----
+   client_id: your-client-id
+   client_secret: your-client-secret
+   organization_name: your-organization
+   redirect_uri: http://localhost:9000/callback
+   ```
+
+The CLI stores the configuration, Base64-encoded, in `~/.casdoor-cli/config.yaml` and reads it from there afterward.
+
+## Sign in and out
+
+To sign in, run:
 
 ```bash
-make build TARGET_OS=darwin && make install TARGET_OS=darwin
+casdoor login
 ```
 
-### Linux
+The CLI opens your default browser, where you sign in to Casdoor.
+
+To sign out, run:
 
 ```bash
-make build TARGET_OS=linux && make install TARGET_OS=linux
+casdoor logout
 ```
 
-### Configure Your Shell
+## Manage users and groups
 
-After installation, add `casdoor-cli` to your `PATH`:
-
-**For Bash users:**
-
-```bash
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-**For Zsh users:**
-
-```bash
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-Verify the installation:
-
-```bash
-casdoor --help
-```
-
-## Configuration
-
-### Casdoor server
-
-You need a Casdoor application for the CLI:
-
-1. **Bootstrap data** — Use the repo’s `init_data.json` and follow [Data initialization](/docs/deployment/data-initialization).
-2. **Manual** — Create and configure an application in the Casdoor admin panel.
-
-### CLI Configuration
-
-On first run, the CLI prompts for a `config.yaml` with your Casdoor connection details. Use the repo’s `config.yaml.example` as a template.
-
-**Required configuration fields:**
-
-```yaml
-application_name: your-app-name
-casdoor_endpoint: https://your-casdoor-instance.com
-certificate: |
-  -----BEGIN CERTIFICATE-----
-  Your certificate content here
-  -----END CERTIFICATE-----
-client_id: your-client-id
-client_secret: your-client-secret
-organization_name: your-organization
-redirect_uri: http://localhost:9000/callback
-```
-
-Your configuration will be securely stored in `~/.casdoor-cli/config.yaml` (base64 encoded) for subsequent use.
-
-## Usage
-
-### Available Commands
+The CLI has the following commands:
 
 ```bash
 Usage:
@@ -136,17 +148,7 @@ Flags:
   -h, --help    help for casdoor
 ```
 
-### Login
-
-To authenticate with your Casdoor instance:
-
-```bash
-casdoor login
-```
-
-This will open your default browser for OAuth2 authentication.
-
-### Managing Users
+Manage users:
 
 ```bash
 # List users
@@ -162,7 +164,7 @@ casdoor users update
 casdoor users delete
 ```
 
-### Managing Groups
+Manage groups:
 
 ```bash
 # List groups
@@ -178,50 +180,36 @@ casdoor groups update
 casdoor groups delete
 ```
 
-### Logout
+## Set up a development environment
 
-To logout from your Casdoor account:
+To work on the CLI itself:
 
-```bash
-casdoor logout
-```
+1. In the casdoor-cli repository, start the local Casdoor environment:
 
-## Development
+   ```bash
+   docker compose up -d
+   ```
 
-### Local Development Environment
+   Wait for the Casdoor container to initialize. It restarts several times while it sets up the database.
 
-A Docker Compose environment is provided in the repository for local testing and development:
+1. Create `config.yaml` at the root of the repository from `config.yaml.example`, with the settings of the local environment.
+1. Run the CLI from source and sign in with the development credentials that the repository documents:
 
-```bash
-docker compose up -d
-```
+   ```bash
+   go run main.go login
+   ```
 
-:::note
+   Or build and install it first:
 
-Allow a few moments for the Casdoor container to fully initialize. The container will restart multiple times as it sets up the database.
+   ```bash
+   make build TARGET_OS=darwin && make install TARGET_OS=darwin  # For macOS
+   # OR
+   make build TARGET_OS=linux && make install TARGET_OS=linux    # For Linux
 
-:::
+   casdoor login
+   ```
 
-### Development Configuration
+## See also
 
-Create a `config.yaml` file from the provided `config.yaml.example` template at the repository root with your local development settings.
-
-### Testing the CLI
-
-Test the login functionality with the default development credentials provided in the repository documentation.
-
-**Run directly with Go:**
-
-```bash
-go run main.go login
-```
-
-**Or build and install first:**
-
-```bash
-make build TARGET_OS=darwin && make install TARGET_OS=darwin  # For macOS
-# OR
-make build TARGET_OS=linux && make install TARGET_OS=linux    # For Linux
-
-casdoor login
-```
+- [Call the Casdoor API](/docs/basic/public-api)
+- [Manage Casdoor with Terraform](/docs/deployment/terraform)

@@ -1,59 +1,65 @@
 ---
-title: Email provider overview
-description: Configure SMTP for verification emails and password reset.
+title: Email providers
+sidebar_label: Overview
+description: Configure an email provider that sends verification codes, password reset links, and notifications, and write the email templates.
 keywords: [email, SMTP, verification]
 authors: [kininaru]
 ---
 
-## Add an email provider
+An email provider sends the emails of Casdoor, such as verification codes at sign-up and sign-in, password reset links, and notifications. This page describes the settings of an SMTP provider and the email templates. Other pages of this section cover specific services.
 
-1. Click **Add** and choose **Email** under **Category**.
-2. Enter **Username**, **Password**, **Host**, and **Port** for your SMTP server.
-3. Set **Email Title** and **Email Content** (templates), then save.
+## Add an SMTP provider {#add-an-email-provider}
 
-![Email provider](/img/providers/emailprovider.png)
-![Email Config](/img/providers/emailconfig.png)
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Email` and **Type** to `Default`, which sends through SMTP.
+1. Enter the **Host**, **Port**, **Username**, and **Password** of your SMTP server, and the **From address**.
+
+   ![Email provider in Casdoor](/img/providers/emailprovider.png)
+
+1. Write the **Email title** and the **Email content**. See [Templates](/docs/provider/email/overview#email-content-and-placeholders).
+
+   ![Email title and Email content](/img/providers/emailconfig.png)
+
+1. Click **Test SMTP Connection** to check the connection, and **Send Testing Email** to send a message to the **Test Email** address.
+1. Save the provider and add it to your application. See [Add providers to an application](/docs/application/providers).
 
 ## SSL mode
 
-The **SSL mode** setting controls how the SMTP connection negotiates TLS:
+**SSL mode** controls how Casdoor negotiates TLS with the SMTP server:
 
 | Value | Behavior |
-|-------|----------|
-| **Auto** (default) | Lets gomail decide based on port. Port 465 uses implicit SSL; other ports attempt STARTTLS. |
-| **Enable** | Forces SSL/TLS on regardless of port. Use this when your server requires implicit TLS on a non-standard port. |
-| **Disable** | Disables SSL/TLS. Use only for servers on trusted internal networks. |
+|---|---|
+| `Auto` (default) | Decides by the port: implicit TLS on port 465, STARTTLS on other ports |
+| `Enable` | Always uses implicit TLS. Use it when the server requires implicit TLS on a non-standard port |
+| `Disable` | Doesn't use TLS. Use it only for servers on a trusted internal network |
 
-Existing providers that had **Disable SSL** checked are treated as `Disable` automatically; no manual migration is needed.
+Providers that had the former **Disable SSL** option turned on behave as `Disable`. You don't migrate them by hand.
 
 ## Proxy
 
-If the Casdoor server cannot reach the SMTP server directly (e.g. Gmail from a restricted network), enable **Enable proxy**. Email is then sent via the SOCKS5 proxy defined in Casdoor’s config.
+If Casdoor can't reach the SMTP server directly, for example Gmail from a restricted network, turn on **Enable proxy**. Casdoor then sends email through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets.
 
-## Email content and placeholders
+## Templates {#email-content-and-placeholders}
 
-Templates support placeholders and the `<reset-link>` block for password reset.
+**Email title** and **Email content** can contain the following placeholders:
 
-| Placeholder | Description |
-|-------------|-------------|
-| **%{'{'}user.friendlyName{'}'}** | User’s display or friendly name. |
-| **%s** | Verification code (for auth emails). |
-| **%link** | Password reset URL. Use only inside `<reset-link>...</reset-link>`. |
+| Placeholder | Replaced by |
+|---|---|
+| `%{user.friendlyName}` | The display name or another friendly name of the user |
+| `%s` | The verification code |
+| `%link` | The password reset URL. Use it only inside a `<reset-link>` block |
 
 ### Password reset link
 
-To let users reset the password by clicking a link in the email:
+To let users reset their password with a link in the email, put the link text and `%link` in a `<reset-link>` block. Casdoor shows the block only in password reset emails and removes it from all other emails, such as sign-up and sign-in codes.
 
-1. Put the link text and `%link` inside `<reset-link>` tags.
-2. The block is shown only in password-reset emails; it is removed for signup/login verification.
-
-**Plain text example:**
+Plain text:
 
 ```text
 You have requested a verification code at Casdoor. Here is your code: %s, please enter in 5 minutes. <reset-link>Or click %link to reset</reset-link>
 ```
 
-**HTML example:**
+HTML:
 
 ```html
 <!DOCTYPE html>
@@ -71,6 +77,10 @@ You have requested a verification code at Casdoor. Here is your code: %s, please
 </html>
 ```
 
-![Html template](/img/providers/email/email-template.png)
+![HTML email template with a reset link](/img/providers/email/email-template.png)
 
-The `<reset-link>` block is omitted for non–password-reset emails (signup, login verification).
+## See also
+
+- [SendGrid](/docs/provider/email/sendgrid)
+- [Resend](/docs/provider/email/resend)
+- [Add providers to an application](/docs/application/providers)

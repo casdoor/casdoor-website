@@ -1,44 +1,69 @@
 ---
-title: Azure Blob storage
-description: Use Azure Blob Storage as a storage provider.
+title: Store files in Azure Blob Storage
+sidebar_label: Azure Blob
+description: Store uploaded files, such as avatars, in a container of Azure Blob Storage.
 keywords: [Azure Blob, storage, provider]
 authors: [sh1luo]
 ---
 
-You need an [Azure Storage account](https://docs.microsoft.com/azure/storage/common/storage-account-create?tabs=azure-portal).
+This guide explains how to store the uploaded files of Casdoor, such as avatars, in Azure Blob Storage.
 
-## 1. Select Azure Blob
+---
 
-In Casdoor **Providers** → **Add**, set **Category** to **Storage**, **Type** to **Azure Blob**.
+#### Learning outcomes
 
-![azureSelect.png](/img/providers/storage/azureSelect.png)
+- Find the values of your storage account.
+- Add Azure Blob as a storage provider in Casdoor.
 
-## 2. Map fields
+#### What you need
 
-| Casdoor field        | Azure / meaning        | Required |
-|----------------------|------------------------|----------|
-| Client ID            | AccountName            | Yes      |
-| Client secret        | AccountKey             | Yes      |
-| Endpoint             | ContainerUrl           | Yes      |
-| Endpoint (intranet)  | PrivateEndpoint        | No       |
-| Bucket               | ContainerName          | Yes      |
-| Path prefix          | Path prefix            | No       |
-| Domain               | Custom domain (e.g. CDN)| No      |
+- An [Azure storage account](https://docs.microsoft.com/azure/storage/common/storage-account-create?tabs=azure-portal) with a container
+- Administrator access to the Casdoor admin console
 
-- **AccountName** — Storage account name.
-- **AccountKey** — From Azure Portal → your storage account → **Access keys**.
-- **ContainerUrl** — From the container’s properties.
-- **PrivateEndpoint** — Optional; for [Azure Private Endpoint](https://learn.microsoft.com/azure/private-link/tutorial-private-endpoint-storage-portal).
-- **ContainerName** — Container name (e.g. `default`).
-- **Domain** — Optional custom domain (e.g. Azure CDN).
+---
 
-![azureKey.png](/img/providers/storage/azureKey.png)
-![azureUrl.png](/img/providers/storage/azureUrl.png)
-![azureContainer.png](/img/providers/storage/azureContainer.png)
-![azureCDN.png](/img/providers/storage/azureCDN.png)
+## Find the values in Azure
 
-## 3. Save
+| Value | Where to find it |
+|---|---|
+| AccountName | The name of the storage account |
+| AccountKey | The storage account, **Access keys** |
+| ContainerUrl | The properties of the container |
+| ContainerName | The name of the container, for example `default` |
+| PrivateEndpoint | Optional. A [private endpoint](https://learn.microsoft.com/azure/private-link/tutorial-private-endpoint-storage-portal) of the account |
+| Domain | Optional. A custom domain, such as one of Azure CDN |
 
-Save the provider. Your application can use Azure Blob for file storage.
+![Access keys of the storage account](/img/providers/storage/azureKey.png)
 
-![azureResult.png](/img/providers/storage/azureResult.png)
+![URL of the container](/img/providers/storage/azureUrl.png)
+
+![Name of the container](/img/providers/storage/azureContainer.png)
+
+![Azure CDN domain](/img/providers/storage/azureCDN.png)
+
+## Add the provider in Casdoor {#1-select-azure-blob}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Storage` and **Type** to `Azure Blob`.
+
+   ![Azure Blob type selection](/img/providers/storage/azureSelect.png)
+
+1. Fill in the fields:
+
+   | Casdoor field        | Azure / meaning        | Required |
+   |----------------------|------------------------|----------|
+   | Client ID            | AccountName            | Yes      |
+   | Client secret        | AccountKey             | Yes      |
+   | Endpoint             | ContainerUrl           | Yes      |
+   | Endpoint (Intranet)  | PrivateEndpoint        | No       |
+   | Bucket               | ContainerName          | Yes      |
+   | Path prefix          | Path prefix            | No       |
+   | Domain               | Custom domain (e.g. CDN)| No      |
+
+1. Save the provider.
+
+   ![Azure Blob provider in Casdoor](/img/providers/storage/azureResult.png)
+
+## See also
+
+- [Storage providers](/docs/provider/storage/overview)

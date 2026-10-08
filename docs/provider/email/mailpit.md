@@ -1,27 +1,55 @@
 ---
-title: Mailpit email
-description: Use Mailpit as a local SMTP server for testing.
+title: Test email with Mailpit
+sidebar_label: Mailpit
+description: Catch the emails of Casdoor in Mailpit, a local SMTP server for testing.
 keywords: [email, mailpit]
 authors: [Attack825]
 ---
 
-[Mailpit](https://github.com/axllent/mailpit) is a test SMTP server that catches outgoing mail. By default it listens on `127.0.0.1:1025` with no TLS or auth.
+This guide explains how to send the emails of Casdoor to [Mailpit](https://github.com/axllent/mailpit), an SMTP server for testing that catches all messages and shows them in a web UI.
 
-## 1. Run Mailpit
+---
 
-Start the Mailpit service so the SMTP server is available at `127.0.0.1:1025` (or your configured host/port).
+#### Learning outcomes
+
+- Point an email provider at Mailpit.
+- Send a test email and read it in Mailpit.
+
+#### What you need
+
+- Mailpit running where Casdoor can reach it. By default, Mailpit listens on `127.0.0.1:1025` without TLS or authentication.
+- Administrator access to the Casdoor admin console
+
+---
+
+## Run Mailpit
+
+Start Mailpit, so that its SMTP server is reachable at `127.0.0.1:1025`, or at the host and port that you configured.
 
 ![Mailpit configuration](/img/providers/mailpit_conf.png)
 
-## 2. Create the email provider in Casdoor
+## Add the provider in Casdoor {#2-create-the-email-provider-in-casdoor}
 
-**Providers** → **Add**. Set **Category** to **Email**, **Type** to the appropriate SMTP option. Set **Host** and **Port** to match Mailpit (e.g. `127.0.0.1`, `1025`). Leave **Username** and **Password** empty if Mailpit has no auth. Save.
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Email` and **Type** to `Default`.
+1. Set **Host** and **Port** to the address of Mailpit, for example `127.0.0.1` and `1025`. Leave **Username** and **Password** empty if Mailpit has no authentication.
 
-![Mailpit email provider](/img/providers/mailpit_email_provider_conf.png)
+   ![Mailpit settings in Casdoor](/img/providers/mailpit_email_provider_conf.png)
 
-## 3. Test
+1. Save the provider.
 
-Use **Test SMTP Connection**; you should see “SMTP connected successfully”. Use **Send Testing Email**; you should see “Email sent successfully” and the message in Mailpit’s UI.
+## Verify the result {#3-test}
 
-![Sending a test email using Mailpit](/img/providers/mailpit_send_test_email.png)
-![Receiving a test email using Mailpit](/img/providers/mailpit_recv_test_email.png)
+1. Click **Test SMTP Connection**. Casdoor reports `SMTP connected successfully`.
+1. Click **Send Testing Email**. Casdoor reports `Email sent successfully`.
+
+   ![Test email sent from Casdoor](/img/providers/mailpit_send_test_email.png)
+
+1. Open the web UI of Mailpit. The message is there.
+
+   ![Test email in Mailpit](/img/providers/mailpit_recv_test_email.png)
+
+## See also
+
+- [Test email with MailHog](/docs/provider/email/mailhog)
+- [Email providers](/docs/provider/email/overview)

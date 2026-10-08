@@ -1,42 +1,69 @@
 ---
-title: Facebook OAuth
-description: Add Facebook as an OAuth provider.
+title: Add Facebook as an OAuth provider
+sidebar_label: Facebook
+description: Let users sign in to Casdoor with their Facebook account.
 keywords: [Facebook, OAuth]
 authors: [ErikQQY]
 ---
 
-## Create a Facebook app
+This guide explains how to let users sign in to Casdoor with their Facebook account.
 
-Go to [Facebook Developers](https://developers.facebook.com/apps/) and create a new app. Choose the app type (e.g. Consumer).
+---
 
-![Facebook select](/img/providers/OAuth/facebookselect.png)
+#### Learning outcomes
 
-After entering your name and contact email, you will be taken to the Facebook Developer dashboard.
+- Create a Facebook app with Facebook Login.
+- Add Facebook as an OAuth provider in Casdoor.
 
-![Dashboard](/img/providers/OAuth/dashboard.png)
+#### What you need
 
-Next, set up Facebook login:
+- A [Meta for Developers](https://developers.facebook.com/apps/) account
+- Administrator access to the Casdoor admin console
 
-![Facebook login](/img/providers/OAuth/facebooklogin.png)
+---
 
-Choose the Web platform for this app:
+## Create a Facebook app {#create-a-facebook-app}
 
-![Facebook web](/img/providers/OAuth/facebookweb.png)
+1. On [Meta for Developers](https://developers.facebook.com/apps/), create an app and select its type, for example **Consumer**.
 
-Under **Facebook Login** → **Settings**, set **Valid OAuth Redirect URIs** to **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
+   ![App type selection](/img/providers/OAuth/facebookselect.png)
 
-![Redirect URIs](/img/providers/OAuth/facebookredirecturl.png)
+1. Enter the name and the contact email. The dashboard of the app opens.
 
-Switch the app from **In development** to **Live** in the dashboard top bar.
+   ![Dashboard of the app](/img/providers/OAuth/dashboard.png)
 
-![Top bar](/img/providers/OAuth/facebooktopbar.png)
+1. Set up **Facebook Login** and select the **Web** platform.
 
-Copy **App ID** and **App Secret** from **Settings** → **Basic**.
+   ![Facebook Login product](/img/providers/OAuth/facebooklogin.png)
 
-![Facebook app](/img/providers/OAuth/facebookappclient.png)
+   ![Web platform](/img/providers/OAuth/facebookweb.png)
+
+1. Go to **Facebook Login** > **Settings** and add the callback URL of Casdoor, `https://<your-casdoor-host>/callback`, to **Valid OAuth Redirect URIs**. See [Redirect URL and callback URL](/docs/application/config#how-the-flow-works).
+
+   ![Valid OAuth Redirect URIs](/img/providers/OAuth/facebookredirecturl.png)
+
+1. In the top bar of the dashboard, switch the app from **In development** to **Live**.
+
+   ![Mode switch in the top bar](/img/providers/OAuth/facebooktopbar.png)
+
+1. Go to **Settings** > **Basic** and copy the **App ID** and the **App Secret**.
+
+   ![App ID and App Secret](/img/providers/OAuth/facebookappclient.png)
 
 ## Add the provider in Casdoor
 
-Create an **OAuth** provider, set **Type** to **Facebook**, and enter **App ID** as **Client ID** and **App Secret** as **Client Secret**.
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `Facebook`.
+1. Enter the App ID as the **Client ID** and the App Secret as the **Client secret**.
 
-![Facebook Client](/img/providers/OAuth/facebookclient.png)
+   ![Facebook provider in Casdoor](/img/providers/OAuth/facebookclient.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)

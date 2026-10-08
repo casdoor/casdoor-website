@@ -1,15 +1,13 @@
 ---
 title: RP-initiated logout
-description: Log a user out of Casdoor from a relying party using the OIDC RP-Initiated Logout endpoint.
+description: Reference for the OpenID Connect end-session endpoint of Casdoor, which a client application calls to sign the user out of Casdoor.
 keywords: [OIDC, RP-initiated logout, end session, logout, id_token_hint, post_logout_redirect_uri]
 authors: [hsluoyz]
 ---
 
-## Overview
+RP-initiated logout lets a relying party (RP), which is your client application, sign the user out of Casdoor and then send the browser back to the application. Casdoor implements [OpenID Connect RP-Initiated Logout 1.0](https://openid.net/specs/openid-connect-rpinitiated-1_0-final.html). OpenID Connect (OIDC) client libraries call this endpoint as the end-session endpoint.
 
-**RP-Initiated Logout** lets a relying party (RP, i.e. your client application) log the user out of Casdoor and, optionally, redirect the browser back to the application afterward. It follows the [OpenID Connect RP-Initiated Logout 1.0](https://openid.net/specs/openid-connect-rpinitiated-1_0-final.html) specification.
-
-This is the endpoint an OIDC client calls as its "end session" endpoint. It differs from [single sign-out](/docs/session/single-sign-out), which terminates every session in the organization at once.
+To end every session of a user in the organization at once, use [single sign-out](/docs/session/single-sign-out) instead.
 
 ## Endpoint
 
@@ -17,6 +15,8 @@ This is the endpoint an OIDC client calls as its "end session" endpoint. It diff
 GET  /api/logout
 POST /api/logout
 ```
+
+## Parameters
 
 | Parameter | Required | Description |
 |---|---|---|
@@ -26,42 +26,42 @@ POST /api/logout
 | `state` | Optional | An opaque value echoed back as a `state` query parameter appended to `post_logout_redirect_uri`. |
 
 :::info
-
-Per the OIDC spec, `id_token_hint` is **RECOMMENDED, not REQUIRED**. Casdoor therefore accepts logout requests without it and falls back to the user's current browser session. Some clients (for example, [Gitea](https://github.com/casdoor/casdoor/issues/5607)) only send `post_logout_redirect_uri` (optionally with `client_id`) — these requests are supported.
-
+The OIDC specification recommends `id_token_hint` but doesn't require it. Casdoor accepts requests without it and then signs out the current browser session. Some clients, such as [Gitea](https://github.com/casdoor/casdoor/issues/5607), send only `post_logout_redirect_uri`, optionally with `client_id`.
 :::
 
 ## Behavior
 
-Casdoor selects one of two paths depending on whether `id_token_hint` is provided.
+What Casdoor does depends on whether the request contains `id_token_hint`.
 
-### With `id_token_hint`
+### With an ID token hint
 
-1. The token identified by `id_token_hint` is expired.
-2. The current browser session is cleared and a back-channel logout notification is sent to other applications.
-3. If `post_logout_redirect_uri` is present and valid for the application, the browser is redirected there (with `state` appended when supplied). Otherwise the endpoint returns `200 OK`.
+1. Casdoor expires the token that `id_token_hint` identifies.
+1. Casdoor clears the current browser session and sends a back-channel logout notification to the other applications.
+1. If `post_logout_redirect_uri` is present and valid for the application, Casdoor redirects the browser to it and appends `state` if the request contains it. Otherwise, Casdoor returns HTTP 200.
 
-### Without `id_token_hint`
+### Without an ID token hint
 
-1. If there is no active session, the endpoint returns `200 OK` and does nothing (the user is already logged out).
-2. Otherwise Casdoor logs out the current session. The application is resolved from the session first, and falls back to the one identified by `client_id` when provided.
-3. The session and its token are cleared and a back-channel logout notification is sent.
-4. If `post_logout_redirect_uri` is present and valid for the application, the browser is redirected there (with `state` appended when supplied).
-5. If no `post_logout_redirect_uri` is given, Casdoor returns `200 OK`, including the application's homepage URL when one is configured (except for the built-in application).
+1. If the browser has no active session, the user is already signed out. Casdoor returns HTTP 200 and does nothing else.
+1. Otherwise, Casdoor signs out the current session. It takes the application from the session and falls back to the application that `client_id` identifies.
+1. Casdoor clears the session and its token and sends a back-channel logout notification.
+1. If `post_logout_redirect_uri` is present and valid for the application, Casdoor redirects the browser to it and appends `state` if the request contains it.
+1. If the request has no `post_logout_redirect_uri`, Casdoor returns HTTP 200. The response includes the home page URL of the application if one is set, except for the built-in application.
 
-## Redirect URI validation
+## Redirect URL validation {#redirect-uri-validation}
 
-`post_logout_redirect_uri` is always validated against the target application's registered **Redirect URLs**. If the URI is not in that list — or the application cannot be resolved — Casdoor rejects the request with an error instead of redirecting. This prevents open-redirect abuse. Make sure your post-logout URL is added to the application's Redirect URLs.
+Casdoor always checks `post_logout_redirect_uri` against the **Redirect URLs** of the application. If the URL isn't in that list, or if Casdoor can't determine the application, Casdoor rejects the request with an error and doesn't redirect. This prevents open redirects.
+
+Add your post-logout URL to the **Redirect URLs** of the application.
 
 ## Examples
 
-Log out using the ID token and return to the app:
+Sign out with the ID token and return to the application:
 
 ```text
 GET /api/logout?id_token_hint=<ID_TOKEN>&post_logout_redirect_uri=https://myapp.example.com/logged-out&state=xyz
 ```
 
-Log out based on the current session, resolving the app by `client_id` (no `id_token_hint`):
+Sign out the current session without an ID token, and identify the application by its client ID:
 
 ```text
 GET /api/logout?client_id=<CLIENT_ID>&post_logout_redirect_uri=https://myapp.example.com/logged-out
@@ -69,5 +69,6 @@ GET /api/logout?client_id=<CLIENT_ID>&post_logout_redirect_uri=https://myapp.exa
 
 ## See also
 
-- [Single sign-out (SSO logout)](/docs/session/single-sign-out) — terminate every session in the organization at once.
+- [Single sign-out](/docs/session/single-sign-out)
 - [Session management](/docs/session/management)
+- [Connect a standard OIDC client](/docs/how-to-connect/oidc-client)

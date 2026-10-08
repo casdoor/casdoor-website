@@ -1,19 +1,26 @@
 ---
-title: Overview
-description: Organizations are the core unit in Casdoor for managing users and applications.
+title: Organizations
+sidebar_label: Overview
+description: An organization holds users and applications. This page describes the settings of an organization - password storage, avatars, usernames, soft deletion, and the navigation that members see.
 keywords: [organization, users, applications]
 authors: [sh1luo]
 ---
 
-An **organization** is the primary unit in Casdoor for managing users and applications. Once a user signs in to an organization, they can access all applications in that organization without signing in again.
+An organization is the unit in which Casdoor manages users and applications. A user who has signed in to an organization can open all applications of that organization without signing in again.
 
-When configuring [applications](/docs/application/config) and [providers](/docs/provider/overview), the chosen organization determines which users can access the application and which providers apply.
+The organization that you select for an [application](/docs/application/config) or a [provider](/docs/provider/overview) determines which users can sign in to the application and where the provider is available.
 
-The organization’s display name (or its name if no display name is set) is used as the issuer in TOTP authenticator apps, helping users distinguish accounts when they have multiple TOTP entries.
+You edit an organization in the Casdoor admin console under **User Management** > **Organizations**. This page describes the general settings. Other pages of this section cover the [account page](/docs/organization/accountCustomization), [password complexity](/docs/organization/passwordComplexity), the [password obfuscator](/docs/organization/passwordObfuscator), the [theme](/docs/organization/customize-theme), [MFA items](/docs/organization/mfa-items), and [groups](/docs/organization/organization-tree). You configure LDAP per organization as well. See [LDAP](/docs/ldap/overview).
 
-LDAP can be configured per organization. For details, see [LDAP](/docs/ldap/overview).
+## Sign-in page of an organization
 
-Casdoor supports multiple password storage algorithms, configurable on the organization edit page. New organizations use **bcrypt** by default for secure password hashing.
+Users usually sign in through an application. They can also sign in on the sign-in page of their organization, at `/login/<organization-name>`. On the demo site, for example: `https://door.casdoor.com/login/casbin`.
+
+When a user signs in through this URL, Casdoor remembers the organization. When the session expires, Casdoor sends the user back to the sign-in page of the same organization.
+
+## Password storage
+
+**Password type** sets the algorithm with which Casdoor stores the passwords of the organization's users. New organizations use `bcrypt`.
 
 | Name        | Algorithm | Description | Typical use |
 | :---------- | :-------- | ----------- | :---------- |
@@ -23,62 +30,62 @@ Casdoor supports multiple password storage algorithms, configurable on the organ
 | bcrypt      | [bcrypt](https://github.com/casdoor/casdoor/blob/master/cred/bcrypt.go) | [bcrypt](https://en.wikipedia.org/wiki/Bcrypt) hashes and salts passwords securely. **Default for new organizations.** | [Spring Boot](https://spring.io/projects/spring-boot), [WordPress](https://stackoverflow.com/questions/1045988/what-type-of-hash-does-wordpress-use) |
 | pbkdf2-salt | [SHA-256 and PBKDF2](https://github.com/casdoor/casdoor/blob/master/cred/pbkdf2-salt.go) | [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is a key derivation function resistant to dictionary and rainbow-table attacks. Use when importing users via the Keycloak syncer. | [Keycloak](http://keycloak.org/) |
 
-## Password Salt Configuration
+### Password salt {#password-salt-configuration}
 
-For algorithms that use salts (`salt`, `md5-salt`, `pbkdf2-salt`), set the **Password salt** on the organization edit page:
+The algorithms `salt`, `md5-salt`, and `pbkdf2-salt` use a salt. **Password salt** controls where the salt comes from:
 
-- **Organization-level salt**: When **Password salt** is set, all users in the organization share the same salt. Use this when you need consistency (e.g. compatibility with another system).
-- **Per-user random salt**: When **Password salt** is left empty, Casdoor generates a unique random salt per user. This improves security by limiting the impact of precomputed hash tables.
+| **Password salt** | Salt | Use it when |
+|---|---|---|
+| Set | All users of the organization share this salt | You need hashes that are compatible with another system |
+| Empty | Casdoor generates a random salt for each user and stores it with the password hash | You set up a new organization. This is the recommended setting, because it limits the use of precomputed hash tables |
 
-**Recommendation:** Use per-user salt for new deployments to strengthen protection against rainbow-table attacks. Salts are stored with the password hash and managed by Casdoor.
+## Permanent avatars {#permanent-avatar-storage}
 
-## Permanent avatar storage
+When a user signs in through an OAuth provider, such as GitHub or Google, Casdoor stores the URL of the avatar at the provider. If the provider later changes or removes that URL, the avatar breaks.
 
-By default, when a user signs in via an OAuth provider (GitHub, Google, etc.), Casdoor stores the provider-hosted avatar URL directly. If the provider changes or removes that URL later, the avatar breaks.
+Turn on **Use permanent avatar** to make Casdoor download the avatar and upload it to its own [storage provider](/docs/provider/storage/overview). The URL then stays stable. Casdoor uploads an avatar only when it is new or has changed.
 
-Enable **Use permanent avatar** on the organization edit page to have Casdoor download the avatar from the OAuth provider and re-upload it to Casdoor's configured [storage provider](/docs/provider/storage/overview). The stored URL is then stable and independent of the original provider.
+## Email as username {#use-email-as-username}
 
-When this setting is on, Casdoor checks whether a permanent avatar already exists for the user before uploading. Only new or changed avatars trigger an upload.
+Turn on **Use Email as username** to register users without a separate username. Then:
 
-## Use email as username
-
-Organizations can enable **Use email as username** so that the user’s email is used as their username when the username field is not shown at sign-up. This simplifies registration by avoiding a separate username.
-
-When enabled:
-
-- At sign-up, if the username field is hidden, the email is used as the username.
-- If a user changes their email, their username is updated to match.
-- Email and username stay in sync.
-
-To enable it, check **Use email as username** on the organization edit page.
+- At sign-up, if the username field is hidden, the email address becomes the username.
+- When a user changes the email address, the username changes with it.
 
 ## Soft deletion
 
-**Soft deletion** is off by default: deleting a user removes it from the database.
+By default, deleting a user removes the user from the database.
 
-When **Soft deletion** is enabled on the organization edit page, deleting a user only marks it as deleted. The user stays in the user list with **Is deleted** checked and a **Deleted time**, can no longer sign in, and its tokens and sessions are revoked. To remove such a user permanently, delete it again: deleting a user that is already marked as deleted removes it from the database. To restore it instead, uncheck **Is deleted** on the user edit page.
+With **Soft deletion** turned on, deleting a user only marks the user as deleted:
 
-## Navbar items
+- The user stays in the user list, with **Is deleted** selected and a **Deleted time**.
+- The user can no longer sign in, and Casdoor revokes the tokens and sessions of the user.
+- To restore the user, clear **Is deleted** on the edit page of the user.
+- To remove the user for good, delete the user a second time.
 
-You can control which pages appear in the Casdoor navigation bar for members of an organization. On the organization edit page there are two independent trees:
+## Navigation of the admin console {#navbar-items}
 
-- **Admin navbar items** (`navItems`) — the navigation shown to administrators. Defaults to **all** items.
-- **User navbar items** (`userNavItems`) — the navigation shown to regular (non-admin) users in the user portal. Defaults to **none**, so by default regular users only see their own account pages.
+Two settings control which pages members of the organization see in the navigation of the Casdoor admin console:
 
-Check or uncheck entries in the tree to choose the visible pages (Applications, Providers, Resources, Keys, Products, Orders, Webhooks, and so on). Selecting **all** shows every page.
+| Setting | Applies to | Default |
+|---|---|---|
+| **Admin navbar items** (`navItems`) | Administrators | All pages |
+| **User navbar items** (`userNavItems`) | Regular users | No pages. Regular users see only their own account pages |
 
-When a regular user opens the Casdoor home page (`/`), they are redirected to the first page that is enabled for them, in this order:
+Select the pages in each tree, for example Applications, Providers, Resources, Keys, Products, Orders, and Webhooks.
 
-1. **Apps** (`/apps`) if it is enabled (or if all items are enabled),
-2. otherwise **Shortcuts** (`/shortcuts`) if it is enabled,
-3. otherwise their **Account** page (`/account`).
+When a regular user opens the Casdoor home page (`/`), Casdoor redirects the user to the first of the following pages that the user may see:
 
-This ensures users are never redirected to a page they are not allowed to see.
+1. **Apps** (`/apps`)
+1. **Shortcuts** (`/shortcuts`)
+1. The account page (`/account`)
 
-:::tip
+## Issuer name in authenticator apps
 
-Besides signing in through an application (which redirects to Casdoor for SSO), users can sign in directly on an organization’s login page: `/login/<organization_name>` (e.g. `https://door.casdoor.com/login/casbin` on the demo site).
+Casdoor uses the display name of the organization, or its name if it has no display name, as the issuer of time-based one-time passwords (TOTP). Users who have several entries in an authenticator app recognize the account by it.
 
-If a user signs in via an organization-specific URL, Casdoor remembers that organization. When the session expires, they are redirected back to that organization’s login page for a simpler re-authentication flow.
+## See also
 
-:::
+- [Core concepts](/docs/basic/core-concepts)
+- [Users](/docs/user/overview)
+- [Applications](/docs/application/overview)

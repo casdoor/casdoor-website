@@ -1,65 +1,96 @@
 ---
-title: Kerberos/SPNEGO authentication
-description: Configure Kerberos/SPNEGO (Integrated Windows Authentication) for single sign-on.
+title: Set up Kerberos sign-in
+sidebar_label: Kerberos/SPNEGO
+description: Configure Kerberos/SPNEGO (Integrated Windows Authentication), so that users on domain-joined machines sign in to Casdoor without entering credentials.
 keywords: [Kerberos, SPNEGO, IWA, Integrated Windows Authentication, SSO]
 authors: [hsluoyz]
 ---
 
-Casdoor supports **Kerberos/SPNEGO** (Integrated Windows Authentication) for seamless SSO in enterprise environments where users are already authenticated against a Kerberos Key Distribution Center (KDC), typically Active Directory. The browser presents a SPNEGO token transparently — users sign in without entering credentials.
+This guide explains how to set up Kerberos/SPNEGO sign-in, also known as Integrated Windows Authentication. Users who are already authenticated against a Kerberos Key Distribution Center (KDC), typically Active Directory, then sign in to Casdoor without entering credentials.
 
-## How it works
+---
 
-1. The browser requests the Casdoor endpoint `/api/kerberos-login?application=<app-name>`.
-2. If no `Authorization: Negotiate` header is present, Casdoor responds with `401 WWW-Authenticate: Negotiate`.
-3. The browser obtains a Kerberos service ticket and sends it as a SPNEGO token in `Authorization: Negotiate <base64-token>`.
-4. Casdoor validates the token using the organization's keytab and maps the Kerberos principal name to a Casdoor user.
-5. On success, Casdoor signs the user in and issues an authorization code or session as usual.
+#### Learning outcomes
 
-## Configuration
+- Generate a keytab for the Casdoor service principal.
+- Configure Kerberos for an organization.
+- Map Kerberos principals to Casdoor users.
+- Start a Kerberos sign-in for an application.
 
-Kerberos settings are per organization. Open the organization edit page and fill in the following fields:
+#### What you need
 
-| Field | Description |
-|-------|-------------|
-| **Kerberos realm** | The Kerberos realm name, typically the uppercase domain (e.g. `CORP.EXAMPLE.COM`). |
-| **Kerberos KDC host** | Hostname or IP of the Key Distribution Center (e.g. `dc.corp.example.com`). |
-| **Kerberos keytab** | Base64-encoded keytab file for the service principal. |
-| **Kerberos service name** | Service principal prefix (default: `HTTP`). The full SPN is `<service-name>/<hostname>@<realm>`. |
+- An Active Directory domain, or another Kerberos realm, and the rights to create a service principal in it
+- Client machines that are joined to the domain, in the same Kerberos realm as the Casdoor server
+- A Casdoor [organization](/docs/organization/overview) whose users correspond to the domain users
 
-## Generating the keytab
+---
 
-On a Windows domain controller, run:
+## About Kerberos sign-in
 
-```powershell
-ktpass -princ HTTP/casdoor.corp.example.com@CORP.EXAMPLE.COM ^
-       -mapuser casdoor-svc@corp.example.com ^
-       -crypto AES256-SHA1 ^
-       -ptype KRB5_NT_PRINCIPAL ^
-       -pass * ^
-       -out casdoor.keytab
-```
+1. The browser requests the Casdoor endpoint `/api/kerberos-login?application=<application-name>`.
+1. If the request has no `Authorization: Negotiate` header, Casdoor answers with HTTP 401 and the header `WWW-Authenticate: Negotiate`.
+1. The browser gets a Kerberos service ticket and sends it as a SPNEGO token in the header `Authorization: Negotiate <base64-token>`.
+1. Casdoor validates the token with the keytab of the organization and maps the Kerberos principal to a Casdoor user.
+1. Casdoor signs the user in and issues an authorization code or a session, as with any other sign-in method.
 
-Then base64-encode the file and paste the result into **Kerberos keytab**:
+:::caution
+The browser and the Casdoor server must be in the same Kerberos realm, and the client machine must be joined to the domain. Authentication across realms needs trust between the KDCs, which you configure outside Casdoor.
+:::
 
-```bash
-# Linux/macOS
-base64 casdoor.keytab
-```
+## Generate the keytab {#generating-the-keytab}
 
-## User matching
+1. On a Windows domain controller, create the keytab for the service principal of Casdoor:
 
-After the SPNEGO token is validated, Casdoor looks up a user in the organization whose `kerberosName` attribute matches the Kerberos principal (e.g. `alice@CORP.EXAMPLE.COM`). If no user is found, the login fails. Pre-create Casdoor users and set their Kerberos principal name to enable the mapping.
+   ```powershell
+   ktpass -princ HTTP/casdoor.corp.example.com@CORP.EXAMPLE.COM ^
+          -mapuser casdoor-svc@corp.example.com ^
+          -crypto AES256-SHA1 ^
+          -ptype KRB5_NT_PRINCIPAL ^
+          -pass * ^
+          -out casdoor.keytab
+   ```
 
-## Endpoint
+1. Encode the file with Base64:
+
+   ```bash
+   # Linux/macOS
+   base64 casdoor.keytab
+   ```
+
+## Configure the organization {#configuration}
+
+Kerberos is configured per organization.
+
+1. In the Casdoor admin console, open the edit page of the organization.
+1. Fill in the following fields:
+
+   | Field | Description |
+   |-------|-------------|
+   | **Kerberos realm** | The Kerberos realm name, typically the uppercase domain (e.g. `CORP.EXAMPLE.COM`). |
+   | **Kerberos KDC host** | Hostname or IP of the Key Distribution Center (e.g. `dc.corp.example.com`). |
+   | **Kerberos keytab** | Base64-encoded keytab file for the service principal. |
+   | **Kerberos service name** | Service principal prefix (default: `HTTP`). The full SPN is `<service-name>/<hostname>@<realm>`. |
+
+1. Save the organization.
+
+## Map principals to users {#user-matching}
+
+After Casdoor has validated the SPNEGO token, it looks for a user of the organization whose `kerberosName` matches the Kerberos principal, for example `alice@CORP.EXAMPLE.COM`. If no user matches, the sign-in fails.
+
+Create the Casdoor users in advance and set the Kerberos principal name of each one.
+
+## Start a Kerberos sign-in {#endpoint}
+
+Send the browser to the following endpoint, directly or through your reverse proxy:
 
 ```http
 GET /api/kerberos-login?application=<application-name>
 ```
 
-Point the browser or your reverse proxy to this URL to initiate Kerberos authentication for the specified application.
+Casdoor signs the user in to the application that the `application` parameter names.
 
-:::caution
+## See also
 
-Kerberos authentication requires the browser and Casdoor server to be in the same Kerberos realm, and the client machine must be domain-joined. Cross-realm authentication requires additional KDC-level trust configuration outside of Casdoor.
-
-:::
+- [LDAP](/docs/ldap/overview)
+- [Active Directory syncer](/docs/syncer/ActiveDirectory)
+- [Set up single sign-on](/docs/session/single-sign-on)

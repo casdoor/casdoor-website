@@ -1,31 +1,63 @@
 ---
-title: LinkedIn OAuth
-description: Add LinkedIn as an OAuth provider.
+title: Add LinkedIn as an OAuth provider
+sidebar_label: LinkedIn
+description: Let users sign in to Casdoor with their LinkedIn account.
 keywords: [LinkedIn, OAuth]
 authors: [ErikQQY]
 ---
 
-1. Create an app at [LinkedIn Developers](https://www.linkedin.com/developers/apps/new).
+This guide explains how to let users sign in to Casdoor with their LinkedIn account.
 
-   ![LinkedIn](/img/providers/OAuth/linkedin.png)
+---
 
-2. Verify the LinkedIn page linked to the app. Only a company page admin can verify and grant permissions.
+#### Learning outcomes
 
-   ![LinkedIn Verify](/img/providers/OAuth/linkedin-verify.png)
+- Create and verify a LinkedIn app.
+- Add LinkedIn as an OAuth provider in Casdoor.
 
-   :::note
-   Verification must be done by the company page administrator.
-   :::
+#### What you need
 
-3. In the app, enable **Sign In with LinkedIn** and add **Authorized redirect URLs**: use **Casdoor’s callback URL**. In Casdoor, set the application **Redirect URL** to your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
+- A LinkedIn company page and an administrator of that page, who verifies the app
+- Administrator access to the Casdoor admin console
 
-   ![LinkedIn sign in](/img/providers/OAuth/linkedinsignin.png)
-   ![LinkedIn Redirect](/img/providers/OAuth/linkedinredirecturl.png)
+---
 
-4. Copy **Client ID** and **Client Secret** from the app.
+## Create a LinkedIn app
 
-   ![LinkedIn Client](/img/providers/OAuth/linkedinclient.png)
+1. Create an app on [LinkedIn Developers](https://www.linkedin.com/developers/apps/new).
 
-5. In Casdoor add an **OAuth** provider, set **Type** to **LinkedIn**, and enter **Client ID** and **Client secret**.
+   ![LinkedIn app creation form](/img/providers/OAuth/linkedin.png)
 
-   ![LinkedIn Provider](/img/providers/OAuth/linkedinprovider.png)
+1. Verify the company page that is linked to the app. Only an administrator of the company page can verify it and grant permissions.
+
+   ![Verification of the LinkedIn page](/img/providers/OAuth/linkedin-verify.png)
+
+1. In the app, turn on **Sign In with LinkedIn**.
+
+   ![Sign In with LinkedIn product](/img/providers/OAuth/linkedinsignin.png)
+
+1. Add the callback URL of Casdoor, `https://<your-casdoor-host>/callback`, to **Authorized redirect URLs**. See [Redirect URL and callback URL](/docs/application/config#how-the-flow-works).
+
+   ![Authorized redirect URLs of the app](/img/providers/OAuth/linkedinredirecturl.png)
+
+1. Copy the **Client ID** and the **Client Secret**.
+
+   ![Client ID and client secret of the app](/img/providers/OAuth/linkedinclient.png)
+
+## Add the provider in Casdoor
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `LinkedIn`.
+1. Enter the **Client ID** and the **Client secret**.
+
+   ![LinkedIn provider in Casdoor](/img/providers/OAuth/linkedinprovider.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)

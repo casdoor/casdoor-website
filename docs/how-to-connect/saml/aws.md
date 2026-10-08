@@ -1,78 +1,102 @@
 ---
-title: AWS Client VPN (SAML)
-description: Use Casdoor as SAML IdP for AWS Client VPN.
+title: Connect AWS Client VPN with SAML
+sidebar_label: AWS Client VPN (SAML)
+description: Use Casdoor as the SAML identity provider of AWS Client VPN, so that users sign in to the VPN with their Casdoor account.
 keywords: [SAML, IdP, AWS, VPN]
 authors: [UsherFall]
 ---
 
-This guide configures Casdoor as a SAML identity provider for **AWS Client VPN**.
+This guide explains how to use Casdoor as the SAML identity provider (IdP) of AWS Client VPN.
 
-## Prerequisites
+---
 
-- AWS account with permission to configure the service
-- Amazon VPC with an EC2 instance ([VPC setup](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html), [EC2](https://docs.aws.amazon.com/ec2/latest/userGuide/EC2_GetStarted.html)); in the instance security group, allow ICMP from the VPC CIDR for testing
-- A private certificate in [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) ([import guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html))
-- Windows or Mac with [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn-download/) installed
+#### Learning outcomes
 
-## Configure the SAML application in Casdoor
+- Configure a Casdoor application for AWS Client VPN.
+- Add Casdoor as a SAML identity provider in AWS IAM.
+- Create a Client VPN endpoint that authenticates users through Casdoor.
+- Connect to the VPN.
 
-- Set **Redirect URL** to `urn:amazon:webservices:clientvpn`.
+#### What you need
 
-![saml_aws_redirect_url.png](/img/how-to-connect/saml/saml_aws_redirect_url.png)
+- An AWS account with the rights to configure IAM and VPC
+- An Amazon VPC with an EC2 instance. See [Get started with Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html) and [Get started with Amazon EC2](https://docs.aws.amazon.com/ec2/latest/userGuide/EC2_GetStarted.html). To test the connection, allow ICMP from the CIDR of the VPC in the security group of the instance.
+- A private certificate in [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/). See the [AWS Client VPN administrator guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html).
+- A Windows or Mac computer with the [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn-download/) application
+- An [application](/docs/application/overview) in Casdoor
 
-- Set **SAML reply URL** to `http://127.0.0.1:35001`.
+---
 
-![saml_aws_reply_url.png](/img/how-to-connect/saml/saml_aws_reply_url.png)
+## Configure the Casdoor application
 
-- Save the **SAML metadata** as an XML file for the next step.
+1. In the Casdoor admin console, open the edit page of the application.
+1. Add `urn:amazon:webservices:clientvpn` to **Redirect URLs**.
 
-![saml_aws_metadata.png](/img/how-to-connect/saml/saml_aws_metadata.png)
+   ![Redirect URLs with the AWS Client VPN identifier](/img/how-to-connect/saml/saml_aws_redirect_url.png)
 
-## Configure AWS
+1. Set **SAML reply URL** to `http://127.0.0.1:35001`.
 
-### Add Casdoor as an identity provider
+   ![SAML reply URL for AWS Client VPN](/img/how-to-connect/saml/saml_aws_reply_url.png)
 
-1. In the **IAM** console, open **Identity providers** → **Create provider**.
-2. Choose **SAML**, give the provider a name, and upload the metadata file from Casdoor.
-3. Click **Next step** → **Create**.
+1. Save the **SAML metadata** as an XML file. You upload it to AWS in the next section.
 
-![saml_aws_create.png](/img/how-to-connect/saml/saml_aws_create.png)
-![saml_aws_choose_metadata.png](/img/how-to-connect/saml/saml_aws_choose_metadata.png)
+   ![SAML metadata of the application](/img/how-to-connect/saml/saml_aws_metadata.png)
 
-### Create a Client VPN endpoint
+## Add Casdoor as an identity provider in AWS
 
-1. In **VPC** → **Client VPN Endpoints** → **Create Client VPN Endpoint**.
-2. Set **Client IPv4 CIDR** for remote users.
-3. Select your **Server certificate** (from ACM).
-4. Under **Authentication**, choose **User-based authentication** → **Federated authentication**.
-5. Select the SAML identity provider you created.
-6. Click **Create Client VPN Endpoint**.
+1. In the IAM console, go to **Identity providers** and click **Create provider**.
 
-![saml_aws_vpn_endpoint.png](/img/how-to-connect/saml/saml_aws_vpn_endpoint.png)
-![saml_aws_create_vpn.png](/img/how-to-connect/saml/saml_aws_create_vpn.png)
+   ![Create provider in the IAM console](/img/how-to-connect/saml/saml_aws_create.png)
 
-### Associate the VPN with a VPC
+1. Select **SAML**, enter a name for the provider, and upload the metadata file from Casdoor.
 
-1. In the endpoint, open **Target network associations** → **Associate target network**.
-2. Select the VPC and subnet.
+   ![Metadata upload in the IAM console](/img/how-to-connect/saml/saml_aws_choose_metadata.png)
 
-![saml_aws_target_network.png](/img/how-to-connect/saml/saml_aws_target_network.png)
+1. Click **Next step**, and then **Create**.
 
-### Authorization rules (optional)
+## Create a Client VPN endpoint
 
-1. Open **Authorization rules** → **Add authorize rule**.
-2. Set **Destination network** (e.g. `172.31.16.0/20` for your EC2).
-3. Under **Grant access to**, choose **Allow access to users in a specific access group** and enter the group name (e.g. `casdoor`).
-4. Add the rule.
+1. In the VPC console, go to **Client VPN Endpoints** and click **Create Client VPN Endpoint**.
 
-![saml_aws_rule.png](/img/how-to-connect/saml/saml_aws_rule.png)
+   ![Client VPN Endpoints in the VPC console](/img/how-to-connect/saml/saml_aws_vpn_endpoint.png)
 
-## Connect to Client VPN
+1. In **Client IPv4 CIDR**, enter the address range for remote users.
+1. In **Server certificate**, select your certificate from ACM.
+1. Under **Authentication**, select **User-based authentication**, and then **Federated authentication**.
+1. Select the SAML identity provider that you created.
+1. Click **Create Client VPN Endpoint**.
 
-1. Select the endpoint (state: Available) → **Download Client Configuration**.
-2. In the AWS Client VPN app: **File** → **Manage Profiles** → **Add Profile** → select the downloaded file.
-3. Select the profile and click **Connect**.
+   ![Client VPN endpoint settings](/img/how-to-connect/saml/saml_aws_create_vpn.png)
 
-![saml_aws_download.png](/img/how-to-connect/saml/saml_aws_download.png)
+## Associate the endpoint with a VPC
+
+1. Open the endpoint, go to **Target network associations**, and click **Associate target network**.
+1. Select the VPC and the subnet.
+
+   ![Target network association](/img/how-to-connect/saml/saml_aws_target_network.png)
+
+## Add an authorization rule
+
+This step is optional. It limits access to a network to one group of users.
+
+1. Open the endpoint, go to **Authorization rules**, and click **Add authorize rule**.
+1. In **Destination network**, enter the network of your EC2 instance, for example `172.31.16.0/20`.
+1. Under **Grant access to**, select **Allow access to users in a specific access group** and enter the name of the group, for example `casdoor`.
+1. Add the rule.
+
+   ![Authorization rule](/img/how-to-connect/saml/saml_aws_rule.png)
+
+## Verify the result {#connect-to-client-vpn}
+
+1. In the VPC console, select the endpoint, wait until its state is `Available`, and click **Download Client Configuration**.
+
+   ![Download Client Configuration](/img/how-to-connect/saml/saml_aws_download.png)
+
+1. In the AWS Client VPN application, go to **File** > **Manage Profiles**, click **Add Profile**, and select the downloaded file.
+1. Select the profile and click **Connect**. The Casdoor sign-in page opens in your browser. After you sign in, the VPN connects.
 
 <video src="/video/saml_aws.mp4" controls="controls" width="100%"></video>
+
+## See also
+
+- [Use Casdoor as a SAML identity provider](/docs/how-to-connect/saml/overview)

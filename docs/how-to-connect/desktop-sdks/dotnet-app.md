@@ -1,58 +1,70 @@
 ---
-title: .NET desktop app
-description: Integrate Casdoor in a .NET desktop app with WebView2.
+title: Sign users in to a .NET desktop app
+sidebar_label: .NET desktop app
+description: Run the Casdoor .NET desktop example, which signs users in through WebView2, and add the same flow to your own app.
 keywords: [dotNET, SDK]
 authors: [zh6335901]
 ---
 
-The [casdoor-dotnet-desktop-example](https://github.com/casdoor/casdoor-dotnet-desktop-example) shows Casdoor sign-in in a .NET desktop app using WebView2.
+This guide explains how to run the Casdoor example for .NET desktop apps and how to add the same sign-in flow to your own app. The example shows the Casdoor sign-in page in a WebView2 window.
+
+---
+
+#### Learning outcomes
+
+- Configure and run the example app.
+- Open the Casdoor sign-in window from your app.
+- Exchange the authorization code for a token and read the user.
+
+#### What you need
+
+- [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download)
+- [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section). Windows usually has it preinstalled.
+- An [application](/docs/application/overview) in Casdoor. Without one, the example uses the [Casdoor demo site](https://door.casdoor.com) and its application [app-casnode](https://door.casdoor.com/applications/app-casnode).
+
+#### Sample code
+
+- [casdoor-dotnet-desktop-example](https://github.com/casdoor/casdoor-dotnet-desktop-example)
+
+---
 
 ## Run the example
 
-### Prerequisites
+1. Clone [casdoor-dotnet-desktop-example](https://github.com/casdoor/casdoor-dotnet-desktop-example).
+1. Set the following values. All of them are strings.
 
-- [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download)
-- [WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section) (usually preinstalled on Windows)
+   | Name         | Description                                                                                             | File                  |
+   | ------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
+   | Domain       | The host/domain of your Casdoor server                                                                  | `CasdoorVariables.cs` |
+   | ClientId     | The Client ID of your Casdoor application                                                               | `CasdoorVariables.cs` |
+   | AppName      | The name of your Casdoor application                                                                    | `CasdoorVariables.cs` |
+   | CallbackUrl  | The path of the callback URL for your Casdoor application. If not provided, it will be `casdoor://callback` | `CasdoorVariables.cs` |
+   | ClientSecret | The Client Secret of your Casdoor application                                                           | `CasdoorVariables.cs` |
 
-### Initialization
+1. Start the app.
 
-Set these 5 string parameters:
+   - In Visual Studio: Open `casdoor-dotnet-desktop-example.sln` and press `Ctrl + F5`.
+   - On the command line: Run `dotnet run` in `src/DesktopApp`.
 
-| Name         | Description                                                                                             | File                  |
-| ------------ | ------------------------------------------------------------------------------------------------------- | --------------------- |
-| Domain       | The host/domain of your Casdoor server                                                                  | `CasdoorVariables.cs` |
-| ClientId     | The Client ID of your Casdoor application                                                               | `CasdoorVariables.cs` |
-| AppName      | The name of your Casdoor application                                                                    | `CasdoorVariables.cs` |
-| CallbackUrl  | The path of the callback URL for your Casdoor application. If not provided, it will be `casdoor://callback` | `CasdoorVariables.cs` |
-| ClientSecret | The Client Secret of your Casdoor application                                                           | `CasdoorVariables.cs` |
+1. In the app window, click **Casdoor Login**.
 
-Defaults: [Casdoor demo](https://door.casdoor.com) and [app-casnode](https://door.casdoor.com/applications/app-casnode) if not set.
+   ![Main window of the example app](/img/how-to-connect/desktop-sdks/dotnet-app/index.png)
 
-### Running
+   The Casdoor sign-in page opens in a window.
 
-**Visual Studio**
+   ![Casdoor sign-in window](/img/how-to-connect/desktop-sdks/dotnet-app/login.png)
 
-1. Open `casdoor-dotnet-desktop-example.sln`
-2. Press `Ctrl + F5` to start
+1. Sign in. The app shows the profile of the user.
 
-**Command line**
+   ![User profile in the example app](/img/how-to-connect/desktop-sdks/dotnet-app/userprofile.png)
 
-1. `cd src/DesktopApp`
-2. `dotnet run`
+![Recording of the complete sign-in flow](/img/how-to-connect/desktop-sdks/dotnet-app/preview.gif)
 
-### Preview
+## Add sign-in to your app
 
-![index](/img/how-to-connect/desktop-sdks/dotnet-app/index.png)
+### Open the sign-in window
 
-Click **Casdoor Login** to open the login window. After sign-in, the user profile is shown.
-
-![login](/img/how-to-connect/desktop-sdks/dotnet-app/login.png)
-![user profile](/img/how-to-connect/desktop-sdks/dotnet-app/userprofile.png)
-![preview gif](/img/how-to-connect/desktop-sdks/dotnet-app/preview.gif)
-
-## Integration
-
-### Open the login window
+Create the sign-in window and subscribe to the event that delivers the authorization code:
 
 ```csharp
 var login = new Login();
@@ -61,7 +73,9 @@ login.CodeReceived += Login_CodeReceived;
 login.ShowDialog();
 ```
 
-### Exchange the auth code for user info
+### Exchange the code for the user
+
+In the event handler, exchange the authorization code for a token and read the user from it:
 
 ```csharp
 public async Task<string?> RequestToken(string clientId, string clientSecret, string code)
@@ -97,3 +111,8 @@ var token = await _casdoorApi.RequestToken(
 
 var user = await _casdoorApi.GetUserInfo(token);
 ```
+
+## See also
+
+- [Casdoor SDKs](/docs/how-to-connect/sdk)
+- [OAuth 2.0](/docs/how-to-connect/oauth)

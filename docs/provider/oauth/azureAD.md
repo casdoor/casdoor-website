@@ -1,30 +1,61 @@
 ---
-title: Azure AD OAuth
-description: Add Microsoft Azure Active Directory as an OAuth provider.
+title: Add Azure AD as an OAuth provider
+sidebar_label: Azure AD
+description: Let users sign in to Casdoor with their Microsoft account in Azure Active Directory (Microsoft Entra ID).
 keywords: [Azure AD, Azure, OAuth]
 authors: [leo220yuyaodog]
 ---
 
-**Azure Active Directory (Azure AD)** provides a single identity for cloud and on-premises apps. Use it as an OAuth provider in Casdoor so users can sign in with their Microsoft accounts.
+This guide explains how to let users sign in to Casdoor with their Microsoft account in Azure Active Directory (Azure AD).
 
-## Register an application
+---
 
-1. [Register an application](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps) in Azure AD and choose the account type (e.g. single tenant).
+#### Learning outcomes
 
-   ![azuread_register.png](/img/providers/OAuth/azuread_register.png)
+- Register an application in Azure AD.
+- Add Azure AD as an OAuth provider in Casdoor.
 
-2. Create a **client secret** and save the value (it is shown only once).
+#### What you need
 
-   ![azuread_secret.png](/img/providers/OAuth/azuread_secret.png)
+- An Azure AD tenant with the rights to register applications
+- Administrator access to the Casdoor admin console
 
-3. Under **Authentication**, add **Redirect URIs** for Casdoor (e.g. `https://your-casdoor.com/callback`).
+---
 
-   ![azuread_uri.png](/img/providers/OAuth/azuread_uri.png)
+## Register an application in Azure AD
 
-4. Under **API permissions**, add the scopes you need (e.g. `User.Read`). Click **Grant admin consent**.
+1. [Register an application](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps) and choose the supported account types, for example single tenant.
 
-   ![azuread_permission.png](/img/providers/OAuth/azuread_permission.png)
+   ![Application registration in Azure AD](/img/providers/OAuth/azuread_register.png)
 
-5. In Casdoor, create an **OAuth** provider, set **Type** to **Azure AD**, and enter the **Client ID** and **Client Secret** from the Azure app.
+1. Create a client secret and copy its value. Azure shows the value only once.
 
-   ![azuread_casdoor.png](/img/providers/OAuth/azuread_casdoor.png)
+   ![Client secret of the application](/img/providers/OAuth/azuread_secret.png)
+
+1. Under **Authentication**, add the callback URL of Casdoor, for example `https://your-casdoor.com/callback`, to **Redirect URIs**.
+
+   ![Redirect URIs of the application](/img/providers/OAuth/azuread_uri.png)
+
+1. Under **API permissions**, add the permissions that you need, for example `User.Read`, and click **Grant admin consent**.
+
+   ![API permissions of the application](/img/providers/OAuth/azuread_permission.png)
+
+## Add the provider in Casdoor
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `Azure AD`.
+1. Enter the application (client) ID as the **Client ID** and the secret value as the **Client secret**.
+
+   ![Azure AD provider in Casdoor](/img/providers/OAuth/azuread_casdoor.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)
+- [Azure AD syncer](/docs/syncer/AzureAD)
+- [Azure AD as a SAML provider](/docs/provider/saml/azure-ad)

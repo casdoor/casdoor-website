@@ -1,36 +1,63 @@
 ---
-title: Adapter
-description: Connect Casbin policy storage (database) and manage policies in the UI.
+title: Adapters
+sidebar_label: Adapter
+description: Connect Casdoor to a database table that holds Casbin policies, and view and edit the policies in the admin console.
 keywords: [permission, Casbin, adapter, policy]
 authors: [leo220yuyaodog]
 ---
 
-In Casbin, an **adapter** is the layer that loads and saves policy rules (e.g. to a database). Casdoor lets you configure an adapter in the UI and run basic CRUD on policies.
+This guide explains adapters. In Casbin, an adapter loads and saves policy rules, for example from a database table. In Casdoor, you configure an adapter in the admin console and then view and edit its policies there.
 
-## Adapter configuration
+---
 
-- **Type** — Adapter type (currently database only).
-- **Host**, **Port**, **User**, **Password** — Database connection.
-- **Database type** — MySQL, PostgreSQL, SQL Server, Oracle, or SQLite 3.
-- **Database** — Database name.
-- **Table** — Table name (created if it does not exist).
+#### Learning outcomes
 
-![adapter_config](/img/permission/adapter/adapter_config.png)
+- Connect an adapter to a database table.
+- Load the policies and add, edit, and delete them.
 
-:::info
-After saving the adapter config, click **Sync** to load policies into the table below.
-:::
+#### What you need
 
-![adapter_policy](/img/permission/adapter/adapter_policy.png)
+- A database that Casdoor can reach
 
-## CRUD on policies
+---
 
-Once the adapter is connected, you can add, edit, and delete policy rows in the UI.
+## Configure the adapter {#adapter-configuration}
 
-**Add** — One policy at a time. New rows appear at the top in the UI but are stored at the end; after the next sync they show in the correct order.
+1. In the Casdoor admin console, open the **Adapters** page and add an adapter.
+1. Fill in the fields:
 
-![adapter_add](/img/permission/adapter/add.gif)
+   | Field | Description |
+   |---|---|
+   | **Type** | Kind of adapter. Only `Database` is available |
+   | **Host**, **Port**, **User**, **Password** | Connection to the database |
+   | **Database type** | MySQL, PostgreSQL, SQL Server, Oracle, or SQLite 3 |
+   | **Database** | Name of the database |
+   | **Table** | Name of the table. Casdoor creates it if it doesn't exist |
 
-**Edit** — ![adapter_edit](/img/permission/adapter/edit.gif)
+   ![Adapter edit page](/img/permission/adapter/adapter_config.png)
 
-**Delete** — ![adapter_delete](/img/permission/adapter/delete.gif)
+1. Save the adapter.
+1. Click **Sync** to load the policies into the table on the page.
+
+   ![Policies of the adapter](/img/permission/adapter/adapter_policy.png)
+
+## Edit the policies {#crud-on-policies}
+
+Add a policy, one at a time:
+
+![Recording of adding a policy](/img/permission/adapter/add.gif)
+
+A new policy appears at the top of the table but is stored at the end. After the next sync, it appears in the stored order.
+
+Edit a policy:
+
+![Recording of editing a policy](/img/permission/adapter/edit.gif)
+
+Delete a policy:
+
+![Recording of deleting a policy](/img/permission/adapter/delete.gif)
+
+## See also
+
+- [Permissions](/docs/permission/overview)
+- [Configure a permission](/docs/permission/permission-configuration)

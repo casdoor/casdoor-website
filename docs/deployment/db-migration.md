@@ -1,21 +1,23 @@
 ---
 title: Database migration
-description: How Casdoor handles database schema and data migrations.
+description: How Casdoor changes its database schema between versions, and when a manual migration is needed.
 keywords: [deployment, database, migration, xorm]
 authors: [forestmgy]
 ---
 
-Casdoor uses [xorm](https://xorm.io/) for database access. Xorm handles many schema changes automatically, but **renaming columns** and some data migrations must be done manually via the [xorm migrate](https://pkg.go.dev/xorm.io/xorm/migrate) package.
+Casdoor updates its database schema on its own when it starts. This page explains how that works and how Casdoor developers add a migration for a change that can't be automated.
 
-:::note
-See the [xorm documentation](https://xorm.io/docs/chapter-03/readme/) for schema operation details.
-:::
+## Automatic schema updates
 
-## How it works
+Casdoor accesses the database through [XORM](https://xorm.io/). At startup, XORM compares the tables with the Go structs and adds missing tables and columns. For the details, see the [XORM documentation on schema operations](https://xorm.io/docs/chapter-03/readme/).
 
-Xorm does not rename columns automatically. To rename a field (e.g. `p_type` → `ptype`), you add a migration that copies data and then drops the old column.
+XORM doesn't rename columns and doesn't transform existing data. Those changes need a migration.
 
-Example migration:
+## Migrations
+
+A migration is a function that runs once against the database. Casdoor writes migrations with the [XORM migrate](https://pkg.go.dev/xorm.io/xorm/migrate) package.
+
+The following migration is part of renaming the column `p_type` to `ptype`. XORM adds the new column `ptype`, and the migration fills it. Another step removes the old column.
 
 ```go
 migrations := []*migrate.Migration{
@@ -35,4 +37,9 @@ migrations := []*migrate.Migration{
     m.Migrate()
 ```
 
-Here the goal is to rename `p_type` to `ptype`: copy values into `ptype`, then drop `p_type` (handled elsewhere). The migration **ID** is stored in the database; on subsequent starts, migrations with an existing ID are skipped.
+Each migration has an `ID`. Casdoor stores the IDs of the migrations that it has run in the database and skips them on later starts.
+
+## See also
+
+- [Upgrade from v3 to v4](/docs/deployment/upgrade-v3-to-v4)
+- [Install the Casdoor server](/docs/basic/server-installation)

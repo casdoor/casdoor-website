@@ -1,31 +1,28 @@
 ---
 title: MCP troubleshooting
-description: Common MCP and OAuth issues and how to debug them.
+description: Causes and fixes for common problems with the Casdoor MCP server and with MCP servers that use Casdoor as their OAuth 2.0 provider.
 keywords: [MCP, OAuth, troubleshooting, debugging, errors]
 authors: [hsluoyz]
 ---
 
-This page covers common problems when using Casdoor’s built-in MCP server or when Casdoor is the OAuth provider for your own MCP server.
+This page covers problems with the built-in MCP server of Casdoor and with your own MCP servers that use Casdoor as their OAuth 2.0 provider.
 
-## Common Errors
+## Common problems {#common-errors}
 
-### 401 Unauthorized from MCP Server
+### The MCP server answers with HTTP 401
 
-**Symptom**: MCP server rejects requests with `401 Unauthorized` status code.
+**Causes**
 
-**Causes**:
+- The access token has expired.
+- The `aud` (audience) claim of the token doesn't match the resource URI of the MCP server.
+- The request has no `Authorization: Bearer` header.
 
-- Access token has expired
-- Token's `aud` (audience) claim doesn't match the MCP server's resource URI
-- Missing `Authorization: Bearer` header in requests
-- Token was issued for a different resource
+**Solution**
 
-**Fix**:
-
-1. Decode your token at [jwt.io](https://jwt.io) and check the `exp` claim for expiration
-2. Verify the `aud` claim matches your MCP server's URI exactly (including scheme, host, and port)
-3. Ensure requests include the header: `Authorization: Bearer YOUR_TOKEN`
-4. If using the `resource` parameter during OAuth, confirm it matches the MCP server URI
+1. Decode the token, for example at [jwt.io](https://jwt.io), and check the `exp` claim.
+1. Check that the `aud` claim is exactly the URI of your MCP server, including the scheme, the host, and the port.
+1. Check that the request carries the header `Authorization: Bearer <access-token>`.
+1. If your client sends the `resource` parameter in the OAuth 2.0 flow, check that it is the URI of the MCP server.
 
 ```bash
 # Example: Check token claims
@@ -38,48 +35,32 @@ curl -X GET https://your-mcp-server.com/api/mcp \
 # - scope: "read:application" (must include required scopes)
 ```
 
-### CORS Errors in Browser
+### The browser reports a CORS error
 
-**Symptom**: Browser console shows CORS errors when MCP client attempts to connect to Casdoor.
+**Cause**
 
-**Causes**:
+The origin of the MCP client isn't an origin that Casdoor trusts. Casdoor allows cross-origin requests from the origins of the **Redirect URLs** of your applications.
 
-- Casdoor CORS settings don't include the MCP client's origin
-- Preflight requests are being blocked
-- Wildcard CORS is disabled for security
+**Solution**
 
-**Fix**:
+1. In the Casdoor admin console, open the edit page of the application.
+1. Add a URL with the origin of the MCP client, including the scheme and a non-standard port, to **Redirect URLs**. For local development, add `http://localhost:<port>`.
 
-1. Log into Casdoor admin panel
-2. Navigate to your application configuration
-3. Add the MCP client's origin to the **CORS Allowed Origins** field
-4. Include the full origin: `https://client-domain.com` (with scheme and port if non-standard)
-5. For local development, add `http://localhost:PORT`
+See [Call the API from a browser](/docs/basic/public-api#call-the-api-from-a-browser).
 
-```text
-# Example CORS configuration:
-https://claude.ai
-https://cursor.sh
-http://localhost:3000
-```
+### The redirect URL doesn't match
 
-### Redirect URI Mismatch
+**Causes**
 
-**Symptom**: OAuth flow fails with `redirect_uri_mismatch` error.
+- The `redirect_uri` of the authorization request isn't in the **Redirect URLs** of the application.
+- The scheme (`http` or `https`), the port, or a trailing slash differs.
 
-**Causes**:
+**Solution**
 
-- The `redirect_uri` in the authorization request doesn't exactly match the application configuration
-- Scheme mismatch (`http` vs `https`)
-- Port number missing or incorrect
-- Trailing slash mismatch
+1. Copy the exact `redirect_uri` from the authorization request.
+1. Add it to **Redirect URLs** of the application.
 
-**Fix**:
-
-1. Copy the exact `redirect_uri` from your authorization request
-2. In Casdoor, edit the application configuration
-3. Add the exact URI to **Redirect URLs** field (must match character-for-character)
-4. Ensure scheme, host, port, and path all match exactly
+The following URLs are all different:
 
 ```bash
 # These are all different redirect URIs:
@@ -89,57 +70,47 @@ http://localhost:3000/callback/  # Trailing slash
 http://localhost:3001/callback   # Different port
 ```
 
-### Discovery Endpoint 404
+### A discovery endpoint returns HTTP 404
 
-**Symptom**: Attempting to fetch `.well-known` discovery document returns 404.
+**Cause**
 
-**Causes**:
+The client requests a discovery path that doesn't fit its role.
 
-- Using wrong discovery path for your use case
-- Casdoor configuration doesn't expose discovery endpoints
-- Application not configured as OIDC provider
+**Solution**
 
-**Fix**:
+Request the endpoint for your use case:
 
-Try these discovery endpoints in order:
-
-1. **OAuth Authorization Server Metadata** (RFC 8414):
+1. OAuth 2.0 Authorization Server Metadata (RFC 8414):
 
    ```bash
    curl https://your-casdoor.com/.well-known/oauth-authorization-server
    ```
 
-2. **OpenID Connect Discovery**:
+1. OpenID Connect Discovery:
 
    ```bash
    curl https://your-casdoor.com/.well-known/openid-configuration
    ```
 
-3. **OAuth Protected Resource Metadata** (RFC 9470):
+1. OAuth 2.0 Protected Resource Metadata (RFC 9728):
 
    ```bash
    curl https://your-casdoor.com/.well-known/oauth-protected-resource
    ```
 
-For MCP servers acting as resource servers, use the `oauth-protected-resource` endpoint to advertise OAuth requirements.
+An MCP server that is a resource server publishes the `oauth-protected-resource` document to advertise its authorization server.
 
-### DCR Registration Rejected
+### Dynamic client registration is rejected
 
-**Symptom**: Dynamic Client Registration (DCR) request fails with error.
+**Causes**
 
-**Causes**:
+- Dynamic client registration (DCR) is turned off for the organization.
+- The registration request lacks required fields.
 
-- Organization has DCR disabled in settings
-- Registration request missing required fields
-- Software statement rejected or invalid
-- Rate limiting on registration endpoint
+**Solution**
 
-**Fix**:
-
-1. Navigate to your organization settings in Casdoor
-2. Enable **Dynamic Client Registration** toggle
-3. Configure **Allowed Redirect URI Patterns** to restrict client URIs
-4. For registration requests, include all required metadata:
+1. In the Casdoor admin console, open the edit page of the organization and turn on **Enable dynamic client registration**. A client registers in the `built-in` organization unless the registration URL has an `organization` parameter.
+1. Send all required metadata in the registration request:
 
    ```json
    {
@@ -150,42 +121,30 @@ For MCP servers acting as resource servers, use the `oauth-protected-resource` e
    }
    ```
 
-See [Dynamic client registration](/docs/application/dynamic-client-registration) for details.
+See [Dynamic client registration](/docs/application/dynamic-client-registration).
 
-### Consent Screen Not Showing
+### The consent screen doesn't appear
 
-**Symptom**: OAuth flow completes without showing user consent screen.
+**Causes**
 
-**Causes**:
+- The application has no custom scopes. Casdoor asks for consent only for custom scopes.
+- The client doesn't request a custom scope.
+- The user has already granted the requested scopes to the application.
 
-- Application's **Consent Policy** is set to "Never"
-- User has previously granted consent and policy is "Once"
-- Session authentication bypasses consent
+**Solution**
 
-**Fix**:
+1. Check that the application defines the scopes and that the client requests them. See [Custom scopes](/docs/application/scopes).
+1. To test the consent screen again, revoke the earlier grant on the **Consents** page.
 
-1. Edit your application in Casdoor admin panel
-2. Set **Consent Policy** to:
-   - **Always**: Show consent on every authorization request
-   - **Once**: Show consent only on first authorization (recommended)
-3. Save the application configuration
-4. Clear user's previous consent if testing (revoke application access)
+### A tool call fails with insufficient_scope
 
-The consent screen displays requested scopes with their display names and descriptions from your scope configuration.
+**Cause**
 
-### insufficient_scope Error
+The access token lacks the scope that the tool requires.
 
-**Symptom**: MCP tool calls fail with `insufficient_scope` JSON-RPC error.
+**Solution**
 
-**Causes**:
-
-- Access token doesn't include the scope required by the tool
-- Token was requested with incorrect scopes
-- Scope names don't match server expectations
-
-**Fix**:
-
-1. Check the error response for `required_scope` and `granted_scopes`:
+1. Read `required_scope` and `granted_scopes` from the error:
 
    ```json
    {
@@ -201,7 +160,7 @@ The consent screen displays requested scopes with their display names and descri
    }
    ```
 
-2. Request a new token with the required scope:
+1. Request a new token with the required scope:
 
    ```bash
    curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
@@ -211,21 +170,18 @@ The consent screen displays requested scopes with their display names and descri
      -d "scope=read:application write:application"
    ```
 
-See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the scope reference.
+See the [scope reference](/docs/how-to-connect/mcp/authorization#complete-scope-reference).
 
-### invalid_target / Resource Error
+### The authorization request fails with invalid_target
 
-**Symptom**: Authorization request fails with `invalid_target` or `invalid_resource` error.
+**Causes**
 
-**Causes**:
+- The `resource` parameter isn't an absolute URI, as RFC 8707 requires.
+- The resource URI has no scheme.
 
-- `resource` parameter is not a valid URI (RFC 8707)
-- Resource URI missing scheme (`http://` or `https://`)
-- Resource parameter conflicts with token audience
+**Solution**
 
-**Fix**:
-
-1. Ensure `resource` parameter is a full URL:
+1. Send a complete URL as `resource`:
 
    ```bash
    # Correct:
@@ -237,23 +193,20 @@ See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the s
    resource=localhost:3000         # Missing scheme
    ```
 
-2. The `resource` value becomes the `aud` claim in the access token
-3. Resource must match the MCP server's expected audience exactly
+1. Remember that the value of `resource` becomes the `aud` claim of the access token. It must be exactly the audience that the MCP server expects.
 
-### Claude Desktop / Cursor Connection Failures
+### Claude Desktop or Cursor can't connect to your own MCP server
 
-**Symptom**: Claude Desktop or Cursor IDE fails to connect to MCP server with OAuth errors.
+**Causes**
 
-**Causes**:
+- Your MCP server doesn't return valid Protected Resource Metadata.
+- The `WWW-Authenticate` header is missing or malformed.
+- The client can't reach the discovery endpoints.
+- Your MCP server fails to validate the token.
 
-- MCP server not returning valid Protected Resource Metadata (PRM)
-- `WWW-Authenticate` header malformed or missing
-- Discovery endpoint not accessible
-- Token validation failing
+**Solution**
 
-**Fix**:
-
-1. **Verify PRM endpoint** returns valid JSON:
+1. Check that the metadata endpoint returns valid JSON:
 
    ```bash
    curl https://your-mcp-server.com/.well-known/oauth-protected-resource
@@ -270,7 +223,7 @@ See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the s
    }
    ```
 
-2. **Check WWW-Authenticate header** on unauthorized requests:
+1. Check the `WWW-Authenticate` header of an unauthenticated request:
 
    ```bash
    curl -v https://your-mcp-server.com/api/mcp
@@ -284,7 +237,7 @@ See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the s
      scope="read:application write:application"
    ```
 
-3. **Test complete OAuth flow** with curl:
+1. Run the OAuth 2.0 flow by hand:
 
    ```bash
    # 1. Get authorization code (requires browser)
@@ -295,7 +248,7 @@ See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the s
      -d "redirect_uri=YOUR_REDIRECT_URI" \
      -d "client_id=YOUR_CLIENT_ID" \
      -d "client_secret=YOUR_CLIENT_SECRET"
-   
+
    # 3. Test MCP endpoint with token
    curl https://your-mcp-server.com/api/mcp \
      -H "Authorization: Bearer ACCESS_TOKEN" \
@@ -303,26 +256,19 @@ See [Authorization and scopes](/docs/how-to-connect/mcp/authorization) for the s
      -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
    ```
 
-## Debugging Tools
+## Debugging tools
 
 ### MCP Inspector
 
-The official MCP Inspector helps test MCP connections interactively:
+The official MCP Inspector tests an MCP connection interactively. It browses and calls tools, shows the JSON-RPC requests and responses, and runs the OAuth 2.0 flow.
 
 ```bash
 npx @modelcontextprotocol/inspector
 ```
 
-Features:
+### Discovery endpoints
 
-- Interactive tool browser and testing
-- Real-time JSON-RPC request/response viewer
-- OAuth flow testing
-- Connection diagnostics
-
-### Testing Discovery Endpoints
-
-Verify each discovery endpoint returns valid JSON:
+Check that each discovery endpoint returns valid JSON:
 
 ```bash
 # OAuth Authorization Server
@@ -335,27 +281,27 @@ curl -s https://your-casdoor.com/.well-known/openid-configuration | jq
 curl -s https://your-mcp-server.com/.well-known/oauth-protected-resource | jq
 ```
 
-### Inspecting JWT Tokens
+### Token claims
 
-Use [jwt.io](https://jwt.io) to decode access tokens and verify claims:
-
-**Key claims to check**:
-
-- `aud` (audience): Must match MCP server URI
-- `scope`: Must include required scopes for tools
-- `exp` (expiration): Must be in the future (Unix timestamp)
-- `iss` (issuer): Should match Casdoor's authorization server URL
-- `sub` (subject): User identifier
-- `client_id`: Application/client that received the token
+Decode the access token at [jwt.io](https://jwt.io), or on the command line:
 
 ```bash
 # Alternative: Decode token with jq
 echo "YOUR_JWT_TOKEN" | cut -d. -f2 | base64 -d | jq
 ```
 
-### Token Introspection Endpoint
+| Claim | Check |
+|---|---|
+| `aud` | Matches the URI of the MCP server |
+| `scope` | Contains the scopes that the tools require |
+| `exp` | Is in the future. The value is a Unix timestamp |
+| `iss` | Is the URL of Casdoor |
+| `sub` | Is the ID of the user |
+| `client_id` | Is the application that received the token |
 
-Casdoor provides a token introspection endpoint (RFC 7662) to validate and inspect tokens:
+### Token introspection
+
+Ask Casdoor whether a token is valid and what it contains (RFC 7662):
 
 ```bash
 curl -X POST https://your-casdoor.com/api/login/oauth/introspect \
@@ -364,7 +310,7 @@ curl -X POST https://your-casdoor.com/api/login/oauth/introspect \
   -d "token=ACCESS_TOKEN"
 ```
 
-Response includes:
+The response:
 
 ```json
 {
@@ -378,9 +324,7 @@ Response includes:
 }
 ```
 
-### Testing with curl
-
-Manual OAuth flow testing with curl:
+### OAuth 2.0 flow with curl
 
 ```bash
 # 1. Test authorization endpoint (requires browser)
@@ -408,44 +352,22 @@ curl https://your-mcp-server.com/api/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-### Debug Logging
+### Logs and network traces
 
-Enable debug logging in your MCP client or server to see detailed OAuth flows:
+- **MCP client**: Turn on debug or verbose mode, and read the log for the redirect, the token exchange, and the tool calls.
+- **MCP server**: Log each incoming request, the result of the token validation with the reason for a failure, and the scope checks.
+- **Browser**: Open the developer tools. The network tab shows the redirects and the API calls, and the console shows JavaScript errors.
+- **CLI clients**: Route the client through mitmproxy to see its requests:
 
-**For MCP clients**:
-
-- Check client configuration for debug/verbose mode
-- Review client logs for OAuth redirect, token exchange, and API calls
-- Capture network traffic with browser DevTools or mitmproxy
-
-**For MCP servers**:
-
-- Enable server debug logging to see incoming requests
-- Log token validation results (success/failure and reasons)
-- Monitor authorization checks and scope validation
-
-### Network Debugging
-
-Use browser DevTools or network analysis tools:
-
-1. **Browser DevTools (F12)**:
-   - Network tab shows all OAuth redirects and API calls
-   - Console tab displays JavaScript errors
-   - Application tab shows stored tokens and cookies
-
-2. **mitmproxy** for CLI clients:
-
-   ```bash
-   mitmproxy -p 8080
-   # Configure client to use proxy: http://localhost:8080
-   ```
-
-3. **Wireshark** for low-level packet analysis
+  ```bash
+  mitmproxy -p 8080
+  # Configure client to use proxy: http://localhost:8080
+  ```
 
 ## See also
 
-- [Authorization and scopes](/docs/how-to-connect/mcp/authorization) — Scope reference
-- [Error handling](/docs/how-to-connect/mcp/error-handling) — JSON-RPC error codes
-- [Authentication](/docs/how-to-connect/mcp/authentication) — OAuth and tokens
-- [Custom scopes](/docs/application/scopes) — Agent application scopes
-- [Dynamic client registration](/docs/application/dynamic-client-registration) — DCR setup
+- [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization)
+- [MCP error handling](/docs/how-to-connect/mcp/error-handling)
+- [MCP authentication](/docs/how-to-connect/mcp/authentication)
+- [Custom scopes](/docs/application/scopes)
+- [Dynamic client registration](/docs/application/dynamic-client-registration)

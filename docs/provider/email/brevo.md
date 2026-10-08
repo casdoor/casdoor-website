@@ -1,32 +1,52 @@
 ---
-title: Brevo email
-description: Use Brevo (Sendinblue) as the SMTP provider for Casdoor.
+title: Send email with Brevo
+sidebar_label: Brevo
+description: Use the SMTP relay of Brevo (formerly Sendinblue) as the email provider of Casdoor.
 keywords: [email, Brevo, SMTP]
 authors: [UsherFall]
 ---
 
-## 1. Enable Brevo SMTP
+This guide explains how to send the emails of Casdoor through the SMTP relay of Brevo, formerly Sendinblue.
 
-Activate SMTP for your Brevo account. See [Send transactional emails using Brevo SMTP](https://help.brevo.com/hc/en-us/articles/7924908994450). You may need to request activation via support.
+---
 
-![brevo_smtp](/img/providers/brevo_smtp.png)
+#### Learning outcomes
 
-## 2. Get SMTP settings
+- Turn on SMTP for a Brevo account and get the SMTP settings.
+- Add Brevo as an email provider in Casdoor and test it.
 
-In the Brevo dashboard, open **SMTP & API** and note:
+#### What you need
 
-- **SMTP Server**
-- **Port**
-- **Login**
-- **SMTP key** (password)
+- A Brevo account
+- Administrator access to the Casdoor admin console
 
-![brevo_conf](/img/providers/brevo_conf.png)
+---
 
-## 3. Configure the provider in Casdoor
+## Prepare Brevo
 
-Create an **Email** provider, set **Type** to the appropriate SMTP option, and enter **Host**, **Port**, **Username**, and **Password** (SMTP key). Set **From** to your verified sender.
+1. Activate SMTP for your Brevo account. See [Send transactional emails using Brevo SMTP](https://help.brevo.com/hc/en-us/articles/7924908994450). You may have to ask the Brevo support to activate it.
 
-![brevo_provider](/img/providers/brevo_provider.png)
+   ![SMTP activation in Brevo](/img/providers/brevo_smtp.png)
 
-- Use **Test SMTP Connection**; you should see “SMTP connected successfully”.
-- Use **Send Testing Email**; you should see “Email sent successfully” and receive the test at the **Test Email** address.
+1. In the Brevo dashboard, open **SMTP & API** and note the SMTP server, the port, the login, and the SMTP key.
+
+   ![SMTP settings in Brevo](/img/providers/brevo_conf.png)
+
+## Add the provider in Casdoor {#3-configure-the-provider-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Email` and **Type** to `Default`.
+1. Enter the SMTP server as the **Host**, the **Port**, the login as the **Username**, and the SMTP key as the **Password**. Set **From address** to your verified sender.
+
+   ![Brevo SMTP settings in Casdoor](/img/providers/brevo_provider.png)
+
+1. Save the provider.
+
+## Verify the result
+
+1. Click **Test SMTP Connection**. Casdoor reports `SMTP connected successfully`.
+1. Click **Send Testing Email**. Casdoor reports `Email sent successfully`, and the message arrives at the **Test Email** address.
+
+## See also
+
+- [Email providers](/docs/provider/email/overview)

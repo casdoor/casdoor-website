@@ -1,13 +1,14 @@
 ---
-title: Notification provider overview
-description: Send notifications via Telegram, Slack, Discord, and other channels.
+title: Notification providers
+sidebar_label: Overview
+description: Send messages from Casdoor to chat services and HTTP endpoints, such as Slack, Telegram, and your own webhook.
 keywords: [Notification, Telegram, Slack, Discord]
 authors: [UsherFall]
 ---
 
-Casdoor can send notification messages through **Notification** providers. Add a provider and attach it to your application to enable notifications.
+A notification provider sends messages from Casdoor to a chat service or an HTTP endpoint. Casdoor uses notification providers, for example, to tell your applications that a user has signed out. See [Receive sign-out notifications](/docs/session/single-sign-out#logout-notifications).
 
-Supported providers:
+## Supported services
 
 | Provider | |
 |----------|---|
@@ -31,4 +32,17 @@ Supported providers:
 | Viber | <img src="https://cdn.casbin.org/img/social_viber.png" width="40" /> |
 | Webpush | <img src="https://cdn.casbin.org/img/email_default.png" width="40" /> |
 
-See the provider subpages for configuration details per channel.
+Casdoor also supports `CUCloud`. The pages of this section describe the configuration of the most common services.
+
+## Add a notification provider
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Notification` and select the **Type**.
+1. Fill in the credentials of the service and, optionally, a message template in **Content**.
+1. Click **Send Testing Notification** to send a test message.
+1. Save the provider and add it to your application.
+
+## See also
+
+- [Custom HTTP](/docs/provider/notification/customHttp)
+- [Sign users out of all applications](/docs/session/single-sign-out)

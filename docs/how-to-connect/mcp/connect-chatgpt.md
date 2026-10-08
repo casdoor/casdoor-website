@@ -1,124 +1,71 @@
 ---
-title: Connect ChatGPT to MCP
-description: Connect ChatGPT to Casdoor’s MCP server with OAuth.
+title: Connect ChatGPT to the Casdoor MCP server
+sidebar_label: Connect ChatGPT
+description: Connect ChatGPT to the Casdoor MCP server with OAuth 2.0, so that ChatGPT can manage applications and users in Casdoor.
 keywords: [MCP, ChatGPT, OpenAI, OAuth, PKCE]
 authors: [hsluoyz]
 ---
 
-Connect ChatGPT to Casdoor’s MCP server so you can manage applications, users, and resources from ChatGPT. Requires ChatGPT Plus or Enterprise with MCP support ([OpenAI docs](https://openai.com/chatgpt)).
+This guide explains how to connect ChatGPT to the MCP server of Casdoor, so that you can manage applications, users, and other objects from a ChatGPT conversation.
 
-## Prerequisites
+---
 
-- A running Casdoor instance (HTTPS required for ChatGPT integration)
-- A ChatGPT Plus or Enterprise account with MCP support
-- Admin access to your Casdoor instance to create applications
+#### Learning outcomes
 
-## Step 1: Create an application in Casdoor
+- Let ChatGPT register itself as an OAuth 2.0 client of Casdoor.
+- Add the Casdoor MCP server to ChatGPT as a connector.
+- Sign in and check that ChatGPT can call the tools.
 
-Create a Casdoor application for ChatGPT’s OAuth:
+#### What you need
 
-1. Log in to your Casdoor admin panel
-2. Navigate to **Applications** and click **Add**
-3. Configure the application with these settings:
+- A Casdoor instance that is reachable from the internet over HTTPS. ChatGPT calls Casdoor from the servers of OpenAI.
+- A ChatGPT plan that supports custom MCP connectors
+- Administrator access to the Casdoor admin console
 
-   - **Name**: `chatgpt-mcp` (or your preferred name)
-   - **Display Name**: `ChatGPT MCP Client`
-   - **Organization**: Select your organization
-   - **Redirect URIs**: Add the ChatGPT OAuth callback URL:
+---
 
-     ```text
-     https://chat.openai.com/auth/callback
-     ```
+## About the connection
 
-     :::warning
-     ChatGPT requires HTTPS for OAuth callbacks. Ensure your Casdoor instance is accessible via HTTPS.
-     :::
+ChatGPT connects to a remote MCP server from the OpenAI platform. It reads the discovery documents of Casdoor, registers itself as a client through dynamic client registration (DCR), and runs the OAuth 2.0 authorization code flow with PKCE. See [Authentication](https://developers.openai.com/apps-sdk/build/auth) in the OpenAI documentation.
 
-4. **Grant Types**: Enable `Authorization Code` and `Refresh Token`
-5. **Enable PKCE**: Check this option for enhanced security
-6. **Token Format**: `JWT` (recommended)
-7. **(Optional) Application Type**: Set to `Agent`
-8. **(Optional) Category**: Set to `MCP` for better organization
+## Allow dynamic client registration
 
-   :::info
-   See [Application categories](/docs/application/categories) for Category and Type options.
-   :::
+1. In the Casdoor admin console, go to **User Management** > **Organizations** and open the `built-in` organization. Clients register in this organization by default.
+1. Turn on **Enable dynamic client registration**.
+1. Save the organization.
 
-9. Click **Save** and note the **Client ID** and **Client Secret** for the next step.
+When ChatGPT registers, Casdoor creates an application for it whose name starts with `dcr_`. See [Dynamic client registration](/docs/application/dynamic-client-registration).
 
-## Step 2: Configure ChatGPT MCP Connection
+## Add the connector in ChatGPT
 
-ChatGPT supports connecting to MCP servers through its settings interface.
+The names of the settings in ChatGPT change over time. For the current steps, see the ChatGPT help.
 
-### Access MCP Settings
+1. In the settings of ChatGPT, turn on developer mode for connectors.
+1. Add a custom connector with the following values:
 
-1. Log in to [ChatGPT](https://chat.openai.com)
-2. Click on your profile icon in the bottom left
-3. Go to **Settings** → **Beta Features**
-4. Enable **Model Context Protocol** (if not already enabled)
-5. Navigate to **Settings** → **MCP Servers**
+   | Setting | Value |
+   |---|---|
+   | Name | `Casdoor`, or a name of your choice |
+   | MCP server URL | `https://your-casdoor.com/api/mcp` |
+   | Authentication | OAuth |
 
-### Add Casdoor MCP Server
+1. Save the connector. ChatGPT registers with Casdoor and opens the Casdoor sign-in page.
 
-1. Click **Add Server** or **+ New Server**
-2. Fill in the server details:
+## Sign in
 
-   - **Server Name**: `Casdoor` (or your preferred name)
-   - **Server URL**: `https://your-casdoor.com/api/mcp`
-   - **Authentication Type**: Select `OAuth 2.0`
-   - **Client ID**: Your Client ID from Step 1
-   - **Client Secret**: Your Client Secret from Step 1
-   - **Authorization URL**: `https://your-casdoor.com/api/login/oauth/authorize`
-   - **Token URL**: `https://your-casdoor.com/api/login/oauth/access_token`
-   - **Scopes**: `read:application write:application openid profile email`
+1. Sign in on the Casdoor sign-in page with an account that may manage the objects that you want ChatGPT to work with.
+1. If Casdoor shows a consent screen, click **Allow**.
+1. Casdoor sends you back to ChatGPT. The connector is now connected.
 
-3. Click **Save** or **Connect**
+## Verify the result
 
-:::note
-The exact UI and field names may vary depending on ChatGPT's current interface. Refer to ChatGPT's help documentation for the most up-to-date instructions.
-:::
+In a new conversation, turn on the connector and ask ChatGPT to work with Casdoor, for example:
 
-### Configuring Scopes
+- "Using Casdoor, list all applications."
+- "Show me the application named `my-app` from Casdoor."
+- "Create an application in Casdoor called `test-app` in the organization `my-org`."
 
-The scopes you configure control what permissions ChatGPT has. Common scopes include:
-
-- `read:application` - View applications
-- `write:application` - Create, update, delete applications
-- `read:user` - View users
-- `write:user` - Create, update, delete users
-- `openid profile email` - Basic user information (required for OAuth)
-
-See [Authorization and Scopes](/docs/how-to-connect/mcp/authorization) for the complete list of available scopes.
-
-## Step 3: Complete the OAuth Flow
-
-After adding the server configuration:
-
-1. ChatGPT will automatically initiate the OAuth flow
-2. You'll be redirected to the Casdoor login page (if not already logged in)
-3. After logging in, you'll see a **Consent Screen** asking you to authorize ChatGPT
-4. The consent screen displays the requested scopes (permissions)
-5. Click **Authorize** to grant access
-6. You'll be redirected back to ChatGPT with a success message
-7. The connection is now established
-
-:::tip
-The OAuth token is securely stored by ChatGPT. You won't need to re-authorize unless you revoke the token or change scopes.
-:::
-
-## Step 4: Verify the Connection
-
-Test the connection by asking ChatGPT to interact with Casdoor in a new conversation:
-
-**Example prompts to try:**
-
-- "Using Casdoor, list all applications"
-- "Show me details about the application named 'my-app' from Casdoor"
-- "Create a new application in Casdoor called 'test-app' in organization 'my-org'"
-
-ChatGPT will use the MCP tools to execute these commands. You should see responses with data from your Casdoor instance.
-
-**Expected output for "List all applications":**
+ChatGPT calls the MCP tools and answers with data from your Casdoor instance, for example:
 
 ```text
 I've connected to your Casdoor instance and found the following applications:
@@ -134,169 +81,42 @@ I've connected to your Casdoor instance and found the following applications:
 ...
 ```
 
-## Alternative: Using MCP Proxy (Advanced)
-
-If ChatGPT doesn't support direct MCP server connections or you need more control, you can use an MCP proxy service:
-
-### Using a Cloud MCP Proxy
-
-1. Deploy an MCP proxy service on a cloud platform that forwards requests to your Casdoor instance
-2. Configure the proxy with your Casdoor OAuth credentials
-3. Add the proxy URL to ChatGPT instead of the direct Casdoor URL
-
-### Example: Deploying MCP Proxy with `@modelcontextprotocol/sdk`
-
-Use the official [`@modelcontextprotocol/sdk`](https://www.npmjs.com/package/@modelcontextprotocol/sdk) to build a proxy server:
-
-```bash
-npm install @modelcontextprotocol/sdk express
-```
-
-```javascript
-// server.js
-const express = require('express');
-const app = express();
-
-// Forward MCP requests to Casdoor with OAuth token injection
-app.use('/mcp', async (req, res) => {
-  const targetUrl = process.env.CASDOOR_URL + '/api/mcp';
-  // Implement token forwarding logic here using @modelcontextprotocol/sdk
-  // Refer to the MCP SDK documentation for transport and auth options
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`MCP proxy listening on port ${PORT}`);
-});
-```
-
-Set environment variables:
-
-- `CASDOOR_URL`: Your Casdoor instance URL
-- `OAUTH_CLIENT_ID`: Your Client ID
-- `OAUTH_CLIENT_SECRET`: Your Client Secret
-- `OAUTH_SCOPES`: Space-separated list of scopes
-
 ## Troubleshooting
 
-### Issue: "Unable to connect to MCP server"
+### ChatGPT can't connect to the MCP server
 
-**Cause**: The MCP server URL might be incorrect or unreachable.
+- Check the URL of the connector. It ends with `/api/mcp`.
+- Check that Casdoor is reachable from the internet over HTTPS with a valid certificate. For development, a tunnel such as ngrok works.
+- Call the endpoint yourself: `curl https://your-casdoor.com/api/mcp`.
 
-**Solution**:
+### Registration fails
 
-- Verify the URL in ChatGPT settings is correct
-- Ensure your Casdoor instance is publicly accessible via HTTPS
-- Test the MCP endpoint manually: `curl https://your-casdoor.com/api/mcp`
+Check that **Enable dynamic client registration** is on for the `built-in` organization.
 
-### Issue: "Redirect URI mismatch" error during OAuth
+### Casdoor reports a redirect URL mismatch
 
-**Cause**: The callback URL doesn't match the configured Redirect URI in Casdoor.
+If you use an application that you created by hand instead of DCR, add the redirect URL that ChatGPT shows for the connector to the **Redirect URLs** of the application. ChatGPT redirects to a URL of the form `https://chatgpt.com/connector/oauth/<callback-id>`.
 
-**Solution**:
+### A tool call fails with insufficient_scope
 
-- In Casdoor, ensure your application has the correct redirect URI:
+The token of ChatGPT lacks the scope that the tool requires. See [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization).
 
-  ```text
-  https://chat.openai.com/auth/callback
-  ```
+### The token expires in a long conversation
 
-- Check ChatGPT's documentation for the current callback URL
+ChatGPT refreshes the token with the refresh token. If the refresh fails, reconnect the connector.
 
-### Issue: "HTTPS required" error
+## Secure the connection
 
-**Cause**: ChatGPT requires HTTPS for OAuth flows.
+- **HTTPS**: ChatGPT requires HTTPS.
+- **Least privilege**: Sign in with an account that has only the rights that ChatGPT needs.
+- **Revocation**: To cut off the client, delete its tokens on the **Tokens** page of the Casdoor admin console.
 
-**Solution**:
-
-- Ensure your Casdoor instance uses HTTPS
-- Configure SSL certificates for your domain
-- Use a reverse proxy (Nginx, Caddy) with automatic HTTPS
-- For development, consider using ngrok or similar tunneling services
-
-### Issue: "CORS error" during OAuth flow
-
-**Cause**: Cross-Origin Resource Sharing (CORS) restrictions.
-
-**Solution**:
-
-- Casdoor should automatically allow CORS for OAuth endpoints
-- If using a reverse proxy, ensure CORS headers are properly forwarded
-- Check your Casdoor CORS configuration for ChatGPT's domain
-
-### Issue: "insufficient_scope" error
-
-**Cause**: The requested operation requires a scope that wasn't granted.
-
-**Solution**:
-
-- Update the scopes in ChatGPT's MCP server settings
-- Example: Add `write:application` if you want to create/modify applications
-- Reconnect the server to get a new token with updated scopes
-
-### Issue: OAuth token expired in long conversations
-
-**Cause**: Access tokens expire after a certain time.
-
-**Solution**:
-
-- Ensure `Refresh Token` grant type is enabled in your Casdoor application (Step 1)
-- ChatGPT should automatically refresh tokens, but you may need to reconnect if refresh fails
-
-### Issue: MCP server not available in conversation
-
-**Cause**: The server might not be properly connected or recognized.
-
-**Solution**:
-
-- Verify the connection in ChatGPT settings
-- Try explicitly mentioning "using Casdoor MCP server" in your prompts
-- Start a new conversation to ensure fresh initialization
-
-## Security Considerations
-
-- **HTTPS Only**: Always use HTTPS for production Casdoor instances when integrating with ChatGPT
-- **PKCE (Proof Key for Code Exchange)**: Always enable PKCE in your Casdoor application
-- **Scopes**: Follow the principle of least privilege - only grant scopes that ChatGPT needs
-- **Token Storage**: ChatGPT stores tokens securely on OpenAI's infrastructure
-- **Client Secret**: Keep your Client Secret confidential - don't share it in conversations
-- **Token Revocation**: You can revoke access tokens in Casdoor's admin panel under **Tokens**
-- **Audit Logs**: Monitor Casdoor's audit logs for actions performed by ChatGPT
-
-## Privacy Considerations
-
-:::warning
-When using ChatGPT with Casdoor MCP server, be aware that:
-
-- Data from your Casdoor instance may be processed by OpenAI
-- Avoid sharing sensitive user information, passwords, or secrets
-- Review OpenAI's privacy policy and terms of service
-- Consider using data masking or filtering for sensitive fields
+:::caution
+OpenAI processes the data that ChatGPT reads from your Casdoor instance. Don't ask ChatGPT to read passwords, secrets, or personal data that you may not share with OpenAI, and review the privacy policy of OpenAI.
 :::
 
-## Use Cases
+## See also
 
-With ChatGPT connected to Casdoor's MCP server, you can:
-
-- **Natural language queries**: "Show me all users created last week"
-- **Bulk operations**: "Create 5 test applications for development"
-- **Configuration assistance**: "What's the current OAuth configuration for app-xyz?"
-- **Troubleshooting**: "Why isn't user John able to log in?"
-- **Documentation**: "Explain the setup for our authentication system"
-- **Reporting**: "Generate a summary of all active applications"
-
-## Next Steps
-
-Now that ChatGPT is connected to Casdoor:
-
-- Explore available [MCP Tools](/docs/how-to-connect/mcp/tools) that ChatGPT can use
-- Learn about [Authentication](/docs/how-to-connect/mcp/authentication) methods
-- Understand [Error Handling](/docs/how-to-connect/mcp/error-handling) for better debugging
-- Check out the [Integration Example](/docs/how-to-connect/mcp/integration) for programmatic access
-
-## Related Resources
-
-- [MCP Server Overview](/docs/how-to-connect/mcp/overview)
-- [Authorization and Scopes](/docs/how-to-connect/mcp/authorization)
-- [Application Categories](/docs/application/categories)
-- [ChatGPT Documentation](https://help.openai.com/en/collections/3742473-chatgpt)
+- [MCP tools reference](/docs/how-to-connect/mcp/tools)
+- [MCP authentication](/docs/how-to-connect/mcp/authentication)
+- [MCP troubleshooting](/docs/how-to-connect/mcp/troubleshooting)

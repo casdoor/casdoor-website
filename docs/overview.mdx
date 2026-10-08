@@ -1,5 +1,6 @@
 ---
-title: Overview
+title: What is Casdoor
+sidebar_label: Overview
 description: "Casdoor is an open-source, UI-first IAM and SSO platform written in Go, supporting OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, WebAuthn, MFA and RADIUS. See how it works."
 keywords: [casdoor, OAuth 2.0]
 authors: [kininaru]
@@ -10,7 +11,7 @@ import styles from './styles.module.css';
 import CasdoorCard from "@site/src/components/CasdoorCard";
 ```
 
-Casdoor is an open-source [identity and access management (IAM)](https://en.wikipedia.org/wiki/Identity_management) and [single sign-on (SSO)](https://en.wikipedia.org/wiki/Single_sign-on) platform. Your applications send users to Casdoor to sign in, and Casdoor gives them back a verified identity over OAuth 2.0, OpenID Connect, SAML, or CAS. Everything, from users and applications to sign-in pages and providers, is managed in a web console.
+Casdoor is an open-source [identity and access management (IAM)](https://en.wikipedia.org/wiki/Identity_management) and [single sign-on (SSO)](https://en.wikipedia.org/wiki/Single_sign-on) platform. Your applications send users to Casdoor to sign in, and Casdoor gives them back a verified identity over OAuth 2.0, OpenID Connect, SAML, or CAS. You manage users, applications, sign-in pages, and providers in a web-based admin console.
 
 ```mdx-code-block
 <div className={styles.gradientborder}>
@@ -20,14 +21,14 @@ Casdoor is an open-source [identity and access management (IAM)](https://en.wiki
 
 ## What Casdoor does
 
-- **Single sign-on for your applications.** Casdoor is an [OAuth 2.0 and OIDC](/docs/how-to-connect/oauth) provider, a [SAML](/docs/how-to-connect/saml/overview) identity provider, and a [CAS](/docs/how-to-connect/cas) server. It also serves [LDAP](/docs/ldap/ldapserver) and [RADIUS](/docs/radius/overview) for applications, VPNs, and network devices that only speak those protocols.
-- **Sign-in with existing accounts.** More than 70 [OAuth providers](/docs/provider/oauth/overview) are built in, from Google, GitHub, and Microsoft to WeChat, DingTalk, and Lark, plus any SAML or OIDC identity provider.
-- **Strong authentication.** Passwords, email and SMS codes, [WebAuthn and passkeys](/docs/how-to-connect/webauthn), [TOTP](/docs/how-to-connect/totp-authenticator-app), and [multi-factor authentication](/docs/user/multi-factor-authentication) that an organization can make optional or required.
-- **Users and organizations.** Several [organizations](/docs/organization/overview) can share one Casdoor, each with its own users, groups, roles, applications, and branding. Users can be imported and kept in sync from LDAP, Active Directory, Keycloak, Okta, and other systems with [syncers](/docs/syncer/overview), or provisioned over [SCIM](/docs/scim/overview).
-- **Authorization.** Casdoor has [permissions](/docs/permission/overview) built on [Casbin](https://casbin.apache.org/), with ACL, RBAC, and ABAC models, and an API your services can call to check them.
-- **Sign-in pages without code.** Each application's sign-in and sign-up pages, fields, and providers are configured in the console. See [UI customization](/docs/application/ui-customization).
-- **AI agents.** Casdoor exposes its management API as an [MCP server](/docs/how-to-connect/mcp/overview) and acts as an [OAuth 2.1 authorization server for MCP servers](/docs/mcp-auth/overview).
-- **Operations.** One Go binary and a SQL database (MySQL, PostgreSQL, SQL Server, Oracle, SQLite, and others). The console is available in 11 languages.
+- **Single sign-on for your applications**: Casdoor is an [OAuth 2.0 and OIDC](/docs/how-to-connect/oauth) provider, a [SAML](/docs/how-to-connect/saml/overview) identity provider, and a [CAS](/docs/how-to-connect/cas) server. It also serves [LDAP](/docs/ldap/ldapserver) and [RADIUS](/docs/radius/overview) for applications, VPNs, and network devices that only speak those protocols.
+- **Sign-in with existing accounts**: More than 70 [OAuth providers](/docs/provider/oauth/overview) are built in, from Google, GitHub, and Microsoft to WeChat, DingTalk, and Lark, plus any SAML or OIDC identity provider.
+- **Strong authentication**: Casdoor supports passwords, email and SMS codes, [WebAuthn and passkeys](/docs/how-to-connect/webauthn), [TOTP](/docs/how-to-connect/totp-authenticator-app), and [multi-factor authentication](/docs/user/multi-factor-authentication) that an organization can make optional or required.
+- **Users and organizations**: Several [organizations](/docs/organization/overview) can share one Casdoor, each with its own users, groups, roles, applications, and branding. [Syncers](/docs/syncer/overview) import users from LDAP, Active Directory, Keycloak, Okta, and other systems and keep them in sync. [SCIM](/docs/scim/overview) provisions users from other identity systems.
+- **Authorization**: Casdoor has [permissions](/docs/permission/overview) built on [Casbin](https://casbin.apache.org/), with ACL, RBAC, and ABAC models, and an API your services can call to check them.
+- **Sign-in pages without code**: You configure the sign-in and sign-up pages, fields, and providers of each application in the admin console. See [UI customization](/docs/application/ui-customization).
+- **AI agents**: Casdoor exposes its management API as an [MCP server](/docs/how-to-connect/mcp/overview) and acts as an [OAuth 2.1 authorization server for MCP servers](/docs/mcp-auth/overview).
+- **Operations**: Casdoor is one Go binary and a SQL database (MySQL, PostgreSQL, SQL Server, Oracle, SQLite, and others). The admin console is available in 11 languages.
 
 ## How sign-in works
 
@@ -35,41 +36,47 @@ Casdoor uses the standard OAuth 2.0 authorization code flow. In most cases a [Ca
 
 ![How Casdoor works](/img/principles.gif)
 
-1. **Your application sends the user to Casdoor.** It redirects the browser to the authorization endpoint:
+1. Your application sends the user to Casdoor. It redirects the browser to the authorization endpoint:
 
    ```text
    https://<casdoor-host>/login/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<callback-url>&scope=openid%20profile%20email&state=<random-value>
    ```
 
-   - `client_id`: the **Client ID** of the [application](/docs/application/overview) in Casdoor.
-   - `redirect_uri`: your application's callback URL. It must be listed in the application's **Redirect URLs**.
-   - `state`: a random value your application generates and checks when the user comes back, to protect against cross-site request forgery.
+   - `client_id`: The **Client ID** of the [application](/docs/application/overview) in Casdoor.
+   - `redirect_uri`: Your application's callback URL. It must be listed in the application's **Redirect URLs**.
+   - `state`: A random value your application generates and checks when the user comes back, to protect against cross-site request forgery.
 
-2. **The user signs in.** Casdoor shows the sign-in page of that application. The user enters a password, uses a passkey, or picks a provider such as Google or GitHub.
+1. The user signs in. Casdoor shows the sign-in page of that application. The user enters a password, uses a passkey, or picks a provider such as Google or GitHub.
 
-3. **Casdoor sends the user back with a code.** The browser is redirected to `redirect_uri` with a one-time `code` and the same `state`.
+1. Casdoor sends the user back with a code. It redirects the browser to `redirect_uri` with a one-time `code` and the same `state`.
 
-4. **Your application exchanges the code for tokens.** Your backend calls `https://<casdoor-host>/api/login/oauth/access_token` with the code and the application's **Client secret**, and receives an access token, an ID token, and a refresh token.
+1. Your application exchanges the code for tokens. Your backend calls `https://<casdoor-host>/api/login/oauth/access_token` with the code and the application's **Client secret**, and receives an access token, an ID token, and a refresh token.
 
-5. **Your application uses the tokens.** The ID token is a JWT that identifies the user. The access token authorizes calls to Casdoor's APIs, such as `/api/userinfo`, and to your own resource servers.
+1. Your application uses the tokens. The ID token is a JWT that identifies the user. The access token authorizes calls to Casdoor's APIs, such as `/api/userinfo`, and to your own resource servers.
 
 ![OAuth 2.0 authorization code flow](/img/oauth.png)
 
 For the details of each request, see [OAuth 2.0](/docs/how-to-connect/oauth) and [OIDC client](/docs/how-to-connect/oidc-client).
 
-## Online demo
+## Try the online demo
 
-- [Casdoor demo](https://door.casdoor.com/): sign in as the global administrator with user name `admin` and password `123`.
-- [Casbin-OA](https://oa.casbin.com) ([source code](https://github.com/casbin/casbin-oa)): a Casbin web application that signs users in with Casdoor.
-- [Casnode](https://casnode.org) ([source code](https://github.com/casbin/casnode)): the Casbin community forum, which uses Casdoor for accounts and sign-in.
+- [Casdoor demo](https://door.casdoor.com/): Sign in as the global administrator with the username `admin` and the password `123`.
+- [Casbin-OA](https://oa.casbin.com) ([source code](https://github.com/casbin/casbin-oa)): A Casbin web application that signs users in with Casdoor.
+- [Casnode](https://casnode.org) ([source code](https://github.com/casbin/casnode)): The Casbin community forum, which uses Casdoor for accounts and sign-in.
 
 ## Architecture
 
 | Part | Description | Language | Source code |
 |---|---|---|---|
-| Frontend | Web console and sign-in pages | TypeScript, React | [casdoor/web](https://github.com/casdoor/casdoor/tree/master/web) |
+| Frontend | Admin console and sign-in pages | TypeScript, React | [casdoor/web](https://github.com/casdoor/casdoor/tree/master/web) |
 | Backend | REST API, protocol endpoints, and the server that serves the frontend | Go, Beego | [casdoor/casdoor](https://github.com/casdoor/casdoor) |
 
-## Comparing Casdoor with other identity providers
+## Compare Casdoor with other identity providers
 
-Evaluating Casdoor against Keycloak, ZITADEL, authentik, Auth0, or Logto? See [Casdoor vs. alternatives](/docs/comparison/overview) and the [feature comparison](/docs/comparison/feature-comparison).
+To evaluate Casdoor against Keycloak, ZITADEL, authentik, Auth0, or Logto, see [Casdoor vs. alternatives](/docs/comparison/overview) and the [feature comparison](/docs/comparison/feature-comparison).
+
+## Next steps
+
+- [Core concepts](/docs/basic/core-concepts): Learn what organizations, users, applications, and providers are.
+- [Run Casdoor with Docker](/docs/basic/try-with-docker): Start a Casdoor instance in one command.
+- [Connect an application to Casdoor](/docs/how-to-connect/overview): Sign users in to your own application.

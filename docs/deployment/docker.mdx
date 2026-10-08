@@ -1,6 +1,7 @@
 ---
-title: Deploying with Docker
-description: Run Casdoor with Docker or Docker Compose and optional reverse proxies.
+title: Deploy Casdoor with Docker
+sidebar_label: Deploy with Docker
+description: Run Casdoor in production with Docker or Docker Compose, behind Traefik, Nginx, or Caddy with HTTPS.
 keywords: [Docker, Docker Compose, Traefik, Nginx, Caddy]
 authors: [BeardedTek]
 ---
@@ -8,19 +9,51 @@ authors: [BeardedTek]
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+This guide explains how to run Casdoor in production with Docker or Docker Compose and how to put a reverse proxy with HTTPS in front of it.
+
+---
+
+#### Learning outcomes
+
+- Prepare the configuration files that the Casdoor container reads.
+- Start Casdoor with Docker Compose or `docker run`.
+- Serve Casdoor over HTTPS through Traefik, Nginx, or Caddy.
+- Check that the deployment works and find the cause when it doesn't.
+
+#### What you need
+
+- Docker, and Docker Compose for the Compose setups
+- A [supported database](/docs/basic/server-installation#supported-databases) that the container can reach
+- For HTTPS: a domain name that points to your server, and ports 80 and 443 open
+
+---
+
 :::tip Don't want to run it yourself?
 [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=deploy-docker) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
 :::
 
-This page describes deploying Casdoor with Docker or Docker Compose, with optional reverse proxy (Traefik, Nginx, Caddy) configs.
+## Prepare the configuration
 
-## Prerequisites
+1. Create the directories that you mount into the container:
 
-- Docker
-- Docker Compose (for the compose method)
-- A domain pointing to your server (for reverse proxy setups)
+   ```bash
+   mkdir -p conf logs
+   ```
 
-## Deployment options
+1. Download the default configuration files:
+
+   ```bash
+   wget https://raw.githubusercontent.com/casdoor/casdoor/master/conf/app.conf -O conf/app.conf
+   wget https://raw.githubusercontent.com/casdoor/casdoor/master/init_data.json.template -O conf/init_data.json
+   ```
+
+1. Edit `conf/app.conf` for your environment. At least set the database connection. See [Configure the database](/docs/basic/server-installation#configure-database) and the [Configuration reference](/docs/basic/configuration).
+
+:::note
+Casdoor runs as uid and gid 1000 inside the container. Make the mounted directories readable by uid 1000, and writable if Casdoor writes to them, for example for logs or a SQLite file. Otherwise Casdoor fails with `permission denied`.
+:::
+
+## Start Casdoor
 
 ````mdx-code-block
 
@@ -34,42 +67,38 @@ This page describes deploying Casdoor with Docker or Docker Compose, with option
 
 <TabItem value="docker-compose">
 
-### Using Docker Compose
+1. Create a `docker-compose.yml` file:
 
-Create a `docker-compose.yml` file:
+   ```yaml
+   services:
+     casdoor:
+       image: casbin/casdoor:latest
+       container_name: casdoor
+       restart: unless-stopped
+       ports:
+         - "8000:8000"
+       volumes:
+         - ./conf:/conf
+         - ./logs:/logs
+       networks:
+         - casdoor-network
 
-```yaml
-services:
-  casdoor:
-    image: casbin/casdoor:latest
-    container_name: casdoor
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./conf:/conf
-      - ./logs:/logs
-    networks:
-      - casdoor-network
+   networks:
+     casdoor-network:
+       driver: bridge
+   ```
 
-networks:
-  casdoor-network:
-    driver: bridge
-```
+1. Start the service:
 
-Start the service:
-
-```bash
-docker compose up -d
-```
+   ```bash
+   docker compose up -d
+   ```
 
 </TabItem>
 
 <TabItem value="docker-run">
 
-### Using Docker Run
-
-Run Casdoor directly with Docker:
+Run the container:
 
 ```bash
 docker run -d \
@@ -87,9 +116,11 @@ docker run -d \
 
 ````
 
-## Reverse Proxy Configuration
+Casdoor now listens on port 8000 of the server.
 
-For production deployments, it's recommended to use a reverse proxy with TLS certificates. Choose your preferred reverse proxy:
+## Add a reverse proxy with HTTPS {#reverse-proxy-configuration}
+
+In production, serve Casdoor over HTTPS through a reverse proxy. In the following examples, replace `your-domain.com` with your domain and `your-email@example.com` with your email address.
 
 ````mdx-code-block
 
@@ -105,306 +136,314 @@ For production deployments, it's recommended to use a reverse proxy with TLS cer
 
 <TabItem value="traefik-labels">
 
-### Traefik with Docker Labels
+Traefik reads its routes from the labels of the Casdoor container and gets certificates from Let's Encrypt.
 
-Create a `docker-compose.yml` with Traefik labels:
+1. Create a `docker-compose.yml` file:
 
-```yaml
-services:
-  traefik:
-    image: traefik:v2.10
-    container_name: traefik
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik/acme.json:/acme.json
-    command:
-      - --api.dashboard=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --certificatesresolvers.letsencrypt.acme.email=your-email@example.com
-      - --certificatesresolvers.letsencrypt.acme.storage=/acme.json
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
-    networks:
-      - casdoor-network
+   ```yaml
+   services:
+     traefik:
+       image: traefik:v2.10
+       container_name: traefik
+       restart: unless-stopped
+       ports:
+         - "80:80"
+         - "443:443"
+       volumes:
+         - /var/run/docker.sock:/var/run/docker.sock:ro
+         - ./traefik/acme.json:/acme.json
+       command:
+         - --api.dashboard=true
+         - --providers.docker=true
+         - --providers.docker.exposedbydefault=false
+         - --entrypoints.web.address=:80
+         - --entrypoints.websecure.address=:443
+         - --certificatesresolvers.letsencrypt.acme.email=your-email@example.com
+         - --certificatesresolvers.letsencrypt.acme.storage=/acme.json
+         - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+       networks:
+         - casdoor-network
 
-  casdoor:
-    image: casbin/casdoor:latest
-    container_name: casdoor
-    restart: unless-stopped
-    volumes:
-      - ./conf:/conf
-      - ./logs:/logs
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.casdoor.rule=Host(`your-domain.com`)"
-      - "traefik.http.routers.casdoor.entrypoints=websecure"
-      - "traefik.http.routers.casdoor.tls.certresolver=letsencrypt"
-      - "traefik.http.services.casdoor.loadbalancer.server.port=8000"
-    networks:
-      - casdoor-network
+     casdoor:
+       image: casbin/casdoor:latest
+       container_name: casdoor
+       restart: unless-stopped
+       volumes:
+         - ./conf:/conf
+         - ./logs:/logs
+       labels:
+         - "traefik.enable=true"
+         - "traefik.http.routers.casdoor.rule=Host(`your-domain.com`)"
+         - "traefik.http.routers.casdoor.entrypoints=websecure"
+         - "traefik.http.routers.casdoor.tls.certresolver=letsencrypt"
+         - "traefik.http.services.casdoor.loadbalancer.server.port=8000"
+       networks:
+         - casdoor-network
 
-networks:
-  casdoor-network:
-    driver: bridge
-```
+   networks:
+     casdoor-network:
+       driver: bridge
+   ```
 
-Create the acme.json file:
+1. Create the file in which Traefik stores the certificates:
 
-```bash
-touch traefik/acme.json
-chmod 600 traefik/acme.json
-```
+   ```bash
+   touch traefik/acme.json
+   chmod 600 traefik/acme.json
+   ```
+
+1. Start the services with `docker compose up -d`.
 
 </TabItem>
 
 <TabItem value="traefik-dynamic">
 
-### Traefik with Dynamic Configuration
+Traefik reads its routes from a configuration file instead of container labels.
 
-Create a `docker-compose.yml` with dynamic configuration:
+1. Create a `docker-compose.yml` file:
 
-```yaml
-services:
-  traefik:
-    image: traefik:v2.10
-    container_name: traefik
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik/acme.json:/acme.json
-      - ./traefik/traefik.yml:/etc/traefik/traefik.yml
-      - ./traefik/dynamic.yml:/etc/traefik/dynamic.yml
-    command:
-      - --configfile=/etc/traefik/traefik.yml
-    networks:
-      - casdoor-network
+   ```yaml
+   services:
+     traefik:
+       image: traefik:v2.10
+       container_name: traefik
+       restart: unless-stopped
+       ports:
+         - "80:80"
+         - "443:443"
+       volumes:
+         - /var/run/docker.sock:/var/run/docker.sock:ro
+         - ./traefik/acme.json:/acme.json
+         - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+         - ./traefik/dynamic.yml:/etc/traefik/dynamic.yml
+       command:
+         - --configfile=/etc/traefik/traefik.yml
+       networks:
+         - casdoor-network
 
-  casdoor:
-    image: casbin/casdoor:latest
-    container_name: casdoor
-    restart: unless-stopped
-    volumes:
-      - ./conf:/conf
-      - ./logs:/logs
-    networks:
-      - casdoor-network
+     casdoor:
+       image: casbin/casdoor:latest
+       container_name: casdoor
+       restart: unless-stopped
+       volumes:
+         - ./conf:/conf
+         - ./logs:/logs
+       networks:
+         - casdoor-network
 
-networks:
-  casdoor-network:
-    driver: bridge
-```
+   networks:
+     casdoor-network:
+       driver: bridge
+   ```
 
-Create `traefik/traefik.yml`:
+1. Create `traefik/traefik.yml`:
 
-```yaml
-api:
-  dashboard: true
+   ```yaml
+   api:
+     dashboard: true
 
-entryPoints:
-  web:
-    address: ":80"
-    http:
-      redirections:
-        entrypoint:
-          to: websecure
-          scheme: https
-  websecure:
-    address: ":443"
+   entryPoints:
+     web:
+       address: ":80"
+       http:
+         redirections:
+           entrypoint:
+             to: websecure
+             scheme: https
+     websecure:
+       address: ":443"
 
-providers:
-  docker:
-    endpoint: "unix:///var/run/docker.sock"
-    exposedByDefault: false
-  file:
-    directory: /etc/traefik
-    watch: true
+   providers:
+     docker:
+       endpoint: "unix:///var/run/docker.sock"
+       exposedByDefault: false
+     file:
+       directory: /etc/traefik
+       watch: true
 
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      email: your-email@example.com
-      storage: /acme.json
-      httpChallenge:
-        entryPoint: web
-```
+   certificatesResolvers:
+     letsencrypt:
+       acme:
+         email: your-email@example.com
+         storage: /acme.json
+         httpChallenge:
+           entryPoint: web
+   ```
 
-Create `traefik/dynamic.yml`:
+1. Create `traefik/dynamic.yml`:
 
-```yaml
-http:
-  routers:
-    casdoor:
-      rule: "Host(`your-domain.com`)"
-      service: casdoor
-      tls:
-        certResolver: letsencrypt
-      entryPoints:
-        - websecure
+   ```yaml
+   http:
+     routers:
+       casdoor:
+         rule: "Host(`your-domain.com`)"
+         service: casdoor
+         tls:
+           certResolver: letsencrypt
+         entryPoints:
+           - websecure
 
-  services:
-    casdoor:
-      loadBalancer:
-        servers:
-          - url: "http://casdoor:8000"
-```
+     services:
+       casdoor:
+         loadBalancer:
+           servers:
+             - url: "http://casdoor:8000"
+   ```
+
+1. Start the services with `docker compose up -d`.
 
 </TabItem>
 
 <TabItem value="nginx">
 
-### Nginx with Let's Encrypt
+Nginx terminates TLS with a certificate that Certbot gets from Let's Encrypt.
 
-Create a `docker-compose.yml` with Nginx:
+1. Create a `docker-compose.yml` file:
 
-```yaml
-services:
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    depends_on:
-      - casdoor
-    networks:
-      - casdoor-network
+   ```yaml
+   services:
+     nginx:
+       image: nginx:alpine
+       container_name: nginx
+       restart: unless-stopped
+       ports:
+         - "80:80"
+         - "443:443"
+       volumes:
+         - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+         - ./nginx/conf.d:/etc/nginx/conf.d
+         - ./certbot/conf:/etc/letsencrypt
+         - ./certbot/www:/var/www/certbot
+       depends_on:
+         - casdoor
+       networks:
+         - casdoor-network
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --email your-email@example.com --agree-tos --no-eff-email -d your-domain.com
+     certbot:
+       image: certbot/certbot
+       container_name: certbot
+       volumes:
+         - ./certbot/conf:/etc/letsencrypt
+         - ./certbot/www:/var/www/certbot
+       command: certonly --webroot --webroot-path=/var/www/certbot --email your-email@example.com --agree-tos --no-eff-email -d your-domain.com
 
-  casdoor:
-    image: casbin/casdoor:latest
-    container_name: casdoor
-    restart: unless-stopped
-    volumes:
-      - ./conf:/conf
-      - ./logs:/logs
-    networks:
-      - casdoor-network
+     casdoor:
+       image: casbin/casdoor:latest
+       container_name: casdoor
+       restart: unless-stopped
+       volumes:
+         - ./conf:/conf
+         - ./logs:/logs
+       networks:
+         - casdoor-network
 
-networks:
-  casdoor-network:
-    driver: bridge
-```
+   networks:
+     casdoor-network:
+       driver: bridge
+   ```
 
-Create `nginx/conf.d/default.conf`:
+1. Create `nginx/conf.d/default.conf`:
 
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-    
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-    
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
+   ```nginx
+   server {
+       listen 80;
+       server_name your-domain.com;
+       
+       location /.well-known/acme-challenge/ {
+           root /var/www/certbot;
+       }
+       
+       location / {
+           return 301 https://$host$request_uri;
+       }
+   }
 
-server {
-    listen 443 ssl;
-    server_name your-domain.com;
-    
-    ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
-    
-    location / {
-        proxy_pass http://casdoor:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
+   server {
+       listen 443 ssl;
+       server_name your-domain.com;
+       
+       ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+       ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+       
+       location / {
+           proxy_pass http://casdoor:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto $scheme;
+       }
+   }
+   ```
 
-Initialize SSL certificates:
+1. Get the first certificate and schedule the renewal:
 
-```bash
-# Create directories
-mkdir -p certbot/conf certbot/www nginx/conf.d
+   ```bash
+   # Create directories
+   mkdir -p certbot/conf certbot/www nginx/conf.d
 
-# Get initial certificate
-docker compose run --rm certbot
+   # Get initial certificate
+   docker compose run --rm certbot
 
-# Add to crontab for renewal
-echo "0 12 * * * docker compose run --rm certbot renew" | crontab -
-```
+   # Add to crontab for renewal
+   echo "0 12 * * * docker compose run --rm certbot renew" | crontab -
+   ```
+
+1. Start the services with `docker compose up -d`.
 
 </TabItem>
 
 <TabItem value="caddy">
 
-### Caddy with Automatic HTTPS
+Caddy gets and renews certificates on its own.
 
-Create a `docker-compose.yml` with Caddy:
+1. Create a `docker-compose.yml` file:
 
-```yaml
-services:
-  caddy:
-    image: caddy:2-alpine
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - casdoor
-    networks:
-      - casdoor-network
+   ```yaml
+   services:
+     caddy:
+       image: caddy:2-alpine
+       container_name: caddy
+       restart: unless-stopped
+       ports:
+         - "80:80"
+         - "443:443"
+       volumes:
+         - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+         - caddy_data:/data
+         - caddy_config:/config
+       depends_on:
+         - casdoor
+       networks:
+         - casdoor-network
 
-  casdoor:
-    image: casbin/casdoor:latest
-    container_name: casdoor
-    restart: unless-stopped
-    volumes:
-      - ./conf:/conf
-      - ./logs:/logs
-    networks:
-      - casdoor-network
+     casdoor:
+       image: casbin/casdoor:latest
+       container_name: casdoor
+       restart: unless-stopped
+       volumes:
+         - ./conf:/conf
+         - ./logs:/logs
+       networks:
+         - casdoor-network
 
-volumes:
-  caddy_data:
-  caddy_config:
+   volumes:
+     caddy_data:
+     caddy_config:
 
-networks:
-  casdoor-network:
-    driver: bridge
-```
+   networks:
+     casdoor-network:
+       driver: bridge
+   ```
 
-Create `caddy/Caddyfile`:
+1. Create `caddy/Caddyfile`:
 
-```caddyfile
-your-domain.com {
-    reverse_proxy casdoor:8000
-}
-```
+   ```caddyfile
+   your-domain.com {
+       reverse_proxy casdoor:8000
+   }
+   ```
+
+1. Start the services with `docker compose up -d`.
 
 </TabItem>
 
@@ -412,37 +451,22 @@ your-domain.com {
 
 ````
 
-## Configuration
+## Verify the deployment
 
-### Create the necessary configuration directories
+Open Casdoor in a browser:
 
-```bash
-mkdir -p conf logs
-```
+| Setup | URL |
+|---|---|
+| Docker Compose or `docker run` without a proxy | `http://<your-server-ip>:8000` |
+| With a reverse proxy | `https://your-domain.com` |
 
-### Download the Casdoor configuration files
-
-```bash
-wget https://raw.githubusercontent.com/casdoor/casdoor/master/conf/app.conf -O conf/app.conf
-wget https://raw.githubusercontent.com/casdoor/casdoor/master/init_data.json.template -O conf/init_data.json
-```
-
-### Edit `conf/app.conf` to match your environment settings
-
-:::note
-The default user of Casdoor has a uid and gid of 1000. When using volume mapping with SQLite (or any storage requiring file permissions), ensure that the path (e.g., `/folder/of/app.conf` in the example above) is accessible to uid 1000. This avoids permission errors like `permission denied` when Casdoor writes to mapped volumes.
-:::
-
-## Testing
-
-After deployment, visit your domain in your browser:
-
-- **Docker Run/Compose only**: `http://your-server-ip:8000`
-- **With Reverse Proxy**: `https://your-domain.com`
+The Casdoor sign-in page appears. Sign in as `built-in/admin` with the password `123`, and then change the password.
 
 ## Troubleshooting
 
-### Check container logs
+### Casdoor doesn't start
+
+Read the container logs:
 
 ```bash
 # For Docker Compose
@@ -452,7 +476,9 @@ docker compose logs casdoor
 docker logs casdoor
 ```
 
-### Verify reverse proxy configuration
+### The proxy doesn't reach Casdoor
+
+Check that the containers run and that Casdoor answers on port 8000:
 
 ```bash
 # Check if containers are running
@@ -462,8 +488,13 @@ docker ps
 curl -I http://localhost:8000
 ```
 
-### SSL Certificate Issues
+### The certificate isn't issued
 
-- Ensure your domain points to the correct server IP
-- Check that ports 80 and 443 are open in your firewall
-- Verify DNS propagation with `nslookup your-domain.com`
+- Check that your domain points to the IP address of the server, for example with `nslookup your-domain.com`.
+- Check that the firewall allows ports 80 and 443.
+
+## See also
+
+- [Run Casdoor with Docker](/docs/basic/try-with-docker)
+- [Deploy Casdoor behind Nginx](/docs/deployment/nginx)
+- [Data initialization](/docs/deployment/data-initialization)

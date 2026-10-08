@@ -1,32 +1,57 @@
 ---
-title: Slack notification
-description: Send Casdoor notifications to a Slack channel.
+title: Send notifications to Slack
+sidebar_label: Slack
+description: Send the notifications of Casdoor to a Slack channel through a Slack app.
 keywords: [Slack, notification, provider]
 authors: [UsherFall]
 ---
 
-## 1. Create a Slack app
+This guide explains how to send the notifications of Casdoor to a Slack channel.
 
-At [Slack API](https://api.slack.com/apps), create an app and add the OAuth scopes **chat:write** and **chat:write.public** for the bot.
+---
 
-![slack_app](/img/providers/notification/slack_app.png)
+#### Learning outcomes
 
-## 2. Get token and channel ID
+- Create a Slack app with a bot token.
+- Add Slack as a notification provider in Casdoor.
 
-- Copy the **Bot User OAuth Access Token** from **OAuth & Permissions**.
-- Get the **Channel ID**: right-click the channel in Slack and choose **Copy link** (or “copy name”); the ID is in the URL or you can use Slack’s channel details.
+#### What you need
 
-![slack_token](/img/providers/notification/slack_token.png)
-![slack_channel](/img/providers/notification/slack_channel.png)
+- A Slack workspace in which you may create apps
+- Administrator access to the Casdoor admin console
 
-## 3. Configure the provider in Casdoor
+---
 
-Create a **Notification** provider, set **Type** to **Slack**, and fill in:
+## Create a Slack app {#1-create-a-slack-app}
 
-| Casdoor field | Value        |
-|---------------|--------------|
-| Secret key    | Access Token |
-| Chat ID       | Channel ID   |
-| Content       | Message template (optional) |
+1. On [Slack API](https://api.slack.com/apps), create an app and add the bot scopes `chat:write` and `chat:write.public`.
 
-![slack_provider](/img/providers/notification/slack_provider.png)
+   ![Scopes of the Slack app](/img/providers/notification/slack_app.png)
+
+1. Install the app to the workspace, and copy the **Bot User OAuth Token** from **OAuth & Permissions**.
+
+   ![Bot token of the Slack app](/img/providers/notification/slack_token.png)
+
+1. Find the ID of the channel: in the details of the channel, or at the end of the link that **Copy link** gives.
+
+   ![Channel ID in Slack](/img/providers/notification/slack_channel.png)
+
+## Add the provider in Casdoor {#3-configure-the-provider-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Notification` and **Type** to `Slack`.
+1. Fill in the fields:
+
+   | Casdoor field | Value        |
+   |---------------|--------------|
+   | Secret key    | Access Token |
+   | Chat ID       | Channel ID   |
+   | Content       | Message template (optional) |
+
+   ![Slack notification provider in Casdoor](/img/providers/notification/slack_provider.png)
+
+1. Click **Send Testing Notification**, and save the provider.
+
+## See also
+
+- [Notification providers](/docs/provider/notification/overview)

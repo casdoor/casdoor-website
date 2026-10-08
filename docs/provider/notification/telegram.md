@@ -1,32 +1,58 @@
 ---
-title: Telegram notification
-description: Send Casdoor notifications to Telegram.
+title: Send notifications to Telegram
+sidebar_label: Telegram
+description: Send the notifications of Casdoor to a Telegram chat through a bot.
 keywords: [telegram, notification, provider]
 authors: [UsherFall]
 ---
 
-## 1. Get bot API token
+This guide explains how to send the notifications of Casdoor to a Telegram chat through a bot.
 
-Create a [Telegram](https://web.telegram.org/) account, then open [@BotFather](https://telegram.me/BotFather) and send `/newbot`. Set the bot name and username; BotFather returns an **API Token**.
+---
 
-![telegram_bot](/img/providers/notification/telegram_bot.png)
+#### Learning outcomes
 
-## 2. Get chat ID
+- Create a Telegram bot and find the chat ID.
+- Add Telegram as a notification provider in Casdoor.
 
-Use [@RawDataBot](https://t.me/raw_info_bot) in Telegram: start a chat and it will show your **Chat ID**.
+#### What you need
 
-![telegram_chat_id](/img/providers/notification/telegram_chat_id.png)
+- A [Telegram](https://web.telegram.org/) account
+- Administrator access to the Casdoor admin console
 
-## 3. Configure the provider in Casdoor
+---
 
-Create a **Notification** provider, set **Type** to **Telegram**, and fill in:
+## Create a bot {#1-get-bot-api-token}
 
-| Casdoor field | Value     |
-|---------------|-----------|
-| Secret key    | API Token |
-| Chat ID       | Chat ID   |
-| Content       | Message template (optional) |
+1. Open [@BotFather](https://telegram.me/BotFather) and send `/newbot`.
+1. Enter the name and the username of the bot. BotFather replies with the API token.
 
-![telegram_provider](/img/providers/notification/telegram_provider.png)
+   ![API token from BotFather](/img/providers/notification/telegram_bot.png)
+
+## Find the chat ID {#2-get-chat-id}
+
+Start a chat with [@RawDataBot](https://t.me/raw_info_bot). It shows your chat ID.
+
+![Chat ID from RawDataBot](/img/providers/notification/telegram_chat_id.png)
+
+## Add the provider in Casdoor {#3-configure-the-provider-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Notification` and **Type** to `Telegram`.
+1. Fill in the fields:
+
+   | Casdoor field | Value     |
+   |---------------|-----------|
+   | Secret key    | API Token |
+   | Chat ID       | Chat ID   |
+   | Content       | Message template (optional) |
+
+   ![Telegram notification provider in Casdoor](/img/providers/notification/telegram_provider.png)
+
+1. Click **Send Testing Notification**, and save the provider.
 
 <video src="/video/provider/notification/use_telegram_as_notification_provider.mp4" controls="controls" width="100%"></video>
+
+## See also
+
+- [Notification providers](/docs/provider/notification/overview)

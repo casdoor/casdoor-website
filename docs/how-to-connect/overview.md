@@ -1,99 +1,67 @@
 ---
-title: Overview
-description: Connect your application to Casdoor using OAuth 2.0, OIDC, SAML, or CAS.
+title: Connect an application to Casdoor
+sidebar_label: Overview
+description: Choose how your application signs users in with Casdoor - OAuth 2.0 and OpenID Connect, SAML, or CAS - and whether to use an OIDC library, a Casdoor SDK, or a plugin.
 keywords: [OAuth, OAuth 2.0, OIDC, SAML, CAS, integration]
 authors: [nomeguy]
 ---
 
-This section describes how to connect your application to Casdoor.
+Your application signs users in with Casdoor through a standard protocol. This page helps you choose the protocol and the kind of client, and links to the guide for each choice.
 
-**When Casdoor acts as a Service Provider (SP)**, it supports:
+## Choose a protocol
 
-- OAuth 2.0 (OIDC)
-- SAML
+Casdoor is an identity provider (IdP) for the following protocols:
 
-**When Casdoor acts as an Identity Provider (IdP)**, it supports:
+| Protocol | Use it when | Guide |
+|---|---|---|
+| OAuth 2.0 and OpenID Connect (OIDC) | You build a new application, or your application already supports OIDC. This is the recommended protocol | [OAuth 2.0](/docs/how-to-connect/oauth) |
+| SAML 2.0 | Your application or a product that you bought supports only SAML | [SAML](/docs/how-to-connect/saml/overview) |
+| CAS 1.0, 2.0, and 3.0 | You connect an existing application that supports only CAS | [CAS](/docs/how-to-connect/cas) |
 
-- OAuth 2.0
-- OIDC
-- SAML
-- CAS 1.0, 2.0, and 3.0
+Casdoor is also a service provider (SP): it lets users sign in with accounts from external identity providers over OAuth 2.0, OIDC, and SAML. See [Providers](/docs/provider/overview).
 
-## OAuth 2.0 (OIDC)
+## OAuth 2.0 and OpenID Connect
 
-<details>
-<summary>What is OAuth 2.0?</summary>
+[OAuth 2.0](https://oauth.net/2/) is an authorization framework. It lets an application get limited access to a user's account at a service, without seeing the user's password. [OpenID Connect](https://openid.net/connect/) adds an identity layer on top of OAuth 2.0: a standard way for the application to learn who the user is, and single sign-on (SSO) across applications.
 
-[OAuth 2](https://oauth.net/2/) is an authorization framework that lets applications obtain limited access to user accounts on an HTTP service. It delegates authentication to the service that hosts the account and authorizes third-party apps to access it. OAuth 2 defines flows for web, desktop, and mobile applications.
+The sign-in flow of Casdoor is the OAuth 2.0 authorization code flow, and Casdoor is a complete OIDC provider. Choose one of three kinds of client:
 
-</details>
+| Client | Use it when | Guide |
+|---|---|---|
+| Standard OIDC client library | Your language or framework has an OIDC library, or your application already uses another OIDC provider. Switching to Casdoor is then a change of the discovery URL and the credentials | [Standard OIDC client](/docs/how-to-connect/oidc-client) |
+| Casdoor SDK | You also want to call the Casdoor API from your application, for example to manage users or upload files. The SDKs build on OIDC and add these functions | [Casdoor SDKs](/docs/how-to-connect/sdk) |
+| Casdoor plugin or middleware | Your application runs on a platform that has one. This is the fastest way to add Casdoor to that platform | [Casdoor plugins](/docs/how-to-connect/plugin) |
 
-Casdoor’s authorization flow is based on OAuth 2.0. We recommend OAuth 2.0 (OIDC) because it is straightforward to implement, covers many use cases, and is widely supported.
-
-Your application can integrate with Casdoor in three main ways:
-
-### Standard OIDC client
-
-**[Standard OIDC client](/docs/how-to-connect/oidc-client)** — Use any standard OIDC client library available for your language or framework.
-
-<details>
-<summary>What is OIDC?</summary>
-
-[OpenID Connect (OIDC)](https://openid.net/connect/) extends OAuth 2.0 with an identity layer. It lets users sign in once (SSO) at an OpenID Provider and access multiple relying parties. OIDC gives applications a standard way to obtain user identity and profile information.
-
-</details>
-
-Casdoor is fully OIDC-compliant. If you already use another OIDC identity provider with a standard client library, switching to Casdoor is typically a configuration change (e.g. discovery URL and credentials).
-
-### Casdoor SDKs
-
-**[Casdoor SDKs](/docs/how-to-connect/sdk)** — Casdoor provides SDKs for many languages, built on OIDC and adding Casdoor-specific features (e.g. user management, file upload).
-
-Using an SDK takes a bit more setup than a generic OIDC client but gives you the most flexibility and the full Casdoor API.
-
-### Casdoor plugin
-
-**[Casdoor plugin](/docs/how-to-connect/plugin)** — If your app runs on a supported platform (e.g. Spring Boot, Quarkus, WordPress), use the official or community plugin or middleware. Plugins are the fastest way to add Casdoor to that platform.
-
-**Plugins:**
+Plugins and middleware include:
 
 - [Jenkins plugin](/docs/integration/java/jenkins-plugin)
 - [APISIX plugin](/docs/integration/lua/apisix#connect-casdoor-via-apisixs-casdoor-plugin)
-
-**Middleware:**
-
-- [Spring Boot](https://github.com/casdoor/casdoor-spring-boot-starter)
-- [Quarkus](/docs/integration/java/quarkus)
-- [Django](https://github.com/casdoor/django-casdoor-auth)
+- [Spring Boot starter](https://github.com/casdoor/casdoor-spring-boot-starter)
+- [Quarkus extension](/docs/integration/java/quarkus)
+- [Django middleware](https://github.com/casdoor/django-casdoor-auth)
 
 ## SAML
 
-<details>
-<summary>What is SAML?</summary>
+Security Assertion Markup Language (SAML) is an XML-based standard through which an IdP passes authentication and authorization information to an SP. It is common in enterprise SSO.
 
-Security Assertion Markup Language (SAML) is an open standard that lets identity providers (IdPs) pass authentication and authorization information to service providers (SPs). Users can sign in once and access many applications. SAML uses XML for messages between the IdP and SPs.
+Casdoor is a SAML 2.0 IdP and supports the main features of SAML 2.0. See [SAML](/docs/how-to-connect/saml/overview). For an example, see [Add Casdoor as a SAML IdP in Keycloak](/docs/how-to-connect/saml/keycloak#add-the-saml-idp-in-keycloak).
 
-</details>
-
-Casdoor can act as a **SAML 2.0 IdP** and supports the main SAML 2.0 features. See **[SAML](/docs/how-to-connect/saml/overview)** for details.
-
-**Example:** [Casdoor as a SAML IdP in Keycloak](/docs/how-to-connect/saml/keycloak#add-the-saml-idp-in-keycloak)
-
-**When to use SAML:** SAML is mature and widely used in enterprise SSO, but the protocol is large and has many optional parts. For new applications, OAuth 2.0 / OIDC is usually simpler; choose SAML when you must interoperate with existing SAML-based systems.
+SAML is a large protocol with many optional parts. For a new application, OAuth 2.0 and OIDC are simpler. Choose SAML when you have to connect a system that supports only SAML.
 
 ## CAS
 
-<details>
-<summary>What is CAS?</summary>
+The Central Authentication Service (CAS) is a web SSO protocol. Applications authenticate users through the CAS server and never handle passwords.
 
-The Central Authentication Service (CAS) is a web SSO protocol. Users sign in once and can access multiple applications. Web applications authenticate users via the CAS server without handling passwords directly.
+Casdoor supports CAS 1.0, 2.0, and 3.0. See [CAS](/docs/how-to-connect/cas).
 
-</details>
+CAS is lightweight but limited. The CAS client and the server establish trust through back-channel calls, not through cryptographic signatures. For a new application, prefer OAuth 2.0 and OIDC.
 
-Casdoor supports **CAS 1.0, 2.0, and 3.0**. See **[CAS](/docs/how-to-connect/cas)** for setup.
+## Step-by-step guides for specific applications
 
-**Note:** CAS is lightweight but limited in scope. Trust between the CAS client and server is established by interface calls rather than cryptographic signatures. For new projects, OAuth 2.0 / OIDC is generally preferred.
+To connect a specific product, such as GitLab, Grafana, or Jenkins, see [Integrations](/docs/category/integrations).
 
-## Integrations
+## See also
 
-For step-by-step examples of connecting specific applications to Casdoor, see the [Integrations](/docs/category/integrations) section.
+- [Core concepts](/docs/basic/core-concepts)
+- [Single sign-on](/docs/session/single-sign-on)
+- [Call the Casdoor API](/docs/basic/public-api)

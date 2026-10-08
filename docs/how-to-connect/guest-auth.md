@@ -1,30 +1,44 @@
 ---
-title: Guest authentication
-description: Create temporary users without credentials and upgrade them later.
+title: Sign users in as guests
+sidebar_label: Guest authentication
+description: Create temporary users without a username or password, and turn them into regular users later.
 keywords: [guest, authentication, temporary users, passwordless]
 authors: [nomeguy]
 ---
 
-**Guest authentication** creates temporary users with no username or password. Users can use the app immediately; require full registration later if needed.
+This guide explains how to let people use your application before they register. Casdoor creates a temporary guest user without a username or password, and you turn the guest into a regular user later.
 
-## Prerequisites
+---
 
-Before using guest authentication, ensure the following settings are enabled on the application:
+#### Learning outcomes
 
-- **Enable signup** — Guest user creation requires signup to be allowed.
-- **Enable guest signin** — The explicit toggle that permits the `guest-user` code flow. Without it, the token endpoint returns `invalid_grant`.
+- Allow guest sign-in for an application.
+- Create a guest user through the token endpoint.
+- Upgrade a guest to a regular user.
 
-Both settings are found on the application edit page under the **Authentication** tab. Guest authentication is not available for the `built-in` organization.
+#### What you need
 
-## Creating a guest user
+- An [application](/docs/application/overview) in an organization other than `built-in`. Guest authentication isn't available in the `built-in` organization.
+- The client ID and client secret of the application
 
-POST to the token endpoint with the special code `guest-user`:
+---
+
+## Allow guest sign-in
+
+1. In the Casdoor admin console, open the edit page of the application and go to the **Authentication** tab.
+1. Turn on **Enable signup**. Casdoor creates a user for each guest, so sign-up must be allowed.
+1. Turn on **Enable guest signin**. Without it, the token endpoint answers guest requests with `invalid_grant`.
+1. Save the application.
+
+## Create a guest user {#creating-a-guest-user}
+
+Send a `POST` request to the token endpoint with the code `guest-user`:
 
 ```bash
 POST https://<CASDOOR_HOST>/api/login/oauth/access_token
 ```
 
-**Request Body:**
+With the body:
 
 ```json
 {
@@ -35,11 +49,7 @@ POST https://<CASDOOR_HOST>/api/login/oauth/access_token
 }
 ```
 
-:::note
-The code `"guest-user"` is a Casdoor extension that creates a guest user instead of completing the normal OAuth code flow.
-:::
-
-**Response:**
+The code `guest-user` is an extension of Casdoor. Casdoor creates a guest user instead of completing an authorization code flow, and returns tokens for that user:
 
 ```json
 {
@@ -52,17 +62,28 @@ The code `"guest-user"` is a Casdoor extension that creates a guest user instead
 }
 ```
 
-Casdoor creates a user with: username `guest_<uuid>`, a random password, and tag `guest-user`.
+The new user has the following properties:
 
-## Upgrading to a normal user
+| Property | Value |
+|---|---|
+| Username | `guest_<uuid>` |
+| Password | Random |
+| Tag | `guest-user` |
 
-When the user sets or changes their username (to something not starting with `guest_`) or sets a password via the user update API, they are upgraded: the tag becomes `normal-user` and they can use normal sign-in.
+A guest can't sign in on the sign-in page until the guest is upgraded.
 
-## Restrictions
+## Upgrade a guest to a regular user {#upgrading-to-a-normal-user}
 
-Guest users cannot sign in via the normal login page until they upgrade (set a real username or password).
+Update the user through the user update API in one of two ways:
 
-## Example Integration
+- Set a username that doesn't start with `guest_`.
+- Set a password.
+
+Casdoor then changes the tag of the user to `normal-user`, and the user can sign in on the sign-in page.
+
+## Example
+
+The following JavaScript creates a guest user and later upgrades it:
 
 ```javascript
 // Create a guest user
@@ -100,8 +121,8 @@ async function upgradeGuestUser(accessToken, newUsername, newPassword) {
 }
 ```
 
-## Related Documentation
+## See also
 
-- [OAuth 2.0](/docs/how-to-connect/oauth) - Standard OAuth flows
-- [User Tags](/docs/user/overview#user-tags) - Understanding user tags
-- [Application Tags](/docs/application/tags) - Restricting access by tags
+- [OAuth 2.0](/docs/how-to-connect/oauth)
+- [User tags](/docs/user/overview#user-tags)
+- [Application tags](/docs/application/tags)

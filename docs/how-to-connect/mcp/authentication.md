@@ -1,19 +1,21 @@
 ---
 title: MCP authentication
-description: OAuth discovery and authentication methods for the MCP server.
+description: How MCP clients discover the OAuth 2.0 requirements of the Casdoor MCP server, and the ways to authenticate a request.
 keywords: [MCP, authentication, OAuth, access token]
 authors: [hsluoyz]
 ---
 
+Requests to the Casdoor MCP server at `/api/mcp` are authenticated in the same ways as requests to the [Casdoor API](/docs/basic/public-api). This page describes how a client discovers what the server requires, and how each authentication method affects the tools that the client can call.
+
 ## OAuth discovery
 
-Casdoor supports [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) OAuth 2.0 Protected Resource Metadata so MCP clients can discover auth requirements. Query the well-known endpoint:
+Casdoor publishes OAuth 2.0 Protected Resource Metadata ([RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728)), so that an MCP client can find out which authorization server protects the MCP endpoint:
 
 ```bash
 curl https://your-casdoor.com/.well-known/oauth-protected-resource
 ```
 
-The response indicates which OAuth authorization server protects the MCP resource:
+The response names the authorization server:
 
 ```json
 {
@@ -24,19 +26,23 @@ The response indicates which OAuth authorization server protects the MCP resourc
 }
 ```
 
-For application-specific discovery, append the application name:
+To get the metadata of a single application, put the application name in the path:
 
 ```bash
 curl https://your-casdoor.com/.well-known/my-app/oauth-protected-resource
 ```
 
-This returns metadata scoped to that specific application, useful when different applications have different authorization requirements.
+Use the application-specific endpoint when applications have different authorization requirements.
 
-## Authentication Methods
+## Authentication methods
 
-MCP requests must use one of the auth methods in [Public API authentication](/docs/basic/public-api). The authentication method you choose affects which tools you can access.
+| Method | Tools that the client can call | Use it for |
+|---|---|---|
+| Access token | The tools that the scopes of the token allow. See [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization) | Automation and MCP clients. This is the recommended method |
+| Client ID and client secret | The tools that the application may use | Service accounts |
+| Session cookie | All tools, without scope checks | Interactive use in the browser |
 
-**Using an access token with scopes** (recommended for automation):
+With an access token:
 
 ```bash
 curl -X POST https://your-casdoor.com/api/mcp \
@@ -45,9 +51,7 @@ curl -X POST https://your-casdoor.com/api/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-Access tokens enforce scope-based authorization. The tools you can use depend on the scopes granted when the token was issued. This approach lets you create tokens with limited permissions for specific tasks.
-
-**Using client credentials** (for service accounts):
+With the client ID and client secret of an application:
 
 ```bash
 curl -X POST https://your-casdoor.com/api/mcp \
@@ -56,13 +60,9 @@ curl -X POST https://your-casdoor.com/api/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-**Using session authentication** (for interactive use):
+## Unauthenticated requests {#handling-unauthenticated-requests}
 
-Session-based authentication through browser cookies grants access to all tools without scope restrictions. This method is intended for interactive use and maintains compatibility with existing workflows.
-
-## Handling Unauthenticated Requests
-
-Unauthenticated requests receive a JSON-RPC error response with a `WWW-Authenticate` header pointing to the OAuth protected resource metadata:
+Casdoor answers a request without credentials with a JSON-RPC error:
 
 ```json
 {
@@ -76,4 +76,10 @@ Unauthenticated requests receive a JSON-RPC error response with a `WWW-Authentic
 }
 ```
 
-The response includes a `WWW-Authenticate: Bearer realm="/.well-known/oauth-protected-resource"` header, allowing compliant OAuth clients to automatically discover the authorization server configuration.
+The response also carries the header `WWW-Authenticate: Bearer realm="/.well-known/oauth-protected-resource"`. An MCP client that follows the OAuth 2.0 specification reads the metadata from that location and starts the authorization flow on its own.
+
+## See also
+
+- [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization)
+- [Call the Casdoor API](/docs/basic/public-api)
+- [OAuth 2.0](/docs/how-to-connect/oauth)

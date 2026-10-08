@@ -1,105 +1,119 @@
 ---
-title: Keycloak SAML
-description: Use Keycloak as a SAML IdP for Casdoor sign-in.
+title: Add Keycloak as a SAML provider
+sidebar_label: Keycloak
+description: Let users of a Keycloak realm sign in to Casdoor through SAML.
 keywords: [Keycloak, SAML]
 authors: [seriouszyx]
 ---
 
-[Keycloak](https://www.keycloak.org/) is an open-source IdP that supports SAML and OpenID Connect and can broker LDAP or other SAML IdPs. This guide configures a Keycloak SAML client and Casdoor so Keycloak users can sign in to Casdoor.
+This guide explains how to let the users of a [Keycloak](https://www.keycloak.org/) realm sign in to Casdoor through SAML. Keycloak is an open-source IdP that supports SAML and OpenID Connect and can broker LDAP and other identity providers.
 
-## Configure Keycloak
+---
 
-Example assumptions:
+#### Learning outcomes
 
-- Casdoor: UI at `http://localhost:7001`, API at `http://localhost:8000`. Adjust for your deployment.
-- Keycloak: UI at `http://localhost:8080/auth`.
-- SP ACS URL and Entity ID: `http://localhost:8000/api/acs`.
+- Create a SAML client for Casdoor in Keycloak.
+- Add Keycloak as a SAML provider in Casdoor.
+- Sign the authentication request, if Keycloak requires it.
 
-:::note
+#### What you need
 
-The `/api/acs` endpoint only accepts POST requests. Ensure Keycloak is configured to use HTTP POST binding for SAML responses.
+- Administrator access to a Keycloak server
+- Administrator access to the Casdoor admin console
 
-:::
+---
 
-Use the default realm or create a new one.
+The examples assume the following addresses. Adjust them for your deployment.
 
-![Add Keycloak realm](/img/providers/SAML/keycloak_realm_add.png)
+| Component | Address |
+|---|---|
+| Casdoor UI | `http://localhost:7001` |
+| Casdoor API | `http://localhost:8000` |
+| Keycloak | `http://localhost:8080/auth` |
+| SP ACS URL and entity ID | `http://localhost:8000/api/acs` |
 
-![Keycloak realm](/img/providers/SAML/keycloak_realm.png)
+## Prepare a realm {#configure-keycloak}
 
-## Add a client entry in Keycloak
+Use the default realm or create one.
 
-:::info
-See [Keycloak client SAML configuration](https://www.keycloak.org/docs/latest/server_admin/index.html#_client-saml-configuration).
-:::
+![Add realm in Keycloak](/img/providers/SAML/keycloak_realm_add.png)
 
-Click **Clients** in the menu and then click **Create** to go to the **Add Client** page. Fill in the fields as follows:
+![Realm settings in Keycloak](/img/providers/SAML/keycloak_realm.png)
 
-- **Client ID**: `http://localhost:8000/api/acs` - This will be the SP Entity ID used in the Casdoor configuration later.
-- **Client Protocol**: `saml`.
-- **Client SAML Endpoint**: `http://localhost:8000/api/acs` - This URL is where you want the Keycloak server to send SAML requests and responses. Generally, applications have one URL for processing SAML requests. Multiple URLs can be set in the Settings tab of the client.
+## Create a SAML client in Keycloak {#add-a-client-entry-in-keycloak}
 
-![Add Keycloak client](/img/providers/SAML/keycloak_client_add.png)
+For all client settings, see [SAML clients](https://www.keycloak.org/docs/latest/server_admin/index.html#_client-saml-configuration) in the Keycloak documentation.
 
-Click **Save**. This action creates the client and brings you to the **Settings** tab.
+1. Go to **Clients** and click **Create**. Fill in the **Add Client** page:
 
-The following are part of the settings:
+   | Field | Value |
+   |---|---|
+   | **Client ID** | `http://localhost:8000/api/acs`. This is the SP entity ID of Casdoor |
+   | **Client Protocol** | `saml` |
+   | **Client SAML Endpoint** | `http://localhost:8000/api/acs`, where Keycloak sends SAML requests and responses |
 
-1. **Name** — e.g. `Casdoor`; any friendly name for the Keycloak UI.
-2. **Enabled** - Select `on`.
-3. **Include Authn Statement** - Select `on`.
-4. **Sign Documents** - Select `on`.
-5. **Sign Assertions** - Select `off`.
-6. **Encrypt Assertions** - Select `off`.
-7. **Client Signature Required** - Select `off`.
-8. **Force Name ID Format** - Select `on`.
-9. **Name ID Format** - Select `username`.
-10. **Valid Redirect URIs** - Add `http://localhost:8000/api/acs`.
-11. **Master SAML Processing URL** - `http://localhost:8000/api/acs`.
-12. Fine Grain SAML Endpoint Configuration
-    1. **Assertion Consumer Service POST Binding URL** - `http://localhost:8000/api/acs`.
-    2. **Assertion Consumer Service Redirect Binding URL** - `http://localhost:8000/api/acs`.
+   ![Add Client page](/img/providers/SAML/keycloak_client_add.png)
 
-Save the configuration.
+1. Click **Save**. The **Settings** tab opens.
+1. Set the following values and save:
 
-![Configure Keycloak client](/img/providers/SAML/keycloak_client_configure.png)
+   | Setting | Value |
+   |---|---|
+   | **Name** | A friendly name, such as `Casdoor` |
+   | **Enabled** | On |
+   | **Include Authn Statement** | On |
+   | **Sign Documents** | On |
+   | **Sign Assertions** | Off |
+   | **Encrypt Assertions** | Off |
+   | **Client Signature Required** | Off. See [Sign the authentication request](#sign-the-authentication-request) |
+   | **Force Name ID Format** | On |
+   | **Name ID Format** | `username` |
+   | **Valid Redirect URIs** | `http://localhost:8000/api/acs` |
+   | **Master SAML Processing URL** | `http://localhost:8000/api/acs` |
+   | **Assertion Consumer Service POST Binding URL** | `http://localhost:8000/api/acs`, under **Fine Grain SAML Endpoint Configuration** |
+   | **Assertion Consumer Service Redirect Binding URL** | `http://localhost:8000/api/acs` |
 
-:::tip
+   ![Settings of the client](/img/providers/SAML/keycloak_client_configure.png)
 
-To sign the authn request: enable **Client Signature Required** and upload your certificate. Casdoor’s private key and certificate (`token_jwt_key.key`, `token_jwt_key.pem`) are in the **object** directory. In Keycloak open **Keys** → **Import** → **Archive Format** → **Certificate PEM** and upload the certificate.
+   The `/api/acs` endpoint accepts only `POST` requests, so Keycloak must send the response with the POST binding.
 
-:::
+1. Go to the **Installation** tab and get the metadata:
 
-Click **Installation** tab.
+   - In Keycloak 5.0.0 and earlier, select the format **SAML Metadata IDPSSODescriptor** and copy the metadata.
+   - In Keycloak 6.0.0 and later, select **Mod Auth Mellon files**, click **Download**, unzip the file, and copy the content of `idp-metadata.xml`.
 
-For Keycloak `<=` 5.0.0, select Format Option - **SAML Metadata IDPSSODescriptor** and copy the metadata.
+   ![Installation tab](/img/providers/SAML/keycloak_client_install.png)
 
-For Keycloak 6.0.0+, select Format Option - **Mod Auth Mellon files** and click **Download**. Unzip the downloaded.zip, locate `idp-metadata.xml`, and copy the metadata.
+   ![Metadata of the client](/img/providers/SAML/keycloak_client_copy.png)
 
-![Download metadata](/img/providers/SAML/keycloak_client_install.png)
+## Add the provider in Casdoor {#configure-in-casdoor}
 
-![Copy metadata](/img/providers/SAML/keycloak_client_copy.png)
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `SAML` and **Type** to `Keycloak`.
+1. Paste the metadata into **Metadata** and click **Parse**. Casdoor fills in **Endpoint**, **IdP**, and **Issuer URL**.
 
-## Configure in Casdoor
+   ![Keycloak provider in Casdoor](/img/providers/SAML/keycloak_casdoor_provider.png)
 
-Create a new provider in Casdoor.
+1. Save the provider.
+1. Open the edit page of your application, add the provider on the **Providers** tab, and save.
 
-Select category as **SAML**, type as **Keycloak**. Copy the content of metadata and paste it into the **Metadata** field. The values of **Endpoint**, **IdP**, and **Issuer URL** will be generated automatically after clicking the **Parse** button. Finally, click the **Save** button.
+   ![Keycloak provider in the application](/img/providers/SAML/keycloak_casdoor_app.png)
 
-:::tip
+## Sign the authentication request
 
-If **Client Signature Required** is enabled in Keycloak and you uploaded a certificate, enable **Sign request** in Casdoor.
+To make Keycloak verify the requests of Casdoor:
 
-:::
+1. In Keycloak, turn on **Client Signature Required** for the client.
+1. Go to **Keys** > **Import**, select the archive format **Certificate PEM**, and upload the certificate of Casdoor. The private key and the certificate of Casdoor are `token_jwt_key.key` and `token_jwt_key.pem` in the `object` directory of the Casdoor source.
+1. In Casdoor, turn on **Sign request** on the provider.
 
-![Casdoor provider](/img/providers/SAML/keycloak_casdoor_provider.png)
+## Verify the result {#test}
 
-Edit the application you want to configure in Casdoor. Select the provider you just added and click the **Save** button.
+Open the sign-in page of the application and click the Keycloak button. After you sign in at Keycloak, you are signed in to Casdoor.
 
-![Add provider for app](/img/providers/SAML/keycloak_casdoor_app.png)
+![Recording of the sign-in through Keycloak](/img/providers/SAML/keycloak_casdoor_login.gif)
 
-## Test
+## See also
 
-Open the application’s login page; a Keycloak option appears. Click it to sign in via Keycloak; after success you are logged into Casdoor.
-
-![Casdoor login](/img/providers/SAML/keycloak_casdoor_login.gif)
+- [SAML providers](/docs/provider/saml/overview)
+- [Keycloak syncer](/docs/syncer/Keycloak)

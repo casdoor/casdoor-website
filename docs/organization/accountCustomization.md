@@ -1,77 +1,70 @@
 ---
-title: Account customization
-description: Control visibility and edit permissions for each user account field.
+title: Customize the account page
+sidebar_label: Account customization
+description: Choose which fields the account page of an organization shows, who can view and edit each field, and how the fields are grouped into tabs.
 keywords: [account customization, view rule, modify rule]
 authors: [leo220yuyaodog]
 ---
 
-You can customize **account items** per organization: whether each field is visible and who can view or modify it. These settings apply to every member’s profile/home page in that organization.
+This guide explains how to configure the account items of an organization. Account items are the fields on the account page and the user edit page of every member of the organization. For each field, you decide whether it is visible, who can view it, and who can edit it.
 
-## Account menu layout
+---
 
-The **Account menu** setting on the organization controls how the user edit page navigation is rendered:
+#### Learning outcomes
 
-- **Horizontal** (default) — Fields grouped into tabs displayed across the top of the page.
-- **Vertical** — Fields grouped into a sidebar menu on the left side of the page, useful for organizations with many account item tabs.
+- Show or hide fields of the account page.
+- Restrict who can view and edit a field.
+- Group fields into tabs and choose the layout of the tabs.
 
-Set this in the organization edit page under **Account menu**.
+#### What you need
 
-## Configuring account items
+- Administrator access to the organization in the Casdoor admin console
 
-Each account item has five settings:
+---
 
-| Column Name | Selectable Value | Description |
-| :---------: | :--------------: | ----------- |
-|    Name     |        -         | Account item name. |
-|   Visible   | `True` / `False` | Select whether this account item is visible on the user home page. |
-|  ViewRule  |    Rule Items    | Select a rule to use when viewing the account item. Controls who can **view** this field. |
-| ModifyRule |    Rule Items    | Select a rule to use when modifying the account item. Controls who can **edit** this field. |
-|    Tab      |        -         | Tab label to group this item under on the user edit page. Items with the same tab value are shown together; items with no tab value appear in the default (un-tabbed) section. |
+## About account items
 
-### Grouping fields into tabs
+Each account item has the following settings:
 
-Setting a **Tab** value on account items splits the user edit page into labelled tabs. All items that share the same tab string are grouped under one tab. Items with an empty tab value always appear first, outside any tab group.
+| Column | Values | Description |
+|---|---|---|
+| **Name** | A field from the [list of account items](/docs/organization/accountCustomization#account-table) | The field |
+| **Visible** | On or off | Whether the field appears on the account page |
+| **View rule** | `Public`, `Self`, `Admin` | Who can see the value of the field |
+| **Modify rule** | `Self`, `Admin`, `Immutable` | Who can change the value of the field |
+| **Tab** | Text | Tab under which the field appears on the user edit page |
 
-For example, to create a "Contact" tab containing Email, Phone, and Location:
+The rules have the following meaning:
 
-1. Open your organization and scroll to **Account items**.
-2. Set the **Tab** column to `Contact` for the Email, Phone, and Location rows.
-3. Save. The user edit page will show a "Contact" tab containing those three fields.
+| Rule | Who can view or change the field |
+|---|---|
+| `Public` | View rule only. Everyone can see the field of any user |
+| `Self` | Each user, for their own account only. Casdoor matches by user ID, or by organization and username if the ID is missing |
+| `Admin` | Administrators of the organization only |
+| `Immutable` | Modify rule only. Nobody can change the field on the account page |
 
-### View rule and modify rule
+:::note
+View rules and modify rules apply to single fields of a user profile. They are separate from [permissions](/docs/permission/overview), which control access to applications and resources.
+:::
 
-- **View rule** — Who can see this field (e.g. email, phone).
-- **Modify rule** — Who can edit this field.
+## Configure the account items {#configuring-account-items}
 
-This is separate from [Permissions](/docs/permission/overview), which control access to applications and resources; view/modify rules apply to individual profile fields.
+1. In the Casdoor admin console, go to **User Management** > **Organizations** and open the organization.
+1. Scroll to **Account items**.
 
-### Steps
+   ![Account items of an organization](/img/organization/account_customize.png)
 
-1. Navigate to **Organizations** in the Casdoor sidebar
-2. Click on your organization to open the **Edit Organization** page
-3. Scroll down to the **Account items** section
+1. To show or hide a field, switch **Visible**.
 
-   ![account_customize.png](/img/organization/account_customize.png)
+   ![Visible switch of an account item](/img/organization/account_visible.png)
 
-4. For each item you can:
+1. To restrict a field, select a **View rule** and a **Modify rule**.
 
-   - **Set visibility** — Show or hide the field on the user home page.
+   ![View rule and Modify rule of an account item](/img/organization/account_rule.png)
 
-   ![account_visible.png](/img/organization/account_visible.png)
+1. Save the organization.
 
-   - **Set view and modify rules** — Who can view or edit the field.
-
-   ![account_rule.png](/img/organization/account_rule.png)
-
-### Rule options
-
-- **Public** — Anyone can view or modify this field for any user.
-- **Self** — Users can only view or modify their own value (matched by user ID, or by org + username if ID is missing).
-- **Admin** — Only organization admins can view or modify this field.
-
-### Example patterns
-
-Here are some common configuration patterns:
+### Common patterns {#example-patterns}
 
 | Field | View Rule | Modify Rule | Use Case |
 |-------|-----------|-------------|----------|
@@ -82,20 +75,29 @@ Here are some common configuration patterns:
 | Password | Self | Self | Users can only change their own password |
 
 :::tip
-
-Use **Admin** rules for sensitive fields like phone numbers, addresses, or internal identifiers that should only be managed by administrators.
-
+Use the `Admin` rule for sensitive fields that only administrators should manage, such as phone numbers, addresses, and internal identifiers.
 :::
 
-:::note
+## Group fields into tabs {#grouping-fields-into-tabs}
 
-These field-level permissions work in conjunction with the broader [Permission system](/docs/permission/overview) in Casdoor. The Permission system controls access to applications and API resources, while View rule and Modify rule control access to specific user profile fields within the **Edit Organization** page configuration.
+Items with the same **Tab** value appear together under one tab of the user edit page. Items without a tab value appear first, outside the tabs.
 
-:::
+For example, to create a `Contact` tab with the email address, the phone number, and the location:
 
-## Account Table
+1. Open the organization and scroll to **Account items**.
+1. Set **Tab** to `Contact` in the rows Email, Phone, and Location.
+1. Save the organization. The user edit page now has a `Contact` tab with the three fields.
 
-Below are all the fields available as account items. Each field can be independently shown/hidden and assigned view/modify rules.
+### Choose the tab layout {#account-menu-layout}
+
+**Account menu** on the organization edit page sets how the tabs are shown:
+
+| Option | Layout |
+|---|---|
+| **Horizontal** (default) | Tabs across the top of the page |
+| **Vertical** | A menu on the left side of the page. Use it for organizations with many tabs |
+
+## List of account items {#account-table}
 
 | Field | Description |
 |-------|-------------|
@@ -151,3 +153,9 @@ Below are all the fields available as account items. Each field can be independe
 | `MFA accounts` | External accounts linked specifically for multi-factor authentication purposes. |
 | `Need update password` | Whether the user is required to change their password at next login. Admin-only. When set, the user is redirected to their **Account** page after sign-in and cannot navigate elsewhere until the password is updated. |
 | `IP whitelist` | IP addresses or CIDR ranges from which this user is allowed to sign in. Admin-only. |
+
+## See also
+
+- [Organizations](/docs/organization/overview)
+- [Users](/docs/user/overview)
+- [MFA items](/docs/organization/mfa-items)

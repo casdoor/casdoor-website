@@ -1,49 +1,65 @@
 ---
-title: Password obfuscator
-description: Encrypt password parameters in login and set-password APIs.
+title: Encrypt passwords in transit
+sidebar_label: Password obfuscator
+description: Make the Casdoor frontend encrypt passwords with AES or DES before it sends them to the sign-in and set-password APIs.
 keywords: [password, obfuscator, AES, DES]
 authors: [ZhaoYP-2001]
 ---
 
-The **Password obfuscator** option encrypts password parameters for the login and set-password APIs before they are sent to the server. You choose the algorithm and (optionally) the key at the organization level.
+This guide explains how to turn on the password obfuscator of an organization. The Casdoor frontend then encrypts passwords before it sends them to the server, in addition to the encryption of the HTTPS connection.
 
-## Configuration
+---
 
-On the organization edit page, set **Password obfuscator**:
+#### Learning outcomes
 
-![password_obfuscator](/img/organization/password_obfuscator/password_obfuscator.png)
+- Choose the obfuscation algorithm and key of an organization.
+- Know which API fields are encrypted and how clients without obfuscation behave.
 
-| Option | Behavior |
-|--------|----------|
-| **Plain** | Passwords are sent in plain text. |
-| **AES** | Passwords are encrypted with AES before transmission. |
-| **DES** | Passwords are encrypted with DES before transmission. |
+#### What you need
 
-When you switch to AES or DES, Casdoor generates a key and fills **Password obf key**. You can override it with your own key:
+- Administrator access to the organization in the Casdoor admin console
 
-![password_obf_key](/img/organization/password_obfuscator/password_obf_key.png)
+---
 
-:::note
-If the key does not match the algorithm’s requirements, Casdoor shows an error with the expected key format (regex).
-:::
+## Turn on the obfuscator {#configuration}
 
-## API support
+1. In the Casdoor admin console, open the edit page of the organization.
+1. Select an option in **Password obfuscator**:
 
-| API | Encrypted fields |
-|-----|------------------|
-| **Login** (`/api/login`) | `password` |
-| **Set password** (`/api/set-password`) | `oldPassword`, `newPassword` |
+   | Option | Passwords are sent |
+   |---|---|
+   | `Plain` | As plaintext |
+   | `AES` | Encrypted with AES |
+   | `DES` | Encrypted with DES |
 
-With obfuscation enabled, the Casdoor frontend encrypts these fields before sending; the backend decrypts with the configured key and algorithm, then processes them as usual.
+   ![Password obfuscator field of the organization](/img/organization/password_obfuscator/password_obfuscator.png)
 
-### Backward compatibility
+1. When you select `AES` or `DES`, Casdoor generates a key and fills in **Password obf key**. To use your own key, replace the value. If the key doesn't fit the algorithm, Casdoor shows an error with the expected format.
 
-The set-password API accepts both obfuscated and plaintext passwords. If obfuscation is not configured or decryption fails, it falls back to plaintext. This keeps compatibility with:
+   ![Password obf key field of the organization](/img/organization/password_obfuscator/password_obf_key.png)
 
-- SDKs that do not yet support obfuscation
-- Direct API calls using plaintext
-- Existing integrations
-
-Demo:
+1. Save the organization.
 
 <video src="/img/organization/password_obfuscator/password_obfuscator.mp4" controls="controls" width="100%"></video>
+
+## Encrypted fields {#api-support}
+
+| API | Encrypted fields |
+|---|---|
+| Sign in (`/api/login`) | `password` |
+| Set password (`/api/set-password`) | `oldPassword`, `newPassword` |
+
+The frontend encrypts these fields. The backend decrypts them with the algorithm and key of the organization and then processes them as usual.
+
+## Clients without obfuscation {#backward-compatibility}
+
+The set-password API accepts obfuscated passwords and plaintext passwords. If the organization has no obfuscator, or if decryption fails, the API treats the value as plaintext. The following clients therefore keep working:
+
+- SDKs that don't support the obfuscator yet
+- Direct API calls with plaintext passwords
+- Existing integrations
+
+## See also
+
+- [Password complexity](/docs/organization/passwordComplexity)
+- [Organizations](/docs/organization/overview)

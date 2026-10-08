@@ -1,21 +1,37 @@
 ---
-title: Deploying behind Nginx
-description: Put Nginx in front of the Casdoor backend to serve and proxy traffic.
+title: Deploy Casdoor behind Nginx
+sidebar_label: Deploy behind Nginx
+description: Put Nginx in front of the Casdoor backend as a reverse proxy for your domain.
 keywords: [Nginx, reverse proxy, deployment]
 authors: [ErikQQY]
 ---
 
-In production, the Casdoor backend serves the frontend static files and the API. You can put [Nginx](https://www.nginx.com/) in front of it to proxy all traffic for your domain to the backend port.
-
-## 1. Build frontend static files
-
-With Casdoor cloned and configured (see [Server installation](/docs/basic/server-installation)), build the frontend:
-
-````mdx-code-block
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+This guide explains how to run Casdoor from source in production mode and proxy the traffic of your domain to it with [Nginx](https://www.nginx.com/).
+
+---
+
+#### Learning outcomes
+
+- Build the Casdoor frontend into static files.
+- Run the Casdoor backend, which serves both the API and the frontend.
+- Proxy your domain to the backend with Nginx.
+
+#### What you need
+
+- Casdoor cloned and connected to a database. See [Install the Casdoor server](/docs/basic/server-installation).
+- Nginx on the same server
+- A domain name that points to the server
+
+---
+
+## Build the frontend
+
+In the `web` directory of the Casdoor repository, build the static files:
+
+````mdx-code-block
 <Tabs
   defaultValue="yarn"
   values={[
@@ -41,45 +57,56 @@ npm install && npm run build
 </TabItem>
 
 </Tabs>
-
 ````
 
-## 2. Run the backend
+## Run the backend
+
+In the repository root, run the backend. It serves the API and the built frontend on port 8000.
 
 ```sh
 go run main.go
 ```
 
-Or build and run:
+Alternatively, build a binary and run it:
 
 ```sh
 go build && ./casdoor
 ```
 
-## 3. Configure Nginx
+## Configure Nginx
 
-Edit your Nginx config and add a `server` block:
+1. Add a `server` block to your Nginx configuration. Replace `YOUR_DOMAIN_NAME` with your domain.
 
-```nginx
-server {
-    listen 80;
-    server_name YOUR_DOMAIN_NAME;
-    location / {
-        proxy_set_header    Host            $http_host;
-        proxy_set_header    X-Real-IP       $remote_addr;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_redirect      off;
-        proxy_pass http://127.0.0.1:8000;
-    }
-}
-```
+   ```nginx
+   server {
+       listen 80;
+       server_name YOUR_DOMAIN_NAME;
+       location / {
+           proxy_set_header    Host            $http_host;
+           proxy_set_header    X-Real-IP       $remote_addr;
+           proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_redirect      off;
+           proxy_pass http://127.0.0.1:8000;
+       }
+   }
+   ```
 
-Next, restart your Nginx process. Run:
+1. Reload Nginx:
 
-```bash
-nginx -s reload
-```
+   ```bash
+   nginx -s reload
+   ```
 
-## 4. Test
+## Verify the result
 
-Visit `http://YOUR_DOMAIN_NAME` in your favorite browser.
+Open `http://YOUR_DOMAIN_NAME` in a browser. The Casdoor sign-in page appears.
+
+## Next steps
+
+- Add a TLS certificate to the `server` block and serve Casdoor over HTTPS. OAuth 2.0 and OpenID Connect (OIDC) clients expect an HTTPS issuer in production.
+- Set `origin` in [`app.conf`](/docs/basic/configuration) to the public URL of Casdoor.
+
+## See also
+
+- [Deploy Casdoor with Docker](/docs/deployment/docker)
+- [Configuration reference](/docs/basic/configuration)

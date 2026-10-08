@@ -1,19 +1,40 @@
 ---
-title: Vue SDK
-description: Use Casdoor in Vue 2 or Vue 3 with the official Vue SDK.
+title: Sign users in to a Vue application
+sidebar_label: Vue SDK
+description: Add Casdoor sign-in to a Vue 2 or Vue 3 application with casdoor-vue-sdk.
 keywords: [Vue, SDK]
 authors: [Nekotoxin]
 ---
 
-The **Casdoor Vue SDK** works with Vue 2 and Vue 3 and wraps [casdoor-js-sdk](/docs/how-to-connect/sdk) for easier integration. For more control, use the JS SDK directly.
+This guide explains how to add Casdoor sign-in to a Vue 2 or Vue 3 application with [casdoor-vue-sdk](https://github.com/casdoor/casdoor-vue-sdk).
+
+---
+
+#### Learning outcomes
+
+- Install and initialize casdoor-vue-sdk in Vue 3 and in Vue 2.
+- Send users to the Casdoor sign-in and sign-up pages from a component.
+
+#### What you need
+
+- A Vue 2 or Vue 3 application
+- An [application](/docs/application/overview) in Casdoor, with the callback URL of your Vue application in **Redirect URLs**
+
+#### Sample code
+
+- [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example): A Vue frontend with a Python backend
+
+---
+
+## About the Vue SDK
+
+casdoor-vue-sdk wraps [casdoor-js-sdk](/docs/how-to-connect/sdk) as a Vue plugin. For more control, use casdoor-js-sdk directly.
 
 :::note
-This plugin is still in development. Questions or suggestions: [open an issue](https://github.com/casdoor/casdoor-vue-sdk/issues).
+The plugin is still in development. To ask a question or suggest a change, [open an issue](https://github.com/casdoor/casdoor-vue-sdk/issues).
 :::
 
-Full example (Vue frontend + Python backend): [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example).
-
-## Installation
+## Install the SDK
 
 ```shell
 # NPM
@@ -23,9 +44,9 @@ npm install casdoor-vue-sdk
 yarn add casdoor-vue-sdk
 ```
 
-## Initialization
+## Initialize the SDK
 
-Provide these parameters (all strings):
+The SDK takes the following settings. All of them are strings.
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
@@ -35,7 +56,7 @@ Provide these parameters (all strings):
 | **organizationName** | Yes | Organization name. |
 | **redirectPath** | No | Callback path; default `/callback`. |
 
-**Vue 3:**
+In Vue 3, register the plugin in `main.js`:
 
 ```javascript
 // main.js
@@ -53,7 +74,7 @@ const app = createApp(App)
 app.use(Casdoor, config)
 ```
 
-**Vue 2:**
+In Vue 2, the plugin also needs `@vue/composition-api`:
 
 ```javascript
 // main.js
@@ -76,7 +97,9 @@ new Vue({
 }).$mount('#app')
 ```
 
-## Usage example
+## Add sign-in to a component
+
+Call the SDK from your components, for example to open the sign-in page:
 
 ```vue
 <script>
@@ -94,12 +117,19 @@ export default {
 </script>
 ```
 
-## Redirect / Vue version issues
+After the user signs in, Casdoor redirects to `redirectPath` with an authorization code. Send the code to your backend and exchange it for a token there. See [Get and verify the access token](/docs/how-to-connect/sdk#get-and-verify-the-access-token).
 
-If the `postinstall` hook did not run or you changed the Vue version, fix redirect behavior with:
+## Troubleshooting
+
+### Redirects fail after a change of the Vue version
+
+The SDK uses [vue-demi](https://github.com/vueuse/vue-demi) to support Vue 2 and Vue 3. If the `postinstall` hook didn't run, or if you changed the Vue version after you installed the SDK, run:
 
 ```shell
 npx vue-demi-fix
 ```
 
-See [vue-demi](https://github.com/vueuse/vue-demi) for switching between Vue 2 and Vue 3.
+## See also
+
+- [Sign users in with a Casdoor SDK](/docs/how-to-connect/sdk)
+- [OAuth 2.0](/docs/how-to-connect/oauth)

@@ -1,16 +1,42 @@
 ---
-title: Default captcha
-description: Use Casdoor’s built-in image captcha (digit sequence).
+title: Use the default captcha
+sidebar_label: Default
+description: Use the built-in image captcha of Casdoor, which needs no external service.
 keywords: [captcha, default]
 authors: [Resulte]
 ---
 
-The **Default** captcha type shows an image containing a sequence of digits (0–9), 5 characters long, and verifies the user’s answer.
+This guide explains how to use the built-in captcha of Casdoor. It shows an image with five digits that the user types. It needs no external service and no keys.
 
-## Configure in Casdoor
+---
 
-1. **Providers** → **Add** → set **Category** to **Captcha**, **Type** to **Default**.
-2. Use **Preview** to check the captcha style.
+#### Learning outcomes
 
-![Default provider](/img/providers/captcha/default_provider.png)
-![Default preview](/img/providers/captcha/default_preview.png)
+- Add the default captcha as a provider.
+
+#### What you need
+
+- Administrator access to the Casdoor admin console
+
+---
+
+## Configure in Casdoor {#configure-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Captcha` and **Type** to `Default`.
+
+   ![Default captcha provider](/img/providers/captcha/default_provider.png)
+
+1. Click **Preview** to check the captcha.
+
+   ![Preview of the default captcha](/img/providers/captcha/default_preview.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application and choose when the captcha appears. See [Add the captcha to an application](/docs/provider/captcha/overview#use-in-an-application).
+
+## See also
+
+- [Captcha providers](/docs/provider/captcha/overview)

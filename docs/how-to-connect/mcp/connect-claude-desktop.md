@@ -1,134 +1,88 @@
 ---
-title: Connect Claude Desktop to MCP
-description: Connect Claude Desktop to Casdoor’s MCP server with OAuth.
+title: Connect Claude Desktop to the Casdoor MCP server
+sidebar_label: Connect Claude Desktop
+description: Connect Claude Desktop to the Casdoor MCP server through mcp-remote and OAuth 2.0, so that Claude can manage applications and users in Casdoor.
 keywords: [MCP, Claude Desktop, OAuth, PKCE]
 authors: [hsluoyz]
 ---
 
-Connect Claude Desktop to Casdoor’s MCP server so Claude can manage your applications, users, and resources via natural language.
+This guide explains how to connect Claude Desktop to the MCP server of Casdoor, so that you can manage applications, users, and other objects by talking to Claude.
 
-## Prerequisites
+---
 
-- A running Casdoor instance (accessible via HTTPS recommended for production)
-- [Claude Desktop](https://claude.ai/download) installed on your computer
-- Admin access to your Casdoor instance to create applications
+#### Learning outcomes
 
-## Step 1: Create an application in Casdoor
+- Let Claude Desktop register itself as an OAuth 2.0 client of Casdoor.
+- Add the Casdoor MCP server to the configuration of Claude Desktop.
+- Sign in and check that Claude can call the tools.
 
-Create a Casdoor application for Claude Desktop’s OAuth:
+#### What you need
 
-1. Log in to your Casdoor admin panel
-2. Navigate to **Applications** and click **Add**
-3. Configure the application with these settings:
+- A running Casdoor instance. Use HTTPS in production.
+- [Claude Desktop](https://claude.ai/download) and Node.js, which provides `npx`
+- Administrator access to the Casdoor admin console
 
-   - **Name**: `claude-desktop-mcp` (or your preferred name)
-   - **Display Name**: `Claude Desktop MCP Client`
-   - **Organization**: Select your organization
-   - **Redirect URIs**: Add these OAuth callback URLs:
+---
 
-     ```text
-     http://127.0.0.1:*/callback
-     http://localhost:*/callback
-     ```
+## About the connection
 
-     :::tip
-     The wildcard `*` allows Claude Desktop to use any available port for the OAuth callback.
-     :::
+Claude Desktop talks to local MCP servers over standard input and output. The [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) package bridges it to a remote server such as Casdoor, and runs the OAuth 2.0 flow: it reads the discovery documents of Casdoor, registers itself as a client through dynamic client registration (DCR), and opens your browser for the sign-in.
 
-4. **Grant Types**: Enable `Authorization Code` and optionally `Refresh Token`
-5. **Enable PKCE**: Check this option for enhanced security
-6. **Token Format**: `JWT` (recommended)
-7. **(Optional) Application Type**: Set to `Agent`
-8. **(Optional) Category**: Set to `MCP` for better organization
+## Allow dynamic client registration
 
-   :::info
-   See [Application categories](/docs/application/categories) for Category and Type options.
-   :::
+1. In the Casdoor admin console, go to **User Management** > **Organizations** and open the `built-in` organization. Clients register in this organization by default.
+1. Turn on **Enable dynamic client registration**.
+1. Save the organization.
 
-9. Click **Save** and note the **Client ID** for the next step.
+When `mcp-remote` registers, Casdoor creates an application for it whose name starts with `dcr_`. See [Dynamic client registration](/docs/application/dynamic-client-registration).
 
-## Step 2: Configure Claude Desktop
+## Configure Claude Desktop
 
-Claude Desktop stores MCP server configurations in a JSON file. The location depends on your operating system:
+1. Open the configuration file of Claude Desktop in a text editor:
 
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+   | Operating system | Path |
+   |---|---|
+   | macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+   | Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+   | Linux | `~/.config/Claude/claude_desktop_config.json` |
 
-Open this file in a text editor and add your Casdoor MCP server configuration:
+1. Add the Casdoor MCP server. Replace `your-casdoor.com` with the domain of your Casdoor instance.
 
-```json
-{
-  "mcpServers": {
-    "casdoor": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://your-casdoor.com/api/mcp"
-      ]
-    }
-  }
-}
-```
+   ```json
+   {
+     "mcpServers": {
+       "casdoor": {
+         "command": "npx",
+         "args": [
+           "mcp-remote",
+           "https://your-casdoor.com/api/mcp"
+         ]
+       }
+     }
+   }
+   ```
 
-Replace the following placeholders:
+1. Quit Claude Desktop completely, not only its window, and start it again.
 
-- `your-casdoor.com` → Your Casdoor instance domain
+## Sign in
 
-:::note
-The [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) package bridges Claude Desktop (which uses stdio transport) to remote HTTP-based MCP servers. It handles OAuth flows automatically — Claude Desktop will open your browser to complete authentication.
-:::
+When Claude Desktop starts, `mcp-remote` opens your default browser.
 
-### Configuring Scopes
+1. Sign in on the Casdoor sign-in page with an account that may manage the objects that you want Claude to work with.
+1. If Casdoor shows a consent screen, click **Allow**.
+1. The browser shows a success message. Return to Claude Desktop.
 
-The `OAUTH_SCOPES` environment variable controls what permissions Claude has. Common scopes include:
+`mcp-remote` stores the tokens on your computer. You sign in again only after the tokens are revoked or expire without a refresh token.
 
-- `read:application` - View applications
-- `write:application` - Create, update, delete applications
-- `read:user` - View users
-- `write:user` - Create, update, delete users
-- `openid profile email` - Basic user information (required for OAuth)
+## Verify the result
 
-See [Authorization and Scopes](/docs/how-to-connect/mcp/authorization) for the complete list of available scopes.
+Ask Claude to work with Casdoor, for example:
 
-## Step 3: Restart Claude Desktop
+- "List all applications in Casdoor."
+- "Show me the application named `my-app`."
+- "Create an application called `test-app` in the organization `my-org`."
 
-After saving the configuration file:
-
-1. Completely quit Claude Desktop (don't just close the window)
-2. Relaunch Claude Desktop
-
-Claude will automatically detect the new MCP server configuration.
-
-## Step 4: Complete the OAuth Flow
-
-The first time Claude Desktop connects to your Casdoor MCP server:
-
-1. Claude Desktop will automatically open your default web browser
-2. You'll see the Casdoor login page (if not already logged in)
-3. After logging in, you'll see a **Consent Screen** asking you to authorize Claude Desktop
-4. The consent screen shows the requested scopes (permissions)
-5. Click **Authorize** to grant access
-6. Your browser will redirect to `http://127.0.0.1:<port>/callback` and show a success message
-7. Return to Claude Desktop - the connection is now established
-
-:::tip
-The OAuth token is securely stored by the MCP OAuth helper. You won't need to re-authorize unless you revoke the token or change scopes.
-:::
-
-## Step 5: Verify the Connection
-
-Test the connection by asking Claude to interact with Casdoor:
-
-**Example prompts to try:**
-
-- "List all applications in Casdoor"
-- "Show me details about the application named 'my-app'"
-- "Create a new application called 'test-app' in organization 'my-org'"
-
-Claude will use the MCP tools to execute these commands. You should see responses with data from your Casdoor instance.
-
-**Expected output for "List all applications":**
+Claude calls the MCP tools and answers with data from your Casdoor instance, for example:
 
 ```text
 I found the following applications in your Casdoor instance:
@@ -140,89 +94,33 @@ I found the following applications in your Casdoor instance:
 
 ## Troubleshooting
 
-### Issue: "Unable to connect to MCP server"
+### Claude Desktop can't connect to the MCP server
 
-**Cause**: The MCP server URL might be incorrect or unreachable.
+- Check the URL in `claude_desktop_config.json`. It ends with `/api/mcp`.
+- Check that Casdoor runs and that your computer can reach it.
+- Check that the scheme is right: `https` in production.
 
-**Solution**:
+### Registration fails
 
-- Verify the URL in your `claude_desktop_config.json` is correct
-- Ensure your Casdoor instance is running and accessible
-- Check for HTTPS/HTTP mismatch (use HTTPS in production)
+Check that **Enable dynamic client registration** is on for the `built-in` organization.
 
-### Issue: "Redirect URI mismatch" error during OAuth
+### Casdoor reports a redirect URL mismatch
 
-**Cause**: The callback URL doesn't match the configured Redirect URI in Casdoor.
+`mcp-remote` listens for the callback at `http://localhost:3334/oauth/callback`. If port 3334 is in use, it chooses another port, and the redirect URL of an earlier registration no longer matches. Free the port, or delete the `dcr_` application in Casdoor and the cached credentials of `mcp-remote`, and connect again.
 
-**Solution**:
+### A tool call fails with insufficient_scope
 
-- In Casdoor, ensure your application has these redirect URIs:
+The token of the client lacks the scope that the tool requires. See [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization).
 
-  ```text
-  http://127.0.0.1:*/callback
-  http://localhost:*/callback
-  ```
+## Secure the connection
 
-- The wildcard `*` is crucial - it allows any port
+- **HTTPS**: Serve Casdoor over HTTPS in production, to protect the OAuth 2.0 flow.
+- **Least privilege**: Sign in with an account that has only the rights that Claude needs.
+- **Revocation**: To cut off the client, delete its tokens on the **Tokens** page of the Casdoor admin console.
 
-### Issue: "CORS error" in browser console
+## See also
 
-**Cause**: Cross-Origin Resource Sharing (CORS) restrictions.
-
-**Solution**:
-
-- Casdoor's MCP endpoint should automatically handle CORS for localhost origins
-- If you're using a custom domain, ensure CORS is properly configured in Casdoor
-
-### Issue: "insufficient_scope" error
-
-**Cause**: The requested operation requires a scope that wasn't granted.
-
-**Solution**:
-
-- Update the `OAUTH_SCOPES` in your `claude_desktop_config.json` to include the required scope
-- Example: Add `write:application` if you want to create/modify applications
-- Restart Claude Desktop and re-authorize to get a new token with updated scopes
-
-### Issue: OAuth token expired
-
-**Cause**: Access tokens expire after a certain time.
-
-**Solution**:
-
-- If you enabled `Refresh Token` grant type in Step 1, the MCP OAuth helper will automatically refresh expired tokens
-- Otherwise, you'll need to re-authorize by restarting Claude Desktop
-
-### Issue: HTTPS requirement in production
-
-**Cause**: OAuth best practices require HTTPS for production environments.
-
-**Solution**:
-
-- Use HTTPS for your Casdoor instance in production
-- For local development/testing, HTTP with localhost is acceptable
-- Configure SSL certificates or use a reverse proxy like Nginx
-
-## Security Considerations
-
-- **PKCE (Proof Key for Code Exchange)**: Always enable PKCE in your Casdoor application for enhanced security
-- **Scopes**: Follow the principle of least privilege - only grant scopes that Claude actually needs
-- **Token Storage**: The MCP OAuth helper stores tokens securely in your system's keychain
-- **HTTPS**: Always use HTTPS for production Casdoor instances to protect OAuth flows
-- **Token Revocation**: You can revoke access tokens in Casdoor's admin panel under **Tokens**
-
-## Next Steps
-
-Now that Claude Desktop is connected to Casdoor:
-
-- Explore available [MCP Tools](/docs/how-to-connect/mcp/tools) that Claude can use
-- Learn about [Authentication](/docs/how-to-connect/mcp/authentication) methods
-- Understand [Error Handling](/docs/how-to-connect/mcp/error-handling) for better debugging
-- Check out the [Integration Example](/docs/how-to-connect/mcp/integration) for programmatic access
-
-## Related Resources
-
-- [MCP Server Overview](/docs/how-to-connect/mcp/overview)
-- [Authorization and Scopes](/docs/how-to-connect/mcp/authorization)
-- [Application Categories](/docs/application/categories)
-- [Claude.ai](https://claude.ai)
+- [MCP tools reference](/docs/how-to-connect/mcp/tools)
+- [MCP authentication](/docs/how-to-connect/mcp/authentication)
+- [MCP troubleshooting](/docs/how-to-connect/mcp/troubleshooting)
+- [Application categories](/docs/application/categories)

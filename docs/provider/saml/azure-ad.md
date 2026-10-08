@@ -1,87 +1,76 @@
 ---
-title: Azure AD
-description: "Configure Azure AD (Microsoft Entra ID) as a SAML identity provider so users sign in to Casdoor with their Azure AD accounts."
+title: Add Azure AD as a SAML provider
+sidebar_label: Azure AD
+description: Let users sign in to Casdoor with their Azure AD (Microsoft Entra ID) account through SAML.
 keywords: [Azure AD, SAML, Microsoft Entra]
 authors: [nomeguy]
 ---
 
-Configure Azure AD (Microsoft Entra ID) as a SAML IdP so users can sign in with their Azure AD accounts.
+This guide explains how to let users sign in to Casdoor with their Azure AD (Microsoft Entra ID) account through SAML.
 
-## Create Enterprise Application in Azure AD
+---
 
-Sign in to the [Azure Portal](https://portal.azure.com/) and navigate to **Azure Active Directory** > **Enterprise applications**.
+#### Learning outcomes
 
-Click **New application** > **Create your own application**.
+- Create an enterprise application for Casdoor in Azure AD.
+- Add Azure AD as a SAML provider in Casdoor.
+- Assign users and test the sign-in.
 
-Enter a name (e.g., "Casdoor") and select **Integrate any other application you don't find in the gallery (Non-gallery)**. Click **Create**.
+#### What you need
 
-## Configure Single Sign-On
+- An Azure AD tenant with the rights to create enterprise applications
+- Administrator access to the Casdoor admin console
 
-In your new enterprise application, navigate to **Single sign-on** and select **SAML**.
+---
 
-### Basic SAML Configuration
+## Create an enterprise application {#create-enterprise-application-in-azure-ad}
 
-Click **Edit** on the Basic SAML Configuration section and enter:
+1. In the [Azure portal](https://portal.azure.com/), go to **Azure Active Directory** > **Enterprise applications**.
+1. Click **New application** > **Create your own application**.
+1. Enter a name, for example `Casdoor`, select **Integrate any other application you don't find in the gallery (Non-gallery)**, and click **Create**.
 
-- **Identifier (Entity ID)**: `https://<your-casdoor-domain>/api/acs`
-  - Example: `https://door.example.com/api/acs`
-- **Reply URL (Assertion Consumer Service URL)**: `https://<your-casdoor-domain>/api/acs`
-  - Use the same URL as Entity ID
+## Configure single sign-on {#configure-single-sign-on}
 
-:::note
+1. In the enterprise application, go to **Single sign-on** and select **SAML**.
+1. In **Basic SAML Configuration**, click **Edit** and enter:
 
-The `/api/acs` endpoint only accepts POST requests. Azure AD uses POST binding by default for SAML responses.
+   | Field | Value |
+   |---|---|
+   | **Identifier (Entity ID)** | `https://<your-casdoor-domain>/api/acs`, for example `https://door.example.com/api/acs` |
+   | **Reply URL (Assertion Consumer Service URL)** | The same URL |
 
-:::
+   Azure AD sends the response with HTTP POST, which the `/api/acs` endpoint requires.
 
-Click **Save**.
+1. Click **Save**.
+1. Keep the default **Attributes & Claims**, or change them:
 
-### Attributes & Claims
+   | Claim | Default source |
+   |---|---|
+   | Unique User Identifier | `user.userprincipalname` |
+   | emailaddress | `user.mail` |
+   | name | `user.userprincipalname` |
 
-The default attributes configuration is typically sufficient:
+   If no username attribute is mapped, Casdoor uses the email address or the NameID of the assertion as the username.
 
-- **Unique User Identifier**: `user.userprincipalname`
-- **emailaddress**: `user.mail`
-- **name**: `user.userprincipalname`
+1. Download the **Federation Metadata XML** from the **SAML Certificates** section. Alternatively, note the **Certificate (Base64)** and, in the **Set up Casdoor** section, the **Login URL**, the **Azure AD Identifier**, and the **Logout URL**.
 
-You can customize these mappings if needed. When the username attribute is not explicitly mapped, Casdoor will automatically fall back to using the email address or NameID from the SAML assertion to populate the username field.
+## Add the provider in Casdoor {#configure-saml-provider-in-casdoor}
 
-### SAML Certificates
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `SAML` and **Type** to `Custom`.
+1. Paste the federation metadata into **Metadata** and click **Parse**.
+1. Save the provider.
+1. Open the edit page of your application, add the provider on the **Providers** tab, and save.
 
-Download the **Certificate (Base64)** from the SAML Certificates section.
+## Assign users {#assign-users}
 
-### Set up Casdoor
+In the enterprise application in Azure AD, go to **Users and groups** and assign the users or groups that may sign in to Casdoor.
 
-Note the following URLs from the **Set up Casdoor** section:
+## Verify the result {#test-the-integration}
 
-- **Login URL**
-- **Azure AD Identifier**
-- **Logout URL**
+Open the sign-in page of the application and click the Azure AD button. You can also test from Azure AD with the **Test** button of the SAML configuration.
 
-## Configure SAML Provider in Casdoor
+## See also
 
-In the Casdoor admin console, navigate to **Providers** and click **Add**.
-
-Select the following:
-
-- **Category**: `SAML`
-- **Type**: `Custom`
-- **Metadata**: You can either:
-  - Download the **Federation Metadata XML** from Azure AD and paste it here, or
-  - Manually configure using the Login URL, Azure AD Identifier, and Certificate
-
-Click **Parse** to automatically fill in the fields, then click **Save**.
-
-## Assign Users
-
-Back in Azure AD, navigate to **Users and groups** in your enterprise application and assign users or groups who should have access to Casdoor.
-
-## Add Provider to Application
-
-Edit your Casdoor application and add the Azure AD SAML provider to the **Providers** list. Click **Save**.
-
-## Test the Integration
-
-Navigate to your Casdoor application's login page. You should see an Azure AD login option. Click it to test the SAML authentication flow.
-
-You can also use the **Test** button in Azure AD's SAML configuration to verify the setup.
+- [SAML providers](/docs/provider/saml/overview)
+- [Add Azure AD as an OAuth provider](/docs/provider/oauth/azureAD)

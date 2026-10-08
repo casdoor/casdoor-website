@@ -1,63 +1,58 @@
 ---
-title: Public API
-description: Authenticate and call the Casdoor REST API from your apps and scripts.
+title: Call the Casdoor API
+sidebar_label: Public API
+description: Authenticate to the Casdoor REST API with an access token, client credentials, an access key, or a username and password, and call it from your applications and scripts.
 keywords: [API, REST, authentication, OAuth, M2M]
 authors: [hsluoyz]
 ---
 
-The Casdoor web UI is a React [SPA](https://developer.mozilla.org/en-US/docs/Glossary/SPA) that talks to the same REST API as your code. That API is the **Casdoor Public API**: anything the UI does can be done via HTTP. It is used by:
+This guide explains how to authenticate to the Casdoor REST API and call it from your own applications, services, and scripts.
+
+---
+
+#### Learning outcomes
+
+- Choose the authentication method that fits your caller.
+- Send an access token, client credentials, or an access key with a request.
+- Get an access token for a service without a user.
+- Sign a user out of all sessions through the API.
+- Allow your frontend origin to call the API from a browser.
+
+#### What you need
+
+- A running Casdoor instance. The examples use the demo site `https://door.casdoor.com`.
+- An [application](/docs/application/overview) in Casdoor, with its client ID and client secret
+
+---
+
+## About the Casdoor API
+
+The Casdoor admin console is a React single-page application that calls a REST API. Your code can call the same API, so everything that the console does is available over HTTP. The API has three kinds of callers:
 
 - The Casdoor frontend
-- Casdoor SDKs (e.g. casdoor-go-sdk)
+- The [Casdoor SDKs](/docs/how-to-connect/sdk), such as casdoor-go-sdk
 - Your own applications and scripts
 
-**API reference:** [https://door.casdoor.com/swagger](https://door.casdoor.com/swagger). To regenerate the Swagger spec, see [Developer guide – Swagger](/docs/developer-guide/swagger#generate-swagger-files).
+The API reference is the Swagger page of your Casdoor instance, for example [https://door.casdoor.com/swagger](https://door.casdoor.com/swagger). To regenerate the Swagger files, see [Generate Swagger files](/docs/developer-guide/swagger#generate-swagger-files).
 
-## Response language
+## Choose an authentication method {#how-to-authenticate}
 
-Responses can be localized. Send the `Accept-Language` header to get error messages and other text in that language:
+| Method | The request runs as | Use it for |
+|---|---|---|
+| [Access token](/docs/basic/public-api#access-token) | The user who signed in, or the application for a client credentials token | Applications that act for a signed-in user, and services that hold a token |
+| [Client ID and client secret](/docs/basic/public-api#client-credentials) | The application, with the rights of an administrator of its organization | Machine-to-machine (M2M) calls from backend services, CLIs, and scheduled jobs |
+| [Access key and access secret](/docs/basic/public-api#access-key) | The organization, application, or user that the key belongs to | Scripts and integrations that need a long-lived credential |
+| [Username and password](/docs/basic/public-api#username-password) | The user | Local demos and compatibility only |
 
-```bash
-# Example: Get error messages in French
-curl -X GET https://door.casdoor.com/api/get-account \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Accept-Language: fr"
-```
+## Authenticate with an access token {#access-token}
 
-Supported codes include `en`, `zh`, `es`, `fr`, `de`, `ja`, `ko`, and others. See [Internationalization](/docs/internationalization) for the full list.
+An access token is what your application receives when a user signs in through OAuth 2.0. A request that carries the token runs with the permissions of that user.
 
-## Machine-to-machine (M2M) authentication
+### Get the token
 
-M2M authentication is for services or scripts that call the API **without a user present**. Use it for:
+Your application receives the token at the end of the OAuth 2.0 authorization code flow, when it exchanges the `code` for tokens. See [OAuth 2.0](/docs/how-to-connect/oauth). An administrator can also see the issued tokens on the **Tokens** page of the admin console, for example `https://door.casdoor.com/tokens`.
 
-- Backend services calling Casdoor programmatically
-- CLI tools using access tokens
-- B2B: per-organization apps with their own client credentials
-- Scheduled jobs, sync, and system integrations
-- Service-to-service auth
-
-Casdoor supports M2M via:
-
-1. **Client Credentials Grant (OAuth 2.0)** — Recommended. Use [Client ID and Client Secret](/docs/how-to-connect/oauth#client-credentials-grant) to obtain an access token.
-2. **Client ID + Client Secret on each request** — Pass credentials directly (see method #2 below).
-
-### Typical M2M use cases
-
-- **Per-organization API access:** One application per organization; client credentials give that org’s admin-level access.
-- **Tokens for downstream services:** Use Client Credentials to get tokens for CLIs or other services.
-- **Service-to-service:** Backend calls the API as the application (org-admin equivalent).
-
-## How to authenticate
-
-### 1. Access token (user context)
-
-Use the access token obtained after a user signs in (e.g. from the OAuth code exchange). API calls run with that user’s permissions.
-
-#### Getting the token
-
-The app receives the token at the end of the OAuth login flow (code + state). Issued tokens are also visible in the Casdoor UI (**Tokens** page, e.g. `https://door.casdoor.com/tokens`).
-
-Example (Go, casdoor-go-sdk):
+The following Go handler uses casdoor-go-sdk to exchange the code and read the token:
 
 ```go
 func (c *ApiController) Signin() {
@@ -76,16 +71,6 @@ func (c *ApiController) Signin() {
         return
     }
 
-    if !claims.IsAdmin {
-        claims.Type = "chat-user"
-    }
-
-    err = c.addInitialChat(&claims.User)
-    if err != nil {
-        c.ResponseError(err.Error())
-        return
-    }
-
     claims.AccessToken = token.AccessToken
     c.SetSessionClaims(claims)
 
@@ -93,177 +78,165 @@ func (c *ApiController) Signin() {
 }
 ```
 
-#### Sending the token
+### Send the token
 
-1. **Query parameter:**
-
-    ```shell
-    /page?access_token=<The access token>
-    ```
-
-    Demo site example: `https://door.casdoor.com/api/get-global-providers?access_token=eyJhbGciOiJSUzI1NiIs`
-
-2. **Bearer header:**
-
-    ```shell
-    Authorization: Bearer <The access token>
-    ```
-
-### 2. Client ID and Client Secret (M2M)
-
-Use this for **machine-to-machine** calls (no user). Permissions are those of the application (equivalent to the organization admin).
-
-#### Getting credentials
-
-On the application edit page (e.g. `https://door.casdoor.com/applications/casbin/app-vue-python-example`) you’ll see **Client ID** and **Client Secret**.
-
-#### Use cases
-
-- **Service authentication**: Backend services calling Casdoor APIs programmatically
-- **Organization management**: In B2B scenarios, create an application per organization to enable them to manage users and generate tokens independently
-- **Token generation**: Obtain access tokens via the [OAuth Client Credentials Grant](/docs/how-to-connect/oauth#client-credentials-grant) flow for distribution to CLI tools or other services
-
-#### Sending credentials
-
-1. **Query parameters:** `/page?clientId=<clientId>&clientSecret=<clientSecret>`
-
-2. **HTTP Basic Auth** — Header:
-
-    ```shell
-    Authorization: Basic <The Base64 encoding of client ID and client secret joined by a single colon ":">
-    ```
-
-Use any standard library for Base64-encoding `clientId:clientSecret`.
-
-#### Getting an access token (Client Credentials flow)
-
-To use a Bearer token instead of sending client ID/secret on every request, use the **Client Credentials Grant**:
-
-1. Make a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token` with:
-
-    ```json
-    {
-        "grant_type": "client_credentials",
-        "client_id": "YOUR_CLIENT_ID",
-        "client_secret": "YOUR_CLIENT_SECRET"
-    }
-    ```
-
-2. The response contains an access token:
-
-    ```json
-    {
-        "access_token": "eyJhb...",
-        "token_type": "Bearer",
-        "expires_in": 10080,
-        "scope": "openid"
-    }
-    ```
-
-3. Call the API with the `access_token` as a Bearer token (same as method #1).
-
-See [Client Credentials Grant](/docs/how-to-connect/oauth#client-credentials-grant) for full details.
-
-:::info
-
-**For B2B**: Create separate Casdoor applications per customer organization. Each application has its own `client_id` and `client_secret`, which your customers can use to:
-
-- Authenticate as their organization (with admin privileges)
-- Generate access tokens for their users or services
-- Manage their organization's users and permissions independently
-- Integrate your APIs into their systems without UI-based login flows
-
-This approach allows you to delegate organization management to your customers while maintaining security and isolation between different organizations.
-
-:::
-
-### 3. Access key and Access secret
-
-Casdoor supports API authentication via **access key / access secret** pairs. These are managed through the [Keys](/docs/key/overview) page and can be scoped to an organization, application, or user. Requests authenticated this way run with the permissions of the associated scope.
-
-#### Setup
-
-Create a key on the **Keys** page in the Casdoor admin sidebar. Select the appropriate **Type** (`Organization`, `Application`, or `User`) and save. Copy the generated access secret immediately — it is not shown again.
-
-#### Sending them
-
-**Query parameters:**
-
-```shell
-/page?accessKey=<access key>&accessSecret=<access secret>"
-```
-
-Example: `https://door.casdoor.com/api/get-global-providers?accessKey=...&accessSecret=...`
+Send the token in the `Authorization` header:
 
 ```bash
-curl --location ‘http://door.casdoor.com/api/user?accessKey=b86db9dc-6bd7-4997-935c-af480dd2c796&accessSecret=79911517-fc36-4093-b115-65a9741f6b14’
+curl https://door.casdoor.com/api/get-account \
+  -H "Authorization: Bearer <access-token>"
 ```
 
-### 4. Username and password
+Alternatively, send it as the `access_token` query parameter:
 
-:::caution
-**Not recommended.** Credentials are sent as query parameters and may be logged or visible on the network. Use only for compatibility or local demos. Prefer access token, client credentials, or access key/secret.
+```text
+https://door.casdoor.com/api/get-global-providers?access_token=<access-token>
+```
+
+Prefer the header. A token in a URL can end up in server logs and browser history.
+
+## Authenticate with a client ID and client secret {#client-credentials}
+
+Use the credentials of an application for M2M calls, where no user is present. The request runs as the application, with the rights of an administrator of the application's organization. Typical callers are:
+
+- Backend services that manage users or permissions in Casdoor
+- CLI tools, scheduled jobs, and synchronization scripts
+- Business-to-business (B2B) setups, where each customer organization has its own application and manages its own users with that application's credentials
+
+### Get the credentials
+
+1. In the Casdoor admin console, open the edit page of the application, for example `https://door.casdoor.com/applications/casbin/app-vue-python-example`.
+1. Copy the **Client ID** and the **Client secret**.
+
+### Send the credentials with each request
+
+Send the credentials with HTTP Basic authentication. The value is the Base64 encoding of `<client-id>:<client-secret>`:
+
+```bash
+curl https://door.casdoor.com/api/get-users?owner=<organization> \
+  -u "<client-id>:<client-secret>"
+```
+
+Alternatively, send them as query parameters:
+
+```text
+https://door.casdoor.com/api/get-users?owner=<organization>&clientId=<client-id>&clientSecret=<client-secret>
+```
+
+### Exchange the credentials for an access token
+
+To avoid sending the client secret with every request, exchange the credentials for an access token with the OAuth 2.0 client credentials grant.
+
+1. Send a `POST` request to `https://<casdoor-host>/api/login/oauth/access_token`:
+
+   ```json
+   {
+       "grant_type": "client_credentials",
+       "client_id": "<client-id>",
+       "client_secret": "<client-secret>"
+   }
+   ```
+
+1. Read the access token from the response:
+
+   ```json
+   {
+       "access_token": "eyJhb...",
+       "token_type": "Bearer",
+       "expires_in": 10080,
+       "scope": "openid"
+   }
+   ```
+
+1. Call the API with the token as described in [Send the token](#send-the-token).
+
+For the details of the grant, see [Client credentials grant](/docs/how-to-connect/oauth#client-credentials-grant).
+
+:::tip
+In a B2B product, create one Casdoor application per customer organization. Each customer gets its own client ID and client secret, manages its own users and permissions, and can't reach the data of other organizations.
 :::
 
-Username format: `<organization>/<username>`. API calls run as that user.
+## Authenticate with an access key and access secret {#access-key}
 
-**Query parameters:**
+An access key pair is a long-lived credential that you create on the [Keys](/docs/key/overview) page. A key belongs to an organization, an application, or a user, and a request that carries it runs with the permissions of that owner.
 
-```shell
-/page?username=<The user's organization name>/<The user name>&password=<the user's password>"
+### Create a key
+
+1. In the Casdoor admin console, open the **Keys** page.
+1. Add a key and select its **Type**: `Organization`, `Application`, or `User`.
+1. Save the key and copy the access secret. Casdoor doesn't show the secret again.
+
+### Send the key
+
+Send the pair as query parameters:
+
+```bash
+curl "https://door.casdoor.com/api/get-global-providers?accessKey=<access-key>&accessSecret=<access-secret>"
 ```
 
-## SSO logout
+## Authenticate with a username and password {#username-password}
 
-The `/api/sso-logout` endpoint logs a user out from all applications or only the current session, depending on `logoutAll`.
+:::caution
+Don't use this method in production. The password travels in the URL, where proxies and servers can log it. Use an access token, client credentials, or an access key instead.
+:::
 
-### Endpoint
+Send the user ID, in the form `<organization>/<username>`, and the password as query parameters. The request runs as that user.
+
+```text
+https://door.casdoor.com/api/get-account?username=<organization>/<username>&password=<password>
+```
+
+Casdoor rejects this method for users who have multi-factor authentication (MFA) enabled.
+
+## Set the response language
+
+Casdoor localizes error messages and other text in responses. Send the `Accept-Language` header to choose the language:
+
+```bash
+curl https://door.casdoor.com/api/get-account \
+  -H "Authorization: Bearer <access-token>" \
+  -H "Accept-Language: fr"
+```
+
+Supported codes include `en`, `zh`, `es`, `fr`, `de`, `ja`, and `ko`. For the full list, see [Internationalization](/docs/internationalization).
+
+## Sign a user out of all sessions
+
+The `/api/sso-logout` endpoint signs the authenticated user out of every application, or only out of the current session.
 
 ```http
 GET or POST /api/sso-logout?logoutAll=<true|false>
 ```
 
-### Parameters
+| Parameter | Required | Description |
+|---|---|---|
+| `logoutAll` | No | `true`, `1`, or omitted: sign out of all sessions. Any other value, such as `false`: sign out of the current session only |
 
-- **logoutAll** (optional): `true`, `1`, or omit → logout from all sessions and expire all tokens. `false` or `0` → current session only.
+| | `logoutAll=true` (default) | `logoutAll=false` |
+|---|---|---|
+| Sessions | Deletes all sessions of the user across all applications | Deletes the current session only |
+| Access tokens | Expires all tokens issued to the user | Keeps all tokens |
+| Sign-out notification | Contains all session IDs and token hashes | Contains the current session ID only |
 
-### Behavior
+Use `logoutAll=false` when a user signs out on one device and stays signed in on the others.
 
-**Full SSO logout** (default):
-
-- Deletes all active sessions for the user across all applications
-- Expires all access tokens issued to the user
-- Sends logout notifications with all session IDs and token hashes
-
-**Session-only logout**:
-
-- Deletes only the current session
-- Preserves other active sessions and tokens
-- Sends logout notification with only the current session ID
-
-Use session-only logout when users should sign out from one device but stay signed in elsewhere.
-
-### Authentication
-
-The user must be authenticated. Use any of the [authentication methods](#how-to-authenticate) above.
-
-### Example Request
+The request must be authenticated with one of the methods on this page or with the session cookie:
 
 ```bash
-# Full SSO logout (all sessions)
+# Sign out of all sessions
 curl -X POST https://door.casdoor.com/api/sso-logout \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer <access-token>"
 
-# Session-level logout (current session only)
+# Sign out of the current session only
 curl -X POST "https://door.casdoor.com/api/sso-logout?logoutAll=false" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer <access-token>"
 
-# Using session cookie
+# Authenticate with the session cookie
 curl -X POST https://door.casdoor.com/api/sso-logout \
-  --cookie "casdoor_session_id=abc123def456"
+  --cookie "casdoor_session_id=<session-id>"
 ```
 
-### Response
+A successful request returns:
 
 ```json
 {
@@ -273,15 +246,22 @@ curl -X POST https://door.casdoor.com/api/sso-logout \
 }
 ```
 
-## CORS
+## Call the API from a browser
 
-Casdoor sets CORS headers so browsers can call the API from your frontend. Allowed origins include:
+Browsers apply cross-origin resource sharing (CORS) rules to calls from your frontend to Casdoor. Casdoor compares the `Origin` header of a request with the origins that it trusts and, on a match, adds the `Access-Control-Allow-*` headers. It trusts:
 
-- Your application’s **Redirect URIs**
-- The Casdoor server hostname
-- Configured origin in Casdoor settings
-- Special cases: `/api/login/oauth/access_token`, `/api/userinfo`, and origin `appleid.apple.com`
+- The origins of the **Redirect URLs** of your applications
+- The host name of the Casdoor server itself
+- The value of `origin` in [`app.conf`](/docs/basic/configuration)
+- Any origin for the `/api/login/oauth/access_token` and `/api/userinfo` endpoints, and the origin `appleid.apple.com`
 
-The server checks the request `Origin` against these; if it matches, it adds the appropriate `Access-Control-Allow-*` headers. For `OPTIONS` preflight, allowed methods include `GET`, `POST`, `OPTIONS`, `DELETE`, with credentials supported.
+The allowed methods are `GET`, `POST`, `OPTIONS`, and `DELETE`.
 
-**To allow your app:** Add your frontend origin to the application’s **Redirect URIs** in the Casdoor admin.
+To allow your frontend to call the API, add its URL to the **Redirect URLs** of the application in the Casdoor admin console.
+
+## See also
+
+- [OAuth 2.0](/docs/how-to-connect/oauth)
+- [Keys](/docs/key/overview)
+- [Casdoor SDKs](/docs/how-to-connect/sdk)
+- [Single sign-out](/docs/session/single-sign-out)

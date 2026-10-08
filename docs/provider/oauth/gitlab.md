@@ -1,27 +1,51 @@
 ---
-title: GitLab OAuth
-description: Add GitLab (or self-hosted GitLab) as an OAuth provider.
+title: Add GitLab as an OAuth provider
+sidebar_label: GitLab
+description: Let users sign in to Casdoor with their account on GitLab.com or on a self-hosted GitLab.
 keywords: [GitLab, OAuth]
 authors: [hsluoyz]
 ---
 
-Use the [GitLab Applications](https://gitlab.com/-/profile/applications) page (or `https://<your-gitlab>/-/profile/applications` for self-hosted) to create an OAuth application.
+This guide explains how to let users sign in to Casdoor with their account on GitLab.com or on a self-hosted GitLab instance.
+
+---
+
+#### Learning outcomes
+
+- Create an OAuth application in GitLab.
+- Add GitLab as an OAuth provider in Casdoor.
+
+#### What you need
+
+- A GitLab account
+- Administrator access to the Casdoor admin console
+
+---
 
 ## Create the GitLab application
 
+1. Open the [Applications](https://gitlab.com/-/profile/applications) page of your profile. On a self-hosted GitLab, the page is `https://<your-gitlab>/-/profile/applications`.
 1. Click **Add new application**.
-2. Set **Name** (e.g. "Casdoor"), **Redirect URI**, and **Scopes**.
+1. Fill in the fields:
 
-   :::caution
-   Enable scopes **read_user** and **profile**. Without them, authentication can fail.
-   :::
+   - **Name**: For example `Casdoor`.
+   - **Redirect URI**: The callback URL of Casdoor, `https://<your-casdoor-host>/callback`. See [Redirect URL and callback URL](/docs/application/config#how-the-flow-works).
+   - **Scopes**: Select at least `read_user` and `profile`. Without them, sign-in can fail.
 
-   :::info
-   In GitLab, **Redirect URI** must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works).
-   :::
-
-3. After creating the app, copy **Application ID** and **Secret** from the app details.
+1. Save the application and copy the **Application ID** and the **Secret**.
 
 ## Add the provider in Casdoor
 
-Create an **OAuth** provider, set **Type** to **GitLab**, and enter **Application ID** as **Client ID** and **Secret** as **Client Secret**.
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `GitLab`.
+1. Enter the Application ID as the **Client ID** and the Secret as the **Client secret**.
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)
+- [GitLab integration](/docs/integration/ruby/gitlab): Sign users in to GitLab with Casdoor.

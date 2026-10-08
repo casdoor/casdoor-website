@@ -1,114 +1,125 @@
 ---
-title: Alibaba Cloud IDaaS SAML
-description: Use Alibaba Cloud IDaaS (EIAM) as a SAML IdP for Casdoor.
+title: Add Alibaba Cloud IDaaS as a SAML provider
+sidebar_label: Alibaba Cloud IDaaS
+description: Let users of Alibaba Cloud IDaaS (EIAM) sign in to Casdoor through SAML.
 keywords: [Alibaba Cloud IDaaS, SAML, EIAM]
 authors: [seriouszyx]
 ---
 
-## Create SAML application in Alibaba Cloud IDaaS
+This guide explains how to let the users of Alibaba Cloud IDaaS (EIAM) sign in to Casdoor through SAML.
 
-Login to the [Alibaba Cloud management console](https://account.aliyun.com/), search and go to the Application Indentity Service (IDentity-as-a-Service, IDaaS).
+---
 
-![Alibaba Cloud IDaaS](/img/providers/SAML/aliyun.png)
+#### Learning outcomes
 
-Click **EIAM Instance List** and open the free version.
+- Create a SAML application in IDaaS and associate its accounts with Casdoor users.
+- Add Alibaba Cloud IDaaS as a SAML provider in Casdoor.
 
-![Alibaba Cloud EIAM](/img/providers/SAML/aliyun_eiam.png)
+#### What you need
 
-An instance will be created and run automatically after opening. Click on the instance name or the **Manage** button to enter the IDaaS management console.
+- An Alibaba Cloud account
+- Administrator access to the Casdoor admin console
 
-![Alibaba Cloud EIAM List](/img/providers/SAML/aliyun_eiam_list.png)
+---
 
-After entering the IDaaS management console, click **Add Application**, search for **SAML**, and click **Add Application**.
+## Create a SAML application in IDaaS {#create-saml-application-in-alibaba-cloud-idaas}
 
-![Add Alibaba Cloud SAML](/img/providers/SAML/aliyun_saml_add.png)
+1. In the [Alibaba Cloud console](https://account.aliyun.com/), open IDaaS (Identity as a Service).
 
-Click **Add SigningKey**.
+   ![IDaaS in the console](/img/providers/SAML/aliyun.png)
 
-![Add Signing Key](/img/providers/SAML/aliyun_saml_signingkey.png)
+1. Click **EIAM Instance List** and open the free version. Alibaba Cloud creates and starts an instance.
 
-Fill in all required information and submit.
+   ![EIAM instances](/img/providers/SAML/aliyun_eiam.png)
 
-![Fill in Signing Key](/img/providers/SAML/aliyun_saml_signingkey_input.png)
+1. Click the name of the instance, or **Manage**, to open the IDaaS console.
 
-Select the added SigningKey.
+   ![EIAM instance list](/img/providers/SAML/aliyun_eiam_list.png)
 
-![Select added Signing Key](/img/providers/SAML/aliyun_saml_signingkey_select.png)
+1. Click **Add Application**, search for **SAML**, and click **Add Application**.
 
-Fill in all the required information below and submit.
+   ![SAML application template](/img/providers/SAML/aliyun_saml_add.png)
 
-- IDP IdentityId: Keep the same as Issuer URL in Casdoor.
-- SP Entity ID & SP ACS URL (SSO Location): Use placeholders for now; after configuring Casdoor, set both to `https://<your-casdoor-domain>/api/acs`.
-- Assertion Attribute: Directly fill in as username.
-- Account Association Mode: Account Association
+1. Click **Add SigningKey**, fill in the form, and submit. Then select the new signing key.
 
-:::note
+   ![Add SigningKey](/img/providers/SAML/aliyun_saml_signingkey.png)
 
-The ACS URL (`/api/acs`) only accepts POST requests. Ensure your IdP is configured to use HTTP POST binding.
+   ![SigningKey form](/img/providers/SAML/aliyun_saml_signingkey_input.png)
 
-:::
+   ![SigningKey selection](/img/providers/SAML/aliyun_saml_signingkey_select.png)
 
-![Update information of Signing Key](/img/providers/SAML/aliyun_saml_signingkey_update.png)
+1. Fill in the application and submit:
 
-## Account authorization & association
+   | Field | Value |
+   |---|---|
+   | IDP IdentityId | The same value as **Issuer URL** in Casdoor |
+   | SP Entity ID, SP ACS URL (SSO Location) | Placeholders for now. You replace them after configuring Casdoor |
+   | Assertion Attribute | `username` |
+   | Account Association Mode | Account Association |
 
-After the application is successfully added, an authorization prompt will pop up. Do not authorize it now, add an account and then authorize it.
+   ![Application settings](/img/providers/SAML/aliyun_saml_signingkey_update.png)
 
-Go to **Organizations and Groups** and click on **New Account**.
+## Associate accounts {#account-authorization--association}
 
-![Add account](/img/providers/SAML/aliyun_account.png)
+After the application is added, IDaaS asks you to authorize it. Don't authorize it yet.
 
-Fill in all required information and submit.
+1. Go to **Organizations and Groups**, click **New Account**, fill in the form, and submit.
 
-![Fill in account information](/img/providers/SAML/aliyun_account_add.png)
+   ![New Account](/img/providers/SAML/aliyun_account.png)
 
-Go to **Application Authorization**, select the accounts you want to authorize and click **Save**.
+   ![Account form](/img/providers/SAML/aliyun_account_add.png)
 
-![Account authorizationn](/img/providers/SAML/aliyun_account_authorization.png)
+1. Go to **Application Authorization**, select the accounts to authorize, and click **Save**.
 
-Go to the **Application List**, click **View application sub-accounts**, and then click **Add account association**.
+   ![Application Authorization](/img/providers/SAML/aliyun_account_authorization.png)
 
-![View sub-account](/img/providers/SAML/aliyun_subaccount_view.png)
-![Add sub-account](/img/providers/SAML/aliyun_subaccount_add.png)
+1. Go to the **Application List**, click **View application sub-accounts**, and then **Add account association**.
 
-Fill in the primary and sub accounts that need to be associated and click **Save**.
+   ![Sub-accounts of the application](/img/providers/SAML/aliyun_subaccount_view.png)
 
-The primary account exists in IDaaS, and the sub account is the ID of the user in Casdoor.
+   ![Add account association](/img/providers/SAML/aliyun_subaccount_add.png)
 
-![Associate](/img/providers/SAML/aliyun_subaccount_input.png)
+1. Enter the primary account, which exists in IDaaS, and the sub-account, which is the ID of the user in Casdoor. Click **Save**.
 
-## Export IDaaS Metadata
+   ![Account association form](/img/providers/SAML/aliyun_subaccount_input.png)
 
-Go to the **Application List**, click **View Application Details** and click **Export IDaaS SAML Metadata**.
+## Export the metadata {#export-idaas-metadata}
 
-![Export](/img/providers/SAML/aliyun_saml_metadata.png)
+In the **Application List**, click **View Application Details** and **Export IDaaS SAML Metadata**.
 
-## Configure in Casdoor
+![Export IDaaS SAML Metadata](/img/providers/SAML/aliyun_saml_metadata.png)
 
-Create a new provider in Casdoor.
+## Add the provider in Casdoor {#configure-in-casdoor}
 
-Set **Category** to **SAML**, **Type** to **Alibaba Cloud IDaaS**. Copy the content of metadata and paste it to the **Metadata** input. The values of **Endpoint**, **IdP** and **Issuer URL** will be generated automatically after clicking the **Parse** button.
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `SAML` and **Type** to `Aliyun IDaaS`.
+1. Paste the metadata into **Metadata** and click **Parse**. Casdoor fills in **Endpoint**, **IdP**, and **Issuer URL**.
 
-![Casdoor provider](/img/providers/SAML/aliyun_casdoor.png)
+   ![Alibaba Cloud IDaaS provider in Casdoor](/img/providers/SAML/aliyun_casdoor.png)
 
-Copy the **SP ACS URL** and the **SP Entity ID** and click the **Save** button.
+1. Copy the **SP ACS URL** and the **SP Entity ID**, and save the provider.
+1. Open the edit page of your application, add the provider on the **Providers** tab, and save.
 
-Edit the application you want to configure in Casdoor. Select the provider just added and click the button **Save**.
+   ![Provider in the application](/img/providers/SAML/aliyun_casdoor_provider.png)
 
-![Add provider for app](/img/providers/SAML/aliyun_casdoor_provider.png)
+## Complete the IDaaS application {#modify-saml-application-in-alibaba-cloud-idaas}
 
-## Modify SAML application in Alibaba Cloud IDaaS
+1. In IDaaS, disable the application and click **Modify Application**.
 
-Disable the application and then click **Modify Application**.
+   ![Modify Application](/img/providers/SAML/aliyun_saml_modify.png)
 
-![Modify SAML app](/img/providers/SAML/aliyun_saml_modify.png)
+1. Enter the **SP Entity ID** and the **SP ACS URL (SSO Location)** that you copied from Casdoor. The ACS URL accepts only `POST`.
 
-Fill in **SP Entity ID** and **SP ACS URL(SSO Location)** with the content copied in Casdoor. Submit and enable application.
+   ![SP values in IDaaS](/img/providers/SAML/aliyun_saml_modify_input.png)
 
-![Modify SAML app](/img/providers/SAML/aliyun_saml_modify_input.png)
+1. Submit and enable the application.
 
-## Test
+## Verify the result {#test}
 
-Open the application’s login page; an IDaaS icon appears. Click it to sign in via Alibaba Cloud IDaaS; after success you are logged into Casdoor.
+Open the sign-in page of the application and click the IDaaS button. After you sign in at IDaaS, you are signed in to Casdoor.
 
-![Casdoor login](/img/providers/SAML/aliyun_casdoor_login.gif)
+![Recording of the sign-in through IDaaS](/img/providers/SAML/aliyun_casdoor_login.gif)
+
+## See also
+
+- [SAML providers](/docs/provider/saml/overview)

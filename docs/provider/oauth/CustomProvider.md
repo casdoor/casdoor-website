@@ -1,88 +1,126 @@
 ---
-title: Custom OAuth provider
-description: Integrate any OAuth 2.0–compliant IdP (Custom through Custom10).
+title: Add a custom OAuth provider
+sidebar_label: Custom provider
+description: Connect Casdoor to any OAuth 2.0 identity provider that has no built-in type, and the requests and responses that the provider must support.
 keywords: [Custom Provider, OAuth, Casdoor]
 authors: [halozhy]
 ---
 
-:::note
-Custom providers must use standard 3-legged OAuth. Responses from **Token URL** and **UserInfo URL** must match the formats below.
-:::
+This guide explains how to connect Casdoor to an OAuth 2.0 identity provider that has no built-in type, such as an internal identity provider or a self-hosted service. You can add up to ten custom providers, with the types `Custom`, `Custom2`, and so on up to `Custom10`, each with its own configuration.
 
-Use **Custom** OAuth to connect Casdoor to any OAuth 2.0–compliant service: internal IdPs, self-hosted auth, or third-party services not yet built-in. You can add up to **10** custom providers: **Custom**, **Custom2**, … **Custom10**, each with its own config.
+---
 
-## Create a custom provider
+#### Learning outcomes
 
-In Casdoor **Providers** → **Add**, set **Type** to one of Custom, Custom2, … Custom10. Fill in **Client ID**, **Client Secret**, **Auth URL**, **Scope**, **Token URL**, **UserInfo URL**, and **Favicon**.
+- Configure a custom OAuth provider.
+- Know which requests Casdoor sends and which responses it expects.
 
-![image-20220418100744005](/img/providers/OAuth/customprovider.png)
+#### What you need
 
-- **Auth URL** — OAuth authorization endpoint. Example: with `https://door.casdoor.com/login/oauth/authorize`, the browser is sent to
+- An identity provider that supports the standard three-legged OAuth 2.0 authorization code flow
+- The authorization, token, and user info endpoints of the provider, and a client ID and client secret from it
 
-  ```url
-  https://door.casdoor.com/login/oauth/authorize?client_id={ClientID}&redirect_uri=https://{your-casdoor-hostname}/callback&state={State_generated_by_Casdoor}&response_type=code&scope={Scope}` 
-  ```
+---
 
-  With **Enable PKCE** on, Casdoor adds:
+## Create the provider {#create-a-custom-provider}
 
-  ```url
-  &code_challenge={code_challenge}&code_challenge_method=S256
-  ```
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to one of `Custom` to `Custom10`.
+1. Fill in the fields:
 
-  The IdP must then redirect to
+   | Field | Description |
+   |---|---|
+   | **Client ID**, **Client secret** | Credentials that the identity provider issued |
+   | **Auth URL** | Authorization endpoint of the identity provider |
+   | **Scope** | Scopes to request, as the identity provider documents them |
+   | **Enable PKCE** | Adds Proof Key for Code Exchange (PKCE) to the flow |
+   | **Token URL** | Token endpoint of the identity provider |
+   | **UserInfo URL** | User info endpoint of the identity provider |
+   | **Favicon** | URL of the logo that the Casdoor sign-in page shows |
 
-  ```url
-  https://{your-casdoor-hostname}/callback?code={code}
-  ```
+   ![Custom provider in Casdoor](/img/providers/OAuth/customprovider.png)
 
-  After this step, Casdoor will recognize the code parameter in the URL.
+1. Save the provider.
 
-- **Scope** — Scope string sent to the Auth URL (per your IdP’s docs).
+## Requests and responses
 
-- **Enable PKCE** — When on, Casdoor generates a fresh cryptographically random code verifier for each login attempt, computes the S256 challenge from it, and appends `code_challenge`/`code_challenge_method=S256` to the auth request. The verifier is stored in `localStorage` keyed by the OAuth state and automatically cleared after use. The `code_verifier` is included in the token exchange request, as required by [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636). Enable this if your IdP requires or supports PKCE.
+The identity provider must handle the following requests and return the following responses. The examples use Casdoor itself as the identity provider.
 
-- **Token URL** — Token endpoint. Casdoor calls it with the code to get an access token. Example:
+### Authorization
 
-  ```bash
-  curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback" https://door.casdoor.com/api/login/oauth/access_token
-  ```
+Casdoor sends the browser to the **Auth URL**:
 
-  When PKCE is enabled, the request includes the code verifier:
+```url
+https://door.casdoor.com/login/oauth/authorize?client_id={ClientID}&redirect_uri=https://{your-casdoor-hostname}/callback&state={State_generated_by_Casdoor}&response_type=code&scope={Scope}` 
+```
 
-  ```bash
-  curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback&code_verifier={code_verifier}" https://door.casdoor.com/api/login/oauth/access_token
-  ```
+With **Enable PKCE** on, Casdoor appends:
 
-  Response must include at least:
+```url
+&code_challenge={code_challenge}&code_challenge_method=S256
+```
 
-  ```json
-  {
-    "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ixxxxxxxxxxxxxx",
-    "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6xxxxxxxxxxxxxx",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid profile email"
-  }
-  ```
+After the user signs in, the identity provider redirects to the callback of Casdoor with the code:
 
-- **UserInfo URL** — API to get user info with the access token. Casdoor calls it like:
+```url
+https://{your-casdoor-hostname}/callback?code={code}
+```
 
-  ```bash
-  curl -X GET -H "Authorization: Bearer {accessToken}" https://door.casdoor.com/api/userinfo
-  ```
+With PKCE, Casdoor generates a new random code verifier for each sign-in, computes the `S256` challenge, and stores the verifier in `localStorage` under the OAuth state. It deletes the verifier after use.
 
-  Response must include at least:
+### Token
 
-  ```json
-  {
-    "name": "admin",
-    "preferred_username": "Admin",
-    "email": "admin@example.com",
-    "picture": "https://casbin.org/img/casbin.svg",
-    "phone": "+1234567890"
-  }
-  ```
+Casdoor exchanges the code at the **Token URL**:
 
-  `phone` is optional; if present, it is stored as the user’s phone in Casdoor.
+```bash
+curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback" https://door.casdoor.com/api/login/oauth/access_token
+```
 
-- **Favicon** — URL of the provider logo shown on the Casdoor login page.
+With PKCE, the request includes the code verifier:
+
+```bash
+curl -X POST -u "{ClientID}:{ClientSecret}" --data-binary "code={code}&grant_type=authorization_code&redirect_uri=https://{your-casdoor-hostname}/callback&code_verifier={code_verifier}" https://door.casdoor.com/api/login/oauth/access_token
+```
+
+The response must contain at least:
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ixxxxxxxxxxxxxx",
+  "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6xxxxxxxxxxxxxx",
+  "token_type": "Bearer",
+  "expires_in": 10080,
+  "scope": "openid profile email"
+}
+```
+
+### User info
+
+Casdoor reads the user from the **UserInfo URL** with the access token:
+
+```bash
+curl -X GET -H "Authorization: Bearer {accessToken}" https://door.casdoor.com/api/userinfo
+```
+
+The response must contain at least:
+
+```json
+{
+  "name": "admin",
+  "preferred_username": "Admin",
+  "email": "admin@example.com",
+  "picture": "https://casbin.org/img/casbin.svg",
+  "phone": "+1234567890"
+}
+```
+
+`phone` is optional. If the response contains it, Casdoor stores it as the phone number of the user.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)
+- [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping)

@@ -1,28 +1,117 @@
 ---
 title: MCP authorization and scopes
-description: Scope-based access control for MCP tools.
+description: The OAuth 2.0 scopes that control which tools of the Casdoor MCP server a token can call, how to request them, and how to define scopes for your own MCP server.
 keywords: [MCP, OAuth, scopes, authorization, permissions]
 authors: [hsluoyz]
 ---
 
-The MCP server enforces fine-grained authorization through OAuth scopes. When you authenticate with an access token, the tools you can access depend on the scopes included in that token. This allows you to create tokens with limited permissions for specific automation tasks, following the principle of least privilege.
+The Casdoor MCP server authorizes tool calls by OAuth 2.0 scopes. A request that is authenticated with an access token can call only the tools that the scopes of the token allow. This lets you issue tokens with the least privilege that a task needs.
 
-Session-based authentication (using cookies) bypasses scope checking and grants full access to all tools. This maintains backward compatibility with existing integrations while encouraging the adoption of scope-based authorization for better security.
+A request that is authenticated with a session cookie isn't checked against scopes and can call all tools.
 
-## Scope-Based Tool Access
+## How scopes control tools {#scope-based-tool-access}
 
-Each MCP tool requires a specific OAuth scope. For application management tools, the mapping is straightforward:
+Each tool requires one scope. A scope has the form `resource:action`: the resource is the kind of object, and the action is `read` or `write`. For example:
 
-- `application:read` grants access to `get_applications` and `get_application`
-- `application:write` grants access to `add_application`, `update_application`, and `delete_application`
+- `application:read` allows `get_applications` and `get_application`.
+- `application:write` allows `add_application`, `update_application`, and `delete_application`.
 
-When you request a token from Casdoor, include the scopes you need in your authorization request. The MCP server filters available tools based on these granted scopes, ensuring that automated processes can only perform actions they're explicitly authorized for.
+`tools/list` with a token returns only the tools that the token can call. A request without credentials still receives the full list for discovery, but can't call any tool.
 
-If you call `tools/list` with a scoped token, the response only includes tools your token can access. Unauthenticated requests still receive the full tool list to enable discovery, but any attempt to actually call a tool without proper authentication will fail.
+Some tools have requirements beyond the scope:
 
-## Scope Validation Errors
+- Creating an application counts against the application quota of the organization.
+- Applications with an IP allowlist are subject to that check.
+- In demo mode, Casdoor rejects write operations.
 
-When you try to use a tool without the required scope, the server responds with an `insufficient_scope` error:
+## Scope reference {#complete-scope-reference}
+
+### Application scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `application:read` | `get_applications`, `get_application` | View application configurations and settings |
+| `application:write` | `add_application`, `update_application`, `delete_application` | Create, modify, and delete applications |
+
+### User scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `user:read` | `get_users`, `get_user` | View user profiles and information |
+| `user:write` | `add_user`, `update_user`, `delete_user` | Create, modify, and delete user accounts |
+
+### Organization scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `organization:read` | `get_organizations`, `get_organization` | View organization details and settings |
+| `organization:write` | `add_organization`, `update_organization`, `delete_organization` | Create, modify, and delete organizations |
+
+### Role scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `role:read` | `get_roles`, `get_role` | View role definitions and assignments |
+| `role:write` | `add_role`, `update_role`, `delete_role` | Create, modify, and delete roles |
+
+### Permission scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `permission:read` | `get_permissions`, `get_permission` | View permission configurations |
+| `permission:write` | `add_permission`, `update_permission`, `delete_permission` | Create, modify, and delete permissions |
+
+### Provider scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `provider:read` | `get_providers`, `get_provider` | View OAuth, SMS, email, and other provider configurations |
+| `provider:write` | `add_provider`, `update_provider`, `delete_provider` | Create, modify, and delete provider integrations |
+
+### Token scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `token:read` | `get_tokens`, `get_token` | View access tokens and their metadata |
+| `token:write` | `delete_token` | Delete access tokens |
+
+### Alias scopes
+
+Three aliases stand for groups of scopes:
+
+| Alias | Stands for |
+|---|---|
+| `read` | Every `:read` scope |
+| `write` | Every `:write` scope |
+| `admin` | Every `:read` and `:write` scope |
+
+## Request a token with scopes {#creating-scoped-tokens}
+
+Name the scopes in the token request. For a token that can read applications but can't change them:
+
+```bash
+curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
+  -d "grant_type=client_credentials" \
+  -d "client_id=YOUR_CLIENT_ID" \
+  -d "client_secret=YOUR_CLIENT_SECRET" \
+  -d "scope=application:read"
+```
+
+For a token that can also create and change applications:
+
+```bash
+curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
+  -d "grant_type=client_credentials" \
+  -d "client_id=YOUR_CLIENT_ID" \
+  -d "client_secret=YOUR_CLIENT_SECRET" \
+  -d "scope=application:write"
+```
+
+Separate several scopes with spaces: `scope=application:read application:write`. In a URL, encode the space as `%20`.
+
+## Missing scopes {#scope-validation-errors}
+
+When a token calls a tool without the required scope, Casdoor returns the error `insufficient_scope`:
 
 ```json
 {
@@ -40,101 +129,19 @@ When you try to use a tool without the required scope, the server responds with 
 }
 ```
 
-This error tells you exactly which scope you need to request a new token with the appropriate permissions. The `granted_scopes` field shows what your current token has, and `required_scope` indicates what's needed for the operation.
+`required_scope` is the scope that the tool needs, and `granted_scopes` are the scopes of your token. Request a new token that includes the required scope.
 
-## Creating Scoped Tokens
+## Define scopes for your own MCP server {#custom-scopes-for-third-party-mcp-servers}
 
-When obtaining an OAuth token for MCP access, specify the scopes in your authorization request. For example, to get a token that can only read applications but not modify them:
+When Casdoor is the OAuth 2.0 provider of an MCP server that you build, define scopes that match the capabilities of your server.
 
-```bash
-curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
-  -d "grant_type=client_credentials" \
-  -d "client_id=YOUR_CLIENT_ID" \
-  -d "client_secret=YOUR_CLIENT_SECRET" \
-  -d "scope=application:read"
-```
+1. In the Casdoor admin console, open the edit page of the application and set **Category** to `Agent`.
+1. Add your scopes to the application, each with a name, a display name, and a description. See [Custom scopes](/docs/application/scopes).
+1. In your MCP server, read the granted scopes from the `scope` claim of the access token and check them before you run a tool.
 
-For automation that needs to create and update applications, request the write scope:
+The scopes appear in the discovery document of the application and on the consent screen.
 
-```bash
-curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
-  -d "grant_type=client_credentials" \
-  -d "client_id=YOUR_CLIENT_ID" \
-  -d "client_secret=YOUR_CLIENT_SECRET" \
-  -d "scope=application:write"
-```
-
-You can request multiple scopes by separating them with spaces: `scope=application:read application:write` (or `scope=application:read%20application:write` when URL-encoded). The token will then have access to all tools covered by those scopes.
-
-Some operations have additional requirements beyond scope authorization. Creating applications checks against your organization's application quota. IP whitelist validation runs for applications with restricted access. Demo mode applies additional constraints to prevent modifications to the demonstration instance.
-
-## Complete Scope Reference
-
-Casdoor's built-in MCP server supports scopes across multiple resource types. Each scope follows the `resource:action` pattern, where `resource` identifies the entity type and `action` specifies the operation level.
-
-### Application Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `application:read` | `get_applications`, `get_application` | View application configurations and settings |
-| `application:write` | `add_application`, `update_application`, `delete_application` | Create, modify, and delete applications |
-
-### User Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `user:read` | `get_users`, `get_user` | View user profiles and information |
-| `user:write` | `add_user`, `update_user`, `delete_user` | Create, modify, and delete user accounts |
-
-### Organization Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `organization:read` | `get_organizations`, `get_organization` | View organization details and settings |
-| `organization:write` | `add_organization`, `update_organization`, `delete_organization` | Create, modify, and delete organizations |
-
-### Role Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `role:read` | `get_roles`, `get_role` | View role definitions and assignments |
-| `role:write` | `add_role`, `update_role`, `delete_role` | Create, modify, and delete roles |
-
-### Permission Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `permission:read` | `get_permissions`, `get_permission` | View permission configurations |
-| `permission:write` | `add_permission`, `update_permission`, `delete_permission` | Create, modify, and delete permissions |
-
-### Provider Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `provider:read` | `get_providers`, `get_provider` | View OAuth, SMS, email, and other provider configurations |
-| `provider:write` | `add_provider`, `update_provider`, `delete_provider` | Create, modify, and delete provider integrations |
-
-### Token Scopes
-
-| Scope | Mapped Tools | Description |
-|-------|-------------|-------------|
-| `token:read` | `get_tokens`, `get_token` | View access tokens and their metadata |
-| `token:write` | `delete_token` | Delete access tokens |
-
-## Custom Scopes for Third-Party MCP Servers
-
-When building your own MCP server with Casdoor as the OAuth provider, you can define custom scopes to match your server's capabilities. This allows fine-grained authorization beyond the built-in Casdoor scopes.
-
-To configure custom scopes:
-
-1. Set your application's **Category** to "Agent" in the Casdoor admin panel
-2. Add custom scopes in the application configuration with Name, Display Name, and Description
-3. Your MCP server validates these scopes from the access token's `scope` claim
-4. The scopes appear in the OIDC discovery endpoint and consent screen
-
-See [Custom scopes](/docs/application/scopes) for configuration.
-
-**Example custom scopes for a file management MCP server:**
+For example, a file management server could define:
 
 | Name | Display Name | Description |
 |------|--------------|-------------|
@@ -142,34 +149,37 @@ See [Custom scopes](/docs/application/scopes) for configuration.
 | `files:write` | Write Files | Create, modify, and delete files |
 | `metadata:read` | Read Metadata | View file metadata and properties |
 
-## Consent Screen Configuration
+## Consent screen {#consent-screen-configuration}
 
-When users authorize an MCP client, Casdoor displays a consent screen showing the requested scopes. The consent screen uses the **Display Name** and **Description** fields you configure for each scope.
+When a user authorizes an MCP client, Casdoor asks for consent if both of the following conditions hold:
 
-To control when the consent screen appears:
+- The application defines custom scopes.
+- The client requests at least one of them, and the user hasn't granted it to the application before.
 
-1. Navigate to your application configuration in Casdoor
-2. Set the **Consent Policy** field:
-   - **Always**: Show consent screen on every authorization request
-   - **Once**: Show consent screen only on first authorization
-   - **Never**: Skip consent screen (not recommended for third-party clients)
+The consent screen lists the requested scopes with their display names and descriptions. After the user clicks **Allow**, Casdoor remembers the grant and doesn't ask again for the same scopes. Users and administrators can see and revoke grants on the **Consents** page.
 
-The consent screen lists all requested scopes with their display names and descriptions, allowing users to understand what permissions they're granting before approving the request.
+Casdoor doesn't show a consent screen for applications without custom scopes.
 
-## Fine-Grained Authorization with Casbin
+## Add fine-grained rules with Casbin {#fine-grained-authorization-with-casbin}
 
-For authorization requirements beyond simple scopes, Casdoor integrates with Casbin to provide fine-grained access control. Casbin policies can enforce complex rules based on:
+Scopes answer the question of which tools a client may call. For rules that depend on the user or the object, use the [permissions](/docs/permission/overview) of Casdoor, which are built on Casbin. A Casbin policy can decide by:
 
-- User attributes (organization, role, department)
-- Resource properties (owner, sensitivity level)
-- Environmental factors (time, location, IP address)
-- Relationships (user is owner, user is team member)
+- Attributes of the user, such as the organization, the role, or the department
+- Properties of the object, such as its owner
+- The environment, such as the time or the IP address
+- Relationships, such as "the user owns the object"
 
 To use Casbin with your MCP server:
 
-1. Define a Casbin model in Casdoor that describes your authorization rules
-2. Create a permission resource linking your application to the Casbin model
-3. Configure policies that map users, roles, and scopes to specific actions
-4. Your MCP server enforces these policies by checking permissions after validating scopes
+1. Define a Casbin model in Casdoor that describes your rules.
+1. Create a permission that connects your application to the model.
+1. Add policies that map users and roles to actions.
+1. In your MCP server, check the permission after you have checked the scope.
 
-Casbin authorization runs in addition to scope validation. A request must pass both scope checking and Casbin policy enforcement to succeed. See [Permissions](/docs/permission/overview) for Casbin integration.
+A request must pass both checks.
+
+## See also
+
+- [MCP tools reference](/docs/how-to-connect/mcp/tools)
+- [Custom scopes](/docs/application/scopes)
+- [Permissions](/docs/permission/overview)

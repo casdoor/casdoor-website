@@ -1,138 +1,165 @@
 ---
-title: Data initialization
-description: Initialize, migrate or declaratively manage Casdoor data with a JSON or YAML file.
+title: Initialize and manage data with a file
+sidebar_label: Data initialization
+description: Load organizations, applications, users, and other objects into Casdoor from a JSON or YAML file, keep them in sync with the file, and export them.
 keywords: [data initialization, deployment, import, export, declarative configuration, configuration as code, GitOps]
 authors: [leo220yuyaodog]
 ---
 
-When shipping Casdoor as part of a larger product, preload organizations, applications, users, and other data so users get a working setup without manual configuration. Data initialization uses a JSON or YAML file that you provide or generate.
+This guide explains how to load data into Casdoor from a JSON or YAML file, how to let Casdoor keep its objects in sync with that file, and how to export the data of a running instance.
 
-The same file can also be the source of truth for the configuration: Casdoor can watch it and apply every change without a restart, see [Configuration as code](#configuration-as-code).
+---
 
-This page describes how to **import** and **export** configuration data.
+#### Learning outcomes
 
-## Import
+- Load organizations, applications, users, and other objects when Casdoor starts.
+- Keep Casdoor objects in a file in Git and apply changes without a restart.
+- Export the data of an instance and load it into another instance.
 
-By default, Casdoor looks for `init_data.json` in the project root at startup and loads it if present. To use a different path, set `initDataFile` in `conf/app.conf`:
+#### What you need
 
-```ini
-initDataFile = /path/to/your/init_data.json
-```
+- A Casdoor instance and access to its `conf/app.conf` or its environment variables
+- For the Kubernetes sections: `kubectl` access to the cluster, or the [Helm chart](/docs/basic/try-with-helm)
 
-A template is available at [init_data.json.template](https://github.com/casdoor/casdoor/blob/master/init_data.json.template). Copy and rename it to `init_data.json` and customize as needed. A file ending in `.yaml` or `.yml` is read as YAML, with the same structure.
+---
 
-By default, every object of the file that already exists is deleted and re-created from the file at each startup, so changes made in the web UI to those objects are lost on restart. Two settings change that:
+## About the init data file
 
-- `initDataNewOnly = true`: only objects that don't exist yet are added, existing ones are left untouched.
-- `initDataMerge = true`: existing objects are updated with only the fields written in the file, see [Configuration as code](#configuration-as-code).
+When you ship Casdoor as part of a larger product, you can preload organizations, applications, users, and other objects, so that the product works without manual setup. Casdoor reads these objects from one file, the init data file.
 
-### Docker
+The file serves two purposes:
 
-Mount the file into the container with a volume:
+- **Initialization**: Casdoor loads the file once, when it starts.
+- **Configuration as code**: Casdoor watches the file and applies every change while it runs. See [Manage configuration as code](/docs/deployment/data-initialization#configuration-as-code).
+
+A template is available at [`init_data.json.template`](https://github.com/casdoor/casdoor/blob/master/init_data.json.template). A file that ends in `.yaml` or `.yml` is read as YAML with the same structure.
+
+## Load data at startup {#import}
+
+1. Copy [`init_data.json.template`](https://github.com/casdoor/casdoor/blob/master/init_data.json.template) to `init_data.json` in the directory that Casdoor runs in, and edit it.
+
+   To keep the file somewhere else, set `initDataFile` in `conf/app.conf`:
+
+   ```ini
+   initDataFile = /path/to/your/init_data.json
+   ```
+
+1. Choose what happens to objects that already exist. Set at most one of the following options in `conf/app.conf`:
+
+   | Option | Objects that already exist |
+   |---|---|
+   | Neither option (default) | Deleted and created again from the file at every start. Changes made in the admin console are lost on restart |
+   | `initDataNewOnly = true` | Left as they are. Casdoor only adds objects that don't exist yet |
+   | `initDataMerge = true` | Updated with only the fields that the file contains. See [Manage configuration as code](/docs/deployment/data-initialization#configuration-as-code) |
+
+1. Start Casdoor.
+
+### Load the file in Docker
+
+Mount the file into the container:
 
 ```bash
 docker run ... -v /path/to/init_data.json:/init_data.json
 ```
 
-### Kubernetes
+### Load the file in Kubernetes
 
-With the [Helm chart](/docs/basic/try-with-helm), put the objects under `initData.data` in your values file and set `initData.enabled: true`, see [Configuration as code](#configuration-as-code).
+With the [Helm chart](/docs/basic/try-with-helm), put the objects under `initData.data` in your values file and set `initData.enabled: true`. See [Manage configuration as code](/docs/deployment/data-initialization#configuration-as-code).
 
-Without the chart, store the file in a Secret (it usually holds passwords and client secrets) or a ConfigMap and mount it into the Casdoor pod:
+Without the chart:
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: casdoor-init-data
-stringData:
-  init_data.yaml: |
-    organizations:
-      - owner: admin
-        name: acme
-        displayName: Acme
-```
+1. Store the file in a Secret, because it usually holds passwords and client secrets. A ConfigMap also works.
 
-Mount it as a directory and point `initDataFile` to the file in it:
+   ```yaml
+   apiVersion: v1
+   kind: Secret
+   metadata:
+     name: casdoor-init-data
+   stringData:
+     init_data.yaml: |
+       organizations:
+         - owner: admin
+           name: acme
+           displayName: Acme
+   ```
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-...
-spec:
-  template:
-    ...
-    spec:
-      containers:
-      ...
-        env:
-        - name: initDataFile
-          value: /init-data/init_data.yaml
-        - name: initDataMerge
-          value: "true"
-        - name: initDataWatchInterval
-          value: "30"
-        volumeMounts:
-        - mountPath: /init-data
-          name: casdoor-init-data-volume
-          readOnly: true
-      volumes:
-      - secret:
-          secretName: casdoor-init-data
-        name: casdoor-init-data-volume
-```
+1. Mount the Secret as a directory and point `initDataFile` to the file in it:
 
-Don't mount the file with `subPath`: Kubernetes doesn't update a `subPath` mount when the Secret or ConfigMap changes, so Casdoor would never see the new content.
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   ...
+   spec:
+     template:
+       ...
+       spec:
+         containers:
+         ...
+           env:
+           - name: initDataFile
+             value: /init-data/init_data.yaml
+           - name: initDataMerge
+             value: "true"
+           - name: initDataWatchInterval
+             value: "30"
+           volumeMounts:
+           - mountPath: /init-data
+             name: casdoor-init-data-volume
+             readOnly: true
+         volumes:
+         - secret:
+             secretName: casdoor-init-data
+           name: casdoor-init-data-volume
+   ```
 
-## Configuration as code
+:::caution
+Don't mount the file with `subPath`. Kubernetes doesn't update a `subPath` mount when the Secret or ConfigMap changes, so Casdoor never sees the new content.
+:::
 
-To keep organizations, applications, users, providers, roles and permissions in Git and roll changes out like any other configuration, similar to authentik blueprints, let Casdoor apply the file continuously:
+## Manage configuration as code {#configuration-as-code}
 
-```ini
-initDataFile = ./init_data.yaml
-initDataMerge = true
-initDataWatchInterval = 30
-```
+To keep organizations, applications, users, providers, roles, and permissions in Git and roll out changes like any other configuration, let Casdoor apply the file continuously.
 
-The settings can also be passed as environment variables of the same names.
+1. Set the following options in `conf/app.conf`, or pass them as environment variables with the same names:
 
-- **Merge**: an object that already exists is updated with only the fields written in the file. Its other fields keep their current values, so the file can manage a few settings of an object (e.g. the redirect URIs of an application) while the rest is edited in the web UI.
-- **Watch**: Casdoor checks the file every `initDataWatchInterval` seconds and applies it again when its content changed, without a restart.
-- A user's `password` is only used when the user is created, so users can change their own passwords afterwards. Organization secrets such as `masterPassword` are written on every apply when they are in the file.
-- Objects removed from the file are not deleted from Casdoor.
-- `records` and `sessions` are skipped in merge mode, they are runtime data.
-- If an object fails to apply, the error is logged once and Casdoor keeps running with the objects applied up to that point; the file is retried on every check until it applies.
+   ```ini
+   initDataFile = ./init_data.yaml
+   initDataMerge = true
+   initDataWatchInterval = 30
+   ```
 
-Example `init_data.yaml`:
+1. Write the objects in the file. For example, `init_data.yaml`:
 
-```yaml
-organizations:
-  - owner: admin
-    name: acme
-    displayName: Acme
-    passwordType: bcrypt
-applications:
-  - owner: admin
-    name: app-acme
-    organization: acme
-    displayName: Acme Portal
-    redirectUris:
-      - https://portal.acme.example.com/callback
-users:
-  - owner: acme
-    name: alice
-    displayName: Alice
-    password: change-me
-    signupApplication: app-acme
-roles:
-  - owner: acme
-    name: admins
-    displayName: Admins
-    users: [acme/alice]
-    isEnabled: true
-```
+   ```yaml
+   organizations:
+     - owner: admin
+       name: acme
+       displayName: Acme
+       passwordType: bcrypt
+   applications:
+     - owner: admin
+       name: app-acme
+       organization: acme
+       displayName: Acme Portal
+       redirectUris:
+         - https://portal.acme.example.com/callback
+   users:
+     - owner: acme
+       name: alice
+       displayName: Alice
+       password: change-me
+       signupApplication: app-acme
+   roles:
+     - owner: acme
+       name: admins
+       displayName: Admins
+       users: [acme/alice]
+       isEnabled: true
+   ```
 
-With the Helm chart, the same objects go under `initData.data`; the chart stores them in a Secret and enables merge and watch by default:
+1. Start Casdoor. From now on, Casdoor applies the file again whenever its content changes.
+
+With the Helm chart, put the same objects under `initData.data`. The chart stores them in a Secret and turns on merge and watch by default:
 
 ```yaml
 initData:
@@ -144,17 +171,30 @@ initData:
         displayName: Acme
 ```
 
-A `helm upgrade` that changes `initData.data` is applied by the running pods within `initData.watchInterval` seconds plus the time kubelet takes to update the mounted Secret (about a minute).
+The running pods apply a `helm upgrade` that changes `initData.data` within `initData.watchInterval` seconds, plus the time that the kubelet needs to update the mounted Secret, which is about a minute.
 
-If you prefer `terraform plan`, import of existing objects and drift detection, the [Terraform provider](/docs/deployment/terraform) manages the same objects through the API.
+### How Casdoor applies the file
 
-## Export
+| Behavior | Description |
+|---|---|
+| Merge | Casdoor updates an existing object with only the fields that the file contains. The other fields keep their values. The file can therefore manage a few settings of an object, such as the redirect URLs of an application, while you edit the rest in the admin console |
+| Watch | Casdoor checks the file every `initDataWatchInterval` seconds and applies it again when the content has changed, without a restart |
+| Passwords | Casdoor uses the `password` of a user only when it creates the user, so users can change their passwords afterward. Casdoor writes organization secrets, such as `masterPassword`, on every apply when the file contains them |
+| Removed objects | Casdoor doesn't delete objects that you remove from the file |
+| Runtime data | Casdoor skips `records` and `sessions` in merge mode |
+| Errors | If an object fails to apply, Casdoor logs the error once and keeps running with the objects that it applied up to that point. It retries the file on every check until the file applies |
 
-Export all Casdoor config data to a JSON file for backup or migration.
+:::tip
+If you prefer `terraform plan`, import of existing objects, and drift detection, use the [Terraform provider](/docs/deployment/terraform). It manages the same objects through the API.
+:::
 
-### Using the binary (recommended)
+## Export data {#export}
 
-Run Casdoor with the `-export` flag to dump the database to JSON:
+Export all data of a Casdoor instance to a JSON file for a backup or a migration.
+
+### Export with the binary
+
+Run Casdoor with the `-export` flag. This is the recommended way. It works with the binary, in Docker, and in Kubernetes, and it doesn't need the Go toolchain.
 
 ```bash
 # Export to default location (init_data_dump.json)
@@ -164,25 +204,27 @@ Run Casdoor with the `-export` flag to dump the database to JSON:
 ./casdoor -export -exportPath /path/to/backup.json
 ```
 
-Export runs after DB init and then the process exits. It works with binary, Docker, or Kubernetes and does not require the Go toolchain.
+Casdoor initializes the database connection, writes the file, and exits.
 
-### Using Go test (from source)
+### Export from source
 
-From the Casdoor source tree:
+In the Casdoor source tree, run:
 
 ```bash
 go test ./object -v -run TestDumpToFile
 ```
 
-This creates `init_data_dump.json` in that directory.
+The command creates `init_data_dump.json` in the `object` directory.
 
-### Migrating to another instance
+### Load the export into another instance
 
-Rename `init_data_dump.json` to `init_data.json`, put it in the root of the target Casdoor instance, and start Casdoor; the data will be loaded automatically.
+1. Rename `init_data_dump.json` to `init_data.json`.
+1. Put the file in the directory that the target Casdoor instance runs in.
+1. Start the target instance. It loads the data at startup.
 
 ## Supported objects
 
-The following object types can be included in the init file:
+The init data file can contain the following objects:
 
 | Object        | Go Struct                                                                                                                     | Documentation                                                     |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
@@ -212,4 +254,10 @@ The following object types can be included in the init file:
 | subscriptions | [struct](https://github.com/casdoor/casdoor/blob/f9ee8a68cb36ef39a551ee49907c239b9d71840c/object/subscription.go#L39)         | [doc](https://casdoor.org/zh/docs/pricing/subscription)           |
 | transactions  | [struct](https://github.com/casdoor/casdoor/blob/f9ee8a68cb36ef39a551ee49907c239b9d71840c/object/transaction.go#L24)          |                                                                   |
 
-For the exact JSON shape, call the REST API or inspect `GetXXX` responses in the browser; they match the structure expected in `init_data.json`.
+The JSON shape of each object is the shape that the REST API returns. To see an example, call the corresponding `get-` endpoint or inspect the responses in the browser while you use the admin console.
+
+## See also
+
+- [Configuration reference](/docs/basic/configuration)
+- [Terraform provider](/docs/deployment/terraform)
+- [Run Casdoor on Kubernetes with Helm](/docs/basic/try-with-helm)

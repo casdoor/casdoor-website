@@ -1,108 +1,124 @@
 ---
-title: Next.js
-description: Integrate Casdoor in a Next.js app with middleware and the JS SDK.
+title: Sign users in to a Next.js application
+sidebar_label: Next.js
+description: Add Casdoor sign-in to a Next.js application with casdoor-js-sdk, and protect routes with Next.js middleware.
 keywords: [nextjs, SDK, middleware]
 authors: [SamYSF]
 ---
 
-The [nextjs-auth](https://github.com/casdoor/nextjs-auth) repo demonstrates Casdoor integration in Next.js. Steps below.
+This guide explains how to add Casdoor sign-in to a Next.js application and how to keep signed-out users away from protected routes.
 
-## Step 1: Deploy Casdoor
+---
 
-Deploy Casdoor in [production mode](/docs/basic/server-installation). Confirm the login page works (e.g. at `http://localhost:8000` with `admin` / `123` in dev).
+#### Learning outcomes
 
-## Step 2: Add middleware
+- Initialize casdoor-js-sdk in a Next.js application.
+- Send users to the Casdoor sign-in page and handle the callback.
+- Protect routes with Next.js middleware.
 
-Put `middleware.ts` (or `.js`) at the project root (same level as `pages` or `app`, or inside `src`). Middleware runs before the request completes and can redirect or modify the response.
+#### What you need
 
-Example:
+- A running Casdoor instance. See [Install the Casdoor server](/docs/basic/server-installation).
+- An [application](/docs/application/overview) in Casdoor
+- A Next.js application
 
-```js
-const protectedRoutes = ["/profile"];
+#### Sample code
 
-export default function middleware(req) {
-  if (protectedRoutes.includes(req.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-}
-```
+- [nextjs-auth](https://github.com/casdoor/nextjs-auth)
 
-See [Next.js middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
+---
 
-## Step 3: Use Casdoor SDK
+## Configure the SDK
 
-### Install
+1. Install casdoor-js-sdk:
 
-```shell
-npm install casdoor-js-sdk
-# or: yarn add casdoor-js-sdk
-```
+   ```shell
+   npm install casdoor-js-sdk
+   # or: yarn add casdoor-js-sdk
+   ```
 
-### Initialize
+1. Define the configuration of the SDK. All settings are strings and all are required.
 
-Provide these six string parameters:
+   | Parameter | Required | Description |
+   |-----------|----------|-------------|
+   | **serverUrl** | Yes | Casdoor server URL (e.g. `http://localhost:8000`). |
+   | **clientId** | Yes | Application client ID. |
+   | **clientSecret** | Yes | Application client secret. |
+   | **organizationName** | Yes | Organization name. |
+   | **appName** | Yes | Application name. |
+   | **redirectPath** | Yes | Callback path (e.g. `/callback`). |
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| **serverUrl** | Yes | Casdoor server URL (e.g. `http://localhost:8000`). |
-| **clientId** | Yes | Application client ID. |
-| **clientSecret** | Yes | Application client secret. |
-| **organizationName** | Yes | Organization name. |
-| **appName** | Yes | Application name. |
-| **redirectPath** | Yes | Callback path (e.g. `/callback`). |
+   ```js
+   const sdkConfig = {
+     serverUrl: "https://door.casdoor.com",
+     clientId: "294b09fbc17f95daf2fe",
+     clientSecret: "dd8982f7046ccba1bbd7851d5c1ece4e52bf039d",
+     organizationName: "casbin",
+     appName: "app-vue-python-example",
+     redirectPath: "/callback",
+   };
+   ```
 
-Example:
+   Replace `serverUrl`, `clientId`, and `clientSecret` with the values of your own Casdoor instance and application.
 
-```js
-const sdkConfig = {
-  serverUrl: "https://door.casdoor.com",
-  clientId: "294b09fbc17f95daf2fe",
-  clientSecret: "dd8982f7046ccba1bbd7851d5c1ece4e52bf039d",
-  organizationName: "casbin",
-  appName: "app-vue-python-example",
-  redirectPath: "/callback",
-};
-```
+1. In the Casdoor admin console, add the callback URL of your application, for example `http://localhost:8080/callback`, to the **Redirect URLs** of the application.
 
-:::caution
-Replace with your own Casdoor instance: `serverUrl`, `clientId`, and `clientSecret`.
-:::
+## Sign the user in
 
-Add the callback URL (e.g. `http://localhost:8080/callback`) in the application’s Redirect URLs.
+1. Send the user to the Casdoor sign-in page:
 
-### Redirect to sign-in and handle callback
+   ```js
+   const CasdoorSDK = new Sdk(sdkConfig);
+   CasdoorSDK.signin_redirect();
+   ```
 
-```js
-const CasdoorSDK = new Sdk(sdkConfig);
-CasdoorSDK.signin_redirect();
-```
+1. After the user signs in, Casdoor redirects to `redirectPath` with an authorization code. On that page, exchange the code for an access token, read the user, and store the user in a cookie:
 
-After sign-in, Casdoor redirects back with a code. Exchange for a token and optionally store the user in a cookie:
+   ```js
+   CasdoorSDK.exchangeForAccessToken()
+     .then((res) => {
+       if (res && res.access_token) {
+         return CasdoorSDK.getUserInfo(res.access_token);
+       }
+     })
+     .then((res) => {
+       Cookies.set("casdoorUser", JSON.stringify(res));
+     });
+   ```
 
-```js
-CasdoorSDK.exchangeForAccessToken()
-  .then((res) => {
-    if (res && res.access_token) {
-      return CasdoorSDK.getUserInfo(res.access_token);
-    }
-  })
-  .then((res) => {
-    Cookies.set("casdoorUser", JSON.stringify(res));
-  });
-```
+For the other functions of the SDK, see [Sign users in with a Casdoor SDK](/docs/how-to-connect/sdk).
 
-See [How to use Casdoor SDK](/docs/how-to-connect/sdk).
+## Protect routes with middleware
 
-## Step 4: Protect routes in middleware
+[Next.js middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware) runs before a request completes and can redirect it.
 
-In middleware, treat the presence of the Casdoor user cookie as authenticated and redirect unauthenticated users away from protected routes:
+1. Create `middleware.ts` or `middleware.js` at the root of the project: at the same level as `pages` or `app`, or inside `src`.
+1. List the protected routes and check each request against the list:
 
-```js
-const protectedRoutes = ["/profile"];
-const casdoorUserCookie = req.cookies.get("casdoorUser");
-const isAuthenticated = !!casdoorUserCookie;
+   ```js
+   const protectedRoutes = ["/profile"];
 
-if (!isAuthenticated && protectedRoutes.includes(req.nextUrl.pathname)) {
-  return NextResponse.redirect(new URL("/login", req.url));
-}
-```
+   export default function middleware(req) {
+     if (protectedRoutes.includes(req.nextUrl.pathname)) {
+       return NextResponse.redirect(new URL("/login", req.url));
+     }
+   }
+   ```
+
+1. Treat a request with the `casdoorUser` cookie as signed in, and redirect all other requests away from the protected routes:
+
+   ```js
+   const protectedRoutes = ["/profile"];
+   const casdoorUserCookie = req.cookies.get("casdoorUser");
+   const isAuthenticated = !!casdoorUserCookie;
+
+   if (!isAuthenticated && protectedRoutes.includes(req.nextUrl.pathname)) {
+     return NextResponse.redirect(new URL("/login", req.url));
+   }
+   ```
+
+## See also
+
+- [Sign users in to a Nuxt application](/docs/how-to-connect/nuxt)
+- [Sign users in with a Casdoor SDK](/docs/how-to-connect/sdk)
+- [OAuth 2.0](/docs/how-to-connect/oauth)

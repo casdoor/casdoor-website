@@ -1,11 +1,14 @@
 ---
-title: Overview
-description: Add OAuth providers so users can sign in with Google, GitHub, and other identity providers.
+title: OAuth providers
+sidebar_label: Overview
+description: Let users sign in to Casdoor with an account at an external identity provider, such as Google or GitHub, and learn how Casdoor links and maps these accounts.
 keywords: [OAuth, identity provider, sign-in]
 authors: [ErikQQY]
 ---
 
-Casdoor can use external OAuth applications as sign-in methods. After adding a provider, its icon appears on the login and sign-up pages. Supported OAuth providers:
+An OAuth provider lets users sign in to Casdoor with an account at an external identity provider, such as Google, GitHub, or WeChat. The icon of the provider appears on the sign-in and sign-up pages of the applications that use it.
+
+## Supported providers
 
 | Provider      | Logo                                                                           | Provider    | Logo                                                                       | Provider     | Logo                                                                      | Provider     | Logo                                                                        |
 |:--------------|:-------------------------------------------------------------------------------|:------------|:---------------------------------------------------------------------------|:-------------|:--------------------------------------------------------------------------|:-------------|:----------------------------------------------------------------------------|
@@ -30,34 +33,47 @@ Casdoor can use external OAuth applications as sign-in methods. After adding a p
 | Yandex        | <img src="https://cdn.casbin.org/img/social_yandex.png" width="40" />          | Zoom        | <img src="https://cdn.casbin.org/img/social_zoom.png" width="40" />        | Email        | <img src="https://cdn.casbin.org/img/social_mail.png" width="40" />       | SMS          | <img src="https://cdn.casbin.org/img/social_msg.png" width="40" />          |
 | Battle.net    | <img src="https://cdn.casbin.org/img/social_battlenet.png" width="40" />       |             |                                                                             |              |                                                                            |              |                                                                              |
 
-## Registering with a third-party OAuth service
+Each provider type has its own guide in this section. For a provider that isn't listed, use a [custom OAuth provider](/docs/provider/oauth/CustomProvider).
 
-You need a **redirect URL** (your app’s URL after login, e.g. `https://forum.casbin.com/`), **scopes** (what you request from the user), and **Client ID / Client Secret** from the provider. Keep the client secret private.
+## Add an OAuth provider
 
-## Adding an OAuth provider in Casdoor
+1. At the identity provider, register an OAuth application:
 
-1. Open **Providers** in the sidebar and click **Add**.
-2. Set **Category** to **OAuth** and choose the **Type** (e.g. Google, GitHub).
-3. Enter **Client ID** and **Client Secret** from the provider’s developer console.
+   - Set its callback URL, which the provider may call the redirect URI, to the callback URL of Casdoor: `https://<your-casdoor-host>/callback`.
+   - Choose the scopes, which determine the user data that Casdoor receives.
+   - Copy the client ID and the client secret. Keep the client secret private.
 
-## User field mapping
+   The callback URL at the provider is the URL of Casdoor, not the URL of your own application. See [Redirect URL and callback URL](/docs/application/config#how-the-flow-works).
 
-Use [User mapping](/docs/provider/oauth/user-mapping) to map OAuth claims (e.g. from Okta, Azure AD) to Casdoor user fields.
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and select the **Type**, such as `Google` or `GitHub`.
+1. Enter the **Client ID** and the **Client secret** from the identity provider.
+1. Save the provider.
 
-## Automatic account linking
+## Add the provider to an application {#attaching-the-provider-to-an-application}
 
-Casdoor can link OAuth logins to existing users by OAuth identity, email/phone (if enabled), or username (case-insensitive). That lets you add OAuth without manual linking.
+1. Open the edit page of the application and go to the **Providers** tab.
+1. Add the provider and choose whether users can sign up, sign in, and unlink with it. See [Add providers to an application](/docs/application/providers).
+1. Save the application.
 
-## Using the provider’s access token
+## How Casdoor links accounts {#automatic-account-linking}
 
-After OAuth sign-in, Casdoor stores the provider’s access token on the user. Your app can read it via `/api/get-account` and call the provider’s API (e.g. GitHub, Google Drive) on behalf of the user. Only the user and org admins can see the token. See [OAuth docs](/docs/how-to-connect/oauth#accessing-oauth-provider-tokens).
+When a user signs in with an OAuth provider, Casdoor looks for the Casdoor user to link the external account to. It matches by the identity at the provider, by email address or phone number if the **Binding rule** of the provider in the application allows it, and by username, without regard to case. You can therefore add an OAuth provider to an existing user base without linking accounts by hand.
 
-## Attaching the provider to an application
+## Map additional user fields {#user-field-mapping}
 
-1. Open **Applications**, edit the application.
-2. Add the provider and set its rules (e.g. enable for login, signup, unbind).
-3. Save.
+Casdoor reads the username, the email address, and the avatar from the provider. To fill in more fields, such as the phone number or the job title, map the claims of the provider to user fields. See [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping).
 
-## Routing through a proxy
+## Use the access token of the provider {#using-the-providers-access-token}
 
-Enable **Enable proxy** on the provider to route its outbound HTTP requests (the OAuth login API calls) through Casdoor's configured SOCKS5 proxy (`socks5Proxy` in `conf/app.conf`). This is useful when the provider is only reachable through a proxy. Some provider types always use the proxy regardless of this option.
+After an OAuth sign-in, Casdoor stores the access token of the provider on the user. Your application can read it from `/api/get-account` and call the API of the provider, such as the GitHub API or the Google Drive API, on behalf of the user. Only the user and the administrators of the organization can see the token. See [Get the access token of an external provider](/docs/how-to-connect/oauth#accessing-oauth-provider-tokens).
+
+## Route requests through a proxy {#routing-through-a-proxy}
+
+If the identity provider is reachable only through a proxy, turn on **Enable proxy** on the provider. Casdoor then sends the requests of the sign-in flow through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets. Some provider types always use the proxy, whatever this setting.
+
+## See also
+
+- [Providers](/docs/provider/overview)
+- [Add providers to an application](/docs/application/providers)
+- [SAML providers](/docs/provider/saml/overview)

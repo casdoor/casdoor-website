@@ -1,36 +1,65 @@
 ---
-title: Alibaba Cloud SMS
-description: Use Alibaba Cloud as an SMS provider for verification codes.
+title: Send SMS with Alibaba Cloud
+sidebar_label: Alibaba Cloud
+description: Use the SMS service of Alibaba Cloud as the SMS provider of Casdoor.
 keywords: [Alibaba Cloud, SMS, provider]
 authors: [UsherFall]
 ---
 
-Create a **SMS** provider in Casdoor and set **Type** to **Alibaba Cloud**. Map fields as follows:
+This guide explains how to send the verification codes of Casdoor by SMS through the SMS service of Alibaba Cloud.
 
-| Casdoor field   | Alibaba Cloud   | Required |
-|-----------------|-----------------|----------|
-| Client ID       | AccessKey ID    | Yes      |
-| Client secret   | AccessKey Secret| Yes      |
-| Sign Name       | Signature       | Yes      |
-| Template code   | Template code   | Yes      |
+---
 
-## Get credentials in Alibaba Cloud
+#### Learning outcomes
 
-- **AccessKey ID / AccessKey Secret** — In the [Alibaba Cloud console](https://ram.console.aliyun.com/manage/ak), create or copy an AccessKey.
+- Get an AccessKey, a signature, and a template code from Alibaba Cloud.
+- Add Alibaba Cloud as an SMS provider in Casdoor and test it.
 
-![Alibaba Cloud workbench](/img/providers/sms/aliyunsms.png)
-![AccessKey](/img/providers/sms/accesskey.png)
+#### What you need
 
-- **Signature** — Configure in the SMS service console.
+- An Alibaba Cloud account with the SMS service
+- Administrator access to the Casdoor admin console
 
-![Alibaba Signature](/img/providers/sms/alibabaSign.png)
+---
 
-- **Template code** — Create or select an SMS template and use its code.
+## Get the credentials
 
-![Alibaba Template Code](/img/providers/sms/alibabaCode.png)
+1. In the [Alibaba Cloud console](https://ram.console.aliyun.com/manage/ak), create or copy an AccessKey ID and AccessKey Secret.
 
-## Configure and test in Casdoor
+   ![SMS service in the Alibaba Cloud console](/img/providers/sms/aliyunsms.png)
 
-Fill in the provider fields and use **SMS Test** with a phone number to verify.
+   ![AccessKey of Alibaba Cloud](/img/providers/sms/accesskey.png)
 
-![Alibaba Provider Configuration](/img/providers/sms/alibabaProvider.png)
+1. In the console of the SMS service, configure a signature.
+
+   ![Signature in the SMS console](/img/providers/sms/alibabaSign.png)
+
+1. Create or select an SMS template and copy its code.
+
+   ![Template code in the SMS console](/img/providers/sms/alibabaCode.png)
+
+## Add the provider in Casdoor
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `SMS` and **Type** to `Aliyun SMS`.
+1. Fill in the fields:
+
+   | Casdoor field   | Alibaba Cloud   | Required |
+   |-----------------|-----------------|----------|
+   | Client ID       | AccessKey ID    | Yes      |
+   | Client secret   | AccessKey Secret| Yes      |
+   | Sign Name       | Signature       | Yes      |
+   | Template code   | Template code   | Yes      |
+
+   ![Alibaba Cloud SMS provider in Casdoor](/img/providers/sms/alibabaProvider.png)
+
+1. Save the provider.
+
+## Verify the result
+
+Enter a phone number in **SMS Test** and send a test message.
+
+## See also
+
+- [SMS providers](/docs/provider/sms/overview)
+- [Send SMS with Alibaba Cloud PNVS](/docs/provider/sms/pnvs)

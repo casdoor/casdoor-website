@@ -1,11 +1,18 @@
 ---
-title: Tutorials
-description: Third-party product docs and articles that use Casdoor for SSO or auth.
+title: Tutorials from the community
+sidebar_label: Tutorials
+description: Documentation of other products and articles by the community that show how to use Casdoor for single sign-on.
 keywords: [tutorial, integration, SSO, OAuth]
 authors: [nomeguy]
 ---
 
+This page lists documentation and articles outside this site that show how to sign users in with Casdoor. The Casdoor team doesn't maintain them, so check the date of an article against the Casdoor version that you run.
+
+For guides that the Casdoor team maintains, see [Integrations](/docs/category/integrations).
+
 ## Product documentation
+
+These products document Casdoor as a single sign-on (SSO) option in their own documentation.
 
 | Product | Stack | Documentation |
 |--------|--------|----------------|
@@ -24,3 +31,8 @@ authors: [nomeguy]
 | [Casnode (JavaScript + React + Go + Beego)](https://casnode.org/) | Chinese  | [Use Lighthouse to set up a forum like V2ex](https://www.jianshu.com/p/e08ef8501a4d)                                                                                                                                                                                          |
 | [Cloudreve (Go)](https://github.com/cloudreve/Cloudreve)          | Chinese  | [Modify Cloudreve to support Casdoor](https://www.epis2048.net/2022/modify-cloudreve-to-support-casdoor/index.html)                                                                                                                                                           |
 | [KodExplorer (PHP)](https://github.com/kalcaddle/KodExplorer)     | Chinese  | [Modify KodExplorer to support Casdoor](https://www.epis2048.net/2022/modify-kodexplorer-to-support-casdoor/index.html)                                                                                                                                                       |
+
+## See also
+
+- [Connect an application to Casdoor](/docs/how-to-connect/overview)
+- [Casdoor SDKs](/docs/how-to-connect/sdk)

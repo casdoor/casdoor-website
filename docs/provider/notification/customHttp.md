@@ -1,35 +1,55 @@
 ---
-title: Custom HTTP notification
-description: Send notifications to an arbitrary HTTP endpoint.
+title: Send notifications to an HTTP endpoint
+sidebar_label: Custom HTTP
+description: Send the notifications of Casdoor to an HTTP endpoint of your own with a GET or POST request.
 keywords: [custom, notification, provider, HTTP]
 authors: [UsherFall]
 ---
 
-The **Custom HTTP** provider sends notification payloads to a URL you specify (GET or POST).
+This guide explains how to send the notifications of Casdoor to an HTTP endpoint of your own, for example a webhook of your application.
 
-## Configure the provider
+---
 
-**Providers** → **Add**. Set **Category** to **Notification**, **Type** to **Custom HTTP**. Fill in:
+#### Learning outcomes
 
-| Field           | Description |
-|-----------------|-------------|
-| Method          | `GET` or `POST` |
-| Parameter name  | Query (GET) or body (POST) parameter name for the message |
-| Content         | Message content or template |
-| Endpoint        | Full HTTP(S) URL to call |
-| Chat ID         | Optional identifier |
+- Configure a Custom HTTP notification provider.
+- Understand the request that Casdoor sends, including the recipient.
 
-![custom_http_provider](/img/providers/notification/custom_http_provider.png)
+#### What you need
 
-When you use **Send Notification Message**, Casdoor sends a request to **Endpoint** with the message in the chosen parameter. Example:
+- An HTTP endpoint that accepts `GET` or `POST` requests
+- Administrator access to the Casdoor admin console
 
-![custom_http_request](/img/providers/notification/custom_http_request.png)
+---
+
+## Add the provider {#configure-the-provider}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Notification` and **Type** to `Custom HTTP`.
+1. Fill in the fields:
+
+   | Field | Description |
+   |---|---|
+   | **Method** | `GET` or `POST` |
+   | **Parameter** | Name of the query parameter (`GET`) or form field (`POST`) that carries the message |
+   | **Content** | The message or a template for it |
+   | **Endpoint** | Complete HTTP or HTTPS URL that Casdoor calls |
+
+   ![Custom HTTP provider in Casdoor](/img/providers/notification/custom_http_provider.png)
+
+1. Save the provider.
+
+## Verify the result
+
+Click **Send Testing Notification**. Casdoor sends a request to the **Endpoint**, with the message in the parameter that **Parameter** names:
+
+![Request received by the endpoint](/img/providers/notification/custom_http_request.png)
 
 <video src="/video/provider/notification/use_custom_http_as_notification_provider.mp4" controls="controls" width="100%"></video>
 
-## Recipient forwarding
+## Forward the recipient {#recipient-forwarding}
 
-The `send-notification` API accepts an optional `recipient` field in its request body:
+The `send-notification` API accepts an optional `recipient` field in its body:
 
 ```json
 {
@@ -38,6 +58,11 @@ The `send-notification` API accepts an optional `recipient` field in its request
 }
 ```
 
-When a `recipient` is provided, the Custom HTTP provider forwards it to your **Endpoint** as an additional `recipient` request parameter — a query parameter for `GET`, or a form field for `POST` — alongside the message in your configured **Parameter name**. The `recipient` parameter is only sent when it is non-empty, so requests without a recipient are unchanged.
+When the request contains a `recipient`, the Custom HTTP provider sends it to the **Endpoint** as an additional `recipient` parameter, a query parameter for `GET` or a form field for `POST`, next to the message. Casdoor sends the parameter only when it isn't empty.
 
-Notification providers that do not support recipient-aware sending simply ignore the `recipient` value, so their behavior is unchanged.
+Notification providers that can't address a recipient ignore the field.
+
+## See also
+
+- [Notification providers](/docs/provider/notification/overview)
+- [Receive sign-out notifications](/docs/session/single-sign-out#logout-notifications)

@@ -1,21 +1,25 @@
 ---
 title: MCP error handling
-description: JSON-RPC error codes and responses from the MCP server.
+description: The JSON-RPC error codes of the Casdoor MCP server, with example responses.
 keywords: [MCP, errors, JSON-RPC, troubleshooting]
 authors: [hsluoyz]
 ---
 
+The Casdoor MCP server reports protocol errors as JSON-RPC 2.0 errors. This page lists the codes and shows example responses.
+
 ## Error codes
 
-The MCP server uses standard JSON-RPC 2.0 error codes:
+| Code | Name | Cause |
+|---|---|---|
+| `-32700` | Parse error | The request isn't valid JSON |
+| `-32600` | Invalid Request | A required field is missing |
+| `-32601` | Method not found | The method name is unknown |
+| `-32602` | Invalid params | The parameters are malformed |
+| `-32001` | Unauthorized or insufficient scope | The request has no valid credentials, or the token lacks the scope of the tool |
 
-- **-32700**: Parse error - Invalid JSON
-- **-32600**: Invalid Request - Missing required fields
-- **-32601**: Method not found - Unknown method name
-- **-32602**: Invalid params - Malformed parameters
-- **-32001**: Unauthorized or Insufficient scope
+## Example responses {#common-error-examples}
 
-The `-32001` error code covers both authentication failures and authorization issues. When you lack the required scope for a tool, the error includes details about what scope you need:
+Missing scope. The error names the scope that the tool requires and the scopes of the token:
 
 ```json
 {
@@ -33,9 +37,7 @@ The `-32001` error code covers both authentication failures and authorization is
 }
 ```
 
-## Common Error Examples
-
-Invalid JSON triggers a parse error:
+Invalid JSON:
 
 ```json
 {
@@ -49,7 +51,7 @@ Invalid JSON triggers a parse error:
 }
 ```
 
-Unknown methods return method not found:
+Unknown method:
 
 ```json
 {
@@ -63,16 +65,25 @@ Unknown methods return method not found:
 }
 ```
 
-## Additional Features
+Errors that happen while a tool runs aren't JSON-RPC errors. The tool returns a result with the `isError` flag. See [Result format](/docs/how-to-connect/mcp/tools#response-format).
 
-The MCP server implements the full JSON-RPC 2.0 specification including notifications (requests without an `id` field) and batch requests. The `ping` method provides a simple health check:
+## Other protocol features {#additional-features}
 
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 9,
-  "method": "ping"
-}
-```
+- **Notifications**: The server accepts requests without an `id` field and doesn't answer them.
+- **Batch requests**: The server accepts an array of requests.
+- **Health check**: The `ping` method returns an empty result:
 
-When running in demo mode, the server restricts write operations to protect the demonstration instance while allowing all read operations and authentication flows.
+  ```json
+  {
+    "jsonrpc": "2.0",
+    "id": 9,
+    "method": "ping"
+  }
+  ```
+
+- **Demo mode**: When Casdoor runs in demo mode, the server rejects write operations and allows read operations and authentication.
+
+## See also
+
+- [MCP troubleshooting](/docs/how-to-connect/mcp/troubleshooting)
+- [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization)

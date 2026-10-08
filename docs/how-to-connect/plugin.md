@@ -1,11 +1,11 @@
 ---
-title: Plugins and middlewares
-description: Official Casdoor plugins for Spring Boot, Quarkus, WordPress, Odoo, Django, Kibana, Chrome, and Terraform.
+title: Plugins and middleware
+description: Official Casdoor plugins and middleware for Spring Boot, Quarkus, WordPress, Odoo, Django, Kibana, Chrome, and Terraform.
 keywords: [plugin, middleware, Spring Boot, Quarkus, WordPress, Odoo, Django, Kibana, Terraform]
 authors: [hsluoyz]
 ---
 
-Casdoor provides plugins or middlewares for popular platforms. For CLI usage, see [Casdoor CLI](/docs/how-to-connect/cli).
+Casdoor maintains plugins and middleware that add Casdoor sign-in to common platforms. If your application runs on one of these platforms, a plugin is the fastest way to connect it.
 
 | Plugin | Language | Repository |
 |--------|----------|------------|
@@ -19,4 +19,10 @@ Casdoor provides plugins or middlewares for popular platforms. For CLI usage, se
 | Chrome extension | JavaScript | [casdoor-chrome-extension](https://github.com/casdoor/casdoor-chrome-extension) |
 | Terraform provider | Go | [terraform-provider-casdoor](https://github.com/casdoor/terraform-provider-casdoor), `casdoor/casdoor` on the [Terraform Registry](https://registry.terraform.io/providers/casdoor/casdoor), see [Terraform](/docs/deployment/terraform) |
 
-More official integrations: [Casdoor repositories](https://github.com/orgs/casdoor/repositories?q=sdk+in%3Areadme&type=all&language=&sort=).
+For more official integrations, see the [repositories of the casdoor organization](https://github.com/orgs/casdoor/repositories?q=sdk+in%3Areadme&type=all&language=&sort=).
+
+## See also
+
+- [Casdoor SDKs](/docs/how-to-connect/sdk)
+- [Casdoor CLI](/docs/how-to-connect/cli)
+- [Integrations](/docs/category/integrations)

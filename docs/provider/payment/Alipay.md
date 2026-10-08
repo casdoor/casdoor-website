@@ -1,74 +1,85 @@
 ---
-title: Alipay
-description: "Accept Alipay payments in Casdoor - prepare an Alipay Open Platform merchant app, configure keys and certificates, and add the provider."
+title: Take payments with Alipay
+sidebar_label: Alipay
+description: Use Alipay as the payment provider of your Casdoor products, with certificate-based signing.
 keywords: [Alipay, payment]
 authors: [Chinoholo0807]
 ---
 
-## Step 1. Preparation
+This guide explains how to let users pay for your Casdoor products with Alipay.
 
-You need a merchant account at [Alipay Open Platform](https://open.alipay.com/).
+---
 
-Before accessing the Alipay, there are some preparations that need to be done.
+#### Learning outcomes
 
-See [preparation before access](https://opendocs.alipay.com/open/270/01didh).
+- Get the APPID and the certificates of an Alipay merchant application.
+- Store the certificates in Casdoor.
+- Add Alipay as a payment provider and add it to a product.
 
-### 1.1 Get APPID
+#### What you need
 
-Login the Alipay Open Platform Console and [create an application](https://opendocs.alipay.com/open/200/105310).
+- A merchant account on the [Alipay Open Platform](https://open.alipay.com/). See [Preparation before access](https://opendocs.alipay.com/open/270/01didh).
+- A [product](/docs/products/product) in Casdoor whose currency is CNY
 
-How to get the `APPID` : [Alipay APPID Query Guide](https://opendocs.alipay.com/common/02nebp)
+---
 
-### 1.2 Configure Cert
+## Prepare Alipay {#step-1-preparation}
 
-Generate an RSA2 certificate per the [Alipay doc](https://opendocs.alipay.com/common/056zub?pathHash=91c49771) to obtain `appPrivateKey.txt` and `appPublicKey.txt`.
+1. [Create an application](https://opendocs.alipay.com/open/200/105310) in the console of the Alipay Open Platform and note its APPID. See [Find the APPID](https://opendocs.alipay.com/common/02nebp).
+1. Generate an RSA2 key pair as the [Alipay documentation](https://opendocs.alipay.com/common/056zub?pathHash=91c49771) describes. You get `appPrivateKey.txt` and `appPublicKey.txt`.
+1. Upload the certificate to the application and download three files: `alipayRootCert.crt`, `appCertPublicKey.crt`, and `alipayCertPublicKey.crt`.
 
-Upload the certificate to the application and download three files: `alipayRootCert.crt`, `appCertPublicKey.crt`, `alipayCertPublicKey.crt`.
+## Store the certificates in Casdoor {#12-configure-cert}
 
-Create a Cert named **App Cert** in Casdoor:
+1. On the **Certs** page of the Casdoor admin console, add a certificate named `App Cert`:
 
-| Casdoor        | Value |
-|----------------|--------|
-| Type           | Payment (x509) |
-| Certificate    | content of `appCertPublicKey.crt` |
-| Private key    | content of `appPrivateKey.txt` |
+   | Casdoor        | Value |
+   |----------------|--------|
+   | Type           | Payment (x509) |
+   | Certificate    | content of `appCertPublicKey.crt` |
+   | Private key    | content of `appPrivateKey.txt` |
 
-![alipay app cert](/img/providers/payment/alipay_app_cert.png)
+   ![App Cert in Casdoor](/img/providers/payment/alipay_app_cert.png)
 
-Create a Cert named **Root Cert** in Casdoor:
+1. Add a certificate named `Root Cert`:
 
-| Casdoor        | Value |
-|----------------|--------|
-| Type           | Payment (x509) |
-| Certificate    | content of `alipayCertPublicKey.crt` |
-| Private key    | content of `alipayRootCert.crt` |
+   | Casdoor        | Value |
+   |----------------|--------|
+   | Type           | Payment (x509) |
+   | Certificate    | content of `alipayCertPublicKey.crt` |
+   | Private key    | content of `alipayRootCert.crt` |
 
-![alipay root cert](/img/providers/payment/alipay_root_cert.png)
+   ![Root Cert in Casdoor](/img/providers/payment/alipay_root_cert.png)
 
-## Step 2.  Create an Alipay Payment provider
+## Add the provider in Casdoor {#step-2-create-an-alipay-payment-provider}
 
-Next, create an Alipay Payment provider in Casdoor by filling in the necessary information.
+1. Go to **Identity** > **Providers** and add a provider with the following values:
 
-| Casdoor   | Value |
-|-----------|--------|
-| Category  | Payment |
-| Type      | Alipay |
-| Client ID | APPID from step 1.1 |
-| Cert      | App Cert from step 1.2 |
-| Root Cert | Root Cert from step 1.2 |
+   | Casdoor   | Value |
+   |-----------|--------|
+   | Category  | Payment |
+   | Type      | Alipay |
+   | Client ID | APPID from step 1.1 |
+   | Cert      | App Cert from step 1.2 |
+   | Root Cert | Root Cert from step 1.2 |
 
-![alipay provider](/img/providers/payment/alipay_provider.png)
+   ![Alipay payment provider in Casdoor](/img/providers/payment/alipay_provider.png)
 
-## Step 3. Add the Alipay Pay Payment provider for your product
+1. Save the provider.
 
-Finally, add the Alipay Payment provider for your product so that users can purchase the product using Alipay.
+## Add the provider to a product {#step-3-add-the-alipay-pay-payment-provider-for-your-product}
 
-:::info Currency Requirement
+Add the provider to the **Payment providers** of the product and save it.
 
-Alipay only supports transactions in Chinese Yuan (CNY). When adding Alipay as a payment provider, ensure your product's currency is set to CNY. Products with other currencies will be rejected during creation or update to prevent payment failures.
+![Alipay in the payment providers of a product](/img/providers/payment/alipay_product.png)
 
+:::info
+Alipay supports only Chinese yuan (CNY). Set the currency of the product to CNY. Casdoor rejects a product with Alipay in another currency when you save it.
 :::
 
-![add wechat pay payment provider for product](/img/providers/payment/alipay_product.png)
-
 <video src="/video/provider/payment/use_alipay_buy_product.mp4" controls="controls" width="100%"></video>
+
+## See also
+
+- [Payment providers](/docs/provider/payment/overview)
+- [Add Alipay as an OAuth provider](/docs/provider/oauth/Alipay)

@@ -1,19 +1,34 @@
 ---
-title: Sign-up items table
-description: Configure signup items to build a custom registration page.
+title: Customize the sign-up form
+sidebar_label: Sign-up items table
+description: Choose which fields the sign-up page of an application shows, which are required, how they are validated, and how some of them behave.
 keywords: [signup, items, table, registration]
 authors: [Resulte]
 ---
 
-On the application configuration page, use the **Sign-up items** table to define which fields appear on the registration page. Add, remove, or reorder items to customize the form.
+This guide explains how to build the sign-up form of an application with the **Signup items** table.
 
-![Signup Items Table](/img/application/signup-items-table/signup-items-table.png)
+---
 
-:::tip
-Applications created via the Casdoor SDK get default signup items (ID, Username, Display name, Password, Confirm password, Email, Phone, Agreement). You can adjust them as needed.
-:::
+#### Learning outcomes
 
-## Column reference
+- Add, remove, and order the fields of the sign-up form.
+- Make fields required and validate them with regular expressions.
+- Change the behavior of fields with rules.
+
+#### What you need
+
+- An [application](/docs/application/overview) with **Enable signup** turned on
+
+---
+
+## About the sign-up items
+
+Each row of **Signup items** is one field or element of the sign-up page. Applications that you create through the Casdoor SDK get default items: ID, Username, Display name, Password, Confirm password, Email, Phone, and Agreement.
+
+![Signup items table of an application](/img/application/signup-items-table/signup-items-table.png)
+
+## Columns {#column-reference}
 
 | Column | Values | Description |
 |--------|--------|-------------|
@@ -27,7 +42,22 @@ Applications created via the Casdoor SDK get default signup items (ID, Username,
 | **Rule** | Rule items | Rule that customizes this item (see table below). |
 | **Action** | — | Move up, move down, or delete. |
 
-Items that support **rules**: ID, Display name, Email, Agreement, Languages.
+## Configure the form
+
+1. In the Casdoor admin console, open the edit page of the application.
+1. In **Signup items**, add, remove, and order the items, and set **Visible** and **Required** for each one.
+1. Set a rule for the items that support one. See [Item rules](#item-rules).
+1. Save the application.
+
+For example, to show an email field that doesn't need verification, add the Email item and set its rule to `No verification`.
+
+![Signup items configured with an email field without verification](/img/application/signup-items-table/signup-items-table-demo-config.png)
+
+The sign-up page then looks like this:
+
+![Sign-up page with an email field](/img/application/signup-items-table/signup-items-table-demo-page.png)
+
+## Item rules
 
 | Item | Rules | Description |
 |------|-------|-------------|
@@ -37,28 +67,26 @@ Items that support **rules**: ID, Display name, Email, Agreement, Languages.
 | **Agreement** | `None` / `Signin` / `Signin (Default True)` | Terms of use: none, require confirmation, or default to confirmed. |
 | **Languages** | `None` / `Label` | Adds a language selector to the sign-up page. `None` = show the selector on its own; `Label` = show it with a text label. |
 
-:::note
-Example: to show an email field without verification, add the Email signup item and set its rule to **No verification**.
-:::
+## Let users choose a tag {#tag-item}
 
-:::note
-The **Tag** signup item adds a drop-down that lets the user pick their own [tag](/docs/application/tags) during registration. It is hidden by default; make it **Visible** to show it. The options come from the item's own **Options** if set, otherwise from the application's **Tags**. A tag the user selects here takes priority over the application's **Default tag**, which is only applied when the user does not choose one.
-:::
+The **Tag** item adds a list from which users pick their own [tag](/docs/application/tags) at sign-up. It is hidden by default. Turn on **Visible** to show it.
 
-![Signup Items Table](/img/application/signup-items-table/signup-items-table-demo-config.png)
+- The options come from the **Options** of the item. If the item has no options, they come from the **Tags** of the application.
+- A tag that the user selects takes precedence over the **Default tag** of the application, which applies only when the user selects none.
 
-![Signup Items Table](/img/application/signup-items-table/signup-items-table-demo-page.png)
+## Validate input with a regular expression {#field-validation}
 
-:::note
-If the organization has "Use email as username" enabled and the username field is hidden in signup items, the user’s email is used as their username.
-:::
+1. In the row of the item, set **Regex** to a pattern, for example `^[a-zA-Z0-9_]+$` for usernames of letters, digits, and underscores.
+1. Save the application.
 
-## Field validation
+The sign-up page shows an error before submission when the input doesn't match. Validation works for Username, Display name, First name, Last name, Affiliation, and custom fields.
 
-Use the **Regex** column to validate input on the client before submit:
+## Use the email address as username
 
-1. Set **Regex** on the signup item (e.g. Username, Display name, or a custom field).
-2. Enter a pattern (e.g. `^[a-zA-Z0-9_]+$` for alphanumeric usernames).
-3. Users see an error when input does not match.
+If the organization has **Use Email as username** turned on and the Username item is hidden, the email address of the user becomes the username. See [Organizations](/docs/organization/overview#use-email-as-username).
 
-Works for standard fields (Username, Display name, First name, Last name, Affiliation) and custom fields.
+## See also
+
+- [Sign-in items](/docs/application/signin-items-table)
+- [Invitation codes](/docs/application/invitation-code)
+- [Application tags](/docs/application/tags)

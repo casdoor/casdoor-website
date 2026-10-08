@@ -1,6 +1,7 @@
 ---
-title: Application configuration
-description: Configure authentication and callback URLs for your Casdoor applications.
+title: Create and configure an application
+sidebar_label: Application configuration
+description: Create an application in Casdoor, connect it to an organization, and set the redirect URL so that your service can sign users in.
 keywords: [config, application, redirect URL, callback]
 authors: [ErikQQY]
 ---
@@ -10,43 +11,36 @@ import styles from '../styles.module.css';
 import CasdoorCard from "@site/src/components/CasdoorCard"
 ```
 
-After deploying Casdoor and creating an organization, configure applications and their authentication settings.
+This guide explains how to create an application in Casdoor for a service that signs users in. The example configures a forum that runs [Casnode](https://casnode.org).
 
-This page explains how to configure application authentication using Casdoor.
+---
 
-:::note
+#### Learning outcomes
 
-**Example:** Configuring a forum application using [Casnode](https://casnode.org).
+- Create an application and assign it to an organization.
+- Set the redirect URL of your service.
+- Tell the redirect URL of Casdoor apart from the callback URL that you enter at an external provider.
 
-:::
+#### What you need
 
-Create an application and fill in the required configuration.
+- A running Casdoor instance. See [Install the Casdoor server](/docs/basic/server-installation).
+- An [organization](/docs/organization/overview) for the users of your service
 
-Select the organization you created so that users in that organization can access this application.
+---
 
-![Organization](/img/application/config/organization.png)
+## Create the application
 
-If your organization is named `my_organization`, select it from the drop-down menu.
+1. In the Casdoor admin console, go to **Identity** > **Applications** and add an application.
+1. In **Organization**, select the organization whose users sign in to your service. If your organization is named `my_organization`, select it from the list.
 
-![Select Organization](/img/application/config/selectorganization.png)
+   ![Organization field of the application](/img/application/config/organization.png)
 
-To allow users to authenticate via Casdoor when they sign up, set the **Redirect URL** to your application’s callback URL (e.g. **`https://your-site-url.com/callback`**).
+   ![Organization list with my_organization selected](/img/application/config/selectorganization.png)
 
-:::caution
+1. Add the callback URL of your service, for example `https://your-site-url.com/callback`, to **Redirect URLs**. Casdoor sends users back to this URL after they sign in.
+1. Save the application.
 
-**Callback URL vs Redirect URL**
-
-- The **callback URL** configured in the provider (e.g. GitHub, Google) must be Casdoor’s callback URL: **`http://your-casdoor-url.com/callback`**.
-- The **Redirect URL** configured in Casdoor must be your application’s callback URL: **`http://your-site-url.com/callback`**.
-
-:::
-
-#### How the flow works
-
-1. The user initiates sign-in and is sent to Casdoor.
-2. Casdoor uses the application’s **Client ID** and **Client Secret** to authenticate with the provider (e.g. GitHub, Google).
-3. After successful authentication, the provider redirects back to Casdoor. The provider’s **callback URL** must be Casdoor’s callback: **`http://your-casdoor-url.com/callback`**.
-4. Casdoor then redirects to your application with the auth result. Casdoor’s **Redirect URL** must be your app’s callback: **`http://your-site-url.com/callback`**.
+The sign-in page of the application now looks like this:
 
 ```mdx-code-block
 <div className={styles.signingradientborder}>
@@ -54,12 +48,32 @@ To allow users to authenticate via Casdoor when they sign up, set the **Redirect
 </div>
 ```
 
-## Verification Code Settings
+## Redirect URL and callback URL {#how-the-flow-works}
 
-Use **Code resend timeout** to control how long users must wait before requesting another verification code (email or SMS). The value is in seconds (default: 60) and sets the countdown shown on the login page. Set to `0` to use the global default.
+When users sign in through an external provider, such as GitHub or Google, two different URLs are involved. Don't mix them up:
 
-:::tip
+| URL | Where you enter it | Value |
+|---|---|---|
+| Callback URL | At the external provider, in the settings of its OAuth application | The callback of Casdoor: `https://<your-casdoor-host>/callback` |
+| Redirect URL | In Casdoor, in **Redirect URLs** of the application | The callback of your service: `https://your-site-url.com/callback` |
 
-For finer control over sign-in methods (e.g. disabling or enabling specific methods), see **[Sign-in methods](./signin-methods.md)**.
+The sign-in then runs as follows:
 
-:::
+1. The user starts the sign-in at your service, and your service sends the user to Casdoor.
+1. Casdoor sends the user to the provider, with the client ID and client secret that the provider issued to Casdoor.
+1. The user signs in at the provider. The provider redirects to the callback URL, which is Casdoor.
+1. Casdoor redirects to the redirect URL, which is your service, with the result of the sign-in.
+
+## Set the wait time for verification codes {#verification-code-settings}
+
+**Code resend timeout** on the **Security** tab sets how many seconds a user must wait before requesting another verification code by email or SMS. The sign-in page shows the countdown. The default is 60. Set the value to `0` to use the global default.
+
+## Next steps
+
+- [Sign-in methods](/docs/application/signin-methods): Choose how users sign in.
+- [Add providers to an application](/docs/application/providers): Offer sign-in with external identity providers.
+- [Connect an application to Casdoor](/docs/how-to-connect/overview): Add the sign-in to the code of your service.
+
+## See also
+
+- [Application settings reference](/docs/application/terminology)

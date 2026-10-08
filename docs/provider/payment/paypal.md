@@ -1,31 +1,56 @@
 ---
-title: PayPal payment
-description: Use PayPal as a payment provider in Casdoor.
+title: Take payments with PayPal
+sidebar_label: PayPal
+description: Use PayPal as the payment provider of your Casdoor products.
 keywords: [PayPal, payment]
 authors: [Chinoholo0807]
 ---
 
-## 1. Create a PayPal app
+This guide explains how to let users pay for your Casdoor products with PayPal.
 
-You need a **PayPal business account**. [Create one](https://www.paypal.com/in/webapps/mpp/account-selection?pros=2) if needed, then sign in to the [Developer Dashboard](https://developer.paypal.com/dashboard/applications/sandbox) and click **Create App** under **Apps & Credentials**.
+---
 
-Copy the **Client ID** and **Secret** from the app’s basic information.
+#### Learning outcomes
 
-![create a PayPal application](/img/providers/payment/paypal_create_app.png)
-![PayPal application details](/img/providers/payment/paypal_app_detail.png)
+- Create a PayPal app.
+- Add PayPal as a payment provider and add it to a product.
 
-## 2. Create the provider in Casdoor
+#### What you need
 
-Add a **Payment** provider, set **Type** to **PayPal**, and enter the **Client ID** and **Secret** (Client secret).
+- A PayPal business account. [Create one](https://www.paypal.com/in/webapps/mpp/account-selection?pros=2) if you don't have one.
+- A [product](/docs/products/product) in Casdoor
 
-## 3. Attach to your product
+---
 
-Add the PayPal provider to your product so users can pay with PayPal.
+## Create a PayPal app {#1-create-a-paypal-app}
 
-![add PayPal payment provider for product](/img/providers/payment/paypal_product.png)
+1. Sign in to the [PayPal developer dashboard](https://developer.paypal.com/dashboard/applications/sandbox) and click **Create App** under **Apps & Credentials**.
+
+   ![App creation in PayPal](/img/providers/payment/paypal_create_app.png)
+
+1. Copy the **Client ID** and the **Secret** of the app.
+
+   ![Client ID and secret of the app](/img/providers/payment/paypal_app_detail.png)
+
+## Add the provider in Casdoor {#2-create-the-provider-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Payment` and **Type** to `PayPal`.
+1. Enter the **Client ID** and the secret as the **Client secret**.
+1. Save the provider.
+
+## Add the provider to a product {#3-attach-to-your-product}
+
+Add the provider to the **Payment providers** of the product and save it.
+
+![PayPal in the payment providers of a product](/img/providers/payment/paypal_product.png)
 
 <video src="/video/provider/payment/use_paypal_as_payment_provider.mp4" controls="controls" width="100%"></video>
 
 :::note
-The steps above use PayPal **Sandbox**. For production, create an app in **Live** mode and set `runmode=prod` in Casdoor’s `conf/app.conf`.
+These steps use the PayPal sandbox. For production, create the app in **Live** mode and set `runmode = prod` in `conf/app.conf` of Casdoor.
 :::
+
+## See also
+
+- [Payment providers](/docs/provider/payment/overview)

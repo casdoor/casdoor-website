@@ -1,59 +1,77 @@
 ---
-title: WeChat Pay
-description: Use WeChat Pay as a payment provider in Casdoor.
+title: Take payments with WeChat Pay
+sidebar_label: WeChat Pay
+description: Use WeChat Pay as the payment provider of your Casdoor products, with Native payment and JSAPI payment inside WeChat.
 keywords: [WeChat Pay, payment]
 authors: [Wrapping-2000, Chinoholo0807]
 ---
 
-You need a [WeChat Merchant](https://pay.weixin.qq.com/index.php/public/wechatpay_en) account. See [preparation before access](https://pay.weixin.qq.com/docs/merchant/products/native-payment/preparation.html).
+This guide explains how to let users pay for your Casdoor products with WeChat Pay. Casdoor supports [Native payment](https://pay.weixin.qq.com/docs/merchant/products/native-payment/introduction.html), with a QR code, and [JSAPI payment](https://pay.weixin.qq.com/docs/merchant/products/jsapi-payment/introduction.html), inside the WeChat app.
 
-## 1. Get credentials
+---
 
-### API Key v3
+#### Learning outcomes
 
-In WeChat Merchant Platform: **Account Settings** → **API Security** → **Set APIv3 Secret**. Copy the **API Key v3**. See [APIv3 Key Settings](https://kf.qq.com/faq/180830E36vyQ180830AZFZvu.html).
+- Get the API key, the certificate, and the IDs from WeChat Pay.
+- Add WeChat Pay as a payment provider and add it to a product.
+- Turn on payment inside the WeChat app.
 
-![wechat api key v3](/img/providers/payment/wechat_apikey_v3.png)
+#### What you need
 
-### Merchant certificate
+- A [WeChat Pay merchant](https://pay.weixin.qq.com/index.php/public/wechatpay_en) account. See [Preparation before access](https://pay.weixin.qq.com/docs/merchant/products/native-payment/preparation.html).
+- A [product](/docs/products/product) in Casdoor
 
-**Account Settings** → **API Security** → **API Certificate** → download the certificate. Get the [Certificate Serial Number](https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay7_0.shtml#part-5) and [Private Key](https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay3_1.shtml). In Casdoor, create a **Cert** and fill in the certificate details.
+---
 
-![wechat merchant certificate](/img/providers/payment/wechat_mch_cert.png)
-![wechat_cert](/img/providers/payment/wechat_cert.png)
+## Get the credentials {#1-get-credentials}
 
-### Merchant ID and App ID
+1. On the WeChat Pay merchant platform, go to **Account Settings** > **API Security** > **Set APIv3 Secret** and copy the API key v3. See [APIv3 key settings](https://kf.qq.com/faq/180830E36vyQ180830AZFZvu.html).
 
-- [Merchant ID](https://kf.qq.com/faq/200729EZ7fEj200729aumYR7.html)
-- [App ID](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml)
+   ![API key v3 setting](/img/providers/payment/wechat_apikey_v3.png)
 
-## 2. Create the provider in Casdoor
+1. Go to **Account Settings** > **API Security** > **API Certificate** and download the merchant certificate. Note its [serial number](https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay7_0.shtml#part-5) and its [private key](https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay3_1.shtml).
 
-Add a **Payment** provider, set **Type** to **WeChat Pay**, and fill in:
+   ![Merchant certificate download](/img/providers/payment/wechat_mch_cert.png)
 
-| Casdoor field   | Value           |
-|-----------------|-----------------|
-| Client ID       | Merchant ID     |
-| Client secret   | API Key v3      |
-| App ID          | App ID          |
-| Cert            | The Cert above  |
+1. Store the certificate on the **Certs** page of Casdoor.
 
-![wechat pay provider](/img/providers/payment/wechat_payment_provider.png)
+   ![Merchant certificate in Casdoor](/img/providers/payment/wechat_cert.png)
 
-## 3. Attach to your product
+1. Note your [merchant ID](https://kf.qq.com/faq/200729EZ7fEj200729aumYR7.html) and your [App ID](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml).
 
-Add the WeChat Pay provider to your product so users can pay with WeChat Pay.
+## Add the provider in Casdoor {#2-create-the-provider-in-casdoor}
 
-![add wechat pay payment provider for product](/img/providers/payment/wechat_product.png)
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Payment` and **Type** to `WeChat Pay`.
+1. Fill in the fields:
+
+   | Casdoor field   | Value           |
+   |-----------------|-----------------|
+   | Client ID       | Merchant ID     |
+   | Client secret   | API Key v3      |
+   | App ID          | App ID          |
+   | Cert            | The Cert above  |
+
+   ![WeChat Pay provider in Casdoor](/img/providers/payment/wechat_payment_provider.png)
+
+1. Save the provider.
+
+## Add the provider to a product {#3-attach-to-your-product}
+
+Add the provider to the **Payment providers** of the product and save it.
+
+![WeChat Pay in the payment providers of a product](/img/providers/payment/wechat_product.png)
 
 <video src="/video/provider/payment/use_wechatpay_buy_product.mp4" controls="controls" width="100%"></video>
 
-## JSAPI payment (in-WeChat browser)
+## Pay inside the WeChat app {#jsapi-payment-in-wechat-browser}
 
-Casdoor supports [JSAPI](https://pay.weixin.qq.com/docs/merchant/products/jsapi-payment/introduction.html) and [Native](https://pay.weixin.qq.com/docs/merchant/products/native-payment/introduction.html) payment. For JSAPI (payment inside the WeChat app), configure a [WeChat OAuth provider](/docs/provider/oauth/Wechat) that uses the **WeChat Media Platform**. The **Client ID 2** of that WeChat OAuth provider must match the **App ID** of this WeChat Pay provider.
+For JSAPI payment, users sign in with WeChat in the built-in browser of the WeChat app and then pay there. Configure a [WeChat OAuth provider](/docs/provider/oauth/Wechat) for the same official account as the payment provider, and add both to the application.
 
-![relation between wechat pay payment provider and wechat oauth provider](/img/providers/payment/wechat_jsapi_conf.png)
-
-After users sign in via WeChat (e.g. in the WeChat in-app browser), they can pay with WeChat Pay via JSAPI.
+![Relation between the WeChat Pay provider and the WeChat OAuth provider](/img/providers/payment/wechat_jsapi_conf.png)
 
 <video src="/video/provider/payment/use_wechatpay_via_jsapi.mp4" controls="controls" width="100%" align="center"></video>
+
+## See also
+
+- [Payment providers](/docs/provider/payment/overview)

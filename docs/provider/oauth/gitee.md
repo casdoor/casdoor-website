@@ -1,31 +1,59 @@
 ---
-title: Gitee OAuth
-description: Add Gitee as an OAuth provider.
+title: Add Gitee as an OAuth provider
+sidebar_label: Gitee
+description: Let users sign in to Casdoor with their Gitee account.
 keywords: [Gitee, OAuth]
 authors: [ErikQQY]
 ---
 
-1. Go to [Gitee OAuth applications](https://gitee.com/oauth/applications) and create an application (or open an existing one).
+This guide explains how to let users sign in to Casdoor with their Gitee account.
 
-   ![Gitee Workbench](/img/providers/OAuth/giteebench.png)
-   ![Gitee](/img/providers/OAuth/gitee.png)
+---
 
-   Set **name**, **description**, **homepage**, and **authorization callback URL**. The callback URL must be **Casdoor’s callback URL**. In Casdoor, the application **Redirect URL** is your application’s callback URL. See [Application config](/docs/application/config#how-the-flow-works). Grant the permissions you need; enable **email** so Casdoor can read the user’s email.
+#### Learning outcomes
 
-   :::info
-   **Callback URL:** In Gitee use Casdoor’s callback URL; in Casdoor use your application’s redirect URL.
-   :::
+- Create an OAuth application on Gitee.
+- Add Gitee as an OAuth provider in Casdoor.
 
-2. After creating the app, copy **Client ID** and **Client Secret**.
+#### What you need
 
-   ![Gitee Client](/img/providers/OAuth/giteeclient.png)
+- A Gitee account
+- Administrator access to the Casdoor admin console
 
-3. In Casdoor add an **OAuth** provider, set **Type** to **Gitee**, and enter **Client ID** and **Client secret**.
+---
 
-   ![Gitee Provider](/img/providers/OAuth/giteeprovider.png)
+## Create a Gitee application
 
-   :::caution
-   Enable the **email** scope in the Gitee app; otherwise scope authorization may fail.
-   :::
+1. Open [Gitee OAuth applications](https://gitee.com/oauth/applications) and create an application, or open an existing one.
 
-   ![Gitee scope](/img/giteescope.jpg)
+   ![Gitee workbench](/img/providers/OAuth/giteebench.png)
+
+1. Fill in the name, the description, and the homepage. Set the authorization callback URL to the callback URL of Casdoor, `https://<your-casdoor-host>/callback`. See [Redirect URL and callback URL](/docs/application/config#how-the-flow-works).
+
+   ![Gitee application form](/img/providers/OAuth/gitee.png)
+
+1. Select the permissions that you need, including `emails`, so that Casdoor can read the email address. Without the email scope, the authorization can fail.
+
+   ![Email scope of the Gitee application](/img/giteescope.jpg)
+
+1. Create the application and copy the **Client ID** and the **Client Secret**.
+
+   ![Client ID and client secret](/img/providers/OAuth/giteeclient.png)
+
+## Add the provider in Casdoor
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `Gitee`.
+1. Enter the **Client ID** and the **Client secret**.
+
+   ![Gitee provider in Casdoor](/img/providers/OAuth/giteeprovider.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)

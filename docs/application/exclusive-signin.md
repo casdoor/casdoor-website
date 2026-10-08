@@ -1,30 +1,49 @@
 ---
-title: Exclusive sign-in
-description: Allow only one active session per user per application.
+title: Allow one session per user
+sidebar_label: Exclusive sign-in
+description: Limit each user to one active session per application, so that a new sign-in ends the sessions on other devices.
 keywords: [exclusive signin, session, single session]
 authors: [hsluoyz]
 ---
 
-**Exclusive sign-in** limits each user to one active session per application. A new sign-in from another device or browser ends all previous sessions for that user and application.
+This guide explains exclusive sign-in. With exclusive sign-in, each user has at most one active session in an application. A sign-in on another device or in another browser ends the earlier sessions of that user in that application.
 
-## Configuration
+---
 
-On the application edit page, enable **Enable exclusive signin**. The setting applies to all users of that application.
+#### Learning outcomes
 
-## Behavior
+- Turn on exclusive sign-in for an application.
+- Understand what happens to existing sessions.
 
-On sign-in with exclusive sign-in enabled:
+#### What you need
 
-- All existing sessions for that user and application are removed
-- A new session is created for the current sign-in
-- The user is effectively signed out everywhere else for this app
+- An [application](/docs/application/overview)
 
-Example: user signs in on a laptop, then on a phone — the laptop session is terminated; only the phone session stays active.
+---
 
-## When to use it
+## About exclusive sign-in {#when-to-use-it}
 
-Exclusive sign-in reduces the risk of concurrent use of the same account (e.g. after forgetting to sign out on a shared PC). It also limits concurrent sessions per user. Users who need to stay signed in on multiple devices will have to sign in again when they switch.
+Exclusive sign-in lowers the risk that several people use one account at the same time, for example after a user forgot to sign out on a shared computer. The cost is for users who work on several devices: they sign in again each time they switch.
 
-## How it works
+## Turn on exclusive sign-in {#configuration}
 
-For each sign-in with exclusive sign-in on: Casdoor finds all sessions for that user and application, deletes them, creates a new session, and keeps only that session ID. This is done per application.
+1. In the Casdoor admin console, open the edit page of the application.
+1. Turn on **Enable exclusive signin**. The setting applies to all users of the application.
+1. Save the application.
+
+## What happens at sign-in {#behavior}
+
+When a user signs in to the application, Casdoor:
+
+1. Finds all sessions of the user in the application.
+1. Deletes them. The user is signed out of the application everywhere else.
+1. Creates a session for the new sign-in and keeps only that session.
+
+For example, a user signs in on a laptop and then on a phone. Casdoor ends the session on the laptop, and only the phone stays signed in.
+
+Casdoor does this per application. Sessions of the same user in other applications stay.
+
+## See also
+
+- [Session management](/docs/session/management)
+- [Single sign-out](/docs/session/single-sign-out)

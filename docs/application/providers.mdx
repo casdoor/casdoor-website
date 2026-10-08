@@ -1,6 +1,7 @@
 ---
-title: Providers
-description: Attach providers to your application and set rules (signup, login, forgot password, MFA, etc.).
+title: Add providers to an application
+sidebar_label: Providers
+description: Add identity, email, SMS, and other providers to an application, and choose for each one in which situations Casdoor uses it.
 keywords: [providers, OAuth, email, SMS, MFA]
 authors: [zhuying]
 ---
@@ -9,22 +10,58 @@ authors: [zhuying]
 import styles from '../styles.module.css';
 ```
 
-Add **providers** to your application so users can sign up or sign in with third-party identity, email, or SMS. For each provider you choose a **rule** that defines when it is used:
+This guide explains how to add providers to an application, so that users can sign in with an external identity provider and receive codes by email or SMS, and how to choose when Casdoor uses each provider.
 
-![Select providers](/img/application/config/selectproviders.png)
+---
 
-Rule reference:
+#### Learning outcomes
 
-| Rule | Use |
-|------|-----|
-| **Signup** | Send SMS/email templates during registration. |
-| **Login** | Use this provider for sign-in. |
-| **Forget Password** | Send reset links or codes. See [Email provider](/docs/provider/email/overview#password-reset-link) for reset links. |
-| **Reset Password** | Use when the user resets their password. |
-| **Set MFA** | Send codes during MFA setup. |
-| **MFA Auth** | Use for MFA verification at login. See [MFA](/docs/user/multi-factor-authentication). |
-| **all** | Use this provider for every scenario above. |
+- Add a provider to an application.
+- Choose the rule that decides when Casdoor uses an email or SMS provider.
 
-![Select rules](/img/application/providers/choose_providers.png)
+#### What you need
 
-![Select regions](/img/application/providers/choose_region.png)
+- An [application](/docs/application/overview)
+- One or more [providers](/docs/provider/overview) that you have created in Casdoor
+
+---
+
+## Add a provider
+
+1. In the Casdoor admin console, open the edit page of the application and go to the **Providers** tab.
+1. Add a row and select the provider.
+
+   ![Provider selection in the Providers table](/img/application/config/selectproviders.png)
+
+1. For an email or SMS provider, select the rule that decides when Casdoor uses it. See [Provider rules](#provider-rules).
+
+   ![Rule selection of a provider](/img/application/providers/choose_providers.png)
+
+1. For an SMS provider, select the country codes that it serves.
+
+   ![Country code selection of an SMS provider](/img/application/providers/choose_region.png)
+
+1. Save the application.
+
+For the other columns of the table, such as **Can sign up** and **Binding rule**, see the [Application settings reference](/docs/application/terminology#providers).
+
+## Provider rules
+
+| Rule | Casdoor uses the provider to |
+|---|---|
+| `All` | Do everything below |
+| `Signup` | Send the verification code during sign-up |
+| `Login` | Send the code for sign-in with a verification code |
+| `Forget Password` | Send the reset code or link on the forgot-password page. For reset links, see [Password reset link](/docs/provider/email/overview#password-reset-link) |
+| `Reset Password` | Send the code when the user changes the password |
+| `Set MFA` | Send the code when the user sets up multi-factor authentication (MFA) |
+| `MFA Auth` | Send the code for the second factor at sign-in. See [Multi-factor authentication](/docs/user/multi-factor-authentication) |
+| `Magic link` | Send the sign-in link for sign-in with a magic link |
+
+To use different providers in different situations, add each provider with its own rule. For example, one SMS provider for sign-in and another one for MFA.
+
+## See also
+
+- [Providers](/docs/provider/overview)
+- [Sign-in methods](/docs/application/signin-methods)
+- [Application settings reference](/docs/application/terminology)

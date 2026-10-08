@@ -1,19 +1,38 @@
 ---
-title: Generating Swagger docs
-description: Generate Swagger/OpenAPI docs for Casdoor APIs using the modified bee tool.
+title: Generate Swagger files
+sidebar_label: Generating Swagger docs
+description: Regenerate the Swagger (OpenAPI) files of the Casdoor API with the modified bee tool after you add or change an API.
 keywords: [bee, swagger, API docs]
 authors: [ComradeProgrammer]
 ---
 
-Casdoor is built on **beego**, which uses the **bee** CLI to generate Swagger files. The default bee does not group APIs by tag; Casdoor uses a [modified bee](https://github.com/casbin/bee) that supports the `@Tag` label so APIs are grouped in the generated docs.
+This guide explains how to regenerate the Swagger files of the Casdoor API after you add or change an API handler.
+
+---
+
+#### Learning outcomes
+
+- Annotate an API handler so that it appears in the Swagger files.
+- Build the modified bee tool.
+- Generate the Swagger files for all APIs or for selected ones.
+
+#### What you need
+
+- A clone of the [Casdoor repository](https://github.com/casdoor/casdoor) and the Go toolchain
+
+---
+
+## About Swagger in Casdoor
+
+Casdoor is built on the Beego framework, whose `bee` command-line tool generates Swagger files from comments in the code. The standard `bee` doesn't group APIs. Casdoor uses a [modified bee](https://github.com/casbin/bee) that reads an additional `@Tag` annotation and groups the APIs with the same tag.
 
 :::note
-The built-in Swagger UI at `/swagger` is only served when Casdoor runs in **dev** run mode (`runmode = dev` in `conf/app.conf`). It is not exposed in production.
+Casdoor serves the Swagger UI at `/swagger` only when `runmode = dev` is set in `conf/app.conf`. It isn't available in production mode.
 :::
 
-## Comment format
+## Annotate the API handler {#comment-format}
 
-Use the same comment style as standard bee; the only extra requirement is **@Tag** so APIs are grouped. Example:
+Write the comments in the standard format of bee, and add `@Tag`:
 
 ```go
 // @Title Login
@@ -26,34 +45,36 @@ Use the same comment style as standard bee; the only extra requirement is **@Tag
 func (c *ApiController) Login() {
 ```
 
-APIs with the same `@Tag` appear in the same group in the Swagger output.
+APIs with the same `@Tag` appear in the same group.
 
-## Generate Swagger files
+## Generate the files {#generate-swagger-files}
 
-1. Add comments in the format above (including `@Tag`) to your API handlers.
-2. Clone the modified bee: [https://github.com/casbin/bee](https://github.com/casbin/bee).
-3. Build bee in the repo root:
+1. Clone the [modified bee](https://github.com/casbin/bee).
+1. Build it in the root of its repository:
 
    ```shell
    go build -o mybee .
    ```
 
-4. Copy `mybee` into the Casdoor project root.
-5. From the Casdoor root, run:
+1. Copy `mybee` to the root of the Casdoor repository.
+1. In the root of the Casdoor repository, generate the files:
 
    ```bash
    mybee generate docs
    ```
 
-6. (Optional) Generate docs for specific tags or APIs:
+To generate the files for selected tags or APIs only, name them. Separate several names with a comma.
 
-   ```bash
-   mybee generate docs --tags "Adapter API"
-   mybee generate docs --tags "Adapter API,Login API"
-   mybee generate docs --apis "add-adapter"
-   mybee generate docs --apis "add-adapter,delete-adapter"
-   ```
+```bash
+mybee generate docs --tags "Adapter API"
+mybee generate docs --tags "Adapter API,Login API"
+mybee generate docs --apis "add-adapter"
+mybee generate docs --apis "add-adapter,delete-adapter"
+```
 
-   Use a comma `,` only when listing multiple tags or APIs.
+The generated files are in the `swagger` directory of the Casdoor repository.
 
-Generated Swagger files will appear in the Casdoor project.
+## See also
+
+- [Call the Casdoor API](/docs/basic/public-api)
+- [Contributing](/docs/contributing)

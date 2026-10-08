@@ -1,30 +1,56 @@
 ---
-title: Customize theme
-description: Set primary color and border radius at global, organization, or application level.
+title: Customize the theme
+sidebar_label: Customize theme
+description: Set the primary color and the border radius of the Casdoor pages for an organization or for a single application.
 keywords: [theme, organization, application]
 authors: [leo220yuyaodog]
 ---
 
-Themes control primary color and border radius so you can match your brand. Casdoor supports three levels:
+This guide explains how to match the Casdoor pages to your brand by setting the primary color and the border radius.
 
-| Level | Where to set | Applies to |
-|-------|----------------|------------|
-| **Global** | In Casdoor source only (no UI). | Any org that uses the global theme. |
-| **Organization** | Organization edit page. | All Casdoor after-login pages for that org, and entry pages (sign-in, sign-up, forgot password, etc.) of applications that follow the org theme. |
-| **Application** | Application edit page. | Entry pages of that application only. |
+---
 
-## Organization theme
+#### Learning outcomes
 
-Edit the organization and use the theme controls (primary color, border radius, etc.). Changes apply to that organization’s pages and to applications following the org theme.
+- Understand the three levels of themes.
+- Set the theme of an organization.
+- Set the theme of a single application.
 
-![edit theme](/img/organization/edit_theme.gif)
+#### What you need
 
-:::info
-If you are editing the same organization you are logged in as, changes apply immediately. Otherwise, sign in to that organization to see the updated theme.
-:::
+- Administrator access to the Casdoor admin console
 
-## Application theme
+---
 
-Applications use the same theme editor. You can preview the theme in the application’s preview panel.
+## Theme levels
 
-![preview](/img/organization/application_preview.png)
+| Level | Where you set it | Where it applies |
+|---|---|---|
+| Global | In the source code only, in [`web/src/Conf.ts`](/docs/basic/configuration#compile-time-frontend-settings) | Every organization that has no theme of its own |
+| Organization | Edit page of the organization | All pages of the admin console for members of the organization, and the entry pages (sign-in, sign-up, forgot password, and so on) of the applications that follow the organization theme |
+| Application | Edit page of the application | The entry pages of that application only |
+
+## Set the theme of an organization {#organization-theme}
+
+1. In the Casdoor admin console, open the edit page of the organization.
+1. In **Theme**, set the primary color and the border radius.
+1. Save the organization.
+
+![Recording of editing the theme of an organization](/img/organization/edit_theme.gif)
+
+If you edit the organization that you are signed in to, the change applies at once. Otherwise, sign in to that organization to see the theme.
+
+## Set the theme of an application {#application-theme}
+
+1. Open the edit page of the application.
+1. Turn off **Follow organization theme**, and set the primary color and the border radius in the theme editor.
+1. Check the result in the preview panel of the application.
+
+   ![Theme preview on the application edit page](/img/organization/application_preview.png)
+
+1. Save the application.
+
+## See also
+
+- [UI customization](/docs/application/ui-customization)
+- [Configuration reference](/docs/basic/configuration)

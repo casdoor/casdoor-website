@@ -1,48 +1,58 @@
 ---
-title: Try with Helm
-description: Deploy Casdoor on Kubernetes using Helm for manageable, scalable deployments.
+title: Run Casdoor on Kubernetes with Helm
+sidebar_label: Try with Helm
+description: Install the Casdoor Helm chart on a Kubernetes cluster, expose it with Ingress or the Gateway API, and manage the release.
 keywords: [Casdoor, Helm, Kubernetes, K8s, Gateway API, Ingress, Istio]
 authors: [nomeguy]
+---
+
+This guide explains how to install Casdoor on a Kubernetes cluster with the official Helm chart, expose it outside the cluster, and upgrade or remove the release.
+
+---
+
+#### Learning outcomes
+
+- Install the Casdoor Helm chart.
+- Override chart values, including the database connection.
+- Expose Casdoor with Ingress or the Gateway API.
+- Keep organizations, applications, and users in the values file.
+- Upgrade and uninstall the release.
+
+#### What you need
+
+- A Kubernetes cluster, version 1.19 or later
+- Helm 3.8 or later
+- For the Gateway API option: the Gateway API CRDs and a Gateway controller in the cluster
+
 ---
 
 :::tip Don't want to run it yourself?
 [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=try-with-helm) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
 :::
 
-This page describes how to deploy Casdoor on Kubernetes using Helm.
+## Install the chart
 
-## Prerequisites
+The chart is published as an OCI artifact on GitHub Container Registry. It is listed on [Artifact Hub](https://artifacthub.io/packages/helm/casdoor/casdoor), and its [source](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor) is in the Casdoor repository.
 
-- A running Kubernetes cluster (1.19+)
-- Helm v3.8+
+1. Install the chart. Replace `<version>` with a chart version from Artifact Hub.
 
-## Installation
+   ```bash
+   helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor --version <version>
+   ```
 
-### Step 1: Install the Casdoor chart
+   To override values, pass your own values file:
 
-Install the Casdoor Helm chart ([Artifact Hub](https://artifacthub.io/packages/helm/casdoor/casdoor), [source](https://github.com/casdoor/casdoor/tree/master/manifests/casdoor)):
+   ```bash
+   helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor      --version <version>      -f my-values.yaml
+   ```
 
-```shell
-helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor --version <version>
-```
+1. Open Casdoor at the URL of the `casdoor` service in your cluster. With the default values, the service is of type `ClusterIP` on port 8000, so it is reachable only inside the cluster until you [expose it](/docs/basic/try-with-helm#exposing-casdoor).
 
-To install with a custom values file:
+## Customize the deployment
 
-```shell
-helm install casdoor oci://ghcr.io/casdoor/helm-charts/casdoor \
-  --version <version> \
-  -f my-values.yaml
-```
+Override the values of [`values.yaml`](https://github.com/casdoor/casdoor/blob/master/manifests/casdoor/values.yaml) in your own values file. The main values are:
 
-### Step 2: Access Casdoor
-
-After installation, use the service URL provided by your cluster to access Casdoor.
-
-## Customization
-
-Override [values.yaml](https://github.com/casdoor/casdoor/blob/master/manifests/casdoor/values.yaml) to customize the deployment. Key parameters:
-
-| Parameter | Description | Default Value |
+| Parameter | Description | Default |
 |---|---|---|
 | `replicaCount` | Number of replicas of the Casdoor application to run. | `1` |
 | `image.repository` | Repository for the Casdoor Docker image. | `casbin` |
@@ -78,11 +88,13 @@ Override [values.yaml](https://github.com/casdoor/casdoor/blob/master/manifests/
 | `envFromConfigmap` | Environment variables from individual ConfigMap keys. | `[]` |
 | `envFrom` | Environment variables from entire Secrets or ConfigMaps. | `[]` |
 
-## Exposing Casdoor
+## Expose Casdoor {#exposing-casdoor}
 
-### Option 1: Ingress (classic)
+Choose Ingress or the Gateway API.
 
-Enable and configure Ingress:
+### Expose Casdoor with Ingress
+
+Enable Ingress in your values file:
 
 ```yaml
 ingress:
@@ -101,23 +113,21 @@ ingress:
         - casdoor.example.com
 ```
 
-### Option 2: Gateway API (modern)
+### Expose Casdoor with the Gateway API
 
-The Kubernetes [Gateway API](https://gateway-api.sigs.k8s.io/) is the next-generation successor to Ingress, officially GA since Kubernetes 1.31. It is supported by Istio, Envoy Gateway, Cilium, Kong, NGINX Gateway Fabric, and others.
+The Kubernetes [Gateway API](https://gateway-api.sigs.k8s.io/) is the successor to Ingress. Istio, Envoy Gateway, Cilium, Kong, NGINX Gateway Fabric, and other controllers support it.
 
-:::tip Prerequisites
-Install the Gateway API CRDs before enabling this option:
+Before you enable this option, install the Gateway API CRDs and make sure that a compatible Gateway controller runs in the cluster:
 
-```shell
+```bash
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
 ```
 
-You also need a compatible Gateway controller running in your cluster.
-:::
+Then use one of the following configurations.
 
 #### Attach to an existing Gateway
 
-If you already have a Gateway resource in your cluster, point the HTTPRoute at it:
+If the cluster already has a Gateway, point the HTTPRoute at it:
 
 ```yaml
 gatewayApi:
@@ -130,9 +140,9 @@ gatewayApi:
     - casdoor.example.com
 ```
 
-#### Create a new Gateway (e.g. with Istio)
+#### Create a Gateway
 
-Let the chart create a Gateway and HTTPRoute together:
+Let the chart create a Gateway together with the HTTPRoute. This example uses Istio:
 
 ```yaml
 gatewayApi:
@@ -151,9 +161,9 @@ gatewayApi:
             from: Same
 ```
 
-#### Create a Gateway with HTTP→HTTPS redirect
+#### Create a Gateway that redirects HTTP to HTTPS
 
-Enable TLS termination and automatic HTTP-to-HTTPS redirect:
+Terminate TLS at the Gateway and redirect HTTP requests to HTTPS:
 
 ```yaml
 gatewayApi:
@@ -184,7 +194,7 @@ gatewayApi:
     enabled: true
 ```
 
-#### Gateway API parameters
+#### Gateway API values
 
 | Parameter | Description | Default |
 |---|---|---|
@@ -203,9 +213,9 @@ gatewayApi:
 | `gatewayApi.httpsRedirect.hostnames` | Hostnames for redirect route | `[]` |
 | `gatewayApi.httpsRedirect.parentRefs` | Override parentRefs for redirect route | `[]` |
 
-## Declarative configuration
+## Manage Casdoor objects in the values file
 
-Organizations, applications, users, providers, roles and permissions can live in the values file next to the rest of the deployment. Casdoor applies them at startup and checks them for changes every 30 seconds, so a `helm upgrade` that changes them takes effect without restarting the pods:
+You can keep organizations, applications, users, providers, roles, and permissions in the values file, next to the rest of the deployment. Casdoor applies them at startup and checks them for changes every 30 seconds. A `helm upgrade` that changes them takes effect without restarting the pods.
 
 ```yaml
 initData:
@@ -225,7 +235,9 @@ initData:
           - https://portal.acme.example.com/callback
 ```
 
-An existing object only gets the fields written here; its other fields keep the values edited in the web UI. The data is stored in a Secret; to keep it out of the values file, create the Secret yourself and set `initData.existingSecret`.
+An existing object receives only the fields that you write here. Its other fields keep the values that were set in the admin console.
+
+The chart stores the data in a Secret. To keep the data out of the values file, create the Secret yourself and set `initData.existingSecret`.
 
 | Parameter | Description | Default |
 |---|---|---|
@@ -236,20 +248,25 @@ An existing object only gets the fields written here; its other fields keep the 
 | `initData.existingSecretKey` | Key of the file in `existingSecret`, `.yaml`/`.yml` keys are read as YAML | `init_data.yaml` |
 | `initData.data` | The objects to apply, in the [init data](/docs/deployment/data-initialization#configuration-as-code) format | `{}` |
 
-## Managing the deployment
+## Upgrade the release
 
-Upgrade:
-
-```shell
+```bash
 helm upgrade casdoor oci://ghcr.io/casdoor/helm-charts/casdoor --version <version>
 ```
 
-Charts up to 4.15.0 were published as `oci://registry-1.docker.io/casbin/casdoor-helm-charts`, which still receives every release. To move an existing release to the new chart, run the `helm upgrade` command above; resource names stay the same.
+:::note
+Charts up to version 4.15.0 were published as `oci://registry-1.docker.io/casbin/casdoor-helm-charts`. That location still receives every release. To move an existing release to the new location, run the `helm upgrade` command above. Resource names stay the same.
+:::
 
-Uninstall:
+## Uninstall the release
 
-```shell
+```bash
 helm uninstall casdoor
 ```
 
-For more options, see the [Helm](https://helm.sh/docs/) and [Kubernetes](https://kubernetes.io/docs/) documentation.
+## See also
+
+- [Data initialization](/docs/deployment/data-initialization)
+- [Deploy on Kubernetes](/docs/deployment/k8s)
+- [Configuration reference](/docs/basic/configuration)
+- [Helm documentation](https://helm.sh/docs/)

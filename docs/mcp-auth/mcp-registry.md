@@ -1,34 +1,33 @@
 ---
-title: Public MCP Server Registry
-description: A curated registry of publicly available MCP servers, with a web UI and machine-readable JSON API.
+title: Public MCP server registry
+description: The public MCP server registry at mcp.casdoor.org lists MCP servers with a web interface and a JSON API. This page explains how to use it and how to add a server.
 keywords: [MCP, registry, MCP servers, public MCP, mcp.casdoor.org]
 authors: [hsluoyz]
 ---
 
-The [Public MCP Server Registry](https://mcp.casdoor.org) is a curated list of publicly available MCP servers. It covers 60+ servers across nine categories and provides both a searchable web interface and a machine-readable JSON API at `/registry.json`.
+The [public MCP server registry](https://mcp.casdoor.org) is a curated list of publicly available MCP servers. It covers more than 60 servers in nine categories and offers a searchable website and a JSON API.
 
-**Website:** [https://mcp.casdoor.org](https://mcp.casdoor.org)
-**Registry API:** [https://mcp.casdoor.org/registry.json](https://mcp.casdoor.org/registry.json)
-**Source:** [github.com/casdoor/public-mcp-server-registry](https://github.com/casdoor/public-mcp-server-registry)
+| Resource | URL |
+|---|---|
+| Website | [https://mcp.casdoor.org](https://mcp.casdoor.org) |
+| JSON API | [https://mcp.casdoor.org/registry.json](https://mcp.casdoor.org/registry.json) |
+| Source | [casdoor/public-mcp-server-registry](https://github.com/casdoor/public-mcp-server-registry) |
 
-## Browsing the registry
+The **MCP Store** page of the Casdoor admin console shows the same list. See [Add a server from the MCP Store](/docs/how-to-connect/mcp/overview#mcp-store).
 
-Open [mcp.casdoor.org](https://mcp.casdoor.org) in a browser. You can:
+## Browse the registry {#browsing-the-registry}
 
-- **Search** by name, description, or category using the search bar.
-- **Filter** by category using the tab buttons (AI & ML, Cloud, Communication, etc.).
+On [mcp.casdoor.org](https://mcp.casdoor.org), search by name, description, or category, or filter by category with the tabs, such as AI & ML, Cloud, and Communication. Each card shows the name, a short description, the endpoint URL, and a link to the website of the server.
 
-Each card shows the server's name, a short description, its endpoint URL, and a link to its website.
+## Use the JSON API {#using-the-json-api}
 
-## Using the JSON API
-
-The registry is also served as a JSON array at `/registry.json`, which you can consume programmatically:
+The registry is a JSON array at `/registry.json`:
 
 ```bash
 curl https://mcp.casdoor.org/registry.json
 ```
 
-Each entry has this shape:
+Each entry has the following form:
 
 ```json
 {
@@ -50,21 +49,19 @@ Each entry has this shape:
 | `website` | Homepage or docs URL |
 | `endpoint` | MCP endpoint URL (`https://` for HTTP/SSE, `wss://` for WebSocket) |
 
-## Adding a server
-
-To list your MCP server in the registry:
+## Add a server {#adding-a-server}
 
 1. Fork [casdoor/public-mcp-server-registry](https://github.com/casdoor/public-mcp-server-registry).
-2. Add an entry to `registry.json` following the schema above.
-3. Open a pull request. The website redeploys automatically on merge.
+1. Add an entry to `registry.json` with the fields above. Keep the description to one sentence, and pick the closest category.
+1. Open a pull request. The website redeploys when the pull request is merged.
 
-Keep the description to one sentence and pick the closest existing category. If none of the nine categories fit, note that in the PR and we'll discuss adding a new one.
+If none of the nine categories fits, say so in the pull request.
 
-## Connecting a listed server
+## Connect a listed server {#connecting-a-listed-server}
 
-Most servers in the registry require their own authentication (API keys, OAuth tokens). Check the server's website for setup instructions. For servers that use Casdoor as their OAuth provider, see [Casdoor as MCP Auth Provider](./overview.md).
+Most servers in the registry require their own credentials, such as API keys or OAuth tokens. See the website of the server. For servers that use Casdoor as their authorization server, see [Use Casdoor as the authorization server of an MCP server](/docs/mcp-auth/overview).
 
-To use a server with Claude Desktop, add it to your config file:
+To use a server in Claude Desktop, add it to the configuration file:
 
 ```json
 {
@@ -79,4 +76,8 @@ To use a server with Claude Desktop, add it to your config file:
 }
 ```
 
-For a walkthrough of connecting MCP servers to Claude Desktop, Cursor, or ChatGPT, see [Connect Claude Desktop](../how-to-connect/mcp/connect-claude-desktop.md).
+For more on connecting clients, see [Connect Claude Desktop to the Casdoor MCP server](/docs/how-to-connect/mcp/connect-claude-desktop).
+
+## See also
+
+- [MCP server overview](/docs/how-to-connect/mcp/overview)

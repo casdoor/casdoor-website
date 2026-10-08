@@ -1,86 +1,82 @@
 ---
-title: OAuth user mapping
-description: Map OAuth provider claims to Casdoor user fields.
+title: Map OAuth claims to user fields
+sidebar_label: OAuth user mapping
+description: Fill in Casdoor user fields, such as the phone number or the job title, from the claims that an OAuth provider returns.
 keywords: [OAuth, user mapping, claims, IDP, identity provider]
 authors: [nomeguy]
 ---
 
-Casdoor captures basic profile data (username, email, avatar) from OAuth sign-in. **User mapping** lets you map additional IdP claims to Casdoor user fields (phone, name, region, etc.).
+This guide explains how to map the claims that an OAuth provider returns to the fields of a Casdoor user. Casdoor reads the basic profile, such as the username, the email address, and the avatar, on its own. User mapping fills in more fields, such as the phone number, the name, or the region.
 
-## Supported Fields
+---
 
-Supported user fields for mapping:
+#### Learning outcomes
 
-- **phone** - Phone number
-- **countryCode** - Country calling code
-- **firstName** - First name
-- **lastName** - Last name
-- **region** - Geographic region
-- **location** - Full location or address
-- **affiliation** - Organization or company affiliation
-- **title** - Job title or position
-- **homepage** - Personal website URL
-- **bio** - Biography or description
-- **tag** - Custom tag or category
-- **language** - Preferred language
-- **gender** - Gender identity
-- **birthday** - Date of birth
-- **education** - Educational background
-- **idCard** - ID card number
-- **idCardType** - Type of ID card
+- Map a claim of a provider to a user field.
+- Know when Casdoor applies the mapping and which values it overwrites.
 
-Standard fields (id, username, displayName, email, avatarUrl) are handled automatically and don't need mapping configuration.
+#### What you need
 
-## Configuration
+- An [OAuth provider](/docs/provider/oauth/overview) in Casdoor
+- The names of the claims that the provider returns. See the documentation of the provider
 
-To configure user mapping:
+---
 
-1. Open **Providers** and select or create an OAuth provider (e.g. Okta, Azure AD B2C, Google).
-2. Scroll to **User mapping** and add entries:
-   - **User field**: The Casdoor user field you want to populate
-   - **Claim name**: The exact claim name from your OAuth provider's response
+## Fields that you can map {#supported-fields}
 
-For example, if your identity provider returns a claim named `given_name` and you want to map it to the user's first name in Casdoor:
+| Field | Description |
+|---|---|
+| `phone` | Phone number |
+| `countryCode` | Country calling code |
+| `firstName` | First name |
+| `lastName` | Last name |
+| `region` | Geographic region |
+| `location` | Location or address |
+| `affiliation` | Organization or company |
+| `title` | Job title |
+| `homepage` | URL of a personal website |
+| `bio` | Biography |
+| `tag` | Tag |
+| `language` | Preferred language |
+| `gender` | Gender |
+| `birthday` | Date of birth |
+| `education` | Education |
+| `idCard` | ID card number |
+| `idCardType` | Type of ID card |
 
-- User field: `firstName`
-- Claim name: `given_name`
+Casdoor fills the standard fields `id`, `username`, `displayName`, `email`, and `avatarUrl` without mapping.
 
-## Provider-Specific Examples
+## Map a claim {#configuration}
 
-### Okta
+1. In the Casdoor admin console, go to **Identity** > **Providers** and open the OAuth provider.
+1. In **User mapping**, add a row for each field:
 
-Okta returns claims like `given_name`, `family_name`, and `locale`. You might configure:
+   | Column | Value |
+   |---|---|
+   | User field | The Casdoor field to fill |
+   | Claim name | The exact name of the claim in the response of the provider |
 
-- `firstName` → `given_name`
-- `lastName` → `family_name`
-- `language` → `locale`
+1. Save the provider.
 
-### Azure AD B2C
+For example, to fill the first name from the claim `given_name`, map `firstName` to `given_name`.
 
-Azure AD B2C can return custom claims configured in your user flows. For instance:
+## Examples {#provider-specific-examples}
 
-- `phone` → `extension_PhoneNumber`
-- `title` → `jobTitle`
-- `location` → `city`
+| Provider | Field | Claim |
+|---|---|---|
+| Okta | `firstName` | `given_name` |
+| Okta | `lastName` | `family_name` |
+| Okta | `language` | `locale` |
+| Azure AD B2C | `phone` | `extension_PhoneNumber`, a custom claim of the user flow |
+| Azure AD B2C | `title` | `jobTitle` |
+| Azure AD B2C | `location` | `city` |
+| Google | `firstName` | `given_name` |
+| Google | `lastName` | `family_name` |
+| GitHub | `location` | `location` |
+| GitHub | `homepage` | `blog` |
+| GitHub | `bio` | `bio` |
 
-### Generic OAuth Providers
-
-Most OAuth providers following standard protocols return claims in their userinfo endpoint. Check your provider's documentation to find available claim names.
-
-## Behavior
-
-The mapping works with these characteristics:
-
-- **Non-destructive**: Existing user field values are preserved. Mapping only updates empty fields.
-- **Automatic sync**: When users sign in via OAuth, the mapping is applied automatically.
-- **Flexible**: Each provider can have its own unique mapping configuration.
-- **Extra claims**: All claims from the provider are stored in the user's extra data, even if not explicitly mapped.
-
-## Common Scenarios
-
-### Enterprise SSO
-
-When integrating with enterprise identity providers like Okta or Azure AD, you often want to sync organizational data:
+For an enterprise identity provider, typical mappings carry organizational data:
 
 ```text
 title → jobTitle
@@ -88,9 +84,7 @@ affiliation → companyName
 region → officeLocation
 ```
 
-### Social Login Enhancement
-
-Social providers (e.g. Google, Facebook) provide basic profile data; additional details can be captured as follows:
+For a social provider, they carry profile details:
 
 ```text
 location → location
@@ -98,29 +92,21 @@ homepage → website
 bio → about_me
 ```
 
-### Multi-Provider Setup
+Each provider has its own mapping. Configure it per provider, because providers name the same data differently.
 
-Different providers may use different claim names for the same data. Configure each provider independently:
+## How Casdoor applies the mapping {#behavior}
 
-**Google OAuth**:
+When a user signs in through the provider:
 
-- `firstName` → `given_name`
-- `lastName` → `family_name`
+1. Casdoor fetches the user information from the provider.
+1. Casdoor fills the standard fields.
+1. Casdoor applies the mapping and fills the mapped fields from the claims.
+1. Casdoor stores all claims of the response in the extra data of the user, including the claims that you haven't mapped.
 
-**GitHub OAuth**:
+The mapping fills only fields that are empty. It doesn't overwrite values that the user already has.
 
-- `location` → `location`
-- `homepage` → `blog`
-- `bio` → `bio`
+## See also
 
-## Technical Details
-
-When a user authenticates through OAuth:
-
-1. Casdoor receives the OAuth token and fetches user info from the provider
-2. The provider response includes standard fields plus extra claims
-3. Standard fields (username, email, etc.) are processed first
-4. User mapping rules are applied to populate additional fields from extra claims
-5. All raw claims are stored in the user's OAuth extra data for reference
-
-This ensures that user profiles in Casdoor stay synchronized with your identity provider while maintaining flexibility in how data is structured.
+- [OAuth providers](/docs/provider/oauth/overview)
+- [Okta](/docs/provider/oauth/okta)
+- [Azure AD B2C](/docs/provider/oauth/azureADb2c)

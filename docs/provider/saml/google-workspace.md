@@ -1,82 +1,60 @@
 ---
-title: Google Workspace
-description: "Configure Google Workspace as a SAML identity provider so users sign in to Casdoor with their Google Workspace accounts."
+title: Add Google Workspace as a SAML provider
+sidebar_label: Google Workspace
+description: Let users sign in to Casdoor with their Google Workspace account through SAML.
 keywords: [Google Workspace, SAML]
 authors: [nomeguy]
 ---
 
-Configure Google Workspace as a SAML IdP so users can sign in with their Google Workspace accounts.
+This guide explains how to let users sign in to Casdoor with their Google Workspace account through SAML.
 
-## Configure SAML App in Google Workspace
+---
 
-Access the Google Admin Console (admin.google.com) and navigate to **Apps** > **Web and mobile apps**.
+#### Learning outcomes
 
-Click **Add App** > **Add custom SAML app**.
+- Create a custom SAML app for Casdoor in Google Workspace.
+- Add Google Workspace as a SAML provider in Casdoor.
 
-### Basic Information
+#### What you need
 
-Enter an **App name** (e.g., "Casdoor") and optionally upload an app icon. Click **Continue**.
+- Administrator access to the Google Admin console
+- Administrator access to the Casdoor admin console
 
-### Google Identity Provider Details
+---
 
-Download the metadata or note the following values provided by Google:
+## Create a SAML app in Google Workspace {#configure-saml-app-in-google-workspace}
 
-- **SSO URL**
-- **Entity ID**
-- **Certificate**
+1. In the Google Admin console (admin.google.com), go to **Apps** > **Web and mobile apps**.
+1. Click **Add App** > **Add custom SAML app**.
+1. Enter an **App name**, for example `Casdoor`, and optionally an icon. Click **Continue**.
+1. Download the metadata, or note the **SSO URL**, the **Entity ID**, and the **Certificate**. Click **Continue**.
+1. Enter the service provider details:
 
-Click **Continue**.
+   | Field | Value |
+   |---|---|
+   | **ACS URL** | `https://<your-casdoor-domain>/api/acs`, for example `https://door.example.com/api/acs` |
+   | **Entity ID** | The same URL |
+   | **Name ID format** | `EMAIL` |
+   | **Name ID** | **Basic Information** > **Primary email** |
 
-### Service Provider Details
+   Google Workspace sends the response with HTTP POST, which the `/api/acs` endpoint requires. Click **Continue**.
 
-Configure Casdoor as the Service Provider with the following values:
+1. Optionally, map attributes, for example `email` to **Primary email**, and `displayName` to **First name** and **Last name**. Click **Finish**.
+1. Turn the app **ON** for your organization or for the organizational units that may sign in.
 
-- **ACS URL**: `https://<your-casdoor-domain>/api/acs`
-  - Example: `https://door.example.com/api/acs`
-- **Entity ID**: `https://<your-casdoor-domain>/api/acs`
-  - Use the same URL as ACS URL
-- **Name ID format**: `EMAIL`
-- **Name ID**: `Basic Information > Primary email`
+## Add the provider in Casdoor {#configure-saml-provider-in-casdoor}
 
-:::note
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `SAML` and **Type** to `Custom`.
+1. Paste the metadata from Google Workspace into **Metadata** and click **Parse**.
+1. Check that **SP ACS URL** and **SP Entity ID** are `https://<your-casdoor-domain>/api/acs`, and save the provider.
+1. Open the edit page of your application, add the provider on the **Providers** tab, and save.
 
-The `/api/acs` endpoint only accepts POST requests. Google Workspace uses POST binding by default.
+## Verify the result {#test-the-integration}
 
-:::
+Open the sign-in page of the application and click the Google Workspace button.
 
-Click **Continue**.
+## See also
 
-### Attribute Mapping
-
-Configure attribute mapping (optional):
-
-- **email** → **Primary email**
-- **displayName** → **First name** and **Last name**
-
-Click **Finish**.
-
-### Enable the App
-
-After creating the app, make sure to turn it **ON** for your organization or specific organizational units.
-
-## Configure SAML Provider in Casdoor
-
-In the Casdoor admin console, navigate to **Providers** and click **Add**.
-
-Select the following:
-
-- **Category**: `SAML`
-- **Type**: `Custom`
-- **Metadata**: Paste the metadata downloaded from Google Workspace, or manually enter the SSO URL, Entity ID, and certificate.
-
-Click **Parse** to automatically fill in the fields, then click **Save**.
-
-Copy the generated **SP ACS URL** and **SP Entity ID** values (they should match `https://<your-casdoor-domain>/api/acs`).
-
-## Add Provider to Application
-
-Edit your Casdoor application and add the Google Workspace SAML provider to the **Providers** list. Click **Save**.
-
-## Test the Integration
-
-Navigate to your Casdoor application's login page. You should see a Google Workspace login option. Click it to test the SAML authentication flow.
+- [SAML providers](/docs/provider/saml/overview)
+- [Connect Google Workspace with SAML](/docs/how-to-connect/saml/google-workspace): Casdoor as the IdP of Google Workspace.

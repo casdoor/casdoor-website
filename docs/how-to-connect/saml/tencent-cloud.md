@@ -1,56 +1,83 @@
 ---
-title: Tencent Cloud (SAML)
-description: Use Casdoor as SAML IdP for Tencent Cloud CAM.
+title: Connect Tencent Cloud with SAML
+sidebar_label: Tencent Cloud (SAML)
+description: Use Casdoor as the SAML identity provider of Tencent Cloud Access Management (CAM), so that users sign in to Tencent Cloud in a role.
 keywords: [SAML, IdP, Tencent Cloud]
 authors: [Songjf-ttk]
 ---
 
-This guide configures Casdoor as a SAML identity provider for **Tencent Cloud** (CAM).
+This guide explains how to use Casdoor as the SAML identity provider (IdP) of Tencent Cloud. Users sign in to Casdoor and enter Tencent Cloud in a role of Cloud Access Management (CAM).
 
-## Get SAML metadata from Casdoor
+---
 
-1. In Casdoor, add an X.509 certificate (RSA).
-2. Copy the **SAML metadata** from the application (or metadata URL).
+#### Learning outcomes
 
-![Add cert](/img/how-to-connect/saml/saml_tencent-cloud_cert.png)
-![Copy Saml metadata](/img/how-to-connect/saml/saml_tencent-cloud_metadata.png)
+- Get the SAML metadata of a Casdoor application.
+- Add Casdoor as an identity provider and create a role in Tencent Cloud.
+- Send the role to Tencent Cloud in SAML attributes.
+- Build the sign-in URL and test the sign-in.
 
-## Add SAML IdP and role in Tencent Cloud
+#### What you need
 
-1. Log in to Tencent Cloud and open **Access Management** (CAM).
-2. Create a new **Identity provider** and upload the Casdoor SAML metadata.
-3. Create a new **Role** and select that identity provider.
+- A Tencent Cloud account with access to CAM
+- An [application](/docs/application/overview) in Casdoor
 
-![Login Access Management](/img/how-to-connect/saml/saml_tencent-cloud_access_management.png)
-![Saml idp create](/img/how-to-connect/saml/saml_tencent-cloud_idp_create.png)
-![Saml role create](/img/how-to-connect/saml/saml_tencent-cloud_create_role.png)
+---
 
-## Configure the application in Casdoor
+## Get the SAML metadata from Casdoor
 
-1. On the application edit page, select the certificate and add the Tencent Cloud domain to **Redirect URLs**.
-2. Set the **ACS URL** and configure **SAML attributes** as follows:
+1. In the Casdoor admin console, add an X.509 certificate with the RSA algorithm. See [Certificates](/docs/cert/overview).
 
-![Select cert and add redirect URLs](/img/how-to-connect/saml/saml_tencent-cloud_app.png)
-![Add acs url and configure saml attribute](/img/how-to-connect/saml/saml_tencent-cloud_acs.png)
+   ![Certificate edit page in Casdoor](/img/how-to-connect/saml/saml_tencent-cloud_cert.png)
 
-| Name | Name Format | Value |
-|------|-------------|-------|
-| `https://cloud.tencent.com/SAML/Attributes/Role` | Unspecified | `qcs::cam::uin/{'{'}AccountID{'}'}:roleName/{'{'}RoleName1{'}'};qcs::cam::uin/{'{'}AccountID{'}'}:roleName/{'{'}RoleName2{'}'},qcs::cam::uin/{'{'}AccountID{'}'}:saml-provider/{'{'}ProviderName{'}'}` |
-| `https://cloud.tencent.com/SAML/Attributes/RoleSessionName` | Unspecified | `casdoor` |
+1. Open the edit page of the application and copy the **SAML metadata**.
 
-:::info
-Replace placeholders using:
+   ![SAML metadata of the application](/img/how-to-connect/saml/saml_tencent-cloud_metadata.png)
 
-- **{'{'}AccountID{'}'}**: Tencent Cloud account ID — [Account Information](https://console.cloud.tencent.com/developer)
-- **{'{'}RoleName{'}'}**: Role name — [Roles](https://console.cloud.tencent.com/cam/role)
-- **{'{'}ProviderName{'}'}**: SAML identity provider name — [Identity Providers](https://console.cloud.tencent.com/cam/idp)
+## Add the IdP and a role in Tencent Cloud
 
-See [Tencent Cloud SAML IdP documentation](https://cloud.tencent.com/document/product/598/38058).
-:::
+1. Sign in to Tencent Cloud and open **Access Management**.
 
-## Log in via SAML
+   ![Access Management in the Tencent Cloud console](/img/how-to-connect/saml/saml_tencent-cloud_access_management.png)
 
-Flow: User → Tencent Cloud (unauthenticated) → redirect to Casdoor → sign in → Tencent Cloud (authenticated). The initial redirect URL can be built from SAML metadata and IdP SSO URL. Example (Go) that fetches metadata, builds the auth URL, and prints it:
+1. Create an identity provider and upload the SAML metadata from Casdoor.
+
+   ![New identity provider in Tencent Cloud](/img/how-to-connect/saml/saml_tencent-cloud_idp_create.png)
+
+1. Create a role and select that identity provider for it.
+
+   ![New role in Tencent Cloud](/img/how-to-connect/saml/saml_tencent-cloud_create_role.png)
+
+## Configure the Casdoor application {#configure-the-application-in-casdoor}
+
+1. On the edit page of the application, select the certificate in **Cert** and add the Tencent Cloud domain to **Redirect URLs**.
+
+   ![Certificate and Redirect URLs of the application](/img/how-to-connect/saml/saml_tencent-cloud_app.png)
+
+1. Set **SAML reply URL** to the ACS URL of Tencent Cloud, and add the following rows to **SAML attributes**:
+
+   | Name | Name Format | Value |
+   |------|-------------|-------|
+   | `https://cloud.tencent.com/SAML/Attributes/Role` | Unspecified | `qcs::cam::uin/<AccountID>:roleName/<RoleName1>;qcs::cam::uin/<AccountID>:roleName/<RoleName2>,qcs::cam::uin/<AccountID>:saml-provider/<ProviderName>` |
+   | `https://cloud.tencent.com/SAML/Attributes/RoleSessionName` | Unspecified | `casdoor` |
+
+   ![SAML reply URL and SAML attributes of the application](/img/how-to-connect/saml/saml_tencent-cloud_acs.png)
+
+1. Replace the placeholders in the first value:
+
+   | Placeholder | Value | Where to find it |
+   |---|---|---|
+   | `<AccountID>` | ID of your Tencent Cloud account | [Account Information](https://console.cloud.tencent.com/developer) |
+   | `<RoleName1>`, `<RoleName2>` | Name of the role | [Roles](https://console.cloud.tencent.com/cam/role) |
+   | `<ProviderName>` | Name of the SAML identity provider | [Identity Providers](https://console.cloud.tencent.com/cam/idp) |
+
+1. Save the application.
+
+For the format of the attributes, see the [Tencent Cloud documentation on SAML identity providers](https://cloud.tencent.com/document/product/598/38058).
+
+## Verify the result {#log-in-via-saml}
+
+A user who opens Tencent Cloud without a session is redirected to Casdoor, signs in there, and returns to Tencent Cloud in the role. You build the first redirect URL from the SAML metadata. The following Go program fetches the metadata, builds the URL, and prints it:
 
 ```go
 func main() {
@@ -116,6 +143,10 @@ func main() {
 }
 ```
 
-After running the code, open the printed URL to test login.
+Run the program and open the printed URL. After you sign in to Casdoor, the Tencent Cloud console opens.
 
-![Final result](/img/how-to-connect/saml/saml_tencent-cloud_login_test.gif)
+![Recording of the sign-in to Tencent Cloud through Casdoor](/img/how-to-connect/saml/saml_tencent-cloud_login_test.gif)
+
+## See also
+
+- [Use Casdoor as a SAML identity provider](/docs/how-to-connect/saml/overview)

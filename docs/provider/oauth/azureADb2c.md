@@ -1,40 +1,60 @@
 ---
-title: Azure AD B2C OAuth
-description: Add Azure AD B2C as an OAuth provider.
+title: Add Azure AD B2C as an OAuth provider
+sidebar_label: Azure AD B2C
+description: Let customers sign in to Casdoor with their account in Azure AD B2C.
 keywords: [Azure AD B2C, OAuth]
 authors: [nomeguy]
 ---
 
-Azure AD B2C is a customer identity platform supporting OpenID Connect, OAuth 2.0, and SAML. Use it as an OAuth provider so users can sign in with B2C accounts.
+This guide explains how to let users sign in to Casdoor with their account in Azure AD B2C, the customer identity platform of Microsoft.
 
-## 1. Create a B2C tenant
+---
 
-Create a B2C tenant in the [Azure Portal](https://portal.azure.com/).
+#### Learning outcomes
 
-## 2. Register an application
+- Register an application in an Azure AD B2C tenant.
+- Add Azure AD B2C as an OAuth provider in Casdoor.
 
-In the B2C tenant, register an application and note the **Application (client) ID**.
+#### What you need
 
-![azuread_register.png](/img/providers/OAuth/azuread_register.png)
+- An Azure subscription
+- Administrator access to the Casdoor admin console
 
-## 3. Create a client secret
+---
 
-Create a **client secret** for the app and copy its value (it is shown only once).
+## Configure Azure AD B2C
 
-![azuread_secret.png](/img/providers/OAuth/azuread_secret.png)
+1. Create a B2C tenant in the [Azure portal](https://portal.azure.com/).
+1. Register an application in the B2C tenant and note the **Application (client) ID**.
 
-## 4. Add redirect URIs
+   ![Application registration](/img/providers/OAuth/azuread_register.png)
 
-In the app registration, add the **Redirect URIs** (e.g. your Casdoor callback URL).
+1. Create a client secret and copy its value. Azure shows the value only once.
 
-![azuread_uri.png](/img/providers/OAuth/azuread_uri.png)
+   ![Client secret of the application](/img/providers/OAuth/azuread_secret.png)
 
-## 5. Define user flows
+1. Add the callback URL of Casdoor, `https://<your-casdoor-host>/callback`, to the **Redirect URIs** of the application.
 
-In B2C, define user flows for sign-up, sign-in, and profile management as needed.
+   ![Redirect URIs of the application](/img/providers/OAuth/azuread_uri.png)
 
-## 6. Add the provider in Casdoor
+1. Define the user flows that you need, for sign-up, sign-in, and profile editing.
 
-**Providers** → **Add**. Set **Category** to **OAuth**, **Type** to **Azure AD B2C**. Enter the **Client ID** and **Client secret** from the B2C app.
+## Add the provider in Casdoor {#6-add-the-provider-in-casdoor}
 
-![azuread_casdoor.png](/img/providers/OAuth/azuread_casdoor.png)
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `Azure AD B2C`.
+1. Enter the **Client ID** and the **Client secret** of the B2C application.
+
+   ![Azure AD B2C provider in Casdoor](/img/providers/OAuth/azuread_casdoor.png)
+
+1. Save the provider.
+
+To fill in more user fields from the claims of your user flows, see [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping).
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)

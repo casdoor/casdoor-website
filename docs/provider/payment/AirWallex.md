@@ -1,31 +1,56 @@
 ---
-title: AirWallex
-description: Use AirWallex as a payment provider.
+title: Take payments with AirWallex
+sidebar_label: AirWallex
+description: Use AirWallex as the payment provider of your Casdoor products.
 keywords: [AirWallex, payment]
 authors: [Cutsin]
 ---
 
-## 1. Get credentials
+This guide explains how to let users pay for your Casdoor products with AirWallex.
 
-Create an account at [AirWallex](https://www.airwallex.com/) and sign in to the [Developer Dashboard](https://www.airwallex.com/app/account/apiKeys). Under **API Keys**, copy **CLIENT ID** and **API KEY** (or create a new custom permission key).
+---
 
-![AirWallex API Keys](/img/providers/payment/airwallex_api_keys.png)
+#### Learning outcomes
 
-## 2. Create the provider in Casdoor
+- Get the API key from AirWallex.
+- Add AirWallex as a payment provider and add it to a product.
 
-**Providers** → **Add**. Set **Category** to **Payment**, **Type** to **AirWallex**. Map:
+#### What you need
 
-| Casdoor       | AirWallex   |
-|---------------|-------------|
-| Client ID     | CLIENT ID   |
-| Client secret | API KEY     |
+- An [AirWallex](https://www.airwallex.com/) account
+- A [product](/docs/products/product) in Casdoor
 
-![AirWallex provider](/img/providers/payment/airwallex_provider.png)
+---
 
-## 3. Attach to a product
+## Get the API key {#1-get-credentials}
 
-Add the AirWallex provider to the product so users can pay with AirWallex.
+In the [AirWallex developer dashboard](https://www.airwallex.com/app/account/apiKeys), under **API Keys**, copy the **CLIENT ID** and the **API KEY**, or create a key with custom permissions.
 
-![Add AirWallex payment provider for product](/img/providers/payment/airwallex_product.png)
+![API keys in AirWallex](/img/providers/payment/airwallex_api_keys.png)
+
+## Add the provider in Casdoor {#2-create-the-provider-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `Payment` and **Type** to `AirWallex`.
+1. Fill in the fields:
+
+   | Casdoor       | AirWallex   |
+   |---------------|-------------|
+   | Client ID     | CLIENT ID   |
+   | Client secret | API KEY     |
+
+   ![AirWallex provider in Casdoor](/img/providers/payment/airwallex_provider.png)
+
+1. Save the provider.
+
+## Add the provider to a product {#3-attach-to-a-product}
+
+Add the provider to the **Payment providers** of the product and save it.
+
+![AirWallex in the payment providers of a product](/img/providers/payment/airwallex_product.png)
 
 <video src="/video/provider/payment/use_airwallex_buy_product.mp4" controls="controls" width="100%"></video>
+
+## See also
+
+- [Payment providers](/docs/provider/payment/overview)

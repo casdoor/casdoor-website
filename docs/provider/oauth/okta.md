@@ -1,19 +1,60 @@
 ---
-title: Okta OAuth
-description: Add Okta as an OIDC/OAuth provider.
+title: Add Okta as an OAuth provider
+sidebar_label: Okta
+description: Let users sign in to Casdoor with their Okta account through OpenID Connect.
 keywords: [Okta, OAuth, OIDC]
 authors: [greenhandatsjtu]
 ---
 
-1. Sign up at [Okta Developer](https://developer.okta.com/signup/).
-2. **Applications** → **Applications** → **Create App Integration**. Choose **OIDC - OpenID Connect**, **Web Application**, then **Next**.
-3. Set **Sign-in redirect URIs** to your Casdoor callback URL (e.g. `https://door.casdoor.com/callback`). In **Assignments** set **Controlled access**, then **Save**.
-4. Copy **Client ID**, **Client secret**, and **Okta domain** from the app.
+This guide explains how to let users sign in to Casdoor with their Okta account.
 
-![Create an app integration](/img/providers/OAuth/oktacreateapp.png)
-![Enter redirect URL](/img/providers/OAuth/oktasetredirecturl.png)
-![Okta OIDC settings](/img/providers/OAuth/oktasettings.png)
+---
 
-In Casdoor add an **OAuth** provider, set **Type** to **Okta**, and enter **Client ID**, **Client secret**, and **Domain**. **Domain** must include the auth server path: use `https://<okta-domain>/oauth2/default` (not just the Okta domain). See [Okta authorization servers](https://developer.okta.com/docs/concepts/auth-servers/).
+#### Learning outcomes
 
-![Add Okta in Casdoor](/img/providers/OAuth/oktacasdoor.png)
+- Create an OpenID Connect (OIDC) app integration in Okta.
+- Add Okta as an OAuth provider in Casdoor.
+
+#### What you need
+
+- An Okta organization. To try it, sign up at [Okta Developer](https://developer.okta.com/signup/).
+- Administrator access to the Casdoor admin console
+
+---
+
+## Create an app integration in Okta
+
+1. In the Okta admin console, go to **Applications** > **Applications** and click **Create App Integration**.
+1. Select **OIDC - OpenID Connect** and **Web Application**, and click **Next**.
+
+   ![Create a new app integration in Okta](/img/providers/OAuth/oktacreateapp.png)
+
+1. Set **Sign-in redirect URIs** to the callback URL of Casdoor, for example `https://door.casdoor.com/callback`.
+
+   ![Sign-in redirect URIs of the app](/img/providers/OAuth/oktasetredirecturl.png)
+
+1. Under **Assignments**, select **Controlled access**, and click **Save**.
+1. Copy the **Client ID**, the **Client secret**, and the **Okta domain**.
+
+   ![Client credentials and Okta domain](/img/providers/OAuth/oktasettings.png)
+
+## Add the provider in Casdoor
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `Okta`.
+1. Enter the **Client ID** and the **Client secret**.
+1. Set **Domain** to the URL of the authorization server, `https://<okta-domain>/oauth2/default`, not the Okta domain alone. See [Authorization servers](https://developer.okta.com/docs/concepts/auth-servers/) in the Okta documentation.
+
+   ![Okta provider in Casdoor](/img/providers/OAuth/oktacasdoor.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)
+- [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping)
+- [Okta syncer](/docs/syncer/Okta)

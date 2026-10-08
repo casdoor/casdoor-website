@@ -1,13 +1,15 @@
 ---
 title: MCP tools reference
-description: List and call MCP tools (applications and more).
+description: The tools of the Casdoor MCP server for managing applications and users, how to list and call them, and the format of the results.
 keywords: [MCP, tools, API, application management]
 authors: [hsluoyz]
 ---
 
-## List tools
+The Casdoor MCP server offers tools that manage Casdoor objects. This page describes how to list the tools, how to call them, and what they return.
 
-Call `tools/list` to discover tools:
+## List the tools {#list-tools}
+
+Call `tools/list`:
 
 ```json
 POST /api/mcp
@@ -18,9 +20,15 @@ POST /api/mcp
 }
 ```
 
-The response depends on auth: unauthenticated requests see all tools (for discovery); session auth returns the full list; a scoped token returns only tools allowed by that token’s scopes.
+Which tools the response contains depends on how the request is authenticated:
 
-The server returns tool definitions with input schemas:
+| Authentication | Tools in the response |
+|---|---|
+| None | All tools, so that clients can discover them. Calling a tool still requires authentication |
+| Session cookie | All tools |
+| Access token | The tools that the scopes of the token allow |
+
+Each tool comes with a description and an input schema:
 
 ```json
 {
@@ -47,11 +55,19 @@ The server returns tool definitions with input schemas:
 }
 ```
 
-## Application Management Tools
+## Application tools {#application-management-tools}
 
-The MCP server currently provides these application management tools:
+| Tool | Description |
+|---|---|
+| `get_applications` | Gets all applications of an organization |
+| `get_application` | Gets one application |
+| `add_application` | Creates an application |
+| `update_application` | Changes an application |
+| `delete_application` | Deletes an application |
 
-**get_applications** - Retrieve all applications for an organization:
+Call a tool with `tools/call`, the name of the tool, and its arguments.
+
+`get_applications`:
 
 ```json
 {
@@ -67,7 +83,7 @@ The MCP server currently provides these application management tools:
 }
 ```
 
-**get_application** - Get details of a specific application:
+`get_application`:
 
 ```json
 {
@@ -83,7 +99,7 @@ The MCP server currently provides these application management tools:
 }
 ```
 
-**add_application** - Create a new application:
+`add_application`:
 
 ```json
 {
@@ -104,7 +120,7 @@ The MCP server currently provides these application management tools:
 }
 ```
 
-**update_application** - Modify an existing application:
+`update_application`:
 
 ```json
 {
@@ -125,7 +141,7 @@ The MCP server currently provides these application management tools:
 }
 ```
 
-**delete_application** - Remove an application:
+`delete_application`:
 
 ```json
 {
@@ -144,21 +160,25 @@ The MCP server currently provides these application management tools:
 }
 ```
 
-## User Management Tools
+## User tools {#user-management-tools}
 
-The MCP server also provides user management tools, mirroring the application tools:
+The user tools work like the application tools.
 
-- **get_users** — List all users in an organization (argument: `owner`).
-- **get_user** — Get one user by `id`, or by `owner` + `email`, or `owner` + `phone`.
-- **add_user** — Create a user (argument: `user` object).
-- **update_user** — Modify an existing user (arguments: `id` and `user` object).
-- **delete_user** — Delete a user (argument: `user` object).
+| Tool | Arguments | Description |
+|---|---|---|
+| `get_users` | `owner` | Lists all users of an organization |
+| `get_user` | `id`, or `owner` and `email`, or `owner` and `phone` | Gets one user |
+| `add_user` | `user` object | Creates a user |
+| `update_user` | `id` and `user` object | Changes a user |
+| `delete_user` | `user` object | Deletes a user |
 
-They are called the same way as the application tools — via `tools/call` with the tool `name` and `arguments`. As with the other tools, results are subject to the caller's auth and scopes.
+## Other tools
 
-## Response Format
+The server also has tools for organizations, roles, permissions, providers, and tokens. For the names of all tools and the scope that each one requires, see the [scope reference](/docs/how-to-connect/mcp/authorization#complete-scope-reference).
 
-Tool calls return results in a structured format:
+## Result format {#response-format}
+
+A successful call returns the result as content:
 
 ```json
 {
@@ -175,7 +195,7 @@ Tool calls return results in a structured format:
 }
 ```
 
-When errors occur during tool execution, the response includes an `isError` flag:
+When the tool fails, the result has the `isError` flag:
 
 ```json
 {
@@ -192,3 +212,10 @@ When errors occur during tool execution, the response includes an `isError` flag
   }
 }
 ```
+
+Errors of the protocol itself, such as a missing scope, are JSON-RPC errors. See [MCP error handling](/docs/how-to-connect/mcp/error-handling).
+
+## See also
+
+- [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization)
+- [MCP integration example](/docs/how-to-connect/mcp/integration)

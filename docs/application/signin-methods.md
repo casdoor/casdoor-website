@@ -1,24 +1,61 @@
 ---
-title: Sign-in methods
-description: Configure which sign-in methods are available and their order on the login page.
+title: Choose the sign-in methods
+sidebar_label: Sign-in methods
+description: Choose which sign-in methods an application offers on its sign-in page, such as password, verification code, WebAuthn, and LDAP, and in which order.
 keywords: [signin, method, password, verification code, WebAuthn, LDAP]
 authors: [HGZ-20]
 ---
 
-On the application edit page, configure the **sign-in items** table: add, remove, and reorder methods. Supported methods: **Password**, **Verification code**, **WebAuthn**, and **LDAP**.
+This guide explains how to choose the sign-in methods that the sign-in page of an application offers, in which order, and with which restrictions.
 
-![Signin Methods](/img/application/signin-methods/signin-methods.png)
+---
 
-Field reference:
+#### Learning outcomes
 
-| Column       | Description |
-|-------------|-------------|
-| Name        | Sign-in method name. |
-| DisplayName | Label shown to users. |
-| Rule        | Rule that customizes this method (see table below). |
-| Action      | Move up, move down, or delete. |
+- Add, remove, and order sign-in methods.
+- Restrict a method with a rule.
 
-The methods below take a rule.
+#### What you need
+
+- An [application](/docs/application/overview)
+
+---
+
+## About sign-in methods
+
+The **Signin methods** table of an application lists the methods on its sign-in page, in order. The available methods include **Password**, **Verification code**, **Magic link**, **WebAuthn**, **LDAP**, **Face ID**, **Device login**, and **WeChat**. All methods except LDAP are on by default. An application needs at least one method.
+
+![Signin methods table of an application](/img/application/signin-methods/signin-methods.png)
+
+| Column | Description |
+|---|---|
+| Name | Method |
+| Display name | Label that users see |
+| Rule | Restriction of the method. See [Method rules](#method-rules) |
+| Action | Move the row up or down, or delete it |
+
+## Configure the methods
+
+1. In the Casdoor admin console, open the edit page of the application.
+1. In **Signin methods**, add, remove, and order the methods.
+1. Optionally, change the display name of a method and select a rule.
+1. Save the application.
+
+For example, to prefer sign-in with an email code and offer the password second:
+
+1. Put **Verification code** first and **Password** second.
+1. Set the rule of **Verification code** to `Email only`, so that the code goes only by email.
+1. Set the display name of **Verification code** to a clear label, such as `Email login`.
+
+![Signin methods configured for email code first](/img/application/signin-methods/signin-methods-demo-config.png)
+
+The sign-in page then looks like this:
+
+![Sign-in page with email code first](/img/application/signin-methods/signin-methods-demo-page.png)
+
+<video src="/video/application/signin-methods-demo.mp4" controls="controls" width="100%"></video>
+
+## Method rules
 
 | Method            | Rules | Description |
 |-------------------|-------|-------------|
@@ -26,24 +63,13 @@ The methods below take a rule.
 | Verification code | `All` (default), `Email only`, `Phone only` | Which channel to use for the code: both, email only, or phone only. |
 | Device login      | `Tab` (default), `Login page` | `Tab` shows the device login QR code in its own tab. `Login page` shows it next to the sign-in form, so users signed in to your mobile app can [scan it to sign in to the website](/docs/how-to-connect/oauth#scanning-the-websites-qr-code-with-your-app). |
 
-:::tip Native apps
-
-A native app can sign users in with a verification code without opening this page: enable the [Verification Code grant](/docs/how-to-connect/oauth#verification-code-grant), which also signs up phone numbers and emails that have no account yet.
-
-:::
-
-:::note
-**Example:** Prefer email sign-in, then password. Add **Verification code** first and **Password** second; set the verification code rule to **Email only** so the code is sent only by email. Optionally set a clear display name for the verification code method (e.g. “Email login”).
-:::
-
-![Signin Methods](/img/application/signin-methods/signin-methods-demo-config.png)
-
-![Signin Methods](/img/application/signin-methods/signin-methods-demo-page.png)
-
 :::tip
-All methods except LDAP are available by default. At least one sign-in method must be configured.
+A native app can sign users in with a verification code without opening the sign-in page. Turn on the [verification code grant](/docs/how-to-connect/oauth#verification-code-grant), which also signs up phone numbers and email addresses that have no account yet.
 :::
 
-Here is a video of how the sign-in method works:
+## See also
 
-<video src="/video/application/signin-methods-demo.mp4" controls="controls" width="100%"></video>
+- [Sign-in items](/docs/application/signin-items-table)
+- [Set up WebAuthn sign-in](/docs/how-to-connect/webauthn)
+- [Set up Face ID sign-in](/docs/how-to-connect/face-id)
+- [LDAP](/docs/ldap/overview)

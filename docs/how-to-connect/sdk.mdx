@@ -1,40 +1,45 @@
 ---
-title: Casdoor SDKs
-description: Use Casdoor SDKs for frontend and backend integration with user management and more.
+title: Sign users in with a Casdoor SDK
+sidebar_label: Casdoor SDKs
+description: Find the Casdoor SDK for your platform, and use a frontend SDK and a backend SDK together to sign users in, verify the access token, and call the Casdoor API.
 keywords: [SDK, frontend, backend, OIDC]
 authors: [nomeguy]
 ---
 
-## Overview
+This guide lists the Casdoor SDKs and explains how to sign users in to a web application with a frontend SDK and a backend SDK. The examples use `casdoor-js-sdk` and `casdoor-go-sdk`. The other SDKs follow the same steps.
 
-Casdoor SDKs extend standard OIDC with user management, resource uploads, and other features. They take a bit more setup than a generic OIDC client but give you the full Casdoor API.
+---
 
-**Frontend SDKs** — For web (JavaScript, React, Vue, etc.) and mobile (Android, iOS, React Native, Flutter).  
-**Backend SDKs** — For Go, Java, Node.js, Python, PHP, .NET, Rust, C++, and more.
+#### Learning outcomes
 
-:::tip
-For a frontend/backend split, use a frontend SDK (e.g. `casdoor-js-sdk`, `casdoor-react-sdk`, `casdoor-vue-sdk`) in the UI and a backend SDK for token validation and API calls. For a traditional server-rendered app (JSP, PHP), a backend SDK may be enough. Example: [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example).
-:::
+- Choose the SDKs for your platform.
+- Configure the backend SDK and the frontend SDK.
+- Exchange the authorization code for an access token and verify the token.
+- Keep the user signed in to your application.
+- Manage users and applications through the SDK.
 
-| Mobile SDK       | Description                     | SDK code                                                                        | Example code                                                                            |
-|------------------|---------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| Android SDK      | For Android apps                | [casdoor-android-sdk](https://github.com/casdoor/casdoor-android-sdk)           | [casdoor-android-example](https://github.com/casdoor/casdoor-android-example)           |
-| iOS SDK          | For iOS apps                    | [casdoor-ios-sdk](https://github.com/casdoor/casdoor-ios-sdk)                   | [casdoor-ios-example](https://github.com/casdoor/casdoor-ios-example)                   |
-| React Native SDK | For React Native apps           | [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk) | [casdoor-react-native-example](https://github.com/casdoor/casdoor-react-native-example) |
-| Flutter SDK      | For Flutter apps                | [casdoor-flutter-sdk](https://github.com/casdoor/casdoor-flutter-sdk)           | [casdoor-flutter-example](https://github.com/casdoor/casdoor-flutter-example)           |
-| Firebase SDK     | For Google Firebase apps        |                                                                                 | [casdoor-firebase-example](https://github.com/casdoor/casdoor-firebase-example)         |
-| Unity Games SDK  | For Unity 2D/3D PC/Mobile games | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk)             | [casdoor-unity-example](https://github.com/casdoor/casdoor-unity-example)               |
-| uni-app SDK      | For uni-app apps                | [casdoor-uniapp-sdk](https://github.com/casdoor/casdoor-uniapp-sdk)             | [casdoor-uniapp-example](https://github.com/casdoor/casdoor-uniapp-example)             |
+#### What you need
 
-:::tip
-Mobile apps that sign users in natively instead of in a browser can use the [Verification Code grant](/docs/how-to-connect/oauth#verification-code-grant) for SMS or email sign-in with automatic signup, and let signed-in users [approve the QR code on your website's login page](/docs/how-to-connect/oauth#scanning-the-websites-qr-code-with-your-app).
-:::
+- A running Casdoor instance
+- An [application](/docs/application/overview) in Casdoor, with the callback URL of your application in **Redirect URLs**
+- The client ID and client secret of the application, and the public key of its certificate
 
-| Desktop SDK      | Description            | SDK code                                                            | Example code                                                                                                                                                                                                                                                                                                                                               |
-|------------------|------------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Electron SDK     | For Electron apps      | [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk)         | [casdoor-electron-example](https://github.com/casdoor/casdoor-electron-example)                                                                                                                                                                                                                                                                            |
-| .NET Desktop SDK | For .NET desktop apps  | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk) | WPF: [casdoor-dotnet-desktop-example](https://github.com/casdoor/casdoor-dotnet-desktop-example)<br />WinForms: [casdoor-dotnet-winform-example](https://github.com/casdoor/casdoor-dotnet-winform-example)<br />[Avalonia UI](https://avaloniaui.net/): [casdoor-dotnet-avalonia-example](https://github.com/RVShershnev/casdoor-dotnet-avalonia-example) |
-| C/C++ SDK        | For C/C++ desktop apps | [casdoor-cpp-sdk](https://github.com/casdoor/casdoor-cpp-sdk)       | [casdoor-cpp-qt-example](https://github.com/casdoor/casdoor-cpp-qt-example)                                                                                                                                                                                                                                                                                |
+---
+
+## About the SDKs
+
+The Casdoor SDKs build on OpenID Connect (OIDC) and add functions of the Casdoor API, such as user management and file upload. They need a little more setup than a [standard OIDC client](/docs/how-to-connect/oidc-client) and give you the full Casdoor API.
+
+- **Frontend SDKs**: For web frontends, mobile apps, and desktop apps. They build the sign-in URL and handle the callback in the UI.
+- **Backend SDKs**: For your server. They exchange the authorization code, verify tokens, and call the Casdoor API.
+
+If your application has a separate frontend and backend, use a frontend SDK in the UI and a backend SDK on the server. For an example, see [casdoor-python-vue-sdk-example](https://github.com/casdoor/casdoor-python-vue-sdk-example). If your application renders pages on the server, as JSP and PHP applications do, a backend SDK alone can be enough.
+
+## Choose an SDK
+
+All official SDKs are in the [casdoor organization on GitHub](https://github.com/orgs/casdoor/repositories?q=sdk&type=all&language=&sort=).
+
+### Web frontend SDKs
 
 | Web frontend SDK  | Description                      | SDK code                                                          | Example code                                                                                                                                                                                                                         |
 |-------------------|----------------------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -49,7 +54,7 @@ Mobile apps that sign users in natively instead of in a browser can use the [Ver
 | ASP.NET SDK       | For ASP.NET Blazor WASM websites | [Blazor.BFF.OpenIDConnect.Template](https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template) | [casdoor-dotnet-blazorwasm-oidc-example](https://github.com/RVShershnev/casdoor-dotnet-blazorwasm-oidc-example)                                                                                                                      |
 | Firebase SDK      | For Google Firebase apps         |                                                                                                     | [casdoor-firebase-example](https://github.com/casdoor/casdoor-firebase-example)                                                                                                                                                      |
 
-Pair the frontend with a backend SDK in your server’s language:
+### Web backend SDKs
 
 | Web backend SDK | Description          | Sdk code                                                            | Example code                                                                                                                                                                                                                                                                                                         |
 |-----------------|----------------------|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -64,13 +69,33 @@ Pair the frontend with a backend SDK in your server’s language:
 | Dart SDK        | For Dart backends    | [casdoor-dart-sdk](https://github.com/casdoor/casdoor-dart-sdk)     |                                                                                                                                                                                                                                                                                                                      |
 | Ruby SDK        | For Ruby backends    | [casdoor-ruby-sdk](https://github.com/casdoor/casdoor-ruby-sdk)     |                                                                                                                                                                                                                                                                                                                      |
 
-**All official SDKs:** `https://github.com/orgs/casdoor/repositories?q=sdk&type=all&language=&sort=`.
+### Mobile SDKs
 
-## Using the SDK
+| Mobile SDK       | Description                     | SDK code                                                                        | Example code                                                                            |
+|------------------|---------------------------------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| Android SDK      | For Android apps                | [casdoor-android-sdk](https://github.com/casdoor/casdoor-android-sdk)           | [casdoor-android-example](https://github.com/casdoor/casdoor-android-example)           |
+| iOS SDK          | For iOS apps                    | [casdoor-ios-sdk](https://github.com/casdoor/casdoor-ios-sdk)                   | [casdoor-ios-example](https://github.com/casdoor/casdoor-ios-example)                   |
+| React Native SDK | For React Native apps           | [casdoor-react-native-sdk](https://github.com/casdoor/casdoor-react-native-sdk) | [casdoor-react-native-example](https://github.com/casdoor/casdoor-react-native-example) |
+| Flutter SDK      | For Flutter apps                | [casdoor-flutter-sdk](https://github.com/casdoor/casdoor-flutter-sdk)           | [casdoor-flutter-example](https://github.com/casdoor/casdoor-flutter-example)           |
+| Firebase SDK     | For Google Firebase apps        |                                                                                 | [casdoor-firebase-example](https://github.com/casdoor/casdoor-firebase-example)         |
+| Unity Games SDK  | For Unity 2D/3D PC/Mobile games | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk)             | [casdoor-unity-example](https://github.com/casdoor/casdoor-unity-example)               |
+| uni-app SDK      | For uni-app apps                | [casdoor-uniapp-sdk](https://github.com/casdoor/casdoor-uniapp-sdk)             | [casdoor-uniapp-example](https://github.com/casdoor/casdoor-uniapp-example)             |
 
-### 1. Backend SDK configuration
+:::tip
+A mobile app that signs users in natively, without a browser, can use the [verification code grant](/docs/how-to-connect/oauth#verification-code-grant) for sign-in by SMS or email with automatic sign-up. Signed-in users can also [approve the QR code on the sign-in page of your website](/docs/how-to-connect/oauth#scanning-the-websites-qr-code-with-your-app) from the app.
+:::
 
-On startup, call the SDK’s init function with your Casdoor endpoint, client ID, client secret, and (for JWT validation) the public key. Example with **casdoor-go-sdk**: `https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64`
+### Desktop SDKs
+
+| Desktop SDK      | Description            | SDK code                                                            | Example code                                                                                                                                                                                                                                                                                                                                               |
+|------------------|------------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Electron SDK     | For Electron apps      | [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk)         | [casdoor-electron-example](https://github.com/casdoor/casdoor-electron-example)                                                                                                                                                                                                                                                                            |
+| .NET Desktop SDK | For .NET desktop apps  | [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk) | WPF: [casdoor-dotnet-desktop-example](https://github.com/casdoor/casdoor-dotnet-desktop-example)<br />WinForms: [casdoor-dotnet-winform-example](https://github.com/casdoor/casdoor-dotnet-winform-example)<br />[Avalonia UI](https://avaloniaui.net/): [casdoor-dotnet-avalonia-example](https://github.com/RVShershnev/casdoor-dotnet-avalonia-example) |
+| C/C++ SDK        | For C/C++ desktop apps | [casdoor-cpp-sdk](https://github.com/casdoor/casdoor-cpp-sdk)       | [casdoor-cpp-qt-example](https://github.com/casdoor/casdoor-cpp-qt-example)                                                                                                                                                                                                                                                                                |
+
+## Configure the backend SDK
+
+When your backend starts, initialize the SDK with the address of Casdoor and the credentials of the application. With `casdoor-go-sdk`:
 
 ```go
 var CasdoorEndpoint = "https://door.casdoor.com"
@@ -87,7 +112,7 @@ func init() {
 }
 ```
 
-All the parameters for `InitConfig()` are explained as follows:
+`InitConfig()` takes the following parameters:
 
 | Parameter        | Must | Description                                                                    |
 |------------------|------|--------------------------------------------------------------------------------|
@@ -98,180 +123,180 @@ All the parameters for `InitConfig()` are explained as follows:
 | organizationName | Yes  | The name for the Casdoor organization                                          |
 | applicationName  | No   | The name for the Casdoor application                                           |
 
-:::tip
+To get the value of `jwtPublicKey`:
 
-The `jwtPublicKey` can be managed in the `Certs` page as below.
+1. In the Casdoor admin console, open the **Certs** page.
 
-![Certs Management](/img/how-to-connect/sdk/howto_cert_list.png)
+   ![Certs page with the list of certificates](/img/how-to-connect/sdk/howto_cert_list.png)
 
-Copy or download the public key from the certificate edit page for use in the SDK.
+1. Open the certificate and copy or download its public key.
 
-![Certs Edit](/img/how-to-connect/sdk/howto_cert_edit.png)
+   ![Certificate edit page with the public key](/img/how-to-connect/sdk/howto_cert_edit.png)
 
-Then select the cert on the application edit page.
+1. On the edit page of the application, select the same certificate in **Cert**.
 
-![Certs Select](/img/how-to-connect/sdk/howto_cert_select.png)
+   ![Application edit page with the certificate selected](/img/how-to-connect/sdk/howto_cert_select.png)
 
-:::
+## Configure the frontend SDK
 
-### 2. Frontend configuration
+1. Install `casdoor-js-sdk` with npm:
 
-First, install `casdoor-js-sdk` via NPM or Yarn:
+   ```shell
+   npm install casdoor-js-sdk
+   ```
 
-```shell
-npm install casdoor-js-sdk
-```
+   Or with Yarn:
 
-Or:
+   ```shell
+   yarn add casdoor-js-sdk
+   ```
 
-```shell
-yarn add casdoor-js-sdk
-```
+1. Define helper functions in a shared file, such as `Setting.js`:
 
-Then define the following utility functions (better in a global JS file like `Setting.js`):
+   ```js
+   import Sdk from "casdoor-js-sdk";
 
-```js
-import Sdk from "casdoor-js-sdk";
+   export function initCasdoorSdk(config) {
+     CasdoorSdk = new Sdk(config);
+   }
 
-export function initCasdoorSdk(config) {
-  CasdoorSdk = new Sdk(config);
-}
+   export function getSignupUrl() {
+     return CasdoorSdk.getSignupUrl();
+   }
 
-export function getSignupUrl() {
-  return CasdoorSdk.getSignupUrl();
-}
+   export function getSigninUrl() {
+     return CasdoorSdk.getSigninUrl();
+   }
 
-export function getSigninUrl() {
-  return CasdoorSdk.getSigninUrl();
-}
+   export function getUserProfileUrl(userName, account) {
+     return CasdoorSdk.getUserProfileUrl(userName, account);
+   }
 
-export function getUserProfileUrl(userName, account) {
-  return CasdoorSdk.getUserProfileUrl(userName, account);
-}
+   export function getMyProfileUrl(account) {
+     return CasdoorSdk.getMyProfileUrl(account);
+   }
 
-export function getMyProfileUrl(account) {
-  return CasdoorSdk.getMyProfileUrl(account);
-}
+   export function getMyResourcesUrl(account) {
+     return CasdoorSdk.getMyProfileUrl(account).replace("/account?", "/resources?");
+   }
 
-export function getMyResourcesUrl(account) {
-  return CasdoorSdk.getMyProfileUrl(account).replace("/account?", "/resources?");
-}
+   export function signin() {
+     return CasdoorSdk.signin(ServerUrl);
+   }
 
-export function signin() {
-  return CasdoorSdk.signin(ServerUrl);
-}
+   export function showMessage(type, text) {
+     if (type === "") {
+       return;
+     } else if (type === "success") {
+       message.success(text);
+     } else if (type === "error") {
+       message.error(text);
+     }
+   }
 
-export function showMessage(type, text) {
-  if (type === "") {
-    return;
-  } else if (type === "success") {
-    message.success(text);
-  } else if (type === "error") {
-    message.error(text);
-  }
-}
+   export function goToLink(link) {
+     window.location.href = link;
+   }
+   ```
 
-export function goToLink(link) {
-  window.location.href = link;
-}
-```
+1. In the entry file of the frontend, such as `index.js` or `app.js` in React, initialize the SDK. Use the same values for the first four settings as in the backend SDK. `redirectPath` is the path of your application that Casdoor sends the user back to after sign-in.
 
-In your frontend entry file (e.g. `index.js` or `app.js` in React), initialize the `casdoor-js-sdk` by calling `InitConfig()` with the required parameters. The first 4 parameters should use the same value as the Casdoor backend SDK. The last parameter `redirectPath` is relative path for the redirected URL, returned from Casdoor's login page.
+   ```js
+   const config = {
+     serverUrl: "https://door.casdoor.com",
+     clientId: "014ae4bd048734ca2dea",
+     organizationName: "casbin",
+     appName: "app-casnode",
+     redirectPath: "/callback",
+   };
 
-```js
-const config = {
-  serverUrl: "https://door.casdoor.com",
-  clientId: "014ae4bd048734ca2dea",
-  organizationName: "casbin",
-  appName: "app-casnode",
-  redirectPath: "/callback",
-};
+   xxx.initCasdoorSdk(config);
+   ```
 
-xxx.initCasdoorSdk(config);
-```
+1. Handle the callback route. In this React example, a component handles `/callback` and forwards the code to the backend. Skip this step if Casdoor redirects straight to your backend, as in JSP and PHP applications.
 
-**(Optional)** This example uses React; the `/callback` route is handled by the component below, which forwards the call to the backend. Skip this if your callback goes directly to the backend (e.g. JSP or PHP).
+   ```js
+   import React from "react";
+   import {Button, Result, Spin} from "antd";
+   import {withRouter} from "react-router-dom";
+   import * as Setting from "./Setting";
 
-```js
-import React from "react";
-import {Button, Result, Spin} from "antd";
-import {withRouter} from "react-router-dom";
-import * as Setting from "./Setting";
+   class AuthCallback extends React.Component {
+     constructor(props) {
+       super(props);
+       this.state = {
+         classes: props,
+         msg: null,
+       };
+     }
 
-class AuthCallback extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      classes: props,
-      msg: null,
-    };
-  }
+     componentWillMount() {
+       this.login();
+     }
 
-  componentWillMount() {
-    this.login();
-  }
+     login() {
+       Setting.signin().then((res) => {
+         if (res.status === "ok") {
+           Setting.showMessage("success", `Logged in successfully`);
+           Setting.goToLink("/");
+         } else {
+           this.setState({
+             msg: res.msg,
+           });
+         }
+       });
+     }
 
-  login() {
-    Setting.signin().then((res) => {
-      if (res.status === "ok") {
-        Setting.showMessage("success", `Logged in successfully`);
-        Setting.goToLink("/");
-      } else {
-        this.setState({
-          msg: res.msg,
-        });
-      }
-    });
-  }
+     render() {
+       return (
+         <div style={{textAlign: "center"}}>
+           {this.state.msg === null ? (
+             <Spin
+               size="large"
+               tip="Signing in..."
+               style={{paddingTop: "10%"}}
+             />
+           ) : (
+             <div style={{display: "inline"}}>
+               <Result
+                 status="error"
+                 title="Login Error"
+                 subTitle={this.state.msg}
+                 extra={[
+                   <Button type="primary" key="details">
+                     Details
+                   </Button>,
+                   <Button key="help">Help</Button>,
+                 ]}
+               />
+             </div>
+           )}
+         </div>
+       );
+     }
+   }
 
-  render() {
-    return (
-      <div style={{textAlign: "center"}}>
-        {this.state.msg === null ? (
-          <Spin
-            size="large"
-            tip="Signing in..."
-            style={{paddingTop: "10%"}}
-          />
-        ) : (
-          <div style={{display: "inline"}}>
-            <Result
-              status="error"
-              title="Login Error"
-              subTitle={this.state.msg}
-              extra={[
-                <Button type="primary" key="details">
-                  Details
-                </Button>,
-                <Button key="help">Help</Button>,
-              ]}
-            />
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+   export default withRouter(AuthCallback);
+   ```
 
-export default withRouter(AuthCallback);
-```
+## Show the sign-in and sign-up links
 
-### 3. Get login URLs
+Give users a **Sign in** and a **Sign up** button or link. Get the URLs from the frontend SDK or the backend SDK. See [Sign-in and sign-up URLs](/docs/basic/core-concepts#login-urls).
 
-Show "Sign up" and "Sign in" buttons or links to users; URLs can be obtained from the frontend or backend. See [Login URLs](/docs/basic/core-concepts#login-urls).
+## Get and verify the access token
 
-### 4. Get and verify access token
+The sign-in flow has three steps:
 
-Here are the steps:
+1. The user clicks the sign-in link and arrives at the Casdoor sign-in page, for example:
 
-1. The user clicks the login URL and is redirected to Casdoor's login page,
-   like: `https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https%3A%2F%2Fforum.casbin.com%2Fcallback&scope=read&state=app-casnode`
-2. The user enters username & password and clicks `Sign In` (or just click the third-party login button
-   like `Sign in with GitHub`).
-3. The user is redirected back to your application with the authorization code issued by Casdoor (
-   like: `https://forum.casbin.com?code=xxx&state=yyy`), your application's backend needs to exchange the authorization code with the access token and verify that the access token is valid and issued by Casdoor. The functions `GetOAuthToken()` and `ParseJwtToken()` are provided by Casdoor backend SDK.
+   ```text
+   https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=https%3A%2F%2Fforum.casbin.com%2Fcallback&scope=read&state=app-casnode
+   ```
 
-The following code shows how to get and verify the access token. For a real example of Casnode (a forum website written in Go), see: `https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64`
+1. The user enters a username and password and clicks **Sign In**, or clicks the button of a provider, such as the GitHub button.
+1. Casdoor redirects the user to your application with an authorization code, for example `https://forum.casbin.com?code=xxx&state=yyy`.
+
+Your backend then exchanges the code for an access token with `GetOAuthToken()` and verifies the token with `ParseJwtToken()`:
 
 ```go
 // get code and state from the GET parameters of the redirected URL
@@ -291,20 +316,13 @@ if err != nil {
 }
 ```
 
-If `ParseJwtToken()` finishes with no error, then the user has successfully logged into the application. The
-returned `claims` can be used to identity the user later.
+If `ParseJwtToken()` returns no error, the token is valid and Casdoor issued it. The user is signed in. Use the returned `claims` to identify the user. For a complete example, see the [sign-in handler of Casnode](https://github.com/casbin/casnode/blob/6d4c55f5c9a3c4bd8c85f2493abad3553b9c7ac0/controllers/account.go#L51-L64), a forum written in Go.
 
-### 4. Identify user with access token
+## Keep the user signed in
 
-:::info
+How your application remembers the user is your own design decision and not part of OIDC, OAuth 2.0, or Casdoor. This section describes two common ways.
 
-This part is actually your application's own business logic and not part of OIDC, OAuth or Casdoor. We just provide good practices as a lot of people don't know what to do for the next step.
-
-:::
-
-In Casdoor, access token is usually identical as ID token. They are the same thing. So the access token contains all information for the logged-in user.
-
-The variable `claims` returned by `ParseJwtToken()` is defined as:
+The `claims` that `ParseJwtToken()` returns have the following type:
 
 ```go
 type Claims struct {
@@ -314,17 +332,17 @@ type Claims struct {
 }
 ```
 
-1. `User`: the User object, containing all information for the logged-in user, see definition
-   at: **[/docs/basic/core-concepts#user](/docs/basic/core-concepts#user)**
-2. `AccessToken`: the access token string.
-3. `jwt.RegisteredClaims`: some other values required by JWT.
+| Field | Description |
+|---|---|
+| `User` | The user, with all profile fields. See [User](/docs/basic/core-concepts#user) |
+| `AccessToken` | The access token string |
+| `jwt.RegisteredClaims` | The standard claims of a JSON Web Token (JWT) |
 
-At this moment, the application usually has two ways to remember the user session: `session` and `JWT`.
+In Casdoor, the access token usually has the same content as the ID token, so it carries the information about the signed-in user.
 
-#### Session
+### Use a server-side session
 
-The Method to set session varies greatly depending on the language and web framework. E.g., Casnode
-uses [Beego web framework](https://github.com/beego/beego/) and set session by calling: `c.SetSessionUser()`.
+Store the claims in the session of your web framework. How you do that depends on the language and the framework. Casnode uses the [Beego](https://github.com/beego/beego/) framework and stores the user with `c.SetSessionUser()`:
 
 ```go
 token, err := auth.GetOAuthToken(code, state)
@@ -341,41 +359,44 @@ claims.AccessToken = token.AccessToken
 c.SetSessionUser(claims) // set session
 ```
 
-#### JWT
+### Use the access token as a JWT
 
-The `accessToken` returned by Casdoor is actually a JWT. So if your application uses JWT to keep user session, just use the access token directly for it:
+The access token is a JWT. If your application keeps sessions in JWTs, use the access token directly:
 
-1. Send the access token to frontend, save it in places like localStorage of the browser.
-2. Let the browser send the access token to backend for every request.
-3. Call `ParseJwtToken()` or your own function to verify the access token and get logged-in user information in your backend.
+1. Send the access token to the frontend and store it there, for example in the `localStorage` of the browser.
+1. Send the access token to the backend with every request.
+1. In the backend, verify the token with `ParseJwtToken()` or your own function, and read the signed-in user from it.
 
-### 5. **(Optional)** Interact with the User table
+## Manage users through the SDK
 
-:::info
+The backend SDKs wrap the [Casdoor API](/docs/basic/public-api). This part is not OIDC or OAuth 2.0. The functions include:
 
-This part is provided by `Casdoor Public API` and not part of the OIDC or OAuth.
+| Function | Description |
+|---|---|
+| `GetUser(name string)` | Gets a user by username |
+| `GetUsers()` | Gets all users |
+| `AddUser()` | Adds a user |
+| `UpdateUser()` | Updates a user |
+| `DeleteUser()` | Deletes a user |
+| `CheckUserPassword(auth.User)` | Checks the password of a user |
 
-:::
+If the SDK has no function for an endpoint, [call the Casdoor API](/docs/basic/public-api) directly.
 
-Casdoor Backend SDK provides a lot of helper functions, not limited to:
+## Manage applications through the SDK
 
-- `GetUser(name string)`: get a user by username.
-- `GetUsers()`: get all users.
-- `AddUser()`: add a user.
-- `UpdateUser()`: update a user.
-- `DeleteUser()`: delete a user.
-- `CheckUserPassword(auth.User)`: check user's password.
+| Function | Description |
+|---|---|
+| `AddApplication()` | Creates an application |
+| `GetApplication(name string)` | Gets an application by name |
+| `GetApplications()` | Gets all applications |
+| `UpdateApplication()` | Updates an application |
+| `DeleteApplication()` | Deletes an application |
 
-These functions are implemented by making RESTful calls against `Casdoor Public API`. If a function is not in the Casdoor Backend SDK, call the [Public API](/docs/basic/public-api) directly.
+When you create an application with `AddApplication()`, Casdoor fills in the default sign-up items (ID, Username, Display name, Password, Confirm password, Email, Phone, Agreement), sign-in items, and sign-in methods. The application works in the UI without further configuration.
 
-### 6. **(Optional)** Manage Applications via SDK
+## See also
 
-Casdoor SDKs also provide functions to manage applications programmatically:
-
-- `AddApplication()`: create a new application.
-- `GetApplication(name string)`: get an application by name.
-- `GetApplications()`: get all applications.
-- `UpdateApplication()`: update an application.
-- `DeleteApplication()`: delete an application.
-
-When creating applications via SDK using `AddApplication()`, Casdoor automatically initializes essential fields with sensible defaults. This includes signup items (ID, Username, Display name, Password, Confirm password, Email, Phone, Agreement), signin items, and signin methods. This ensures applications created programmatically work correctly in the UI without requiring manual configuration of these basic settings.
+- [Connect a standard OIDC client](/docs/how-to-connect/oidc-client)
+- [OAuth 2.0](/docs/how-to-connect/oauth)
+- [Call the Casdoor API](/docs/basic/public-api)
+- [Single sign-on](/docs/session/single-sign-on)

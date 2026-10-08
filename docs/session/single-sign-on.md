@@ -1,59 +1,88 @@
 ---
-title: Single sign-on (SSO)
-description: Let users sign in once and access all apps in the organization without signing in again.
+title: Set up single sign-on
+sidebar_label: Single sign-on (SSO)
+description: Let users sign in once and open every application of their organization without signing in again.
 keywords: [SSO, single sign-on, auto sign-in, silent sign-in]
 authors: [leo220yuyaodog]
 ---
 
-## Overview
+This guide explains how to set up single sign-on (SSO) between the applications of one organization, so that a user who has signed in to Casdoor opens the other applications without signing in again.
 
-With multiple applications in one organization, enable **single sign-on (SSO)** so users sign in once and are automatically signed in for other apps in the same org.
+---
 
-To enable SSO:
+#### Learning outcomes
 
-1. Set the **Home** URL (application home or login page).
-2. Enable **Auto Sign-In** on the application.
-3. Implement **Silent Sign-In** on your app’s home page so it can complete login when opened with the SSO link.
+- Turn on automatic sign-in for an application.
+- Implement silent sign-in on the home page of your application.
+- Offer sign-in in a popup window or an iframe.
+- Let users move between applications from the Casdoor home page.
 
-:::note
-Without auto sign-in, users see a picker to choose the current user or another account. With auto sign-in, the already-signed-in user is used and the picker is skipped.
-:::
+#### What you need
 
-## Configuration
+- Two or more [applications](/docs/application/overview) in the same organization
+- An application frontend that you can change, with [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk) or [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk)
 
-1. Set **Home** to your application’s home page or login URL.
+---
 
-![sso_home.png](/img/how-to-connect/single-sign-on/sso_home.png)
-2. Enable **Auto Sign-In**.
+## About SSO in Casdoor
 
-![sso_signin.png](/img/how-to-connect/single-sign-on/sso_signin.png)
+When a user who is already signed in to Casdoor opens the sign-in page of another application, Casdoor shows a picker: continue as the current user or use another account. With automatic sign-in, Casdoor skips the picker and signs the current user in.
 
-## Silent sign-in
+SSO between applications has three parts:
 
-SSO works by opening your app’s home URL with a query parameter. Your app must detect that and trigger login. The [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk) provides a `SilentSignin` component; see [use-in-react](https://github.com/casdoor/casdoor-react-sdk#use-in-react).
+1. Each application has a **Home** URL.
+1. Each application has **Auto signin** turned on.
+1. The home page of each application implements silent sign-in: when it is opened with the SSO link, it starts the sign-in on its own.
 
-:::info
-**Flow:** The link to your home page includes `silentSignin=1`. On load, if `silentSignin === 1`, render the `SilentSignin` component so it starts the login; with auto sign-in enabled, the user is signed in without extra clicks. Silent sign-in only runs when the user’s organization matches the application, avoiding duplicate or wrong sign-ins.
-:::
+## Configure the application {#configuration}
 
-## Popup sign-in
+1. In the Casdoor admin console, open the edit page of the application.
+1. Set **Home** to the home page or the sign-in page of your application.
 
-**Popup sign-in** opens a small window for Casdoor login; after success it posts the auth result to the opener and closes. Use `popupSignin()` from [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk); demo: [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example). The home URL is called with `popup=1`; Casdoor sends `code` and `state` to the opener, and the main window exchanges them for a token via the SDK.
+   ![Home field of the application](/img/how-to-connect/single-sign-on/sso_home.png)
 
-By default Casdoor posts the result to `window.opener` (equivalent to `popup_type=window`). To embed the login inside an **iframe** instead of opening a separate window, add `popup_type=iframe` to the URL: Casdoor then posts the `code`/`state` message to `window.parent` (the embedding page's origin) rather than to `window.opener`.
+1. Turn on **Signin session**, and then turn on **Auto signin**. Casdoor requires **Signin session** before it lets you turn on **Auto signin**.
 
-## Using SSO
+   ![Auto signin switch of the application](/img/how-to-connect/single-sign-on/sso_signin.png)
+
+1. Save the application.
+
+## Implement silent sign-in {#silent-sign-in}
+
+Casdoor opens your application at its **Home** URL with the query parameter `silentSignin=1`. Your home page detects the parameter and starts the sign-in. Because **Auto signin** is on, the user is signed in without a click.
+
+In React, [casdoor-react-sdk](https://github.com/casdoor/casdoor-react-sdk) provides the `SilentSignin` component for this. Render it when `silentSignin` is `1`. See [Use in React](https://github.com/casdoor/casdoor-react-sdk#use-in-react).
+
+Silent sign-in runs only when the organization of the user matches the organization of the application. This prevents duplicate sign-ins and sign-ins with the wrong account.
+
+## Offer sign-in in a popup or an iframe {#popup-sign-in}
+
+With popup sign-in, the Casdoor sign-in page opens in a small window. After the user signs in, Casdoor posts the result to the window that opened the popup and closes the popup.
+
+1. Call `popupSignin()` of [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk). The SDK opens the sign-in page with `popup=1`.
+1. Casdoor sends `code` and `state` to the opener.
+1. In the main window, exchange the code for a token through the SDK.
+
+For a demo, see [casdoor-nodejs-react-example](https://github.com/casdoor/casdoor-nodejs-react-example).
+
+By default, Casdoor posts the result to `window.opener`, which is the same as `popup_type=window`. To embed the sign-in page in an iframe instead, add `popup_type=iframe` to the URL. Casdoor then posts the `code` and `state` message to `window.parent`, the page that embeds the iframe.
+
+## Let users switch between applications {#using-sso}
 
 Users start from the Casdoor home page:
 
-1. Make sure your application links to the user's Casdoor profile page; the SDKs provide [getMyProfileUrl(account, returnUrl)](https://github.com/casdoor/casdoor-js-sdk#get-my-profile-page-url) for this.
-2. On the profile page, the user opens **Home** (`/`), which lists the applications of their organization. Users of the `built-in` organization (global administrators) don't see this list.
-3. Clicking an application opens its **Home** URL with `?silentSignin=1`. If the application implements [silent sign-in](#silent-sign-in), the user is signed in to it in the background.
+1. Link from your application to the profile page of the user in Casdoor. The SDKs provide [`getMyProfileUrl(account, returnUrl)`](https://github.com/casdoor/casdoor-js-sdk#get-my-profile-page-url) for this.
+1. On the profile page, the user opens **Home** (`/`). The page lists the applications of the user's organization. Users of the `built-in` organization, who are global administrators, don't see this list.
+1. The user clicks an application. Casdoor opens its **Home** URL with `?silentSignin=1`, and the application signs the user in in the background.
 
-![sso_homepage.png](/img/how-to-connect/single-sign-on/sso_homepage.png)
+![Casdoor home page with the applications of the organization](/img/how-to-connect/single-sign-on/sso_homepage.png)
 
-## SSO Logout
+## Next steps
 
-When using SSO, you might need to log a user out from all applications simultaneously. Casdoor provides an SSO logout endpoint that terminates all active sessions and expires all tokens for a user across all applications in the organization.
+To sign a user out of all applications at once, call the `/api/sso-logout` endpoint. See [Single sign-out](/docs/session/single-sign-out).
 
-To implement SSO logout in your application, make a request to the `/api/sso-logout` endpoint. This endpoint will ensure the user is completely logged out from all integrated applications. For detailed information about the SSO logout API, including authentication methods and request examples, see the [Single Sign-Out](/docs/session/single-sign-out) documentation.
+## See also
+
+- [Single sign-out](/docs/session/single-sign-out)
+- [RP-initiated logout](/docs/session/rp-initiated-logout)
+- [Session management](/docs/session/management)

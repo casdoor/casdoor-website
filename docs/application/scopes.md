@@ -1,44 +1,53 @@
 ---
-title: Custom scopes
-description: Define custom OAuth scopes for Agent applications (e.g. MCP servers).
+title: Define custom scopes
+sidebar_label: Custom scopes
+description: Define your own OAuth 2.0 scopes on an Agent application, such as an MCP server, so that clients request only the permissions that they need.
 keywords: [scopes, OAuth, OIDC, agent, MCP, permissions]
 authors: [hsluoyz]
 ---
 
-**Custom scopes** let Agent applications define permissions or capabilities exposed via OAuth. They are added to the app’s OIDC discovery and used alongside standard OIDC scopes.
+This guide explains how to define custom scopes on an application. A custom scope names one permission or capability of your service. Clients request the scopes that they need, and your service checks the scopes of the token.
 
-## When to use custom scopes
+---
 
-Available for applications with category **Agent**. Useful for:
+#### Learning outcomes
 
-- MCP servers that need to define granular permissions for different resources
-- API services that want to control access to specific endpoints or features
-- Applications implementing fine-grained authorization models
+- Add custom scopes to an application.
+- Know how Casdoor validates the scopes that a client requests.
+- Request several scopes with a pattern.
 
-Default (non-Agent) applications use only standard OIDC scopes and do not need custom scopes.
+#### What you need
 
-## Configuring scopes
+- An [application](/docs/application/overview) with the [category](/docs/application/categories) `Agent`
 
-On the application edit page, add scopes. Each has:
+---
 
-- **Name** — Scope identifier in OAuth (e.g. `files:read`, `messages:write`).
-- **Display name** — Shown to the user during consent (e.g. “Read files”).
-- **Description** — What the scope allows (e.g. “Allow reading your files”).
+## About custom scopes
 
-## How scopes work
+Custom scopes are available on applications with the category `Agent`. Typical uses are:
 
-When you configure custom scopes for an Agent application:
+- An MCP server that defines a permission for each kind of resource
+- An API that controls access to single endpoints or features
+- A service with a fine-grained authorization model
 
-1. The scopes are stored with the application configuration
-2. They're merged with standard OIDC scopes in the discovery endpoint
-3. Client applications can request these scopes during OAuth flows
-4. The scopes appear in the OIDC discovery document at `/.well-known/openid-configuration`
+Custom scopes extend the standard OpenID Connect (OIDC) scopes and don't replace them. The standard scopes stay available on every application. Casdoor lists the custom scopes in the discovery document of the application, at `/.well-known/openid-configuration`.
 
-Standard OIDC scopes are always available regardless of your custom scopes configuration. Your custom scopes extend rather than replace the defaults.
+## Add scopes {#adding-scopes}
 
-## Example
+1. In the Casdoor admin console, open the edit page of the application.
+1. Check that **Category** is `Agent`.
+1. In **Scopes**, click **Add** and fill in the row:
 
-Here's a practical example for an MCP server that manages files and databases:
+   | Column | Description | Example |
+   |---|---|---|
+   | Name | Identifier of the scope in OAuth 2.0 requests | `files:read` |
+   | Display name | Name shown to the user on the consent screen | Read files |
+   | Description | What the scope allows | Allow reading your files |
+
+1. To change the order of the scopes, use the arrows. To remove a scope, delete its row.
+1. Save the application. The scopes are available at once.
+
+For example, an MCP server that manages files and databases could define:
 
 | Name | Display Name | Description |
 |------|--------------|-------------|
@@ -47,25 +56,16 @@ Here's a practical example for an MCP server that manages files and databases:
 | `db:query` | Query Database | Execute read-only database queries |
 | `db:modify` | Modify Database | Create, update, and delete database records |
 
-When clients connect to this MCP server, they can request specific scopes based on what operations they need to perform, following the principle of least privilege.
+A client then requests only the scopes for the operations that it performs.
 
-## Adding Scopes
+## How Casdoor validates scopes {#scope-enforcement}
 
-From the application edit page:
+| Application | Validation of the `scope` parameter in a token request |
+|---|---|
+| Has no custom scopes | Casdoor accepts any value |
+| Has at least one custom scope | Casdoor accepts only the scopes in the list |
 
-1. Ensure your application Category is set to "Agent"
-2. Scroll to the Scopes section
-3. Click "Add" to create a new scope
-4. Fill in the Name, Display Name, and Description
-5. Use the up/down arrows to reorder scopes
-6. Click the delete button to remove unwanted scopes
-7. Save your application
-
-The scopes are immediately available after saving and will appear in your OIDC discovery endpoint.
-
-## Scope enforcement
-
-When an application has at least one custom scope configured, Casdoor validates the `scope` parameter on every token request against that list. If the client requests a scope that is not in the application's scope list, Casdoor returns an `invalid_scope` error (per RFC 6749):
+When a client requests a scope that isn't in the list, Casdoor returns the error `invalid_scope`, as RFC 6749 defines:
 
 ```json
 {
@@ -74,14 +74,18 @@ When an application has at least one custom scope configured, Casdoor validates 
 }
 ```
 
-Applications with **no scopes configured** accept any `scope` value, preserving backward compatibility. Once you define at least one scope, only the scopes you've listed are accepted.
+## Request scopes with a pattern {#regex-and-wildcard-scopes}
 
-## Regex and wildcard scopes
+A client can request several scopes at once with a regular expression. Casdoor treats a requested scope as a pattern when it contains one of the following characters: `.`, `*`, `+`, `?`, `^`, `$`, `{`, `}`, `(`, `)`, `|`, `[`, `]`, `\`.
 
-Clients can request scopes using **regular expression patterns** when their scope string contains regex metacharacters (`.`, `*`, `+`, `?`, `^`, `$`, `{`, `}`, `(`, `)`, `|`, `[`, `]`, `\`).
+Casdoor matches the pattern against the names of all custom scopes of the application and grants every scope that matches. A requested scope without these characters must match a name exactly.
 
-When a pattern is detected, Casdoor expands it by matching against all configured scope names. All matching scope names replace the pattern in the final granted scope. Literal scope names (no metacharacters) are validated by exact match as before.
+For example, an application defines `files:read`, `files:write`, and `db:query`. A client that requests `scope=files:.*` receives `files:read` and `files:write`.
 
-For example, if an application defines `files:read`, `files:write`, and `db:query`, a client requesting `scope=files:.*` will receive both `files:read` and `files:write`.
+If a pattern matches no scope, Casdoor rejects the request with `invalid_scope`.
 
-If a pattern matches nothing, the request is rejected as `invalid_scope`.
+## See also
+
+- [Application categories](/docs/application/categories)
+- [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization)
+- [OAuth 2.0](/docs/how-to-connect/oauth)

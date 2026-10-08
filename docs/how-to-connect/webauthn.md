@@ -1,42 +1,73 @@
 ---
-title: WebAuthn
-description: Sign in with WebAuthn (passkeys, fingerprint, face, security keys).
+title: Set up WebAuthn sign-in
+sidebar_label: WebAuthn
+description: Let users sign in to Casdoor with passkeys, fingerprint or face recognition, Windows Hello, or a security key through WebAuthn.
 keywords: [webauthn, passkey, FIDO]
 authors: [ComradeProgrammer]
 ---
 
-Casdoor supports **WebAuthn** so users can sign in with built-in authenticators (fingerprint, face, Windows Hello) or security keys (e.g. YubiKey) instead of (or in addition to) a password.
+This guide explains how to turn on WebAuthn sign-in. Users then sign in with an authenticator that is built in to their device, such as a fingerprint reader, face recognition, or Windows Hello, or with a security key such as a YubiKey, instead of or in addition to a password.
 
-## What is WebAuthn?
+---
 
-WebAuthn (Web Authentication API) is a W3C/FIDO standard that uses public-key cryptography for registration and sign-in. The server stores a public key; the private key stays on the user’s device. Sign-in works by proving possession of the private key (e.g. via biometrics or a security key). Credentials are bound to the user, the authenticator, and the site origin.
+#### Learning outcomes
 
-For more detail: [webauthn.guide](https://webauthn.guide/).
+- Configure Casdoor for WebAuthn.
+- Offer WebAuthn as a sign-in method of an application.
+- Register a WebAuthn credential for a user.
 
-## Enable WebAuthn in Casdoor
+#### What you need
 
-### Step 0: Configuration
+- Access to `conf/app.conf` of your Casdoor instance
+- Casdoor served over HTTPS. WebAuthn requires HTTPS, except on `localhost`.
+- A device with a WebAuthn authenticator
 
-1. In `conf/app.conf`, set **origin** to the exact URL of your Casdoor site:
+---
+
+## About WebAuthn
+
+Web Authentication (WebAuthn) is a standard of the W3C and the FIDO Alliance that signs users in with public-key cryptography. Casdoor stores a public key. The private key never leaves the device of the user. To sign in, the user proves possession of the private key, typically with a biometric check or a security key. A credential is bound to the user, the authenticator, and the origin of the site.
+
+For an introduction, see [webauthn.guide](https://webauthn.guide/).
+
+## Configure Casdoor
+
+1. In `conf/app.conf`, set `origin` to the exact URL under which users open Casdoor:
 
    ```ini
    origin = "http://localhost:8000"
    ```
 
-   :::caution
-   WebAuthn requires **HTTPS** in production; `localhost` is allowed for development.
-   :::
+1. Restart Casdoor.
 
-2. As an admin, open the application edit page and turn on **Enable WebAuthn signin** (off by default).
+## Add WebAuthn to the sign-in methods
 
-### Step 1: Register a credential
+1. In the Casdoor admin console, go to **Identity** > **Applications** and open the application.
+1. In **Signin methods**, add **WebAuthn**.
+1. Save the application.
 
-Go to **My Account**. Use **Add WebAuthn Credential** and follow your device’s prompt to register a new credential. You can delete credentials from the list.
+## Register a credential
 
-![WebAuthn1](/img/webauthn/webauthn.png)
+Each user registers their own credential:
 
-### Step 2: Sign in with WebAuthn
+1. Sign in and open **My Account**.
+1. In **WebAuthn credentials**, add a credential and follow the prompt of your device.
 
-Sign out, then on the login page select the WebAuthn method, enter your username, and click sign in. Complete the authenticator step (e.g. fingerprint or Windows Hello).
+   ![WebAuthn credentials on the account page](/img/webauthn/webauthn.png)
 
-![WebAuthn2](/img/webauthn/login_webauthn.png)
+To remove a credential, delete it from the same list.
+
+## Verify the result
+
+1. Sign out.
+1. On the sign-in page, select the **WebAuthn** method.
+1. Enter your username and click **Sign in with WebAuthn**.
+1. Complete the prompt of your authenticator, for example with your fingerprint or Windows Hello.
+
+   ![Sign-in page with the WebAuthn method](/img/webauthn/login_webauthn.png)
+
+## See also
+
+- [Sign-in methods](/docs/application/signin-methods)
+- [Multi-factor authentication](/docs/user/multi-factor-authentication)
+- [Set up Face ID sign-in](/docs/how-to-connect/face-id)

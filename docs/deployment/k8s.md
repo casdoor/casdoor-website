@@ -1,32 +1,37 @@
 ---
-title: Deploying to Kubernetes
-description: Deploy Casdoor in a Kubernetes cluster using the example manifests.
+title: Deploy Casdoor on Kubernetes
+sidebar_label: Deploy on Kubernetes
+description: Deploy Casdoor on a Kubernetes cluster with the example manifest, expose it with Ingress, and protect other applications with oauth2-proxy.
 keywords: [k8s, Kubernetes, Casdoor, deployment]
 authors: [ComradeProgrammer]
+---
+
+This guide explains how to deploy Casdoor on a Kubernetes cluster with the example manifest from the Casdoor repository and how to expose it with Ingress.
+
+---
+
+#### Learning outcomes
+
+- Deploy Casdoor with the example manifest `k8s.yaml`.
+- Expose Casdoor outside the cluster with an Ingress.
+- Protect an application at the ingress layer with oauth2-proxy and Casdoor.
+
+#### What you need
+
+- A Kubernetes cluster and `kubectl`
+- A [supported database](/docs/basic/server-installation#supported-databases) that the cluster can reach
+- An ingress controller, such as ingress-nginx, to expose Casdoor
+- A clone of the [Casdoor repository](https://github.com/casdoor/casdoor)
+
 ---
 
 :::tip Don't want to run it yourself?
 [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=deploy-k8s) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
 :::
 
-## Deploy Casdoor on Kubernetes
+## About the example manifest
 
-The Casdoor repo includes an example manifest `k8s.yaml` in the project root, with a Deployment and a Service. For production or custom setups, consider using the [Helm chart](/docs/basic/try-with-helm) instead.
-
-Before deploying:
-
-1. Update `conf/app.conf` so Casdoor can connect to your database.
-2. Ensure the database is running and the cluster can pull the Casdoor image.
-
-Deploy with:
-
-```shell
-kubectl apply -f k8s.yaml
-```
-
-Check deployment status with `kubectl get pods`.
-
-Here is the content of `k8s.yaml`:
+The root of the Casdoor repository contains `k8s.yaml`, an example manifest with a Service and a Deployment. It is a starting point. For a deployment that you can configure and upgrade through values, use the [Helm chart](/docs/basic/try-with-helm) instead.
 
 ```yaml
 # Example: deploying Casdoor on Kubernetes
@@ -88,15 +93,30 @@ spec:
 
 ```
 
-This file is only an example. Adjust as needed (namespace, service type, ConfigMap for config). Using a ConfigMap for the config file is recommended in production.
+## Deploy Casdoor
 
-## Exposing Casdoor with Ingress
+1. Set the database connection in `conf/app.conf`. See [Configure the database](/docs/basic/server-installation#configure-database).
+1. Make sure that the database runs and that the cluster can pull the `casbin/casdoor` image.
+1. Adjust `k8s.yaml` for your environment: the namespace, the Service type, and the path of the `conf` volume on the host.
+1. Apply the manifest:
 
-Once Casdoor is deployed, you typically want to expose it externally. There are several approaches to handle authentication for your applications:
+   ```shell
+   kubectl apply -f k8s.yaml
+   ```
 
-### Direct Ingress Access
+1. Check that the pod runs:
 
-For simple setups where you want to expose Casdoor itself, create an Ingress resource:
+   ```shell
+   kubectl get pods
+   ```
+
+:::tip
+In production, put `app.conf` in a ConfigMap instead of a `hostPath` volume.
+:::
+
+## Expose Casdoor with Ingress {#exposing-casdoor-with-ingress}
+
+Create an Ingress that routes your domain to the Casdoor Service. Replace `auth.yourdomain.com` with your domain.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -124,20 +144,22 @@ spec:
     secretName: casdoor-tls-secret
 ```
 
-Your applications can then integrate with Casdoor using the SDK or OAuth 2.0/OIDC protocols directly. This is the recommended approach for most use cases as it gives you full control over the authentication flow in your application code.
+Your applications can now sign users in with Casdoor through an [SDK](/docs/how-to-connect/sdk) or through OAuth 2.0 and OpenID Connect (OIDC). This is the recommended setup, because your application code controls the sign-in flow.
 
-### Authentication with ingress-nginx auth annotations
+## Protect an application at the ingress layer
 
-While ingress-nginx provides external authentication capabilities through annotations, this approach has significant limitations when used with OAuth2/OIDC providers like Casdoor. The `nginx.ingress.kubernetes.io/auth-url` annotation is designed for simple token validation endpoints, not for complete OAuth2 flows that require redirects and session management.
+To require sign-in for an application without changing its code, put [oauth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/) in front of it. oauth2-proxy handles the complete OAuth 2.0 flow:
 
-For protecting applications at the ingress level, you should use oauth2-proxy or similar authentication proxies. These tools handle the complete OAuth2/OIDC flow including:
+- It redirects the user to Casdoor to sign in.
+- It handles the callback with the authorization code.
+- It keeps the user's session in a cookie.
+- It validates and refreshes tokens.
 
-- Initiating the login redirect to Casdoor
-- Handling the OAuth2 callback with authorization codes
-- Managing user sessions with cookies
-- Token refresh and validation
+:::note
+Don't use the `nginx.ingress.kubernetes.io/auth-url` annotation of ingress-nginx with Casdoor directly. The annotation expects an endpoint that validates a token. It can't run an OAuth 2.0 flow with redirects and sessions.
+:::
 
-Here's how to deploy oauth2-proxy alongside your application:
+The following manifest deploys oauth2-proxy and routes `app.yourdomain.com` through it:
 
 ```yaml
 apiVersion: apps/v1
@@ -204,13 +226,25 @@ spec:
     secretName: app-tls-secret
 ```
 
-This approach ensures proper OAuth2/OIDC flow handling while keeping your application protected at the ingress layer.
+| Placeholder | Value |
+|---|---|
+| `auth.yourdomain.com` | Domain of Casdoor |
+| `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET` | Client ID and client secret of the Casdoor application |
+| `app.yourdomain.com` | Domain of the protected application. Add `https://app.yourdomain.com/oauth2/callback` to the **Redirect URLs** of the Casdoor application |
+| `RANDOM_SECRET_32_CHARS` | Random secret that encrypts the session cookie |
+| `your-app-service:8080` | Service and port of the protected application |
 
-### Security Considerations
+For more options, see the [OAuth2 Proxy integration guide](/docs/integration/go/oauth2-proxy).
 
-When deploying authentication in Kubernetes:
+## Secure the deployment
 
-- **Always use HTTPS/TLS** - OAuth2 requires secure connections. Configure TLS certificates for your ingress resources using cert-manager or similar tools.
-- **Secure sensitive values** - Store client secrets, cookie secrets, and other sensitive data in Kubernetes Secrets, not in plain ConfigMaps or deployment manifests.
-- **Use proper RBAC** - Limit access to authentication configurations and secrets using Kubernetes RBAC policies.
-- **Session management** - For production deployments with multiple replicas, configure oauth2-proxy to use Redis for session storage to ensure sessions work across pod restarts and multiple instances.
+- **Use HTTPS**: OAuth 2.0 requires secure connections. Issue TLS certificates for your Ingress resources, for example with cert-manager.
+- **Keep secrets in Secrets**: Store client secrets and cookie secrets in Kubernetes Secrets, not in ConfigMaps or in manifests.
+- **Restrict access with RBAC**: Limit who can read the authentication configuration and the Secrets.
+- **Share sessions between replicas**: If you run several replicas of oauth2-proxy, configure Redis as its session store, so that sessions survive pod restarts and work on every replica.
+
+## See also
+
+- [Run Casdoor on Kubernetes with Helm](/docs/basic/try-with-helm)
+- [OAuth2 Proxy](/docs/integration/go/oauth2-proxy)
+- [Kubernetes integration](/docs/integration/go/kubernetes)

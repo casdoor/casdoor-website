@@ -1,199 +1,87 @@
 ---
-title: Permission configuration
-description: Configure Casbin permission policies and each field on the Edit Permission page.
+title: Configure a permission
+sidebar_label: Permission configuration
+description: Reference for the fields of the permission edit page - the model, the adapter, the subjects, the resources and actions, and the effect.
 keywords: [permissions, Casbin, policy, model]
 authors: [MagicalSheep]
 ---
 
-This page describes the fields on the **Edit Permission** form, where you define permission policies for an [organization](/docs/organization/overview).
+This page describes the fields of the permission edit page, on which you define the policies of an [organization](/docs/organization/overview).
 
-## Opening the form
+To open it, go to the **Permissions** page of the Casdoor admin console and add a permission or open an existing one.
 
-1. Sign in to Casdoor.
-2. Go to **Permissions** in the sidebar.
-3. Click **Add** for a new policy or open an existing one to edit.
+![Permission edit page](/img/permission/permission_edit.png)
 
-![Permission Edit Page](/img/permission/permission_edit.png)
+## Basic fields {#basic-information}
 
-## Fields
+| Field | Description |
+|---|---|
+| **Organization** | The organization that owns the permission. An organization can have many permissions |
+| **Name** | Unique name of the permission in the organization. The [Casbin APIs](/docs/permission/exposed-casbin-apis) refer to the permission by it |
+| **Display name** | Name shown in the UI |
 
-### Basic information
+## Model and adapter {#model-and-storage}
 
-**Organization** — The [organization](/docs/organization/overview) that owns this policy. One org can have multiple permission policies. Choose from the dropdown.
-
-**Name** — Unique identifier for the policy inside the organization. Must be unique; it is used when calling [Casbin APIs](/docs/permission/exposed-casbin-apis).
-
-**Display name** — Label shown in the UI.
-
-### Model and storage
-
-**Model** — The model that defines how this policy is evaluated (ACL, RBAC, ABAC, etc.). Create and edit models on the **Models** page. Examples:
-
-- ACL, RBAC, ABAC — see [Casbin supported models](https://casbin.org/docs/supported-models).
-
-:::tip
-Design and test models in the [Casbin Online Editor](https://casbin.org/editor), then add them in Casdoor.
-:::
-
-**Adapter**
-
-This field specifies the database table name where the permission policy rules are stored.
-
-Casdoor uses its own database to store permission policies:
-
-- If this field is **empty**, the permission policy will be stored in the `permission_rule` table
-- If **specified**, it will be stored in the specified database table
-- If the specified table name does not exist in the database, it will be created automatically
-
-:::caution Important
-
-Each Model should use a separate Adapter (table name). Different models with different structures should not share the same table, as this may cause conflicts when loading policies.
-
-:::
-
-Learn more about adapters in the [Adapter documentation](/docs/permission/adapter).
-
-### Adapter and Model relationship
-
-In Casdoor, adapters are **not configured per Permission**.
-
-The adapter and authorization behavior (such as RBAC or ABAC support) are defined at the **Model** level.
-A Permission only references a selected Model and provides policy data (subjects, resources, actions, effects).
-
-If RBAC-related fields (for example, *Sub-users* or *Sub-roles*) are disabled on the Permission page,
-it means the selected Model does not define a `role_definition` or does not support RBAC.
-
-To use an adapter with a Permission:
-
-1. Create or edit a Model and configure it with the appropriate Casbin definition and adapter.
-2. Save the Model.
-3. Select this Model when creating or editing a Permission.
-
-This behavior is expected and by design.
-
-### Subject Configuration
-
-These fields define **who** the permission policy applies to.
-
-#### Sub users
-
-Which [users](/docs/user/overview) the permission applies to; select them on the **Edit Permission** page.
-
-Examples:
-
-- Select specific users like `alice`, `bob`
-- Leave empty to not restrict by user
-
-#### Sub roles
-
-For RBAC, select which [roles](/docs/user/roles) apply to this permission on the **Edit Role** page.
-
-This will add permission policies such as `g, user, role` for every user in this role.
-
-Examples:
-
-- Select roles like `admin`, `editor`, `viewer`
-- All users with these roles will inherit the permissions
-
-:::tip Role-Based Permissions
-
-Using roles is a powerful way to manage permissions at scale. Instead of assigning permissions to individual users, you assign them to roles, and then assign roles to users.
-
-:::
-
-#### Sub groups
-
-Which groups the permission applies to; select them on the **Edit Permission** page. Every user who is a member of a selected group inherits the permission. Use `*` to match all groups in the organization.
-
-Examples:
-
-- Select groups like `dev-team`, `qa-team`
-- Leave empty to not restrict by group
-
-:::note Sub users, roles, and groups are additive
-
-Sub users, sub roles, and sub groups are combined with OR: a user is granted the permission if they are listed directly, **or** belong to any selected role, **or** are a member of any selected group. A role can itself contain groups, so a group can also grant a permission indirectly through a role.
-
-:::
-
-#### Sub domains
-
-Which domains will the permission policy be applied to. This is useful for multi-tenant scenarios.
-
-Examples:
-
-- `domain1`, `domain2`
-- Leave empty if not using domain-based access control
-
-### Object and Action Configuration
-
-These fields define **what** resources and **what actions** are controlled by the policy.
-
-#### Resource type
-
-Casdoor does not use this field for external app authentication; you can ignore it or use it for your own categorization.
-
-#### Resources
-
-This field describes the resources for which you wish to enforce permission control.
-
-:::note
-
-These resources are **not** the ones on the **Resources** page in the Casdoor UI. Use any string here, e.g.:
-
-- A URL: `/api/users`, `/admin/dashboard`
-- A file name: `document.pdf`, `config.yaml`
-- A resource identifier: `project:123`, `database:users`
-
-:::
-
-Add multiple resources; Casdoor creates permission rules for each resource–action combination.
-
-#### Actions
-
-This field describes the actions to operate on resources. Similar to resources, it can be any string you want, such as:
-
-- HTTP methods: `GET`, `POST`, `PUT`, `DELETE`
-- CRUD operations: `read`, `write`, `update`, `delete`
-- Custom actions: `view`, `edit`, `approve`, `publish`
+| Field | Description |
+|---|---|
+| **Model** | The model that evaluates the permission, such as ACL, RBAC, or ABAC. You create models on the **Models** page. See [supported models](https://casbin.apache.org/docs/supported-models) |
+| **Adapter** | The database table in which Casdoor stores the policy rules of the permission. If empty, the rules go to the `permission_rule` table. If the table doesn't exist, Casdoor creates it |
 
 :::caution
-
-Casdoor **converts all these strings to lowercase** before storing them. Additionally, Casdoor will **apply all actions to each resource**. You cannot specify that an action only takes effect on certain resources in this configuration page.
-
+Give each model its own adapter table. Models with different structures that share a table conflict when Casdoor loads the policies.
 :::
 
-If you need fine-grained control over action-resource combinations, you should define this in your Model file.
+The model defines which features the permission has. If the RBAC fields, such as **Sub users** or **Sub roles**, are unavailable on the permission page, the selected model has no `role_definition`. Edit the model to support roles. See also [Adapters](/docs/permission/adapter).
 
-### Effect Configuration
+## Subjects {#subject-configuration}
 
-#### Effect
+These fields define who the permission applies to.
 
-This option takes effect for Casdoor itself to control application access.
+| Field | Description |
+|---|---|
+| **Sub users** | [Users](/docs/user/overview) that the permission applies to, for example `alice` and `bob`. Leave empty to not restrict by user |
+| **Sub roles** | [Roles](/docs/user/roles) that the permission applies to, for example `admin` and `editor`. Casdoor adds a rule such as `g, user, role` for each user of the roles |
+| **Sub groups** | [Groups](/docs/organization/organization-tree) that the permission applies to, for example `dev-team`. Every member inherits the permission. `*` matches all groups of the organization |
+| **Sub domains** | Domains that the permission applies to, for multi-tenant models. Leave empty if your model has no domains |
 
-:::info
+The subjects add up: a user has the permission if the user is listed directly, or has one of the roles, or is a member of one of the groups. A role can contain groups, so a group can also grant a permission through a role.
 
-If you want an external application to enforce permission controls using the interface Casdoor exposes, this field won't do anything. You should describe the effect of pattern matching in the Model file using `allow` or `deny` rules.
+## Resources and actions {#object-and-action-configuration}
 
+These fields define what the permission controls.
+
+| Field | Description |
+|---|---|
+| **Resource type** | Casdoor doesn't use this field to authorize external applications. Use it to categorize permissions if you like |
+| **Resources** | Any strings that name what you protect, such as URLs (`/api/users`), file names (`document.pdf`), or identifiers (`project:123`). These aren't the files on the **Resources** page of Casdoor |
+| **Actions** | Any strings that name what users do, such as HTTP methods (`GET`, `POST`), operations (`read`, `write`), or your own verbs (`approve`, `publish`) |
+
+Casdoor creates a rule for every combination of resource and action.
+
+:::caution
+Casdoor converts actions to lowercase before it stores them, and applies every action to every resource. To allow an action on some resources only, express it in the model, or create separate permissions.
 :::
 
-## Example Configuration
+## Effect {#effect-configuration}
 
-This page is tailored to the `(sub, obj, act)` model, one of the most common permission models.
+**Effect** applies only when Casdoor uses the permission to control access to its own applications. When your application calls the Casbin APIs, the field has no effect: express `allow` and `deny` in the model instead.
 
-Here's an example configuration:
+## Example {#example-configuration}
 
-- **Model**: `rbac_model` (Role-Based Access Control)
-- **Sub roles**: `admin`, `editor`
-- **Resources**: `/api/users`, `/api/posts`
-- **Actions**: `read`, `write`
+The following permission uses a model with `(sub, obj, act)` requests:
 
-This would allow users with the `admin` or `editor` role to perform `read` and `write` actions on the `/api/users` and `/api/posts` resources.
+| Field | Value |
+|---|---|
+| **Model** | `rbac_model` |
+| **Sub roles** | `admin`, `editor` |
+| **Resources** | `/api/users`, `/api/posts` |
+| **Actions** | `read`, `write` |
 
-## Related Topics
+Users with the role `admin` or `editor` may `read` and `write` `/api/users` and `/api/posts`.
 
-- [Permission Overview](/docs/permission/overview): Understand the basics of permissions in Casdoor
-- [Exposed Casbin APIs](/docs/permission/exposed-casbin-apis): Use permissions in your external applications
-- [Adapters](/docs/permission/adapter): Configure policy storage adapters
-- [Account Customization](/docs/organization/accountCustomization): Configure View rule and Modify rule for user account fields
-- [User Roles](/docs/user/roles): Manage user roles in the **Edit Role** page
+## See also
+
+- [Permissions](/docs/permission/overview)
+- [Casbin APIs](/docs/permission/exposed-casbin-apis)
+- [Adapters](/docs/permission/adapter)
+- [Roles](/docs/user/roles)

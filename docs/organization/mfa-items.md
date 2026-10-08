@@ -1,36 +1,68 @@
 ---
-title: MFA items
-description: Configure which MFA methods are available and whether they are optional or required.
+title: Require multi-factor authentication
+sidebar_label: MFA items
+description: Choose which multi-factor authentication methods an organization offers, and whether each one is optional, prompted, or required.
 keywords: [organization, MFA, multi-factor authentication, 2FA]
 authors: [leo220yuyaodog]
 ---
 
-Admins can add **MFA items** to the organization’s account settings. Users then enable and manage MFA on their profile.
+This guide explains how to offer multi-factor authentication (MFA) methods to the users of an organization and how to require them.
 
-![organization-items-mfa](/img/organization/mfa/organization-items-mfa.png)
+---
 
-## MFA rules
+#### Learning outcomes
 
-For each MFA method, set:
+- Add MFA methods to an organization.
+- Make a method optional, prompted, or required.
+- Let users skip MFA on a trusted device for a period.
 
-- **Optional** — Users may enable or skip this MFA method.
-- **Prompt** — Users are prompted to enable it after sign-in if they haven’t yet.
-- **Required** — Users must enable this method before they can complete sign-in.
+#### What you need
 
-![organization-mfa-table](/img/organization/mfa/organization-mfa-table.png)
+- Administrator access to the organization in the Casdoor admin console
 
-Prompt shown when MFA is set to prompt:
+---
 
-![mfa prompt](/img/organization/mfa/mfa-prompt.png)
+## Add MFA methods
 
-When set to required, users must complete MFA setup before finishing login:
+1. In the Casdoor admin console, open the edit page of the organization.
+1. In **MFA items**, add the MFA methods that the organization offers.
 
-![mfa prompt](/img/organization/mfa/mfa-required.gif)
+   ![MFA items of an organization](/img/organization/mfa/organization-items-mfa.png)
 
-## Remember MFA
+1. Select a rule for each method:
 
-Users can choose to have MFA “remembered” for a period so they are not asked again on the same device. Configure **MFA remember time** in the organization settings (e.g. 12 hours).
+   | Rule | Behavior |
+   |---|---|
+   | **Optional** | Users can set up the method or leave it |
+   | **Prompt** | Casdoor prompts users who haven't set up the method after they sign in |
+   | **Required** | Users must set up the method before they can complete the sign-in |
 
-![mfa remember](/img/organization/mfa/mfa-remember.png)
+   ![Rules of the MFA items](/img/organization/mfa/organization-mfa-table.png)
 
-![mfa remember time](/img/organization/mfa/mfa-remember-time.png)
+1. Save the organization.
+
+Users then set up and manage their methods on their account page. See [Multi-factor authentication](/docs/user/multi-factor-authentication).
+
+With the **Prompt** rule, users see the following prompt after sign-in:
+
+![Prompt to set up MFA](/img/organization/mfa/mfa-prompt.png)
+
+With the **Required** rule, users go through the setup before the sign-in completes:
+
+![Recording of the required MFA setup](/img/organization/mfa/mfa-required.gif)
+
+## Remember MFA on a device {#remember-mfa}
+
+Users can choose to be remembered on a device, so that Casdoor doesn't ask for the second factor again for a period.
+
+![Remember option during MFA](/img/organization/mfa/mfa-remember.png)
+
+Set the length of the period, for example 12 hours, in **MFA remember time** on the organization edit page.
+
+![MFA remember time of an organization](/img/organization/mfa/mfa-remember-time.png)
+
+## See also
+
+- [Multi-factor authentication](/docs/user/multi-factor-authentication)
+- [Casdoor Authenticator app](/docs/how-to-connect/totp-authenticator-app)
+- [Customize the account page](/docs/organization/accountCustomization)

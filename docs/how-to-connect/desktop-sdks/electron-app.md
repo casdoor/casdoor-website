@@ -1,40 +1,65 @@
 ---
-title: Electron app
-description: Integrate Casdoor in an Electron app with OAuth and a custom protocol.
+title: Sign users in to an Electron app
+sidebar_label: Electron app
+description: Run the Casdoor Electron example, which signs users in through the system browser and a custom protocol, and add the same flow to your own app.
 keywords: [electron, SDK, Casdoor]
 authors: [Resulte]
 ---
 
-The [casdoor-electron-example](https://github.com/casdoor/casdoor-electron-example) shows Casdoor sign-in in an Electron app (custom protocol + browser OAuth).
+This guide explains how to run the Casdoor example for Electron and how to add the same sign-in flow to your own app. The user signs in in the system browser, and the browser hands the result back to the app through a custom protocol.
+
+---
+
+#### Learning outcomes
+
+- Configure, run, and package the example app.
+- Register a custom protocol for your app.
+- Open the Casdoor sign-in page in the browser and receive the authorization code.
+- Exchange the code for a token and read the user.
+
+#### What you need
+
+- Node.js with npm or Yarn
+- An [application](/docs/application/overview) in Casdoor. Without one, the example uses the [Casdoor demo site](https://door.casdoor.com/) and its application [app-casnode](https://door.casdoor.com/applications/app-casnode).
+
+#### Sample code
+
+- [casdoor-electron-example](https://github.com/casdoor/casdoor-electron-example)
+
+---
 
 ## Run the example
 
-### Initialization
+1. Clone [casdoor-electron-example](https://github.com/casdoor/casdoor-electron-example) and install its dependencies.
+1. Set the following values. All of them are strings.
 
-Set these 6 string parameters:
+   | Name                 | Description                                                                                      | Path                   |
+   | -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------- |
+   | serverUrl            | Your Casdoor server URL                                                                          | `src/App.js`         |
+   | clientId             | The Client ID of your Casdoor application                                                        | `src/App.js`         |
+   | appName              | The name of your Casdoor application                                                             | `src/App.js`         |
+   | redirectPath         | The path of the redirect URL for your Casdoor application, will be `/callback` if not provided | `src/App.js`         |
+   | clientSecret         | The Client Secret of your Casdoor application                                                   | `src/App.js`         |
+   | casdoorServiceDomain | Your Casdoor server URL                                                                          | `public/electron.js` |
 
-| Name                 | Description                                                                                      | Path                   |
-| -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------- |
-| serverUrl            | Your Casdoor server URL                                                                          | `src/App.js`         |
-| clientId             | The Client ID of your Casdoor application                                                        | `src/App.js`         |
-| appName              | The name of your Casdoor application                                                             | `src/App.js`         |
-| redirectPath         | The path of the redirect URL for your Casdoor application, will be `/callback` if not provided | `src/App.js`         |
-| clientSecret         | The Client Secret of your Casdoor application                                                   | `src/App.js`         |
-| casdoorServiceDomain | Your Casdoor server URL                                                                          | `public/electron.js` |
+1. Build and start the app with `npm run dev` or `yarn dev`.
+1. In the app window, click **Login with Casdoor**.
 
-Defaults: [Casdoor demo](https://door.casdoor.com/) and [app-casnode](https://door.casdoor.com/applications/app-casnode) if not set.
+   ![Example app before sign-in](/img/how-to-connect/desktop-sdks/electron-app/login.png)
 
-### Commands
+   The Casdoor sign-in page opens in your browser.
 
-In the project directory:
+   ![Casdoor sign-in page in the browser](/img/how-to-connect/desktop-sdks/electron-app/browser.png)
 
-#### `npm run dev` or `yarn dev`
+1. Sign in. The browser opens the app again, and the app shows your username.
 
-Builds the electron app and runs this app.
+   ![Example app after sign-in](/img/how-to-connect/desktop-sdks/electron-app/logout.png)
 
-#### `npm run make` or `yarn make`
+![Recording of the complete sign-in flow](/img/how-to-connect/desktop-sdks/electron-app/preview.gif)
 
-Packages and distributes your application. It will create the `out` folder where your package will be located:
+### Package the example
+
+To package the app for distribution, run `npm run make` or `yarn make`. The command creates the `out` folder with the package:
 
 ```bash
 // Example for macOS out/  
@@ -43,24 +68,11 @@ Packages and distributes your application. It will create the `out` folder where
 └── out/casdoor-electron-example-darwin-x64/casdoor-electron-example.app/Contents/MacOS/casdoor-electron-example
 ```
 
-### Preview
+## Add sign-in to your app
 
-![Electron Login](/img/how-to-connect/desktop-sdks/electron-app/login.png)
+### Register the custom protocol
 
-Running the app opens a window. Click **Login with Casdoor** to open the Casdoor login page in your browser.
-
-![Browser View](/img/how-to-connect/desktop-sdks/electron-app/browser.png)
-
-After sign-in, the app opens and shows your username.
-
-![Electron Logout](/img/how-to-connect/desktop-sdks/electron-app/logout.png)
-![Electron Preview Gif](/img/how-to-connect/desktop-sdks/electron-app/preview.gif)
-
-## Integration steps
-
-### 1. Set the custom protocol
-
-Register the `casdoor` custom protocol:
+Register the `casdoor` protocol, so that the browser can open your app and pass the authorization code to it:
 
 ```javascript
 const protocol = "casdoor";
@@ -76,9 +88,9 @@ if (process.defaultApp) {
 }
 ```
 
-The browser can then open your app and pass the auth code via the protocol.
+### Open the sign-in page in the browser
 
-### 2. Open the login URL in the browser
+Build the sign-in URL and open it in the system browser. Change the first five variables to the values of your Casdoor instance.
 
 ```javascript
 const serverUrl = "https://door.casdoor.com";
@@ -94,11 +106,9 @@ const signinUrl = `${serverUrl}/login/oauth/authorize?client_id=${clientId}&resp
 shell.openExternal(signinUrl); //Open the login url in the browser
 ```
 
-Adjust the first five variables for your Casdoor instance.
+### Receive the authorization code
 
-### 3. Listen for the app being opened
-
-After sign-in in the browser, the browser opens your app via the custom protocol. Listen for that event:
+After the user signs in, the browser opens your app through the custom protocol. Listen for that event:
 
 ```javascript
 const gotTheLock = app.requestSingleInstanceLock();
@@ -137,9 +147,9 @@ if (!gotTheLock) {
 }
 ```
 
-The auth code is in `casdoor_code` or `params.code`.
+The authorization code is in `casdoor_code` or in `params.code`.
 
-### 4. Exchange the code for user info
+### Exchange the code for the user
 
 ```javascript
 async function getUserInfo(clientId, clientSecret, code) {
@@ -171,4 +181,9 @@ ipcMain.handle("getUserInfo", async (event, clientId, clientSecret) => {
 });
 ```
 
-See [OAuth](/docs/how-to-connect/oauth) for the full flow.
+For the requests behind this flow, see [OAuth 2.0](/docs/how-to-connect/oauth).
+
+## See also
+
+- [Casdoor SDKs](/docs/how-to-connect/sdk)
+- [OAuth 2.0](/docs/how-to-connect/oauth)

@@ -1,21 +1,57 @@
 ---
-title: Dynamic client registration
-description: Register OAuth clients programmatically via RFC 7591 (DCR).
+title: Register clients dynamically
+sidebar_label: Dynamic client registration
+description: Let software register itself as an OAuth 2.0 client of Casdoor with one HTTP request, as defined in RFC 7591, and control where this is allowed.
 keywords: [OAuth 2.0, DCR, dynamic registration, RFC 7591, MCP]
 authors: [hsluoyz]
 ---
 
-**Dynamic Client Registration (DCR)** lets your software register an OAuth client with Casdoor in one HTTP request instead of creating an application manually in the admin UI. That helps when you ship tools to end users: MCP clients, CLIs, or desktop apps can obtain client credentials at first run or install. Casdoor implements [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591).
+This guide explains dynamic client registration (DCR): software registers itself as an OAuth 2.0 client of Casdoor with one HTTP request, and nobody creates an application in the admin console. DCR suits tools that you ship to end users, such as MCP clients, CLIs, and desktop applications, which get their client credentials on first run. Casdoor implements [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591) and [RFC 7592](https://datatracker.ietf.org/doc/html/rfc7592).
 
-## Registration endpoint
+---
 
-The endpoint is advertised in OIDC discovery. Request `/.well-known/openid-configuration`:
+#### Learning outcomes
+
+- Allow DCR for an organization.
+- Find the registration endpoint and register a client.
+- Read, update, and delete a registration.
+- Understand what a registered client may do.
+
+#### What you need
+
+- Administrator access to the Casdoor admin console
+- A client that can send HTTP requests
+
+---
+
+## Allow DCR for an organization {#controlling-dcr-per-organization}
+
+DCR is off by default, for every organization including `built-in`. The registration endpoint needs no authentication, so Casdoor exposes it only after you turn it on.
+
+1. In the Casdoor admin console, open the edit page of the organization.
+1. Turn on **Enable dynamic client registration**.
+1. Save the organization.
+
+The switch sets the `dcrPolicy` field of the organization:
+
+| `dcrPolicy` | Behavior |
+|---|---|
+| `disabled`, or empty | Casdoor rejects registration requests |
+| `open` | Anyone can register an application in the organization, without authentication |
+
+:::caution
+Turn DCR on only for organizations that need it. Many setups work with applications that an administrator creates by hand, and leaving DCR off removes a way to abuse your Casdoor instance.
+:::
+
+## Find the registration endpoint {#registration-endpoint}
+
+The discovery document advertises the endpoint. Request it:
 
 ```bash
 curl https://your-casdoor.com/.well-known/openid-configuration
 ```
 
-Use the `registration_endpoint` value (e.g. `/api/oauth/register`) for registration:
+Read the value of `registration_endpoint`:
 
 ```json
 {
@@ -27,9 +63,9 @@ Use the `registration_endpoint` value (e.g. `/api/oauth/register`) for registrat
 }
 ```
 
-## Registering a client
+## Register a client {#registering-a-client}
 
-POST to `/api/oauth/register` with JSON metadata:
+Send a `POST` request with the metadata of the client as JSON to the registration endpoint:
 
 ```bash
 curl -X POST https://your-casdoor.com/api/oauth/register \
@@ -43,7 +79,7 @@ curl -X POST https://your-casdoor.com/api/oauth/register \
   }'
 ```
 
-Response includes the new client credentials:
+The response contains the credentials of the new client:
 
 ```json
 {
@@ -58,58 +94,62 @@ Response includes the new client credentials:
 }
 ```
 
-Store the `client_id` and `client_secret` securely—you'll use them for all subsequent OAuth flows.
+Store `client_id` and `client_secret` securely. The client uses them in all later OAuth 2.0 flows.
 
-## Request Parameters
+### Request parameters
 
-Your registration request needs at least one redirect URI. Everything else is optional, with Casdoor applying sensible defaults:
+| Parameter | Required | Description |
+|---|---|---|
+| `redirect_uris` | Yes | Array of callback URLs that Casdoor may redirect to after sign-in |
+| `client_name` | No | Display name of the client. Casdoor generates a name if you omit it |
+| `grant_types` | No | Grant types that the client uses. The default is `["authorization_code"]` |
+| `token_endpoint_auth_method` | No | How the client authenticates at the token endpoint: `none`, `client_secret_post`, or `client_secret_basic` |
+| `application_type` | No | `web` for server-side clients, or `native` for desktop and mobile clients |
+| `logo_uri` | No | URL of the logo of the client |
+| `client_uri` | No | URL of the home page of the client |
+| `scope` | No | Space-separated list of the scopes that the client requests |
 
-- **redirect_uris** (required): Array of allowed callback URLs where Casdoor redirects after authentication
-- **client_name**: Display name for your application (auto-generated if omitted)
-- **grant_types**: OAuth grant types your app will use—defaults to `["authorization_code"]`
-- **token_endpoint_auth_method**: How your app authenticates at the token endpoint (`none`, `client_secret_post`, or `client_secret_basic`)
-- **application_type**: Either `web` for server-side apps or `native` for desktop/mobile apps
-- **logo_uri**: URL to your application's logo
-- **client_uri**: URL to your application's homepage
-- **scope**: Space-separated list of OAuth scopes your app requests
+### Errors {#handling-registration-failures}
 
-Applications created through DCR get a 7-day token expiration and are tagged with `dcr` for easy identification in the admin interface.
+On failure, Casdoor returns an error as RFC 7591 defines it, with an `error` code and a readable `error_description`:
 
-## Managing a registered client
+| Error | Cause |
+|---|---|
+| `invalid_redirect_uri` | `redirect_uris` is missing or invalid |
+| `invalid_client_metadata` | A parameter is malformed |
+| `access_denied` | DCR is turned off for the organization |
 
-Casdoor also implements [RFC 7592](https://datatracker.ietf.org/doc/html/rfc7592) so a client can read, update, or delete its own registration at `/api/oauth/register/{client_id}`:
+## Manage a registration {#managing-a-registered-client}
 
-- `GET /api/oauth/register/{client_id}` — read the client's current metadata.
-- `PUT /api/oauth/register/{client_id}` — update the client's metadata.
-- `DELETE /api/oauth/register/{client_id}` — delete the client.
+A client reads, updates, and deletes its own registration at `/api/oauth/register/<client-id>`:
 
-## Controlling DCR Per Organization
+| Request | Description |
+|---|---|
+| `GET /api/oauth/register/<client-id>` | Returns the current metadata of the client |
+| `PUT /api/oauth/register/<client-id>` | Updates the metadata |
+| `DELETE /api/oauth/register/<client-id>` | Deletes the client |
 
-Organizations control whether DCR is available through the `dcrPolicy` setting on the organization configuration page. Two values are supported:
+## What a registered client is and may do {#security-model}
 
-- **`disabled`** (default) — registration requests are rejected with an error. An unset/empty `dcrPolicy` is also treated as disabled, so DCR is **off unless you explicitly opt in**. Casdoor's built-in organization ships with DCR disabled.
-- **`open`** — anyone can register an application in this organization without authentication.
+Casdoor creates an application for each registered client. The application has the following properties:
 
-This gives you flexibility: turn DCR on for developer-friendly organizations while keeping it locked down for production environments that require manual oversight. Because the default is closed, an unauthenticated registration endpoint is never exposed until you deliberately enable it.
+- It belongs to the administrator account of the organization and appears in the application list with the tag `dcr`.
+- Its tokens expire after seven days.
+- Its client secret doesn't expire. An administrator can delete the application at any time.
+- It runs under the restricted role `app-dcr`. With its client credentials, it can call only the endpoints of the sign-in flow: `/api/login/oauth/*`, `/api/get-oauth-token`, `/api/userinfo`, and `/api/get-application`. It can't call the management APIs.
 
-## Security Model
+So that users can sign in to the client right away, the application has password sign-in turned on and inherits the following settings from the default application of the organization:
 
-The registration endpoint itself requires no authentication—this is by design for public clients like mobile apps and desktop tools that can't securely store credentials before registration. To keep that unauthenticated surface from being exposed by accident, DCR is **disabled by default** and must be turned on per organization (see [Controlling DCR Per Organization](#controlling-dcr-per-organization)).
+| Setting | Inherited |
+|---|---|
+| Providers and sign-in methods | Yes, so that at least one sign-in method works |
+| Branding | The theme, the footer HTML, and the form CSS. The logo too, unless the request contains `logo_uri` |
+| Sign-in items | The layout of the sign-in form |
+| Session and WebAuthn settings | `EnableSigninSession` and `EnableWebAuthn` |
 
-Applications created through DCR belong to the organization's admin account and appear in your application list with a `dcr` tag. This tag is not just a label: DCR-registered applications run under a restricted `app-dcr` role and can only reach the OAuth/OIDC endpoints they need for the login flow (`/api/login/oauth/*`, `/api/get-oauth-token`, `/api/userinfo`, `/api/get-application`). They cannot use the client credentials to call other management APIs, which limits the blast radius of a self-registered client.
+## Example: an MCP client {#complete-example-mcp-client}
 
-So that end users can actually sign in to a self-registered app, DCR-registered applications have password sign-in enabled and inherit a set of fields from the organization's default application:
-
-- **Providers and sign-in methods** — so there is at least one working sign-in method out of the box.
-- **Branding** — the logo (only when the request omits `logo_uri`), theme, footer HTML, and form CSS, so the login page matches the rest of the organization.
-- **Sign-in items** — the same sign-in form layout as the default application.
-- **`EnableSigninSession` and `EnableWebAuthn`** — the default application's session and WebAuthn settings.
-
-Client secrets never expire by default, but you can revoke any application through the admin interface at any time. For production deployments, consider whether your organization actually needs unauthenticated registration. Many scenarios work fine with manual app creation, and leaving DCR disabled removes a potential abuse vector.
-
-## Complete Example: MCP Client
-
-Here's how an MCP client might implement DCR from scratch:
+The following JavaScript discovers the registration endpoint and registers a client:
 
 ```javascript
 // Discover the registration endpoint
@@ -133,8 +173,10 @@ const registration = await fetch(discovery.registration_endpoint, {
 const { client_id, client_secret } = registration;
 ```
 
-With these credentials, the client proceeds through the standard OAuth authorization code flow. The user authenticates in their browser, Casdoor redirects back to your callback URL with an authorization code, and you exchange it for access tokens.
+With the credentials, the client runs the authorization code flow: the user signs in in the browser, Casdoor redirects to the callback URL with an authorization code, and the client exchanges the code for tokens. See [OAuth 2.0](/docs/how-to-connect/oauth).
 
-## Handling Registration Failures
+## See also
 
-When something goes wrong, Casdoor returns RFC 7591 compliant errors with an `error` code and human-readable `error_description`. The most common issues: missing redirect URIs (`invalid_redirect_uri`), malformed parameters (`invalid_client_metadata`), or DCR being disabled for the organization (`access_denied`). Check the description field for specifics on what needs to be fixed.
+- [OAuth 2.0](/docs/how-to-connect/oauth)
+- [Application categories](/docs/application/categories)
+- [Connect Claude Desktop to the Casdoor MCP server](/docs/how-to-connect/mcp/connect-claude-desktop)

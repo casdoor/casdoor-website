@@ -1,11 +1,11 @@
 ---
 title: Core concepts
-description: Organizations, users, applications, and providers—the main building blocks of Casdoor.
+description: Organizations, users, applications, and providers are the four objects that every Casdoor setup is built from.
 keywords: [core concepts, organization, user, application, provider]
 authors: [hsluoyz]
 ---
 
-Casdoor is built around four core concepts: **Organization**, **User**, **Application**, and **Provider**. Understanding these will help you configure and operate Casdoor effectively.
+Casdoor has four core objects: organizations, users, applications, and providers. An organization contains users and applications. Users sign in through an application. An application uses providers to offer sign-in methods and to send messages.
 
 ```mermaid
 flowchart LR;
@@ -66,247 +66,158 @@ flowchart LR;
     Applications-2<-->Providers;
 ```
 
-:::tip
-Examples in this section use the demo site `https://door.casdoor.com`.
-:::
+The examples on this page use the demo site `https://door.casdoor.com`.
 
 ## Organization
 
-An **organization** is a container for users and applications—for example, a company’s employees or a product’s customers. The `Organization` struct in code looks like this:
+An organization is a container for users and applications. An organization typically stands for the employees of a company or the customers of a product. Several organizations can share one Casdoor instance, and each organization has its own users, applications, password rules, and branding.
 
-```go
-type Organization struct {
-    Owner       string `xorm:"varchar(100) notnull pk" json:"owner"`
-    Name        string `xorm:"varchar(100) notnull pk" json:"name"`
-    CreatedTime string `xorm:"varchar(100)" json:"createdTime"`
+| Property | Description |
+|---|---|
+| `owner` | Always `admin` for organizations |
+| `name` | Unique name of the organization, for example `built-in` |
+| `displayName` | Name shown in the UI |
+| `websiteUrl` | Website of the organization |
+| `passwordType` | Algorithm used to store the passwords of the organization's users |
+| `defaultAvatar` | Avatar given to new users |
+| `enableSoftDeletion` | Marks deleted users as deleted but keeps them in the database |
+| `accountItems` | Fields shown on the account page of a user, and who can view and edit them |
 
-    DisplayName        string   `xorm:"varchar(100)" json:"displayName"`
-    WebsiteUrl         string   `xorm:"varchar(100)" json:"websiteUrl"`
-    Favicon            string   `xorm:"varchar(100)" json:"favicon"`
-    PasswordType       string   `xorm:"varchar(100)" json:"passwordType"`
-    PasswordSalt       string   `xorm:"varchar(100)" json:"passwordSalt"`
-    PhonePrefix        string   `xorm:"varchar(10)"  json:"phonePrefix"`
-    DefaultAvatar      string   `xorm:"varchar(100)" json:"defaultAvatar"`
-    Tags               []string `xorm:"mediumtext" json:"tags"`
-    MasterPassword     string   `xorm:"varchar(100)" json:"masterPassword"`
-    EnableSoftDeletion bool     `json:"enableSoftDeletion"`
-    IsProfilePublic    bool     `json:"isProfilePublic"`
-
-    AccountItems []*AccountItem `xorm:"varchar(2000)" json:"accountItems"`
-}
-```
+For all settings of an organization, see [Organizations](/docs/organization/overview).
 
 ## User
 
-A **user** can sign in to applications. Each user belongs to exactly one organization but can sign in to any application in that organization. Casdoor has two user types:
+A user is an account that can sign in. Each user belongs to exactly one organization and can sign in to every application of that organization.
 
-- **Built-in users** (e.g. `built-in/admin`): Global administrators with full control over the Casdoor instance.
-- **Organization users** (e.g. `my-company/alice`): Regular users who can sign up, sign in, sign out, and manage their own profile.
+Casdoor has two kinds of users:
 
-In the API, a user is identified as `<organization_name>/<username>`. The default admin is `built-in/admin`. The `User` struct also has an `id` field (a UUID such as `d835a48f-2e88-4c1f-b907-60ac6b6c1b40`) that applications can use as a stable user ID.
+- **Users of the `built-in` organization**, such as `built-in/admin`: Global administrators with full control over the Casdoor instance.
+- **Users of other organizations**, such as `my-company/alice`: Regular users who can sign up, sign in, sign out, and manage their own profile.
 
-:::tip
-For single-organization applications, use `<username>` instead of `<organization_name>/<username>` as the user ID to keep things simple.
-:::
+### User IDs
 
-The `User` struct:
+A user has two identifiers:
 
-```go
-type User struct {
-    Owner       string `xorm:"varchar(100) notnull pk" json:"owner"`
-    Name        string `xorm:"varchar(100) notnull pk" json:"name"`
-    CreatedTime string `xorm:"varchar(100)" json:"createdTime"`
-    UpdatedTime string `xorm:"varchar(100)" json:"updatedTime"`
-
-    Id                string   `xorm:"varchar(100)" json:"id"`
-    Type              string   `xorm:"varchar(100)" json:"type"`
-    Password          string   `xorm:"varchar(100)" json:"password"`
-    PasswordSalt      string   `xorm:"varchar(100)" json:"passwordSalt"`
-    DisplayName       string   `xorm:"varchar(100)" json:"displayName"`
-    Avatar            string   `xorm:"varchar(500)" json:"avatar"`
-    PermanentAvatar   string   `xorm:"varchar(500)" json:"permanentAvatar"`
-    Email             string   `xorm:"varchar(100) index" json:"email"`
-    Phone             string   `xorm:"varchar(100) index" json:"phone"`
-    Location          string   `xorm:"varchar(100)" json:"location"`
-    Address           []string `json:"address"`
-    Affiliation       string   `xorm:"varchar(100)" json:"affiliation"`
-    Title             string   `xorm:"varchar(100)" json:"title"`
-    IdCardType        string   `xorm:"varchar(100)" json:"idCardType"`
-    IdCard            string   `xorm:"varchar(100) index" json:"idCard"`
-    Homepage          string   `xorm:"varchar(100)" json:"homepage"`
-    Bio               string   `xorm:"varchar(100)" json:"bio"`
-    Tag               string   `xorm:"varchar(100)" json:"tag"`
-    Region            string   `xorm:"varchar(100)" json:"region"`
-    Language          string   `xorm:"varchar(100)" json:"language"`
-    Gender            string   `xorm:"varchar(100)" json:"gender"`
-    Birthday          string   `xorm:"varchar(100)" json:"birthday"`
-    Education         string   `xorm:"varchar(100)" json:"education"`
-    Score             int      `json:"score"`
-    Ranking           int      `json:"ranking"`
-    IsDefaultAvatar   bool     `json:"isDefaultAvatar"`
-    IsOnline          bool     `json:"isOnline"`
-    IsAdmin           bool     `json:"isAdmin"`
-    IsGlobalAdmin     bool     `json:"isGlobalAdmin"`
-    IsForbidden       bool     `json:"isForbidden"`
-    IsDeleted         bool     `json:"isDeleted"`
-    SignupApplication string   `xorm:"varchar(100)" json:"signupApplication"`
-    Hash              string   `xorm:"varchar(100)" json:"hash"`
-    PreHash           string   `xorm:"varchar(100)" json:"preHash"`
-
-    CreatedIp      string `xorm:"varchar(100)" json:"createdIp"`
-    LastSigninTime string `xorm:"varchar(100)" json:"lastSigninTime"`
-    LastSigninIp   string `xorm:"varchar(100)" json:"lastSigninIp"`
-
-    Github   string `xorm:"varchar(100)" json:"github"`
-    Google   string `xorm:"varchar(100)" json:"google"`
-    QQ       string `xorm:"qq varchar(100)" json:"qq"`
-    WeChat   string `xorm:"wechat varchar(100)" json:"wechat"`
-    Facebook string `xorm:"facebook varchar(100)" json:"facebook"`
-    DingTalk string `xorm:"dingtalk varchar(100)" json:"dingtalk"`
-    Weibo    string `xorm:"weibo varchar(100)" json:"weibo"`
-    Gitee    string `xorm:"gitee varchar(100)" json:"gitee"`
-    LinkedIn string `xorm:"linkedin varchar(100)" json:"linkedin"`
-    Wecom    string `xorm:"wecom varchar(100)" json:"wecom"`
-    Lark     string `xorm:"lark varchar(100)" json:"lark"`
-    Gitlab   string `xorm:"gitlab varchar(100)" json:"gitlab"`
-    Apple    string `xorm:"apple varchar(100)" json:"apple"`
-    AzureAD  string `xorm:"azuread varchar(100)" json:"azuread"`
-    Slack    string `xorm:"slack varchar(100)" json:"slack"`
-
-    Ldap       string            `xorm:"ldap varchar(100)" json:"ldap"`
-    Properties map[string]string `json:"properties"`
-}
-```
+| Identifier | Example | Use it for |
+|---|---|---|
+| `<organization>/<username>` | `built-in/admin` | Calls to the Casdoor API |
+| `id` | `d835a48f-2e88-4c1f-b907-60ac6b6c1b40` | A stable user ID in your own application. It is a UUID |
 
 :::tip
-The `Properties` field is a key-value map for custom user attributes. See [User overview](/docs/user/overview#using-the-properties-field) for usage and best practices.
+If your application uses one organization only, you can use `<username>` alone as the user ID in your application.
 :::
+
+### User properties
+
+| Property | Description |
+|---|---|
+| `owner` | Name of the organization that the user belongs to |
+| `name` | Username, unique within the organization |
+| `id` | UUID of the user |
+| `displayName` | Name shown in the UI |
+| `avatar` | URL of the avatar image |
+| `email`, `phone` | Contact details, also used for verification codes |
+| `password` | Password, stored in the form that the organization's `passwordType` defines |
+| `isAdmin` | Whether the user is an administrator of the organization |
+| `isForbidden` | Whether the user is blocked from signing in |
+| `isDeleted` | Whether the user is soft-deleted |
+| `signupApplication` | Application through which the user signed up |
+| `github`, `google`, `wechat`, and so on | ID of the user at each linked identity provider |
+| `ldap` | ID of the user in the LDAP directory that the user was synchronized from |
+| `properties` | Key-value map for your own attributes |
+
+Use `properties` for attributes that Casdoor has no field for. See [Using the Properties field](/docs/user/overview#using-the-properties-field). For the full list of fields, see [Users](/docs/user/overview).
 
 ## Application
 
-An **application** is a web service that uses Casdoor for authentication—for example, a forum, an internal OA system, or a CRM.
+An application is a web service that signs users in with Casdoor, for example a forum, an internal office system, or a customer relationship management system. An application belongs to one organization and holds the settings for how users of that organization sign in to it.
 
-```go
-type Application struct {
-    Owner               string          `xorm:"varchar(100) notnull pk" json:"owner"`
-    Name                string          `xorm:"varchar(100) notnull pk" json:"name"`
-    CreatedTime         string          `xorm:"varchar(100)" json:"createdTime"`
-    DisplayName         string          `xorm:"varchar(100)" json:"displayName"`
-    Logo                string          `xorm:"varchar(100)" json:"logo"`
-    HomepageUrl         string          `xorm:"varchar(100)" json:"homepageUrl"`
-    Description         string          `xorm:"varchar(100)" json:"description"`
-    Organization        string          `xorm:"varchar(100)" json:"organization"`
-    Cert                string          `xorm:"varchar(100)" json:"cert"`
-    EnablePassword      bool            `json:"enablePassword"`
-    EnableSignUp        bool            `json:"enableSignUp"`
-    EnableSigninSession bool            `json:"enableSigninSession"`
-    EnableCodeSignin    bool            `json:"enableCodeSignin"`
-    Providers           []*ProviderItem `xorm:"mediumtext" json:"providers"`
-    SignupItems         []*SignupItem   `xorm:"varchar(1000)" json:"signupItems"`
-    OrganizationObj     *Organization   `xorm:"-" json:"organizationObj"`
-    ClientId             string         `xorm:"varchar(100)" json:"clientId"`
-    ClientSecret         string         `xorm:"varchar(100)" json:"clientSecret"`
-    RedirectUris         []string       `xorm:"varchar(1000)" json:"redirectUris"`
-    TokenFormat          string         `xorm:"varchar(100)" json:"tokenFormat"`
-    ExpireInHours        int            `json:"expireInHours"`
-    RefreshExpireInHours int            `json:"refreshExpireInHours"`
-    SignupUrl            string         `xorm:"varchar(200)" json:"signupUrl"`
-    SigninUrl            string         `xorm:"varchar(200)" json:"signinUrl"`
-    ForgetUrl            string         `xorm:"varchar(200)" json:"forgetUrl"`
-    AffiliationUrl       string         `xorm:"varchar(100)" json:"affiliationUrl"`
-    TermsOfUse           string         `xorm:"varchar(200)" json:"termsOfUse"`
-    SignupHtml           string         `xorm:"mediumtext" json:"signupHtml"`
-    SigninHtml           string         `xorm:"mediumtext" json:"signinHtml"`
-}
-```
+| Property | Description |
+|---|---|
+| `owner` | Always `admin` for applications |
+| `name` | Unique name of the application, for example `app-built-in` |
+| `organization` | Organization whose users can sign in to the application |
+| `clientId`, `clientSecret` | OAuth 2.0 credentials of the application |
+| `redirectUris` | URLs that Casdoor may send users back to after sign-in |
+| `providers` | Providers that the application offers on its sign-in and sign-up pages |
+| `signupItems` | Fields of the sign-up page |
+| `enablePassword` | Whether users can sign in with a password |
+| `enableSignUp` | Whether new users can sign up |
+| `tokenFormat` | Format of the access tokens that Casdoor issues for the application |
+| `expireInHours`, `refreshExpireInHours` | Lifetime of access tokens and refresh tokens |
+| `cert` | Certificate that signs the tokens |
 
-Each application can have its own sign-up and sign-in pages. The root path `/login` (e.g. `https://door.casdoor.com/login`) is the sign-in page for Casdoor’s built-in application, `app-built-in`.
+For all settings of an application, see [Application configuration](/docs/application/config).
 
-An application is the entry point through which users sign in to Casdoor; users always sign in via an application’s sign-in page.
+### Sign-in and sign-up pages
 
-| Application   | Sign-up page URL                           | Sign-in page URL                                                                                                                                                                      |
-|---------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| app-built-in  | `https://door.casdoor.com/signup`           | `https://door.casdoor.com/login`                                                                                                                                                         |
-| app-casnode   | `https://door.casdoor.com/signup/app-casnode`| `https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor` |
-| app-casbin-oa | `https://door.casdoor.com/signup/app-casbin-oa` | `https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor`  |
+Users always sign in through an application. Each application has its own sign-in and sign-up pages. The root path `/login` is the sign-in page of `app-built-in`, the application that Casdoor creates for its own admin console.
 
-### Login URLs
+| Application | Sign-up page | Sign-in page |
+|---|---|---|
+| `app-built-in` | `https://door.casdoor.com/signup` | `https://door.casdoor.com/login` |
+| `app-casnode` | `https://door.casdoor.com/signup/app-casnode` | `https://door.casdoor.com/login/oauth/authorize?client_id=014ae4bd048734ca2dea&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor` |
+| `app-casbin-oa` | `https://door.casdoor.com/signup/app-casbin-oa` | `https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=http://localhost:9000/callback&scope=read&state=casdoor` |
 
-Signing in via the built-in application is straightforward: open the Casdoor server URL (e.g. `https://door.casdoor.com`) and you are redirected to `/login`. For other applications, build sign-in and sign-up URLs in two ways:
+### Sign-in and sign-up URLs {#login-urls}
 
-#### 1. Build URLs manually
+To send users to the pages of your own application, build the URLs yourself or let an SDK build them.
 
-- **Sign-up**
-  - By application: `<casdoor-host>/signup/<application-name>`
-  - By OAuth: `<casdoor-host>/signup/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=casdoor`
-  - Auto sign-up: `<casdoor-host>/auto-signup/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=casdoor`
-- **Sign-in**
-  - By organization: `<casdoor-host>/login/<organization-name>`
-  - By OAuth: `<casdoor-host>/login/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=casdoor`
+#### Build the URLs yourself
 
-#### 2. Frontend SDK (React, Vue, Angular)
+| Page | URL |
+|---|---|
+| Sign-up page of an application | `<casdoor-host>/signup/<application-name>` |
+| Sign-up page that continues with OAuth 2.0 | `<casdoor-host>/signup/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=<state>` |
+| Sign-in page of an organization | `<casdoor-host>/login/<organization-name>` |
+| Sign-in page that continues with OAuth 2.0 | `<casdoor-host>/login/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>&scope=read&state=<state>` |
 
-Use `getSignupUrl()` and `getSigninUrl()` from [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63).
+#### Use a frontend SDK
 
-#### 3. Backend SDK (Go, Java, etc.)
+In React, Vue, and Angular applications, call `getSignupUrl()` and `getSigninUrl()` of [casdoor-js-sdk](https://github.com/casdoor/casdoor-js-sdk/blob/3d08d726bcd5f62d6444b820596e2d8472f67d97/src/sdk.ts#L50-L63).
 
-Use `GetSignupUrl()` and `GetSigninUrl()` from [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39).
+#### Use a backend SDK
+
+In Go, Java, and other backends, call the equivalent functions of the SDK, for example `GetSignupUrl()` and `GetSigninUrl()` of [casdoor-go-sdk](https://github.com/casdoor/casdoor-go-sdk/blob/f3ef1adff792e9a06af5682e0a3af9436ed24ed3/auth/url.go#L23-L39).
 
 ## Provider
 
-Casdoor acts as a federated SSO platform: it supports multiple identity providers (OIDC, OAuth, SAML) and can send verification codes and notifications via email or SMS. All such integrations are represented as **providers**.
+A provider connects Casdoor to an external service. Casdoor federates sign-in to external identity providers over OAuth 2.0, OpenID Connect (OIDC), and SAML. It also uses external services to send email and SMS, store files, show captchas, and take payments. Each of these connections is a provider.
 
-See **[Providers overview](/docs/provider/overview)** for the full list of supported provider types.
+You create a provider once and then add it to the applications that use it.
 
-```go
-type Provider struct {
-    Owner       string `xorm:"varchar(100) notnull pk" json:"owner"`
-    Name        string `xorm:"varchar(100) notnull pk" json:"name"`
-    CreatedTime string `xorm:"varchar(100)" json:"createdTime"`
+| Property | Description |
+|---|---|
+| `owner` | `admin` for a provider that all organizations share, or the name of the organization that owns it |
+| `name` | Unique name of the provider |
+| `category` | Kind of provider, for example `OAuth`, `SAML`, `Email`, `SMS`, `Storage`, `Captcha`, or `Payment` |
+| `type` | Service behind the provider, for example `GitHub`, `Google`, or `Twilio SMS` |
+| `clientId`, `clientSecret` | Credentials that the external service issues to Casdoor |
+| `host`, `port` | Server address, for example of an SMTP server |
+| `endpoint`, `bucket`, `domain` | Location settings of storage providers |
+| `metadata`, `issuerUrl` | Settings of SAML identity providers |
 
-    DisplayName   string `xorm:"varchar(100)" json:"displayName"`
-    Category      string `xorm:"varchar(100)" json:"category"`
-    Type          string `xorm:"varchar(100)" json:"type"`
-    Method        string `xorm:"varchar(100)" json:"method"`
-    ClientId      string `xorm:"varchar(100)" json:"clientId"`
-    ClientSecret  string `xorm:"varchar(100)" json:"clientSecret"`
-    ClientId2     string `xorm:"varchar(100)" json:"clientId2"`
-    ClientSecret2 string `xorm:"varchar(100)" json:"clientSecret2"`
+For every provider category and type, see [Providers](/docs/provider/overview).
 
-    Host    string `xorm:"varchar(100)" json:"host"`
-    Port    int    `json:"port"`
-    Title   string `xorm:"varchar(100)" json:"title"`
-    Content string `xorm:"varchar(1000)" json:"content"`
+## Built-in objects {#how-casdoor-manages-itself}
 
-    RegionId     string `xorm:"varchar(100)" json:"regionId"`
-    SignName     string `xorm:"varchar(100)" json:"signName"`
-    TemplateCode string `xorm:"varchar(100)" json:"templateCode"`
-    AppId        string `xorm:"varchar(100)" json:"appId"`
+Casdoor manages itself with the same four objects. On first start, it creates:
 
-    Endpoint         string `xorm:"varchar(1000)" json:"endpoint"`
-    IntranetEndpoint string `xorm:"varchar(100)" json:"intranetEndpoint"`
-    Domain           string `xorm:"varchar(100)" json:"domain"`
-    Bucket           string `xorm:"varchar(100)" json:"bucket"`
+| Object | Name | Purpose |
+|---|---|---|
+| Organization | `built-in` | Holds the administrators of the Casdoor instance |
+| User | `built-in/admin` | First global administrator |
+| Application | `app-built-in` | The Casdoor admin console itself |
 
-    Metadata               string `xorm:"mediumtext" json:"metadata"`
-    IdP                    string `xorm:"mediumtext" json:"idP"`
-    IssuerUrl              string `xorm:"varchar(100)" json:"issuerUrl"`
-    EnableSignAuthnRequest bool   `json:"enableSignAuthnRequest"`
-
-    ProviderUrl string `xorm:"varchar(200)" json:"providerUrl"`
-}
-```
-
-## How Casdoor manages itself
-
-On first run, Casdoor creates default objects:
-
-- **Organization:** `built-in`
-- **User:** `admin` in `built-in`
-- **Application:** `app-built-in` (the Casdoor UI), owned by `built-in`
-
-All users in the `built-in` organization (including `admin`) have full admin rights. For multiple admins, create additional accounts under `built-in`, or disable sign-up for `app-built-in` to avoid unwanted accounts.
+Every user of the `built-in` organization is a global administrator. To add administrators, create more users in `built-in`. To keep strangers from becoming administrators, turn off sign-up for `app-built-in`.
 
 :::caution
-The built-in organization, `admin` user, and `app-built-in` application **cannot be renamed or deleted** via the UI or API. Their names are hardcoded; changing or removing them in the database can break the system.
+You can't rename or delete the `built-in` organization, the `built-in/admin` user, or the `app-built-in` application in the admin console or through the API. Their names are hardcoded. Changing or removing them in the database can break Casdoor.
 :::
+
+## See also
+
+- [Organizations](/docs/organization/overview)
+- [Users](/docs/user/overview)
+- [Applications](/docs/application/overview)
+- [Providers](/docs/provider/overview)

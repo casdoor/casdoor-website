@@ -1,35 +1,67 @@
 ---
-title: Standard OIDC client
-description: Connect to Casdoor with any OIDC client using discovery endpoints.
+title: Connect a standard OIDC client
+sidebar_label: Standard OIDC client
+description: Point any OpenID Connect client library at the Casdoor discovery endpoint, and learn what the discovery document and the UserInfo endpoint return.
 keywords: [OIDC, discovery, client, migration]
 authors: [nomeguy]
 ---
 
-## OIDC discovery
+This guide explains how to connect an application to Casdoor with a standard OpenID Connect (OIDC) client library, and it describes the discovery endpoints and the UserInfo fields that the library relies on.
 
-Casdoor is a full OIDC implementation. If your app already uses a standard OIDC client against another IdP, you can switch to Casdoor by pointing the client at Casdoor’s discovery URL.
+---
 
-### Discovery endpoints
+#### Learning outcomes
 
-Casdoor exposes metadata at both OpenID Connect and OAuth 2.0 discovery URLs. Most clients use these to auto-configure endpoints and capabilities.
+- Find the discovery URL of your Casdoor instance.
+- Configure an OIDC client library with the discovery URL and the application credentials.
+- Use the discovery endpoints of a single application.
+- Map the UserInfo fields to the fields of a Casdoor user.
 
-#### OpenID Connect discovery
+#### What you need
 
-```url
-<your-casdoor-backend-host>/.well-known/openid-configuration
-```
+- A running Casdoor instance. The examples use the demo site `https://door.casdoor.com`.
+- An [application](/docs/application/overview) in Casdoor, with its client ID, its client secret, and the callback URL of your application in **Redirect URLs**
+- An OIDC client library for your language
 
-#### OAuth 2.0 authorization server metadata (RFC 8414)
+---
 
-```url
-<your-casdoor-backend-host>/.well-known/oauth-authorization-server
-```
+## Configure the client
 
-Use this if your client only needs OAuth 2.0. Both discovery URLs return the same metadata.
+Casdoor is a complete OIDC provider. If your application already uses an OIDC library with another identity provider, you switch to Casdoor by changing the configuration.
 
-### Example response
+1. Choose a library. For example:
 
-Both `https://door.casdoor.com/.well-known/openid-configuration` and `https://door.casdoor.com/.well-known/oauth-authorization-server` return metadata like:
+   | OIDC client library | Language | Link                                                   |
+   |---------------------|----------|--------------------------------------------------------|
+   | go-oidc             | Go       | `https://github.com/coreos/go-oidc`                      |
+   | pac4j-oidc          | Java     | `https://www.pac4j.org/docs/clients/openid-connect.html` |
+
+   For more libraries, see [oauth.net/code](https://oauth.net/code/) and the [certified OpenID developer tools](https://openid.net/certified-open-id-developer-tools/).
+
+1. Give the library the following values:
+
+   | Setting | Value |
+   |---|---|
+   | Issuer or discovery URL | `https://<your-casdoor-host>`. The library appends `/.well-known/openid-configuration` |
+   | Client ID | **Client ID** of the Casdoor application |
+   | Client secret | **Client secret** of the Casdoor application |
+   | Redirect URL | Callback URL of your application. It must be listed in **Redirect URLs** of the Casdoor application |
+   | Scopes | `openid`, plus `profile` and `email` as needed |
+
+The library reads the endpoints and the capabilities of Casdoor from the discovery document, so you don't configure them by hand.
+
+## Discovery endpoints
+
+Casdoor publishes its metadata at two URLs. Both return the same document.
+
+| Standard | URL |
+|---|---|
+| OpenID Connect Discovery | `https://<your-casdoor-host>/.well-known/openid-configuration` |
+| OAuth 2.0 Authorization Server Metadata (RFC 8414) | `https://<your-casdoor-host>/.well-known/oauth-authorization-server` |
+
+Use the second URL if your client supports only OAuth 2.0.
+
+For example, `https://door.casdoor.com/.well-known/openid-configuration` returns:
 
 ```json
 {
@@ -119,46 +151,30 @@ Both `https://door.casdoor.com/.well-known/openid-configuration` and `https://do
 }
 ```
 
-Casdoor supports all standard OAuth 2.0 grant types, including authorization code, implicit, password credentials, client credentials, and refresh token flows. The device code grant (`urn:ietf:params:oauth:grant-type:device_code`) is also available for scenarios like smart TVs or CLI tools that have limited input capabilities.
+The document tells clients the following:
 
-The `code_challenge_methods_supported` field indicates that Casdoor supports PKCE (Proof Key for Code Exchange) with the S256 challenge method. PKCE enhances security for public clients like mobile apps and single-page applications by preventing authorization code interception attacks. When your client library supports automatic PKCE, it will use the S256 method based on this discovery metadata. For manual implementation details, see the [OAuth 2.0 documentation](/docs/how-to-connect/oauth).
+- **Grant types**: Casdoor supports the authorization code, implicit, password, client credentials, and refresh token grants. It also supports the device code grant (`urn:ietf:params:oauth:grant-type:device_code`) for devices with limited input, such as smart TVs and CLI tools.
+- **PKCE**: `code_challenge_methods_supported` shows that Casdoor supports Proof Key for Code Exchange (PKCE) with the `S256` method. PKCE protects public clients, such as mobile and single-page applications, against interception of the authorization code. A library that supports PKCE turns it on from this metadata. To implement PKCE yourself, see [OAuth 2.0](/docs/how-to-connect/oauth).
 
-### Application-Specific OIDC Endpoints
+## Discovery endpoints of a single application {#application-specific-oidc-endpoints}
 
-Besides the global discovery endpoint, application-specific OIDC discovery endpoints are available. Each application gets its own isolated OIDC configuration — its own `jwks_uri` and, when configured, its own signing certificate. This comes in handy when running multi-tenant deployments where applications need their own certificates or when you want to gradually migrate applications without affecting others.
+Each application also has its own discovery endpoints. Use them when an application signs its tokens with its own certificate, for example in a multi-tenant deployment, or when you move applications to new certificates one at a time.
 
-The application-specific discovery URLs follow these patterns:
+| Endpoint | URL |
+|---|---|
+| OpenID Connect Discovery | `https://<your-casdoor-host>/.well-known/<application-name>/openid-configuration` |
+| OAuth 2.0 Authorization Server Metadata | `https://<your-casdoor-host>/.well-known/<application-name>/oauth-authorization-server` |
+| JSON Web Key Set (JWKS) | `https://<your-casdoor-host>/.well-known/<application-name>/jwks` |
+| WebFinger | `https://<your-casdoor-host>/.well-known/<application-name>/webfinger` |
 
-```url
-<your-casdoor-backend-host>/.well-known/<application-name>/openid-configuration
-<your-casdoor-backend-host>/.well-known/<application-name>/oauth-authorization-server
-```
-
-For example, if you have an application named `app-example`:
+For example, for the application `app-example` on the demo site:
 
 ```url
 https://door.casdoor.com/.well-known/app-example/openid-configuration
 https://door.casdoor.com/.well-known/app-example/oauth-authorization-server
 ```
 
-The main difference is that the `jwks_uri` field in the discovery response points to the application-specific path, `/.well-known/app-example/jwks`. Everything else, including the `issuer`, authorization, and token endpoints, stays the same.
-
-:::note
-
-The `issuer` field is **the same** as the global issuer (`https://door.casdoor.com`), even on the application-specific discovery endpoint. This is intentional: the `iss` claim in the JWT tokens that Casdoor issues is always the backend host, so the discovery `issuer` must match it for standard OIDC clients to validate tokens correctly. Earlier versions returned an application-specific issuer (`https://door.casdoor.com/.well-known/app-example`) here, which did not match the token's `iss` claim and caused token validation to fail in strict clients.
-
-:::
-
-JWKS and WebFinger are also available per application:
-
-```url
-<your-casdoor-backend-host>/.well-known/<application-name>/jwks
-<your-casdoor-backend-host>/.well-known/<application-name>/webfinger
-```
-
-The JWKS endpoint returns the public keys for verifying tokens. When an application has its own certificate configured, that certificate is used. Otherwise, it falls back to the global certificates.
-
-Here's what the responses look like. The global endpoint returns:
+The document of an application differs from the global document in one field: `jwks_uri` points to the JWKS of the application. The global endpoint returns:
 
 ```json
 {
@@ -169,7 +185,7 @@ Here's what the responses look like. The global endpoint returns:
 }
 ```
 
-While the application-specific endpoint for `app-example` returns the same `issuer`, but an application-specific `jwks_uri`:
+The endpoint of `app-example` returns:
 
 ```json
 {
@@ -180,23 +196,15 @@ While the application-specific endpoint for `app-example` returns the same `issu
 }
 ```
 
-## List of OIDC Client Libraries
+The JWKS of an application contains the public key of the application's own certificate. If the application has no certificate of its own, the JWKS contains the global certificates.
 
-Here is a list of some OIDC client libraries for languages like Go and Java:
+:::note
+The `issuer` is the same in both documents. Casdoor always sets the `iss` claim of a token to the host of the Casdoor backend, and OIDC clients require the `issuer` of the discovery document to match it. Earlier versions returned an issuer that included the application name, such as `https://door.casdoor.com/.well-known/app-example`, which made strict clients reject the tokens.
+:::
 
-| OIDC client library | Language | Link                                                   |
-|---------------------|----------|--------------------------------------------------------|
-| go-oidc             | Go       | `https://github.com/coreos/go-oidc`                      |
-| pac4j-oidc          | Java     | `https://www.pac4j.org/docs/clients/openid-connect.html` |
+## UserInfo fields {#oidc-userinfo-fields}
 
-The table above is not exhaustive. For more OIDC client libraries, see:
-
-1. `https://oauth.net/code/`
-2. `https://openid.net/certified-open-id-developer-tools/`
-
-## OIDC UserInfo Fields
-
-The following table illustrates how OIDC UserInfo fields (via the `/api/userinfo` API) are mapped from properties of Casdoor's User table:
+The `/api/userinfo` endpoint returns the following fields. The table shows which field of the Casdoor user each one comes from.
 
 | Casdoor User Field | OIDC UserInfo Field |
 |--------------------|---------------------|
@@ -210,10 +218,15 @@ The following table illustrates how OIDC UserInfo fields (via the `/api/userinfo
 | Location           | address             |
 | Phone              | phone               |
 
+The mapping is defined in [`object/user.go`](https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185).
+
 :::note
-
-The `/api/userinfo` endpoint returns the `address` claim as a **plain string** taken from the user's `Location` field (e.g., `"New York"`), not as a structured OIDC address object. This is different from the behavior of **JWT-Standard** tokens, where `address` is returned as a proper OIDC address object built from the user's `Address` array. See [OIDC Address Claim](/docs/token/overview#oidc-address-claim) for the full explanation.
-
+`/api/userinfo` returns the `address` claim as a plain string from the `Location` field of the user, for example `"New York"`. Tokens in the `JWT-Standard` format return `address` as a structured OIDC address object that is built from the `Address` array of the user. See [OIDC address claim](/docs/token/overview#oidc-address-claim).
 :::
 
-UserInfo is defined [here](https://github.com/casdoor/casdoor/blob/95ab2472ce84c479be43d6fc4db6533fc738b259/object/user.go#L175-L185).
+## See also
+
+- [OAuth 2.0](/docs/how-to-connect/oauth)
+- [Casdoor SDKs](/docs/how-to-connect/sdk)
+- [Tokens](/docs/token/overview)
+- [Certificates](/docs/cert/overview)

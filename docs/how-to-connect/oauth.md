@@ -1,13 +1,25 @@
 ---
 title: OAuth 2.0
-description: Obtain, verify, and use access tokens with Casdoor’s OAuth 2.0 endpoints.
+description: Reference for the OAuth 2.0 endpoints of Casdoor - every supported grant type, PKCE, resource indicators, DPoP, token introspection, and the UserInfo endpoint.
 keywords: [OAuth 2.0, access token, refresh token, grant types]
 authors: [nomeguy]
 ---
 
-Casdoor issues **access tokens** for authenticating clients. This page describes how to get a token via the API, verify it, and use it. Alternatively use [Casdoor SDKs](/docs/how-to-connect/sdk) to handle the flow.
+Casdoor is an OAuth 2.0 authorization server. This page describes how to get an access token with each grant type, how to verify a token, and how to use it. If you prefer not to call the endpoints yourself, use a [Casdoor SDK](/docs/how-to-connect/sdk) or a [standard OIDC client](/docs/how-to-connect/oidc-client).
 
-**Supported grant types:**
+## Endpoints
+
+| Endpoint | URL |
+|---|---|
+| Authorization | `https://<casdoor-host>/login/oauth/authorize` |
+| Token | `https://<casdoor-host>/api/login/oauth/access_token` |
+| Refresh token | `https://<casdoor-host>/api/login/oauth/refresh_token` |
+| Token introspection | `https://<casdoor-host>/api/login/oauth/introspect` |
+| UserInfo | `https://<casdoor-host>/api/userinfo` |
+
+In the examples, `ClientId` and `ClientSecret` are the **Client ID** and the **Client secret** of the Casdoor [application](/docs/application/overview).
+
+## Supported grant types
 
 | Grant Type | RFC | Use Case |
 |------------|-----|----------|
@@ -19,26 +31,66 @@ Casdoor issues **access tokens** for authenticating clients. This page describes
 | [Device Authorization](https://datatracker.ietf.org/doc/html/rfc8628) | RFC 8628 | Devices with limited input or no browser. |
 | [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) | RFC 8693 | Swap an existing token for one with different scope or audience. |
 | [JWT Bearer](https://datatracker.ietf.org/doc/html/rfc7523) | RFC 7523 | Service auth using a signed JWT assertion instead of a client secret. |
-| [Verification Code](#verification-code-grant) | Casdoor extension | Native apps that sign users in (and up) with a code sent by SMS or email. |
+| [Verification Code](/docs/how-to-connect/oauth#verification-code-grant) | Casdoor extension | Native apps that sign users in (and up) with a code sent by SMS or email. |
 
-Enable non-default grant types on the application edit page.
+The authorization code grant is on by default. Turn on the other grant types in **Grant types** on the edit page of the application.
 
-![Grant Types](/img/how-to-connect/oauth/accesstoken_grant_types.png)
+![Grant types setting of the application](/img/how-to-connect/oauth/accesstoken_grant_types.png)
 
-### Authorization code grant
+## Authorization code grant {#authorization-code-grant}
 
-Redirect the user to:
+Use this grant for applications that sign users in through the browser. It is the recommended grant.
 
-```url
-https://<CASDOOR_HOST>/login/oauth/authorize?
-client_id=CLIENT_ID&
-redirect_uri=REDIRECT_URI&
-response_type=code&
-scope=openid&
-state=STATE
-```
+1. Redirect the user to the authorization endpoint:
 
-#### Scopes
+   ```url
+   https://<CASDOOR_HOST>/login/oauth/authorize?
+   client_id=CLIENT_ID&
+   redirect_uri=REDIRECT_URI&
+   response_type=code&
+   scope=openid&
+   state=STATE
+   ```
+
+1. The user signs in. Casdoor redirects the browser to your redirect URL with an authorization code:
+
+   ```url
+   https://REDIRECT_URI?code=CODE&state=STATE
+   ```
+
+1. Exchange the code for tokens. Send a `POST` request to the token endpoint:
+
+   ```url
+   https://<CASDOOR_HOST>/api/login/oauth/access_token
+   ```
+
+   With the body:
+
+   ```json
+   {
+       "grant_type": "authorization_code",
+       "client_id": ClientId,
+       "client_secret": ClientSecret,
+       "code": Code,
+   }
+   ```
+
+1. Read the tokens from the response:
+
+   ```json
+   {
+       "access_token": "eyJhb...",
+       "id_token": "eyJhb...",
+       "refresh_token": "eyJhb...",
+       "token_type": "Bearer",
+       "expires_in": 10080,
+       "scope": "openid"
+   }
+   ```
+
+### Scopes
+
+Request scopes with the `scope` parameter of the authorization URL. They determine which user fields the tokens and the [UserInfo endpoint](/docs/how-to-connect/oauth#how-to-use-accesstoken) return.
 
 | Scope | Description |
 |-------|-------------|
@@ -48,8 +100,7 @@ state=STATE
 | address | address (OIDC object in **JWT-Standard**; see [OIDC address claim](/docs/token/overview#oidc-address-claim)) |
 | phone | phone number |
 
-:::info
-Request scopes in the authorize URL. Separate multiple scopes with `%20`:
+Separate several scopes with `%20`:
 
 ```text
 https://<CASDOOR_HOST>/login/oauth/authorize?
@@ -57,94 +108,63 @@ client_id=...&
 scope=openid%20email
 ```
 
-See the [OIDC spec](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse) for details.
-:::
+For the claims behind each scope, see the [OpenID Connect specification](https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse).
 
-After the user signs in, Casdoor redirects to:
+### PKCE
 
-```url
-https://REDIRECT_URI?code=CODE&state=STATE
-```
+Casdoor supports [Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636), which protects the authorization code of public clients such as mobile and single-page applications.
 
-Exchange the code for tokens with a POST to:
+1. Generate a random code verifier of 43 to 128 characters.
+1. Compute the code challenge: the Base64-URL-encoded SHA-256 hash of the verifier.
+1. Add two parameters to the authorization URL:
 
-```url
-https://<CASDOOR_HOST>/api/login/oauth/access_token
-```
+   ```url
+   &code_challenge_method=S256&code_challenge=YOUR_CHALLENGE
+   ```
 
-Request body:
+1. Add the `code_verifier` parameter, with the original verifier, to the token request.
 
-```json
-{
-    "grant_type": "authorization_code",
-    "client_id": ClientId,
-    "client_secret": ClientSecret,
-    "code": Code,
-}
-```
-
-Example response:
-
-```json
-{
-    "access_token": "eyJhb...",
-    "id_token": "eyJhb...",
-    "refresh_token": "eyJhb...",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid"
-}
-```
+With PKCE, `client_secret` is optional in the token request. If you send it, it must be correct.
 
 :::note
-
-Casdoor supports [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) (Proof Key for Code Exchange) for enhanced security. To enable PKCE, add two parameters when requesting the authorization code:
-
-```url
-&code_challenge_method=S256&code_challenge=YOUR_CHALLENGE
-```
-
-The code challenge should be a Base64-URL-encoded SHA-256 hash of your randomly generated code verifier (43-128 characters). When requesting the token, include the original `code_verifier` parameter. With PKCE enabled, `client_secret` becomes optional, but if provided, it must be correct.
-
-For OAuth providers configured in Casdoor (like Twitter and custom providers with PKCE enabled), Casdoor automatically generates unique code verifiers for each authentication flow, so you don't need to manually implement PKCE.
-
+When Casdoor itself signs users in at an external OAuth provider that requires PKCE, such as Twitter or a custom provider with PKCE turned on, Casdoor generates the code verifier for each flow. You don't implement PKCE for that part.
 :::
 
-#### Binding Tokens to Specific Services
+### Bind a token to one service {#binding-tokens-to-specific-services}
 
-When your application needs to call multiple backend services, you might want tokens that are explicitly bound to a specific service. This prevents security issues where a token meant for one service could accidentally be used with another.
+If your application calls several backend services, you can bind a token to one of them, so that a token that was issued for one service can't be used at another. Casdoor supports [Resource Indicators (RFC 8707)](https://datatracker.ietf.org/doc/html/rfc8707) for this.
 
-Casdoor supports RFC 8707 Resource Indicators, which lets you specify the intended service when requesting authorization. Add the `resource` parameter with an absolute URI identifying your service:
+1. Add the `resource` parameter, with an absolute URI that identifies the service, to the authorization URL:
 
-```url
-https://<CASDOOR_HOST>/login/oauth/authorize?
-client_id=CLIENT_ID&
-redirect_uri=REDIRECT_URI&
-response_type=code&
-scope=openid&
-state=STATE&
-resource=https://api.example.com
-```
+   ```url
+   https://<CASDOOR_HOST>/login/oauth/authorize?
+   client_id=CLIENT_ID&
+   redirect_uri=REDIRECT_URI&
+   response_type=code&
+   scope=openid&
+   state=STATE&
+   resource=https://api.example.com
+   ```
 
-When you exchange the authorization code for tokens, include the same `resource` parameter:
+1. Send the same `resource` in the token request:
 
-```json
-{
-    "grant_type": "authorization_code",
-    "client_id": ClientId,
-    "client_secret": ClientSecret,
-    "code": Code,
-    "resource": "https://api.example.com"
-}
-```
+   ```json
+   {
+       "grant_type": "authorization_code",
+       "client_id": ClientId,
+       "client_secret": ClientSecret,
+       "code": Code,
+       "resource": "https://api.example.com"
+   }
+   ```
 
-The resulting access token will have its `aud` (audience) claim set to your resource URI instead of the client ID. Your backend service can then verify that tokens were issued specifically for it by checking the audience claim. The resource must match exactly between the authorization and token requests.
+The `aud` (audience) claim of the access token is then the resource URI and not the client ID. The service verifies that a token was issued for it by checking `aud`. The value of `resource` must be exactly the same in both requests.
 
-The `resource` parameter is preserved through browser-based login flows. If a user needs to complete an interactive login (e.g. password entry, MFA, or WebAuthn), the parameter is carried through the entire redirect chain and included when the authorization code is issued.
+Casdoor carries the `resource` parameter through interactive sign-in. If the user has to enter a password, complete multi-factor authentication (MFA), or use WebAuthn, the parameter survives the redirects.
 
-#### provider_hint parameter
+### Skip the sign-in page with a provider hint {#provider_hint-parameter}
 
-To skip the Casdoor login page and send the user directly to a specific OAuth provider, add `provider_hint=<provider-name>` to the authorize URL:
+To send the user straight to one OAuth provider, without showing the Casdoor sign-in page, add `provider_hint=<provider-name>` to the authorization URL:
 
 ```url
 https://<CASDOOR_HOST>/login/oauth/authorize?
@@ -156,210 +176,240 @@ state=STATE&
 provider_hint=github
 ```
 
-Casdoor serves a lightweight redirect page (without loading the full React app) that immediately bounces the user to that provider's OAuth flow. This reduces time-to-redirect on constrained devices or slow connections.
+Casdoor then serves a small redirect page, without loading the full frontend, and sends the user to the provider. This shortens the time to the redirect on slow devices and connections.
 
-#### Signup Flow with OAuth
+### Sign-up in the authorization flow {#signup-flow-with-oauth}
 
-When users sign up through the OAuth authorization flow, they are automatically redirected to your application's callback URL with the authorization code, just like the sign-in flow. Previously, users had to manually click through intermediate pages after creating their account. Now the signup process matches the streamlined experience of signing in—once registration completes, Casdoor immediately generates the authorization code and redirects to your `redirect_uri`.
+A user who creates an account during the authorization flow is redirected to your redirect URL with an authorization code as soon as the sign-up completes, exactly as after a sign-in. Casdoor carries the authorization parameters, such as `client_id`, `response_type`, and `redirect_uri`, through the sign-up. Your application needs no changes for this.
 
-Your application doesn't need any changes to support this. The authorization parameters (`client_id`, `response_type`, `redirect_uri`, etc.) are automatically passed through the signup process when users choose to create a new account during OAuth authorization.
+## Implicit grant
 
-### Implicit Grant
+Use this grant only for applications without a backend. Prefer the authorization code grant with PKCE.
 
-For apps without a backend, use **Implicit Grant**. Enable it on the application, then redirect users to:
+1. Turn on the implicit grant in **Grant types** of the application.
+1. Redirect the user to:
+
+   ```url
+   https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE
+   ```
+
+1. After the user signs in, Casdoor redirects the browser to:
+
+   ```url
+   https://REDIRECT_URI/#access_token=ACCESS_TOKEN
+   ```
+
+Casdoor also supports [`id_token`](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`.
 
 :::caution
-
-The Implicit Grant token endpoint requires a valid `username` and `password`. Pure OAuth users (accounts created exclusively via a third-party provider with no local password set) cannot use this flow and will receive `invalid_grant`. Use the Authorization Code flow for social-login users.
-
+The implicit grant requires a user with a username and a password. Users who were created only through an external provider and have no local password can't use it and receive `invalid_grant`. Use the authorization code grant for them.
 :::
 
-```url
-https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=token&scope=openid&state=STATE
-```
+## Device grant
 
-After your user has authenticated with Casdoor, Casdoor will redirect them to:
+Use this grant for devices with limited input or without a browser, such as smart TVs and CLI tools.
 
-```url
-https://REDIRECT_URI/#access_token=ACCESS_TOKEN
-```
+1. Turn on the device grant in **Grant types** of the application.
+1. Send a request to the `device_authorization_endpoint` from the [discovery document](/docs/how-to-connect/oidc-client#discovery-endpoints).
+1. Show the `verification_uri` from the response to the user, as text or as a QR code.
+1. The user opens the URL on another device, enters the user code, and signs in. Casdoor provides the page behind `verification_uri`, so you don't build a UI for it.
+1. Meanwhile, the device polls the token endpoint with its `device_code` until the user has signed in. See [RFC 8628, section 3.4](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
 
-Casdoor also supports the [id_token](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`, which is a feature of OpenID.
+You can also offer device login as a sign-in method in the **Signin methods** table of the application.
 
-### Device Grant
+### Let users sign in to your website by scanning a QR code {#scanning-the-websites-qr-code-with-your-app}
 
-For devices with limited input or no browser, use **Device Grant**. Enable it on the application, request `device_authorization_endpoint` from OIDC discovery, then show `verification_uri` (e.g. via QR or text) so the user can complete login.
+The same flow lets users who are signed in to your native app sign in to your website by scanning a QR code with the app.
 
-Casdoor provides a built-in device login page at the `verification_uri` where the user enters the user code and signs in — no custom UI is required. Device login can also be enabled as a sign-in method on the application's **Signin methods** table.
+1. In the Casdoor admin console, add **Device login** to the **Signin methods** of the application, with the rule **Login page**.
+1. Turn on **Device Code** in **Grant types**.
 
-Meanwhile, the device polls the token endpoint with its `device_code` until the user has signed in, as described in [RFC 8628, section 3.4](https://datatracker.ietf.org/doc/html/rfc8628#section-3.4).
+The sign-in page now shows a QR code next to the form and completes the sign-in on its own once the QR code is approved.
 
-#### Scanning the website's QR code with your app
+The QR code contains the `verification_uri`, for example `https://<casdoor-host>/login/oauth/device/ra91hy?cancelToken=...`. A user who scans it with the camera of a phone opens the URL in the browser, signs in, and approves there. Your app can approve it directly instead, with the access token that it already holds:
 
-The same flow lets users who are signed in to your native app sign in to your website by scanning a QR code, the way many apps do. Add **Device login** to the application's **Signin methods** with the rule **Login page**, and enable **Device Code** in **Grant types**. The login page then shows a QR code next to the form and finishes the sign-in by itself once it is approved.
+1. Take the user code from the path of the URL. In the example, it is `ra91hy`.
+1. Show the user what they are about to sign in to.
+1. Send a `POST` request to `https://<casdoor-host>/api/login` with the header `Authorization: Bearer <access-token>` and the body:
 
-The QR code holds the `verification_uri`, for example `https://<CASDOOR_HOST>/login/oauth/device/ra91hy?cancelToken=...`. A phone camera opens it in the browser, where the user approves after signing in. Your app can instead approve it directly with the access token it already has: take the user code from the path (`ra91hy`), show the user what is being signed in to, and send a POST request to `https://<CASDOOR_HOST>/api/login` with the header `Authorization: Bearer <ACCESS_TOKEN>`:
+   ```json
+   {
+       "application": ApplicationName,
+       "organization": OrganizationName,
+       "type": "device",
+       "userCode": "ra91hy"
+   }
+   ```
 
-```json
-{
-    "application": ApplicationName,
-    "organization": OrganizationName,
-    "type": "device",
-    "userCode": "ra91hy"
-}
-```
+To reject the sign-in, send `userCode` and the `cancelToken` from the same URL as query parameters to `https://<casdoor-host>/api/cancel-device-auth`.
 
-To reject the sign-in, send `userCode` and the `cancelToken` from the same URL to `https://<CASDOOR_HOST>/api/cancel-device-auth` as query parameters.
+### Device grant with several replicas
 
-:::info Multi-replica deployments
+By default, Casdoor keeps pending device authorization requests, which map device codes to user codes, in memory. With several replicas of Casdoor, the polling request of the device and the confirmation in the browser can reach different replicas, and the flow then fails intermittently.
 
-The pending device-authorization requests (the mapping between the device code and the user code) are held in an in-memory store by default. In a multi-replica / horizontally-scaled deployment, the polling request from the device and the browser confirmation may land on different replicas, so an in-memory store causes the device flow to fail intermittently.
+To share the requests between replicas, set `redisEndpoint` in `conf/app.conf`. Casdoor then stores them in Redis. This is the same option that shares sessions, in the format `host:port[,db[,password]]`, and no further option is needed. If Casdoor can't reach Redis at startup, it logs a warning and uses the in-memory store. See the [Configuration reference](/docs/basic/configuration).
 
-To make the device flow work across replicas, configure `redisEndpoint` in `conf/app.conf`. When it is set, Casdoor automatically backs the device-authorization store with Redis so all replicas share the same state. No extra configuration key is needed — the same `redisEndpoint` value used for shared sessions is reused (format: `host:port[,db[,password]]`). If Redis cannot be reached at startup, Casdoor logs a warning and falls back to the in-memory store. See [Configuration](/docs/basic/configuration).
+## Resource owner password credentials grant
 
-:::
+Use this grant only when your application can't redirect the user to Casdoor and collects the username and password itself.
 
-### Resource Owner Password Credentials Grant
+1. Turn on the password grant in **Grant types** of the application.
+1. Send a `POST` request to the token endpoint:
 
-If your application doesn't have a frontend that redirects users to Casdoor, then you may need this.
+   ```url
+   https://<CASDOOR_HOST>/api/login/oauth/access_token
+   ```
 
-Enable **Password Credentials Grant** on the application, then send a POST request to:
+   With the body:
 
-```url
-https://<CASDOOR_HOST>/api/login/oauth/access_token
-```
+   ```json
+   {
+       "grant_type": "password",
+       "client_id": ClientId,
+       "client_secret": ClientSecret,
+       "username": Username,
+       "password": Password,
+   }
+   ```
 
-```json
-{
-    "grant_type": "password",
-    "client_id": ClientId,
-    "client_secret": ClientSecret,
-    "username": Username,
-    "password": Password,
-}
-```
+1. Read the tokens from the response:
 
-Example response:
+   ```json
+   {
+       "access_token": "eyJhb...",
+       "id_token": "eyJhb...",
+       "refresh_token": "eyJhb...",
+       "token_type": "Bearer",
+       "expires_in": 10080,
+       "scope": "openid"
+   }
+   ```
 
-```json
-{
-    "access_token": "eyJhb...",
-    "id_token": "eyJhb...",
-    "refresh_token": "eyJhb...",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid"
-}
-```
+## Verification code grant {#verification-code-grant}
 
-### Verification Code Grant
+Use this grant in native apps that sign users in with a phone number or an email address and a one-time code, without opening a browser. It is an extension grant of Casdoor, as allowed by RFC 6749, section 4.5. If the application allows it, an address that has no account yet is signed up in the same step.
 
-Native apps that sign users in with a phone number or email and a one-time code, without opening a browser, use this grant. It is a Casdoor extension grant (RFC 6749 section 4.5). An address that has no account yet is signed up in the same step when the application allows it.
+1. Turn on **Verification Code** in **Grant types** of the application, and add an SMS provider, an email provider, or both to the application.
+1. Send the code. Send a `POST` request with form data to `https://<casdoor-host>/api/send-verification-code`:
 
-Enable **Verification Code** in the application's **Grant types** and add an SMS and/or email provider to the application. Then:
+   | Field | Value |
+   |-------|-------|
+   | `applicationId` | `admin/<APPLICATION_NAME>` |
+   | `type` | `phone` or `email` |
+   | `dest` | The phone number or email |
+   | `countryCode` | The region of a phone number, e.g. `CN` or `US`. Not needed for an E.164 number like `+8613800000000` |
+   | `method` | `login` |
+   | `captchaType` | `none`, or the captcha type and `captchaToken` when the application's captcha provider asks for one |
 
-1. Send the code with a POST request to `https://<CASDOOR_HOST>/api/send-verification-code` (form data):
+1. Exchange the code for tokens. Send a `POST` request to `https://<casdoor-host>/api/login/oauth/access_token`:
 
-    | Field | Value |
-    |-------|-------|
-    | `applicationId` | `admin/<APPLICATION_NAME>` |
-    | `type` | `phone` or `email` |
-    | `dest` | The phone number or email |
-    | `countryCode` | The region of a phone number, e.g. `CN` or `US`. Not needed for an E.164 number like `+8613800000000` |
-    | `method` | `login` |
-    | `captchaType` | `none`, or the captcha type and `captchaToken` when the application's captcha provider asks for one |
+   ```json
+   {
+       "grant_type": "urn:casdoor:params:oauth:grant-type:verification-code",
+       "client_id": ClientId,
+       "username": "+8613800000000",
+       "code": "123456",
+       "scope": "openid profile"
+   }
+   ```
 
-2. Exchange the code for tokens with a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+   `username` is the phone number or the email address that the code was sent to. For a phone number in the national format, also send `country_code`.
 
-    ```json
-    {
-        "grant_type": "urn:casdoor:params:oauth:grant-type:verification-code",
-        "client_id": ClientId,
-        "username": "+8613800000000",
-        "code": "123456",
-        "scope": "openid profile"
-    }
-    ```
+The grant needs no client secret, so it works from a public client. The response is the same as for the other grants and contains a `refresh_token` that keeps the user signed in.
 
-    `username` is the phone number or email the code was sent to. For a phone number in the national format, also send `country_code`. No client secret is needed, so the grant works from a public client. The response is the same as for the other grants, with a `refresh_token` to keep the user signed in.
+Wrong codes count toward the **Failed signin limit** of the application. Casdoor refuses users who have MFA enabled. Use the authorization code grant for them.
 
-**Signing up new users:** when no user has the phone number or email, the grant creates the user, the same as the signup page would, if all of these hold:
+### Sign up new users with a verification code
+
+When no user has the phone number or the email address, the grant creates the user, as the sign-up page would, if all of the following conditions hold:
 
 - **Enable signup** is on for the application, and **Disable self signup** is off.
-- The application's **Signup items** require nothing but what the code proves: an item other than ID, Username, Display name, Password, Confirm password, Agreement, Signup button and Providers can't be required, and `Email` (or `Phone`) can only be required when signing up with an email (or a phone number). The default signup items require both, so make the other one optional.
-- For a phone number, its region is in the organization's **Supported country codes**.
+- The **Signup items** of the application require nothing beyond what the code proves. Only ID, Username, Display name, Password, Confirm password, Agreement, Signup button, and Providers may be required, plus `Email` when the user signs up with an email address, or `Phone` when the user signs up with a phone number. The default sign-up items require both `Email` and `Phone`, so make the other one optional.
+- For a phone number, its region is in the **Supported country codes** of the organization.
 
-Otherwise `/api/send-verification-code` answers that the user does not exist, the same as before, and only existing users can sign in. Wrong codes count towards the application's **Failed signin limit**. Users who have MFA enabled are refused, use the authorization code flow for them.
+Otherwise, `/api/send-verification-code` answers that the user doesn't exist, and only existing users can sign in.
 
-### Client Credentials Grant
+## Client credentials grant {#client-credentials-grant}
 
-Use Client Credentials Grant when the application has no frontend.
+Use this grant for machine-to-machine calls, where no user is present.
 
-Enable **Client Credentials Grant** on the application and send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+1. Turn on the client credentials grant in **Grant types** of the application.
+1. Send a `POST` request to `https://<casdoor-host>/api/login/oauth/access_token`:
 
-```json
-{
-    "grant_type": "client_credentials",
-    "client_id": ClientId,
-    "client_secret": ClientSecret,
-}
-```
+   ```json
+   {
+       "grant_type": "client_credentials",
+       "client_id": ClientId,
+       "client_secret": ClientSecret,
+   }
+   ```
 
-Example response:
+1. Read the token from the response:
 
-```json
-{
-    "access_token": "eyJhb...",
-    "id_token": "eyJhb...",
-    "refresh_token": "eyJhb...",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid"
-}
-```
+   ```json
+   {
+       "access_token": "eyJhb...",
+       "id_token": "eyJhb...",
+       "refresh_token": "eyJhb...",
+       "token_type": "Bearer",
+       "expires_in": 10080,
+       "scope": "openid"
+   }
+   ```
 
-It is important to note that the AccessToken obtained in this way differs from the first three in that it corresponds to the application rather than to the user.
+Unlike the tokens of the grants above, this access token belongs to the application and not to a user.
 
-### Refresh Token
+## Refresh token grant {#refresh-token}
 
-To refresh the access token, use the `refreshToken` obtained above.
+Use the refresh token from an earlier response to get a new access token.
 
-Set the **Refresh Token** expiration in the application (default 0 hours), then send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/refresh_token`
+1. Set the lifetime of refresh tokens in **Refresh token expire** of the application. The default is 0 hours.
+1. Send a `POST` request to `https://<casdoor-host>/api/login/oauth/refresh_token`:
 
-```json
-{
-    "grant_type": "refresh_token",
-    "refresh_token": REFRESH_TOKEN,
-    "scope": SCOPE,
-    "client_id": ClientId,
-    "client_secret": ClientSecret,
-}
-```
+   ```json
+   {
+       "grant_type": "refresh_token",
+       "refresh_token": REFRESH_TOKEN,
+       "scope": SCOPE,
+       "client_id": ClientId,
+       "client_secret": ClientSecret,
+   }
+   ```
 
-Example response:
+1. Read the tokens from the response:
 
-```json
-{
-    "access_token": "eyJhb...",
-    "id_token": "eyJhb...",
-    "refresh_token": "eyJhb...",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid"
-}
-```
+   ```json
+   {
+       "access_token": "eyJhb...",
+       "id_token": "eyJhb...",
+       "refresh_token": "eyJhb...",
+       "token_type": "Bearer",
+       "expires_in": 10080,
+       "scope": "openid"
+   }
+   ```
 
-**Rotation:** by default every refresh returns a new refresh token and revokes the one that was used, as recommended for public clients by [RFC 9700](https://datatracker.ietf.org/doc/html/rfc9700#section-4.14.2). Store the new one after each refresh. Presenting a used refresh token again fails with `invalid_grant`.
+Renaming a user doesn't invalidate the refresh tokens of the user.
 
-When several processes share one refresh token, e.g. a CLI that runs parallel jobs with the token from an environment variable, the first refresh revokes it for all the others. For such clients turn on **Disable refresh token rotation** in the application's **OIDC/OAuth** settings. A refresh then returns the same refresh token, which keeps its original expiry, and the access tokens of earlier refreshes stay valid until they expire. Signing out still revokes the refresh token for everyone. This is less secure, a leaked refresh token can be used until it expires, so keep **Refresh token expire** short and prefer [DPoP](#dpop-sender-constrained-tokens) for public clients.
+### Refresh token rotation
 
-Renaming a user doesn't break the user's refresh tokens.
+By default, every refresh returns a new refresh token and revokes the one that was used, as [RFC 9700](https://datatracker.ietf.org/doc/html/rfc9700#section-4.14.2) recommends for public clients. Store the new refresh token after each refresh. A refresh token that was already used fails with `invalid_grant`.
 
-### Token Exchange Grant
+Rotation breaks clients in which several processes share one refresh token, for example a CLI that runs parallel jobs with a token from an environment variable: the first refresh revokes the token for all the others. For such clients, turn on **Disable refresh token rotation** in the **OIDC/OAuth** settings of the application. Then:
 
-Token Exchange (RFC 8693) lets you swap an existing token for a new one with different characteristics—particularly useful when one service needs to call another on behalf of a user, or to narrow a token's scope for a specific downstream service.
+- A refresh returns the same refresh token, which keeps its original expiry.
+- The access tokens of earlier refreshes stay valid until they expire.
+- Signing out still revokes the refresh token for all processes.
 
-To exchange a token, send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+:::caution
+Without rotation, a leaked refresh token works until it expires. Keep **Refresh token expire** short, and prefer [DPoP](/docs/how-to-connect/oauth#dpop-sender-constrained-tokens) for public clients.
+:::
+
+## Token exchange grant
+
+[Token Exchange (RFC 8693)](https://datatracker.ietf.org/doc/html/rfc8693) swaps a token for a new token with different properties. Use it when one service calls another on behalf of a user, or to narrow the scope of a token before you pass it to a downstream service. For example, an API gateway exchanges a token with a broad scope for a token with a narrow scope before it forwards a request to a microservice, so that each service gets only the permissions that it needs.
+
+Send a `POST` request to `https://<casdoor-host>/api/login/oauth/access_token`:
 
 ```json
 {
@@ -372,15 +422,13 @@ To exchange a token, send a POST request to `https://<CASDOOR_HOST>/api/login/oa
 }
 ```
 
-The `subject_token` is the token you want to exchange—typically an access token or JWT you already have. If you want to narrow the permissions in the new token, specify a `scope` that's a subset of the original token's scope. When you omit `scope`, the new token inherits the same scope as the subject token.
+| Parameter | Description |
+|---|---|
+| `subject_token` | The token to exchange, typically an access token or a JSON Web Token (JWT) that you already hold |
+| `subject_token_type` | `urn:ietf:params:oauth:token-type:access_token` (default), `urn:ietf:params:oauth:token-type:jwt`, or `urn:ietf:params:oauth:token-type:id_token` |
+| `scope` | Optional. A subset of the scope of the subject token. If you omit it, the new token has the scope of the subject token |
 
-Casdoor supports three token types for `subject_token_type`:
-
-- `urn:ietf:params:oauth:token-type:access_token` (default)
-- `urn:ietf:params:oauth:token-type:jwt`
-- `urn:ietf:params:oauth:token-type:id_token`
-
-The response returns a new token tied to the same user as your subject token:
+The response contains a new token for the same user as the subject token:
 
 ```json
 {
@@ -393,61 +441,59 @@ The response returns a new token tied to the same user as your subject token:
 }
 ```
 
-For example, an API gateway might exchange a broad-scoped access token for a narrower one before forwarding requests to a downstream microservice. This pattern—called scope downscoping—ensures each service gets only the permissions it needs, rather than inheriting full access from the original token.
+Casdoor validates the subject token with the certificate of the application that issued it, which the `azp` claim identifies, and not with the certificate of the requesting client. If the requesting client isn't the issuer, the `aud` claim of the subject token must include the client ID of the requesting client. Otherwise, Casdoor rejects the exchange with `invalid_grant`. This keeps one application from exchanging the tokens of another application without being named as an audience (RFC 8693, section 2.1).
 
-**Audience binding:** Casdoor validates the `subject_token` using the certificate of its issuing application (identified by the `azp` claim), not the requesting client's certificate. If the requesting client differs from the token's issuer, the token's `aud` claim must include the requesting client's ID; otherwise the exchange is rejected with `invalid_grant`. This prevents one application from exchanging another application's tokens without explicit audience authorization (RFC 8693 §2.1).
+## JWT bearer grant
 
-### JWT Bearer Grant
+With the [JWT bearer grant (RFC 7523)](https://datatracker.ietf.org/doc/html/rfc7523), a client gets an access token by presenting a signed JWT assertion instead of a client secret. Use it for service-to-service calls in which the client holds a private key and you don't want to share a long-lived secret.
 
-JWT Bearer (RFC 7523) allows a client to obtain an access token by presenting a signed JWT assertion instead of a client secret. This is useful for service-to-service calls where the client holds a private key and wants to authenticate without sharing a long-lived secret.
+1. Turn on **JWT Bearer** in **Grant types** of the application.
+1. Upload the certificate of the client in **Client cert** on the **Security** tab of the application. Casdoor verifies assertions with the public key of that certificate.
+1. Create the assertion: a JWT that is signed with the private key of the client and contains the following claims:
 
-Enable **JWT Bearer** on the application, then upload the client's certificate in the **Client cert** field under the Security tab. Casdoor uses the public key from that certificate to verify the JWT assertion.
+   | Claim | Description |
+   |-------|-------------|
+   | `iss` | Issuer — the `client_id` of the application |
+   | `sub` | Subject — the `client_id` of the application |
+   | `aud` | Audience — the Casdoor token endpoint URL |
+   | `exp` | Expiry time (Unix timestamp) |
 
-Send a POST request to `https://<CASDOOR_HOST>/api/login/oauth/access_token`:
+1. Send a `POST` request to `https://<casdoor-host>/api/login/oauth/access_token`:
 
-```json
-{
-    "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
-    "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-    "client_assertion": "<signed-JWT>",
-    "client_id": "CLIENT_ID"
-}
-```
+   ```json
+   {
+       "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+       "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+       "client_assertion": "<signed-JWT>",
+       "client_id": "CLIENT_ID"
+   }
+   ```
 
-The JWT assertion (`client_assertion`) must be signed with the client's private key and contain:
+1. Read the token from the response:
 
-| Claim | Description |
-|-------|-------------|
-| `iss` | Issuer — the `client_id` of the application |
-| `sub` | Subject — the `client_id` of the application |
-| `aud` | Audience — the Casdoor token endpoint URL |
-| `exp` | Expiry time (Unix timestamp) |
+   ```json
+   {
+       "access_token": "eyJhb...",
+       "token_type": "Bearer",
+       "expires_in": 10080,
+       "scope": "openid"
+   }
+   ```
 
-Casdoor verifies the signature against the public key in the application's **Client cert**, checks the standard JWT claims, and—if valid—returns an access token tied to the application (same behavior as the Client Credentials grant).
+Casdoor verifies the signature and the standard JWT claims. The access token belongs to the application, as with the client credentials grant.
 
-Example response:
+## DPoP (sender-constrained tokens) {#dpop-sender-constrained-tokens}
 
-```json
-{
-    "access_token": "eyJhb...",
-    "token_type": "Bearer",
-    "expires_in": 10080,
-    "scope": "openid"
-}
-```
+Casdoor supports [Demonstrating Proof of Possession (DPoP, RFC 9449)](https://datatracker.ietf.org/doc/html/rfc9449). DPoP binds an access token to a key that the client holds, so that a leaked token is useless without the private key.
 
-## DPoP (sender-constrained tokens)
-
-Casdoor supports [DPoP (Demonstrating Proof of Possession, RFC 9449)](https://datatracker.ietf.org/doc/html/rfc9449), which binds an access token to a client-held key so that a leaked token cannot be used without the matching private key.
-
-To request a DPoP-bound token, send a `DPoP` header containing a DPoP proof JWT with your token request:
+To get a DPoP-bound token, send a `DPoP` header with a DPoP proof JWT in the token request:
 
 ```http
 POST /api/login/oauth/access_token
 DPoP: <DPoP proof JWT>
 ```
 
-When a valid proof is supplied, Casdoor binds the issued token to the proof's public key (its JWK thumbprint, `jkt`) and returns `token_type` as `DPoP` instead of `Bearer`:
+Casdoor binds the token to the public key of the proof, by its JWK thumbprint (`jkt`), and returns the `token_type` `DPoP` instead of `Bearer`:
 
 ```json
 {
@@ -458,9 +504,9 @@ When a valid proof is supplied, Casdoor binds the issued token to the proof's pu
 }
 ```
 
-The same `DPoP` header is also accepted on the refresh token request. An invalid proof is rejected with the `invalid_dpop_proof` error.
+The refresh token request accepts the same `DPoP` header. Casdoor rejects an invalid proof with the error `invalid_dpop_proof`.
 
-The supported proof signing algorithms are advertised in the OpenID Connect discovery document (`/.well-known/openid-configuration`) under `dpop_signing_alg_values_supported`:
+The discovery document lists the signing algorithms that Casdoor accepts for proofs in `dpop_signing_alg_values_supported`:
 
 ```json
 {
@@ -468,11 +514,11 @@ The supported proof signing algorithms are advertised in the OpenID Connect disc
 }
 ```
 
-The [token introspection](#how-to-verify-access-token) response also exposes the key binding through the `cnf.jkt` claim (RFC 9449 §8).
+The [token introspection](/docs/how-to-connect/oauth#how-to-verify-access-token) response shows the key binding in the `cnf.jkt` claim (RFC 9449, section 8).
 
-## How to Verify Access Token
+## Verify an access token {#how-to-verify-access-token}
 
-Casdoor currently supports the [token introspection](https://datatracker.ietf.org/doc/html/rfc7662) endpoint. This endpoint is protected by Basic Authentication (ClientId:ClientSecret).
+Casdoor supports [token introspection (RFC 7662)](https://datatracker.ietf.org/doc/html/rfc7662). Authenticate the request with HTTP Basic authentication, with the client ID as the username and the client secret as the password:
 
 ```http
 POST /api/login/oauth/introspect HTTP/1.1
@@ -503,22 +549,16 @@ Example response:
 }
 ```
 
-## How to Use `AccessToken`
+Alternatively, verify the signature of the token yourself with the public key of the application's certificate, or with the keys of the [JWKS endpoint](/docs/how-to-connect/oidc-client#discovery-endpoints). The SDKs do this in `ParseJwtToken()`.
 
-Use the access token to call Casdoor APIs that require authentication.
+## Use an access token {#how-to-use-accesstoken}
 
-For example, there are two different ways to request `/api/userinfo`.
+Send the access token to call the Casdoor API. For example, call `/api/userinfo` in one of two ways:
 
-Type 1: Query parameter
+- With the `Authorization` header: `Authorization: Bearer <access-token>`
+- With a query parameter: `https://<casdoor-host>/api/userinfo?accessToken=<access-token>`
 
-`https://CASDOOR_HOST/api/userinfo?accessToken=your_access_token`
-
-Type 2: HTTP Bearer token
-
-`https://CASDOOR_HOST/api/userinfo` with the header: "Authorization: Bearer `your_access_token`"
-
-Casdoor will parse the access_token and return corresponding user information according to the `scope`.
-The response has the same shape:
+Casdoor returns the fields of the user that the scope of the token allows:
 
 ```json
 {
@@ -528,13 +568,20 @@ The response has the same shape:
 }
 ```
 
-If you expect more user information, add `scope` when obtaining the AccessToken in step [Authorization code grant](#authorization-code-grant).
+To get more fields, request more [scopes](#scopes) in the authorization request.
 
-## Accessing OAuth Provider Tokens
+### UserInfo and get-account {#differences-between-the-userinfo-and-get-account-apis}
 
-When users sign in via OAuth providers (GitHub, Google, etc.), the provider's access token is available to call the third-party API on their behalf; it is stored in the user's `originalToken` field.
+| Endpoint | Returns |
+|---|---|
+| `/api/userinfo` | The standard OpenID Connect (OIDC) claims of the user, limited by the [scopes](#scopes) of the token |
+| `/api/get-account` | The complete [user](/docs/basic/core-concepts#user) object of the signed-in account. This endpoint is specific to Casdoor. It includes the access token of the external OAuth provider, if there is one |
 
-The token is available through the `/api/get-account` endpoint:
+## Get the access token of an external provider {#accessing-oauth-provider-tokens}
+
+When a user signs in through an external OAuth provider, such as GitHub or Google, Casdoor stores the access token of that provider in the `originalToken` field of the user. Your application can use it to call the API of the provider, such as the GitHub API or the Google Drive API, on behalf of the user, without another OAuth flow.
+
+Read the token from `/api/get-account`:
 
 ```json
 {
@@ -547,12 +594,11 @@ The token is available through the `/api/get-account` endpoint:
 }
 ```
 
-The `originalToken` is visible only when the user requests their own account or when the requester is an admin. For other requests, it is masked for privacy.
+Casdoor returns `originalToken` only to the user and to administrators. For all other requesters, it masks the field.
 
-This allows your application to interact with third-party APIs (e.g., GitHub API, Google Drive API) using the provider's access token without requiring additional OAuth flows.
+## See also
 
-## Differences between the `userinfo` and `get-account` APIs
-
-- `/api/userinfo`: This API returns user information as part of the OIDC protocol. It provides limited information, including only the basic information defined in OIDC standards. For a list of available scopes supported by Casdoor, see the [Scopes](#scopes) section.
-
-- `/api/get-account`: This API retrieves the user object for the currently logged-in account. It is a Casdoor-specific API that allows you to obtain all the information of the [user](/docs/basic/core-concepts#user) in Casdoor, including the OAuth provider's access token when applicable.
+- [Connect a standard OIDC client](/docs/how-to-connect/oidc-client)
+- [Sign users in with a Casdoor SDK](/docs/how-to-connect/sdk)
+- [Tokens](/docs/token/overview)
+- [Call the Casdoor API](/docs/basic/public-api)

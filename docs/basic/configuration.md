@@ -1,24 +1,27 @@
 ---
-title: Configuration
-description: Configure the Casdoor backend and web console via app.conf and environment variables.
+title: Configuration reference
+sidebar_label: Configuration
+description: Every option in the Casdoor configuration file app.conf, and how to override options with environment variables.
 keywords: [Casdoor, configuration, app.conf, environment variables, backend, frontend]
 authors: [hsluoyz]
 ---
 
-Casdoor is configured with one file, `conf/app.conf`, whose options can also be set as environment variables. This page lists every option.
+Casdoor reads its settings from one file, [`conf/app.conf`](https://github.com/casdoor/casdoor/blob/master/conf/app.conf). You can override every option with an environment variable. This page lists all options.
 
-## Backend configuration (app.conf)
+For a minimal setup, set only `driverName`, `dataSourceName`, and `dbName`. See [Configure the database](/docs/basic/server-installation#configure-database).
 
-The backend reads a single config file: [**conf/app.conf**](https://github.com/casdoor/casdoor/blob/master/conf/app.conf). For a minimal setup, set `driverName` and `dataSourceName` for your database (see [Configure database](/docs/basic/server-installation#configure-database)). The table below lists every option.
+## Backend options
 
-| Parameter                   | Default Value                                                                        | Description                                                                                                                                          |
+The options appear in the order of `conf/app.conf`. Restart Casdoor after you change an option.
+
+| Option                      | Default                                                                              | Description                                                                                                                                          |
 |-----------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `appname`                   | `casdoor`                                                                            | Application name (currently has no practical use)                                                                                                    |
+| `appname`                   | `casdoor`                                                                            | Application name. Not used at the moment                                                                                                    |
 | `httpport`                  | `8000`                                                                               | Port that the backend application listens on                                                                                                         |
 | `runmode`                   | `dev`                                                                                | Running mode: `dev` or `prod`                                                                                                                        |
 | `copyrequestbody`           | `true`                                                                               | Whether to copy request body for later use                                                                                                           |
-| `driverName`                | `mysql`                                                                              | Database driver (e.g., `mysql`, `postgres`, `sqlite`). See [Configure Database](/docs/basic/server-installation#configure-database)                  |
-| `dataSourceName`            | `root:123456@tcp(localhost:3306)/`                                                   | Database connection string. See [Configure Database](/docs/basic/server-installation#configure-database)                                             |
+| `driverName`                | `mysql`                                                                              | Database driver (e.g., `mysql`, `postgres`, `sqlite`). See [Configure the database](/docs/basic/server-installation#configure-database)                  |
+| `dataSourceName`            | `root:123456@tcp(localhost:3306)/`                                                   | Database connection string. See [Configure the database](/docs/basic/server-installation#configure-database)                                             |
 | `dbName`                    | `casdoor`                                                                            | Database name used by Casdoor                                                                                                                        |
 | `tableNamePrefix`           | (empty)                                                                              | Prefix for table names when using an adapter                                                                                                         |
 | `showSql`                   | `false`                                                                              | Show SQL statements in logger when log level is greater than INFO                                                                                    |
@@ -26,7 +29,7 @@ The backend reads a single config file: [**conf/app.conf**](https://github.com/c
 | `sessionCookieLifeTime`     | (empty)                                                                              | Session cookie lifetime in seconds. Defaults to 30 days (`2592000`) when empty or not greater than 0; set a value greater than 0 to override it.     |
 | `defaultStorageProvider`    | (empty)                                                                              | Default storage provider name for file uploads (e.g., avatars). See [storage](/docs/provider/storage/overview)                                       |
 | `isCloudIntranet`           | `false`                                                                              | Whether provider endpoints use intranet addresses                                                                                                    |
-| `authState`                 | `"casdoor"`                                                                          | Authorization application name checked during login                                                                                                  |
+| `authState`                 | `"casdoor"`                                                                          | Authorization application name that Casdoor checks during sign-in                                                                                                  |
 | `socks5Proxy`               | `"127.0.0.1:10808"`                                                                  | SOCKS5 proxy address for OAuth providers (Google, GitHub, etc.) that may be blocked                                                                  |
 | `verificationCodeTimeout`   | `10`                                                                                 | Verification code expiration time in minutes                                                                                                         |
 | `initScore`                 | `0`                                                                                  | Initial score assigned to new users (used by Casnode, not Casdoor)                                                                                   |
@@ -42,12 +45,12 @@ The backend reads a single config file: [**conf/app.conf**](https://github.com/c
 | `showGithubCorner`          | `false`                                                                              | Show the GitHub corner ribbon on the UI                                                                                                              |
 | `forceLanguage`             | `""`                                                                                 | Force the UI to use a specific language (e.g. `"zh"`, `"en"`). Overrides the user's browser language. Empty means no override.                       |
 | `defaultLanguage`           | `"en"`                                                                               | Default UI language when no browser preference or force override is set                                                                              |
-| `defaultApplication`        | `"app-built-in"`                                                                     | Name of the application to redirect to after login when no specific application is requested                                                         |
+| `defaultApplication`        | `"app-built-in"`                                                                     | Name of the application to redirect to after sign-in when no specific application is requested                                                         |
 | `maxItemsForFlatMenu`       | `7`                                                                                  | Maximum number of items to show in a flat (non-grouped) sidebar menu. When the count exceeds this, the menu switches to a tree/grouped view           |
 | `enableErrorMask`           | `false`                                                                              | Whether to mask detailed error messages                                                                                                              |
 | `enableErrorMask2`          | `false`                                                                              | Replace every API error message with a generic one, so that responses don't reveal why a request failed                                                |
 | `enableGzip`                | `true`                                                                               | Accept and respond with gzip encoding when client supports it                                                                                        |
-| `inactiveTimeoutMinutes`    | (empty)                                                                              | Auto-logout timeout in minutes. Empty or ≤0 means no timeout                                                                                         |
+| `inactiveTimeoutMinutes`    | (empty)                                                                              | Automatic sign-out timeout in minutes. Empty or ≤0 means no timeout                                                                                         |
 | `ldapServerPort`            | `389`                                                                                | Port for LDAP server                                                                                                                                 |
 | `ldapsCertId`               | `""`                                                                                 | Certificate ID for LDAPS connections                                                                                                                 |
 | `ldapsServerPort`           | `636`                                                                                | Port for LDAPS (LDAP over SSL) server                                                                                                                |
@@ -62,38 +65,56 @@ The backend reads a single config file: [**conf/app.conf**](https://github.com/c
 | `logConfig`                 | `{"adapter":"file", "filename": "logs/casdoor.log", "maxdays":99999, "perm":"0770"}` | Logging configuration (adapter, file path, rotation, permissions)                                                                                    |
 | `initDataNewOnly`           | `false`                                                                              | Only add the objects of the init data file that don't exist yet, existing ones are left as they are                                                  |
 | `initDataMerge`             | `false`                                                                              | Update the existing objects with only the fields set in the init data file, instead of deleting and re-creating them                                 |
-| `initDataFile`              | `"./init_data.json"`                                                                 | Path to the data initialization file, JSON or YAML (`.yaml`/`.yml`). See [Data Initialization](/docs/deployment/data-initialization)                 |
+| `initDataFile`              | `"./init_data.json"`                                                                 | Path to the data initialization file, JSON or YAML (`.yaml`/`.yml`). See [Data initialization](/docs/deployment/data-initialization)                 |
 | `initDataWatchInterval`     | `0`                                                                                  | Seconds between the checks of the init data file for changes, a changed file is applied again without a restart. `0` applies it only at startup      |
 | `frontendBaseDir`           | `"../cc_0"`                                                                          | Base directory for frontend files (only for development)                                                                                             |
 
-### Environment variables
+## Override options with environment variables
 
-Every Casdoor option in `app.conf` can be overridden with an environment variable of the same name. Some Beego options (e.g. `httpport`, `appname`) are also supported.
+An environment variable with the same name as an option in `app.conf` overrides the value in the file. The name must match the option name exactly, including case. Some Beego options, such as `httpport` and `appname`, work the same way.
 
-Example: starting Casdoor with config passed via environment variables:
+Set a variable for one run:
 
-```shell
+```bash
 appname=casbin go run main.go
 ```
 
-Variables can also be `export`ed in the shell. Variable names must match the `app.conf` key names exactly.
+Or export it in the shell before you start Casdoor:
 
-:::note
-Environment variables override values in `app.conf`.
-:::
+```bash
+export httpport=9000
+./casdoor
+```
 
-## Frontend configuration
+In Docker, pass the options with `-e`. See [Try with Docker](/docs/basic/try-with-docker).
 
-The web console reads a few settings from the backend at runtime, so you change them in `app.conf` (or with environment variables) and restart the backend; there is no need to rebuild the frontend:
+## Options that affect the admin console
 
-| `app.conf` option     | Effect on the web console                                                       |
-|-----------------------|---------------------------------------------------------------------------------|
-| `defaultApplication`  | Application whose sign-in page is shown when none is specified                  |
-| `showGithubCorner`    | Show the GitHub corner ribbon                                                   |
-| `isDemoMode`          | Restrict what the console allows, for public demo sites                         |
-| `forceLanguage`       | Use this language for every user, ignoring the browser language                 |
-| `defaultLanguage`     | Language used when the browser doesn't ask for a supported one                  |
-| `staticBaseUrl`       | Base URL of static images such as logos and avatars                             |
-| `maxItemsForFlatMenu` | Number of top menu items above which the menu is grouped                        |
+The frontend reads the following options from the backend at runtime. Change them in `app.conf` or with environment variables and restart the backend. You don't need to rebuild the frontend.
 
-The compile-time defaults of these settings, plus the default theme (`ThemeDefault`) and an optional custom footer (`CustomFooter`), are in [**web/src/Conf.ts**](https://github.com/casdoor/casdoor/blob/master/web/src/Conf.ts). Changing that file requires rebuilding the frontend with `yarn build` in the `web` directory. Per-organization and per-application themes are set in the console instead; see [Customize theme](/docs/organization/customize-theme).
+| Option | Effect on the admin console |
+|---|---|
+| `defaultApplication` | Application whose sign-in page appears when the request names no application |
+| `defaultLanguage` | Language used when the browser doesn't ask for a supported one |
+| `forceLanguage` | Language used for every user, regardless of the browser language |
+| `isDemoMode` | Restricts what the console allows, for public demo sites |
+| `maxItemsForFlatMenu` | Number of top menu items above which the menu is grouped |
+| `showGithubCorner` | Shows the GitHub corner ribbon |
+| `staticBaseUrl` | Base URL of static images such as logos and avatars |
+
+## Compile-time frontend settings
+
+The compile-time defaults of the options above, the default theme (`ThemeDefault`), and an optional custom footer (`CustomFooter`) are in [`web/src/Conf.ts`](https://github.com/casdoor/casdoor/blob/master/web/src/Conf.ts). After you change that file, rebuild the frontend:
+
+```bash
+cd web
+yarn build
+```
+
+To set a theme for one organization or one application, use the admin console instead. See [Customize the theme](/docs/organization/customize-theme).
+
+## See also
+
+- [Install the Casdoor server](/docs/basic/server-installation)
+- [Data initialization](/docs/deployment/data-initialization)
+- [Deploy behind Nginx](/docs/deployment/nginx)

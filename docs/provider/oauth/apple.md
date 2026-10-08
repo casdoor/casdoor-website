@@ -1,57 +1,78 @@
 ---
-title: Sign in with Apple
-description: Add Apple as an OAuth provider (Sign in with Apple).
+title: Add Sign in with Apple
+sidebar_label: Apple
+description: Let users sign in to Casdoor with their Apple ID through Sign in with Apple.
 keywords: [Apple, OAuth, Sign in with Apple]
 authors: [People257]
 ---
 
-You need an [Apple Developer](https://developer.apple.com/account) account and an **Apple Developer Program** membership.
+This guide explains how to let users sign in to Casdoor with their Apple ID.
 
-### Step 1: Configure App ID
+---
 
-Create a new App ID or configure an existing one, and ensure **Sign in with Apple** is enabled for it.
+#### Learning outcomes
 
-![Enable Sign in with Apple for App ID](/img/providers/OAuth/appledashboard.png)
+- Configure an App ID, a Services ID, and a key at Apple.
+- Add Apple as an OAuth provider in Casdoor.
 
-### Step 2: Create a Services ID
+#### What you need
 
-Next, create a new identifier, making sure to select the **Services IDs** type. (The `Identifier` you set here will be your **Client ID** in Casdoor).
+- An [Apple Developer](https://developer.apple.com/account) account with a membership of the Apple Developer Program
+- Administrator access to the Casdoor admin console
 
-![Register Services ID](/img/providers/OAuth/appleregisterserviceid.png)
+---
 
-Then, configure this Services ID. Enable **Sign in with Apple** and click **Configure**.
+## Configure Apple
 
-![Edit Services ID Configuration](/img/providers/OAuth/appleeditserviceconfig.png)
+1. Create an App ID, or open an existing one, and turn on **Sign in with Apple** for it.
 
-### Step 3: Configure Redirect URLs
+   ![Sign in with Apple capability of the App ID](/img/providers/OAuth/appledashboard.png)
 
-In the configuration screen, set up the **Return URLs** (callback URLs). You need to enter the **Redirect URL shown on the Casdoor provider page** here.
+1. Create an identifier of the type **Services IDs**. Its identifier becomes the **Client ID** in Casdoor.
 
-![Configure Callback URLs](/img/providers/OAuth/applecallbackconfig.png)
+   ![Services ID registration](/img/providers/OAuth/appleregisterserviceid.png)
 
-:::info Set Return URLs Correctly
-The `Return URLs` on Apple **must** exactly match the `Redirect URL` shown on your Casdoor Apple provider configuration page (e.g., `https://your-casdoor-domain.com/callback`).
-:::
+1. Open the Services ID, turn on **Sign in with Apple**, and click **Configure**.
 
-### Step 4: Create a Key
+   ![Services ID configuration](/img/providers/OAuth/appleeditserviceconfig.png)
 
-After configuring the Services ID, create a **Key**.
-When creating the Key, enable **Sign in with Apple** and associate it with your App ID.
+1. In **Return URLs**, enter the redirect URL that the Apple provider page in Casdoor shows, for example `https://your-casdoor-domain.com/callback`. The two values must match exactly.
 
-![Configure Key Association](/img/providers/OAuth/applekeyconfig.png)
+   ![Return URLs of the Services ID](/img/providers/OAuth/applecallbackconfig.png)
 
-After registering the Key, note down the **Key ID** and **download the `.p8` file immediately**. (This file can only be downloaded once, save it securely!)
+1. Create a key, turn on **Sign in with Apple** for it, and associate it with your App ID.
 
-![Get Key ID and Download .p8 File](/img/providers/OAuth/applegetkeyid.png)
+   ![Key configuration](/img/providers/OAuth/applekeyconfig.png)
 
-**Important:** Find and note down your **Team ID** from the **Membership** page on the Apple Developer Portal.
+1. Register the key. Note the **Key ID** and download the `.p8` file at once. Apple lets you download the file only once, so store it securely.
 
-### Step 5: Add the provider in Casdoor
+   ![Key ID and download of the key file](/img/providers/OAuth/applegetkeyid.png)
 
-1. **Client ID** — The **Services ID** (Identifier) you created in Step 2.
-2. **Team ID**: Enter your Apple **Team ID** (found on the Membership page).
-3. **Key ID**: Enter the Apple **Key ID** you noted down.
-4. **Key Text**: Open the downloaded `.p8` file with a text editor. Copy its **entire content** (including the `-----BEGIN...` and `-----END...` lines) and paste it here.
-5. **Check Redirect URL**: Verify that the `Redirect URL` shown here in Casdoor has been correctly added to the **Return URLs** in your Apple Services ID configuration.
+1. On the **Membership** page of the Apple Developer portal, note your **Team ID**.
 
-![Configure Casdoor Provider](/img/providers/OAuth/appleconfigcasdoor.png)
+## Add the provider in Casdoor {#step-5-add-the-provider-in-casdoor}
+
+1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
+1. Set **Category** to `OAuth` and **Type** to `Apple`.
+1. Fill in the fields:
+
+   | Field | Value |
+   |---|---|
+   | **Client ID** | The identifier of the Services ID |
+   | Team ID | Your Apple Team ID |
+   | Key ID | The ID of the key |
+   | Key text | The complete content of the `.p8` file, including the `-----BEGIN` and `-----END` lines |
+
+1. Check that the redirect URL that Casdoor shows is in the **Return URLs** of the Services ID.
+
+   ![Apple provider in Casdoor](/img/providers/OAuth/appleconfigcasdoor.png)
+
+1. Save the provider.
+
+## Next steps
+
+Add the provider to an application. See [Add providers to an application](/docs/application/providers).
+
+## See also
+
+- [OAuth providers](/docs/provider/oauth/overview)

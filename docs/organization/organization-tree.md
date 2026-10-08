@@ -1,37 +1,47 @@
 ---
-title: Organization tree
-description: User groups and group hierarchy within an organization.
+title: Groups
+sidebar_label: Organization tree
+description: Groups collect the users of an organization and form a tree. This page describes the properties of a group and where you manage groups.
 keywords: [user, group, organization, tree]
 authors: [leo220yuyaodog]
 ---
 
-**Groups** are collections of users in an organization. A user can be in multiple groups.
+A group is a collection of users of an organization. Groups form a tree, with the organization at the root, so that they can mirror the structure of a company. A user can belong to several groups.
 
 ## Group properties
 
-- **Owner** — Owning organization
-- **Name** — Unique group name
-- **DisplayName**, **CreatedTime**, **UpdatedTime**
-- **Type** — `Physical` or `Virtual`. A user can be in only one Physical group but multiple Virtual groups.
-- **ParentGroup** — Parent group (top-level groups use the organization as parent)
-- **Properties** — Arbitrary key/value metadata attached to the group
+| Property | Description |
+|---|---|
+| `owner` | Organization that the group belongs to |
+| `name` | Unique name of the group |
+| `displayName` | Name shown in the UI |
+| `createdTime`, `updatedTime` | Time of creation and of the last change |
+| `type` | `Physical` or `Virtual`. A user can be in one physical group only and in any number of virtual groups |
+| `parentGroup` | Parent of the group. The parent of a top-level group is the organization |
+| `properties` | Key-value map for your own metadata |
 
-## Managing groups
+## Manage groups {#managing-groups}
 
-Groups can be managed in two places:
+You manage groups in three places of the Casdoor admin console.
 
-1. **Groups list page** — View all groups in the organization.
+On the **Groups** page, which lists all groups:
 
-   ![groups list](/img/organization/organization_tree/groups_list.png)
+![Groups list page](/img/organization/organization_tree/groups_list.png)
 
-2. **Organization list** — Click **Groups** on an organization to open the group tree.
+In the group tree of an organization. To open it, click **Groups** in the row of the organization on the **Organizations** page:
 
-   ![organization list](/img/organization/organization_tree/organization_tree_entry.png)
+![Groups button in the organization list](/img/organization/organization_tree/organization_tree_entry.png)
 
-   ![groups tree](/img/organization/organization_tree/groups_tree.png)
+![Group tree of an organization](/img/organization/organization_tree/groups_tree.png)
 
-   ![groups tree page](/img/organization/organization_tree/groups_tree.gif)
+![Recording of the group tree page](/img/organization/organization_tree/groups_tree.gif)
 
-You can also assign and edit groups from a user’s profile.
+On the edit page of a user, where you assign the user to groups:
 
-![groups user](/img/organization/organization_tree/groups_user.png)
+![Groups field of a user](/img/organization/organization_tree/groups_user.png)
+
+## See also
+
+- [Users](/docs/user/overview)
+- [Roles](/docs/user/roles)
+- [Permissions](/docs/permission/overview)

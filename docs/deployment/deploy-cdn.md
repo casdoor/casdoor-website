@@ -1,56 +1,74 @@
 ---
-title: Hosting static files in a CDN
-description: Deploy Casdoor frontend static assets to a CDN using a storage provider.
+title: Host the frontend files on a CDN
+sidebar_label: Host static files on a CDN
+description: Upload the built Casdoor frontend to a CDN through a storage provider, so that browsers load JavaScript and CSS from the CDN.
 keywords: [deployment, cdn, frontend, static]
 authors: [leo220yuyaodog]
 ---
 
-Frontend assets (e.g. `.js` and `.css`) live in `web/build/assets/` (`web/build/static/` before v4). Upload them to a CDN via a Casdoor storage provider; a script in the repo automates this.
+This guide explains how to upload the JavaScript and CSS files of the Casdoor frontend to a content delivery network (CDN) with a script from the Casdoor repository.
 
-:::note
-Build the frontend first. See [Server installation](/docs/basic/server-installation#frontend) if needed.
+---
+
+#### Learning outcomes
+
+- Create a storage provider that points to your CDN.
+- Upload the built frontend files with the deployment script.
+- Understand what the script changes.
+
+#### What you need
+
+- Casdoor built from source, with the frontend built into `web/build`. See [Run in production mode](/docs/basic/server-installation#production-mode).
+- An object storage service with a CDN, such as [Alibaba Cloud OSS](/docs/provider/storage/aliyun-oss)
+
+---
+
+## About the script
+
+The script [`deployment/deploy_test.go`](https://github.com/casdoor/casdoor/blob/master/deployment/deploy_test.go) does two things:
+
+1. It uploads the files under `web/build/assets/` to the storage provider. Before Casdoor v4, the directory was `web/build/static/`.
+1. It rewrites the URLs of the `.css` and `.js` files in `web/build/index.html`, so that they point to the CDN.
+
+The Casdoor backend still serves `index.html`. The browser then loads the assets from the CDN.
+
+:::tip
+If you install the frontend from the `casdoor-web` npm package, you don't need this script. Set `frontendCdnUrl` in [`app.conf`](/docs/basic/configuration) instead.
 :::
 
-## Preparation
+## Create a storage provider
 
-Create a [storage provider](/docs/provider/storage/overview) in the Casdoor UI (e.g. [Aliyun OSS](/docs/provider/storage/aliyun-oss)).
+1. In the Casdoor admin console, create a [storage provider](/docs/provider/storage/overview) for your object storage.
+1. Set the **Domain** field to the URL of the CDN, ending with `/`.
 
-:::caution
-Set the **Domain** field to a URL ending with `/`.
+   ![Domain field of the storage provider with a URL that ends with a slash](/img/deployment/deploy-cdn/storage_domian.png)
 
-![storage_domian](/img/deployment/deploy-cdn/storage_domian.png)
-:::
+## Upload the files
 
-## Usage
+1. In `deployment/deploy_test.go`, set the ID of your provider in the call to `GetProvider()`. The format is `<owner>/<name>`.
 
-The script is at [deployment/deploy_test.go](https://github.com/casdoor/casdoor/blob/7b0b426a76fd77b89817e0eafcccaed8d15b8cf4/deployment/deploy_test.go). Set the provider in `GetProvider()`; the ID format is `<owner>/<name>`.
+   ```go
+   func TestDeployStaticFiles(t *testing.T) {
+       provider := object.GetProvider("admin/provider_storage_aliyun_oss")
+       deployStaticFiles(provider)
+   }
+   ```
 
-```go
-func TestDeployStaticFiles(t *testing.T) {
-    provider := object.GetProvider("admin/provider_storage_aliyun_oss")
-    deployStaticFiles(provider)
-}
-```
+1. Run the script:
 
-Then run:
+   ```bash
+   cd deployment
+   go test
+   ```
 
-```bash
-cd deployment
-go test
-```
+   When the upload succeeds, the output is:
 
-On success you should see:
+   ```bash
+   PASS
+   ok      github.com/casdoor/casdoor/deployment   2.951s
+   ```
 
-```bash
-PASS
-ok      github.com/casdoor/casdoor/deployment   2.951s
-```
+## See also
 
-## How it works
-
-The script:
-
-1. Uploads the files under `web/build/assets/` to the storage provider (your CDN).
-2. Rewrites `.css` and `.js` URLs in `web/build/index.html` to point to the CDN.
-
-Serve `index.html` from the Casdoor backend as usual; the browser will load the static assets from the CDN using the URLs in `index.html`.
+- [Storage providers](/docs/provider/storage/overview)
+- [Host static files on an intranet](/docs/deployment/deploy-intranet)
