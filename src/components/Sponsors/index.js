@@ -53,7 +53,8 @@ export default function Sponsors() {
       <div className="container text--center">
         <h2 className={styles.sponsorsTitle}><Translate>Sponsors</Translate></h2>
         <p className={styles.sponsorsLead}>
-          <Translate>Casdoor is free and open source. These companies help keep it that way.</Translate>
+          <Translate>Casdoor is free and open source. These companies help keep it that way.</Translate>{" "}
+          <a href="mailto:admin@casdoor.org"><Translate>Want to appear here?</Translate></a>
         </p>
         <div className={styles.sponsorGrid}>
           {SponsorList.map((props, idx) => (
