@@ -647,6 +647,7 @@ module.exports = {
             "integration/go/caddy",
             "integration/go/oauth2-proxy",
             "integration/go/portainer",
+            "integration/go/argocd",
           ],
         },
         {
@@ -701,6 +702,7 @@ module.exports = {
           items: [
             "integration/javascript/firebase",
             "integration/javascript/wechat_miniprogram",
+            "integration/javascript/immich",
           ],
         },
         {
@@ -724,6 +726,16 @@ module.exports = {
             "integration/php/showdoc",
             "integration/php/Flarum",
             "integration/php/Moodle",
+            "integration/php/nextcloud",
+          ],
+        },
+        {
+          type: "category",
+          label: "Perl",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "integration/perl/proxmox",
           ],
         },
         {
@@ -733,6 +745,15 @@ module.exports = {
           link: {type: "generated-index"},
           items: [
             "integration/ruby/gitlab",
+          ],
+        },
+        {
+          type: "category",
+          label: "Rust",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "integration/rust/vaultwarden",
           ],
         },
         {
@@ -752,6 +773,7 @@ module.exports = {
           items: [
             "integration/python/FastAPI",
             "integration/python/JumpServer",
+            "integration/python/open-webui",
           ],
         },
       ],
