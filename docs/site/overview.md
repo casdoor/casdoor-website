@@ -62,6 +62,94 @@ The proxy passes the signed-in user to the backend in these request headers:
 
 Headers with these names sent by the client are removed, so the backend can trust them. Apps that support login by a trusted header, such as Grafana's auth proxy, can use `X-Forwarded-User` to sign the user in. Only expose the backend through the site, otherwise anyone who reaches it directly can set these headers themselves.
 
+## Using your own reverse proxy (forward auth)
+
+If Traefik, Caddy or Nginx already sits in front of your app, keep it and let it ask Casdoor whether each request may pass, instead of routing the traffic through the site proxy. Casdoor answers at `/api/forward-auth`:
+
+- `200` with the `X-Forwarded-User`, `X-Forwarded-Email` and `X-Forwarded-Groups` headers when the user is signed in and allowed, copy them to the request sent to the app.
+- A redirect to the Casdoor login page when the user isn't signed in (`401` with a `Location` header for Nginx).
+- `403` when the user is disabled or not allowed by the application's permissions.
+
+Set up a site for it first:
+
+1. Add a site whose **Domain** is the app's domain, e.g. `app.example.com`, and set **Casdoor app**. **Host** and **Port** can stay empty, since the traffic doesn't go through Casdoor.
+2. Add `https://app.example.com/caswaf-handler` to the **Redirect URLs** of that application. After signing in, the user comes back to this path, the proxy passes it to Casdoor like any other request, and Casdoor sets the session cookie on the app's domain.
+
+Casdoor finds the site by the `X-Forwarded-Host` header (or `X-Original-URL` for Nginx), so the proxy must send the original host, scheme and URI.
+
+### Traefik
+
+```yaml
+http:
+  middlewares:
+    casdoor:
+      forwardAuth:
+        address: "http://casdoor:8000/api/forward-auth"
+        authResponseHeaders:
+          - X-Forwarded-User
+          - X-Forwarded-Email
+          - X-Forwarded-Groups
+```
+
+Add the `casdoor` middleware to the router of the app.
+
+### Caddy
+
+```caddyfile
+app.example.com {
+    forward_auth casdoor:8000 {
+        uri /api/forward-auth
+        copy_headers X-Forwarded-User X-Forwarded-Email X-Forwarded-Groups
+    }
+    reverse_proxy app:3000
+}
+```
+
+### Nginx
+
+Nginx's `auth_request` can't follow redirects, so Casdoor returns `401` with the login URL in `Location`, and the callback path is passed to Casdoor directly:
+
+```nginx
+server {
+    server_name app.example.com;
+
+    # The session cookie holds a JWT, which can be larger than the default buffer
+    proxy_buffer_size 16k;
+    proxy_buffers 8 16k;
+
+    location = /caswaf-handler {
+        proxy_pass http://casdoor:8000/api/forward-auth;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-Uri $request_uri;
+    }
+
+    location = /casdoor-auth {
+        internal;
+        proxy_pass http://casdoor:8000/api/forward-auth;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+    }
+
+    location / {
+        auth_request /casdoor-auth;
+        auth_request_set $casdoor_redirect $upstream_http_location;
+        auth_request_set $casdoor_user $upstream_http_x_forwarded_user;
+        auth_request_set $casdoor_email $upstream_http_x_forwarded_email;
+        auth_request_set $casdoor_groups $upstream_http_x_forwarded_groups;
+        error_page 401 =302 $casdoor_redirect;
+
+        proxy_set_header X-Forwarded-User $casdoor_user;
+        proxy_set_header X-Forwarded-Email $casdoor_email;
+        proxy_set_header X-Forwarded-Groups $casdoor_groups;
+        proxy_pass http://app:3000;
+    }
+}
+```
+
+As with the site proxy, the app must only be reachable through the reverse proxy, otherwise anyone can set the `X-Forwarded-*` headers themselves.
+
 ## Relationship with Application reverse proxy
 
 Applications also have a **Reverse Proxy** tab for basic proxy configuration scoped to that application. Sites provide a standalone, more feature-rich proxy configuration that can be used independently of any application, with additional capabilities like health checks, multi-domain routing, and traffic rules.
