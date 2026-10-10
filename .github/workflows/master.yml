@@ -3,22 +3,15 @@ on:
   push:
       branches:
         - master
+concurrency:
+  group: deploy
+  cancel-in-progress: true
 jobs:
   build-and-deploy:
     env:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     runs-on: ubuntu-latest
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          swap-storage: true
-
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 

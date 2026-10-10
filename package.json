@@ -23,6 +23,7 @@
   "dependencies": {
     "@crowdin/cli": "^3.7.10",
     "@docusaurus/core": "^3.9.2",
+    "@docusaurus/faster": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
     "@docusaurus/theme-mermaid": "^3.9.2",
     "@giscus/react": "^2.2.4",

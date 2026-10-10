@@ -17,7 +17,13 @@ module.exports = {
   projectName: "casdoor-website", // Usually your repo name.
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "es", "fr", "de", "ja", "zh", "vi", "pt", "tr", "pl", "uk"],
+    locales: ["en", "es", "fr", "de", "ja", "zh", "pt", "uk"],
+  },
+  future: {
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+    },
+    experimental_faster: true,
   },
   themeConfig: {
     image: "img/social-card.png",
