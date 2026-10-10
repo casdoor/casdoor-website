@@ -78,4 +78,6 @@ Choose **Keycloak** if you need its advanced OAuth profiles, already maintain Ja
 
 Choose **Casdoor** if you want a smaller service to operate, login pages your team can change without a deployment, built-in CAS, LDAP, and RADIUS servers, sign-in providers for the Chinese market, or first-class support for AI agents and MCP.
 
+You can self-host Casdoor for free, or let us run it: [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives you a dedicated instance, priced per instance rather than per user.
+
 See also the [comparison overview](/docs/comparison/overview).

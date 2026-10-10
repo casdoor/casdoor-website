@@ -37,8 +37,8 @@ module.exports = {
       applicationId: "1689986",
     },
     announcementBar: {
-      id: "casbin-gateway",
-      content: "New: <a target=\"_blank\" rel=\"noopener\" href=\"https://gateway.casbin.org\"><b>Casbin Gateway</b></a> shows what every AI coding agent on your machine is doing (Claude Code, Codex, Cursor and more), with Casdoor SSO built in. <a target=\"_blank\" rel=\"noopener\" href=\"https://github.com/apache/casbin-gateway\">Star it on GitHub</a>.",
+      id: "casdoor-cloud",
+      content: `<a target="_blank" rel="noopener" href="${cloudUrl("announcement")}"><b>Casdoor Cloud</b></a>: a dedicated Casdoor instance that we host and keep upgraded, from $29/month with no per-user fees. New accounts get $20 in free credit. <a target="_blank" rel="noopener" href="https://admin.casdoor.com/signup?from=%2Finstances%2Fnew%3Ftier%3Dbasic%26period%3DPostPaid">Start a free trial</a>.`,
       isCloseable: true,
     },
     navbar: {

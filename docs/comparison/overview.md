@@ -58,4 +58,4 @@ The fastest way to compare is to run Casdoor next to what you have:
 docker run -p 8000:8000 casbin/casdoor-all-in-one
 ```
 
-Then open `http://localhost:8000` and sign in with `admin` / `123`. See [Try with Docker](/docs/basic/try-with-docker) for details, or use the [online demo](https://door.casdoor.com).
+Then open `http://localhost:8000` and sign in with `admin` / `123`. See [Try with Docker](/docs/basic/try-with-docker) for details, or use the [online demo](https://door.casdoor.com). To try it on your own hosted instance instead, [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives new accounts $20 in free credit.

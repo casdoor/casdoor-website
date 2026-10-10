@@ -67,4 +67,6 @@ Choose **Authentik** if you want to design login logic as flows with policies, o
 
 Choose **Casdoor** if you want a single small service, more built-in sign-in providers, a CAS server, a choice of databases, an Apache-2.0 license for every feature in the repository, or built-in MCP support.
 
+You can self-host Casdoor for free, or let us run it: [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives you a dedicated instance, priced per instance rather than per user.
+
 See also the [comparison overview](/docs/comparison/overview).

@@ -25,7 +25,7 @@ This guide explains how to install the Casdoor server on your own machine, conne
 ---
 
 :::tip Don't want to run it yourself?
-[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=server-installation) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
+[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=server-installation) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $29/month with no per-user fees. New accounts get $20 in free credit to try it.
 :::
 
 ## About the Casdoor server

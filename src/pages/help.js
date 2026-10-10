@@ -81,6 +81,20 @@ function Help() {
               {"Ask questions about Casdoor on {stackOverflowLink}."}
             </Translate>
           </div>
+          <div className="col">
+            <h2>Casdoor Cloud</h2>
+            <Translate
+              values={{
+                cloudLink: (
+                  <a href="https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=help&utm_content=help" target="_blank" rel="noopener noreferrer">
+                    <Translate>Casdoor Cloud</Translate>
+                  </a>
+                ),
+              }}
+            >
+              {"Let us host and upgrade Casdoor for you with {cloudLink}."}
+            </Translate>
+          </div>
         </div>
       </div>
       <br />

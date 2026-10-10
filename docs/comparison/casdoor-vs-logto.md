@@ -64,4 +64,6 @@ Choose **Logto** if you are a JavaScript team building a new SaaS product on Pos
 
 Choose **Casdoor** if you need more protocols and providers, directory synchronization, a choice of databases, an Apache-2.0 license, or an MCP server for managing identity from an AI assistant.
 
+You can self-host Casdoor for free, or let us run it: [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives you a dedicated instance, priced per instance rather than per user.
+
 See also the [comparison overview](/docs/comparison/overview).

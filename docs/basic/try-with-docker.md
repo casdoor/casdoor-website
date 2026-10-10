@@ -26,7 +26,7 @@ This guide explains how to run Casdoor in a Docker container and sign in to the 
 ---
 
 :::tip Don't want to run it yourself?
-[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=try-with-docker) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $25/month with no per-user fees.
+[Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=try-with-docker) gives you a dedicated Casdoor instance that we host and keep upgraded for you, from $29/month with no per-user fees. New accounts get $20 in free credit to try it.
 :::
 
 ## Choose an image
