@@ -23,6 +23,7 @@ authors: [hsluoyz]
 | **Mode** | SSL mode: `None`, `HTTP`, `HTTPS and HTTP`, or `HTTPS Only`. |
 | **SSL cert** | Certificate used for HTTPS. Select an SSL certificate from the [Certs](/docs/cert/overview) page. |
 | **Casdoor app** | Casdoor application to use for authentication on this site. |
+| **Public paths** | Paths that can be visited without signing in, e.g. `/api/webhook` or `/health`. A path also covers everything under it: `/public` covers `/public/logo.png` but not `/publicity`. Shown when **Casdoor app** is set. |
 | **Status** | Current proxy status (reported by the node running the proxy). |
 
 ## Health checks and alerts
@@ -51,6 +52,8 @@ When **Casdoor app** is set, the site only lets signed-in users through, so you 
 - A visitor without a valid session is sent to the Casdoor login page of that application, and comes back to the original URL after signing in.
 - Who can get in is decided by the application's [permissions](/docs/permission/permission-configuration): add a permission with resource type **Application**, the application as its resource, and the users, groups or roles that are allowed. Without such a permission, every user of the organization can get in. Organization admins and users of the `built-in` organization can always get in.
 - The user and the permissions are checked again at least once a minute, so a user who is disabled, deleted or removed from the permission loses access within a minute, and gets a 403 page.
+- Paths listed in **Public paths** are passed without signing in, for webhooks, health checks or static files that other systems fetch. No user headers are sent for them.
+- The site's [Rules](/docs/rule/overview) are checked before the login, so blocked IPs or user agents never reach the login page.
 
 The proxy passes the signed-in user to the backend in these request headers:
 
@@ -69,6 +72,8 @@ If Traefik, Caddy or Nginx already sits in front of your app, keep it and let it
 - `200` with the `X-Forwarded-User`, `X-Forwarded-Email` and `X-Forwarded-Groups` headers when the user is signed in and allowed, copy them to the request sent to the app.
 - A redirect to the Casdoor login page when the user isn't signed in (`401` with a `Location` header for Nginx).
 - `403` when the user is disabled or not allowed by the application's permissions.
+- `200` without user headers for the site's **Public paths**.
+- The status of the rule when one of the site's [Rules](/docs/rule/overview) blocks the request (always `403` for Nginx). Rules see the original method, path, user agent and client IP, taken from the `X-Forwarded-*` headers that the proxy sends.
 
 Set up a site for it first:
 
@@ -130,6 +135,8 @@ server {
         proxy_pass_request_body off;
         proxy_set_header Content-Length "";
         proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+        proxy_set_header X-Forwarded-Method $request_method;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
     location / {
@@ -149,6 +156,8 @@ server {
 ```
 
 As with the site proxy, the app must only be reachable through the reverse proxy, otherwise anyone can set the `X-Forwarded-*` headers themselves.
+
+For a step-by-step example with Grafana, see [Add login to an app without OIDC](/docs/site/protect-app).
 
 ## Relationship with Application reverse proxy
 

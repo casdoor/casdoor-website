@@ -507,6 +507,7 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "site/overview",
+        "site/protect-app",
       ],
     },
     {
