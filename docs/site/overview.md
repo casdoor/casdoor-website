@@ -44,6 +44,24 @@ Enable **Enable alert** to monitor site availability. When enabled:
 5. If the site requires authentication, set **Casdoor app** to the relevant application.
 6. Save. The proxy starts serving traffic on the configured domain.
 
+## Protecting an app that has no login
+
+When **Casdoor app** is set, the site only lets signed-in users through, so you can put Casdoor in front of an app that has no login of its own or no OIDC support.
+
+- A visitor without a valid session is sent to the Casdoor login page of that application, and comes back to the original URL after signing in.
+- Who can get in is decided by the application's [permissions](/docs/permission/permission-configuration): add a permission with resource type **Application**, the application as its resource, and the users, groups or roles that are allowed. Without such a permission, every user of the organization can get in. Organization admins and users of the `built-in` organization can always get in.
+- The user and the permissions are checked again at least once a minute, so a user who is disabled, deleted or removed from the permission loses access within a minute, and gets a 403 page.
+
+The proxy passes the signed-in user to the backend in these request headers:
+
+| Header | Value |
+|--------|-------|
+| `X-Forwarded-User` | The user's name (username), e.g. `alice` |
+| `X-Forwarded-Email` | The user's email, if set |
+| `X-Forwarded-Groups` | The user's group names, separated by commas, e.g. `staff,dev` |
+
+Headers with these names sent by the client are removed, so the backend can trust them. Apps that support login by a trusted header, such as Grafana's auth proxy, can use `X-Forwarded-User` to sign the user in. Only expose the backend through the site, otherwise anyone who reaches it directly can set these headers themselves.
+
 ## Relationship with Application reverse proxy
 
 Applications also have a **Reverse Proxy** tab for basic proxy configuration scoped to that application. Sites provide a standalone, more feature-rich proxy configuration that can be used independently of any application, with additional capabilities like health checks, multi-domain routing, and traffic rules.
