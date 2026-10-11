@@ -55,6 +55,7 @@ module.exports = {
         "deployment/docker",
         "deployment/nginx",
         "deployment/k8s",
+        "deployment/kubernetes-operator",
         "deployment/data-initialization",
         "deployment/terraform",
         "deployment/deploy-cdn",

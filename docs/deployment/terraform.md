@@ -183,5 +183,6 @@ After an import, the first `terraform apply` writes the `password` and `client_s
 ## See also
 
 - [Initialize and manage data with a file](/docs/deployment/data-initialization): Load objects from a file when a new Casdoor server starts.
+- [Run Casdoor with the Kubernetes operator](/docs/deployment/kubernetes-operator): Declare organizations and applications as Kubernetes resources.
 - [Call the Casdoor API](/docs/basic/public-api)
 - [Casdoor plugins](/docs/how-to-connect/plugin)

@@ -31,7 +31,7 @@ This guide explains how to deploy Casdoor on a Kubernetes cluster with the examp
 
 ## About the example manifest
 
-The root of the Casdoor repository contains `k8s.yaml`, an example manifest with a Service and a Deployment. It is a starting point. For a deployment that you can configure and upgrade through values, use the [Helm chart](/docs/basic/try-with-helm) instead.
+The root of the Casdoor repository contains `k8s.yaml`, an example manifest with a Service and a Deployment. It is a starting point. For a deployment that you can configure and upgrade through values, use the [Helm chart](/docs/basic/try-with-helm) instead. To run several instances, or to declare organizations and applications as Kubernetes resources, use the [Kubernetes operator](/docs/deployment/kubernetes-operator).
 
 ```yaml
 # Example: deploying Casdoor on Kubernetes
@@ -246,5 +246,6 @@ For more options, see the [OAuth2 Proxy integration guide](/docs/integration/go/
 ## See also
 
 - [Run Casdoor on Kubernetes with Helm](/docs/basic/try-with-helm)
+- [Run Casdoor with the Kubernetes operator](/docs/deployment/kubernetes-operator)
 - [OAuth2 Proxy](/docs/integration/go/oauth2-proxy)
 - [Kubernetes integration](/docs/integration/go/kubernetes)

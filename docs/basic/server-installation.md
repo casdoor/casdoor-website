@@ -240,4 +240,5 @@ For example, [Casnode](https://casnode.org) signs users in with Casdoor. Its `se
 
 - [Try with Docker](/docs/basic/try-with-docker)
 - [Try with Helm](/docs/basic/try-with-helm)
+- [Kubernetes operator](/docs/deployment/kubernetes-operator)
 - [Core concepts](/docs/basic/core-concepts)

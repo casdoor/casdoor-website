@@ -6,7 +6,7 @@ keywords: [Casdoor, Helm, Kubernetes, K8s, Gateway API, Ingress, Istio]
 authors: [nomeguy]
 ---
 
-This guide explains how to install Casdoor on a Kubernetes cluster with the official Helm chart, expose it outside the cluster, and upgrade or remove the release.
+This guide explains how to install Casdoor on a Kubernetes cluster with the official Helm chart, expose it outside the cluster, and upgrade or remove the release. To run several instances, or to declare organizations and applications as Kubernetes resources, see the [Kubernetes operator](/docs/deployment/kubernetes-operator).
 
 ---
 
@@ -268,5 +268,6 @@ helm uninstall casdoor
 
 - [Data initialization](/docs/deployment/data-initialization)
 - [Deploy on Kubernetes](/docs/deployment/k8s)
+- [Run Casdoor with the Kubernetes operator](/docs/deployment/kubernetes-operator)
 - [Configuration reference](/docs/basic/configuration)
 - [Helm documentation](https://helm.sh/docs/)
