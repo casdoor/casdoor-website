@@ -192,6 +192,14 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Marketplace",
+      link: {type: "generated-index"},
+      items: [
+        "marketplace/overview",
+      ],
+    },
+    {
+      type: "category",
       label: "MCP authorization",
       link: {type: "generated-index"},
       items: [
