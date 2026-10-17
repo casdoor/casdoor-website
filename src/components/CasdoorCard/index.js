@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 // Casdoor pages autofocus their first input, which scrolls this page to the iframe, even when this
 // window is in the background. Hand the focus back and undo any scroll the user didn't make, unless
@@ -70,12 +70,15 @@ function usePreventAutofocusScroll(ref) {
 
 export default function CasdoorCard(props) {
   const ref = useRef(null);
+  const [src, setSrc] = useState();
   usePreventAutofocusScroll(ref);
+  // Load the page only after hydration, so the scroll guard is in place before it can autofocus
+  useEffect(() => setSrc(props.src), [props.src]);
 
   return (
     <iframe
       ref={ref}
-      src={props.src}
+      src={src}
       width={props.width}
       height={props.height}
       style={{borderRadius: "20px"}}
