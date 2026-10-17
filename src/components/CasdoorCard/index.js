@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 
 // Casdoor pages autofocus their first input, which scrolls this page to the iframe, even when this
 // window is in the background. Hand the focus back and undo any scroll the user didn't make, unless
-// the user is pointing at the iframe or has clicked into it.
+// the user is pointing at the iframe or has clicked into it. A hidden tab only fires that scroll event
+// once it is shown again, so watch for it then too.
 function usePreventAutofocusScroll(ref) {
   useEffect(() => {
     const frame = ref.current;
@@ -12,6 +13,7 @@ function usePreventAutofocusScroll(ref) {
     let guardUntil = Date.now() + 15000;
     let inputAt = 0;
     let stolenAt = 0;
+    let hiddenWhileGuarded = false;
 
     const takeFocusBack = () => {
       if (document.activeElement !== frame || hovered || Date.now() > guardUntil) {
@@ -44,6 +46,14 @@ function usePreventAutofocusScroll(ref) {
     const onLoad = () => {
       guardUntil = Math.max(guardUntil, Date.now() + 10000);
     };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        hiddenWhileGuarded = hiddenWhileGuarded || Date.now() < guardUntil;
+      } else if (hiddenWhileGuarded) {
+        hiddenWhileGuarded = false;
+        stolenAt = Date.now();
+      }
+    };
     const onEnter = () => {
       hovered = true;
     };
@@ -53,6 +63,7 @@ function usePreventAutofocusScroll(ref) {
 
     window.addEventListener("scroll", onScroll, {passive: true});
     window.addEventListener("blur", onBlur);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     events.forEach((event) => window.addEventListener(event, onInput, {capture: true, passive: true}));
     frame.addEventListener("load", onLoad);
     frame.addEventListener("mouseenter", onEnter);
@@ -60,6 +71,7 @@ function usePreventAutofocusScroll(ref) {
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("blur", onBlur);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       events.forEach((event) => window.removeEventListener(event, onInput, {capture: true}));
       frame.removeEventListener("load", onLoad);
       frame.removeEventListener("mouseenter", onEnter);
@@ -72,8 +84,14 @@ export default function CasdoorCard(props) {
   const ref = useRef(null);
   const [src, setSrc] = useState();
   usePreventAutofocusScroll(ref);
-  // Load the page only after hydration, so the scroll guard is in place before it can autofocus
-  useEffect(() => setSrc(props.src), [props.src]);
+  // Load the page only after hydration and while the tab is shown, so the scroll guard is in place
+  // before it can autofocus
+  useEffect(() => {
+    const load = () => document.visibilityState === "visible" && setSrc(props.src);
+    load();
+    document.addEventListener("visibilitychange", load);
+    return () => document.removeEventListener("visibilitychange", load);
+  }, [props.src]);
 
   return (
     <iframe
