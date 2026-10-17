@@ -3,18 +3,41 @@ import Translate from "@docusaurus/Translate";
 import CasdoorCard from "./CasdoorCard";
 import {useWindowSize} from "@docusaurus/theme-common";
 
-const DEFAULT_SOURCES = [
-  "https://door.casdoor.com/login",
-  "https://ciam.jinkosolar.com/login",
-  "https://door.casdoor.com/login/oauth/authorize?client_id=0ba528121ea87b3eb54d&response_type=code&redirect_uri=.casbin.com/callback&scope=read&state=casdoor",
-  "https://casdoor.tldv.io/login",
+// Sign-in themes from the Casdoor Marketplace, shown on the demo site with `?theme=<id>`
+const THEMES = [
+  {id: "aurora", name: "Aurora"},
+  {id: "brutal", name: "Brutal"},
+  {id: "midnight", name: "Midnight"},
+  {id: "material", name: "Material"},
+  {id: "terminal", name: "Terminal"},
+  {id: "paper", name: "Paper"},
+  {id: "pixel", name: "Pixel"},
+  {id: "fluent", name: "Fluent"},
+  {id: "dracula", name: "Dracula"},
+  {id: "backdrop", name: "Backdrop"},
+  {id: "cupertino", name: "Cupertino"},
+  {id: "retro", name: "Retro"},
+  {id: "prism", name: "Prism"},
+  {id: "blueprint", name: "Blueprint"},
+  {id: "nord", name: "Nord"},
+  {id: "sketch", name: "Sketch"},
+  {id: "mono", name: "Mono"},
+  {id: "waves", name: "Waves"},
+  {id: "catppuccin", name: "Catppuccin"},
+  {id: "civic", name: "Civic"},
+  {id: "solarized", name: "Solarized"},
+  {id: "halves", name: "Halves"},
+  {id: "split", name: "Split"},
+  {id: "bare", name: "Bare"},
 ];
 
+const DEMO_URL = "https://door.casdoor.com/login";
+const MARKETPLACE_URL = "https://marketplace.casdoor.com";
 const DEFAULT_INTERVAL_MS = 5000;
 
 export default function HeroLoginCarousel(props) {
   const {
-    sources = DEFAULT_SOURCES,
+    themes = THEMES,
     width = "550",
     height = "720",
     intervalMs = DEFAULT_INTERVAL_MS,
@@ -26,12 +49,16 @@ export default function HeroLoginCarousel(props) {
   const windowSize = useWindowSize();
   const isMobile = windowSize === "mobile";
 
+  // the themes stop while the visitor is looking at one
   useEffect(() => {
+    if (mouseState) {
+      return undefined;
+    }
     const id = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % sources.length);
+      setActiveIndex((i) => (i + 1) % themes.length);
     }, intervalMs);
     return () => clearInterval(id);
-  }, [sources.length, intervalMs]);
+  }, [themes.length, intervalMs, mouseState]);
 
   const maskStyle = {
     position: "absolute",
@@ -41,14 +68,31 @@ export default function HeroLoginCarousel(props) {
     bottom: 0,
     zIndex: 10,
     background: "rgba(0,0,0,0.4)",
-    cursor: "pointer",
     borderRadius: "20px",
     display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
     alignItems: "center",
     justifyContent: "center",
   };
+  const labelStyle = {
+    position: "absolute",
+    left: "16px",
+    bottom: "16px",
+    zIndex: 5,
+    padding: "4px 12px",
+    borderRadius: "999px",
+    background: "rgba(0,0,0,0.6)",
+    color: "#fff",
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    pointerEvents: "none",
+  };
 
-  const currentUrl = sources[activeIndex];
+  const current = themes[activeIndex];
+  const nextIndex = (activeIndex + 1) % themes.length;
+  const prevIndex = (activeIndex - 1 + themes.length) % themes.length;
+  const getDemoUrl = (theme) => `${DEMO_URL}?theme=${theme.id}`;
   const sizeStyle = {
     width: typeof width === "number" ? width : `${width}px`,
     height: typeof height === "number" ? height : `${height}px`,
@@ -59,6 +103,7 @@ export default function HeroLoginCarousel(props) {
     border: "none",
     display: "block",
   };
+  const buttonMargin = isMobile ? "1rem" : "3rem";
 
   return (
     <div
@@ -69,9 +114,10 @@ export default function HeroLoginCarousel(props) {
     >
       {/* In-flow sizer so wrapper keeps same size as original single iframe, avoiding layout shift */}
       <div style={sizeStyle} aria-hidden />
-      {sources.map((src, index) => (
+      {/* only the theme on show is loaded, with the next one ready to fade in and the last one fading out */}
+      {themes.map((theme, index) => [prevIndex, activeIndex, nextIndex].includes(index) ? (
         <div
-          key={src}
+          key={theme.id}
           style={{
             position: "absolute",
             top: 0,
@@ -85,22 +131,30 @@ export default function HeroLoginCarousel(props) {
           }}
           aria-hidden={index !== activeIndex}
         >
-          <CasdoorCard src={src} width={width} height={height} />
+          <CasdoorCard src={getDemoUrl(theme)} width={width} height={height} />
         </div>
-      ))}
-      <div
-        style={{...maskStyle, visibility: mouseState ? "visible" : "hidden"}}
-        onClick={() => window.open(currentUrl)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && window.open(currentUrl)}
-      >
-        <span
+      ) : null)}
+      <span style={{...labelStyle, visibility: mouseState ? "hidden" : "visible"}}>
+        {current.name} <Translate>theme</Translate>
+      </span>
+      <div style={{...maskStyle, visibility: mouseState ? "visible" : "hidden"}}>
+        <a
           className="button button--secondary button--lg"
-          style={{marginRight: isMobile ? "1rem" : "3rem", marginLeft: isMobile ? "1rem" : "3rem"}}
+          href={getDemoUrl(current)}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{marginRight: buttonMargin, marginLeft: buttonMargin}}
         >
           <Translate>Online Demo</Translate>
-        </span>
+        </a>
+        <a
+          className="button button--primary"
+          href={`${MARKETPLACE_URL}/integrations/${current.id}/`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Translate>Get this theme from the Marketplace</Translate>
+        </a>
       </div>
     </div>
   );
