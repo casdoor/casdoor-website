@@ -22,6 +22,7 @@ module.exports = {
         "basic/configuration",
         "basic/try-with-docker",
         "basic/try-with-helm",
+        "basic/admin-console",
         "basic/public-api",
         "basic/tutorials",
       ],
@@ -165,6 +166,7 @@ module.exports = {
         "organization/accountCustomization",
         "organization/customize-theme",
         "organization/mfa-items",
+        "organization/records",
       ],
     },
     {
@@ -244,6 +246,7 @@ module.exports = {
             "provider/oauth/adfs",
             "provider/oauth/azureAD",
             "provider/oauth/azureADb2c",
+            "provider/oauth/oidc",
             "provider/oauth/CustomProvider",
             "provider/oauth/okta",
             "provider/oauth/Twitter",
@@ -270,6 +273,7 @@ module.exports = {
             "provider/email/overview",
             "provider/email/sendgrid",
             "provider/email/resend",
+            "provider/email/customHttp",
             "provider/email/azureACS",
             "provider/email/brevo",
             "provider/email/mailhog",
@@ -377,12 +381,11 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Web3",
+          label: "Audit",
           collapsed: true,
           link: {type: "generated-index"},
           items: [
-            "provider/web3/metamask",
-            "provider/web3/web3onboard",
+            "provider/audit/syslog",
           ],
         },
         {

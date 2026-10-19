@@ -14,6 +14,7 @@ This guide explains how to restrict an application to users with certain tags. O
 
 - Add tags to an application.
 - Understand how Casdoor matches the tags of users.
+- Know which applications users see on the apps page.
 
 #### What you need
 
@@ -43,6 +44,10 @@ The following users aren't restricted:
 
 - Administrators of the organization and global administrators
 - Users and applications of the `built-in` organization
+
+## Applications on the apps page {#apps-page}
+
+The apps page (`/apps`) of a user lists only the applications that the user may sign in to. An application with **Tags** appears only for users who have one of its tags. Administrators of the organization and global administrators see all applications.
 
 The tag `guest-user` is reserved for [guest users](/docs/how-to-connect/guest-auth). A guest user receives the tag `normal-user` after setting a username or a password.
 

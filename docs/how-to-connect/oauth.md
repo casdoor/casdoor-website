@@ -1,6 +1,6 @@
 ---
 title: OAuth 2.0
-description: Reference for the OAuth 2.0 endpoints of Casdoor - every supported grant type, PKCE, resource indicators, DPoP, token introspection, and the UserInfo endpoint.
+description: Reference for the OAuth 2.0 endpoints of Casdoor - every supported grant type, the hybrid flow and response modes, PKCE, resource indicators, federated credentials, DPoP, token introspection, and the UserInfo endpoint.
 keywords: [OAuth 2.0, access token, refresh token, grant types]
 authors: [nomeguy]
 ---
@@ -55,8 +55,10 @@ Use this grant for applications that sign users in through the browser. It is th
 1. The user signs in. Casdoor redirects the browser to your redirect URL with an authorization code:
 
    ```url
-   https://REDIRECT_URI?code=CODE&state=STATE
+   https://REDIRECT_URI?code=CODE&state=STATE&iss=ISSUER
    ```
+
+   `iss` is the issuer URL of Casdoor, as defined by [RFC 9207](https://datatracker.ietf.org/doc/html/rfc9207). Compare it with the `issuer` of the [discovery document](/docs/how-to-connect/oidc-client#discovery-endpoints) to make sure that the response comes from the Casdoor server that you sent the user to. Casdoor adds `iss` to every authorization response and to every error that it sends back to the redirect URL, and the discovery document announces this with `"authorization_response_iss_parameter_supported": true`.
 
 1. Exchange the code for tokens. Send a `POST` request to the token endpoint:
 
@@ -87,6 +89,10 @@ Use this grant for applications that sign users in through the browser. It is th
        "scope": "openid"
    }
    ```
+
+An authorization code is valid for 5 minutes and works once. A second exchange of the same code fails with `invalid_grant` and the description `authorization code has been used for token: [...]`.
+
+The responses of the token endpoint and the refresh token endpoint carry the headers `Cache-Control: no-store` and `Pragma: no-cache`, so that no cache keeps the tokens.
 
 ### Scopes
 
@@ -160,7 +166,9 @@ If your application calls several backend services, you can bind a token to one 
 
 The `aud` (audience) claim of the access token is then the resource URI and not the client ID. The service verifies that a token was issued for it by checking `aud`. The value of `resource` must be exactly the same in both requests.
 
-Casdoor carries the `resource` parameter through interactive sign-in. If the user has to enter a password, complete multi-factor authentication (MFA), or use WebAuthn, the parameter survives the redirects.
+Casdoor carries the `resource` parameter through interactive sign-in. If the user has to enter a password, complete multi-factor authentication (MFA), use WebAuthn, or approve the consent page, the parameter survives the redirects. It's also kept when Casdoor signs the user in automatically with an existing session.
+
+When you refresh the token, the new access token keeps the `aud` of the original grant. You can repeat `resource` in the refresh request, as a query parameter or a field of the body. If you do, it must be the same value as in the original grant. Otherwise, Casdoor returns `invalid_grant` with the description `resource parameter does not match the original grant`.
 
 ### Skip the sign-in page with a provider hint {#provider_hint-parameter}
 
@@ -182,11 +190,33 @@ Casdoor then serves a small redirect page, without loading the full frontend, an
 
 A user who creates an account during the authorization flow is redirected to your redirect URL with an authorization code as soon as the sign-up completes, exactly as after a sign-in. Casdoor carries the authorization parameters, such as `client_id`, `response_type`, and `redirect_uri`, through the sign-up. Your application needs no changes for this.
 
+### Control the sign-in prompt {#prompt-and-max-age}
+
+By default, a user who already has a Casdoor session can be signed in without entering credentials again. Add the OpenID Connect parameters `prompt` and `max_age` to the authorization URL to change this:
+
+| Parameter | Effect |
+|---|---|
+| `prompt=login` | The user must enter credentials again, even with an existing session |
+| `max_age=<seconds>` | The user must enter credentials again if they last entered them more than `<seconds>` seconds ago, or if Casdoor doesn't know when they did |
+| `prompt=none` | Casdoor shows no page. It signs the user in with the existing session, or sends an error back to the redirect URL |
+
+`prompt` takes a space-separated list of values. When the existing session doesn't satisfy `prompt=login` or `max_age`, a sign-in with that session fails with `login_required` and the message `Please sign in again`. The time at which the user entered credentials is in the `auth_time` claim of the ID token.
+
+Use `prompt=none` to check, for example from a hidden iframe, whether the user is still signed in. Casdoor then skips the automatic redirect to a single provider, and answers in the same way as a successful response would go, with `state` and `iss`, and with one of these errors:
+
+| Error | Reason |
+|---|---|
+| `login_required` | No Casdoor session, the user of the session isn't in the organization of the application, or the session doesn't satisfy `max_age` |
+| `consent_required` | The user must approve the consent page first |
+| `interaction_required` | The user must update the password, set up or complete MFA, select a plan, or fill in the prompt page first |
+| `access_denied` | The sign-in failed for another reason. `error_description` says why |
+| `server_error` | The request to Casdoor failed |
+
 ## Implicit grant
 
 Use this grant only for applications without a backend. Prefer the authorization code grant with PKCE.
 
-1. Turn on the implicit grant in **Grant types** of the application.
+1. In **Grant types** of the application, turn on **Token** to return an access token, **ID Token** to return an ID token, or both.
 1. Redirect the user to:
 
    ```url
@@ -196,14 +226,64 @@ Use this grant only for applications without a backend. Prefer the authorization
 1. After the user signs in, Casdoor redirects the browser to:
 
    ```url
-   https://REDIRECT_URI/#access_token=ACCESS_TOKEN
+   https://REDIRECT_URI#access_token=ACCESS_TOKEN&token_type=Bearer&state=STATE&iss=ISSUER
    ```
 
-Casdoor also supports [`id_token`](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token) as `response_type`.
+`response_type` can be `token`, [`id_token`](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#id_token), or `id_token token`. The authorization endpoint never returns a refresh token. If the grant type that a response type needs isn't turned on, Casdoor shows `Grant_type: token is not supported in this application` (or `id_token`).
+
+When `scope` contains `openid` and the response contains an ID token, send a `nonce` parameter. Casdoor copies it into the ID token, and refuses the request without it: `The nonce parameter is required for this response type`.
 
 :::caution
-The implicit grant requires a user with a username and a password. Users who were created only through an external provider and have no local password can't use it and receive `invalid_grant`. Use the authorization code grant for them.
+The implicit grant at the token endpoint (`grant_type=token` with a username and a password) requires a user with a local password. Users who were created only through an external provider and have no local password can't use it and receive `invalid_grant`. The same [rules as for the password grant](/docs/how-to-connect/oauth#password-grant-refusals) apply. Use the authorization code grant for these users.
 :::
+
+## Hybrid flow {#hybrid-flow}
+
+In the OpenID Connect hybrid flow, the authorization endpoint returns an authorization code together with tokens. Your frontend can use the tokens at once, and your backend exchanges the code as in the [authorization code grant](/docs/how-to-connect/oauth#authorization-code-grant).
+
+`response_type` is a space-separated combination of `code`, `token`, and `id_token`. The hybrid values are:
+
+| `response_type` | The authorization endpoint returns |
+|---|---|
+| `code id_token` | `code` and `id_token` |
+| `code token` | `code` and `access_token` |
+| `code token id_token` | `code`, `access_token`, and `id_token` |
+
+1. In **Grant types** of the application, turn on **Token** for a response type that contains `token`, and **ID Token** for one that contains `id_token`.
+1. Redirect the user to the authorization endpoint with the response type and a `nonce`:
+
+   ```url
+   https://<CASDOOR_HOST>/login/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code%20id_token&scope=openid&state=STATE&nonce=NONCE
+   ```
+
+   `nonce` is required when `scope` contains `openid` and the response type contains `id_token`, or is `code token`.
+
+1. After the user signs in, Casdoor redirects the browser to your redirect URL. The values are in the fragment, unless you ask for another [response mode](/docs/how-to-connect/oauth#response-modes).
+1. Exchange the code at the token endpoint. Only this exchange returns a refresh token.
+
+The ID token carries these claims of the OpenID Connect specification:
+
+| Claim | When it's present |
+|---|---|
+| `auth_time` | When Casdoor knows the time at which the user last entered credentials |
+| `at_hash` | When the ID token comes with an access token, and in the ID token of the authorization code grant |
+| `c_hash` | When the ID token comes with an authorization code |
+
+`at_hash` and `c_hash` use SHA-256, or SHA-384 or SHA-512 when the **Token signing method** of the application ends in `384` or `512`. Verify them as the [OpenID Connect specification](https://openid.net/specs/openid-connect-core-1_0.html#HybridIDToken) describes.
+
+## Response modes {#response-modes}
+
+`response_mode` decides how Casdoor sends the authorization response, or the error, to the redirect URL:
+
+| `response_mode` | Delivery | Default for |
+|---|---|---|
+| `query` | In the query string | `response_type=code` |
+| `fragment` | In the fragment, after `#` | Every response type that returns a token |
+| `form_post` | In a form that the browser submits to the redirect URL with `POST` | None |
+
+Casdoor never puts tokens in the query string. A response that contains a token goes in the fragment, even with `response_mode=query`. The response contains `state` and `iss`, and `token_type=Bearer` when it contains an access token. With `form_post`, they are fields of the form. The sign-in page and the consent page both support all three modes.
+
+With **Auto signin** on, Casdoor signs a user who has a session in without loading the sign-in page only for `response_type=code` with `response_mode` empty or `query`. Other requests load the sign-in page, which then completes the sign-in.
 
 ## Device grant
 
@@ -247,7 +327,7 @@ To reject the sign-in, send `userCode` and the `cancelToken` from the same URL a
 
 By default, Casdoor keeps pending device authorization requests, which map device codes to user codes, in memory. With several replicas of Casdoor, the polling request of the device and the confirmation in the browser can reach different replicas, and the flow then fails intermittently.
 
-To share the requests between replicas, set `redisEndpoint` in `conf/app.conf`. Casdoor then stores them in Redis. This is the same option that shares sessions, in the format `host:port[,db[,password]]`, and no further option is needed. If Casdoor can't reach Redis at startup, it logs a warning and uses the in-memory store. See the [Configuration reference](/docs/basic/configuration).
+To share the requests between replicas, set `redisEndpoint` in `conf/app.conf`. Casdoor then stores them in Redis. This is the same option that shares sessions, in the format `host:port[,poolSize[,password[,db]]]`, for example `localhost:6379,100,mypassword,2`, and no further option is needed. Several addresses in the first field, separated by `;`, use Redis Cluster. If Casdoor can't reach Redis at startup, it logs a warning and uses the in-memory store. See the [Configuration reference](/docs/basic/configuration).
 
 ## Resource owner password credentials grant
 
@@ -284,6 +364,19 @@ Use this grant only when your application can't redirect the user to Casdoor and
        "scope": "openid"
    }
    ```
+
+### When Casdoor refuses the password grant {#password-grant-refusals}
+
+A password alone would skip the checks of the sign-in page. Casdoor therefore refuses the password grant, and the implicit grant at the token endpoint, with `invalid_grant` in these cases:
+
+| Case | `error_description` |
+|---|---|
+| The user has MFA enabled | `the user has MFA enabled and cannot sign in with a password grant, please use the authorization code flow` |
+| The organization has turned off sign-in | `The organization: <organization> has disabled users to signin` |
+| The user must change the password, or must set up MFA that the organization requires | `the user: <organization>/<user> must update the password or set up MFA on the login page first` |
+| The user has no local password, for example a user created through an external provider | `OAuth users cannot use password grant type, please use authorization code flow` |
+
+The other sign-in restrictions of the application and the organization, such as IP restrictions, apply as well. A user who must change the password or set up MFA does that on the sign-in page first, after which the password grant works again.
 
 ## Verification code grant {#verification-code-grant}
 
@@ -389,7 +482,14 @@ Use the refresh token from an earlier response to get a new access token.
    }
    ```
 
-Renaming a user doesn't invalidate the refresh tokens of the user.
+Casdoor checks the refresh request as follows:
+
+- If the token was issued by an authorization code exchange that sent a `client_secret`, or by a token exchange, the refresh request must contain the correct `client_secret`. Otherwise, Casdoor returns `invalid_client`. A public client that used PKCE without a secret refreshes without one.
+- The refresh token must belong to the requesting application. Otherwise, Casdoor returns `invalid_grant` with `the token is for wrong application (client_id)`.
+- A `scope` in the request must be a subset of the original scope. If you omit it, the new token has the original scope.
+- An unknown or revoked refresh token fails with `invalid_grant` and `refresh token is invalid or revoked`. A refresh token that Casdoor has invalidated, for example at sign-out, fails with `invalid_grant` and `refresh token is expired`.
+
+Renaming a user doesn't invalidate the refresh tokens of the user. For the events that do revoke tokens, see [When Casdoor revokes tokens](/docs/token/overview#when-casdoor-revokes-tokens).
 
 ### Refresh token rotation
 
@@ -427,6 +527,7 @@ Send a `POST` request to `https://<casdoor-host>/api/login/oauth/access_token`:
 | `subject_token` | The token to exchange, typically an access token or a JSON Web Token (JWT) that you already hold |
 | `subject_token_type` | `urn:ietf:params:oauth:token-type:access_token` (default), `urn:ietf:params:oauth:token-type:jwt`, or `urn:ietf:params:oauth:token-type:id_token` |
 | `scope` | Optional. A subset of the scope of the subject token. If you omit it, the new token has the scope of the subject token |
+| `audience` | Optional. The application that the new access token is for, by its client ID or by its application name. The `aud` claim of the new access token is then the client ID of that application, and the `aud` of the new ID token stays the requesting client |
 
 The response contains a new token for the same user as the subject token:
 
@@ -441,7 +542,20 @@ The response contains a new token for the same user as the subject token:
 }
 ```
 
-Casdoor validates the subject token with the certificate of the application that issued it, which the `azp` claim identifies, and not with the certificate of the requesting client. If the requesting client isn't the issuer, the `aud` claim of the subject token must include the client ID of the requesting client. Otherwise, Casdoor rejects the exchange with `invalid_grant`. This keeps one application from exchanging the tokens of another application without being named as an audience (RFC 8693, section 2.1).
+Casdoor validates the subject token with the certificate of the application that issued it, which the `azp` claim identifies, and not with the certificate of the requesting client. If the requesting client isn't the issuer, the `aud` claim of the subject token must include the client ID of the requesting client. Otherwise, Casdoor rejects the exchange with `invalid_grant`. This keeps one application from exchanging the tokens of another application without being named as an audience (RFC 8693, section 2.1). The rule applies to every **Token format**, including **JWT-Standard**.
+
+Casdoor also refuses the exchange in these cases:
+
+| Case | Error |
+|---|---|
+| The subject token isn't an active token of Casdoor, for example because it was revoked or has expired. With `subject_token_type` set to `urn:ietf:params:oauth:token-type:id_token`, Casdoor looks the token up as an ID token, otherwise as an access token | `invalid_grant`, `subject_token is revoked or unknown` |
+| The subject token has no user, for example a token of the client credentials grant | `invalid_grant`, `subject_token has no user` |
+| The user is forbidden to sign in | `invalid_grant` |
+| The user isn't in the organization of the requesting application, and the application isn't shared | `invalid_grant` |
+| `audience` isn't a known application | `invalid_target` |
+| The `audience` application isn't in the organization of the user, and isn't shared | `invalid_target` |
+
+A token of an external issuer can be the subject token too, without a client secret. See [Federated credentials](/docs/how-to-connect/oauth#federated-credentials).
 
 ## JWT bearer grant
 
@@ -482,6 +596,53 @@ With the [JWT bearer grant (RFC 7523)](https://datatracker.ietf.org/doc/html/rfc
 
 Casdoor verifies the signature and the standard JWT claims. The access token belongs to the application, as with the client credentials grant.
 
+The `assertion` of the JWT bearer grant can also be a token of an external issuer that the application trusts. See [Federated credentials](/docs/how-to-connect/oauth#federated-credentials).
+
+## Federated credentials (workload identity) {#federated-credentials}
+
+With federated credentials, an application trusts the tokens of an external OpenID Connect issuer, such as GitHub Actions, Kubernetes, a cloud workload identity, or another IdP, as its credential. A workload that already holds such a token gets a Casdoor token without a client secret or a client certificate.
+
+1. In the Casdoor admin console, open the application and go to the **OIDC/OAuth** tab.
+1. In **Federated credentials**, add a row for each issuer and subject that you trust:
+
+   | Column | Description |
+   |---|---|
+   | **Issuer** | The issuer of the external tokens. It must equal the `iss` claim exactly, for example `https://token.actions.githubusercontent.com` |
+   | **JWKS URL** | The URL of the signing keys of the issuer. If you leave it empty, Casdoor reads `jwks_uri` from `<issuer>/.well-known/openid-configuration`, whose `issuer` must match |
+   | **Subject** | Required. The `sub` claim to accept. `*` matches any text, for example `repo:my-org/my-repo:*` |
+   | **Audience** | The `aud` value to accept. If you leave it empty, Casdoor accepts its own origin, its token endpoint `https://<casdoor-host>/api/login/oauth/access_token`, or the client ID of the application |
+   | **User** | The user that the token stands for: a username, or `{claim}` to take the username from a claim, for example `{email}`. If you leave it empty, the token stands for the application itself |
+
+1. In **Grant types**, turn on the grant that the workload uses.
+1. Click **Save**.
+
+The workload then presents its external token in one of three ways:
+
+- As `client_assertion` at the token endpoint, with `client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer`, to authenticate the client in any grant. Send `client_id` in the request too, because the `sub` of an external token isn't a client ID.
+- As the `assertion` of the [JWT bearer grant](/docs/how-to-connect/oauth#jwt-bearer-grant).
+- As the `subject_token` of the [token exchange grant](/docs/how-to-connect/oauth#token-exchange-grant). No client secret is needed.
+
+For example, a GitHub Actions job exchanges its OIDC token for a Casdoor token:
+
+```bash
+curl -X POST https://<casdoor-host>/api/login/oauth/access_token \
+  -d grant_type=urn:ietf:params:oauth:grant-type:token-exchange \
+  -d client_id=<client-id> \
+  -d subject_token=<github-oidc-token> \
+  -d subject_token_type=urn:ietf:params:oauth:token-type:jwt
+```
+
+Casdoor verifies an external token as follows:
+
+- The signature is checked with the keys of the issuer. Casdoor caches the keys for one hour, and fetches them again, at most once a minute, when a token has an unknown `kid`.
+- The signing algorithm is one of RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512, or EdDSA.
+- The token must have an `exp` claim. Casdoor allows one minute of clock skew.
+- A token of a trusted issuer whose subject matches no row fails, for example with `the subject: <sub> of issuer: <issuer> is not trusted by application: [<application>]`.
+
+With **User** empty, the new token is an application token, as with the client credentials grant, without a refresh token or an ID token. Otherwise, it's a token of the mapped user in the organization of the application. If that user doesn't exist, or the token lacks the claim, Casdoor returns `invalid_grant`.
+
+The discovery document lists `private_key_jwt` in `token_endpoint_auth_methods_supported`.
+
 ## DPoP (sender-constrained tokens) {#dpop-sender-constrained-tokens}
 
 Casdoor supports [Demonstrating Proof of Possession (DPoP, RFC 9449)](https://datatracker.ietf.org/doc/html/rfc9449). DPoP binds an access token to a key that the client holds, so that a leaked token is useless without the private key.
@@ -504,7 +665,7 @@ Casdoor binds the token to the public key of the proof, by its JWK thumbprint (`
 }
 ```
 
-The refresh token request accepts the same `DPoP` header. Casdoor rejects an invalid proof with the error `invalid_dpop_proof`.
+The refresh token request accepts the same `DPoP` header. Casdoor rejects an invalid proof with the error `invalid_dpop_proof`. A refresh token that was issued with DPoP is bound to the key too: refreshing it requires a `DPoP` proof signed with the same key. Without a proof, or with a proof of another key, the refresh fails with `invalid_dpop_proof`. Casdoor checks the `htu` claim of a refresh proof against the token endpoint, `https://<casdoor-host>/api/login/oauth/access_token`.
 
 The discovery document lists the signing algorithms that Casdoor accepts for proofs in `dpop_signing_alg_values_supported`:
 
@@ -553,7 +714,7 @@ Alternatively, verify the signature of the token yourself with the public key of
 
 ## Use an access token {#how-to-use-accesstoken}
 
-Send the access token to call the Casdoor API. For example, call `/api/userinfo` in one of two ways:
+Send the access token to call the Casdoor API. For example, call `/api/userinfo`, with `GET` or `POST`, in one of two ways:
 
 - With the `Authorization` header: `Authorization: Bearer <access-token>`
 - With a query parameter: `https://<casdoor-host>/api/userinfo?accessToken=<access-token>`

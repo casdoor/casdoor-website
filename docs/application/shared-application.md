@@ -50,6 +50,16 @@ Users who sign in through this URL sign in to the organization `casbin`.
 
 <video src="/img/application/shared-application/shared_application_demo.mp4" controls="controls" width="100%"></video>
 
+## Tokens of applications of other organizations {#api-limits}
+
+A shared application belongs to the `built-in` organization, so its tokens work like the tokens of any other application. An application of any other organization is different: when a user from outside that organization, such as a global administrator, signs in to it, the token and the session can call only these APIs:
+
+- `/api/userinfo`
+- `/api/user`
+- `/api/login/oauth`
+
+Casdoor denies every other request that carries such a token. If the browser only sends the session cookie that such a request left behind, Casdoor signs that session out and handles the request as anonymous. This keeps the admin of the application from using the tokens of users of other organizations to manage Casdoor.
+
 ## Invitations
 
 For [invitations](/docs/invitation/overview) to a shared application, Casdoor generates links with the `-org-<organization-name>` suffix, so that users register in the right organization.

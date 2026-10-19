@@ -5,7 +5,7 @@ keywords: [monitor, CPU, memory, API latency]
 authors: [OutOfEastGate]
 ---
 
-Casdoor exposes runtime metrics on the **Sysinfo** page (e.g. [door.casdoor.com/sysinfo](https://door.casdoor.com/sysinfo)):
+Casdoor exposes runtime metrics on the **Sysinfo** page (e.g. [door.casdoor.com/sysinfo](https://door.casdoor.com/sysinfo)). Only global administrators, the users of the `built-in` organization, can open it: the page reads `/api/get-system-info` and `/api/get-prometheus-info`, which refuse everyone else.
 
 - **CPU and memory usage** — progress bars turn yellow at 70% and red at 90%
 

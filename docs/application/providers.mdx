@@ -52,13 +52,23 @@ For the other columns of the table, such as **Can sign up** and **Binding rule**
 | `All` | Do everything below |
 | `Signup` | Send the verification code during sign-up |
 | `Login` | Send the code for sign-in with a verification code |
-| `Forget Password` | Send the reset code or link on the forgot-password page. For reset links, see [Password reset link](/docs/provider/email/overview#password-reset-link) |
+| `Forget Password` | Send the reset code or link on the forgot-password page. See [Forgot-password flow](/docs/application/signin-items-table#forgot-password-flow). For reset links, see [Password reset link](/docs/provider/email/overview#password-reset-link) |
 | `Reset Password` | Send the code when the user changes the password |
 | `Set MFA` | Send the code when the user sets up multi-factor authentication (MFA) |
 | `MFA Auth` | Send the code for the second factor at sign-in. See [Multi-factor authentication](/docs/user/multi-factor-authentication) |
 | `Magic link` | Send the sign-in link for sign-in with a magic link |
 
 To use different providers in different situations, add each provider with its own rule. For example, one SMS provider for sign-in and another one for MFA.
+
+### Which provider Casdoor picks {#provider-rule-precedence}
+
+When an application has several Email or SMS providers, Casdoor picks one for each message in this order:
+
+1. For SMS, Casdoor skips the rows whose **Country codes** don't include the country code of the phone number.
+1. The first row whose rule names the purpose, such as `Login` or `MFA Auth`, wins, wherever it is in the table.
+1. Otherwise, the first row with the rule `All` wins.
+
+A later row with the same rule as an earlier row is never used, and the **Providers** tab shows "Never used, an earlier row already carries this rule" on it.
 
 ## See also
 

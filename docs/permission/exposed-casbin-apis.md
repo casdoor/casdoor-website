@@ -202,32 +202,6 @@ Response:
 }
 ```
 
-## Run a Casbin command {#runcasbincommand}
-
-`GET /api/run-casbin-command` runs the Casbin command-line tool of a language and returns its output. It requires administrator rights, except in demo mode, where it is public.
-
-| Parameter | Description |
-|---|---|
-| `language` | Language of the Casbin CLI, such as `go`, `java`, `node`, or `python` |
-| `args` | JSON array of arguments, such as `["-v"]` or `["new"]`. URL-encode it |
-
-```shell
-curl --location --request GET 'http://localhost:8000/api/run-casbin-command?language=go&args=["-v"]' \
---user '<client-id>:<client-secret>'
-```
-
-Response:
-
-```json
-{
-    "status": "ok",
-    "msg": "",
-    "data": "casbin version 2.x.x"
-}
-```
-
-Casdoor caches the result for five minutes per combination of language and arguments, and returns the cached result for identical requests.
-
 ## See also
 
 - [Permissions](/docs/permission/overview)

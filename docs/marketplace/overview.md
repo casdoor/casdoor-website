@@ -21,7 +21,7 @@ The Marketplace is in Casdoor master since October 2026 and in every release aft
 |---|---|---|
 | **App integration** | Creates an [application](/docs/application/overview) with the redirect URLs, grant types and token format the app needs. The guide then shows the app's own settings with your Casdoor address, client ID and client secret filled in. | Grafana, GitLab, Nextcloud, Vaultwarden, Argo CD, Immich, Open WebUI, Portainer, Gitea, Proxmox VE |
 | **Identity provider** | Creates a [provider](/docs/provider/overview) from a template, so your users can sign in to Casdoor with an identity system they already have. Optionally adds it to the sign-in page of an application. | Keycloak, authentik, ZITADEL, Authelia, GitLab Self-Managed |
-| **Sign-in theme** | Replaces the look of the sign-in pages of one application: `themeData`, `formOffset`, `formCss`, `formCssMobile`, `formSideHtml` and `footerHtml`. | Midnight, Split |
+| **Sign-in theme** | Replaces the look of the sign-in pages of one application: `themeData`, `formOffset`, `formCss`, `formCssMobile`, `formSideHtml`, `footerHtml`, `formBackgroundUrl` and `formBackgroundUrlMobile` (**Background URL** and **Background URL Mobile**). | Midnight, Split |
 
 ## Install an integration
 
@@ -48,7 +48,7 @@ Delete the integration under **Identity → Integrations**:
 ## Who can install what
 
 - Organization admins can install integrations into their own organization, add providers and themes only to their own organization's applications, and uninstall only their own organization's integrations. Their quotas apply as when they add an application or provider by hand.
-- A theme that sets the side panel or footer HTML (`formSideHtml`, `footerHtml`) can only be installed by a global admin, because only global admins can change those fields. Such themes are marked on their Marketplace page.
+- Organization admins can install a theme only if its CSS, side panel HTML and footer HTML follow the rules for custom HTML and CSS that apply to them. Otherwise, the install fails with "the theme: `<id>` uses HTML or loads files that this Casdoor only lets a global admin set". Global admins can install any theme. See [What organization admins can put in custom HTML and CSS](/docs/application/ui-customization#organization-admin-limits).
 - An application can have one installed theme at a time.
 
 ## Where the catalog comes from

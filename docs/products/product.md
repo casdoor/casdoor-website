@@ -30,6 +30,10 @@ Alipay is restricted to CNY only. Selecting Alipay for a product in any other cu
 
 ![product_provider.png](/img/products/product_provider.png)
 
+### Properties
+
+**Properties** is a table of name and value pairs that you attach to the product, for example plan limits or a stock-keeping unit (SKU) code. Casdoor stores the table with the product and returns it as the `properties` object of the product in the API, for example in `GET /api/get-product`. Casdoor doesn't read the properties itself, so use them for your own metadata.
+
 ### Success URL (Optional)
 
 To redirect users to a custom URL after payment instead of the Casdoor callback, set **Success URL**. When configured, Casdoor will append the payment owner and transaction name as query parameters to your provided URL.

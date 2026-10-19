@@ -91,6 +91,10 @@ MCP client libraries perform the handshake for you. To connect a specific client
 
 1. Save the server. Casdoor fetches the list of tools from the server and stores it.
 
+MCP clients reach the server through the proxy endpoint of Casdoor, `/api/server/<organization>/<server-name>`, with `GET` and `POST` requests. The proxy never forwards the `Cookie` header of the caller. It replaces the `Authorization` header of the caller with `Bearer <token>`, where `<token>` is the **Token** of the server, or removes the header when the server has no token. A request that Casdoor doesn't authorize gets the same answer as an [unauthenticated request to `/api/mcp`](/docs/how-to-connect/mcp/authentication#handling-unauthenticated-requests).
+
+Casdoor never returns the **Token** of a server in its API responses, so the field shows empty on the edit page after you save it. If you save the server with an empty **Token**, Casdoor keeps the stored token. To change the token, enter the new one.
+
 ### Get a token from Casdoor
 
 If the external server trusts Casdoor as its OAuth 2.0 provider, you don't have to paste a token. Select an **Application**, and then click **Get access token** next to the **Token** field. Casdoor issues an access token for the signed-in user and that application and fills it in. The button is unavailable until you select an application, because Casdoor issues the token for that application.

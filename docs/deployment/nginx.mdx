@@ -97,9 +97,42 @@ go build && ./casdoor
    nginx -s reload
    ```
 
+## Serve Casdoor under a path
+
+To share a domain with other applications, serve Casdoor under a path such as `https://YOUR_DOMAIN_NAME/casdoor` instead of at the root.
+
+1. In [`app.conf`](/docs/basic/configuration), set `basePath`:
+
+   ```ini
+   basePath = /casdoor
+   ```
+
+   Casdoor trims leading and trailing slashes and adds one leading slash, so `casdoor/` works too. Like other options, `basePath` can also be set as an environment variable.
+
+1. If you set `origin`, include the path in it, for example `origin = https://YOUR_DOMAIN_NAME/casdoor`. Casdoor uses `origin` as it is. When `origin` is empty, Casdoor adds the path to the URLs that it derives from the request host.
+1. Restart the backend.
+1. Proxy the path to the backend in the `server` block:
+
+   ```nginx
+   location /casdoor/ {
+       proxy_set_header    Host            $http_host;
+       proxy_set_header    X-Real-IP       $remote_addr;
+       proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_redirect      off;
+       proxy_pass http://127.0.0.1:8000;
+   }
+   ```
+
+   Casdoor removes the path prefix before it routes a request, so the proxy may either keep the prefix, as in this example, or strip it.
+
+1. Reload Nginx.
+1. Update the URLs that point to Casdoor: the Casdoor URL in your applications and SDKs, and the callback URL that you register with each identity provider, which becomes `https://YOUR_DOMAIN_NAME/casdoor/callback`.
+
+With `basePath` set, Casdoor writes the path into the `index.html` that it serves: it prefixes the root-relative script and stylesheet URLs and adds a `<meta name="casdoor-base-path">` tag. The frontend reads that tag for its routes, API calls, and links. The OIDC discovery document, including the issuer, uses the path too.
+
 ## Verify the result
 
-Open `http://YOUR_DOMAIN_NAME` in a browser. The Casdoor sign-in page appears.
+Open `http://YOUR_DOMAIN_NAME` in a browser, or `http://YOUR_DOMAIN_NAME/casdoor` if you serve Casdoor under a path. The Casdoor sign-in page appears.
 
 ## Next steps
 

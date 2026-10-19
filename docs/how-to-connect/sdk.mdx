@@ -338,7 +338,7 @@ type Claims struct {
 | `AccessToken` | The access token string |
 | `jwt.RegisteredClaims` | The standard claims of a JSON Web Token (JWT) |
 
-In Casdoor, the access token usually has the same content as the ID token, so it carries the information about the signed-in user.
+In Casdoor, the access token carries the same user claims as the ID token, so it carries the information about the signed-in user. The two are still separate tokens, with a different `tokenType` claim and possibly a different `aud`. See [Access token and ID token](/docs/token/overview#access-token-and-id-token).
 
 ### Use a server-side session
 

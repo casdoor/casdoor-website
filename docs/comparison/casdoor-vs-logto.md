@@ -17,7 +17,7 @@ Logto and Casdoor are both newer open-source identity platforms with a web conso
 | OAuth 2.0, OIDC, SAML | Yes | Yes |
 | CAS, LDAP server, RADIUS server, Kerberos | Built in | Not offered |
 | Multi-tenancy | Organizations, each with its own users, applications, and theme | Organizations with organization roles |
-| Sign-in providers | 70+ OAuth providers, SAML, LDAP, Web3 | Social and enterprise connectors |
+| Sign-in providers | 70+ OAuth providers, SAML, LDAP | Social and enterprise connectors |
 | Directory sync | Syncers for Active Directory, Azure AD, Google Workspace, Okta, Keycloak, databases; SCIM | Enterprise SSO connectors |
 | Authorization | Casbin models (ACL, RBAC, ABAC) | API resources with RBAC |
 | AI agents and MCP | Built-in MCP server; OAuth 2.1 authorization server for MCP | OAuth 2.1 authorization server for MCP |

@@ -46,8 +46,9 @@ Casdoor publishes two images on Docker Hub:
    docker run -p 8000:8000 casbin/casdoor-all-in-one
    ```
 
-1. Open `http://localhost:8000` in a browser.
-1. Sign in with the organization `built-in`, the username `admin`, and the password `123`.
+1. Open `http://localhost:8000` in a browser. Casdoor opens the **Welcome to Casdoor** page.
+1. Set the password of the administrator `admin` and click **Set Password**. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
+1. Sign in with the organization `built-in`, the username `admin`, and the password that you set.
 
 The data lives in a SQLite file inside the container and is lost when you remove the container.
 
@@ -72,7 +73,9 @@ This is the recommended way. Every option of [`app.conf`](/docs/basic/configurat
    - `<user>` and `<password>`: the database account.
    - `<host>`: the address of the database as seen from inside the container.
 
-1. Open `http://localhost:8000` and sign in as `built-in/admin` with the password `123`.
+   To set the password of `built-in/admin` without the welcome page, also pass `-e initAdminPassword=<admin-password>`. It applies only when Casdoor creates a new database.
+
+1. Open `http://localhost:8000`, set the password of `admin` on the **Welcome to Casdoor** page, and sign in as `built-in/admin`. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 ### Mount a configuration file
 
@@ -83,7 +86,7 @@ This is the recommended way. Every option of [`app.conf`](/docs/basic/configurat
    docker run -p 8000:8000 -v /folder/of/app.conf:/conf casbin/casdoor:latest
    ```
 
-1. Open `http://localhost:8000` and sign in as `built-in/admin` with the password `123`.
+1. Open `http://localhost:8000`, set the password of `admin` on the **Welcome to Casdoor** page, and sign in as `built-in/admin`. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 :::note
 Casdoor runs as uid and gid 1000 inside the container. When you mount a volume that Casdoor writes to, for example for a SQLite file, make the path writable by uid 1000. Otherwise Casdoor fails with `permission denied`.
@@ -91,7 +94,7 @@ Casdoor runs as uid and gid 1000 inside the container. When you mount a volume t
 
 ## Run Casdoor and a database with Docker Compose
 
-The Casdoor repository contains a [`docker-compose.yml`](https://github.com/casdoor/casdoor/blob/master/docker-compose.yml) that starts Casdoor together with a database.
+The Casdoor repository contains a [`docker-compose.yml`](https://github.com/casdoor/casdoor/blob/master/docker-compose.yml) that starts Casdoor together with a MySQL 8.0 database. The `db` service has a health check that runs `mysqladmin ping`, and Casdoor starts only after the database reports healthy (`depends_on` with `condition: service_healthy`).
 
 1. Clone the repository or copy `docker-compose.yml` to a folder.
 1. Put `app.conf` in a `conf/` directory next to `docker-compose.yml`. Start from [`conf/app.conf`](https://github.com/casdoor/casdoor/blob/master/conf/app.conf).
@@ -101,15 +104,26 @@ The Casdoor repository contains a [`docker-compose.yml`](https://github.com/casd
    docker-compose up
    ```
 
-1. Open `http://localhost:8000` and sign in as `built-in/admin` with the password `123`.
+1. Open `http://localhost:8000`, set the password of `admin` on the **Welcome to Casdoor** page, and sign in as `built-in/admin`. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 :::info
 `docker-compose.yml` sets the `RUNNING_IN_DOCKER` environment variable. The database is reachable at `localhost` from the host but not from inside the Casdoor container. When `RUNNING_IN_DOCKER` is set, Casdoor connects to `host.docker.internal` instead, so you don't have to edit `app.conf`.
 :::
 
+## Check the container health
+
+Both images define a Docker `HEALTHCHECK`. Every 10 seconds, it requests `http://127.0.0.1:<httpport>/api/health` inside the container, where `<httpport>` is the `httpport` environment variable or `8000`. The check times out after 5 seconds, allows 60 seconds for startup, and marks the container unhealthy after 3 failures in a row. If you change the port only in a mounted `app.conf`, the check still requests port `8000`, so set `httpport` as an environment variable instead.
+
+1. List the containers:
+
+   ```bash
+   docker ps
+   ```
+
+   The `STATUS` column shows `(healthy)` once Casdoor answers, and `(unhealthy)` when it stops answering.
+
 ## Next steps
 
-- Change the password of `built-in/admin` before you expose Casdoor to a network.
 - [Deploy with Docker in production](/docs/deployment/docker)
 - [Connect an application to Casdoor](/docs/how-to-connect/overview)
 

@@ -68,7 +68,15 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
   "issuer": "https://door.casdoor.com",
   "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
   "token_endpoint": "https://door.casdoor.com/api/login/oauth/access_token",
+  "token_endpoint_auth_methods_supported": [
+    "client_secret_basic",
+    "client_secret_post",
+    "private_key_jwt",
+    "none"
+  ],
   "userinfo_endpoint": "https://door.casdoor.com/api/userinfo",
+  "device_authorization_endpoint": "https://door.casdoor.com/api/device-auth",
+  "registration_endpoint": "https://door.casdoor.com/api/oauth/register",
   "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
   "introspection_endpoint": "https://door.casdoor.com/api/login/oauth/introspect",
   "response_types_supported": [
@@ -78,13 +86,12 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "code token",
     "code id_token",
     "token id_token",
-    "code token id_token",
-    "none"
+    "code token id_token"
   ],
   "response_modes_supported": [
-    "login",
-    "code",
-    "link"
+    "query",
+    "fragment",
+    "form_post"
   ],
   "grant_types_supported": [
     "authorization_code",
@@ -92,16 +99,19 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "password",
     "client_credentials",
     "refresh_token",
-    "urn:ietf:params:oauth:grant-type:device_code"
-  ],
-  "code_challenge_methods_supported": [
-    "S256"
+    "urn:ietf:params:oauth:grant-type:device_code",
+    "urn:ietf:params:oauth:grant-type:token-exchange",
+    "urn:casdoor:params:oauth:grant-type:verification-code"
   ],
   "subject_types_supported": [
     "public"
   ],
   "id_token_signing_alg_values_supported": [
-    "RS256"
+    "RS256",
+    "RS512",
+    "ES256",
+    "ES384",
+    "ES512"
   ],
   "scopes_supported": [
     "openid",
@@ -110,6 +120,9 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "address",
     "phone",
     "offline_access"
+  ],
+  "code_challenge_methods_supported": [
+    "S256"
   ],
   "claims_supported": [
     "iss",
@@ -137,7 +150,6 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "ranking",
     "isOnline",
     "isAdmin",
-    "isGlobalAdmin",
     "isForbidden",
     "signupApplication",
     "ldap"
@@ -147,14 +159,33 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "HS256",
     "HS384",
     "HS512"
-  ]
+  ],
+  "end_session_endpoint": "https://door.casdoor.com/api/logout",
+  "backchannel_logout_supported": true,
+  "backchannel_logout_session_supported": true,
+  "dpop_signing_alg_values_supported": [
+    "RS256",
+    "RS512",
+    "ES256",
+    "ES384",
+    "ES512",
+    "PS256",
+    "PS384",
+    "PS512"
+  ],
+  "authorization_response_iss_parameter_supported": true,
+  "client_id_metadata_document_supported": false
 }
 ```
 
 The document tells clients the following:
 
-- **Grant types**: Casdoor supports the authorization code, implicit, password, client credentials, and refresh token grants. It also supports the device code grant (`urn:ietf:params:oauth:grant-type:device_code`) for devices with limited input, such as smart TVs and CLI tools.
+- **Grant types**: Casdoor supports the authorization code, implicit, password, client credentials, and refresh token grants. It also supports the device code grant (`urn:ietf:params:oauth:grant-type:device_code`) for devices with limited input, such as smart TVs and CLI tools, [token exchange](/docs/how-to-connect/oauth#token-exchange-grant), and its own [verification code grant](/docs/how-to-connect/oauth#verification-code-grant).
+- **Response types and modes**: `response_types_supported` lists the authorization code, implicit, and [hybrid](/docs/how-to-connect/oauth#hybrid-flow) combinations. `response_modes_supported` lists the three [response modes](/docs/how-to-connect/oauth#response-modes).
+- **Client authentication**: `token_endpoint_auth_methods_supported` shows that a client authenticates with its secret in the `Authorization` header or in the body, with a signed JWT (`private_key_jwt`, see [Federated credentials](/docs/how-to-connect/oauth#federated-credentials)), or not at all as a public client with PKCE (`none`).
 - **PKCE**: `code_challenge_methods_supported` shows that Casdoor supports Proof Key for Code Exchange (PKCE) with the `S256` method. PKCE protects public clients, such as mobile and single-page applications, against interception of the authorization code. A library that supports PKCE turns it on from this metadata. To implement PKCE yourself, see [OAuth 2.0](/docs/how-to-connect/oauth).
+- **Issuer in the authorization response**: `authorization_response_iss_parameter_supported` is `true`, because Casdoor adds `iss` to every authorization response ([RFC 9207](https://datatracker.ietf.org/doc/html/rfc9207)).
+- **Client ID metadata documents**: `client_id_metadata_document_supported` is `true` when the `built-in` organization accepts client IDs that are URLs of a metadata document. See [Dynamic client registration](/docs/application/dynamic-client-registration).
 
 ## Discovery endpoints of a single application {#application-specific-oidc-endpoints}
 
@@ -174,24 +205,30 @@ https://door.casdoor.com/.well-known/app-example/openid-configuration
 https://door.casdoor.com/.well-known/app-example/oauth-authorization-server
 ```
 
-The document of an application differs from the global document in one field: `jwks_uri` points to the JWKS of the application. The global endpoint returns:
+The document of an application differs from the global document in these fields:
+
+- `jwks_uri` points to the JWKS of the application.
+- `registration_endpoint` carries the organization of the application, as in `https://door.casdoor.com/api/oauth/register?organization=<organization-name>`, so that clients that register through [dynamic client registration](/docs/application/dynamic-client-registration) land in that organization. The global document has no `organization` parameter, and registers clients in `built-in`.
+- `scopes_supported` adds the custom **Scopes** of the application.
+
+The global endpoint returns:
 
 ```json
 {
   "issuer": "https://door.casdoor.com",
   "jwks_uri": "https://door.casdoor.com/.well-known/jwks",
-  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  "registration_endpoint": "https://door.casdoor.com/api/oauth/register",
   ...
 }
 ```
 
-The endpoint of `app-example` returns:
+The endpoint of `app-example`, an application of the organization `casbin`, returns:
 
 ```json
 {
   "issuer": "https://door.casdoor.com",
   "jwks_uri": "https://door.casdoor.com/.well-known/app-example/jwks",
-  "authorization_endpoint": "https://door.casdoor.com/login/oauth/authorize",
+  "registration_endpoint": "https://door.casdoor.com/api/oauth/register?organization=casbin",
   ...
 }
 ```

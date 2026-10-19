@@ -211,10 +211,13 @@ To load the configuration from another location, pass the `--config` flag. The f
 ## Sign in to the admin console {#sign-in}
 
 1. Open the Casdoor URL in a browser: `http://localhost:7001` in development mode, or `http://localhost:8000` in production mode and for the pre-built binary.
-1. Sign in with the organization `built-in`, the username `admin`, and the password `123`.
+1. On a new database, Casdoor opens the **Welcome to Casdoor** page at `/init-admin`. Enter a password for the administrator `admin` in **New Password** and **Re-enter New**, and then click **Set Password**. The password must meet the password complexity options of the `built-in` organization. Casdoor then shows the sign-in page.
+1. Sign in with the organization `built-in`, the username `admin`, and the password that you set.
+
+When Casdoor creates the database, the server log shows `The password of built-in/admin is not set, open Casdoor in the browser to set it, or set initAdminPassword before the first start`. To skip the welcome page, set [`initAdminPassword`](/docs/basic/configuration) before the first start.
 
 :::danger
-Change the password of `built-in/admin` before you expose Casdoor to a network.
+Set the password of `built-in/admin` right after the first start. Until it is set, anyone who opens the Casdoor URL first can choose it.
 :::
 
 ## Choose the URL that your applications use

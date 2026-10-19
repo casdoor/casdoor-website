@@ -57,6 +57,14 @@ The root certificate:
 1. Enter the APPID as the **Client ID**, and select the application certificate and the root certificate that you created.
 1. Save the provider.
 
+## User ID
+
+Casdoor uses the `user_id` of Alipay as the ID of the user. Alipay applications that were created after the OpenID migration of Alipay return no `user_id`, so Casdoor uses the `open_id` instead. If the response has neither, the sign-in fails with `alipay GetUserInfo error: both user_id and open_id are empty`.
+
+:::caution
+If you switch an Alipay application from `user_id` to `open_id`, the ID of each user changes. Users that signed in before then no longer match their linked Casdoor accounts.
+:::
+
 ## Troubleshooting
 
 If the sign-in fails, for example with `asn1: syntax error: sequence truncated`, check the following:

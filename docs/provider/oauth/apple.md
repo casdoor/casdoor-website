@@ -69,6 +69,16 @@ This guide explains how to let users sign in to Casdoor with their Apple ID.
 
 1. Save the provider.
 
+## User information
+
+Casdoor reads the user ID and the email address from the ID token that Apple signs.
+
+Apple sends the first and last name of the user only once: in the `user` field of the form that it posts to the `/api/callback` endpoint of Casdoor, on the first authorization of the user. Casdoor keeps the name for 5 minutes in an HttpOnly cookie named `casdoor_apple_user`, and uses it as the display name of the user that it creates. An existing user gets the name only if the display name is empty.
+
+- The display name is `<first-name> <last-name>`. If either part is Chinese, it is `<last-name><first-name>`, without a space. If only one part is present, Casdoor uses that part.
+- Apple doesn't sign the name, so Casdoor uses it only for the display name. The username and the email address always come from the ID token.
+- On later sign-ins, Apple doesn't send the name. To send it again, the user removes the application under **Sign in with Apple** in the settings of their Apple ID, and then signs in again.
+
 ## Next steps
 
 Add the provider to an application. See [Add providers to an application](/docs/application/providers).

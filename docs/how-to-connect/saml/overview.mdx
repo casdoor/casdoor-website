@@ -1,7 +1,7 @@
 ---
 title: Use Casdoor as a SAML identity provider
 sidebar_label: Overview
-description: Connect a SAML 2.0 service provider to Casdoor - the metadata URL, the reply URL and entity ID, the response binding, SAML attributes, and assertion signatures.
+description: Connect a SAML 2.0 service provider to Casdoor - the metadata URL, the reply URL and entity ID, the response binding, IdP-initiated SSO, single logout, SAML attributes, and assertion signatures.
 keywords: [SAML, IdP]
 ---
 
@@ -52,6 +52,47 @@ Casdoor can send the `SAMLResponse` with an HTTP `POST` request or an HTTP `GET`
 :::note
 When Casdoor itself signs users in at an external SAML IdP, such as Azure AD, the external IdP posts its SAML response to the `/api/acs` endpoint of Casdoor. This endpoint accepts cross-origin `POST` requests, so that an IdP on another domain can send the response.
 :::
+
+## Start the sign-in from Casdoor (IdP-initiated SSO) {#idp-initiated-sso}
+
+In IdP-initiated SSO, the user starts at Casdoor instead of at the service provider. Casdoor sends the SP a SAML response that no `AuthnRequest` asked for. Use it for portal links and bookmarks.
+
+1. On the **SAML** tab of the application, set **SAML reply URL** to the ACS URL of the SP. Without it, the sign-in fails with `the SAML reply URL should not be empty for IdP-initiated SSO`.
+1. Make sure that the first entry of **Redirect URLs** is the entity ID of the SP. Casdoor uses it as the audience of the assertion.
+1. Save the application. The **SAML** tab then shows the **IdP-initiated SSO URL**:
+
+   ```text
+   <casdoor-host>/login/saml/authorize/admin/<application-name>
+   ```
+
+1. Click **Copy IdP-initiated SSO URL**, and give the URL to your users.
+
+A user who opens the URL signs in to Casdoor, and Casdoor posts the SAML response to the reply URL with the HTTP-POST binding. The response has no `InResponseTo` attribute, because no request preceded it. To pass a `RelayState` to the SP, add it to the URL as a query parameter, for example `?RelayState=/dashboard`.
+
+## Sign users out of the SP (single logout) {#single-logout}
+
+Casdoor supports SAML Single Logout (SLO) in both directions. To turn it on, set **SAML single logout URL** on the **SAML** tab of the application to the SingleLogoutService URL of the SP.
+
+The metadata of the application announces the SingleLogoutService of Casdoor, with the HTTP-Redirect and the HTTP-POST bindings, at:
+
+```text
+<casdoor-backend-host>/api/saml/logout/admin/<application-name>
+```
+
+Every assertion carries a `SessionIndex` in its `AuthnStatement`, which identifies the Casdoor session of the sign-in.
+
+### SP-initiated logout
+
+When a user signs out at the SP, the SP sends a `LogoutRequest` to the SingleLogoutService of Casdoor, with `GET` or `POST`, in the `SAMLRequest` parameter and an optional `RelayState`:
+
+1. Casdoor checks the request. Its `Issuer` must be in **Redirect URLs**, it must contain a `NameID`, and the application must have a **SAML single logout URL**.
+1. Casdoor ends the Casdoor sessions that the `SessionIndex` values of the request name. Without a `SessionIndex`, it ends only the browser session that sent the request, and only if the `NameID` belongs to its user.
+1. Casdoor signs the user out of the other applications of those sessions, with OIDC back-channel logout and SAML logout requests.
+1. Casdoor answers with a signed `LogoutResponse` over the binding of the request: a redirect to the **SAML single logout URL** for `GET`, or a form that the browser posts there for `POST`.
+
+### IdP-initiated logout
+
+When a user signs out of Casdoor, through `/api/logout` or through `/api/sso-logout`, Casdoor sends a signed `LogoutRequest` to the **SAML single logout URL** of every SAML application that the user signed in to in the ended sessions. The same happens when Casdoor ends sessions for other reasons, for example when a user is forbidden to sign in, or when a new sign-in exceeds the session limit. Casdoor posts these requests from the server, as with [OIDC back-channel logout](/docs/session/single-sign-out), not through the browser. When the SP sends its `LogoutResponse` to the same SingleLogoutService endpoint, Casdoor checks that its `Issuer` is in **Redirect URLs** and that its status is `Success`.
 
 ## User profile in the response {#user-profile}
 

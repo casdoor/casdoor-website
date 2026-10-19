@@ -66,6 +66,10 @@ To remove a credential, delete it from the same list.
 
    ![Sign-in page with the WebAuthn method](/img/webauthn/login_webauthn.png)
 
+## WebAuthn and multi-factor authentication
+
+A WebAuthn sign-in doesn't replace multi-factor authentication (MFA). If the user has MFA turned on, Casdoor asks for the second factor after the WebAuthn check, unless the user's browser is still remembered from an earlier MFA check. If the organization requires MFA and the user hasn't set it up, Casdoor asks the user to set it up first. See [Multi-factor authentication](/docs/user/multi-factor-authentication).
+
 ## See also
 
 - [Sign-in methods](/docs/application/signin-methods)

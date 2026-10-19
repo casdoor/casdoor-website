@@ -35,17 +35,23 @@ What Casdoor does depends on whether the request contains `id_token_hint`.
 
 ### With an ID token hint
 
-1. Casdoor expires the token that `id_token_hint` identifies.
-1. Casdoor clears the current browser session and sends a back-channel logout notification to the other applications.
+1. Casdoor looks up the token whose ID token is `id_token_hint`. For a hint that an older version of Casdoor issued, when the access token and the ID token were the same, Casdoor looks the hint up as an access token. If it finds no token, Casdoor returns the error `Token not found, invalid accessToken`.
+1. Casdoor expires that token. If the request has no session cookie, Casdoor takes the user from the token.
+1. Casdoor clears the current browser session and sends a back-channel logout notification to the other applications, and a SAML logout request to the SAML applications of the session. If the application signed the user in through a Custom OAuth provider with a logout URL, Casdoor calls that URL with the access token of the token.
 1. If `post_logout_redirect_uri` is present and valid for the application, Casdoor redirects the browser to it and appends `state` if the request contains it. Otherwise, Casdoor returns HTTP 200.
 
 ### Without an ID token hint
 
-1. If the browser has no active session, the user is already signed out. Casdoor returns HTTP 200 and does nothing else.
-1. Otherwise, Casdoor signs out the current session. It takes the application from the session and falls back to the application that `client_id` identifies.
+1. Casdoor takes the application from the session and falls back to the application that `client_id` identifies.
+1. If the browser has no active session, the user is already signed out, for example because the session expired or ended in another tab. If the request has a `post_logout_redirect_uri` and Casdoor knows the application, Casdoor still checks the URL, redirects the browser to it, and appends `state`. Otherwise, Casdoor returns HTTP 200 and does nothing else.
+1. Otherwise, Casdoor signs out the current session.
 1. Casdoor clears the session and its token and sends a back-channel logout notification.
 1. If `post_logout_redirect_uri` is present and valid for the application, Casdoor redirects the browser to it and appends `state` if the request contains it.
 1. If the request has no `post_logout_redirect_uri`, Casdoor returns HTTP 200. The response includes the home page URL of the application if one is set, except for the built-in application.
+
+### Audit records
+
+Casdoor records every logout, also for `GET` requests when `logPostOnly` is `true`, and fires the webhooks of the logout. When the request has no session cookie, the record names the user of `id_token_hint`. Casdoor removes `id_token_hint` from the request URI that it stores in the record. See the [Configuration reference](/docs/basic/configuration).
 
 ## Redirect URL validation {#redirect-uri-validation}
 

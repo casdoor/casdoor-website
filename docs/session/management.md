@@ -7,14 +7,30 @@ authors: [hsluoyz]
 
 In the Casdoor admin panel, view active sessions and end them individually or in bulk. Admins and users can control which devices or browsers stay signed in.
 
-## Viewing sessions
+## Viewing sessions {#viewing-sessions}
 
 1. Open **Sessions** in the sidebar.
-2. You’ll see all active sessions for the organization, with user, application, creation time, and session IDs.
+2. You’ll see the sessions of the organization, with the user (**Name**), the **Organization**, the **Created time**, and the **Session ID** column.
 
 Each row is one user–application pair; multiple session IDs in a row mean the user is signed in from more than one device or browser.
 
-## Deleting a single session
+The **Session ID** column shows one card per session ID. A card shows:
+
+- An icon for the device type: desktop, mobile, or tablet
+- The browser and the operating system, read from the user agent. Hover over them to see the full user agent
+- The IP address of the sign-in
+- **Active** or **Expired**, depending on the expiry time of the session
+- **Last active**: the time of the last request that the user made in this session
+- The session ID
+- An × button that ends the session
+
+Casdoor records the device, the IP address, and the times when the user signs in. Sessions that were created before Casdoor recorded this information show only the session ID. Casdoor updates **Last active** on authenticated API requests of the signed-in user, at most once a minute per session. Requests of an administrator who [impersonates](/docs/user/impersonation) the user don't count.
+
+### Session IDs are hashed {#hashed-session-ids}
+
+The session ID that you see is not the session cookie of the user. The Casdoor admin console and the session APIs show the SHA-256 hash of the cookie, as lowercase hexadecimal, so that nobody can take over a session with an ID from the list. This applies to `sessionId` and to `sessionInfos[].sessionId` in the responses of `GET /api/get-sessions` and `GET /api/get-session`. `POST /api/delete-session` accepts the hash, as well as the real session ID.
+
+## Deleting a single session {#deleting-a-single-session}
 
 Ending a specific session revokes access from that device or browser only. Use this to:
 
@@ -25,13 +41,22 @@ Ending a specific session revokes access from that device or browser only. Use t
 
 ### Steps
 
-On the Sessions list, each session’s IDs appear as tags. To remove one:
-
 1. Find the session row.
-2. Click the × on the session ID tag you want to end.
+2. Click the × on the card of the session ID that you want to end.
 3. Confirm in the dialog.
 
 That session is invalidated immediately; the user is signed out on that device or browser only.
+
+### Tokens of the session {#tokens-of-the-session}
+
+Ending a session also revokes the OAuth tokens that were issued in it. Casdoor records the session in which each token was issued, for the authorization code, implicit, consent, and MCP flows, and a refreshed token keeps the session of the original token. When a session ends, Casdoor expires the access and refresh tokens of that session at once. This applies when you:
+
+- Delete one session ID
+- Delete a session row
+- Delete all sessions of a user
+- Sign out of one session
+
+Tokens that were issued without a browser session, such as tokens of the client credentials grant, aren't affected. For the other events that revoke tokens, see [When Casdoor revokes tokens](/docs/token/overview#when-casdoor-revokes-tokens).
 
 ### Current session protection
 
@@ -70,7 +95,7 @@ Content-Type: application/json
 }
 ```
 
-The `sessionId` parameter specifies which session ID to remove. If this is the last session ID for the record, the entire session record is deleted.
+The `sessionId` parameter specifies which session ID to remove, as the hash that the API returns or as the real session ID. If this is the last session ID for the record, the entire session record is deleted.
 
 ### Delete All Session IDs
 

@@ -52,8 +52,8 @@ These fields define what the permission controls.
 
 | Field | Description |
 |---|---|
-| **Resource type** | Casdoor doesn't use this field to authorize external applications. Use it to categorize permissions if you like |
-| **Resources** | Any strings that name what you protect, such as URLs (`/api/users`), file names (`document.pdf`), or identifiers (`project:123`). These aren't the files on the **Resources** page of Casdoor |
+| **Resource type** | `Application`, `TreeNode`, `Custom`, or `API`. With `Application`, Casdoor itself uses the permission to decide who may sign in to the applications in **Resources**. See [Restrict who can sign in to an application](#restrict-who-can-sign-in-to-an-application) |
+| **Resources** | What you protect. With `Application`, select applications, or **All** (`*`) for every application. With `API`, select paths of the Casdoor API. With `Custom`, enter any strings, such as URLs (`/api/users`), file names (`document.pdf`), or identifiers (`project:123`). These aren't the files on the **Resources** page of Casdoor |
 | **Actions** | Any strings that name what users do, such as HTTP methods (`GET`, `POST`), operations (`read`, `write`), or your own verbs (`approve`, `publish`) |
 
 Casdoor creates a rule for every combination of resource and action.
@@ -65,6 +65,35 @@ Casdoor converts actions to lowercase before it stores them, and applies every a
 ## Effect {#effect-configuration}
 
 **Effect** applies only when Casdoor uses the permission to control access to its own applications. When your application calls the Casbin APIs, the field has no effect: express `allow` and `deny` in the model instead.
+
+## Restrict who can sign in to an application
+
+A permission with **Resource type** `Application` controls who may sign in to the applications in its **Resources**. Casdoor checks these permissions at every sign-in and when it lists the applications on the **Apps** page of a user.
+
+Casdoor considers a permission only when **Is enabled** is on and **State** is `Approved`. For each permission whose subjects include the user, Casdoor enforces the request `(<user-id>, <application-name>, "Read")`, and the same request for each matching role of the user. Then:
+
+1. If a permission with **Effect** `Deny` matches, the sign-in is refused.
+1. Otherwise, if a permission with **Effect** `Allow` matches, the sign-in is allowed.
+1. Otherwise, if the application has only `Allow` permissions and none covers the user, the sign-in is refused.
+1. Otherwise, for example when no permission targets the application, the sign-in is allowed.
+
+A refused sign-in fails with `Unauthorized operation`.
+
+For a [shared application](/docs/application/shared-application), Casdoor reads the permissions from the organization of the user who signs in, not from the organization of the application.
+
+Users of the `built-in` organization and the administrators of an organization (users with **Is admin** on) always pass this check. This keeps administrators from locking themselves out.
+
+## Expiry
+
+**Expire time** (`expireTime`) ends a permission automatically, for example for time-limited access as required by ISO/IEC 27001 control 5.18. Enter a timestamp in RFC 3339 format, such as `2026-12-31T23:59:59+08:00`. Leave it empty for a permission that never expires.
+
+Casdoor checks the permissions at startup and then every hour, on the hour. For every enabled permission whose expire time has passed, it removes the Casbin policies of the permission and turns off **Is enabled**. An expired permission can therefore still apply for up to an hour.
+
+To grant the access again, set a later expire time or clear it, and then turn **Is enabled** back on.
+
+:::caution
+Casdoor ignores an expire time that isn't valid RFC 3339, so the permission never expires. Check the format, including the time zone offset.
+:::
 
 ## Example {#example-configuration}
 

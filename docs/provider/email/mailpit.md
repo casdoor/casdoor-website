@@ -38,6 +38,10 @@ Start Mailpit, so that its SMTP server is reachable at `127.0.0.1:1025`, or at t
 
 1. Save the provider.
 
+:::caution
+Create the provider as a global administrator, in the `admin` or `built-in` organization. A provider of another organization can reach only Internet addresses, so it can't connect to `127.0.0.1` or to another private address. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+:::
+
 ## Verify the result {#3-test}
 
 1. Click **Test SMTP Connection**. Casdoor reports `SMTP connected successfully`.

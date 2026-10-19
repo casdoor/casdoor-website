@@ -29,7 +29,9 @@ Sessions move from creation to termination as follows:
 
 **Expiration**: Sessions expire after a configurable period of inactivity or at maximum lifetime. Casdoor cleans up expired sessions automatically.
 
-**Termination**: Sessions can be ended by logout (user or admin). When terminated, all associated session IDs are invalidated immediately.
+**Termination**: Sessions can be ended by logout (user or admin). When terminated, all associated session IDs are invalidated immediately, and Casdoor revokes the OAuth tokens that were issued in the session. Changing the password of a user revokes all tokens of the user, so that applications must sign the user in again. See [When Casdoor revokes tokens](/docs/token/overview#when-casdoor-revokes-tokens).
+
+Each session ID also records the device, the browser, the IP address, and the time of the last activity, which the [Sessions](/docs/session/management#viewing-sessions) page shows.
 
 ## Multi-session support
 

@@ -33,7 +33,9 @@ Casdoor checks the permission when the user signs in, and again at least once a 
 
 ## 3. Add the site
 
-Go to **Sites** and add a site:
+As a global administrator, go to **Sites** and add a site. Only global administrators can add and update sites.
+
+Set these fields:
 
 - **Domain**: `grafana.example.com`
 - **Casdoor app**: `app-grafana`

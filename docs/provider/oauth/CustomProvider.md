@@ -6,7 +6,7 @@ keywords: [Custom Provider, OAuth, Casdoor]
 authors: [halozhy]
 ---
 
-This guide explains how to connect Casdoor to an OAuth 2.0 identity provider that has no built-in type, such as an internal identity provider or a self-hosted service. You can add up to ten custom providers, with the types `Custom`, `Custom2`, and so on up to `Custom10`, each with its own configuration.
+This guide explains how to connect Casdoor to an OAuth 2.0 identity provider that has no built-in type, such as an internal identity provider or a self-hosted service. You can add up to ten custom providers, with the types `Custom`, `Custom2`, and so on up to `Custom10`, each with its own configuration. For a provider that supports OpenID Connect (OIDC) discovery, use the [OIDC type](/docs/provider/oauth/oidc) instead.
 
 ---
 
@@ -35,7 +35,9 @@ This guide explains how to connect Casdoor to an OAuth 2.0 identity provider tha
    | **Scope** | Scopes to request, as the identity provider documents them |
    | **Enable PKCE** | Adds Proof Key for Code Exchange (PKCE) to the flow |
    | **Token URL** | Token endpoint of the identity provider |
-   | **UserInfo URL** | User info endpoint of the identity provider |
+   | **UserInfo URL** | User info endpoint of the identity provider. Optional if the token response has an ID token |
+   | **Logout URL** | Optional. When a user signs out, Casdoor sends a `POST` form with `token`, `client_id`, and `client_secret` to it |
+   | **User mapping** | Claim name for each user field. See [User info](#user-info) |
    | **Favicon** | URL of the logo that the Casdoor sign-in page shows |
 
    ![Custom provider in Casdoor](/img/providers/OAuth/customprovider.png)
@@ -102,19 +104,25 @@ Casdoor reads the user from the **UserInfo URL** with the access token:
 curl -X GET -H "Authorization: Bearer {accessToken}" https://door.casdoor.com/api/userinfo
 ```
 
-The response must contain at least:
+For example:
 
 ```json
 {
+  "sub": "8a7b9c4e-1234-5678-9abc-def012345678",
   "name": "admin",
   "preferred_username": "Admin",
   "email": "admin@example.com",
+  "email_verified": true,
   "picture": "https://casbin.org/img/casbin.svg",
   "phone": "+1234567890"
 }
 ```
 
-`phone` is optional. If the response contains it, Casdoor stores it as the phone number of the user.
+If the token response has an `id_token`, Casdoor also reads its claims. It checks that `sub` is present, that `exp` isn't in the past, and that `aud` contains the client ID. The claims of the **UserInfo URL** override the claims of the ID token with the same name.
+
+Casdoor reads each user field from the claim that **User mapping** names. A dotted name, such as `data.user.id`, reads a nested claim. If the claim is missing or empty, Casdoor uses the standard OIDC claim, such as `sub` for the ID, `preferred_username` for the username, `picture` for the avatar, and `phone_number` for the phone. See [Claims that Casdoor reads](/docs/provider/oauth/oidc#claims-that-casdoor-reads). The claim that **ID** names is required: if the response doesn't contain it, the sign-in fails. For the example above, set **ID** to `sub`.
+
+The user mapping keys `emailVerified` and `phoneVerified` decide whether the email address and the phone number count as verified. See [Verified email and phone](/docs/provider/oauth/user-mapping#verified-email-and-phone).
 
 ## Next steps
 

@@ -38,6 +38,10 @@ Start MailHog, so that its SMTP server is reachable from Casdoor. This guide use
 
 1. Save the provider.
 
+:::caution
+Create the provider as a global administrator, in the `admin` or `built-in` organization. A provider of another organization can reach only Internet addresses, so it can't connect to a private address such as `192.168.24.128`. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+:::
+
 ## Verify the result {#3-test}
 
 1. Click **Test SMTP Connection**. Casdoor reports `SMTP connected successfully`.

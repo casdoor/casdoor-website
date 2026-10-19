@@ -107,6 +107,30 @@ The RADIUS authentication communicates with the external RADIUS server configure
 
 :::
 
+## Where MFA applies
+
+Casdoor asks for the second factor, or for the MFA setup when the organization requires MFA (see [MFA items](/docs/organization/mfa-items)), on every sign-in path that can show a page:
+
+- Sign-in with a password, a verification code, or a social provider on the sign-in page.
+- Sign-in with a passkey ([WebAuthn](/docs/how-to-connect/webauthn)).
+- Sign-in with [Kerberos](/docs/how-to-connect/kerberos).
+
+The paths that send only a password can't ask for a second factor. They refuse users with MFA enabled:
+
+| Path | Result for a user with MFA enabled |
+|---|---|
+| Bind to the [built-in LDAP server](/docs/ldap/ldapserver) | `invalidCredentials` with `the user has MFA enabled and cannot bind with a password` |
+| Sign-in with `?username=<owner>/<name>&password=<password>` in the URL | `the user: <owner>/<name> has MFA enabled and cannot sign in with a password in the URL` |
+| OAuth 2.0 password grant, and the implicit token request with a password ([OAuth 2.0](/docs/how-to-connect/oauth)) | `invalid_grant` with `the user has MFA enabled and cannot sign in with a password grant, please use the authorization code flow` |
+
+These paths also refuse a user when the organization has **Disable signin** on, or when the user must still update the password or set up a required MFA method. The user finishes the password change or the MFA setup on the sign-in page first. The URL sign-in additionally checks the IP restrictions of the organization.
+
+## Limit on wrong codes
+
+Wrong MFA passcodes and wrong recovery codes count against **Failed signin limit** and **Failed signin frozen time** of the user's application: the application the user signed up with, or the default application of the organization. The defaults are 5 attempts and 15 minutes. After too many wrong codes, Casdoor refuses further codes until the frozen time has passed.
+
+Casdoor counts wrong MFA codes separately from wrong passwords. The limit also applies to the passcode check during MFA setup, and to the time-based one-time password (TOTP) check of the built-in [RADIUS server](/docs/radius/overview).
+
 ## Changing your preferred MFA method
 
 Multiple MFA methods can be added; only the preferred one is used at sign-in.

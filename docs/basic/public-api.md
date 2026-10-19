@@ -200,6 +200,36 @@ curl https://door.casdoor.com/api/get-account \
 
 Supported codes include `en`, `zh`, `es`, `fr`, `de`, `ja`, and `ko`. For the full list, see [Internationalization](/docs/internationalization).
 
+## Read error responses
+
+Every API response is a JSON object with a `status` field. A failed request returns `"status": "error"` and a localized message in `msg`.
+
+Failed sign-ins through `POST /api/login` with a password, including LDAP, and failed multi-factor authentication (MFA) steps also return a `code` field. Unlike `msg`, it doesn't depend on the language, so your code can branch on it:
+
+```json
+{
+  "status": "error",
+  "code": "wrong-password",
+  "msg": "password or code is incorrect, you have 4 remaining chances",
+  "sub": "",
+  "name": "",
+  "data": null,
+  "data2": null,
+  "data3": null
+}
+```
+
+| `code` | Reason |
+|---|---|
+| `user-not-found` | The user doesn't exist in the organization |
+| `account-disabled` | The user is forbidden to sign in, or is a guest user who hasn't set a username and password |
+| `account-frozen` | The user entered a wrong password or code too many times and must wait |
+| `wrong-password` | The password is incorrect |
+| `password-expired` | The password has expired and must be reset |
+| `mfa-failed` | The MFA passcode or recovery code is incorrect |
+
+Other errors omit `code`. Casdoor also stores the reason in the detail of the sign-in record. When `enableErrorMask2` is `true` in [`app.conf`](/docs/basic/configuration), responses carry neither `code` nor the detailed message.
+
 ## Sign a user out of all sessions
 
 The `/api/sso-logout` endpoint signs the authenticated user out of every application, or only out of the current session.
@@ -216,7 +246,7 @@ GET or POST /api/sso-logout?logoutAll=<true|false>
 |---|---|---|
 | Sessions | Deletes all sessions of the user across all applications | Deletes the current session only |
 | Access tokens | Expires all tokens issued to the user | Keeps all tokens |
-| Sign-out notification | Contains all session IDs and token hashes | Contains the current session ID only |
+| Sign-out notification | Contains all session IDs of the user and the hashes of all the user's tokens | Contains the current session ID and the hashes of all the user's tokens. The tokens stay valid |
 
 Use `logoutAll=false` when a user signs out on one device and stays signed in on the others.
 
@@ -248,16 +278,29 @@ A successful request returns:
 
 ## Call the API from a browser
 
-Browsers apply cross-origin resource sharing (CORS) rules to calls from your frontend to Casdoor. Casdoor compares the `Origin` header of a request with the origins that it trusts and, on a match, adds the `Access-Control-Allow-*` headers. It trusts:
+Browsers apply cross-origin resource sharing (CORS) rules to calls from your frontend to Casdoor. Casdoor compares the `Origin` header of a request with the origins that it trusts and, on a match, adds the `Access-Control-Allow-*` headers. Casdoor trusts origins at two levels.
 
-- The origins of the **Redirect URLs** of your applications
-- The host name of the Casdoor server itself
+These origins may send the session cookie (`Access-Control-Allow-Credentials: true`):
+
 - The value of `origin` in [`app.conf`](/docs/basic/configuration)
-- Any origin for the `/api/login/oauth/access_token` and `/api/userinfo` endpoints, and the origin `appleid.apple.com`
+- Any origin on the host name of the Casdoor server itself
+- A loopback origin, such as `http://localhost:3000`, when Casdoor itself runs on a loopback address
+- `appleid.apple.com`
 
-The allowed methods are `GET`, `POST`, `OPTIONS`, and `DELETE`.
+These origins get CORS headers without credentials:
 
-To allow your frontend to call the API, add its URL to the **Redirect URLs** of the application in the Casdoor admin console.
+- The origins of the **Redirect URLs** of your applications. Clients registered through dynamic client registration don't count
+- `http://localhost`, `https://localhost`, `http://127.0.0.1`, `http://casdoor-authenticator`, and `*.chromiumapp.org`, on any port
+- Any origin for `POST /api/login/oauth/access_token` and `POST /api/acs`
+
+`/api/userinfo` answers any origin, and allows credentials only for the value of `origin` or the Casdoor host. Casdoor rejects requests from other origins with HTTP 403. Responses carry `Vary: Origin`, and `Origin: null` counts as a request without an origin. The allowed methods are `GET`, `POST`, `OPTIONS`, and `DELETE`.
+
+A request other than `GET`, `HEAD`, or `OPTIONS` from an origin without credentials runs as an anonymous user when only the session cookie authenticates it. SAML logout requests (`/api/saml/logout/...`) are the exception. Casdoor also refuses to link a provider account from such an origin.
+
+To call the API from a frontend on another origin:
+
+1. In the Casdoor admin console, add the URL of your frontend to the **Redirect URLs** of the application.
+1. Authenticate each request with an [access token](/docs/basic/public-api#access-token) in the `Authorization` header, not with the session cookie.
 
 ## See also
 

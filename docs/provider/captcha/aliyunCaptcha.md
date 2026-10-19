@@ -1,12 +1,12 @@
 ---
 title: Use Alibaba Cloud Captcha
 sidebar_label: Alibaba Cloud Captcha
-description: Protect sign-in and sign-up with Alibaba Cloud Captcha, with sliding or intelligent validation.
+description: Protect sign-in and sign-up with Alibaba Cloud Captcha, shown inside the Casdoor captcha dialog or as the popup of Alibaba Cloud.
 keywords: [Alibaba Cloud Captcha]
 authors: [Resulte]
 ---
 
-This guide explains how to use [Alibaba Cloud Captcha](https://help.aliyun.com/product/28308.html) as the captcha of Casdoor. Alibaba Cloud Captcha offers two kinds of validation: sliding validation and intelligent validation.
+This guide explains how to use [Alibaba Cloud Captcha](https://help.aliyun.com/product/28308.html) as the captcha of Casdoor. The scene that you create in Alibaba Cloud decides the kind of validation, such as a slider or traceless validation.
 
 ---
 
@@ -47,22 +47,26 @@ This guide explains how to use [Alibaba Cloud Captcha](https://help.aliyun.com/p
 ## Add the provider in Casdoor {#configure-in-casdoor}
 
 1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
-1. Set **Category** to `Captcha`, **Type** to `Aliyun Captcha`, and **Sub type** to sliding validation or intelligent validation.
-1. Enter the **Access key**, the **Secret access key**, the **Scene**, and the **App key**.
+1. Set **Category** to `Captcha` and **Type** to `Aliyun Captcha`.
+1. Set **Sub type** to `Embed` or `Popup`. See [Sub types](#sub-types).
+1. Enter the **Access key**, the **Secret access key**, the **Scene**, and the **App key**. The **App key** is the identity prefix of your Captcha account.
 
    ![Alibaba Cloud Captcha provider in Casdoor](/img/providers/captcha/aliyunCaptcha_provider.png)
 
-1. Click **Preview** to check the captcha.
+1. Click **Preview** to check the captcha. For example, a slider scene with the `Embed` sub type looks like this:
 
-   Sliding validation:
-
-   ![Preview of sliding validation](/img/providers/captcha/aliyunCaptcha_nc_preview.png)
-
-   Intelligent validation:
-
-   ![Preview of intelligent validation](/img/providers/captcha/aliyunCaptcha_ic_preview.png)
+   ![Preview of a slider captcha](/img/providers/captcha/aliyunCaptcha_nc_preview.png)
 
 1. Save the provider.
+
+## Sub types
+
+| Sub type | Behavior |
+|---|---|
+| `Embed` (default) | Casdoor opens its captcha dialog and shows the captcha inside it |
+| `Popup` | Casdoor opens no dialog of its own, and the popup of Alibaba Cloud opens at once. A traceless scene starts traceless validation, and other scenes open the popup. After a failed attempt, the popup stays open for another try. If the user closes the popup, or an error occurs, Casdoor cancels the action that needed the captcha |
+
+Use `Popup` for scenes that need the popup mode of Alibaba Cloud, such as traceless scenes.
 
 ## Add the captcha to an application {#application-integration}
 

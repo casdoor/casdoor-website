@@ -16,6 +16,7 @@ This guide explains how to change the look of the sign-in page of an application
 - Style the sign-in form with CSS.
 - Position the form and add a side panel.
 - Move the design to the same application on another Casdoor instance.
+- Know what an organization admin can put in custom HTML and CSS.
 
 #### What you need
 
@@ -150,8 +151,51 @@ The JSON contains the `name` and the `organization` of the application and the f
 The `name` and the `organization` in the JSON must match the target application. Otherwise, Casdoor rejects the import. The import moves a design between instances, not between different applications.
 :::
 
+## What organization admins can put in custom HTML and CSS {#organization-admin-limits}
+
+Global administrators can save any HTML and CSS. When an organization admin adds or updates an application, in the admin console or through the Casdoor MCP server, Casdoor checks each of these fields that the admin changed:
+
+- **Header HTML**, **Page HTML**, **Footer HTML**, **Side panel HTML**, **Signin HTML**, and **Signup HTML**
+- **Custom CSS** and **Custom CSS Mobile**
+- The **Custom CSS** of the sign-in items, which custom sign-in items render as HTML
+- The **Custom CSS** of the sign-up items, and the **Label** of the `Text` sign-up items, which Casdoor renders as HTML
+
+Fields that the admin didn't change keep their value, even if it breaks the rules below. If a changed field breaks them, Casdoor rejects the save with an error that names the fields: "the `<fields>` of the application uses HTML or loads files that this Casdoor only lets a global admin set: ...".
+
+### HTML rules
+
+- Only layout and text elements are allowed: for example `div`, `span`, `p`, headings, lists, `a`, `img`, tables, `section`, `details` and `summary`, `center`, `font`, `style`, and basic `svg` shapes and gradients. `script`, `form`, `input`, `iframe`, and other elements are refused.
+- Event handler attributes (`on...`) are refused, as are attributes such as `srcset`, `action`, `formaction`, `srcdoc`, `contenteditable`, and `xlink:href`.
+- `href` is allowed only on `a`, with a relative URL or an `http`, `https`, `mailto`, or `tel` URL.
+- `src` is allowed only on `img`. Its URL, the `background` and `poster` attributes, and any `url()` in an attribute follow the URL rule below.
+- HTML comments and doctypes are refused.
+
+### CSS rules
+
+- The CSS must not contain `\`, `<`, `image(`, `image-set(`, `cross-fade(`, `element(`, or `src(`.
+- Every `url()` is relative, a `data:` URL, a `#` reference, or starts with an allowed prefix.
+- `@import` is allowed only from `https://fonts.googleapis.com/css`, `https://cdn.jsdelivr.net/npm/@fontsource/`, and `https://cdn.jsdelivr.net/npm/@fontsource-variable/`.
+
+The allowed prefixes are:
+
+- `https://fonts.googleapis.com/` and `https://fonts.gstatic.com/`
+- `https://cdn.jsdelivr.net/gh/casdoor/`, `https://cdn.jsdelivr.net/npm/@fontsource/`, and `https://cdn.jsdelivr.net/npm/@fontsource-variable/`
+- `https://cdn.casbin.org/`, `https://cdn.casdoor.com/`, and `https://cdn.casvisor.com/`
+- The `origin` of this Casdoor
+- The **Domain** of each Storage provider of the `admin` owner
+- Each entry of `formCssAllowedUrls` in `conf/app.conf`, a comma-separated list that is empty by default. See [Configuration](/docs/basic/configuration#backend-options).
+
+For example, to let organization admins use background images from your own image host, set:
+
+```ini
+formCssAllowedUrls = "https://img.example.com/"
+```
+
+On the sign-in pages, Casdoor also removes scripts from the custom HTML of applications outside the `built-in` organization. See [Custom HTML and scripts](/docs/application/terminology#custom-html).
+
 ## See also
 
 - [Customize the theme](/docs/organization/customize-theme)
 - [Customize the sign-in page](/docs/application/signin-items-table)
 - [Customize the sign-up form](/docs/application/signup-items-table)
+- [Marketplace](/docs/marketplace/overview)

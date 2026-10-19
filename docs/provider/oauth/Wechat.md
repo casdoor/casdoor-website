@@ -33,6 +33,8 @@ This guide explains how to let users sign in to Casdoor with WeChat: on a PC by 
 
 WeChat doesn't allow sign-in from other apps or from mobile browsers outside WeChat. To support both PC and WeChat, create two WeChat providers, one with each sub type.
 
+Inside the WeChat built-in browser, Casdoor always signs in through the official account, with **Client ID 2**. If the provider has no **Client ID 2**, Casdoor doesn't start the sign-in and shows: `Please open the login page in an external browser to sign in with WeChat, or ask the administrator to configure a WeChat Official Account`.
+
 :::tip
 Link your WeChat Open Platform account and your WeChat Media Platform account in the Open Platform. WeChat then gives the same user the same identity on PC and inside WeChat.
 :::

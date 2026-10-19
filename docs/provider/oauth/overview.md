@@ -31,9 +31,9 @@ An OAuth provider lets users sign in to Casdoor with an account at an external i
 | VK            | <img src="https://cdn.casbin.org/img/social_vk.png" width="40" />              | WeChat      | <img src="https://cdn.casbin.org/img/social_wechat.png" width="40" />      | WeCom        | <img src="https://cdn.casbin.org/img/social_wecom.png" width="40" />      | Weibo        | <img src="https://cdn.casbin.org/img/social_weibo.png" width="40" />        |
 | WePay         | <img src="https://cdn.casbin.org/img/social_wepay.png" width="40" />           | Xero        | <img src="https://cdn.casbin.org/img/social_xero.png" width="40" />        | Yahoo        | <img src="https://cdn.casbin.org/img/social_yahoo.png" width="40" />      | Yammer       | <img src="https://cdn.casbin.org/img/social_yammer.png" width="40" />       |
 | Yandex        | <img src="https://cdn.casbin.org/img/social_yandex.png" width="40" />          | Zoom        | <img src="https://cdn.casbin.org/img/social_zoom.png" width="40" />        | Email        | <img src="https://cdn.casbin.org/img/social_mail.png" width="40" />       | SMS          | <img src="https://cdn.casbin.org/img/social_msg.png" width="40" />          |
-| Battle.net    | <img src="https://cdn.casbin.org/img/social_battlenet.png" width="40" />       |             |                                                                             |              |                                                                            |              |                                                                              |
+| Battle.net    | <img src="https://cdn.casbin.org/img/social_battlenet.png" width="40" />       | OIDC        | <img src="https://cdn.casbin.org/img/social_custom.png" width="40" />     |              |                                                                            |              |                                                                              |
 
-Each provider type has its own guide in this section. For a provider that isn't listed, use a [custom OAuth provider](/docs/provider/oauth/CustomProvider).
+Each provider type has its own guide in this section. For a provider that isn't listed, use the [OIDC type](/docs/provider/oauth/oidc) if it supports OpenID Connect (OIDC), or a [custom OAuth provider](/docs/provider/oauth/CustomProvider) otherwise.
 
 ## Add an OAuth provider
 
@@ -58,7 +58,25 @@ Each provider type has its own guide in this section. For a provider that isn't 
 
 ## How Casdoor links accounts {#automatic-account-linking}
 
-When a user signs in with an OAuth provider, Casdoor looks for the Casdoor user to link the external account to. It matches by the identity at the provider, by email address or phone number if the **Binding rule** of the provider in the application allows it, and by username, without regard to case. You can therefore add an OAuth provider to an existing user base without linking accounts by hand.
+When a user signs in with an OAuth provider, Casdoor first looks for the Casdoor user that is already linked to the identity at the provider. If there is none, it checks the fields of the **Binding rule** of the provider, set on the **Providers** tab of the application, in order, and links the first user that matches. You can therefore add an OAuth provider to an existing user base without linking accounts by hand.
+
+| Rule | Links the user when |
+|---|---|
+| `Email` | The provider reports the email address as verified, and a user of the organization has the same email address. That user must have a verified email address, or must not have been created by a sign-up through an application |
+| `Phone` | The provider reports the phone number as verified, and a user of the organization has the same phone number and country code |
+| `Name` | A user of the organization has the same username, without regard to case |
+
+The default **Binding rule** is `Email`, `Phone`. Add `Name` only if usernames at the provider and in Casdoor belong to the same people. An empty **Binding rule** turns off linking. If the existing user has multi-factor authentication (MFA) turned on, Casdoor asks for the second factor before the sign-in completes.
+
+Whether an email address or a phone number counts as verified depends on the provider type. For example, Google reports the `email_verified` claim, the [OIDC type](/docs/provider/oauth/oidc) reads `email_verified` and `phone_number_verified`, and GitHub, GitLab, and DingTalk count every email address that they return as verified. A custom provider reads the user mapping keys `emailVerified` and `phoneVerified`. See [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping#verified-email-and-phone).
+
+### Sign up with a provider
+
+If no user matches and the application allows sign-up with the provider, Casdoor creates a user:
+
+- Casdoor converts the email address to lowercase.
+- If another user of the organization already has the email address, the sign-up fails with `Email already exists`. If another user has the phone number with the same country code, it fails with `Phone already exists`. Casdoor doesn't create a second user with the same email address or phone number. Only the **Binding rule** decides whether the sign-in belongs to the existing user.
+- The email address of the new user is verified if the provider reports it as verified. The `email_verified` claim of the tokens that Casdoor issues therefore follows the provider.
 
 ## Map additional user fields {#user-field-mapping}
 
@@ -70,7 +88,9 @@ After an OAuth sign-in, Casdoor stores the access token of the provider on the u
 
 ## Route requests through a proxy {#routing-through-a-proxy}
 
-If the identity provider is reachable only through a proxy, turn on **Enable proxy** on the provider. Casdoor then sends the requests of the sign-in flow through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets. Some provider types always use the proxy, whatever this setting.
+If the identity provider is reachable only through a proxy, turn on **Enable proxy** on the provider. Casdoor then sends the requests of the sign-in flow through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets. Some provider types always use the proxy, whatever this setting: GitHub, Google, Facebook, LinkedIn, Steam, Line, Amazon, Instagram, TikTok, Twitter, Uber, and Yahoo.
+
+A provider that belongs to an organization other than `built-in` sends the requests of the sign-in flow only to Internet addresses, and **Enable proxy** has no effect on it. The provider types in the list above are the exception: they always use the proxy. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
 
 ## See also
 

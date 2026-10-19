@@ -5,7 +5,7 @@ keywords: [syncer, wecom, wechat work]
 authors: [UsherFall]
 ---
 
-The **WeCom syncer** imports users from your WeCom organization into Casdoor. It uses the WeCom API to fetch users from all departments and keeps data in sync.
+The **WeCom syncer** imports users and departments from your WeCom organization into Casdoor. It uses the WeCom API to fetch users from all departments, syncs the departments as Casdoor groups, and keeps data in sync.
 
 ## Configuration
 
@@ -60,11 +60,36 @@ The syncer automatically maps WeCom user fields to Casdoor user fields:
 | position | Title | Job title |
 | gender | Gender | Gender (1=Male, 2=Female) |
 | status/enable | IsForbidden | Account status |
+| department | Groups | One group per department, as `<organization>/<department-id>` |
 
 The syncer automatically handles user account status based on WeCom's status and enable fields:
 
 - **Activated users** (status=1, enable=1): Normal Casdoor users
 - **Disabled, not activated, or quit users** (status=2/4/5 or enable=0): Marked as forbidden in Casdoor
+
+## Departments
+
+Each run syncs the WeCom departments as Casdoor groups in the syncer's organization, before it syncs the users:
+
+| Group field | Value |
+|-------------|-------|
+| Name | The WeCom department ID. Department names aren't unique in WeCom, so the ID is used. |
+| Display name | The department `name`, otherwise `name_en`, otherwise the department ID |
+| Type | `department` |
+| Parent | The group of the WeCom `parentid`. A department whose parent is outside the application's visible scope becomes a top-level group. |
+
+When a department's name or parent changes in WeCom, the next run updates the group. Groups whose department was removed from WeCom stay in Casdoor.
+
+Each synced user is added to the groups of all the departments the user belongs to.
+
+## Permissions and newer WeCom apps
+
+WeCom self-built apps created after 2022-08-15 can't call `department/list` or `user/list`. The syncer then falls back to calls that every app can make:
+
+- Departments: `department/simplelist`, then `department/get` for each department.
+- Users: `user/list_id`, then `user/get` for each user. A user who belongs to several departments is synced once.
+
+To get department names, the departments must be inside the app's visible scope, and the app needs the contacts permission. Without them, the groups are still synced, with the department ID as display name, and the syncer appends a line to its **Error text** that names those departments.
 
 ## OAuth login binding
 
@@ -77,3 +102,9 @@ After configuration, you can:
 - Enable **Is enabled** to allow automatic synchronization on schedule
 - Use the **Sync** button to manually trigger a synchronization
 - The syncer will fetch users from all departments and deduplicate them automatically
+
+Department sync errors, and any error of a scheduled run, are appended to the syncer's **Error text** field. A failed department sync doesn't stop the user sync.
+
+## See also
+
+- [Syncer overview](/docs/syncer/overview)

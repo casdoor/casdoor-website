@@ -51,7 +51,19 @@ This guide explains how to let users sign in to Casdoor with their DingTalk acco
 
 1. Save the provider.
 
-Casdoor uses the `unionid` of DingTalk as the username, so that a user keeps the same account when other details change.
+## User information
+
+Casdoor reads the user from `/v1.0/contact/users/me`, and then looks up the user in the corporate directory of the application with `topapi/user/getbyunionid`. If the user isn't a member of the organization of the DingTalk application, the sign-in fails.
+
+Casdoor then reads the user details from `topapi/v2/user/get`. If this call succeeds:
+
+- The `unionid` of DingTalk becomes the username, so that a user keeps the same account when other details change.
+- The phone number and the email address of the corporate directory replace those of the personal account.
+- The job title of the user, `title`, is passed on as an extra claim. Casdoor stores it in the user property `oauth_DingTalk_extra`, as JSON, for example `{"title":"Engineer"}`.
+
+Casdoor counts the email address and the phone number that DingTalk returns as verified, so the **Binding rule** can link the sign-in to an existing user with the same email address or phone number. See [How Casdoor links accounts](/docs/provider/oauth/overview#automatic-account-linking).
+
+The provider edit page has no **User mapping** for DingTalk, so the job title doesn't fill the **Title** of the user on its own. To fill it, set the `userMapping` of the provider to `{"title": "title"}` through the API. See [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping).
 
 ## Next steps
 

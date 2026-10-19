@@ -15,7 +15,10 @@ Both give you the same access as the impersonated user.
 
 ## Session-based impersonation
 
-Start from the **Users** page: each row has an **Impersonation** button. Click it to switch your session to that user; the UI and permissions match theirs.
+1. In the Casdoor admin console, go to **User Management** > **Users**.
+1. In the row of the user, open the row actions and select **Impersonate**. The Casdoor admin console reloads at `/` as that user, with the user's view and permissions.
+
+The **Impersonate** action appears only for administrators, and not in the row of your own account.
 
 ![enter impersonation](/img/user/user_impersonation.png)
 
@@ -23,12 +26,33 @@ You stay in the impersonated user’s context until you exit. Casdoor tracks tha
 
 ### Exiting
 
-Open the user menu (top right). Choose **Exit impersonation** (instead of Logout) to return to your admin session.
+Open the user menu at the top right and select **Exit impersonation**. It replaces **Logout** while you impersonate a user. Casdoor returns you to your own session.
 
 ![exit impersonation](/img/user/exit_user_impersonation.png)
 
-:::tip
-Only administrators can impersonate; normal users do not see the impersonation button.
+### How it works
+
+The console calls two endpoints:
+
+| Endpoint | Description |
+|---|---|
+| `POST /api/impersonate-user` | Starts impersonation. Takes the form fields `owner` and `name` of the target user. Sets the session key `impersonateUser` and the cookie `impersonateUser=<owner>/<name>` (path `/`) |
+| `POST /api/exit-impersonate-user` | Ends impersonation and clears the session key and the cookie. Returns `Unauthorized operation` when you aren't impersonating anyone |
+
+`POST /api/impersonate-user` requires administrator rights. An organization administrator can impersonate only users of their own organization. A global administrator, that is, a user of the `built-in` organization, can impersonate any user. Missing fields return `Missing parameter`, and an unknown user returns `The user: <owner>/<name> doesn't exist`.
+
+```shell
+curl -X POST 'http://localhost:8000/api/impersonate-user' \
+  -b 'casdoor_session_id=<session-id>' \
+  -d 'owner=built-in&name=alice'
+```
+
+Replace `<session-id>` with the session cookie of your signed-in administrator account. Send the `impersonateUser` cookie that the response sets together with the session cookie in the later requests.
+
+While both the session key and the cookie are present, and you are a global administrator or an administrator of the target user's organization, Casdoor authorizes and runs every API request as the target user. The only exception is `/api/exit-impersonate-user`, which runs as you. Your session itself stays yours: the session list and the records of the requests show your account.
+
+:::note
+The Swagger descriptions name the endpoints `/impersonation-user` and `/exit-impersonation-user`. The actual routes are `/api/impersonate-user` and `/api/exit-impersonate-user`.
 :::
 
 ## Master password
@@ -69,11 +93,11 @@ Emergency situations sometimes require immediate access to a user's data when th
 
 ## Security considerations
 
-Session-based impersonation requires admin privileges and creates an audit trail of who impersonated whom. The system tracks these sessions separately from normal logins, maintaining accountability.
+Session-based impersonation requires admin privileges. The records of the requests that you make while impersonating name your own account, so the audit log shows who acted.
 
 Master password authentication doesn't distinguish between administrator impersonation and regular login in basic audit logs, since it uses the standard authentication flow. This makes session-based impersonation preferable for most scenarios.
 
-Both methods respect multi-factor authentication settings. If a user has MFA enabled, you'll need to complete those verification steps even when impersonating.
+Sign-in with the master password goes through the normal sign-in flow, so it respects multi-factor authentication settings: if the user has MFA enabled, you complete those verification steps. Session-based impersonation doesn't sign in again, so it asks for no second factor.
 
 ## Disabling master password
 

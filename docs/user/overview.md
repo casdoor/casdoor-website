@@ -24,7 +24,8 @@ Casdoor manages user accounts. Each user has the following properties:
 - `Avatar`: URL or link to the user's current avatar image
 - `PermanentAvatar`: URL to the user's permanently stored avatar (not affected by provider changes)
 - `Email`: The user's email address (automatically normalized to lowercase)
-- `Phone`: The user's phone number
+- `Phone`: The user's phone number, stored as the national number in digits only. See [Phone numbers](#phone-numbers)
+- `CountryCode`: The region of the phone number, such as `PL` or `US`
 - `Location`: The user's geographical location
 - `Address`: An array of strings containing the user's address information (e.g., street address, city, state, postal code)
 - `Affiliation`: The user's organization or institutional affiliation
@@ -49,14 +50,14 @@ Casdoor manages user accounts. Each user has the following properties:
 - `IsOnline`: Indicates whether the user is currently online
 - `IsAdmin`: Indicates whether the user is an administrator of their organization
 - `IsGlobalAdmin`: Indicates whether the user has permission to manage Casdoor
-- `IsForbidden`: Indicates whether the user account has been banned or restricted
+- `IsForbidden`: Indicates whether the user account has been banned or restricted. Turning it on ends the user's access at once. See [Forbid or delete a user](#forbid-or-delete-a-user)
 - `IsDeleted`: When a user is soft-deleted (`IsDeleted = true`), they cannot sign in through any authentication method, including OAuth providers. This prevents deleted users from re-registering via third-party login.
 - `SignupApplication`: The application through which the user signed up
 - `Hash`: Hash value used for internal authentication mechanisms
 - `PreHash`: Previous hash value (used during password migration)
 - `CreatedIp`: The IP address from which the user account was created
-- `LastSigninTime`: Timestamp of the user's last sign-in
-- `LastSigninIp`: The IP address from the user's last sign-in
+- `LastSigninTime`: Timestamp of the user's last successful sign-in (**Last signin time**). See [Last sign-in time and IP address](#last-sign-in-time-and-ip-address)
+- `LastSigninIp`: The IP address of the user's last successful sign-in (**Last signin IP**)
 - `Roles`: An array of the user's roles (extended field, read-only via User API)
 - `Permissions`: An array of the user's permissions (extended field, read-only via User API)
 - `OriginalRefreshToken`: The refresh token from the most recent social login (legacy single-provider field, kept for backward compatibility). Masked as `***` in API responses.
@@ -135,11 +136,58 @@ This normalization happens automatically during:
 - User login and authentication
 - Email duplicate checking
 
+## Phone numbers
+
+Casdoor parses and validates a phone number together with its country code when a user signs up, when the user is updated in the Casdoor admin console or through `POST /api/update-user`, and when the user changes the phone number with a verification code. An invalid number is rejected with `Phone number is invalid`, or `Phone number is invalid in your region <country-code>` on a phone change.
+
+Casdoor stores the national number in digits only in `phone`, and the region in `countryCode`. For example, `+48 666 666 666` is stored as `666666666` with `PL`. Casdoor takes the region from the number only when the number starts with `+` or when no country code is given. A calling code that several countries share, such as `+1`, doesn't replace the country that the user selected.
+
+The check for `Phone already exists` compares the normalized values. At sign-in, Casdoor also looks up a national number in each of the **Supported country codes** of the organization.
+
+## Last sign-in time and IP address
+
+Casdoor updates `lastSigninTime` and `lastSigninIp` after every successful sign-in through `/api/login`, which covers the sign-in page and the sign-in with social providers.
+
+The OAuth 2.0 password grant (`grant_type=password`) updates `lastSigninTime` only, and leaves `lastSigninIp` unchanged. Casdoor records this sign-in after it generates the token, so the `lastSigninTime` and `lastSigninIp` claims in that token hold the previous sign-in. The time of the current sign-in is the `iat` claim of the token.
+
+## Forbid or delete a user
+
+When an update turns on `isForbidden` or `isDeleted` (with [soft deletion](/docs/organization/overview#soft-deletion)), Casdoor ends the user's access at once:
+
+1. Sends OpenID Connect (OIDC) back-channel logout and SAML logout for the user's tokens.
+1. Expires all tokens of the user in every application.
+1. Deletes all sessions of the user in every application.
+1. Sends the SSO logout notifications. These are best effort: the access is already revoked when they are sent.
+
+Deleting a user does the same.
+
+Afterwards, Casdoor treats every token of a forbidden, deleted, or removed user as inactive:
+
+- `/api/login/oauth/introspect` returns `active: false`.
+- API calls with such an access token fail with `The user is forbidden to sign in, please contact the administrator`.
+- The MCP endpoint of Casdoor rejects the token.
+
+Tokens of the `client_credentials` grant belong to no user and stay active.
+
 ## Partial updates with the `columns` parameter
 
 `/api/update-user` accepts an optional `columns` query parameter to perform a **partial update**: only the listed fields are written, and every other field on the user is left untouched. Omit it (or leave it empty) to update the full user object.
 
 Field names in `columns` may be written in either **camelCase** or **snake_case** — both are accepted and map to the same underlying column. For example, `columns=displayName,avatar` and `columns=display_name,avatar` are equivalent.
+
+## Set a password through update-user
+
+An administrator can set a user's password with `POST /api/update-user` by sending a new `password` that is neither empty nor `***`. Casdoor hashes it with the **Password type** of the organization. Before it saves the password, Casdoor checks that:
+
+- The password contains no spaces.
+- The password satisfies the [password complexity](/docs/organization/passwordComplexity) of the organization.
+- The password isn't reused, see [Password history](/docs/organization/passwordComplexity#password-history).
+
+Casdoor then records the old password in the password history, sets `lastChangePasswordTime`, and writes the columns `password`, `password_salt`, `password_type`, and `last_change_password_time` even if `columns` doesn't list them.
+
+Only administrators can do this, and users with the tag `guest-user` for their own account. Any other user, and every request for an LDAP user, fails with `Please use the set-password API to change the password`.
+
+To import a password that is already hashed, include `password` and `password_type` in `columns`, and send the hash in `password` and its algorithm in `passwordType`. Casdoor then stores the password as given, without hashing or checking it.
 
 ## Roles and permissions (extended fields)
 

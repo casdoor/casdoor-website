@@ -45,6 +45,21 @@ When you register Casdoor at the IdP, use the following values. Replace `<your-c
 | SP entity ID | The same URL: `https://<your-casdoor-domain>/api/acs` |
 | Binding | HTTP POST. The `/api/acs` endpoint accepts only `POST` requests |
 
+## Assertion checks
+
+Casdoor accepts a SAML response only if its assertion passes these checks:
+
+| Check | Error if it fails |
+|---|---|
+| The current time is within `NotBefore` and `NotOnOrAfter` of the assertion | `the SAML assertion is not within its validity period (NotBefore / NotOnOrAfter)` |
+| The `AudienceRestriction` is `https://<your-casdoor-domain>/api/acs`, the SP entity ID | `the SAML assertion is not issued for this service provider (AudienceRestriction mismatch)` |
+| `InResponseTo` is the ID of the authentication request that Casdoor sent in the same browser session | `the SAML assertion does not answer the AuthnRequest of this login (InResponseTo: <id>)` |
+| The ID of the assertion wasn't used before | `the SAML assertion has already been used: <id>` |
+
+Casdoor stores the ID of the authentication request in the session when the user clicks the SAML button on the sign-in page. As a result, Casdoor accepts only sign-ins that start at Casdoor. It rejects IdP-initiated responses, which a user starts from the portal of the IdP, because they answer no request.
+
+Casdoor keeps the IDs of used assertions until the `NotOnOrAfter` of the assertion, or for 1 hour if the assertion has none. It keeps them in memory, or in Redis if `redisEndpoint` is set in `conf/app.conf`. Set `redisEndpoint` if you run several Casdoor instances, so that they share the list. If Casdoor can't reach Redis at startup, it uses memory. See the [Configuration reference](/docs/basic/configuration).
+
 ## Usernames {#user-attribute-mapping}
 
 Casdoor reads the user from the attributes of the SAML assertion, according to the attribute mapping of the provider. If the assertion has no username, Casdoor uses, in this order:

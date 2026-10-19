@@ -43,7 +43,7 @@ Casdoor is more direct. Each [application](/docs/application/overview) has a sig
 
 Authentik supports the common social logins and generic OAuth, SAML, and LDAP sources.
 
-Casdoor ships more than 70 [OAuth providers](/docs/provider/oauth/overview), plus SAML, LDAP, and Web3 wallets. If your users sign in with WeChat, DingTalk, Lark, Alipay, or QQ, Casdoor supports them without extra work.
+Casdoor ships more than 70 [OAuth providers](/docs/provider/oauth/overview), plus SAML and LDAP. If your users sign in with WeChat, DingTalk, Lark, Alipay, or QQ, Casdoor supports them without extra work.
 
 ## Reverse-proxy authentication
 

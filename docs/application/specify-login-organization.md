@@ -50,9 +50,9 @@ The organization choice appears only on `/login` and `/login/<organization>`, an
 
 ## Return to the same organization {#automatic-redirect-after-session-expiry}
 
-When a user visits the sign-in page of an organization, such as `/login/my-org`, the browser remembers the organization. When the session of the user expires, Casdoor sends the user to the sign-in page of that organization instead of `/login`.
+When a user submits the sign-in form, the browser stores the organization of the form in `localStorage` as `lastLoginOrg`, whether the sign-in succeeds or not. Visiting a sign-in page such as `/login/my-org` without submitting the form doesn't store anything.
 
-If the browser hasn't stored an organization, Casdoor sends the user to `/login`, where the user chooses the organization if the mode is `Input` or `Select`.
+When a user who isn't signed in opens a page of the Casdoor admin console, for example after the session expired, Casdoor sends the user to `/login/<lastLoginOrg>`. If the browser hasn't stored an organization, or the stored organization is `built-in`, Casdoor sends the user to `/login`, where the user chooses the organization if the mode is `Input` or `Select`.
 
 ## See also
 

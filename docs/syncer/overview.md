@@ -33,6 +33,12 @@ Syncers can map a wide set of attributes: profile data, credentials (passwords, 
 
 Casdoor computes a **hash** per user from fields such as password and phone. When the hash for a given user `Id` changes, Casdoor treats that user as updated and applies the change. This allows **two-way sync** between the Casdoor user table and the source system.
 
+## Sync order and errors
+
+Every run, whether it is the first one after the syncer is turned on, a scheduled one, or one started with the **Sync** button, syncs groups before users, so that the groups the users reference already exist. This applies to every syncer type. For types that have no group support yet, such as Database, the group step does nothing.
+
+Errors don't stop the syncer or the Casdoor server. Casdoor appends each one, with a timestamp, to the syncer's **Error text** field: errors of the first run, of scheduled runs, and of the group sync. A failed group sync doesn't stop the user sync. **Error text** keeps the last 64 KB.
+
 ## Password handling
 
 When the remote source does not provide a password value for a user (the field is empty or not mapped), the syncer skips the password column entirely and leaves the existing password in Casdoor unchanged. This prevents remote systems from accidentally clearing passwords that users have set directly in Casdoor.

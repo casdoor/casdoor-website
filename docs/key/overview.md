@@ -25,9 +25,9 @@ authors: [hsluoyz]
 ## Key types
 
 - **Organization** — Key is valid for all operations within the organization.
-- **Application** — Key is scoped to a specific application within the organization.
+- **Application** — Key acts as the application, with the same rights as the application's client ID and client secret: an administrator of the application's organization, or a global administrator when the application belongs to the `built-in` organization. Only global administrators can create application keys.
 - **User** — Key is tied to a specific user and carries that user's permissions.
-- **Prometheus** — Key that authorizes scraping the [Prometheus metrics endpoint](/docs/monitoring/Prometheus) (`/api/metrics`).
+- **Prometheus** — Key that authorizes scraping the [Prometheus metrics endpoint](/docs/monitoring/Prometheus) (`/api/metrics`). The key must belong to the `admin` or `built-in` organization.
 
 ## Managing keys
 
@@ -37,10 +37,18 @@ When creating a key, Casdoor auto-generates the Access key and Access secret. Co
 
 Set **State** to `Inactive` to temporarily disable a key without deleting it.
 
-The **Owner** field of an existing key can only be changed by a global admin. Non-global-admin users cannot reassign a key to a different owner; such requests are rejected with an authorization error.
-
 :::caution
 
 Treat the Access secret like a password. Store it in a secrets manager and never commit it to source control.
 
 :::
+
+## Who can create and edit keys
+
+Global administrators can create and edit any key. For everyone else, Casdoor applies these rules when a key is added or updated:
+
+- The key must belong to the caller's organization. Casdoor sets **Organization** to the caller's organization, and refuses a request that names another organization.
+- An organization administrator can create keys for any user of their organization, but can't create **Application** keys.
+- A user who isn't an administrator can create and edit only keys whose **User** is themselves.
+
+Casdoor rejects a request that breaks a rule with `Unauthorized operation`.

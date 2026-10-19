@@ -48,6 +48,7 @@ This guide explains how to run Casdoor in production with Docker or Docker Compo
    ```
 
 1. Edit `conf/app.conf` for your environment. At least set the database connection. See [Configure the database](/docs/basic/server-installation#configure-database) and the [Configuration reference](/docs/basic/configuration).
+1. Optional: add `initAdminPassword = <admin-password>` to `conf/app.conf`. Casdoor gives this password to `built-in/admin` when it creates a new database. Without it, the first visitor of the Casdoor URL sets the password on a welcome page, so set it for a server that is reachable from the internet.
 
 :::note
 Casdoor runs as uid and gid 1000 inside the container. Make the mounted directories readable by uid 1000, and writable if Casdoor writes to them, for example for logs or a SQLite file. Otherwise Casdoor fails with `permission denied`.
@@ -460,7 +461,9 @@ Open Casdoor in a browser:
 | Docker Compose or `docker run` without a proxy | `http://<your-server-ip>:8000` |
 | With a reverse proxy | `https://your-domain.com` |
 
-The Casdoor sign-in page appears. Sign in as `built-in/admin` with the password `123`, and then change the password.
+On a new database without `initAdminPassword`, the **Welcome to Casdoor** page appears. Set the password of `admin` and click **Set Password**. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
+
+On the sign-in page, sign in as `built-in/admin` with the password that you set.
 
 ## Troubleshooting
 

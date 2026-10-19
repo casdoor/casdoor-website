@@ -39,8 +39,8 @@ The `logoutAll` parameter selects one of two modes:
 | | Full sign-out: `logoutAll=true` (default) | Current session only: `logoutAll=false` |
 |---|---|---|
 | Sessions | Deletes all sessions of the user across all applications of the organization | Deletes the current session |
-| Access tokens | Expires all access tokens issued to the user | Clears the token of the current session |
-| Notification | Contains all session IDs and the hashes of all expired tokens | Contains the current session ID and the hashes of its tokens |
+| Access tokens | Expires all access tokens issued to the user | Expires the tokens that were issued in the current session |
+| Notification | Contains all session IDs and the hashes of all tokens of the user | Contains the current session ID and the hashes of all tokens of the user |
 
 Use `logoutAll=false` when a user signs out on one device or browser and stays signed in on the others.
 
@@ -275,7 +275,7 @@ Casdoor sends a `POST` request with the following payload:
 | Field | Description |
 |---|---|
 | `sessionIds` | IDs of the sessions that were ended |
-| `accessTokenHashes` | SHA-256 hashes of the access tokens that were expired. Compare them with the hashes of the tokens that your application holds to find the sessions to end |
+| `accessTokenHashes` | SHA-256 hashes of the access tokens of the user, in both modes, including tokens that had already expired. With `logoutAll=false`, the list also contains tokens of other sessions, which stay valid, so match on `sessionIds` first. Compare the hashes with the hashes of the tokens that your application holds to find the sessions to end |
 | `nonce` | Random value that protects against replay |
 | `timestamp` | Unix time at which Casdoor created the notification |
 | `signature` | HMAC-SHA256 signature, computed with the client secret of the application |
@@ -352,6 +352,10 @@ Casdoor supports [OpenID Connect Back-Channel Logout 1.0](https://openid.net/spe
 
 Casdoor sends an HTTP `POST` request with a `logout_token` parameter to that URI. The token is a JSON Web Token (JWT) with the `sub` and `sid` claims and the `http://schemas.openid.net/event/backchannel-logout` event. Casdoor skips applications that have no back-channel logout URL.
 
+## Sign out of SAML applications {#saml-single-logout}
+
+For applications that sign users in with SAML, Casdoor sends a signed SAML `LogoutRequest` to the **SAML single logout URL** of the application when the user signs out, with both modes of `/api/sso-logout` and with `/api/logout`. A SAML service provider can also start the logout at Casdoor. See [Single logout](/docs/how-to-connect/saml/overview#single-logout).
+
 ## Troubleshooting
 
 ### The user stays signed in to some applications
@@ -364,7 +368,7 @@ Casdoor sends an HTTP `POST` request with a `logout_token` parameter to that URI
 - Check that the request went to `/api/sso-logout` and was authenticated as the user.
 - Check that your applications don't cache the result of token validation.
 
-After a full sign-out, the token records stay in the database with `ExpiresIn` set to `0`. The token introspection endpoint and the refresh token endpoint reject them. A client that uses a refresh token after sign-out receives the error `invalid_grant` with the message "refresh token is invalid, expired or revoked".
+After a sign-out, the token records stay in the database with `ExpiresIn` set to `0`. The token introspection endpoint and the refresh token endpoint reject them. A client that uses such a refresh token receives the error `invalid_grant` with the message "refresh token is expired". A refresh token that Casdoor doesn't know, for example one that was replaced by [refresh token rotation](/docs/how-to-connect/oauth#refresh-token-rotation), fails with "refresh token is invalid or revoked".
 
 ### The endpoint returns an error
 
@@ -402,3 +406,4 @@ async function logout() {
 - [RP-initiated logout](/docs/session/rp-initiated-logout)
 - [Call the Casdoor API](/docs/basic/public-api)
 - [Tokens](/docs/token/overview)
+- [Use Casdoor as a SAML identity provider](/docs/how-to-connect/saml/overview)

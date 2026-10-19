@@ -27,6 +27,8 @@ Webhooks can be subscribed to a wide set of events, grouped by area:
 - `new-user-ldap` - Custom event fired when a new user is created through an LDAP sync
 - `new-user-syncer` - Custom event fired when a new user is created through a database syncer
 
+`logout` and `sso-logout` fire for `GET` requests too, for example when an OpenID Connect (OIDC) relying party sends the browser to `GET /api/logout` for RP-initiated logout. Casdoor records these two actions even when `logPostOnly` in [the configuration file](/docs/basic/configuration) is `true`, which otherwise skips every `GET` request. Without a session cookie, the record takes its user and organization from the subject of `id_token_hint`.
+
 #### Resource Management Events
 
 Standard CRUD operations (`add-*`, `update-*`, `delete-*`) are available for all core resources including organizations, groups, users, applications, providers, and certificates. Additional resources like roles, permissions, models, adapters, enforcers, sessions, tokens, products, payments, and pricing also support these operations. Webhooks can track changes to syncers, forms, invitations, LDAP configurations, orders, tickets, and transactions as well.
@@ -59,18 +61,39 @@ Standard CRUD operations (`add-*`, `update-*`, `delete-*`) are available for all
 
 **SAML:** `acs`, `saml/metadata`
 
-**System Operations:** `run-casbin-command`, `refresh-engines`, `health`, `metrics`, `callback`, `device-auth`, `faceid-signin-begin`, `user`, `userinfo`
+**System Operations:** `health`, `metrics`, `callback`, `device-auth`, `faceid-signin-begin`, `user`, `userinfo`
 
 Each event includes contextual information in the webhook payload, allowing you to implement custom logic based on the specific action that triggered the webhook.
 
 ## Setting up a webhook
 
-1. In your Casdoor instance, go to **Settings** → **Webhooks**.
-2. Click **Add Webhook**.
-3. Enter the **Webhook URL** that will receive events.
-4. Select one or more events to subscribe to.
-5. (Optional) Add custom headers (e.g. for authentication).
-6. Save. Casdoor will send events to the URL from then on.
+1. In the Casdoor admin console, go to **Admin** > **Webhooks**.
+1. Click **Add**.
+1. Select the **Organization** that owns the webhook.
+1. In **URL**, enter the address that receives the events.
+1. In **Events**, select one or more events.
+1. Optional: in **Headers**, add custom headers, for example for authentication.
+1. Set **Single org only**, see [Events of other organizations](#events-of-other-organizations).
+1. Turn on **Is enabled** and save. Casdoor sends the events to the URL from then on.
+
+An administrator of an organization can add webhooks only to their own organization. For any other organization, `POST /api/add-webhook` returns "Unauthorized operation".
+
+### Events of other organizations
+
+**Single org only** (`singleOrgOnly`) decides which records trigger the webhook:
+
+- **On**: Only the records of the organization that owns the webhook trigger it.
+- **Off**: The records of all organizations trigger it.
+
+Only a global administrator, that is, a user of the `built-in` organization, can turn **Single org only** off. When anyone else adds or updates a webhook, Casdoor saves it with **Single org only** on.
+
+### Addresses that a webhook can reach
+
+The webhooks of every organization other than `built-in` may only send requests to Internet addresses. Casdoor refuses to connect to private, loopback, link-local, and unspecified addresses, and to the shared address space `100.64.0.0/10`. The link-local range includes the cloud metadata address `169.254.169.254`. Casdoor checks the resolved IP address of every connection, so a host name that resolves to an intranet address, DNS rebinding, and redirects to an intranet address are refused too. These webhooks don't use the proxy that Casdoor is configured with.
+
+The error of a refused delivery contains `the address: <address> is not allowed, only Internet addresses can be requested`.
+
+Only the webhooks of the `built-in` organization, which only global administrators manage, can reach hosts on the intranet. To send the events of another organization to a service on your own network, a global administrator creates the webhook in the `built-in` organization and turns off **Single org only**.
 
 ## Filtering webhook payloads
 

@@ -13,6 +13,10 @@ authors: [hsluoyz]
 | **Pull-based** | A background collector reads records from an external source | System Log, SELinux Log |
 | **Receive-based** | An external agent pushes data to Casdoor over HTTP | Agent (OpenClaw) |
 
+Only a global administrator can save a System Log, SELinux Log, or Agent provider, because these types read the logs of the Casdoor server or accept data on its address. An organization administrator can save a Casdoor Permission Log provider.
+
+To send the audit records of Casdoor to a Syslog server instead, use an [Audit provider](/docs/provider/audit/syslog).
+
 ## Provider types
 
 ### Casdoor Permission Log

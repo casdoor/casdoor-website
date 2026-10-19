@@ -109,6 +109,14 @@ curl -X POST https://your-casdoor.com/api/login/oauth/access_token \
 
 Separate several scopes with spaces: `scope=application:read application:write`. In a URL, encode the space as `%20`.
 
+### Clients identified by a metadata document URL {#client-id-metadata-documents}
+
+MCP clients often have no client ID of Casdoor. Such a client either registers itself through [dynamic client registration](/docs/application/dynamic-client-registration), or uses a client ID metadata document: its `client_id` is an `https` URL that points to a JSON document that describes the client, such as its name and its redirect URIs.
+
+Casdoor accepts these client IDs when **Enable dynamic client registration** is on for the `built-in` organization. The discovery document then has `"client_id_metadata_document_supported": true`. Otherwise, the authorization request fails with `client ID metadata documents are not accepted, enable dynamic client registration of the organization: built-in first`.
+
+At the first authorization request, Casdoor fetches the document and creates an application for the client in the `built-in` organization. The client is a public client: it uses PKCE and has no client secret. For the requirements on the document and the application that Casdoor creates, see [Dynamic client registration](/docs/application/dynamic-client-registration).
+
 ## Missing scopes {#scope-validation-errors}
 
 When a token calls a tool without the required scope, Casdoor returns the error `insufficient_scope`:

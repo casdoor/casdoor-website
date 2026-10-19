@@ -21,6 +21,13 @@ For transactions with external payment providers, Casdoor creates transaction re
 
 Transaction records are automatically linked to the user's signup application, providing clear audit trails across your organization.
 
+## List payments
+
+`GET /api/get-payments?owner=<organization>` returns:
+
+- For an administrator of the organization: all payments of the organization. Add `field=user&value=<username>` to get the payments of one user.
+- For any other user: only the user's own payments. Other filters apply on top of that. A user of another organization gets `Unauthorized operation`.
+
 ## Invoice
 
 Open the payment edit screen and fill in the invoice fields. Two invoice types are available: **individual** and **organization**. Click **Issue invoice** to generate the invoice.

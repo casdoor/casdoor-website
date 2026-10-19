@@ -131,3 +131,4 @@ If something worked in v3 and doesn't work in v4, [open an issue](https://github
 - [Version information](/docs/deployment/version-info)
 - [Database migration](/docs/deployment/db-migration)
 - [UI customization](/docs/application/ui-customization)
+- [Admin console](/docs/basic/admin-console)

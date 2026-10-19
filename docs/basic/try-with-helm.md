@@ -47,6 +47,9 @@ The chart is published as an OCI artifact on GitHub Container Registry. It is li
    ```
 
 1. Open Casdoor at the URL of the `casdoor` service in your cluster. With the default values, the service is of type `ClusterIP` on port 8000, so it is reachable only inside the cluster until you [expose it](/docs/basic/try-with-helm#exposing-casdoor).
+1. On the first visit, Casdoor opens the **Welcome to Casdoor** page. Set the password of `admin` and click **Set Password**. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
+
+   The chart has no value for this password. To set it before the first start instead, add `initAdminPassword = <admin-password>` to `config`, or pass `initAdminPassword` as an environment variable with `envFromSecret`.
 
 ## Customize the deployment
 
@@ -69,6 +72,7 @@ Override the values of [`values.yaml`](https://github.com/casdoor/casdoor/blob/m
 | `database.sslMode` | SSL mode for the database connection. | `disable` |
 | `service.type` | Type of Kubernetes service (`ClusterIP`, `NodePort`, `LoadBalancer`). | `ClusterIP` |
 | `service.port` | Port number for the Casdoor service. | `8000` |
+| `service.annotations` | Annotations for the Kubernetes Service, for example the annotations of a cloud load balancer when `service.type` is `LoadBalancer`. | `{}` |
 | `ingress.enabled` | Whether to enable Ingress for Casdoor. | `false` |
 | `ingress.annotations` | Annotations for the Ingress resource. | `{}` |
 | `ingress.hosts` | Hostnames for the Ingress resource. | `[]` |

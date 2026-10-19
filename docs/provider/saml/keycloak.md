@@ -104,8 +104,11 @@ For all client settings, see [SAML clients](https://www.keycloak.org/docs/latest
 To make Keycloak verify the requests of Casdoor:
 
 1. In Keycloak, turn on **Client Signature Required** for the client.
-1. Go to **Keys** > **Import**, select the archive format **Certificate PEM**, and upload the certificate of Casdoor. The private key and the certificate of Casdoor are `token_jwt_key.key` and `token_jwt_key.pem` in the `object` directory of the Casdoor source.
+1. In the Casdoor admin console, go to **Identity** > **Certs**, open `cert-built-in`, and click **Download certificate**. Casdoor signs the authentication requests with this certificate of the `admin` organization, and its private key stays in the database.
+1. In Keycloak, go to **Keys** > **Import**, select the archive format **Certificate PEM**, and upload the certificate.
 1. In Casdoor, turn on **Sign request** on the provider.
+
+If `cert-built-in` doesn't exist, the sign-in fails with `the cert: admin/cert-built-in is not found`. If you replace the key pair of `cert-built-in`, import the new certificate in Keycloak again. See [Certificates](/docs/cert/overview).
 
 ## Verify the result {#test}
 

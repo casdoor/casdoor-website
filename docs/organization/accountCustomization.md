@@ -151,8 +151,23 @@ For example, to create a `Contact` tab with the email address, the phone number,
 | `Managed accounts` | Sub-accounts or delegated accounts that this user can manage on behalf of others. |
 | `Face ID` | Enrolled face recognition data used for biometric login. |
 | `MFA accounts` | External accounts linked specifically for multi-factor authentication purposes. |
-| `Need update password` | Whether the user is required to change their password at next login. Admin-only. When set, the user is redirected to their **Account** page after sign-in and cannot navigate elsewhere until the password is updated. |
+| `Need update password` | Whether the user is required to change their password at next login. Admin-only. See [Forced password update](#forced-password-update). |
 | `IP whitelist` | IP addresses or CIDR ranges from which this user is allowed to sign in. Admin-only. |
+
+## Forced password update
+
+When **Need update password** is on for a user, Casdoor issues no token or code at the next sign-in. This applies to the sign-in with a password and to the callbacks of OAuth 2.0 and SAML providers. Instead, Casdoor sends the user to the page `/update-password/<application-name>`, or to `/update-password` when the user signs in to the Casdoor admin console.
+
+The page is titled **You need to update your password** and has these fields:
+
+- **Old Password**: Hidden when the account has no password, and for administrators.
+- **New Password** and **Re-enter New**.
+
+The user clicks **Set Password**. The [password complexity](/docs/organization/passwordComplexity) and password history rules of the organization apply. Until the password is changed, every page of the Casdoor admin console redirects to this page.
+
+After the change, the interrupted sign-in continues: Casdoor signs the user in again without a prompt and returns to the OAuth 2.0 flow of the application. If there was no such flow, the user goes to the Casdoor admin console.
+
+Sign-in paths that can't show the page, such as the OAuth 2.0 password grant and a bind to the built-in LDAP server, refuse the user until the password is changed. See [Where MFA applies](/docs/user/multi-factor-authentication#where-mfa-applies).
 
 ## See also
 

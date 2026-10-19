@@ -23,6 +23,17 @@ An email provider sends the emails of Casdoor, such as verification codes at sig
 1. Click **Test SMTP Connection** to check the connection, and **Send Testing Email** to send a message to the **Test Email** address.
 1. Save the provider and add it to your application. See [Add providers to an application](/docs/application/providers).
 
+## Other email types
+
+| Type | Sends through |
+|---|---|
+| `Default` | An SMTP server, as described on this page |
+| `SUBMAIL`, `Mailtrap` | The SMTP server of the service, with the same fields as `Default` |
+| `Azure ACS` | Azure Communication Services. See [Azure ACS](/docs/provider/email/azureACS) |
+| `SendGrid` | SendGrid. See [SendGrid](/docs/provider/email/sendgrid) |
+| `Resend` | Resend. See [Resend](/docs/provider/email/resend) |
+| `Custom HTTP Email` | An HTTP API that you describe. See [Send email through your own HTTP API](/docs/provider/email/customHttp) |
+
 ## SSL mode
 
 **SSL mode** controls how Casdoor negotiates TLS with the SMTP server:
@@ -37,7 +48,9 @@ Providers that had the former **Disable SSL** option turned on behave as `Disabl
 
 ## Proxy
 
-If Casdoor can't reach the SMTP server directly, for example Gmail from a restricted network, turn on **Enable proxy**. Casdoor then sends email through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets.
+If Casdoor can't reach the SMTP server directly, for example Gmail from a restricted network, turn on **Enable proxy**. Casdoor then sends email through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets. For SMTP, write `socks5Proxy` as `host:port`: the SMTP connection doesn't accept the `socks5://` prefix or a username and password in the value.
+
+An email provider that belongs to an organization other than `built-in` can send only to SMTP servers and HTTP endpoints at Internet addresses. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
 
 ## Templates {#email-content-and-placeholders}
 
@@ -52,6 +65,8 @@ If Casdoor can't reach the SMTP server directly, for example Gmail from a restri
 ### Password reset link
 
 To let users reset their password with a link in the email, put the link text and `%link` in a `<reset-link>` block. Casdoor shows the block only in password reset emails and removes it from all other emails, such as sign-up and sign-in codes.
+
+Casdoor fills in `%link` only if it knows its own public URL: `origin` or `originFrontend` is set in `conf/app.conf`, or the request reaches Casdoor on a loopback host such as `localhost`. Otherwise, it removes the `<reset-link>` block from password reset emails too, and the email contains only the code. Casdoor doesn't build the link from the `Host` header of the request, because anyone can set that header. The same rule applies to magic links, which fail with `please set "origin" in conf/app.conf to send magic links`. See the [Configuration reference](/docs/basic/configuration).
 
 Plain text:
 
@@ -83,4 +98,5 @@ HTML:
 
 - [SendGrid](/docs/provider/email/sendgrid)
 - [Resend](/docs/provider/email/resend)
+- [Send email through your own HTTP API](/docs/provider/email/customHttp)
 - [Add providers to an application](/docs/application/providers)

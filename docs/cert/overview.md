@@ -91,6 +91,27 @@ For example, for Alipay create certificates for:
 
 See [Alipay](/docs/provider/payment/Alipay) and [WeChat Pay](/docs/provider/payment/WeChatPay) for details.
 
+## The built-in certificate
+
+`cert-built-in` (organization `admin`) is the certificate that Casdoor creates with a new database. `app-built-in` uses it, and Casdoor also uses it to sign SAML authentication requests when a SAML provider has **Sign request** on. On a new install, Casdoor generates a random RS256 key pair for it, with a 4096-bit key and a validity of 20 years, so every installation has its own key. Get the certificate for your SDK or service provider from the **Certs** page, not from the Casdoor source code.
+
+Installations created by older versions of Casdoor may still use the key pair that was published in the Casdoor repository. Anyone can forge tokens signed with that key. At startup, Casdoor detects it and prints:
+
+```text
+WARNING: the cert: admin/cert-built-in signs tokens with the private key published in the Casdoor repository, anyone can forge its tokens, please generate a new key pair for it
+```
+
+To replace the key pair:
+
+1. In the Casdoor admin console, go to **Certs** and edit `cert-built-in`.
+1. Clear the **Certificate** and **Private key** fields.
+1. Click **Save**. Casdoor generates a new key pair from the **Crypto algorithm**, **Bit size**, and **Expire in years** fields.
+1. Give the new certificate to every application, SDK, and SAML service provider that verifies tokens or requests signed by `cert-built-in`.
+
+:::caution
+Tokens signed with the old key fail verification after the change, so users of these applications have to sign in again.
+:::
+
 ## Creating a certificate
 
 To add a certificate:

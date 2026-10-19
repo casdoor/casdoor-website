@@ -12,7 +12,7 @@ A provider connects Casdoor to an external service, such as an identity provider
 
 | Category | Purpose |
 |---|---|
-| Audit | Send audit events to an external system |
+| Audit | Send the audit records of Casdoor to a Syslog server. See [Syslog audit provider](/docs/provider/audit/syslog) |
 | Captcha | Protect sign-in and sign-up with a captcha. See [Captcha providers](/docs/provider/captcha/overview) |
 | Email | Send email, such as verification codes and notifications. See [Email providers](/docs/provider/email/overview) |
 | Face ID | Recognize faces for Face ID sign-in. See [Face ID providers](/docs/provider/faceid/overview) |
@@ -35,6 +35,24 @@ Only administrators create providers. Where a provider is available depends on w
 |---|---|
 | A global administrator: a user of the `built-in` organization, or a user with `IsGlobalAdmin` | All applications |
 | An organization administrator: a user with `IsAdmin` | Applications of the same organization |
+
+Log providers of the types System Log, SELinux Log, and Agent read the logs of the Casdoor server or accept data on its address, so only a global administrator can save them. An organization administrator who saves one gets `Unauthorized operation`.
+
+## Which addresses a provider can reach
+
+A provider of an organization other than `admin` and `built-in` can connect only to Internet addresses. Casdoor refuses private, loopback, link-local, and unspecified addresses, and the shared address space `100.64.0.0/10`. It checks the address that the host name resolves to. For HTTP requests, it checks every connection, including redirects. This stops an organization administrator from reaching the internal network of the Casdoor server, such as a database or a cloud metadata endpoint, through a provider.
+
+The rule covers these connections:
+
+| Category | Connection |
+|---|---|
+| Email | The SMTP server, or the endpoint of `Custom HTTP Email` |
+| SMS | The endpoint of `Custom HTTP SMS` |
+| Notification | The endpoint of `Custom HTTP` |
+| Storage | The endpoint of the storage service |
+| OAuth | The token, user info, and logout endpoints of the provider, and the OIDC discovery that the **Request** button fetches. The types GitHub, Google, Facebook, LinkedIn, Steam, Line, Amazon, Instagram, TikTok, Twitter, Uber, and Yahoo always use the proxy instead |
+
+To connect to a service on your internal network, such as a local SMTP server, create the provider as a global administrator. When an organization administrator clicks **Request** on an OIDC provider, Casdoor applies the same rule to the discovery fetch, whatever organization the provider belongs to.
 
 ## Create a provider
 
