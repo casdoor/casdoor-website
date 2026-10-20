@@ -661,6 +661,9 @@ module.exports = {
             "integration/go/oauth2-proxy",
             "integration/go/portainer",
             "integration/go/argocd",
+            "integration/go/netbird",
+            "integration/go/openlist",
+            "integration/go/safeline",
           ],
         },
         {
@@ -705,6 +708,7 @@ module.exports = {
             "integration/java/firezone",
             "integration/java/CloudFoundry",
             "integration/java/Thingsboard",
+            "integration/java/halo",
           ],
         },
         {
@@ -740,6 +744,7 @@ module.exports = {
             "integration/php/Flarum",
             "integration/php/Moodle",
             "integration/php/nextcloud",
+            "integration/php/kanboard",
           ],
         },
         {
@@ -787,6 +792,7 @@ module.exports = {
             "integration/python/FastAPI",
             "integration/python/JumpServer",
             "integration/python/open-webui",
+            "integration/python/sentry",
           ],
         },
       ],
