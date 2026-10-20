@@ -44,7 +44,12 @@ In the [RAM console of Alibaba Cloud](https://ram.console.aliyun.com/manage/ak),
 
 Enter a phone number in **SMS Test** and send a test message.
 
+## Sign in with the phone number of the device
+
+The same provider lets native apps sign users in with the one-click login of PNVS, see [Mobile one-click login](/docs/how-to-connect/mobile-one-click).
+
 ## See also
 
 - [SMS providers](/docs/provider/sms/overview)
 - [Send SMS with Alibaba Cloud](/docs/provider/sms/alibabaCloud)
+- [Mobile one-click login](/docs/how-to-connect/mobile-one-click)

@@ -101,7 +101,8 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "refresh_token",
     "urn:ietf:params:oauth:grant-type:device_code",
     "urn:ietf:params:oauth:grant-type:token-exchange",
-    "urn:casdoor:params:oauth:grant-type:verification-code"
+    "urn:casdoor:params:oauth:grant-type:verification-code",
+    "urn:casdoor:params:oauth:grant-type:mobile-one-click"
   ],
   "subject_types_supported": [
     "public"
@@ -180,7 +181,7 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
 
 The document tells clients the following:
 
-- **Grant types**: Casdoor supports the authorization code, implicit, password, client credentials, and refresh token grants. It also supports the device code grant (`urn:ietf:params:oauth:grant-type:device_code`) for devices with limited input, such as smart TVs and CLI tools, [token exchange](/docs/how-to-connect/oauth#token-exchange-grant), and its own [verification code grant](/docs/how-to-connect/oauth#verification-code-grant).
+- **Grant types**: Casdoor supports the authorization code, implicit, password, client credentials, and refresh token grants. It also supports the device code grant (`urn:ietf:params:oauth:grant-type:device_code`) for devices with limited input, such as smart TVs and CLI tools, [token exchange](/docs/how-to-connect/oauth#token-exchange-grant), and its own [verification code grant](/docs/how-to-connect/oauth#verification-code-grant) and [mobile one-click grant](/docs/how-to-connect/mobile-one-click).
 - **Response types and modes**: `response_types_supported` lists the authorization code, implicit, and [hybrid](/docs/how-to-connect/oauth#hybrid-flow) combinations. `response_modes_supported` lists the three [response modes](/docs/how-to-connect/oauth#response-modes).
 - **Client authentication**: `token_endpoint_auth_methods_supported` shows that a client authenticates with its secret in the `Authorization` header or in the body, with a signed JWT (`private_key_jwt`, see [Federated credentials](/docs/how-to-connect/oauth#federated-credentials)), or not at all as a public client with PKCE (`none`).
 - **PKCE**: `code_challenge_methods_supported` shows that Casdoor supports Proof Key for Code Exchange (PKCE) with the `S256` method. PKCE protects public clients, such as mobile and single-page applications, against interception of the authorization code. A library that supports PKCE turns it on from this metadata. To implement PKCE yourself, see [OAuth 2.0](/docs/how-to-connect/oauth).

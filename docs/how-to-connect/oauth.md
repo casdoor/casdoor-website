@@ -32,6 +32,7 @@ In the examples, `ClientId` and `ClientSecret` are the **Client ID** and the **C
 | [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) | RFC 8693 | Swap an existing token for one with different scope or audience. |
 | [JWT Bearer](https://datatracker.ietf.org/doc/html/rfc7523) | RFC 7523 | Service auth using a signed JWT assertion instead of a client secret. |
 | [Verification Code](/docs/how-to-connect/oauth#verification-code-grant) | Casdoor extension | Native apps that sign users in (and up) with a code sent by SMS or email. |
+| [Mobile One-Click](/docs/how-to-connect/mobile-one-click) | Casdoor extension | Native apps that sign users in (and up) with the phone number of the device, through Alibaba Cloud PNVS. |
 
 The authorization code grant is on by default. Turn on the other grant types in **Grant types** on the edit page of the application.
 
@@ -421,6 +422,10 @@ When no user has the phone number or the email address, the grant creates the us
 - For a phone number, its region is in the **Supported country codes** of the organization.
 
 Otherwise, `/api/send-verification-code` answers that the user doesn't exist, and only existing users can sign in.
+
+## Mobile one-click grant {#mobile-one-click-grant}
+
+Native apps in mainland China can also sign users in with the phone number of the device, without an SMS code: the one-click login SDK of Alibaba Cloud PNVS returns a token, and the app exchanges it with the grant type `urn:casdoor:params:oauth:grant-type:mobile-one-click`. See [Mobile one-click login](/docs/how-to-connect/mobile-one-click).
 
 ## Client credentials grant {#client-credentials-grant}
 
