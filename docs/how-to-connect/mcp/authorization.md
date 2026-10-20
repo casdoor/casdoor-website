@@ -162,9 +162,13 @@ For example, a file management server could define:
 When a user authorizes an MCP client, Casdoor asks for consent if both of the following conditions hold:
 
 - The application defines custom scopes.
-- The client requests at least one of them, and the user hasn't granted it to the application before.
+- The client requests at least one of them, and the user hasn't granted or declined it for the application before.
 
-The consent screen lists the requested scopes with their display names and descriptions. After the user clicks **Allow**, Casdoor remembers the grant and doesn't ask again for the same scopes. Users and administrators can see and revoke grants on the **Consents** page.
+The consent screen lists the requested scopes with their display names and descriptions, each with a checkbox. All scopes are selected at first, and the user can clear the ones they don't want to grant. `openid` and requested scopes that aren't custom scopes of the application are always granted, so their checkboxes can't be cleared. At least one scope must stay selected before the user can click **Allow**.
+
+The authorization code and the tokens carry only the scopes that the user granted. The `scope` field of the token response, the `scope` claim of the access token, and the introspection response all show the granted scopes, so your client should read them instead of assuming that it received every scope it requested.
+
+Casdoor remembers the scopes that the user granted and the scopes that the user declined, and doesn't ask again when a client requests the same scopes. A later request then receives only the granted scopes. When a client requests a custom scope that the user hasn't answered yet, Casdoor shows the consent screen again: the new scopes are marked **New**, and the scopes that the user answered before keep the earlier choice. Users and administrators can see and revoke grants on the **Consents** page. Casdoor asks again for a revoked scope.
 
 Casdoor doesn't show a consent screen for applications without custom scopes.
 

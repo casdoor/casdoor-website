@@ -129,7 +129,7 @@ See [Dynamic client registration](/docs/application/dynamic-client-registration)
 
 - The application has no custom scopes. Casdoor asks for consent only for custom scopes.
 - The client doesn't request a custom scope.
-- The user has already granted the requested scopes to the application.
+- The user has already granted or declined the requested scopes for the application. Casdoor doesn't ask again, and the token carries only the granted scopes.
 
 **Solution**
 
