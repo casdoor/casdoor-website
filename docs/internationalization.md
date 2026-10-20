@@ -7,9 +7,9 @@ authors: [ErikQQY]
 
 Casdoor’s interface and backend messages are translated into multiple languages. Supported languages include: English, Spanish, French, German, Japanese, Chinese, Vietnamese, Portuguese, Turkish, Polish, and Ukrainian. The same set of languages is available across the product (e.g. user profiles, organization settings) for a consistent experience.
 
-Translations are managed on [Crowdin](https://crowdin.com/project/casdoor-web). The project syncs with Crowdin so that community contributions are pulled in and kept up to date.
+Translations are managed on [Caslingo](https://caslingo.casdoor.com/projects/casdoor), which reads the strings from the Casdoor repository and commits the translations back. New strings are machine translated first, so every language stays complete.
 
-If you want to improve or add translations, contribute on [Crowdin](https://crowdin.com/project/casdoor-web). Your contributions help users in your language use Casdoor more effectively.
+If a translation reads wrong in your language, sign in to [Caslingo](https://caslingo.casdoor.com/projects/casdoor) with your GitHub or Google account and suggest a better one; the maintainers review the suggestions. Your contributions help users in your language use Casdoor more effectively.
 
 ## How Casdoor picks the language
 

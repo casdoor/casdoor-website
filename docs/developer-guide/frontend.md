@@ -31,7 +31,6 @@ For the complete setup, see [Run in development mode](/docs/basic/server-install
 | `tailwind.config.js`, `postcss.config.js` | Tailwind CSS configuration |
 | `components.json` | shadcn/ui configuration |
 | `tsconfig.json` | TypeScript configuration |
-| `crowdin.yml` | Crowdin configuration for translations |
 | `cypress`, `cypress.config.js` | End-to-end tests |
 | `package.json`, `yarn.lock` | Dependencies |
 

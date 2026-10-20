@@ -104,13 +104,13 @@ If reviewers request changes, update the same PR instead of closing it and openi
 
 ### Updating i18n data
 
-We use [Crowdin](https://crowdin.com/project/casdoor-site) and i18next for translations. When you add new UI strings with i18next under `web/`, run:
+We use [Caslingo](https://caslingo.casdoor.com/projects/casdoor) and i18next for translations. When you add new UI strings with i18next under `web/`, run:
 
 ```shell
 cd i18n && go test
 ```
 
-This regenerates `web/src/locales/**/data.json`. New keys are filled with English by default. After the PR is merged, translations can be added on [Crowdin](https://crowdin.com/project/casdoor-site).
+This regenerates `web/src/locales/**/data.json`. New keys are filled with English by default. After the PR is merged, Caslingo machine translates the new keys and commits them; better translations can be suggested on [Caslingo](https://caslingo.casdoor.com/projects/casdoor).
 
 :::caution
 Do not translate into a language you are not confident in; leave the default (English) as is.

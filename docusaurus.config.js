@@ -106,7 +106,7 @@ module.exports = {
               value: "<hr style=\"margin: 0.3rem 0;\">",
             },
             {
-              to: "https://crowdin.com/project/casdoor-website",
+              to: "https://caslingo.casdoor.com/projects/casdoor-website",
               label: "Help translate",
             },
           ],

@@ -9,7 +9,7 @@ concurrency:
 jobs:
   build-and-deploy:
     env:
-      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      CASLINGO_TOKEN: ${{ secrets.CASLINGO_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -31,7 +31,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           yarn install
-          yarn crowdin:sync
+          yarn caslingo:sync
           yarn build
 
       - name: Deploy 🚀

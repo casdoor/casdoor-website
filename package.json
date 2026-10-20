@@ -17,11 +17,10 @@
     "lint": "yarn lint:js && yarn lint:css && yarn lint:md",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download && node scripts/sync-blog-front-matter.js",
+    "caslingo:sync": "bash scripts/caslingo-sync.sh && node scripts/check-translations.mjs && node scripts/sync-blog-front-matter.js",
     "prepare": "husky install"
   },
   "dependencies": {
-    "@crowdin/cli": "^3.7.10",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/faster": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
