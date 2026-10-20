@@ -23,6 +23,7 @@ A **Plan** describes a set of features for an application, with a name and price
 | **PaymentProviders** | Providers through which users can pay. See [Payment provider](/docs/provider/payment/overview). |
 | **IsEnabled** | Whether the plan is active. |
 | **IsExclusive** | If enabled, a user may only hold one active subscription to this plan at a time. Attempting to subscribe again while an active, upcoming, or pending subscription exists will be rejected. |
+| **AutoRenew** | Whether the **Auto renew** switch is on by default when a user buys this plan. Only subscriptions paid with Balance or Stripe can renew automatically. See [Auto renewal](/docs/pricing/subscription#auto-renewal). |
 
 ![plan edit](/img/pricing/plan_edit.png)
 
