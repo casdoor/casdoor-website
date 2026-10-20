@@ -1,8 +1,8 @@
 ---
 title: Connect ChatGPT to the Casdoor MCP server
 sidebar_label: Connect ChatGPT
-description: Connect ChatGPT to the Casdoor MCP server with OAuth 2.0, so that ChatGPT can manage applications and users in Casdoor.
-keywords: [MCP, ChatGPT, OpenAI, OAuth, PKCE]
+description: Connect ChatGPT to an MCP server with OAuth 2.0, using the Casdoor MCP server as the example - developer mode, dynamic client registration, sign-in, and why ChatGPT asks for permission before tool calls.
+keywords: [MCP, ChatGPT, ChatGPT MCP, connect ChatGPT to MCP server, ChatGPT developer mode, ChatGPT connector, OpenAI, OAuth, PKCE]
 authors: [hsluoyz]
 ---
 
@@ -96,6 +96,12 @@ Check that **Enable dynamic client registration** is on for the `built-in` organ
 ### Casdoor reports a redirect URL mismatch
 
 If you use an application that you created by hand instead of DCR, add the redirect URL that ChatGPT shows for the connector to the **Redirect URLs** of the application. ChatGPT redirects to a URL of the form `https://chatgpt.com/connector/oauth/<callback-id>`.
+
+### ChatGPT asks for permission before every tool call
+
+ChatGPT decides how to confirm a tool call from the tool's MCP annotations, such as `readOnlyHint` for tools that can't change anything and `destructiveHint` for tools whose effect is hard to undo. See [Build your MCP server](https://developers.openai.com/apps-sdk/build/mcp-server) in the OpenAI documentation. The tools of the Casdoor MCP server don't set annotations, so ChatGPT can't tell that `get_applications`, `get_application`, `get_users`, and `get_user` only read data, and it may ask for permission for them as well as for the `add_`, `update_`, and `delete_` tools.
+
+Approve a call only after you check its arguments, in particular the object that an `update_` or `delete_` tool will change. To limit what ChatGPT can do whatever you approve, sign in with an account that has only the rights that ChatGPT needs, and grant only the scopes it needs (see [MCP authorization and scopes](/docs/how-to-connect/mcp/authorization)).
 
 ### A tool call fails with insufficient_scope
 

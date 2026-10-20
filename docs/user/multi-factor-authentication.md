@@ -1,15 +1,25 @@
 ---
-title: MFA / 2FA
-description: Secure your account with MFA / 2FA
-keywords: [MFA, 2FA, Authentication, Security, SMS, TOTP, Email, RADIUS]
+title: Multi-factor authentication (MFA / 2FA)
+sidebar_label: MFA / 2FA
+description: Turn on multi-factor authentication (MFA) or two-factor authentication (2FA) in Casdoor with a TOTP authenticator app, SMS codes, email codes or RADIUS, plus recovery codes and per-organization MFA requirements.
+keywords: [MFA, 2FA, two-factor authentication, multi-factor authentication, TOTP, authenticator app, SMS, Email, RADIUS, recovery codes]
 authors: [leo220yuyaodog]
 ---
 
 ## About multi-factor authentication
 
-MFA (Multi-Factor Authentication) is a security measure that can enhance the security of users and systems. It requires users to provide two or more factors of authentication to verify their identity when logging in or performing sensitive operations.
+MFA (multi-factor authentication) requires users to provide two or more factors to prove who they are when signing in or performing sensitive operations: something they know, such as a password, plus something they have, such as a phone with an authenticator app. 2FA (two-factor authentication) is the common case of MFA with exactly two factors, and in Casdoor the two terms describe the same feature: a password, passkey or social sign-in followed by a second factor.
 
-Casdoor supports multiple second-factor authentication methods including SMS codes, email codes, TOTP authenticator apps, and RADIUS authentication.
+Casdoor supports these second factors:
+
+| Method | What the user enters |
+|---|---|
+| TOTP authenticator app (Google Authenticator, Microsoft Authenticator and other apps) | A six-digit code that changes every 30 seconds |
+| SMS | A code sent to the user's phone number |
+| Email | A code sent to the user's email address |
+| RADIUS | The password of the user's account on an external RADIUS server |
+
+Every method also gives the user recovery codes for when the second factor is lost. Administrators can make MFA optional or required for an organization with [MFA items](/docs/organization/mfa-items).
 
 Once you enable MFA, Casdoor requires an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
 

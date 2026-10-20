@@ -67,7 +67,7 @@ function HomepageHeader() {
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title"><Translate>Casdoor</Translate></h1>
+        <h1 className="hero__title"><Translate>Casdoor</Translate><span className={styles.heroTitleTagline}><Translate>Open-source identity and access management (IAM) and single sign-on (SSO)</Translate></span></h1>
         <br />
         <p className="hero__subtitle" style={{margin: "0 auto", maxWidth: 700}}><Translate>Identity & Access Management for the AI Agent era. The first open-source IAM platform with native MCP server, OAuth 2.1 for AI agents, and full support for OAuth 2.0, OIDC, SAML, CAS, LDAP, WebAuthn, MFA, and 100+ identity providers.</Translate></p>
         <br />
