@@ -1,11 +1,32 @@
 ---
-title: RP-initiated logout
-description: Reference for the OpenID Connect end-session endpoint of Casdoor, which a client application calls to sign the user out of Casdoor.
-keywords: [OIDC, RP-initiated logout, end session, logout, id_token_hint, post_logout_redirect_uri]
+title: RP-initiated logout (OIDC end-session endpoint)
+sidebar_label: RP-initiated logout
+description: What OpenID Connect RP-initiated logout is and how to use Casdoor's end-session endpoint - parameters, id_token_hint, post_logout_redirect_uri, what Casdoor revokes, and how it relates to back-channel logout.
+keywords: [OIDC, RP-initiated logout, rp initiated logout, end session endpoint, end_session_endpoint, OIDC logout, logout, id_token_hint, post_logout_redirect_uri]
 authors: [hsluoyz]
 ---
 
 RP-initiated logout lets a relying party (RP), which is your client application, sign the user out of Casdoor and then send the browser back to the application. Casdoor implements [OpenID Connect RP-Initiated Logout 1.0](https://openid.net/specs/openid-connect-rpinitiated-1_0-final.html). OpenID Connect (OIDC) client libraries call this endpoint as the end-session endpoint.
+
+## What RP-initiated logout is
+
+Signing out of your application only ends the application's own session. The user is still signed in to the identity provider, so the next sign-in goes straight through without a password. RP-initiated logout closes that gap: when the user clicks **Sign out** in your application, the application clears its own session and redirects the browser to the identity provider's end-session endpoint, which ends the provider's session and redirects back.
+
+OpenID Connect has three logout specifications that work together:
+
+| Specification | Who starts it | What it does |
+|---|---|---|
+| RP-initiated logout | Your application, through the browser | Ends the session at the identity provider |
+| Back-channel logout | The identity provider, server to server | Tells the other applications of the session to end their sessions |
+| Front-channel logout | The identity provider, through the browser | The same, through hidden iframes in the browser |
+
+Casdoor implements RP-initiated logout and back-channel logout: after a logout at this endpoint, it sends back-channel logout notifications to the other applications of the session. Its discovery document at `/.well-known/openid-configuration` announces the endpoint in `end_session_endpoint`, so most OIDC libraries find it without configuration.
+
+A typical request:
+
+```text
+https://door.example.com/api/logout?id_token_hint=<ID token>&post_logout_redirect_uri=https%3A%2F%2Fapp.example.com%2F&state=af0ifjsldkj
+```
 
 To end every session of a user in the organization at once, use [single sign-out](/docs/session/single-sign-out) instead.
 
