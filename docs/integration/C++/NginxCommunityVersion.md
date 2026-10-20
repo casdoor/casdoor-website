@@ -1,9 +1,18 @@
 ---
-title: Nginx community edition
-description: "Add Casdoor single sign-on to applications behind open-source Nginx (not NGINX Plus) with OAuth2 Proxy and auth_request."
-keywords: [nginx, OAuth2-Proxy, nginx-community-version]
+title: Nginx authentication and single sign-on with OAuth2 Proxy
+sidebar_label: Nginx community edition
+description: "Add Casdoor single sign-on to applications behind open-source Nginx (not NGINX Plus) with OAuth2 Proxy and auth_request, and what to use instead of a CAS module."
+keywords: [nginx, nginx authentication, nginx sso, nginx cas authentication, OAuth2-Proxy, auth_request, nginx-community-version]
 authors: [gzyzhy]
 ---
+
+Open-source Nginx can't sign users in by itself. Its `auth_request` module sends a subrequest for every request to an authentication service and lets the request through only if that service answers with 2xx. This guide uses OAuth2 Proxy as that service: it runs the OpenID Connect sign-in against Casdoor and keeps the user's session.
+
+:::tip Looking for CAS?
+
+Casdoor is also a [CAS server](/docs/how-to-connect/cas), but open-source Nginx has no CAS module among its official modules. To put a login in front of an app behind Nginx, use OpenID Connect through OAuth2 Proxy as shown here; the user experience is the same single sign-on. If the app itself is a CAS client, connect it to Casdoor's CAS endpoints directly.
+
+:::
 
 ## Prerequisites
 
