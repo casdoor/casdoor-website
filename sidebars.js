@@ -720,6 +720,7 @@ module.exports = {
             "integration/javascript/firebase",
             "integration/javascript/wechat_miniprogram",
             "integration/javascript/immich",
+            "integration/javascript/joplin",
           ],
         },
         {
