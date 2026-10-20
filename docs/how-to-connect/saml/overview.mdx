@@ -131,9 +131,9 @@ Produce these attributes in the response:
 
 ## Control the assertion signature {#assertion-signature-control}
 
-Casdoor always signs the SAML response. Since version 2.81.0, it also signs the assertion inside the response, as SAML 2.0 best practice recommends. Some service providers, such as Sentry, don't handle signed assertions correctly.
+Casdoor always signs the SAML response. To also sign the assertion inside the response, turn on **Enable SAML assertion signature** on the application. The option is off by default.
 
-For such a service provider, turn off **Enable SAML assertion signature** on the application. Casdoor then signs only the response envelope, which keeps the response authentic and works with more service providers.
+Versions 2.81.0 to 2.247.x always signed the assertion as well. Some service providers, such as [Sentry](/docs/integration/python/sentry), reject responses with a signed assertion, so since version 2.248.0, Casdoor signs only the response envelope unless the option is on. The signed response keeps the assertion authentic too.
 
 ## Test with a Go service provider {#an-example}
 
