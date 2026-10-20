@@ -25,7 +25,7 @@ The response contains the version, the commit, and the number of commits since t
 }
 ```
 
-The monitoring page of the admin console shows the same version.
+The System Info page of the admin console shows the same version, together with the latest release on GitHub. See [Upgrade Casdoor](/docs/deployment/upgrade).
 
 ## Where the version comes from
 
@@ -49,5 +49,6 @@ var (
 
 ## See also
 
+- [Upgrade Casdoor](/docs/deployment/upgrade)
 - [Install the Casdoor server](/docs/basic/server-installation)
 - [Web UI monitoring](/docs/monitoring/Web-UI)

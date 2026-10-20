@@ -76,6 +76,8 @@ Choose one of the two options.
 
 1. [Sign in to the admin console](/docs/basic/server-installation#sign-in) at `http://localhost:8000`.
 
+A binary from GitHub Releases can later upgrade itself from the System Info page. See [Upgrade Casdoor](/docs/deployment/upgrade).
+
 ### Build from source
 
 1. Clone the repository. Casdoor uses Go modules, so you can clone it anywhere.
