@@ -7,7 +7,7 @@ authors: [Wrapping-2000]
 
 ## Step 1: Deploy Casdoor
 
-Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in (e.g. `admin` / `123`). For a quick start, use the [Casdoor demo](https://door.casdoor.com/).
+Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in). For a quick start, use the [Casdoor demo](https://door.casdoor.com/).
 
 ## Step 2: Import Casdoor.Client
 

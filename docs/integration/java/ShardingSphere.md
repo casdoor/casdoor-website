@@ -9,7 +9,7 @@ authors: [jakiuncle]
 
 ## Step 1: Deploy Casdoor
 
-Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running and you can sign in at the Casdoor login page (e.g. `admin` / `123`).
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running and you can sign in at the Casdoor login page as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 ## Step 2: Configure Casdoor application and configure application in ShardingSphere
 

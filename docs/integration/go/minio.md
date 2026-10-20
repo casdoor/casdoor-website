@@ -17,7 +17,7 @@ After a successful deployment, make sure that:
 
 - The Casdoor server is running on **`http://localhost:8000`**.
 - Open your favorite browser and visit **`http://localhost:7001`** to see the login page of Casdoor.
-- Test the login functionality by entering `admin` and `123`.
+- Sign in as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 Implement a Casdoor-based login in your app with the following steps.
 

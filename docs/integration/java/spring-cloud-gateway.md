@@ -9,7 +9,7 @@ The [casdoor-springcloud-gateway-example](https://github.com/casdoor/casdoor-spr
 
 ## Step 1: Deploy Casdoor
 
-Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in at the login page (e.g. `admin` / `123`).
+Deploy Casdoor in **production mode**. See [Server installation](/docs/basic/server-installation). Ensure the server is reachable and you can sign in at the login page as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 ## Step 2: Initialize a Spring Cloud Gateway
 

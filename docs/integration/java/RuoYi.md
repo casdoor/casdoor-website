@@ -9,7 +9,7 @@ Casdoor can be easily integrated with RuoYi-cloud.
 
 ## Step 1: Deploy Casdoor
 
-Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running (e.g. `http://localhost:8000`) and you can open the login page (e.g. `http://localhost:7001`) and sign in with `admin` / `123`.
+Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running (e.g. `http://localhost:8000`) and you can open the login page (e.g. `http://localhost:7001`) and sign in as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 ## Step 2: Configure Casdoor
 

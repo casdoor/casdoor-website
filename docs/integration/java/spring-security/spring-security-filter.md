@@ -13,7 +13,7 @@ This guide integrates Casdoor with your application using **Spring Security Filt
 
 - The Casdoor server is running at **`http://localhost:8000`**.
 - The Casdoor login page is at **`http://localhost:7001`**.
-- Test login with credentials `admin` and `123`.
+- You can sign in as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
 After verifying these steps, follow the steps below to integrate Casdoor with your application.
 
