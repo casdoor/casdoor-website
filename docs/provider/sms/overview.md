@@ -10,7 +10,7 @@ An SMS provider sends verification codes to the phone numbers of users, for exam
 
 ## Supported services
 
-The **Type** of an SMS provider can be: `Aliyun SMS`, `Alibaba Cloud PNVS SMS`, `Amazon SNS`, `Azure ACS`, `Baidu Cloud SMS`, `Huawei Cloud SMS`, `Infobip SMS`, `Msg91 SMS`, `OSON SMS`, `SmsBao SMS`, `SUBMAIL SMS`, `Tencent Cloud SMS`, `Twilio SMS`, `UCloud SMS`, `Volc Engine SMS`, and `Custom HTTP SMS`, which calls an HTTP API of your choice.
+The **Type** of an SMS provider can be: `Aliyun SMS`, `Alibaba Cloud PNVS SMS`, `Amazon SNS`, `Azure ACS`, `Baidu Cloud SMS`, `Huawei Cloud SMS`, `Infobip SMS`, `Msg91 SMS`, `OSON SMS`, `SmsBao SMS`, `SUBMAIL SMS`, `Tencent Cloud SMS`, `Twilio SMS`, `Twilio Verify`, `UCloud SMS`, `Volc Engine SMS`, and `Custom HTTP SMS`, which calls an HTTP API of your choice.
 
 To request another service, open an issue or a pull request in [go-sms-sender](https://github.com/casdoor/go-sms-sender).
 

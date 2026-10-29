@@ -290,6 +290,7 @@ module.exports = {
           items: [
             "provider/sms/overview",
             "provider/sms/twilio",
+            "provider/sms/twilioVerify",
             "provider/sms/amazonSns",
             "provider/sms/acs",
             "provider/sms/alibabaCloud",
