@@ -1,0 +1,84 @@
+---
+slug: casdoor-v4
+title: "Casdoor v4: A New Console, a Marketplace, and OAuth for MCP Servers"
+authors: [hsluoyz]
+tags: [Casdoor, Release, IAM, SSO, OAuth, MCP, Self-hosting]
+date: 2026-10-30
+---
+
+Casdoor v4.0 came out on September 1. Two months and 25 releases later we are at v4.25, so this is a good point to look back at what changed. In short: the admin console was rebuilt, self-hosting got a lot less fiddly, there is now a Marketplace for integrations and sign-in themes, and Casdoor can act as the authorization server for MCP servers and AI agents.
+
+If you haven't used it: Casdoor is an open-source identity and access management platform written in Go. It is a full identity provider, not a library or a login proxy. Users live in Casdoor, Casdoor issues the tokens, and your apps talk to it over OAuth 2.0, OpenID Connect, SAML 2.0, CAS, LDAP or SCIM. Authorization is handled by [Apache Casbin](https://casbin.apache.org), so ACL, RBAC and ABAC models all work. It is Apache-2.0 licensed and listed in the CNCF Landscape.
+
+<!-- truncate -->
+
+## A rebuilt console and sign-in pages
+
+v4.0 replaced the Ant Design admin console with a new one built on shadcn/ui, Tailwind and Vite (now on React 19). It has a command palette, bulk row selection, inline form validation, two-column forms and tables where you can hide columns. Switching languages no longer reloads the page.
+
+The sign-in, sign-up and password reset pages were redesigned too. Dark mode works properly, and the pages are usable on a phone.
+
+If you are upgrading from v3, read the upgrade guide linked from the README first. The main thing to check is the path of the frontend build if you serve static files through a CDN or reverse proxy.
+
+## Easier to self-host
+
+A lot of the v4 work came from issues and forum threads by people running Casdoor themselves:
+
+- **No default password.** On first visit Casdoor asks you to set the `admin` password, or you can set it with `initAdminPassword`.
+- **Sub-path deployment.** Set `basePath` to serve Casdoor at `https://example.com/auth/` instead of its own host.
+- **Forward auth.** Casdoor has a forward auth endpoint for Traefik, Caddy and Nginx, so you can put apps that have no login of their own behind it, with public paths and per-site rules.
+- **Docker tags.** Images are now also tagged `X`, `X.Y` and `X.Y.Z`, so you can follow a major or minor version.
+- **Helm.** The chart moved into the main repository, is published to GHCR and [Artifact Hub](https://artifacthub.io/packages/helm/casdoor/casdoor) with every release, and can hold organizations, applications and users as configuration. See [Running Casdoor on Kubernetes](/blog/casdoor-on-kubernetes).
+- **Windows service.** The binary can run as a Windows service.
+- **Upgrades.** The system info page shows the latest release and can upgrade an official binary in one click.
+- **Operations.** Container health checks, Prometheus counters for sign-in success and failure, audit logs forwarded to Syslog, and Redis Cluster support.
+
+## Marketplace
+
+The new [Marketplace](https://marketplace.casdoor.com) lets an admin install integrations from inside Casdoor: application templates, identity providers and sign-in themes. Installing one fills in the configuration for you, and uninstalling restores what was there before.
+
+There are more than 20 sign-in themes so far. You can preview a theme on your own sign-in page before installing it. Organization admins can also customize the sign-in pages with their own fonts, images and HTML, within an allowlist that blocks forms and scripts. The read-only demo at [door.casdoor.com](https://door.casdoor.com) cycles through the themes if you want to see them.
+
+## OAuth for MCP servers and AI agents
+
+The MCP specification asks remote MCP servers to use OAuth, and MCP clients usually don't know in advance which authorization server they will meet. Casdoor now covers the pieces this needs:
+
+- OAuth 2.1 authorization code flow with PKCE, and a consent page where users can grant only some of the requested scopes
+- Dynamic Client Registration (RFC 7591) and client management (RFC 7592)
+- Client ID Metadata Documents: an MCP client can use a URL as its `client_id` without registering first
+- `private_key_jwt` client authentication for dynamically registered clients
+- Resource Indicators (RFC 8707) and Protected Resource Metadata (RFC 9728)
+- Token Exchange (RFC 8693), including ID-JAGs for enterprise-managed authorization, so an organization's IdP can decide which agents may reach which MCP servers
+
+Point your MCP server's protected resource metadata at Casdoor, and sign-in, consent, token issuing and validation are handled for you. Casdoor also runs its own MCP server, so an assistant such as Claude Code or Cursor can manage users, applications and permissions through it.
+
+## Other protocol work
+
+- SAML Single Logout and IdP-initiated SSO
+- OIDC `prompt=none`, better conformance for hybrid flow, `prompt` and `max_age`, and the RFC 9207 `iss` parameter
+- Token revocation (RFC 7009), DPoP and the device authorization flow
+- Magic link sign-in, password history checks, and passkeys shared across sibling subdomains
+- Exclusive sign-in with a maximum number of sessions per user
+
+## Try it
+
+The quickest way to look around:
+
+```shell
+docker run -p 8000:8000 casbin/casdoor-all-in-one
+```
+
+Then open http://localhost:8000. The image includes SQLite and sample data, so use it for trying things out, not for production. The [installation guide](/docs/basic/server-installation) covers real deployments.
+
+There are two online demos: [demo.casdoor.com](https://demo.casdoor.com) is writable and resets every five minutes, and [door.casdoor.com](https://door.casdoor.com) is read-only.
+
+If you would rather not run it yourself, [Casdoor Cloud](https://www.casdoor.com/pricing) gives you a dedicated, managed instance at a flat price with no per-user fees. New accounts get $10 in credit to try it.
+
+## Links
+
+- GitHub: https://github.com/casdoor/casdoor
+- Release notes: https://github.com/casdoor/casdoor/releases
+- Docs: https://casdoor.ai/docs/overview
+- Discord: https://discord.gg/5rPsrAzK7S
+
+Bug reports and feature requests are welcome on GitHub. If Casdoor is useful to you, a star helps other people find it.
