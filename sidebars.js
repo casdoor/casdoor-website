@@ -27,6 +27,7 @@ module.exports = {
         "basic/tutorials",
       ],
     },
+    "commercial-support",
     {
       type: "category",
       label: "Comparisons",
