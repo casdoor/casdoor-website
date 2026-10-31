@@ -20,7 +20,7 @@ function* walk(dir) {
 // unparsable URL and fails the build. URLs in code spans and fences are not links.
 function findUnparsableUrl(source) {
   const text = source.replace(/```[\s\S]*?```/g, "").replace(/~~~[\s\S]*?~~~/g, "").replace(/`[^`]*`/g, "");
-  const match = text.match(/https?:\/\/[^\s<>()"']*[　-〿＀-￯]/);
+  const match = text.match(/https?:\/\/[A-Za-z0-9._~:/?#@!$&*+,;=%-]+[　-〿＀-￯]/);
   return match ? match[0] : null;
 }
 
