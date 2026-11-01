@@ -7,6 +7,12 @@ authors: [jakiuncle]
 
 ShenYu has a Casdoor plugin to enable the use of Casdoor.
 
+:::note
+
+Released ShenYu versions (up to 2.7.1) ship the Casdoor plugin in the main repository. On ShenYu `master` it has moved to the [ShenYu plugin store](https://github.com/apache/shenyu-plugin-store) ([apache/shenyu#7500](https://github.com/apache/shenyu/pull/7500)): add the `shenyu-spring-boot-starter-plugin-casdoor` starter to your gateway as described in [plugin-store-casdoor.md](https://github.com/apache/shenyu/blob/master/docs/plugin-store-casdoor.md). The plugin name and configuration fields stay the same.
+
+:::
+
 ## Step 1: Deploy Casdoor
 
 Deploy Casdoor first. See [Server installation](/docs/basic/server-installation).
@@ -43,7 +49,7 @@ Paste it into the certificate field of the ShenYu Casdoor config.
 ### 2. Configure the ShenYu Casdoor plugin
 
    ![Shenyu Casdoor Config](/img/integration/java/shenyu/shenyu_casdoor.png)
-   Configure the Casdoor settings as needed.
+   Configure the Casdoor settings as needed. The plugin reads `endpoint`, `client_id`, `client_secrect`, `certificate`, `organization-name` and `application-name`; note that the client secret key is spelled `client_secrect` in the plugin.
 
 ### 3. Getting the service and using it
 

@@ -54,15 +54,13 @@ spring:
           casdoor:
             client-id: <Client ID>
             client-secret: <Client Secret>
-            scope: <Scope>
+            scope: openid,profile,email
             authorization-grant-type: authorization_code
             redirect-uri: <Redirect URL>
         provider:
           casdoor:
-            authorization-uri: http://CASDOOR_HOSTNAME:7001/login/oauth/authorize
-            token-uri: http://CASDOOR_HOSTNAME:8000/api/login/oauth/access_token
-            user-info-uri: http://CASDOOR_HOSTNAME:8000/api/get-account
-            user-name-attribute: name
+            issuer-uri: http://CASDOOR_HOSTNAME
+            user-name-attribute: preferred_username
 ```
 
 </TabItem>
@@ -72,14 +70,12 @@ spring:
 ```properties
 spring.security.oauth2.client.registration.casdoor.client-id=<Client ID>
 spring.security.oauth2.client.registration.casdoor.client-secret=<Client Secret>
-spring.security.oauth2.client.registration.casdoor.scope=<Scope>
+spring.security.oauth2.client.registration.casdoor.scope=openid,profile,email
 spring.security.oauth2.client.registration.casdoor.authorization-grant-type=authorization_code
 spring.security.oauth2.client.registration.casdoor.redirect-uri=<Redirect URL>
 
-spring.security.oauth2.client.provider.casdoor.authorization-uri=http://CASDOOR_HOSTNAME:7001/login/oauth/authorize
-spring.security.oauth2.client.provider.casdoor.token-uri=http://CASDOOR_HOSTNAME:8000/api/login/oauth/access_token
-spring.security.oauth2.client.provider.casdoor.user-info-uri=http://CASDOOR_HOSTNAME:8000/api/get-account
-spring.security.oauth2.client.provider.casdoor.user-name-attribute=name
+spring.security.oauth2.client.provider.casdoor.issuer-uri=http://CASDOOR_HOSTNAME
+spring.security.oauth2.client.provider.casdoor.user-name-attribute=preferred_username
 ```
 
 </TabItem>
@@ -87,40 +83,43 @@ spring.security.oauth2.client.provider.casdoor.user-name-attribute=name
 </Tabs>
 ````
 
+With `issuer-uri`, Spring Boot reads Casdoor's discovery document at startup and fills in the authorization, token, userinfo (`/api/userinfo`) and JWKS endpoints. The value must match the `issuer` in that document. In Casdoor's userinfo, `preferred_username` is the user name and `name` is the display name.
+
 :::caution
 
-For the default situation of Spring Security, the `<Redirect URL>` should be like `http://<Your Spring Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/custom`.
-For example, in the following demo, the redirect URL should be `http://localhost:8080/login/oauth2/code/custom`.
+For the default situation of Spring Security, the `<Redirect URL>` should be like `http://<Your Spring Boot Application Endpoint>/<Servlet Prefix if it is configured>/login/oauth2/code/casdoor`, where `casdoor` is the registration ID.
+For example, in the following demo, the redirect URL should be `http://localhost:8080/login/oauth2/code/casdoor`.
 
 You should also configure this in the `casdoor` application.
 
 :::
 
-You can also customize the settings using `ClientRegistration` in your code. You can find the mapping [here](https://docs.spring.io/spring-security/site/docs/5.2.12.RELEASE/reference/html/oauth2.html#oauth2login-boot-property-mappings)
+You can also customize the settings using `ClientRegistration` in your code. You can find the mapping [here](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html#oauth2login-boot-property-mappings).
 
 ## Step 4: Get Started with a Demo
 
 1. We can create a Spring Boot application.
 
-2. We can add a configuration that protects all endpoints except `/` and `/login**` for users to log in.
+2. We can add a configuration that protects all endpoints except `/` and `/login**` for users to log in. Spring Security 6 removed `WebSecurityConfigurerAdapter`, so declare a `SecurityFilterChain` bean:
 
     ```java
+    @Configuration
     @EnableWebSecurity
-    public class UiSecurityConfig extends WebSecurityConfigurerAdapter {
+    public class UiSecurityConfig {
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                .antMatchers("/", "/login**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .oauth2Login();
-
+        @Bean
+        SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            http
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/", "/login**").permitAll()
+                    .anyRequest().authenticated())
+                .oauth2Login(Customizer.withDefaults());
+            return http.build();
         }
     }
     ```
+
+    For role mapping, logout from Casdoor, resource servers and Spring Cloud Gateway, see [Spring Boot SSO with OpenID Connect](/blog/spring-boot-sso-oidc).
 
 3. We can add a naive page for the user to log in.
 

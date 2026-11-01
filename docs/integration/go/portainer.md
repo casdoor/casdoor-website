@@ -39,6 +39,12 @@ Expand the **Settings** from the left navigation bar, click on the **Authenticat
 
 - `Redirect URL`: **https://`PORTAINER_HOST`**
 
+:::note
+
+Automatic team membership and admin group mapping from OAuth claims are Portainer Business Edition features. In Community Edition the team membership switch is locked, so assign teams and admin rights to Casdoor users by hand in Portainer.
+
+:::
+
 Log out of Portainer and test.
 
 ![Login](/img/integration/go/portainer/login.gif)

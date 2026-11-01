@@ -1,13 +1,13 @@
 ---
 title: Pulsar manager
-description: "Enable Casdoor sign-in for Apache Pulsar Manager - configure application.yml on the back end and turn on the Casdoor switch in the front end."
+description: "Enable Casdoor sign-in for Apache Pulsar Manager - configure application.properties on the back end and the Casdoor settings in the front end."
 keywords: [Pulsar Manager]
 authors: [jakiuncle]
 ---
 
 Casdoor can easily connect to Pulsar Manager.
 
-The code for connecting Casdoor has already been added to Pulsar Manager, so we just need to configure the `application.yml` file in the back-end and enable the front-end switch.
+The code for connecting Casdoor has already been added to Pulsar Manager, so we just need to configure the `application.properties` file in the back-end and the Casdoor settings in the front-end.
 
 ## Step 1: Deploy Casdoor
 
@@ -25,17 +25,25 @@ Configure an organization and an application in Casdoor (see [Application](/docs
 
 ![application](/img/integration/java/Pulsar-manager/editApplication.png)
 
-## Step 3: Enable the Pulsar Manager front-end switch
+## Step 3: Configure the Pulsar Manager front-end
 
-Enable this switch to send code and state to the back-end.
+The login page has a **Login with casdoor** button, which sends the code and state to the back-end after sign-in.
 
-The switch is on line 80 of `pulsar-manager/front-end/src/router/index.js`.
+Configure the Casdoor settings in the `config` object of `pulsar-manager/front-end/src/main.js`.
 
-![frontSwitch](/img/integration/java/Pulsar-manager/frontSwitch.png)
+```js
+const config = {
+  serverUrl: "http://localhost:7001",
+  clientId: "<client id from previous step>",
+  organizationName: "pulsar",
+  appName: "app-pulsar",
+  redirectPath: "/#callback",
+};
+```
 
 ## Step 4: Configure the back-end code
 
-Configure Casdoor's settings in the `application.properties` file, which can be found on line 154 of `pulsar-manager/src/main/resources/application.properties`.
+Configure Casdoor's settings in `pulsar-manager/src/main/resources/application.properties`.
 
 ```ini
 casdoor.endpoint = http://localhost:8000

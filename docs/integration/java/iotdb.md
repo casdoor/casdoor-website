@@ -5,9 +5,15 @@ keywords: [Apache IoTDB]
 authors: [jakiuncle]
 ---
 
-Casdoor can easily connect to [Apache IoTDB](https://github.com/apache/iotdb).
+Casdoor can easily connect to [Apache IoTDB](https://github.com/apache/iotdb) through [Apache IoTDB Web Workbench](https://github.com/apache/iotdb-web-workbench), the web console for IoTDB. Casdoor sign-in applies to the Workbench, not to the IoTDB database itself.
 
-[Apache IoTDB Web Workbench](https://github.com/apache/iotdb-web-workbench) already includes Casdoor support. Configure the backend `application.yml` and enable the front-end switch.
+The Workbench already includes Casdoor support. Configure the backend `application.properties` and enable the front-end switch.
+
+:::note
+
+The `apache/iotdb-web-workbench` repository is archived and no longer maintained.
+
+:::
 
 ## Step 1: Deploy Casdoor
 
@@ -29,7 +35,11 @@ Create an organization and an application in Casdoor (see [Application](/docs/ap
 
 Open this switch to send the code and state to the back-end.
 
-This switch can be found in iotdb-web-workbench/fronted/.env file.
+The switch is the `VUE_APP_CASDOOR` variable in `iotdb-web-workbench/frontend/.env`. Set it to `true`:
+
+```ini
+VUE_APP_CASDOOR=true
+```
 
 ![frontSwitch](/img/integration/java/IoTDB/frontSwitch.png)
 

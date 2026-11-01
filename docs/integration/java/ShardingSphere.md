@@ -7,6 +7,12 @@ authors: [jakiuncle]
 
 [shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui) includes Casdoor; configure it as below.
 
+:::note
+
+Casdoor login was added to the ElasticJob UI after its last release (3.0.2), so it exists only on the `master` branch. Build the UI from `master` to use it.
+
+:::
+
 ## Step 1: Deploy Casdoor
 
 Deploy Casdoor. See [Server installation](/docs/basic/server-installation). Ensure the server is running and you can sign in at the Casdoor login page as `built-in/admin` with the password that you set. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).

@@ -31,6 +31,10 @@ security:
   authentication:
     # Authentication types (supported types: PASSWORD, LDAP, CASDOOR_SSO)
     type: CASDOOR_SSO
+    casdoor:
+      user:
+        # The Casdoor user name that becomes the DolphinScheduler administrator
+        admin:
 casdoor:
   # The URL of your Casdoor server
   endpoint:
@@ -48,3 +52,9 @@ casdoor:
 
 Now, DolphinScheduler will automatically redirect you to Casdoor for authentication.
 ![Demo](/img/integration/java/dolphinscheduler/dolphinscheduler.gif)
+
+:::tip
+
+DolphinScheduler 3.4.0 and later also support a generic `OIDC` authentication type. Instead of `CASDOOR_SSO`, you can set `type: OIDC` and add Casdoor under `security.authentication.oidc.providers` with `issuer-uri: http://CASDOOR_HOSTNAME`; the redirect URL to add in Casdoor is then `<api.base-url>/login/oauth2/code/<provider id>`, for example `http://localhost:12345/dolphinscheduler/login/oauth2/code/casdoor`. See the [DolphinScheduler authentication docs](https://github.com/apache/dolphinscheduler/blob/3.4.0/docs/docs/en/guide/security/authentication-type.md#oidc-openid-connect).
+
+:::

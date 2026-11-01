@@ -27,8 +27,11 @@ client_id = <client ID from previous step>
 client_secret = <client secret from previous step>
 auth_url = <Casdoor endpoint>/login/oauth/authorize
 token_url = <Casdoor endpoint>/api/login/oauth/access_token
-
+api_url = <Casdoor endpoint>/api/userinfo
+scopes = openid profile email
 ```
+
+Set `scopes` explicitly: Grafana's default is `user:email`, which does not request `openid`.
 
 ### HTTPS
 
@@ -55,7 +58,7 @@ Related links:
 
 ### About Role Mapping
 
-You may want to configure `role_attribute_path` to map your user's role to Grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#role-mapping).
+You may want to configure `role_attribute_path` to map your user's role to Grafana via [role_attribute_path](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#configure-role-mapping).
 
 ```ini
 [auth.generic_oauth]

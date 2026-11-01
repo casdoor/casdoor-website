@@ -52,18 +52,18 @@ Make sure to back up the Jenkins `config.xml` file to recover in case of any set
 
 4. In the Configuration mode, select `Automatic configuration` and enter **http://`CASDOOR_HOSTNAME`/.well-known/openid-configuration** as the Well-known configuration endpoint. ![Jenkins' Setting](/img/integration/java/jenkins-oidc/jenkins_auto.png)
 
-    If your Casdoor is deployed locally, you may need to select `Manual configuration` and provide the following information:
+    If your Casdoor is deployed locally, you may need to select `Manual configuration` and provide the following information (the same endpoints the discovery URL lists):
 
     - Token server URL: **http://`CASDOOR_HOSTNAME`/api/login/oauth/access_token**
     - Authorization server URL: **http://`CASDOOR_HOSTNAME`/login/oauth/authorize**
-    - UserInfo server URL: **http://`CASDOOR_HOSTNAME`/api/get-account**
+    - UserInfo server URL: **http://`CASDOOR_HOSTNAME`/api/userinfo**
     - Scopes: `address phone openid profile offline_access email`
     ![Manual configuration](/img/integration/java/jenkins-oidc/jenkins_manual.png)
 
 5. Click on **Advanced settings** and fill in the following:
 
-    - In the User name field, specify `name`.
-    - In the Full name field, specify `displayName`.
+    - In the User name field, specify `preferred_username`.
+    - In the Full name field, specify `name`.
     - In the Email field, specify `email`.
 
     ![Userinfo Field Setting](/img/integration/java/jenkins-oidc/jenkins_field.png)

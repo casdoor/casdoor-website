@@ -21,7 +21,13 @@ After a successful deployment, make sure that:
 
 Implement a Casdoor-based login in your app with the following steps.
 
-Deploy MinIO: [MinIO quickstart](https://github.com/minio/minio#minio-quickstart-guide). Install the `mc` client: [MinIO mc](https://docs.min.io/minio/baremetal/reference/minio-mc.html#install-mc).
+Deploy MinIO: [MinIO quickstart](https://github.com/minio/minio#minio-quickstart-guide). Install the `mc` client: [MinIO mc](https://github.com/minio/docs/blob/main/source/reference/minio-mc.rst).
+
+:::note
+
+The `minio/minio` GitHub repository is archived and no longer maintained; MinIO now points users to its AIStor editions. The links on this page go to the MinIO documentation sources in [minio/docs](https://github.com/minio/docs), because the old `docs.min.io` pages for the open-source server have been removed.
+
+:::
 
 ## Step 2: Configure Casdoor Application
 
@@ -36,7 +42,7 @@ Deploy MinIO: [MinIO quickstart](https://github.com/minio/minio#minio-quickstart
 
     ![MinIO Policy Setting](/img/integration/go/minio/minio_policy.png)
 
-    See [MinIO policy-based access control](https://docs.min.io/minio/baremetal/security/minio-identity-management/policy-based-access-control.html#minio-policy) for supported policies.
+    See [MinIO policy-based access control](https://github.com/minio/docs/blob/main/source/administration/identity-access-management/policy-based-access-control.rst) for supported policies.
 
 ## Step 3: Configure MinIO
 
@@ -62,7 +68,7 @@ Now, configure the OpenID Connect of MinIO. For Casdoor, the command will be:
 mc admin config set myminio identity_openid config_url="http://CASDOOR_HOSTNAME/.well-known/openid-configuration" client_id=<client id> client_secret=<client secret> claim_name="tag"
 ```
 
-See the [MinIO OpenID identity management docs](https://docs.min.io/minio/baremetal/reference/minio-server/minio-server.html#openid-identity-management) for more parameters.
+See the [MinIO OpenID identity management docs](https://github.com/minio/docs/blob/main/source/reference/minio-server/settings/iam/openid.rst) for more parameters.
 
 Once successfully set, restart the MinIO instance.
 
