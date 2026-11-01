@@ -1,0 +1,322 @@
+---
+slug: spring-boot-sso-oidc
+title: "Spring Boot SSO with OpenID Connect: Spring Security, Resource Server and Spring Cloud Gateway with Casdoor"
+description: "Add single sign-on to Spring Boot with OpenID Connect and Casdoor: oauth2Login web apps, JWT resource servers and Spring Cloud Gateway TokenRelay, with YAML."
+authors: [hsluoyz]
+tags: [Casdoor, Spring Boot, Spring Security, Spring Cloud Gateway, OIDC, OAuth 2.0, SSO, JWT]
+date: 2026-11-02
+---
+
+To add single sign-on to Spring Boot, register each app as an application in an OpenID Connect provider such as Casdoor, point Spring Security at the provider's issuer URL, and pick the Spring module that matches the app: `oauth2Login()` for a server-rendered web app, `oauth2ResourceServer().jwt()` for a REST API that receives bearer tokens, and Spring Cloud Gateway with the `TokenRelay` filter when one gateway signs users in for a set of microservices. Users get SSO because every app sends them to the same Casdoor, which remembers the session: the second app redirects, Casdoor already knows the user, and they come straight back without a login form. This post sets up all three shapes against one Casdoor, each with a working `application.yml` and a customized `SecurityFilterChain`.
+
+<!-- truncate -->
+
+## The three shapes at a glance
+
+| Shape | Spring dependency | Who holds the login | Casdoor endpoints used | Filter chain |
+|---|---|---|---|---|
+| Web app | `spring-boot-starter-oauth2-client` | The app (HTTP session) | discovery, authorize, token, userinfo, JWKS, logout | `SecurityFilterChain` with `oauth2Login()` |
+| REST API | `spring-boot-starter-oauth2-resource-server` | Nobody, every request carries a bearer token | JWKS (and discovery if you use `issuer-uri`) | `SecurityFilterChain` with `oauth2ResourceServer()` |
+| Gateway + microservices | `spring-cloud-starter-gateway-server-webflux` + `spring-boot-starter-oauth2-client` | The gateway (WebFlux session) | Same as the web app; services behind it use JWKS | `SecurityWebFilterChain` with `oauth2Login()`, `TokenRelay` on routes |
+
+Version assumptions: Spring Boot 3.5 with Spring Security 6.5, Java 17, and Spring Cloud 2025.0 (Spring Cloud Gateway 4.3). On Spring Boot 4 the two Security starters are named `spring-boot-starter-security-oauth2-client` and `spring-boot-starter-security-oauth2-resource-server`. Gateway 4.3 and 5.0 both use the `spring.cloud.gateway.server.webflux.*` property prefix used below; the older `spring.cloud.gateway.*` prefix and the `spring-cloud-starter-gateway` artifact are deprecated since Spring Cloud 2025.0.
+
+## What Casdoor gives Spring
+
+In the Casdoor admin console, create an application (or reuse one) and copy its **Client ID** and **Client secret**. Add every callback the Spring apps will use to **Redirect URLs**. Spring Security's default is `{baseUrl}/login/oauth2/code/{registrationId}`, so with the registration ID `casdoor` and an app on port 8080 the URL is `http://localhost:8080/login/oauth2/code/casdoor`. If you use OIDC logout, also add the page users land on afterwards, for example `http://localhost:8080/`; Casdoor refuses a `post_logout_redirect_uri` that is not in the list.
+
+Casdoor publishes a standard discovery document at `/.well-known/openid-configuration`, so Spring only needs the issuer. These are the endpoints it advertises, taken from the Casdoor source:
+
+| Metadata field | Casdoor path |
+|---|---|
+| `issuer` | The backend origin, e.g. `https://door.example.com` (no trailing slash) |
+| `authorization_endpoint` | `/login/oauth/authorize` |
+| `token_endpoint` | `/api/login/oauth/access_token` |
+| `userinfo_endpoint` | `/api/userinfo` |
+| `jwks_uri` | `/.well-known/jwks` |
+| `end_session_endpoint` | `/api/logout` |
+
+Supported scopes are `openid`, `email`, `profile`, `address`, `phone` and `offline_access`, plus any custom scopes defined on the application. Tokens are signed with RS256 by default and carry the cert name as `kid`. Each application also has its own discovery document at `/.well-known/<application>/openid-configuration`; see [Connect a standard OIDC client](/docs/how-to-connect/oidc-client) for the details and the full list of [OAuth 2.0 endpoints](/docs/how-to-connect/oauth).
+
+Two things in Casdoor's tokens matter for Spring:
+
+- **The issuer must match exactly.** Spring compares the `issuer` in the discovery document with the `issuer-uri` you configure, and later with the `iss` claim of every token. Casdoor derives the issuer from the `origin` setting in `app.conf`, or from the Host header when `origin` is empty. If your Spring apps reach Casdoor through an internal hostname (say `http://casdoor:8000` inside Docker) while browsers use a public one, set `origin` to the public URL so every token gets the same `iss`. See [Configuration](/docs/basic/configuration).
+- **Roles come in two forms.** `/api/userinfo` returns `roles` as a list of role names when the `profile` scope was granted. The access token in the default `JWT` [token format](/docs/token/overview) contains `roles` as a list of role objects, each with a `name` field. The code below handles both. Casdoor access tokens also carry `scope` as a space-separated string, which Spring turns into `SCOPE_...` authorities by default.
+
+If you want background on the protocol, see [What is OpenID Connect](https://www.casdoor.com/blog/what-is-openid-connect) and [ID token vs access token](https://www.casdoor.com/blog/id-token-vs-access-token).
+
+## 1. Spring Boot web app with oauth2Login()
+
+Add `spring-boot-starter-web`, `spring-boot-starter-security` and `spring-boot-starter-oauth2-client`. Then configure the provider by issuer:
+
+```yaml title="application.yml"
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          casdoor:
+            client-id: <client-id>
+            client-secret: <client-secret>
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email
+        provider:
+          casdoor:
+            issuer-uri: https://door.example.com
+            user-name-attribute: preferred_username
+```
+
+At startup Spring Boot fetches `https://door.example.com/.well-known/openid-configuration` and fills in the authorization, token, userinfo and JWKS URIs. Spring then validates the ID token's signature, issuer, audience and nonce, calls `/api/userinfo` because `profile` and `email` are in the scope, and merges the claims. `preferred_username` is the Casdoor user name; `name` in userinfo is the display name, and the default `sub` is the user's UUID.
+
+Without your own configuration, Spring Boot requires login for every URL. The customized `SecurityFilterChain` below opens the home page, maps Casdoor roles to `ROLE_` authorities, and logs out of Casdoor as well as the app:
+
+```java title="SecurityConfig.java"
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http,
+            ClientRegistrationRepository clientRegistrations) throws Exception {
+        OidcClientInitiatedLogoutSuccessHandler oidcLogout =
+                new OidcClientInitiatedLogoutSuccessHandler(clientRegistrations);
+        oidcLogout.setPostLogoutRedirectUri("{baseUrl}/");
+
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/public/**", "/error").permitAll()
+                .requestMatchers("/admin/**").hasRole("admin")
+                .anyRequest().authenticated())
+            .oauth2Login(login -> login
+                .userInfoEndpoint(userInfo -> userInfo
+                    .userAuthoritiesMapper(casdoorRoles())))
+            .logout(logout -> logout
+                .logoutSuccessHandler(oidcLogout));
+        return http.build();
+    }
+
+    private GrantedAuthoritiesMapper casdoorRoles() {
+        return authorities -> {
+            Set<GrantedAuthority> mapped = new HashSet<>(authorities);
+            for (GrantedAuthority authority : authorities) {
+                if (authority instanceof OidcUserAuthority oidc && oidc.getUserInfo() != null) {
+                    List<String> roles = oidc.getUserInfo().getClaimAsStringList("roles");
+                    if (roles != null) {
+                        roles.forEach(role -> mapped.add(new SimpleGrantedAuthority("ROLE_" + role)));
+                    }
+                }
+            }
+            return mapped;
+        };
+    }
+}
+```
+
+`hasRole("admin")` now matches users who have the Casdoor role `admin`. `OidcClientInitiatedLogoutSuccessHandler` reads `end_session_endpoint` from the discovery document and redirects to Casdoor's `/api/logout` with `id_token_hint` and `post_logout_redirect_uri`, so the Casdoor session ends too. Without it, `/logout` only clears the Spring session and the next login is silent.
+
+In a controller, the signed-in user is an `OidcUser`:
+
+```java
+@GetMapping("/me")
+Map<String, Object> me(@AuthenticationPrincipal OidcUser user) {
+    return Map.of("name", user.getName(), "email", user.getEmail(),
+            "authorities", user.getAuthorities().toString());
+}
+```
+
+The older step-by-step page for this setup is [Spring Security OAuth](/docs/integration/java/spring-security/spring-security-oauth).
+
+## 2. Spring Boot API as an OAuth2 resource server
+
+A REST API should not redirect anyone. It accepts `Authorization: Bearer <access token>`, checks the JWT signature against Casdoor's JWKS, and checks the claims. Add `spring-boot-starter-web`, `spring-boot-starter-security` and `spring-boot-starter-oauth2-resource-server`:
+
+```yaml title="application.yml"
+server:
+  port: 9000
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://door.example.com
+          jwk-set-uri: https://door.example.com/.well-known/jwks
+          audiences: <client-id>
+```
+
+With only this file, Spring Boot builds a `JwtDecoder` that checks the signature, the expiry, `iss` and `aud`. Setting `jwk-set-uri` next to `issuer-uri` means the keys are fetched directly instead of through discovery, and the issuer is still validated. The audience is the client ID of the Casdoor application that issued the token: if a single-page app or the gateway from section 3 obtains the token, use that application's client ID.
+
+There is one Casdoor-specific check worth adding. Casdoor signs ID tokens and access tokens with the same key and gives both the client ID as audience, so the default validators would also accept an ID token sent as a bearer token. Every Casdoor token has a `tokenType` claim (`access-token`, `id-token` or `refresh-token`), which makes the check simple. Defining a `JwtDecoder` bean replaces Boot's, so the bean re-adds the issuer and audience checks:
+
+```java title="ApiSecurityConfig.java"
+@Configuration
+@EnableWebSecurity
+public class ApiSecurityConfig {
+
+    @Bean
+    JwtDecoder jwtDecoder(
+            @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}") String issuer,
+            @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri,
+            @Value("${spring.security.oauth2.resourceserver.jwt.audiences}") String clientId) {
+        NimbusJwtDecoder decoder = NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
+        decoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(
+                JwtValidators.createDefaultWithIssuer(issuer),
+                new JwtClaimValidator<List<String>>(JwtClaimNames.AUD,
+                        aud -> aud != null && aud.contains(clientId)),
+                new JwtClaimValidator<String>("tokenType", "access-token"::equals)));
+        return decoder;
+    }
+
+    @Bean
+    SecurityFilterChain apiFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/actuator/health").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("admin")
+                .anyRequest().authenticated())
+            .oauth2ResourceServer(server -> server
+                .jwt(jwt -> jwt
+                    .decoder(jwtDecoder)
+                    .jwtAuthenticationConverter(casdoorJwtConverter())))
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
+
+    private JwtAuthenticationConverter casdoorJwtConverter() {
+        JwtGrantedAuthoritiesConverter scopes = new JwtGrantedAuthoritiesConverter();
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setPrincipalClaimName("name");
+        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            Collection<GrantedAuthority> authorities = new ArrayList<>(scopes.convert(jwt));
+            if (jwt.getClaims().get("roles") instanceof Collection<?> roles) {
+                for (Object role : roles) {
+                    Object name = role instanceof Map<?, ?> map ? map.get("name") : role;
+                    if (name instanceof String roleName && !roleName.isEmpty()) {
+                        authorities.add(new SimpleGrantedAuthority("ROLE_" + roleName));
+                    }
+                }
+            }
+            return authorities;
+        });
+        return converter;
+    }
+}
+```
+
+The converter keeps the `SCOPE_` authorities, adds `ROLE_` authorities from the `roles` claim whether it holds names or objects, and uses the `name` claim (the Casdoor user name) as the principal. If the application uses the `JWT-Standard` token format, use `preferred_username` as the principal claim instead. Disabling CSRF and sessions is right here because the API never sees a browser cookie; do not copy those two lines into the web app.
+
+To try it without a browser, get a machine token with the client credentials grant and call the API:
+
+```shell
+TOKEN=$(curl -s -u '<client-id>:<client-secret>' \
+  -d grant_type=client_credentials \
+  https://door.example.com/api/login/oauth/access_token | jq -r .access_token)
+
+curl -H "Authorization: Bearer $TOKEN" http://localhost:9000/api/hello
+```
+
+A client credentials token represents the application, not a user, so it has no roles. For more on which claims to check and why, see [JWT validation](https://www.casdoor.com/blog/jwt-validation) and [OAuth scopes](https://www.casdoor.com/blog/oauth-scopes).
+
+## 3. Spring Cloud Gateway with TokenRelay
+
+With microservices, a common layout is to let the gateway handle login and keep the services as resource servers. The browser only ever talks to the gateway and holds a session cookie; the gateway stores the user's access token and the `TokenRelay` filter adds it as `Authorization: Bearer ...` to each proxied request. The services from section 2 validate it as usual.
+
+Add `spring-cloud-starter-gateway-server-webflux` and `spring-boot-starter-oauth2-client`, with the Spring Cloud 2025.0 BOM:
+
+```yaml title="application.yml"
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  security:
+    oauth2:
+      client:
+        registration:
+          casdoor:
+            client-id: <client-id>
+            client-secret: <client-secret>
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email
+        provider:
+          casdoor:
+            issuer-uri: https://door.example.com
+            user-name-attribute: preferred_username
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: orders
+              uri: http://localhost:9000
+              predicates:
+                - Path=/api/orders/**
+              filters:
+                - TokenRelay=
+            - id: users
+              uri: http://localhost:9001
+              predicates:
+                - Path=/api/users/**
+              filters:
+                - TokenRelay=
+```
+
+`TokenRelay=` with no argument relays the token of the signed-in user. The `TokenRelay` filter factory is only created when `spring.security.oauth2.client.*` is configured, and the default authorized-client store is in memory, so a gateway with several replicas needs a shared store or sticky sessions. The services behind it set `audiences` to the gateway's client ID.
+
+Spring Cloud Gateway runs on WebFlux, so its security configuration is a `SecurityWebFilterChain` built from `ServerHttpSecurity`, not the servlet `SecurityFilterChain`:
+
+```java title="GatewaySecurityConfig.java"
+@Configuration
+@EnableWebFluxSecurity
+public class GatewaySecurityConfig {
+
+    @Bean
+    SecurityWebFilterChain gatewayFilterChain(ServerHttpSecurity http,
+            ReactiveClientRegistrationRepository clientRegistrations) {
+        OidcClientInitiatedServerLogoutSuccessHandler oidcLogout =
+                new OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrations);
+        oidcLogout.setPostLogoutRedirectUri("{baseUrl}/");
+
+        http
+            .authorizeExchange(exchanges -> exchanges
+                .pathMatchers("/", "/actuator/health").permitAll()
+                .anyExchange().authenticated())
+            .oauth2Login(Customizer.withDefaults())
+            .logout(logout -> logout.logoutSuccessHandler(oidcLogout));
+        return http.build();
+    }
+}
+```
+
+Keep authorization decisions in the services, where the roles are in the token; the gateway only makes sure there is a signed-in user. CSRF protection stays on in the gateway because it is cookie-based.
+
+The existing [Spring Cloud Gateway](/docs/integration/java/spring-cloud-gateway) and [Spring Cloud](/docs/integration/java/spring-cloud) pages show a different design, where a custom `GlobalFilter` checks a Casdoor user stored in the gateway session.
+
+## Alternative: the Casdoor Spring Boot starter
+
+If you would rather not write the YAML, [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter) 2.x (Spring Boot 3 and 4, Java 17+) takes `casdoor.endpoint`, `casdoor.client-id`, `casdoor.client-secret`, `casdoor.organization-name` and `casdoor.application-name`, and sets the `spring.security.oauth2.*` properties above for whichever Security starter is on the classpath. It registers the client as `casdoor`, maps Casdoor roles to `ROLE_` authorities for both OAuth2 login and the servlet resource server, and exposes the [Casdoor Java SDK](https://github.com/casdoor/casdoor-java-sdk) services as beans. Its properties have the lowest precedence, so you can still override any of them. See [Spring Boot](/docs/integration/java/spring-boot) for the setup.
+
+## Common errors
+
+- **"The Issuer ... provided in the configuration metadata did not match the requested issuer"**: the `issuer-uri` differs from what Casdoor reports. Remove any trailing slash, and set `origin` in Casdoor if the hostnames differ.
+- **`redirect_uri` rejected by Casdoor**: the callback is not in the application's Redirect URLs. Check the scheme and port, especially behind a reverse proxy.
+- **"Missing attribute 'preferred_username'"**: the `profile` scope was not requested, or the application's token fields leave out `Name`.
+- **401 with an `invalid_token` error on the API**: the token came from another application (wrong `aud`), it is expired, or it is an ID token.
+
+## References
+
+- Casdoor discovery document and endpoints: [`object/wellknown_oidc_discovery.go`](https://github.com/casdoor/casdoor/blob/master/object/wellknown_oidc_discovery.go)
+- Casdoor token claims: [`object/token_jwt.go`](https://github.com/casdoor/casdoor/blob/master/object/token_jwt.go)
+- [Spring Boot 3.5 reference: Spring Security, OAuth2 client and resource server](https://docs.spring.io/spring-boot/3.5/reference/web/spring-security.html)
+- [Spring Security: OIDC client-initiated logout](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/logout.html)
+- [Spring Security: OAuth 2.0 resource server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
+- [Spring Cloud Gateway: TokenRelay GatewayFilter factory](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/gatewayfilter-factories/tokenrelay-factory.html)
+- [Spring Cloud Gateway: starter `spring-cloud-starter-gateway-server-webflux`](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/starter.html)
+- [Spring Cloud 2025.0 release notes](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2025.0-Release-Notes)
+- [casdoor-spring-boot-starter](https://github.com/casdoor/casdoor-spring-boot-starter)

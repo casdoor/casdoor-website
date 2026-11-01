@@ -1,0 +1,95 @@
+---
+slug: captcha-for-login-pages
+title: "CAPTCHA Providers Compared for Login Pages: reCAPTCHA, hCaptcha, Turnstile, GeeTest and Alibaba Cloud in Casdoor"
+description: "Compare reCAPTCHA, hCaptcha, Cloudflare Turnstile, GeeTest, Alibaba Cloud Captcha and the built-in captcha for login and sign-up pages, and use them in Casdoor."
+authors: [hsluoyz]
+tags: [Casdoor, CAPTCHA, reCAPTCHA, hCaptcha, Turnstile, GeeTest, Alibaba Cloud, Security]
+date: 2026-11-02
+---
+
+For most sign-in and sign-up pages on the global internet, Cloudflare Turnstile is the easiest pick: the free plan has no cap on challenges, and its default mode shows a checkbox only to risky visitors. If many of your users are in mainland China, use Alibaba Cloud Captcha or GeeTest instead, because Cloudflare says Turnstile is not supported there. If you need the captcha to work without any outside service, use the built-in image captcha of Casdoor. Casdoor supports all of these, plus Google reCAPTCHA (v2 and v3) and hCaptcha, as [captcha providers](/docs/provider/captcha/overview), and you pick when the captcha appears per application.
+
+<!-- truncate -->
+
+## The comparison
+
+Pricing and availability below were checked against each vendor's own site on 2026-11-02. Where a vendor does not publish a number, the table says so instead of guessing.
+
+| Provider | What the user sees | Invisible mode | Data and privacy | Free tier and pricing | Mainland China | Casdoor type |
+|---|---|---|---|---|---|---|
+| Casdoor default | Types five digits from an image | No | Generated and checked by your Casdoor server; no third party | Free, part of Casdoor | Works, no outside call | `Default` |
+| Google reCAPTCHA v2 | Checkbox; some users get an image challenge | v2 also has an invisible variant that challenges only suspicious traffic | Google; sets the `_GRECAPTCHA` cookie for risk analysis | Essentials tier free up to 10,000 assessments per month per organization; Premium is $8 flat up to 100,000, then $1 per 1,000 | Google says to use `www.recaptcha.net` where `www.google.com` is not accessible | `reCAPTCHA`, `reCAPTCHA v2` (checkbox) |
+| Google reCAPTCHA v3 | Nothing; returns a score | Yes | Same as v2 | Same as v2 | Same as v2 | `reCAPTCHA v3` |
+| hCaptcha | Checkbox with image challenges on the free plan | Passive mode on Pro ("99.9% passive") and a no-CAPTCHA mode on Enterprise | Says the free plan complies with GDPR, CCPA, LGPD and PIPL; certifies to the EU-U.S. Data Privacy Framework | Basic is free; Pro is $139 per month (or $99 per month billed yearly) with 100,000 evaluations, then $0.99 per 1,000; Enterprise through sales | Not documented by hCaptcha | `hCaptcha` |
+| Cloudflare Turnstile | Managed mode shows a checkbox only when needed | Non-interactive and Invisible widget modes | Cloudflare says it processes only the data strictly necessary and does not read form entries; no Cloudflare proxy required | Free plan: unlimited challenges, up to 20 widgets; Enterprise through sales | Cloudflare: "not supported in Mainland China" | `Cloudflare Turnstile` |
+| GeeTest CAPTCHA v4 | One-click, slide puzzle, text click, match-three | Not listed on the v4 product page | Chinese vendor; product-specific privacy policy | No public price list; 30-day free trial, then sales | Chinese vendor | `GEETEST` |
+| Alibaba Cloud Captcha 2.0 | One-click, slider, jigsaw, image restoration | Traceless mode in the Standard and Enterprise editions | Runs on Alibaba Cloud | Pay as you go: 0.005 CNY per call in mainland China, 0.007 CNY outside; subscription editions and resource packages also available | Yes; Casdoor verifies against the Shanghai region endpoint | `Aliyun Captcha` |
+
+Two notes on the reCAPTCHA rows. Google has moved reCAPTCHA into Google Cloud Fraud Defense with Essentials, Premium and Enterprise tiers, and the free allowance of 10,000 assessments is pooled across the whole Google Cloud organization. Casdoor talks to reCAPTCHA with a site key and secret key through the standard `siteverify` endpoint, and it loads the script from `recaptcha.net` rather than `google.com`, for both the browser script and server-side verification.
+
+## Which one to pick
+
+### Global SaaS
+
+Start with [Cloudflare Turnstile](/docs/provider/captcha/cloudflareTurnstile). The free plan does not meter challenges, the Managed mode keeps most users from clicking anything, and you do not need to route your site through Cloudflare. If you already run on Google Cloud and want reCAPTCHA's risk signals, [reCAPTCHA](/docs/provider/captcha/recaptcha) is fine, but watch the 10,000 free assessments: a busy sign-in page or an SMS-pumping attack can pass that in a day. [hCaptcha](/docs/provider/captcha/hcaptcha) is the other common choice; its free plan always shows a challenge, and the passive modes are paid.
+
+### An app with users in mainland China
+
+Turnstile is out, by Cloudflare's own documentation. For reCAPTCHA, Google documents `www.recaptcha.net` as the domain to use when `www.google.com` is not reachable, and Casdoor already uses it, but you should still test from your users' networks before you depend on it. hCaptcha publishes no statement about China, so the same advice applies.
+
+The two safe picks are [Alibaba Cloud Captcha](/docs/provider/captcha/aliyunCaptcha) and [GeeTest](/docs/provider/captcha/geetest). Alibaba Cloud publishes per-call prices and lets you start pay-as-you-go; its traceless mode (in Casdoor, use the `Popup` sub type for it) gets close to the invisible experience of Turnstile. GeeTest sells through its sales team after a 30-day trial. If you serve both China and the rest of the world from one Casdoor, remember that an application has one captcha provider, so split the audiences into two applications if they need different captchas.
+
+### Privacy-sensitive users in the EU
+
+Every hosted captcha sends some data about the visitor's browser to the vendor. If your legal team wants no third party in the sign-in path at all, the Casdoor [default captcha](/docs/provider/captcha/default) is the only option in the table that keeps everything on your own server. Among the hosted ones, Turnstile and hCaptcha both describe privacy as part of the product (data limited to what the check needs, GDPR and the EU-U.S. Data Privacy Framework respectively). reCAPTCHA sets a `_GRECAPTCHA` cookie; Google notes that serving from `www.recaptcha.net` avoids other cookies that `www.google.com` may set. Whichever you pick, list it in your privacy notice.
+
+### Self-hosted, intranet or offline
+
+Use the default captcha. It needs no keys and no outbound network access, so it works in air-gapped installs. Pair it with the `Internet-Only` rule (below) so that people on the office network never see it, while requests from the public internet still do.
+
+The default captcha is the weakest of the group against automated solvers, since it is a plain distorted-digits image. For a public, high-traffic sign-in page, combine it with [multi-factor authentication](https://www.casdoor.com/blog/mfa-methods-compared) or move users to [passwordless sign-in](https://www.casdoor.com/blog/passwordless-authentication), which removes the password guessing that captchas exist to slow down.
+
+## How CAPTCHA works in Casdoor
+
+You add a provider with **Category** set to `Captcha` and one of these types: `Default`, `reCAPTCHA`, `reCAPTCHA v2`, `reCAPTCHA v3`, `hCaptcha`, `Cloudflare Turnstile`, `GEETEST` or `Aliyun Captcha`. Then you add it to an application on the **Providers** tab. An application can hold only one captcha provider; Casdoor refuses to save a second one. Setup steps for each vendor are in the [captcha provider docs](/docs/provider/captcha/overview).
+
+### Where Casdoor asks for it
+
+The same provider guards several actions, and Casdoor checks the token on the server, not only in the browser:
+
+- Password sign-in.
+- Sign-up form submission.
+- Sending a verification code by email or SMS, which covers the code step of sign-up, the forgot-password page and code-based sign-in. This is the protection against bots that burn your SMS budget.
+
+### When Casdoor asks for it
+
+The **Rule** of the captcha provider in the application decides when it appears:
+
+| Rule | Behavior |
+|---|---|
+| `None` | Never; the captcha is off |
+| `Dynamic` | Only after the user's failed sign-ins reach the application's **Failed signin limit** |
+| `Always` | Every time |
+| `Internet-Only` | For requests from public IP addresses; not for private, loopback or other non-public addresses |
+
+`Dynamic` is the gentlest setting for sign-in: honest users never see a challenge, and someone guessing passwords hits one after a few failures. It only applies to accounts that already exist, though. A sign-up, or a code sent to an address that has no account yet, does not trigger it. If SMS or email abuse at sign-up is your concern, use `Always` or `Internet-Only`.
+
+### Where it appears on the page
+
+On the application's sign-in items, the **Captcha** item has its own rule: `Pop up` shows the captcha in a dialog when it is needed, and `Inline` puts it directly on the page. See [Change the captcha](/docs/application/signin-items-table#captcha-rules). Alibaba Cloud Captcha has an extra **Sub type**: `Embed` shows it inside the Casdoor dialog, and `Popup` hands control to Alibaba Cloud's own popup, which is what traceless scenes need.
+
+Use the **Preview** button on the provider page to check the keys before you turn the rule on.
+
+## References
+
+- Google reCAPTCHA versions: https://developers.google.com/recaptcha/docs/versions
+- Google reCAPTCHA FAQ (`recaptcha.net`, `_GRECAPTCHA` cookie): https://developers.google.com/recaptcha/docs/faq
+- reCAPTCHA billing in Google Cloud Fraud Defense (checked 2026-11-02): https://docs.cloud.google.com/recaptcha/docs/billing-information
+- hCaptcha pricing (checked 2026-11-02): https://www.hcaptcha.com/pricing
+- hCaptcha privacy policy: https://www.hcaptcha.com/privacy
+- Cloudflare Turnstile overview: https://developers.cloudflare.com/turnstile/
+- Cloudflare Turnstile plans (checked 2026-11-02): https://developers.cloudflare.com/turnstile/plans/
+- Cloudflare China Network FAQ (Turnstile in mainland China): https://developers.cloudflare.com/china-network/faq/
+- GeeTest CAPTCHA v4 (checked 2026-11-02): https://www.geetest.com/adaptive-captcha
+- Alibaba Cloud Captcha 2.0 overview: https://help.aliyun.com/zh/captcha/captcha2-0/product-overview/what-is-alibaba-cloud-captcha-2
+- Alibaba Cloud Captcha 2.0 editions and prices (checked 2026-11-02): https://help.aliyun.com/zh/captcha/captcha2-0/product-overview/version-description

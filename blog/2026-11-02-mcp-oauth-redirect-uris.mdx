@@ -1,0 +1,157 @@
+---
+slug: mcp-oauth-redirect-uris
+title: "MCP OAuth Redirect URIs for Cursor, Claude and ChatGPT: Registering MCP Clients in Casdoor"
+description: "The OAuth callback URLs that Cursor, Claude and ChatGPT use for MCP servers, where claude_desktop_config.json lives, and how to register each client in Casdoor."
+authors: [hsluoyz]
+tags: [Casdoor, MCP, OAuth, Cursor, Claude, ChatGPT, Dynamic Client Registration]
+date: 2026-11-02
+---
+
+Every MCP client sends its own redirect URI when it signs in to an OAuth-protected MCP server. Cursor desktop uses `http://localhost:8787/callback` (releases before mid-2026 used `cursor://anysphere.cursor-mcp/oauth/callback`), Cursor on the web and Cursor Cloud Agents use `https://www.cursor.com/agents/mcp/oauth/callback`, claude.ai, Claude Desktop connectors, Claude mobile and Cowork use `https://claude.ai/api/mcp/auth_callback`, and ChatGPT uses `https://chatgpt.com/connector_platform_oauth_redirect` or a per-connection `https://chatgpt.com/connector/oauth/<callback-id>`. If you turn on dynamic client registration in Casdoor, you don't enter any of these: the clients register themselves or hand Casdoor a client ID metadata document. You add them to **Redirect URLs** only when you create a Casdoor application for a client by hand.
+
+<!-- truncate -->
+
+## Redirect URIs by client
+
+| Client | Redirect URI | How it gets a client ID from Casdoor | Notes |
+|---|---|---|---|
+| Cursor desktop (current) | `http://localhost:8787/callback` | DCR, or `auth.CLIENT_ID` in `mcp.json` | Fixed port 8787 |
+| Cursor web and Cloud Agents | `https://www.cursor.com/agents/mcp/oauth/callback` | DCR, or `auth.CLIENT_ID` | With DCR, the desktop app registers this URI and the localhost one |
+| Cursor desktop (older releases) | `cursor://anysphere.cursor-mcp/oauth/callback` | DCR, or `auth.CLIENT_ID` | Cursor made the loopback URI the default in July 2026 |
+| claude.ai, Claude Desktop connectors, Claude mobile, Cowork | `https://claude.ai/api/mcp/auth_callback` | CIMD, then DCR, or a client ID entered in the custom connector dialog | Anthropic's servers make the requests |
+| Claude Code | `http://localhost:<port>/callback` and `http://127.0.0.1:<port>/callback` | CIMD | The port changes per session |
+| Claude Desktop through `mcp-remote` | `http://localhost:<port>/oauth/callback` | DCR | The port is derived from the server URL |
+| ChatGPT | `https://chatgpt.com/connector_platform_oauth_redirect`, or `https://chatgpt.com/connector/oauth/<callback-id>` | CIMD, DCR, or a predefined client | Copy the exact value from ChatGPT |
+
+These values come from the vendors' documentation as of November 2, 2026 (see [References](#references)). Clients change them. When a sign-in fails, read the `redirect_uri` parameter of the authorization request in the browser's address bar and compare it with what Casdoor has.
+
+The table applies in two setups: the [MCP server built into Casdoor](/docs/how-to-connect/mcp/overview) at `/api/mcp`, and your own MCP server that uses [Casdoor as its authorization server](/docs/mcp-auth/overview). In both, the client finds Casdoor through protected resource metadata ([RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728)) and gets its client ID from Casdoor.
+
+## Option 1: let clients register themselves
+
+Casdoor supports dynamic client registration ([RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591)) at `/api/oauth/register`, and client ID metadata documents (CIMD), where the `client_id` is an HTTPS URL of a JSON document that lists the client's redirect URIs. One switch controls both: **Enable dynamic client registration** on the organization. It is off by default, for every organization including `built-in`.
+
+With the switch on for `built-in`, the discovery document shows what the clients look for:
+
+```bash
+curl -s https://your-casdoor.com/.well-known/openid-configuration | jq '{
+  registration_endpoint,
+  client_id_metadata_document_supported,
+  code_challenge_methods_supported,
+  token_endpoint_auth_methods_supported,
+  authorization_response_iss_parameter_supported
+}'
+```
+
+```json
+{
+  "registration_endpoint": "https://your-casdoor.com/api/oauth/register",
+  "client_id_metadata_document_supported": true,
+  "code_challenge_methods_supported": ["S256"],
+  "token_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post", "private_key_jwt", "none"],
+  "authorization_response_iss_parameter_supported": true
+}
+```
+
+Each client then picks its method:
+
+- **Claude** uses CIMD only when the metadata has both `client_id_metadata_document_supported: true` and `none` in `token_endpoint_auth_methods_supported`. Casdoor has both once the switch is on, so Claude identifies itself with a document URL and Casdoor creates an application named `cimd_...`. Otherwise Claude falls back to DCR.
+- **ChatGPT** prefers CIMD, with the `client_id` `https://chatgpt.com/oauth/client.json` (or a per-callback variant), and uses DCR when CIMD isn't available.
+- **Cursor** registers through DCR as a public client without a secret. Cursor's documentation doesn't mention CIMD.
+- **`mcp-remote`** registers through DCR.
+
+The redirect URIs come from the registration request or the metadata document, so there is nothing to type. Registered clients run under a restricted role and their tokens can't call the management API. See [Dynamic client registration](/docs/application/dynamic-client-registration) for the full rules and the organization a client lands in.
+
+## Option 2: create an application for the client
+
+If you keep registration off, create one application per client, so that you can revoke them separately:
+
+1. In the Casdoor admin console, go to **Identity** > **Applications** and add an application, for example `cursor-mcp`.
+1. Add the client's redirect URIs from the table to **Redirect URLs**. For Cursor, add all three, because different Cursor installs send different ones.
+1. Set **Category** to `Agent`. See [Set up Casdoor for your MCP server](/docs/mcp-auth/setup) for scopes and grant types.
+1. Give the **Client ID** to the client.
+
+A client secret is optional for these clients. Casdoor accepts an authorization code exchange without a secret when the request used PKCE, and Cursor, Claude and ChatGPT all use PKCE with `S256`. If a client does send a secret, it must be the right one.
+
+Where the client ID goes:
+
+- **Cursor**: an `auth` object in `~/.cursor/mcp.json` or `.cursor/mcp.json`. With a static `CLIENT_ID`, the Cursor desktop app sends only its localhost redirect URI.
+
+  ```json
+  {
+    "mcpServers": {
+      "casdoor": {
+        "url": "https://your-casdoor.com/api/mcp",
+        "auth": {
+          "CLIENT_ID": "${env:CASDOOR_MCP_CLIENT_ID}",
+          "scopes": ["application:read", "user:read"]
+        }
+      }
+    }
+  }
+  ```
+
+- **Claude**: the OAuth client ID field in the custom connector dialog. Register `https://claude.ai/api/mcp/auth_callback`.
+- **ChatGPT**: ChatGPT also works with predefined OAuth clients. Copy the redirect URI from the MCP server's management page in ChatGPT, since which of the two forms it uses depends on the authorization server.
+
+Step-by-step guides: [Cursor](/docs/how-to-connect/mcp/connect-cursor), [Claude Desktop](/docs/how-to-connect/mcp/connect-claude-desktop), [ChatGPT](/docs/how-to-connect/mcp/connect-chatgpt).
+
+## How Casdoor matches redirect URIs
+
+Casdoor compares the `redirect_uri` of a request with each entry in **Redirect URLs**:
+
+- The scheme, the host and the path must match. The query string isn't compared.
+- The port must match, except on loopback hosts. When both URIs use the same loopback host (`localhost`, `127.0.0.1` or `::1`), Casdoor ignores the port, as [RFC 8252](https://datatracker.ietf.org/doc/html/rfc8252#section-7.3) asks for native apps. `localhost` and `127.0.0.1` are different hosts, so Claude Code needs both `http://localhost/callback` and `http://127.0.0.1/callback`.
+- A redirect URI on a subdomain of a registered host also matches, so `https://example.com/cb` accepts `https://app.example.com/cb`. Register the most specific host you can.
+- Custom schemes such as `cursor://` match by the same rules. `javascript:`, `data:` and `vbscript:` URIs are always rejected.
+
+Because the loopback port is ignored, an `mcp-remote` or Claude Code registration keeps working when the local port changes between sessions.
+
+## Where claude_desktop_config.json lives
+
+The [MCP documentation](https://modelcontextprotocol.io/docs/develop/connect-local-servers) gives these paths. In Claude Desktop, **Settings** > **Developer** > **Edit Config** opens the file and creates it if it's missing.
+
+| Operating system | Path |
+|---|---|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+| Linux | `~/.config/Claude/claude_desktop_config.json` |
+
+Claude Desktop reaches a remote MCP server in one of two ways, and they use different redirect URIs:
+
+- **As a connector**, added in Claude's connector settings. Anthropic's servers run the OAuth flow, the redirect URI is `https://claude.ai/api/mcp/auth_callback`, and Casdoor must be reachable from the internet.
+- **Through `claude_desktop_config.json`**, with `mcp-remote` as a local bridge. The OAuth flow runs on your computer, and the redirect URI is `http://localhost:<port>/oauth/callback`:
+
+  ```json
+  {
+    "mcpServers": {
+      "casdoor": {
+        "command": "npx",
+        "args": ["mcp-remote", "https://your-casdoor.com/api/mcp"]
+      }
+    }
+  }
+  ```
+
+Quit Claude Desktop completely and start it again after you edit the file.
+
+## Hosted clients need a public Casdoor
+
+ChatGPT and Claude connectors call your MCP server and Casdoor from their vendors' servers, not from your computer. Casdoor must be reachable over public HTTPS with a valid certificate. Anthropic's requests come from `160.79.104.0/21`, if you filter by IP. Cursor desktop, Claude Code and `mcp-remote` run the flow locally, so a Casdoor on your network works for them.
+
+Two more things hosted clients check, which Casdoor already does:
+
+- **Issuer in the response** ([RFC 9207](https://www.rfc-editor.org/rfc/rfc9207)): ChatGPT rejects an authorization response without the right `iss`, and uses its stable redirect URI only with authorization servers that meet its RFC 9207 requirements. Casdoor advertises the support in its metadata and adds `iss` to the redirect.
+- **Resource indicators** ([RFC 8707](https://datatracker.ietf.org/doc/html/rfc8707)): ChatGPT sends `resource` with the MCP server URL on the authorization and token requests. Casdoor puts that value in the `aud` claim of the access token, and your MCP server should check it. See [MCP authentication](/docs/how-to-connect/mcp/authentication) for the discovery flow.
+
+Related reading on www.casdoor.com: [OAuth for AI agents](https://www.casdoor.com/blog/oauth-for-ai-agents) and [authorization servers for MCP](https://www.casdoor.com/blog/mcp-authorization-servers).
+
+## References
+
+- Cursor: [Model Context Protocol (MCP)](https://cursor.com/docs/mcp), section "Static OAuth for remote servers"
+- Cursor forum: [OAuth redirect URI changed from cursor:// to http://localhost](https://forum.cursor.com/t/oauth-redirect-uri-changed-from-cursor-to-http-localhost-for-streamable-http-mcp/165019)
+- Anthropic: [Authentication for connectors](https://claude.com/docs/connectors/building/authentication)
+- Model Context Protocol: [Connect to local MCP servers](https://modelcontextprotocol.io/docs/develop/connect-local-servers)
+- OpenAI: [Authenticate users](https://developers.openai.com/plugins/build/auth)
+- `mcp-remote`: [README](https://github.com/geelen/mcp-remote)
+- Casdoor: [Dynamic client registration](/docs/application/dynamic-client-registration), [Set up Casdoor for your MCP server](/docs/mcp-auth/setup)

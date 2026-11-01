@@ -1,0 +1,220 @@
+---
+slug: nginx-sso-authentication
+title: "Nginx CAS Authentication and SSO: Protecting Any App Behind Nginx with Casdoor"
+description: "Add CAS, OIDC or auth_request login in front of any app behind nginx with Casdoor: forward auth, OAuth2 Proxy, an nginx module, CAS clients and MFA compared."
+authors: [hsluoyz]
+tags: [Casdoor, nginx, CAS, SSO, OIDC, MFA, forward auth]
+date: 2026-11-02
+---
+
+Open-source nginx has no CAS module, so "nginx CAS authentication" in practice means one of two setups. Either nginx asks an authentication service about every request through its `auth_request` module, and Casdoor answers (directly at `/api/forward-auth`, or through casdoor-forward-auth or OAuth2 Proxy), or the app behind nginx is itself a CAS client and talks to Casdoor's CAS server endpoints. If you can rebuild nginx, the Casdoor nginx module runs the login inside nginx, and if you'd rather not run nginx at all, Casdoor's site proxy can sit in front of the app. In every case the login page is Casdoor's, so one SSO session, one set of permissions and one MFA policy cover all the apps.
+
+<!-- truncate -->
+
+## The options at a glance
+
+| Option | Login logic runs in | What nginx needs | Protocol to Casdoor | Who gets in | Pick it when |
+|---|---|---|---|---|---|
+| Casdoor forward auth | Casdoor, `/api/forward-auth` | `auth_request` | Casdoor session cookie on the app's domain | Application permissions, checked again at least once a minute | nginx is already in front and you want no extra service |
+| casdoor-forward-auth | A small Go service | `auth_request` | OIDC authorization code | Casdoor roles or groups, per location | One session cookie shared by many subdomains |
+| OAuth2 Proxy | OAuth2 Proxy | `auth_request` | OIDC | `allowed_groups`, email domains | You already run OAuth2 Proxy |
+| casdoor-nginx-module | nginx itself | A compiled module | OIDC with PKCE, tokens verified locally | Any signed-in user of the app | No extra process, plus bearer tokens for APIs |
+| CAS client in the app | The app | Nothing, it only proxies | CAS 1.0, 2.0, 3.0 | Whatever the app does with the attributes | The app already supports CAS |
+| Casdoor site proxy | Casdoor on ports 80 and 443 | No nginx | Casdoor session | Application permissions | Nothing else is in front of the app |
+
+The first three differ only in who answers nginx's subrequest.
+
+## Why there is no "nginx CAS module"
+
+CAS is a conversation between an application and the CAS server: the app sends the browser to the server's `/login` with a `service` URL, gets a service ticket back on that URL, and validates the ticket with a server-to-server call. Apache httpd has Apereo's [mod_auth_cas](https://github.com/apereo/mod_auth_cas) for doing this at the web server, but nginx has no CAS module among its official modules. For nginx, the standard building block is [`ngx_http_auth_request_module`](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html): before serving a request, nginx sends a subrequest to a URL you choose. A 2xx answer lets the request through, 401 or 403 denies it with that code, and any other code is an error.
+
+To the user, a CAS login and an OIDC login look the same: a redirect to the Casdoor login page and back. So for an app without CAS support, the practical answer is OIDC at the nginx layer. Background on the protocol: [What is CAS](https://www.casdoor.com/blog/what-is-cas).
+
+The auth_request module is not built by default: add `--with-http_auth_request_module` when compiling, or check `nginx -V` on a packaged nginx.
+
+## Option 1: Casdoor's own forward auth
+
+Casdoor can answer nginx's subrequest itself. You add a **Site** in Casdoor whose **Domain** is the app's domain and whose **Casdoor app** is the application users sign in to, and add `https://app.example.com/caswaf-handler` to that application's **Redirect URLs**. Host and port can stay empty, since the traffic doesn't pass through Casdoor.
+
+Because `auth_request` can't follow a redirect, Casdoor answers an unauthenticated subrequest with `401` and puts the login URL in `Location`. nginx turns that into a 302:
+
+```nginx
+server {
+    server_name app.example.com;
+
+    proxy_buffer_size 16k;
+    proxy_buffers 8 16k;
+
+    location = /caswaf-handler {
+        proxy_pass http://casdoor:8000/api/forward-auth;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-Uri $request_uri;
+    }
+
+    location = /casdoor-auth {
+        internal;
+        proxy_pass http://casdoor:8000/api/forward-auth;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+        proxy_set_header X-Forwarded-Method $request_method;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location / {
+        auth_request /casdoor-auth;
+        auth_request_set $casdoor_redirect $upstream_http_location;
+        auth_request_set $casdoor_user $upstream_http_x_forwarded_user;
+        auth_request_set $casdoor_email $upstream_http_x_forwarded_email;
+        auth_request_set $casdoor_groups $upstream_http_x_forwarded_groups;
+        error_page 401 =302 $casdoor_redirect;
+
+        proxy_set_header X-Forwarded-User $casdoor_user;
+        proxy_set_header X-Forwarded-Email $casdoor_email;
+        proxy_set_header X-Forwarded-Groups $casdoor_groups;
+        proxy_pass http://app:3000;
+    }
+}
+```
+
+The backend receives the user in `X-Forwarded-User`, `X-Forwarded-Email` and `X-Forwarded-Groups`. Access follows a [permission](/docs/permission/permission-configuration) on the application, checked again at least once a minute, so a disabled user loses access quickly. The site's **Public paths** (webhooks, health checks) pass without a login.
+
+See [Using your own reverse proxy](/docs/site/overview#using-your-own-reverse-proxy-forward-auth) for the reference and [Add login to an app without OIDC](/docs/site/protect-app) for a Grafana walkthrough. The app must only be reachable through nginx, or anyone can send `X-Forwarded-User` themselves.
+
+## Option 2: casdoor-forward-auth or OAuth2 Proxy
+
+If you would rather not create a Casdoor site for each app, run a small service that does the OIDC flow against Casdoor and answers the subrequest.
+
+[casdoor-forward-auth](https://github.com/casdoor/casdoor-forward-auth) is Casdoor's standalone service for this (it replaced traefik-casdoor-auth). It keeps the user in a signed cookie with no server state. For nginx it exposes `/verify`, which answers 200 with identity headers or 401, and nginx redirects to its `/login` on 401:
+
+```nginx
+server {
+    server_name app.example.com;
+
+    location = /_casdoor_verify {
+        internal;
+        proxy_pass http://casdoor-forward-auth:9999/verify?groups=built-in/dev;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+    }
+
+    location @casdoor_login {
+        return 302 https://auth.example.com/login?rd=$scheme://$http_host$request_uri;
+    }
+
+    location / {
+        auth_request /_casdoor_verify;
+        error_page 401 = @casdoor_login;
+
+        auth_request_set $casdoor_user $upstream_http_x_forwarded_user;
+        auth_request_set $casdoor_roles $upstream_http_x_forwarded_roles;
+        proxy_set_header X-Forwarded-User $casdoor_user;
+        proxy_set_header X-Forwarded-Roles $casdoor_roles;
+        proxy_pass http://app:8080;
+    }
+}
+```
+
+The `roles` and `groups` query parameters on the verify URL restrict each app to holders of a Casdoor role or members of a group; signed-in users without them get 403. Roles and groups are read at login and kept for the session, so changes apply after the user signs in again. Setting `COOKIE_DOMAIN=example.com` lets one login cover every subdomain. The [Traefik guide](/docs/integration/go/traefik) covers the same service for Traefik.
+
+[OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/configuration/integrations/nginx) works the same way with `provider = "oidc"` and `oidc_issuer_url` set to your Casdoor URL. Its `/oauth2/auth` endpoint returns 202 or 401, user and email headers need `--set-xauthrequest`, and the forwarded-header handling in its nginx example requires `--reverse-proxy`. Two Casdoor settings matter: use the `JWT-Standard` token format, or users with an unverified email are rejected, and keep the `profile` scope so groups and roles are returned. See [OAuth2 Proxy with Casdoor](/docs/integration/go/oauth2-proxy) and the [nginx community edition guide](/docs/integration/C++/NginxCommunityVersion).
+
+## Option 3: the Casdoor nginx module
+
+[casdoor-nginx-module](https://github.com/casdoor/casdoor-nginx-module) does the login inside nginx, without a separate process. Browsers without a session go to Casdoor's login page; the module exchanges the code with PKCE, verifies the access token's signature, `exp`, `aud` and type against the Casdoor certificate, and keeps the user in a signed cookie. API clients can send `Authorization: Bearer` with a Casdoor access token, verified locally without a call to Casdoor.
+
+It needs nginx 1.22 or newer and OpenSSL 1.1.1 or newer. You can build it as a dynamic module against the nginx you already run:
+
+```bash
+./configure --with-compat --with-http_ssl_module --add-dynamic-module=/path/to/casdoor-nginx-module
+make modules
+cp objs/ngx_http_casdoor_module.so /etc/nginx/modules/
+```
+
+```nginx
+load_module modules/ngx_http_casdoor_module.so;
+
+events {}
+
+http {
+    server {
+        listen 443 ssl;
+        server_name app.example.com;
+        ssl_certificate     /etc/nginx/app.crt;
+        ssl_certificate_key /etc/nginx/app.key;
+
+        casdoor_endpoint        https://door.example.com;
+        casdoor_client_id       <client-id>;
+        casdoor_client_secret   <client-secret>;
+        casdoor_certificate     /etc/nginx/casdoor.pem;
+        casdoor_redirect_uri    https://app.example.com/casdoor/callback;
+        casdoor_token_location  /_casdoor/token;
+
+        location = /_casdoor/token {
+            internal;
+            proxy_pass https://door.example.com/api/login/oauth/access_token;
+            proxy_ssl_server_name on;
+        }
+
+        location = /casdoor/callback {
+            casdoor_callback;
+        }
+
+        location / {
+            casdoor on;
+            proxy_set_header X-User $casdoor_user;
+            proxy_pass http://127.0.0.1:3000;
+        }
+    }
+}
+```
+
+Replace the placeholders with the application's values. The session isn't checked with Casdoor again until it expires, so disabling a user takes effect when the session ends; `casdoor_session_timeout` shortens that window. The module has no role or group checks. On NGINX Plus, see [the NGINX Plus guide](/docs/integration/C++/Nginx) instead.
+
+## Option 4: the app is a CAS client
+
+If the app already speaks CAS, such as a Java app with the Apereo CAS client, nginx only proxies and Casdoor is the CAS server. Each Casdoor application has CAS endpoints under `/cas/<organization>/<application>`: `/login` and `/logout`, `/validate` for CAS 1.0, `/serviceValidate`, `/proxyValidate` and `/proxy` for 2.0, `/p3/serviceValidate` and `/p3/proxyValidate` for 3.0, and `/samlValidate` for SAML 1.1 validation.
+
+The app sends the browser to `/login?service=...`, Casdoor redirects back with `ticket=ST-...`, and the app validates it:
+
+```bash
+curl "https://door.example.com/cas/my-org/my-app/p3/serviceValidate?ticket=ST-1234567890&service=https%3A%2F%2Fapp.example.com%2F"
+```
+
+A successful answer is a `cas:serviceResponse` with `cas:user` and attributes such as email, display name and `memberOf`; add `format=json` for JSON. Things that trip people up:
+
+- Every `service` URL must be listed in the application's **Redirect URLs**, and the `service` at validation must exactly match the one the ticket was issued for.
+- Tickets work once and expire after 5 minutes.
+- Tickets are kept in memory, so with several Casdoor replicas, validation must reach the replica that issued the ticket (sticky sessions).
+- Behind nginx, pass `Host` and `X-Forwarded-Proto` so the app builds the same `service` URL that the browser saw.
+
+The setup, including the Java client's filters for each CAS version, is in [Connect a CAS client](/docs/how-to-connect/cas).
+
+## Option 5: let Casdoor be the reverse proxy
+
+When nothing else sits in front of the app, Casdoor can serve it directly: its site proxy listens on `gatewayHttpPort` and `gatewayHttpsPort` (80 and 443 by default) once a site exists. Set the site's **Host** to the backend, pick a certificate, set **Casdoor app**, and point DNS at Casdoor. Login, permissions and headers behave as in option 1. See [Sites](/docs/site/overview).
+
+## Adding MFA
+
+MFA needs no change in nginx or in the app. Casdoor asks for the second factor on its own sign-in page before it issues an OAuth authorization code or a CAS service ticket, so every option above gets it. Users can use a TOTP app, SMS, email or RADIUS, with recovery codes, and administrators can require MFA for an organization with [MFA items](/docs/organization/mfa-items). That also answers "CAS 2FA": with Casdoor as the CAS server, the second factor is part of the CAS login.
+
+MFA is enforced at login, not per request: a session that nginx or a forward-auth service already holds lasts until it expires, and the organization's **MFA remember time** lets users skip the second factor on a trusted device for a while. See the [MFA guide](/docs/user/multi-factor-authentication) and [What is MFA](https://www.casdoor.com/blog/what-is-mfa).
+
+Once signed in to Casdoor, users reach other apps that send them to Casdoor without a new password prompt; with **Auto signin**, Casdoor also skips the account picker. See [single sign-on](/docs/session/single-sign-on) and [Single logout](https://www.casdoor.com/blog/single-logout).
+
+## Which one to pick
+
+- No login in the app and nginx already in front: Casdoor's forward auth.
+- One login across many subdomains, or role checks per location: casdoor-forward-auth (or OAuth2 Proxy if you already run it).
+- You build nginx yourself and also protect APIs with bearer tokens: casdoor-nginx-module.
+- The app supports CAS: Casdoor's CAS endpoints, nginx as a plain proxy.
+- No proxy yet: Casdoor's site proxy.
+
+## References
+
+- nginx: [ngx_http_auth_request_module](https://nginx.org/en/docs/http/ngx_http_auth_request_module.html)
+- OAuth2 Proxy: [nginx integration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/integrations/nginx)
+- Apereo: [CAS Protocol Specification](https://apereo.github.io/cas/7.1.x/protocol/CAS-Protocol-Specification.html), [mod_auth_cas](https://github.com/apereo/mod_auth_cas)
+- Casdoor: [casdoor-forward-auth](https://github.com/casdoor/casdoor-forward-auth), [casdoor-nginx-module](https://github.com/casdoor/casdoor-nginx-module)
+- Casdoor docs: [Sites](/docs/site/overview), [Connect a CAS client](/docs/how-to-connect/cas), [MFA](/docs/user/multi-factor-authentication)

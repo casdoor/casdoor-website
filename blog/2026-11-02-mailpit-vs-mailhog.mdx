@@ -1,0 +1,177 @@
+---
+slug: mailhog-vs-mailpit
+title: "MailHog vs Mailpit: Testing Verification and Password Reset Emails with Casdoor"
+description: "MailHog vs Mailpit: both listen on SMTP port 1025 and web UI port 8025. Compare maintenance, Docker images and test APIs, then point Casdoor at either one."
+authors: [hsluoyz]
+tags: [Casdoor, Email, MailHog, Mailpit, Testing, SMTP, CI]
+date: 2026-11-02
+---
+
+MailHog and Mailpit are both fake SMTP servers for development: they accept every message, keep it, and show it in a web UI instead of delivering it. Both use the same default ports, **SMTP on 1025 and the web UI and API on 8025**, so the SMTP address is `smtp://127.0.0.1:1025` and the inbox is at `http://127.0.0.1:8025` for either one. The difference is maintenance: MailHog's last release, v1.0.1, came out in August 2020, while Mailpit released v1.33.0 on October 31, 2026. For a new project, use Mailpit. Casdoor sends to both through a plain SMTP provider, so you can test sign-up codes, password reset emails and magic links without a real mail account.
+
+<!-- truncate -->
+
+## MailHog vs Mailpit at a glance
+
+| | MailHog | Mailpit |
+|---|---|---|
+| Latest release | v1.0.1, 2020-08-11 | v1.33.0, 2026-10-31 |
+| Last commit on the default branch | 2022-08-02 | 2026-10-31 |
+| License | MIT | MIT |
+| Default SMTP port | 1025 | 1025 |
+| Default web UI and API port | 8025 | 8025 |
+| Docker image | `mailhog/mailhog`, amd64 only | `axllent/mailpit`, amd64, arm64 and 386 |
+| HTTP API | v1 and v2: list, get, delete, search by `from`, `to` or `containing` | v1: list, get, delete, search with filters such as `to:` and `subject:`, `latest` message shortcut |
+| Default storage | In memory | Temporary SQLite database, deleted on exit |
+| Persistent storage | MongoDB or Maildir | SQLite file (`MP_DATABASE`) or rqlite |
+| Message limit | None documented | Keeps the newest 500 by default (`MP_MAX_MESSAGES`) |
+| HTML check, link check, spam check | No | Yes |
+| Webhook on new mail | No | Yes (`MP_WEBHOOK_URL`) |
+| SMTP TLS | Not offered | Optional STARTTLS or SSL/TLS |
+| Failure injection | Jim | Chaos |
+| Release a message to a real SMTP server | Yes | Yes |
+| POP3 server | No | Yes, optional |
+| Basic auth for the web UI | Yes | Yes |
+
+Docker Hub counts show that many people still pull MailHog. That reflects old tutorials and CI files, not activity: an open issue on the MailHog repository titled "THIS PROJECT IS DEAD!" has a 2023 reply from the author saying he no longer has time to maintain it. Mailpit's README describes itself as inspired by MailHog and points to that same comment.
+
+The image architecture matters more than it looks. On an Apple Silicon laptop or an ARM CI runner, `mailhog/mailhog` runs only under emulation, while `axllent/mailpit` has a native arm64 image.
+
+## Run either one with Docker
+
+MailHog:
+
+```shell
+docker run -d --name mailhog -p 1025:1025 -p 8025:8025 mailhog/mailhog
+```
+
+Mailpit:
+
+```shell
+docker run -d --name mailpit -p 1025:1025 -p 8025:8025 axllent/mailpit
+```
+
+Mailpit keeps mail in a temporary database that disappears when the container stops. To keep it across restarts, mount a volume and set `MP_DATABASE`:
+
+```shell
+docker run -d --name mailpit \
+  -v "$PWD/mailpit-data:/data" \
+  -e MP_DATABASE=/data/mailpit.db \
+  -p 1025:1025 -p 8025:8025 \
+  axllent/mailpit
+```
+
+Without Docker, `brew install mailhog` and `brew install mailpit` both work on macOS, and Mailpit ships static binaries for Windows, Linux and macOS on its releases page.
+
+In GitHub Actions, run it as a service container next to your test job:
+
+```yaml
+services:
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - 1025:1025
+      - 8025:8025
+```
+
+## Point Casdoor at MailHog or Mailpit
+
+Casdoor has no separate provider type for MailHog or Mailpit, and it doesn't need one. The `Default` email type sends over SMTP, and both tools are SMTP servers.
+
+1. As a global administrator, add a provider in the `admin` or `built-in` organization.
+1. Set **Category** to `Email` and **Type** to `Default`.
+1. Set **Host** to where the tool runs and **Port** to `1025`.
+1. Leave **Username** and **Password** empty.
+1. Click **Test SMTP Connection**, then **Send Testing Email**, and check the web UI on port 8025.
+
+The step-by-step pages with screenshots are [Test email with MailHog](/docs/provider/email/mailhog) and [Test email with Mailpit](/docs/provider/email/mailpit).
+
+A few details decide whether this works on the first try:
+
+**Leave SSL mode on Auto, or set it to Disable.** In `Auto`, Casdoor uses implicit TLS only on port 465 and upgrades with STARTTLS only if the server offers it. Neither MailHog nor a default Mailpit offers STARTTLS on port 1025, so the connection stays plain. Don't choose `Enable`: that forces implicit TLS, and the handshake fails against a plain-text server. The [SSL mode table](/docs/provider/email/overview#ssl-mode) has the full behavior.
+
+**Leave the credentials empty.** Casdoor logs in to the SMTP server only when **Username** is set. If you fill it in, Go's `PLAIN` authentication refuses to send the password over an unencrypted connection unless the host is localhost, so a MailHog at `192.168.x.x` fails with an authentication error even though MailHog would accept any login. Mailpit by default doesn't ask for authentication at all.
+
+**Use the right host.** `127.0.0.1` works only when Casdoor and the mail catcher run on the same machine. If both run in Docker Compose, use the service name, such as `mailpit`, as the host.
+
+**Use a global provider.** A provider owned by an ordinary organization may only reach Internet addresses, so it can't connect to `127.0.0.1` or a private IP. Providers in `admin` or `built-in` aren't restricted. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+
+**Set `origin` for links.** Verification codes work right away. Password reset links and magic links need Casdoor to know its public URL, through `origin` in `conf/app.conf` or a request on a loopback host. Otherwise the reset link is dropped from the email and magic links fail. See [Templates](/docs/provider/email/overview#email-content-and-placeholders).
+
+Finally, add the provider to your application in [Add providers to an application](/docs/application/providers) so sign-up and password reset actually use it.
+
+## Read the verification code in an automated test
+
+Casdoor's verification codes are six digits, and the default template reads "Here is your code: " followed by the code. An end-to-end test signs up a user, asks Casdoor to send the code, then reads it from the mail catcher's API.
+
+With Mailpit, search by recipient and open the newest match. `GET /api/v1/search` returns matches newest first, and `GET /api/v1/message/{ID}` returns the parsed `Text` and `HTML` bodies:
+
+```ts
+import { request } from "@playwright/test";
+
+const MAILPIT = process.env.MAILPIT_URL ?? "http://127.0.0.1:8025";
+
+export async function latestCode(to: string): Promise<string> {
+  const api = await request.newContext({ baseURL: MAILPIT });
+  for (let i = 0; i < 20; i++) {
+    const res = await api.get("/api/v1/search", {
+      params: { query: `to:"${to}"`, limit: "1" },
+    });
+    const { messages } = await res.json();
+    if (messages.length > 0) {
+      const msg = await (await api.get(`/api/v1/message/${messages[0].ID}`)).json();
+      const match = (msg.Text || msg.HTML).match(/code: (\d{6})/);
+      if (match) return match[1];
+    }
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  throw new Error(`no verification email for ${to}`);
+}
+```
+
+If only one test sends mail at a time, `GET /api/v1/message/latest` skips the search step. Before each test, `DELETE /api/v1/messages` with no body clears the inbox.
+
+With MailHog, the closest call is `GET /api/v2/search?kind=to&query=<address>`. Messages come back newest first in `items`, and the body is in `items[0].Content.Body`:
+
+```ts
+const res = await api.get("/api/v2/search", {
+  params: { kind: "to", query: to, limit: "1" },
+});
+const { items } = await res.json();
+const body: string = items[0]?.Content.Body ?? "";
+```
+
+`Content.Body` is the raw MIME body. Casdoor sends quoted-printable, so `=` becomes `=3D` and long lines get soft breaks ending in `=`. Decode it first, or keep the code near the start of a short template. Clear MailHog with `DELETE /api/v1/messages`.
+
+## Migrating from MailHog to Mailpit
+
+Because the ports match, most migrations are a one-line change in `docker-compose.yml`: replace `mailhog/mailhog` with `axllent/mailpit`. Casdoor's provider keeps the same host and port. What does change:
+
+- **Settings.** MailHog reads `MH_*` variables; Mailpit reads `MP_*`. If you used `MH_STORAGE=maildir` or MongoDB, move to `MP_DATABASE`.
+- **Test helpers.** Mailpit has no `/api/v2` endpoints. Rewrite calls to `/api/v2/messages` and `/api/v2/search` for `/api/v1/messages` and `/api/v1/search`, and read `messages[].ID` plus `Text` or `HTML` instead of `items[].Content.Body`. The quoted-printable decoding goes away.
+- **Search syntax.** `kind=to&query=a@example.com` becomes `query=to:"a@example.com"`.
+- **Failure injection.** Jim has no flags in Mailpit; use Chaos.
+- **Authentication.** If an app insists on logging in over plain SMTP, start Mailpit with `MP_SMTP_AUTH_ACCEPT_ANY=1` and `MP_SMTP_AUTH_ALLOW_INSECURE=1`. For Casdoor, leaving the credentials empty is simpler.
+- **Retention.** Mailpit prunes to the newest 500 messages by default. Raise `MP_MAX_MESSAGES` if a long test run needs more.
+
+## Going to production
+
+MailHog and Mailpit never deliver mail to real inboxes unless you release messages by hand, so production needs a real provider. In Casdoor you swap the provider, not the templates. The email templates, the `%s` code placeholder and the `<reset-link>` block stay the same:
+
+- Any SMTP server with the `Default` type, described in [Email providers](/docs/provider/email/overview)
+- [SendGrid](/docs/provider/email/sendgrid) and [Resend](/docs/provider/email/resend) through their APIs
+- [Brevo](/docs/provider/email/brevo) through its SMTP relay
+- [Azure Communication Services](/docs/provider/email/azureACS)
+- Your own HTTP endpoint with [Custom HTTP Email](/docs/provider/email/customHttp)
+
+A common setup keeps Mailpit in development and CI and the real provider in production. Each environment points its application at a different provider, so the sign-up flow you test is the one that ships.
+
+## References
+
+- MailHog repository and README: https://github.com/mailhog/MailHog
+- MailHog configuration and API v1/v2 docs: https://github.com/mailhog/MailHog/tree/master/docs
+- MailHog maintenance comment: https://github.com/mailhog/MailHog/issues/442#issuecomment-1493415258
+- Mailpit repository and README: https://github.com/axllent/mailpit
+- Mailpit documentation (Docker, storage, SMTP, webhook, search filters): https://mailpit.axllent.org/docs/
+- Mailpit API v1 reference: https://mailpit.axllent.org/docs/api-v1/
+- Casdoor email provider code: https://github.com/casdoor/casdoor/tree/master/email
