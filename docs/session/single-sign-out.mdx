@@ -345,12 +345,18 @@ The client secret signs the notifications. Keep it on the server, for example in
 
 ## Receive OIDC back-channel logout tokens {#oidc-back-channel-logout}
 
-Casdoor supports [OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html). When a user signs out through [RP-initiated logout](/docs/session/rp-initiated-logout), Casdoor sends a signed logout token to every application that has an active session for the user. Each application then ends its own session, server to server.
+Casdoor supports [OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html). When a user's session ends, Casdoor sends a signed logout token to every application that has an active token for the user. Each application then ends its own session, server to server. Casdoor sends logout tokens when:
+
+- The user signs out through [RP-initiated logout](/docs/session/rp-initiated-logout) (`/api/logout`).
+- The user signs out through the [SSO logout endpoint](/docs/session/single-sign-out#sso-logout-api), in either mode.
+- A sign-in ends older sessions because of the **Max sessions** limit. See [Exclusive sign-in](/docs/application/exclusive-signin). Only the applications signed in with the ended sessions are notified.
+- A SAML service provider starts a [single logout](/docs/session/single-sign-out#saml-single-logout). Only the applications signed in with that session are notified.
+- The user is forbidden or deleted, by an administrator or by a [syncer](/docs/syncer/overview).
 
 1. In the Casdoor admin console, open the edit page of the application.
 1. Set **Backchannel logout URL** (`backchannelLogoutUri`) to the endpoint of your application that receives the logout token.
 
-Casdoor sends an HTTP `POST` request with a `logout_token` parameter to that URI. The token is a JSON Web Token (JWT) with the `sub` and `sid` claims and the `http://schemas.openid.net/event/backchannel-logout` event. Casdoor skips applications that have no back-channel logout URL.
+Casdoor sends an HTTP `POST` request with a `logout_token` parameter to that URI. The token is a JSON Web Token (JWT) with the `iss`, `sub`, `aud`, `iat`, `exp` and `jti` claims and the `http://schemas.openid.net/event/backchannel-logout` event. The token expires 2 minutes after it is issued. It carries the `sid` claim with the Casdoor session ID only for the SSO logout endpoint, the session limit and SAML single logout. Tokens sent for `/api/logout` and for a forbidden or deleted user have no `sid`, so end all sessions of the user given in `sub`. Casdoor skips applications that have no back-channel logout URL.
 
 ## Sign out of SAML applications {#saml-single-logout}
 

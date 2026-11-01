@@ -90,7 +90,7 @@ When issuing JWTs, choose among four formats:
 The token format options behave as follows:
 
 - **JWT**: includes all User fields in the token payload
-- **JWT-Empty**: includes only non-empty User fields
+- **JWT-Empty**: includes only a short, fixed set of User fields: `owner`, `name`, `id`, `displayName`, `avatar`, `email`, `email_verified` and `phone`
 - **JWT-Custom**: includes the custom User Token fields you select (choose attributes in the Token fields)
 - **JWT-Standard**: includes standard OIDC claims (email, phone, gender, address) in OIDC-compliant format
 
@@ -104,7 +104,7 @@ Set the format in **Token format** on the **OIDC/OAuth** tab of the application.
 
 ## Group format {#token-group-format}
 
-**Token group format** on the **OIDC/OAuth** tab of the application decides how the `groups` claim names the groups of the user, in every token format and in the response of `/api/userinfo`:
+**Token group format** on the **OIDC/OAuth** tab of the application decides how the `groups` claim names the groups of the user, in the response of `/api/userinfo` and in the token formats that carry the claim: **JWT** always, **JWT-Custom** only when `Groups` is selected in **Token fields**. **JWT-Empty** and **JWT-Standard** tokens have no `groups` claim:
 
 | Option | Value in `groups` |
 |---|---|

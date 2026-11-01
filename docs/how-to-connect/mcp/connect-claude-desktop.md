@@ -106,7 +106,7 @@ Check that **Enable dynamic client registration** is on for the `built-in` organ
 
 ### Casdoor reports a redirect URL mismatch
 
-`mcp-remote` listens for the callback at `http://localhost:3334/oauth/callback`. If port 3334 is in use, it chooses another port, and the redirect URL of an earlier registration no longer matches. Free the port, or delete the `dcr_` application in Casdoor and the cached credentials of `mcp-remote`, and connect again.
+`mcp-remote` listens for the callback at `http://localhost:<port>/oauth/callback`. By default it derives the port from the server URL, somewhere between 3335 and 49150, and tries the next ports if that one is in use. A changed port doesn't cause a mismatch: for a loopback host such as `localhost` or `127.0.0.1`, Casdoor ignores the port when it compares redirect URLs. A different host or path does, for example after you add `--host 127.0.0.1` or `--callback-path` to the arguments of `mcp-remote`. Delete the `dcr_` application in Casdoor and the cached credentials of `mcp-remote` in `~/.mcp-auth`, and connect again.
 
 ### A tool call fails with insufficient_scope
 

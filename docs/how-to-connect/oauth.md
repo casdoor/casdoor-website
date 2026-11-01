@@ -15,6 +15,7 @@ Casdoor is an OAuth 2.0 authorization server. This page describes how to get an 
 | Token | `https://<casdoor-host>/api/login/oauth/access_token` |
 | Refresh token | `https://<casdoor-host>/api/login/oauth/refresh_token` |
 | Token introspection | `https://<casdoor-host>/api/login/oauth/introspect` |
+| Token revocation | `https://<casdoor-host>/api/login/oauth/revoke` |
 | UserInfo | `https://<casdoor-host>/api/userinfo` |
 
 In the examples, `ClientId` and `ClientSecret` are the **Client ID** and the **Client secret** of the Casdoor [application](/docs/application/overview).
@@ -716,6 +717,28 @@ Example response:
 ```
 
 Alternatively, verify the signature of the token yourself with the public key of the application's certificate, or with the keys of the [JWKS endpoint](/docs/how-to-connect/oidc-client#discovery-endpoints). The SDKs do this in `ParseJwtToken()`.
+
+## Revoke a token {#revoke-token}
+
+Casdoor supports [token revocation (RFC 7009)](https://datatracker.ietf.org/doc/html/rfc7009). Send a `POST` request with form parameters:
+
+```http
+POST /api/login/oauth/revoke HTTP/1.1
+Host: CASDOOR_HOST
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+
+token=REFRESH_TOKEN&token_type_hint=refresh_token
+```
+
+| Parameter | Required | Description |
+|---|---|---|
+| `token` | Yes | The access token or the refresh token to revoke |
+| `token_type_hint` | No | `access_token` or `refresh_token`. Casdoor looks the token up as this type first, then as the other type |
+| `client_id` | Yes | The client ID of the application. Send it with HTTP Basic authentication or as a form parameter |
+| `client_secret` | See description | The client secret of the application. Required for tokens issued by the authorization code grant without PKCE, the client credentials grant and the token exchange grant. Public clients that used PKCE can send only `client_id` |
+
+The access token and the refresh token of one grant are revoked together. If the refresh token is shared by several access tokens, because [refresh token rotation](#refresh-token-rotation) is off, all of them are revoked. Casdoor returns HTTP 200 with an empty body when the token is revoked, already expired, unknown, or belongs to another application. A missing `client_id`, an unknown client or a wrong client secret returns HTTP 401 with `invalid_client`, and a missing `token` returns HTTP 400 with `invalid_request`.
 
 ## Use an access token {#how-to-use-accesstoken}
 

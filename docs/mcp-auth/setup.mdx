@@ -42,7 +42,7 @@ This guide explains how to make Casdoor the authorization server of your own MCP
 
 Add the callback URLs of the MCP clients that use your server to **Redirect URLs**, for example `https://mcp.example.com/oauth/callback`. Casdoor sends users back to these URLs after authorization.
 
-Casdoor compares redirect URLs exactly, including the scheme, the port, and the path. Clients that register themselves through dynamic client registration bring their own redirect URLs, so you don't add those here.
+Casdoor accepts a redirect URL that equals an entry exactly. Otherwise, for an entry with a scheme, the scheme, the host, the port, and the path must match. A subdomain of the host also matches, and Casdoor ignores the port when both URLs use the same loopback host, such as `localhost` or `127.0.0.1`. An entry without a scheme, such as `example.com/callback`, matches `http` and `https` URLs on that host or its subdomains; a leading dot, as in `.example.com`, matches only subdomains, and an entry without a path matches any path. Casdoor treats an entry that can't be parsed as a URL, for example one that contains `\.`, as a regular expression that must match the whole URL. Clients that register themselves through dynamic client registration bring their own redirect URLs, so you don't add those here.
 
 ### Set the grant types {#step-3-set-grant-types}
 
