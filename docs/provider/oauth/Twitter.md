@@ -28,7 +28,7 @@ This guide explains how to let users sign in to Casdoor with their Twitter (X) a
 1. In the authentication settings of the app:
 
    - Turn on **3-legged OAuth**, which Sign in with Twitter requires.
-   - To receive the email address of users, turn on **Request email address from users**.
+   - You don't need **Request email address from users**. Casdoor requests only the `users.read` and `tweet.read` scopes and doesn't read the email address from Twitter, so users who sign in with Twitter have no email address in Casdoor.
    - Set **Callback URL** to the callback URL of Casdoor, `https://<your-casdoor-host>/callback`.
 
 1. Save the settings and copy the client ID and the client secret of the app.

@@ -32,10 +32,10 @@ This guide explains how to let users sign in to Casdoor from the WeCom (WeChat W
    |-----------------|-------------|
    | Sub type        | Internal or Third-party |
    | Method          | Silent or Normal |
-   | Client ID       | Enterprise **CorpID** |
-   | Client secret   | Enterprise **CorpSecret** |
-   | Agent ID        | Application **AgentId** |
-   | Scope           | `snsapi_userinfo` (default) or `snsapi_privateinfo` |
+   | Client ID       | Internal: enterprise **CorpID**. Third-party: **CorpID** of the service provider |
+   | Client secret   | Internal: **Secret** of the application (CorpSecret). Third-party: **ProviderSecret** of the service provider |
+   | Agent ID        | Internal only: application **AgentId** |
+   | Scope           | `snsapi_userinfo` (default) or `snsapi_privateinfo`, used only by the Silent method |
 
 1. Save the provider.
 
@@ -43,19 +43,21 @@ This guide explains how to let users sign in to Casdoor from the WeCom (WeChat W
 
 | Method | Behavior |
 |---|---|
-| `Silent` | WeCom redirects the user to `redirect_uri?code=CODE&state=STATE` without asking |
-| `Normal` | WeCom shows a consent page and redirects after the user agrees |
+| `Silent` | Web authorization (`open.weixin.qq.com/connect/oauth2/authorize`) for pages opened in the WeCom client. WeCom redirects the user to `redirect_uri?code=CODE&state=STATE` without asking |
+| `Normal` | WeCom web login (`login.work.weixin.qq.com/wwlogin/sso/login`). The user scans a QR code with the WeCom mobile app, or signs in quickly from the WeCom desktop client |
 
-See [WeCom OAuth](https://developer.work.weixin.qq.com/document/path/91119).
+See [WeCom OAuth](https://developer.work.weixin.qq.com/document/path/91119) and [WeCom web login](https://developer.work.weixin.qq.com/document/path/98151).
 
 ## Scopes {#scope}
 
+Casdoor sends the scope only with the `Silent` method.
+
 | Scope | Data |
 |---|---|
-| `snsapi_userinfo` | The basic profile, without the email address |
-| `snsapi_privateinfo` | Also the email address and other sensitive data. The administrator of the enterprise must grant the application the permission for sensitive member information |
+| `snsapi_userinfo` | The basic profile, without the email address. The current WeCom documentation no longer lists this value and names the silent scope `snsapi_base` instead |
+| `snsapi_privateinfo` | Also the email address and other sensitive data. WeCom asks the user to authorize, and the user must be in the visible range of the application. The administrator of the enterprise must grant the application the permission for sensitive member information |
 
-Use `snsapi_privateinfo` if Casdoor should fill in the email address of users from WeCom.
+Use an internal application with the `Silent` method and `snsapi_privateinfo` if Casdoor should fill in the email address of users from WeCom.
 
 ## Next steps
 

@@ -50,7 +50,7 @@ The syncer maps DingTalk user attributes to Casdoor fields as follows:
 
 Account status mapping works inversely: when a DingTalk user is marked as inactive (`active: false`), they appear as forbidden in Casdoor (`IsForbidden: true`). Active DingTalk users sync as normal Casdoor accounts.
 
-The syncer uses `unionid` as the username in Casdoor, matching the behavior of the OAuth provider. This ensures users who sign in via OAuth and those imported via the syncer maintain consistent identities. The `unionid` field provides a stable identifier that persists even when employee numbers or other attributes change.
+The syncer uses `unionid` as the username in Casdoor, the same username that the DingTalk OAuth provider reports for a member of your organization. The `Name` binding rule can therefore link the two (see [OAuth login binding](#oauth-login-binding)). The `unionid` field provides a stable identifier that persists even when employee numbers or other attributes change.
 
 ## Custom field mapping
 
@@ -80,7 +80,11 @@ Department discovery is **recursive**: starting from the root department, the sy
 
 ## OAuth login binding
 
-When a user is synced from DingTalk, their DingTalk `unionid` is stored in the `dingtalk` field on the Casdoor user. Synced users can therefore sign in via the DingTalk OAuth provider without a separate account link step.
+When a user is synced from DingTalk, their DingTalk `userid` is stored in the `dingtalk` field on the Casdoor user. The DingTalk OAuth provider identifies users by their `openId` instead, so the first DingTalk sign-in of a synced user doesn't find the user through this field.
+
+Casdoor then applies the **Binding rule** of the provider in the application, which is `Email`, `Phone` by default. The synced user is linked if their email address matches the one that DingTalk returns. `Phone` also compares the country code, which the syncer doesn't set, so it usually doesn't match a synced user. To link by username, add `Name` to the binding rule: with the default mapping, the synced username is the `unionid`, which is also the username that DingTalk sign-in returns. When a rule matches, Casdoor writes the `openId` into the `dingtalk` field and later sign-ins find the user directly. If no rule matches, Casdoor handles the sign-in as the sign-up of a new user, which fails with `Email already exists` if the synced user has the same email address. See [How Casdoor links accounts](/docs/provider/oauth/overview#automatic-account-linking).
+
+When a later sync updates the user, the syncer writes the `userid` back into the `dingtalk` field, and the next sign-in links the user again through the binding rule.
 
 ## Running the Syncer
 

@@ -49,6 +49,7 @@ This guide explains how to let users sign in to Casdoor with their account in Ba
 
 1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
 1. Set **Category** to `OAuth` and **Type** to `Infoflow`.
+1. Set **Sub type** to `Internal` for an application registered in your own organization, as in this guide. Casdoor rejects the sign-in if the sub type is empty. `Third-party` is for a third-party suite of Infoflow: **Client ID** and **Client secret** then take the suite ID and the suite secret.
 1. Fill in the fields:
 
    | Casdoor       | Infoflow   |

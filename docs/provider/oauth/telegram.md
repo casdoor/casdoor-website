@@ -66,10 +66,14 @@ Open the sign-in page of the application and sign in with Telegram.
 
 ## User data {#authentication-flow}
 
-Casdoor verifies the HMAC-SHA256 signature and the timestamp of the data from the widget, as the [Telegram specification](https://core.telegram.org/widgets/login#checking-authorization) describes. It receives the Telegram user ID, the name, the username, and, if available, the photo.
+Casdoor verifies the HMAC-SHA256 signature and the timestamp of the data from the widget, as the [Telegram specification](https://core.telegram.org/widgets/login-legacy#checking-authorization) describes. It receives the Telegram user ID, the name, the username, and, if available, the photo.
 
 - **Email**: The widget doesn't provide the email address. Collect it separately if you need it.
 - **Username**: The Telegram username is optional. For a user without one, Casdoor generates the username `telegram_<user-id>`, for example `telegram_123456789`. The ID doesn't change, so the user keeps the same username at every sign-in.
+
+:::tip
+Telegram also offers [login through OpenID Connect](https://core.telegram.org/bots/telegram-login), with the issuer `https://oauth.telegram.org`. To use it instead of the widget, connect it through a [Custom OAuth provider](/docs/provider/oauth/CustomProvider).
+:::
 
 ## See also
 
