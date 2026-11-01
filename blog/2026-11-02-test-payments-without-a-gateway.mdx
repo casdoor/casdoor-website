@@ -1,0 +1,110 @@
+---
+slug: test-payments-without-a-gateway
+title: "Dummy Payment Gateway for Testing: Casdoor's Dummy Provider, Stripe Test Mode and PayPal Sandbox"
+description: "A dummy payment gateway completes checkout without moving money. How the Casdoor Dummy provider works, and when to switch to Stripe test mode or PayPal sandbox."
+authors: [hsluoyz]
+tags: [Casdoor, Payment, Testing, Stripe, PayPal, Subscription]
+date: 2026-11-02
+---
+
+A dummy payment gateway is a payment provider that accepts every checkout as paid without contacting a bank or card network, so you can test orders, subscriptions and fulfillment with no money and no gateway account. Casdoor ships one: the [Dummy payment provider](/docs/provider/payment/dummy). Add it to a product, buy the product, and Casdoor records the payment and the order as `Paid`, starts the subscription and writes the transaction, all without leaving your server. Use Dummy in development, and switch to a vendor sandbox (Stripe test mode, PayPal sandbox, Paddle sandbox) in staging, where you also need declined cards, 3-D Secure and real redirects.
+
+<!-- truncate -->
+
+## Dummy, Balance and vendor sandboxes at a glance
+
+| Provider | Test environment | How Casdoor picks test or live | Casdoor provider type |
+|---|---|---|---|
+| Dummy | None needed, every payment succeeds | Always simulated | `Dummy` |
+| Balance | Internal, funded by a recharge product | Always internal | `Balance` |
+| Stripe | Sandbox with `sk_test_` / `pk_test_` keys | By the keys you enter | `Stripe` |
+| PayPal | Sandbox apps and sandbox accounts | `runmode` other than `prod` uses the sandbox | `PayPal` |
+| Paddle | Separate sandbox account at `sandbox-vendors.paddle.com` | `runmode` other than `prod` uses `sandbox-api.paddle.com` | `Paddle` |
+| Adyen | Test environment (`checkout-test.adyen.com`) | `runmode` other than `prod` uses the test environment | `Adyen` |
+| AirWallex | Separate sandbox account | `runmode` other than `prod` calls `api-demo.airwallex.com` | `AirWallex` |
+| Lemon Squeezy | Store test mode with test-mode API keys | By the API key you enter | `Lemon Squeezy` |
+| FastSpring | Test storefront with `.test.` in the host | By the **Host** you enter | `FastSpring` |
+| Polar | Sandbox at `sandbox.polar.sh` | Not supported, Casdoor always calls `api.polar.sh` | `Polar` |
+
+`runmode` is the option in `conf/app.conf` (or the `runmode` environment variable) described in the [configuration reference](/docs/basic/configuration). Its default is `dev`, so a fresh Casdoor talks to the sandboxes of PayPal, Paddle, Adyen and AirWallex until you set it to `prod`.
+
+## What a dummy transaction means
+
+A dummy transaction runs through the same records as a real purchase (order, payment, subscription, ledger entry) but moves no money. It is different from a sandbox transaction. A sandbox still calls the vendor's API, shows the vendor's checkout page and sends webhooks; only the money is fake. A dummy transaction never leaves your system.
+
+That difference decides what each one can test. A dummy gateway is good for your own logic: does the plan grant the right role, does the order show up, does the coupon count as used, does the user land on the right page. A sandbox is good for the integration: credentials, redirects, card declines, authentication challenges and webhook delivery. You need both, at different stages.
+
+## How the Casdoor Dummy provider works
+
+The Dummy provider has no settings and no payment page. Here is the full flow on Casdoor master:
+
+1. When the user pays, the provider's `Pay` call returns the Casdoor result page as the payment URL. It packs the price and currency into the order ID instead of creating anything at a vendor.
+1. Casdoor stores the payment in state `Created` and sends the browser straight to the result page. There is no card form, fake or otherwise.
+1. The result page sees a `Created` payment and calls `POST /api/notify-payment` about a second later.
+1. The provider's `Notify` call always answers `Paid`, with the price it packed earlier, so the price check passes.
+1. Casdoor then runs the normal success path: the payment and the order become `Paid`, the subscriptions created for the payment are updated, a `Purchase` transaction is written, product stock is reduced and a coupon on the order is marked as used. If the product is a recharge product, a `Recharge` transaction also adds the amount to the user's balance.
+
+So yes, Dummy marks the order as paid right away, and the user sees the success page with no step in between.
+
+Two limits follow from that design. Dummy can't fail: there is no way to make it return `Canceled`, `Timeout` or `Error`, so failure paths need a sandbox. And Dummy can't renew: Casdoor only allows auto renewal for Balance and Stripe, so a subscription bought with Dummy always has auto renewal off.
+
+On a new database, Casdoor creates a built-in Dummy provider named `provider_payment_dummy` in the `admin` organization, next to a built-in Balance provider. You can also add your own: in **Identity** > **Providers**, set **Category** to `Payment` and **Type** to `Dummy`.
+
+### Keep Dummy out of production
+
+`/api/notify-payment` is open to anonymous callers, because real gateways call it without a Casdoor session. For a real provider that is safe, since `Notify` checks the payment with the vendor. Dummy checks nothing and reports `Paid`. Any product that lists Dummy in its **Payment providers** shows it at checkout, and anyone who picks it gets the product for free. Remove Dummy from every product before you go live, and do not put it on products in an organization that real users can reach.
+
+## Balance: the internal wallet you can fund with Dummy
+
+The [Balance provider](/docs/provider/payment/Balance) lets users pay from their account balance. Casdoor checks the balance first, deducts the price, and marks the payment and order `Paid` in the same request. Balance is a real production feature, not a test tool, but it pairs well with Dummy: put Dummy on a recharge product, "top up" a test user, and the balance is credited with no money involved.
+
+This matters for subscriptions, because Balance is one of the two providers that support auto renewal. With Dummy plus Balance you can test the whole renewal loop on a laptop with no gateway account.
+
+## Vendor sandboxes for staging
+
+**Stripe.** Stripe separates test and live data by keys: sandbox keys start with `pk_test_` and `sk_test_`, live keys with `pk_live_` and `sk_live_`, and objects in one mode are not visible in the other. Casdoor uses whatever keys you put in the [Stripe provider](/docs/provider/payment/stripe); `runmode` does not change anything for Stripe. Stripe's test cards cover the paths Dummy can't: `4242 4242 4242 4242` succeeds, `4000 0000 0000 0002` is declined, and `4000 0000 0000 3220` requires 3-D Secure. Use any future expiry and any CVC. Stripe's terms forbid testing in live mode with real card details.
+
+**PayPal.** The PayPal sandbox is a separate environment with its own apps and test accounts. PayPal creates a default personal and a default business sandbox account when you first sign in to the developer dashboard; you pay with the personal one. Create the app in sandbox mode, put its credentials in the [PayPal provider](/docs/provider/payment/paypal), and keep `runmode` at `dev`.
+
+**Paddle.** The sandbox is a separate account at `sandbox-vendors.paddle.com` with its own keys and products; nothing is shared with live. Paddle's test cards include `4242 4242 4242 4242` (succeeds) and `4000 0000 0000 0002` (declined).
+
+**Lemon Squeezy** has a test mode per store, and API keys created in test mode only see test data. **FastSpring** test orders go through a test storefront: insert `.test.` into the store host, for example `yourstore.test.onfastspring.com`, and enter that as the provider's **Host**. **Polar** has a sandbox with its own tokens, but the Casdoor Polar provider does not select it, so a Polar provider in Casdoor always works against live Polar. **Alipay** in Casdoor is also hard-wired to production.
+
+## A test plan for Casdoor products, plans and subscriptions
+
+### Development, with Dummy
+
+1. Create a [product](/docs/products/product) and add Dummy to its **Payment providers**.
+1. Create a [plan](/docs/pricing/plan) for that product and a pricing page that lists it (see the [pricing overview](/docs/pricing/overview)).
+1. As a test user, open the pricing page and buy the plan. Check that the payment and the order are `Paid`, the subscription is `Active`, and a `Purchase` transaction appears on the user.
+1. Sign in as the user and check that the plan's role took effect in your application.
+1. If the plan has **Is exclusive** on, buy it again and expect the error that the user already has an active subscription.
+1. Apply a coupon at checkout and check that its usage is recorded.
+1. Create a recharge product with Dummy, top up the test user, then buy the plan with Balance and **Auto renew** on.
+1. To test renewal without waiting a month, edit the subscription's **End time** on its edit page so it ends within 24 hours. Casdoor checks subscriptions once an hour; expect **Renewal state** `Renewed` and a new subscription for the next period. Then buy the plan again with a balance too low for the next period, move its end time the same way, and expect `Failed` with the reason in **Renewal message**. The [subscription docs](/docs/pricing/subscription#auto-renewal) describe the exact rules.
+
+### Staging, with a sandbox
+
+1. Run staging with `runmode = dev` and sandbox or test credentials only.
+1. Replace Dummy with the provider you will use in production, configured with its sandbox keys.
+1. Repeat the purchase and check that the browser goes to the vendor's checkout and comes back to the Casdoor result page.
+1. With Stripe, pay once with the decline card and once with the 3-D Secure card, and check the payment and order states for each.
+1. With Stripe and **Auto renew** on, Casdoor saves the card at checkout and charges it itself at renewal, so the end-time trick above works in the sandbox too.
+
+### Going live
+
+Remove Dummy from all products, set `runmode = prod` if you use PayPal, Paddle, Adyen or AirWallex, and swap in live keys. Check the [payment records](/docs/products/payment) of the first real orders.
+
+If you also test sign-up email in the same environment, a local mail catcher keeps those messages off real inboxes; see [MailHog vs Mailpit](/blog/mailhog-vs-mailpit).
+
+## References
+
+- Casdoor source: [`pp/dummy.go`](https://github.com/casdoor/casdoor/blob/master/pp/dummy.go), [`pp/balance.go`](https://github.com/casdoor/casdoor/blob/master/pp/balance.go), [`object/order_pay.go`](https://github.com/casdoor/casdoor/blob/master/object/order_pay.go), [`object/payment.go`](https://github.com/casdoor/casdoor/blob/master/object/payment.go), [`object/subscription_renew.go`](https://github.com/casdoor/casdoor/blob/master/object/subscription_renew.go)
+- Casdoor docs: [Payment providers](/docs/provider/payment/overview), [Dummy](/docs/provider/payment/dummy), [Balance](/docs/provider/payment/Balance), [Subscription](/docs/pricing/subscription)
+- Stripe: [Testing](https://docs.stripe.com/testing), [API keys](https://docs.stripe.com/keys)
+- PayPal: [Sandbox](https://developer.paypal.com/tools/sandbox/), [Sandbox accounts](https://developer.paypal.com/tools/sandbox/accounts/)
+- Paddle: [Sandbox](https://developer.paddle.com/build/tools/sandbox)
+- Lemon Squeezy: [Test mode](https://docs.lemonsqueezy.com/help/getting-started/test-mode)
+- FastSpring: [Test orders](https://developer.fastspring.com/docs/test-orders)
+- Polar: [Sandbox](https://polar.sh/docs/integrate/sandbox)
+- Adyen: [Live endpoints](https://docs.adyen.com/development-resources/live-endpoints)

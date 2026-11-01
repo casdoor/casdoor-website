@@ -1,0 +1,123 @@
+---
+slug: radius-mfa-vpn-wifi
+title: "RADIUS Multi-Factor Authentication for VPN and Wi-Fi: TOTP 2FA with the Casdoor RADIUS Server"
+description: "Add TOTP 2FA to VPN logins over RADIUS with Casdoor: why only PAP works, how Access-Challenge asks for the code, which VPN clients support it, and Wi-Fi limits."
+authors: [hsluoyz]
+tags: [Casdoor, RADIUS, MFA, 2FA, TOTP, VPN, Wi-Fi, 802.1X]
+date: 2026-11-02
+---
+
+To put multi-factor authentication in front of a VPN with RADIUS, the VPN gateway sends the username and password to the RADIUS server with PAP, the server checks the password and answers with an `Access-Challenge`, the client shows a prompt, and the user types the 2FA code from an authenticator app into a second request. Casdoor ships a RADIUS server that does exactly this for users who have TOTP set up, so a gateway that can show an `Access-Challenge` prompt (FortiGate SSL VPN is one whose vendor documents it) gets a password plus a 2FA code without any extra software. Wi-Fi with WPA2/WPA3-Enterprise is different: 802.1X runs over EAP, which has no place for a typed code, so Casdoor has a switch to skip the code for those clients.
+
+<!-- truncate -->
+
+If you want the background on RADIUS itself and how it compares with LDAP for network devices, read [RADIUS vs LDAP](https://www.casdoor.com/blog/radius-vs-ldap) first. This post is about the MFA part: what goes over the wire, which clients can carry a second factor, and how to turn it on in Casdoor.
+
+## Which clients can do RADIUS MFA with Casdoor
+
+The table lists what each vendor documents. "Challenge support" means the client shows the `Access-Challenge` prompt to the user and sends the answer back. Where the vendor page we checked doesn't say, the table says so instead of guessing.
+
+| Client | RADIUS auth method to use with Casdoor | Access-Challenge support | Notes |
+|---|---|---|---|
+| FortiGate SSL VPN | PAP (set the method to PAP, or leave Default, which tries PAP first) | Yes, per Fortinet | Fortinet says SSL VPN forwards the challenge to the client and waits for the answer |
+| FortiGate IPsec VPN (including FortiClient) | PAP | Not forwarded by default | Fortinet's fix requires MS-CHAP on the RADIUS server, which Casdoor doesn't speak; use SSL VPN or skip MFA |
+| Cisco ASA (AnyConnect / Secure Client) | PAP, the ASA default for all connection types | Not stated in the ASA RADIUS configuration guide | Don't enable `password-management` on the tunnel group: it switches the ASA to MS-CHAPv2 |
+| OpenVPN Access Server | PAP (it also offers CHAP and MS-CHAPv2) | Not stated on the RADIUS settings page | Accounting is a separate toggle, default port 1813 |
+| pfSense (RADIUS auth server, used by its OpenVPN) | PAP (also MD5-CHAP, MS-CHAPv1, MS-CHAPv2) | Not stated in the Netgate docs | Netgate's OTP examples put the code inside the password field, which Casdoor doesn't accept |
+| WireGuard | None | Not applicable | Peers authenticate with public keys only, so there is no login for RADIUS to check |
+| Wi-Fi, WPA2/WPA3-Enterprise (802.1X) | EAP (PEAP, EAP-TTLS and so on) | No typed-code prompt | Casdoor doesn't implement EAP; see the Wi-Fi section |
+
+Where a cell says "not stated", test with the real VPN client before you roll it out, and check that the prompt appears and the code goes through.
+
+## Why only PAP can carry the password Casdoor checks
+
+RADIUS has several ways to send a password, and they decide what the server is able to verify.
+
+With **PAP**, the client puts the password into the `User-Password` attribute, hidden with an MD5 hash of the shared secret and the request authenticator (RFC 2865, section 5.2). The server reverses that with the same secret, gets the cleartext password, and can check it against a stored hash or an LDAP bind. Casdoor reads `User-Password` and runs the same password check as its sign-in page.
+
+With **CHAP**, the client never sends the password. It sends a hash of the password and a random challenge. RFC 2865 says plainly that CHAP needs the user's password in cleartext on the server to recompute that hash. **MS-CHAPv2** has the same shape with an NT hash. An identity provider that stores passwords as one-way hashes (Casdoor's built-in organization uses bcrypt) can't verify either one. The Casdoor RADIUS server only reads `User-Password`, so a CHAP or MS-CHAPv2 request reaches it with no password and is rejected.
+
+Because the PAP hiding is only MD5 with the shared secret, use a long random secret, keep RADIUS on a private network or a VPN between the gateway and Casdoor, and turn on the `Message-Authenticator` attribute on the client. Casdoor verifies `Message-Authenticator` when a request carries it and signs its reply in that case, which is the mitigation for Blast-RADIUS (CVE-2024-3596). The details are in the [RADIUS server docs](/docs/radius/overview#message-authenticator).
+
+## Access-Challenge vs appending the code to the password
+
+There are two common ways to get a 2FA code through RADIUS.
+
+1. **Access-Challenge.** The server checks the password, then replies with `Access-Challenge`, a `State` attribute and a `Reply-Message`. The client shows the message, the user types the code, and the client sends a new `Access-Request` with the code in `User-Password` and the same `State`. RFC 2865 section 4.4 also says what happens on a client without challenge support: it MUST treat the `Access-Challenge` as an `Access-Reject`.
+2. **Code appended to the password.** The user types `password123456` into the one password field, and the server splits off the last six digits. This works with any client, which is why products built for older gateways offer it.
+
+Casdoor implements only the first. Here is the flow in its RADIUS server (`radius/server.go`):
+
+- The first `Access-Request` must carry the correct password. A user with MFA turned on gets `Access-Challenge`, a random `State`, and the `Reply-Message` `please enter OTP`.
+- The `State` is valid for 120 seconds and can be used once. It is tied to the organization and username of the first request.
+- The second `Access-Request` must carry that `State` and the six-digit TOTP code from the user's authenticator app in `User-Password`. Casdoor checks the code against the user's TOTP secret and answers `Access-Accept` or `Access-Reject`.
+- Wrong codes count toward the failed sign-in limit of the user's application (5 attempts and a 15-minute freeze by default), separately from wrong passwords.
+
+Two consequences follow. A client that can only do "password plus code in one field" will fail, because Casdoor checks the whole string as the password. And only TOTP works over RADIUS: SMS and email codes need Casdoor to send a message after the password step, which the RADIUS server doesn't do. A user whose only MFA method is SMS or email gets the challenge and then a reject, so have RADIUS users set up an authenticator app.
+
+## Wi-Fi: 802.1X and WPA-Enterprise
+
+On Wi-Fi with WPA2-Enterprise or WPA3-Enterprise, the access point doesn't collect a password itself. It relays an EAP conversation between the device (the supplicant) and the RADIUS server, and RADIUS carries the EAP packets in `EAP-Message` attributes. In that setup `Access-Challenge` is already in use: every round trip of the EAP exchange is an `Access-Request` and `Access-Challenge` pair (RFC 3579). RFC 3579 also says a message carrying `EAP-Message` must not include `Reply-Message`, so there is no field for "please enter OTP" and no dialog on the phone or laptop to type a code into.
+
+Two practical points for Casdoor:
+
+- Casdoor's RADIUS server doesn't implement EAP. An access point can't talk to it directly for WPA-Enterprise. You need an EAP server in front that terminates the TLS tunnel and forwards a plain PAP request. FreeRADIUS can do this with EAP-TTLS and PAP as the inner method, proxying the inner request to another RADIUS server, and the devices must be set to TTLS with PAP inside. PEAP with MS-CHAPv2, the default on many devices, won't work against Casdoor for the reason in the PAP section.
+- For those users, turn on **Skip MFA for RADIUS** on the organization. Casdoor then accepts users who have MFA after the password check alone. MFA on the web sign-in page is not affected.
+
+## Ports, shared secret and accounting
+
+RFC 2865 assigns UDP port 1812 to RADIUS authentication, and RFC 2866 assigns 1813 to accounting. Casdoor listens on one UDP port, `radiusServerPort`, and handles both `Access-Request` and `Accounting-Request` there. So point the gateway's accounting at the same port as authentication (1812 by default), not at 1813, or accounting packets will go nowhere. If Casdoor runs in a container, publish the port as UDP, for example `-p 1812:1812/udp`.
+
+The shared secret is one value for all clients, `radiusSecret`. Every gateway that talks to Casdoor uses it.
+
+For accounting, Casdoor records `Start`, `Interim-Update` and `Stop` messages in its database (table `radius_accounting`), with the session ID, session time, NAS address, framed IP and byte and packet counters. It only does that for organizations with RADIUS turned on.
+
+## Configure Casdoor
+
+**1. Set the RADIUS options.** In `conf/app.conf`, or as environment variables with the same names:
+
+```ini
+radiusServerPort = 1812
+radiusDefaultOrganization = "my-company"
+radiusSecret = "a-long-random-string-shared-with-the-gateway"
+```
+
+`radiusDefaultOrganization` is the organization Casdoor uses when a request has no `Class` attribute. If your gateway can't add a `Class` attribute to its requests, this setting decides which organization's users sign in over RADIUS. All keys are listed in the [configuration reference](/docs/basic/configuration).
+
+**2. Turn on RADIUS for the organization.** On the organization edit page, turn on **Enable RADIUS**. It is off by default and only global administrators can change it. While it is off, Casdoor rejects every `Access-Request` for that organization and ignores its accounting.
+
+**3. Decide on MFA for RADIUS.** Leave **Skip MFA for RADIUS** off for VPN gateways that support `Access-Challenge`. Turn it on for an organization whose RADIUS clients can't answer a challenge, such as WPA-Enterprise Wi-Fi.
+
+**4. Get users onto TOTP.** Users set up an authenticator app from their profile page, as described in [multi-factor authentication](/docs/user/multi-factor-authentication). To make it mandatory, add the TOTP item with the **Required** rule under the organization's [MFA items](/docs/organization/mfa-items). Note the order: a user who must still set up required MFA, or must change the password first, is rejected over RADIUS until they finish that on the Casdoor sign-in page.
+
+**5. Test from the command line.** FreeRADIUS's `radclient` sends PAP requests and prints the reply:
+
+```bash
+echo 'User-Name = "alice", User-Password = "her-password"' \
+  | radclient -x casdoor.example.com:1812 auth a-long-random-string-shared-with-the-gateway
+```
+
+For a user with TOTP you should see `Access-Challenge` with a `State` and the `Reply-Message`. Send the code back with that `State` within 120 seconds:
+
+```bash
+echo 'User-Name = "alice", User-Password = "123456", State = 0x...' \
+  | radclient -x casdoor.example.com:1812 auth a-long-random-string-shared-with-the-gateway
+```
+
+Paste the `State` value from the first reply in place of `0x...`. An `Access-Accept` means the setup is right, and the gateway is next.
+
+If you also want Casdoor to use an outside RADIUS server as a second factor for its own web sign-in, that is the opposite direction and is covered by the [RADIUS MFA provider](/docs/provider/mfa/radius).
+
+## References
+
+- [RFC 2865: Remote Authentication Dial In User Service (RADIUS)](https://www.rfc-editor.org/rfc/rfc2865)
+- [RFC 2866: RADIUS Accounting](https://www.rfc-editor.org/rfc/rfc2866)
+- [RFC 3579: RADIUS Support for EAP](https://www.rfc-editor.org/rfc/rfc3579)
+- [Fortinet: Difference in RADIUS Access-Challenge handling between SSL VPN and IPsec VPN](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Difference-in-RADIUS-Access-Challenge-for/ta-p/406069)
+- [FortiOS 7.6.5: Configuring a RADIUS server](https://docs.fortinet.com/document/fortigate/7.6.5/administration-guide/759080/configuring-a-radius-server)
+- [Cisco ASA 9.22: RADIUS servers for AAA](https://www.cisco.com/c/en/us/td/docs/security/asa/asa922/configuration/general/asa-922-general-config/aaa-radius.html)
+- [OpenVPN Access Server: Authentication](https://openvpn.net/as-docs/authentication-78640/)
+- [pfSense: RADIUS authentication servers](https://docs.netgate.com/pfsense/en/latest/usermanager/radius.html)
+- [WireGuard](https://www.wireguard.com/)
+- [FreeRADIUS `inner-tunnel` virtual server](https://github.com/FreeRADIUS/freeradius-server/blob/v3.2.x/raddb/sites-available/inner-tunnel)
+- [Casdoor RADIUS server](/docs/radius/overview)

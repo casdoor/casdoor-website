@@ -1,0 +1,179 @@
+---
+slug: devops-sso-gitea-jenkins-grafana
+title: "Jenkins OIDC, Gitea OIDC and Grafana SSO with Casdoor: One Login for a Self-Hosted DevOps Stack"
+description: "Use Casdoor as the OIDC provider for Gitea, Jenkins, Grafana, Argo CD, MinIO, Portainer, Harbor and GitLab: callback URLs, config keys and admin group mapping."
+authors: [hsluoyz]
+tags: [Casdoor, OIDC, SSO, Jenkins, Gitea, Grafana, Argo CD, MinIO, DevOps]
+date: 2026-11-02
+---
+
+Every tool in a typical self-hosted DevOps stack can act as an OpenID Connect client: Gitea and Argo CD speak OIDC natively, Jenkins does through the `oic-auth` plugin, Grafana and Portainer through generic OAuth 2.0, and MinIO, Harbor and GitLab through their OIDC settings. Point all of them at one Casdoor instance, give each tool its own Casdoor application, and put your people in Casdoor groups. Each tool then reads the `groups` claim and decides who is an administrator. This post lists the callback URL, the config keys and the group mapping for each tool, then covers the parts they share.
+
+<!-- truncate -->
+
+## The stack at a glance
+
+All paths below are relative to the tool's own public URL. Register them in **Redirect URLs** of the Casdoor application for that tool.
+
+| App | Protocol | Callback URL | Group/role to admin mapping | Casdoor doc |
+|---|---|---|---|---|
+| Gitea | OIDC (OAuth2 auth source) | `/user/oauth2/<source-name>/callback` | Yes: admin group, restricted group, team map | [Gitea](/docs/integration/go/gitea) |
+| Jenkins | OIDC (`oic-auth` plugin) | `/securityRealm/finishLogin`, logout `/OicLogout` | Yes: groups claim plus Matrix-based security | [Jenkins (OIDC)](/docs/integration/java/jenkins-oidc) |
+| Grafana | Generic OAuth 2.0 | `/login/generic_oauth` | Yes: `role_attribute_path` | [Grafana](/docs/integration/go/grafana) |
+| Argo CD | OIDC | `/auth/callback`, CLI `http://localhost:8085/auth/callback` | Yes: `argocd-rbac-cm` | [Argo CD](/docs/integration/go/argocd) |
+| MinIO | OIDC | Console `/oauth_callback` | Policies from one claim (`claim_name`) | [MinIO](/docs/integration/go/minio) |
+| Portainer | OAuth 2.0 (Custom) | The Portainer base URL | Business Edition only | [Portainer](/docs/integration/go/portainer) |
+| Harbor | OIDC | `/c/oidc/callback` | Yes: OIDC Admin Group | none yet |
+| GitLab | OIDC (OmniAuth) | `/users/auth/openid_connect/callback` | Premium and Ultimate: `admin_groups` | [GitLab](/docs/integration/ruby/gitlab) |
+
+The discovery document every OIDC client needs is `https://<casdoor-host>/.well-known/openid-configuration`. If you have not connected an OIDC client to Casdoor before, [Connect a standard OIDC client](/docs/how-to-connect/oidc-client) explains the endpoints.
+
+## Prepare Casdoor once
+
+Before touching the tools, set up three things in Casdoor.
+
+**Groups.** Create groups such as `devops-admins` and `devops-users` in the organization tree and add users to them. See [Groups](/docs/organization/organization-tree).
+
+**Token group format.** By default the `groups` claim names each group as `<organization>/<group>`. Most tools compare the claim with a plain string you type, so set **Token group format** on the **OIDC/OAuth** tab of each application to `Name (group)`. The claim then carries `devops-admins`. The options are described under [Group format](/docs/token/overview#token-group-format).
+
+**Token format.** Keep **Token format** at `JWT`, the default. In that format the ID token carries `groups`, `roles` and `tag`. `JWT-Empty` and `JWT-Standard` leave all three out of the token, and `JWT-Custom` carries them only if you select them in **Token fields**. The `/api/userinfo` response returns `groups` and the role names when the `profile` scope is granted, so tools that read userinfo still see them.
+
+Roles work too. In the `JWT` format the `roles` claim is an array of role objects, so match on `roles[*].name`. In `/api/userinfo` it is a plain array of names. See [User roles](/docs/user/roles).
+
+## Gitea
+
+In **Site Administration**, add an authentication source of type **OAuth2** with provider **OpenID Connect**, the client ID and secret, and the Casdoor discovery URL. The name you give the source is part of the callback URL: a source named `casdoor` uses `https://gitea.example.com/user/oauth2/casdoor/callback`.
+
+For group mapping, fill in **Claim name providing group names** with `groups`, then **Group Claim value for administrator users** with `devops-admins`. Gitea also has **Group Claim value for restricted users** and **Map claimed groups to Organization teams**. The same source from the CLI:
+
+```bash
+gitea admin auth add-oauth \
+  --name casdoor \
+  --provider openidConnect \
+  --key <client-id> \
+  --secret <client-secret> \
+  --auto-discover-url https://door.example.com/.well-known/openid-configuration \
+  --group-claim-name groups \
+  --admin-group devops-admins
+```
+
+## Jenkins
+
+Jenkins has no OIDC support of its own. Install the [OpenId Connect Authentication](https://plugins.jenkins.io/oic-auth/) plugin, choose it as the security realm, and use the well-known configuration. The login callback is `/securityRealm/finishLogin` and the logout callback is `/OicLogout`; add both to Casdoor. In JCasC:
+
+```yaml
+jenkins:
+  securityRealm:
+    oic:
+      serverConfiguration:
+        wellKnown:
+          wellKnownOpenIDConfigurationUrl: https://door.example.com/.well-known/openid-configuration
+      clientId: <client-id>
+      clientSecret: <client-secret>
+      userNameField: name
+      fullNameFieldName: displayName
+      emailFieldName: email
+      groupsFieldName: groups
+      logoutFromOpenidProvider: true
+      properties:
+      - "pkce"
+```
+
+The plugin only passes the groups to Jenkins. Rights come from the authorization strategy: with Matrix-based security, each row of the table is a user or a group, so add a row for `devops-admins` and give it Overall/Administer. Choosing the plugin as the security realm turns off other login methods, so configure the plugin's `escapeHatch` property (a fallback username and secret) before you save. Casdoor also has its own Jenkins plugin, described in [Jenkins plugin](/docs/integration/java/jenkins-plugin), but the generic OIDC plugin is the one this post assumes.
+
+## Grafana
+
+Grafana uses generic OAuth. Its callback is `/login/generic_oauth`. Grafana's default `scopes` is `user:email`, so set the OIDC scopes explicitly:
+
+```ini
+[auth.generic_oauth]
+enabled = true
+name = Casdoor
+client_id = <client-id>
+client_secret = <client-secret>
+scopes = openid profile email
+auth_url = https://door.example.com/login/oauth/authorize
+token_url = https://door.example.com/api/login/oauth/access_token
+api_url = https://door.example.com/api/userinfo
+use_pkce = true
+groups_attribute_path = groups
+role_attribute_path = contains(groups[*], 'devops-admins') && 'Admin' || contains(groups[*], 'devops-users') && 'Editor' || 'Viewer'
+role_attribute_strict = true
+```
+
+Grafana evaluates `role_attribute_path` against the ID token first, then the userinfo response, then the access token. Valid results are `None`, `Viewer`, `Editor`, `Admin` and `GrafanaAdmin`; the last one needs `allow_assign_grafana_admin = true`. `allowed_groups` limits login to listed groups and requires `groups_attribute_path`. Team sync is a Grafana Enterprise and Grafana Cloud feature.
+
+## Argo CD
+
+Argo CD talks to Casdoor directly, without its bundled Dex. The browser callback is `/auth/callback`. `argocd login --sso` starts a local server on port 8085 by default and uses `http://localhost:8085/auth/callback`, so register that as well.
+
+Set `url` and `oidc.config` (with `name`, `issuer`, `clientID`, `clientSecret`, `requestedScopes`) in `argocd-cm`. Argo CD's default `requestedScopes` adds a `groups` scope. Casdoor does not need it, because the `JWT` ID token always carries `groups`, so our guide requests `["openid", "profile", "email"]`. Groups are mapped in `argocd-rbac-cm`, where `scopes` defaults to `[groups]`:
+
+```yaml
+data:
+  policy.default: role:readonly
+  policy.csv: |
+    g, devops-admins, role:admin
+```
+
+The full walkthrough, including the client secret in `argocd-secret`, is in the [Argo CD](/docs/integration/go/argocd) guide.
+
+## MinIO
+
+MinIO reads policies from a single claim, set with `claim_name` (default `policy`). It does not map groups. MinIO's own Casdoor quickstart and our guide use Casdoor's `tag` claim: put a MinIO policy name such as `readwrite` in the user's **Tag**, then:
+
+```bash
+mc admin config set myminio identity_openid \
+  config_url="https://door.example.com/.well-known/openid-configuration" \
+  client_id=<client-id> client_secret=<client-secret> claim_name="tag"
+```
+
+`role_policy` is the alternative: every user who signs in through this provider gets the listed policies, and it cannot be combined with `claim_name`. The Console callback is `<console-url>/oauth_callback`. Behind a proxy, set `MINIO_BROWSER_REDIRECT_URL`; the old `redirect_uri` key is deprecated. Note that the `minio/minio` GitHub repository has been archived and its README says it is no longer maintained, so check which MinIO build you run before relying on these settings.
+
+## Portainer
+
+Portainer uses a Custom OAuth provider. Fill in **Authorization URL** (`/login/oauth/authorize`), **Access token URL** (`/api/login/oauth/access_token`) and **Resource URL** (`/api/userinfo`) on your Casdoor host, and set **Redirect URL** to the Portainer base URL. There is also a **Logout URL** field. In Portainer CE, **Automatic team membership** is marked as a Business Edition feature, and the setting that assigns admin rights to groups is only in Business Edition. On CE, users created by automatic provisioning get the standard user role and you promote admins by hand.
+
+## Harbor and GitLab
+
+Harbor shows its redirect URI at the bottom of the OIDC settings page: `<harbor-url>/c/oidc/callback`. Set **OIDC Provider Endpoint** to the Casdoor URL, **Group Claim Name** to `groups`, and **OIDC Admin Group** to `devops-admins`. Harbor reads the group claim from the ID token, which the `JWT` format provides. You can only switch Harbor from database to OIDC authentication before any local users exist.
+
+GitLab's OIDC docs have a Casdoor section and require Casdoor to be served over HTTPS. The callback is `/users/auth/openid_connect/callback`. Group-based roles (`groups_attribute`, `admin_groups`, `required_groups`, `external_groups`) need GitLab Premium or Ultimate.
+
+## Tools without OIDC
+
+For internal dashboards with no login of their own, put them behind Apache APISIX's `openid-connect` plugin (`discovery`, `client_id`, `client_secret`, `redirect_uri`, `bearer_only`), as in the [APISIX guide](/docs/integration/lua/apisix), or behind nginx as described in [Nginx SSO authentication](/blog/nginx-sso-authentication).
+
+## One application per tool or a shared one
+
+A single Casdoor application with every tool's callback in its Redirect URLs works, but one application per tool is easier to run:
+
+- Each tool gets its own client secret, so a leaked Jenkins secret does not expose Grafana.
+- **Token group format**, **Token format** and token expiry are per application, so you can give Argo CD `Name (group)` without changing another tool's claims.
+- Casdoor checks `post_logout_redirect_uri` against the Redirect URLs of the application, so each list stays short and specific.
+
+Users still sign in once: after the first login, Casdoor's session cookie lets the next tool's redirect complete without a password prompt.
+
+## Logout
+
+Casdoor's end-session endpoint is `/api/logout`, listed as `end_session_endpoint` in the discovery document. It accepts `id_token_hint`, `post_logout_redirect_uri`, `client_id` and `state`, and only redirects to a URL listed in the application's Redirect URLs. Signing out of Casdoor ends the Casdoor session and the tokens of that session, but each tool also keeps its own session cookie. Wire up logout in each tool:
+
+- Jenkins: `logoutFromOpenidProvider`, with `/OicLogout` registered.
+- Grafana: `signout_redirect_url`.
+- Argo CD: `logoutURL` in `oidc.config`, for example `https://door.example.com/api/logout?id_token_hint={{token}}&post_logout_redirect_uri={{logoutRedirectURL}}`.
+- Harbor: **OIDC Session Logout**.
+- Portainer: **Logout URL**.
+
+The details of the endpoint are in [RP-initiated logout](/docs/session/rp-initiated-logout).
+
+## References
+
+- Gitea: [Authentication](https://docs.gitea.com/usage/authentication), [`admin auth add-oauth`](https://docs.gitea.com/administration/command-line)
+- Jenkins: [OpenId Connect Authentication plugin](https://plugins.jenkins.io/oic-auth/), [configuration reference](https://github.com/jenkinsci/oic-auth-plugin/blob/master/docs/configuration/README.md), [Managing security](https://www.jenkins.io/doc/book/security/managing-security/)
+- Grafana: [Configure generic OAuth2 authentication](https://grafana.com/docs/grafana/latest/setup-grafana/configure-access/configure-authentication/generic-oauth/)
+- Argo CD: [User management](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/), [RBAC](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/), [`argocd login`](https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_login/)
+- MinIO: [Casdoor quickstart in the MinIO repository](https://github.com/minio/minio/blob/master/docs/sts/casdoor.md)
+- Portainer: [OAuth authentication](https://docs.portainer.io/admin/settings/authentication/oauth)
+- Harbor: [Configure OIDC provider authentication](https://goharbor.io/docs/main/administration/configure-authentication/oidc-auth/)
+- GitLab: [Use OpenID Connect as an authentication provider](https://docs.gitlab.com/administration/auth/oidc/)
+- Apache APISIX: [openid-connect plugin](https://apisix.apache.org/docs/apisix/plugins/openid-connect/)

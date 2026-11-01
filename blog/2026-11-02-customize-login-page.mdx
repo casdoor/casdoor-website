@@ -1,0 +1,115 @@
+---
+slug: customize-login-page
+title: "Customize the Login Page in Casdoor: Custom Styling of the Authentication UI Without Forking"
+description: "Style Casdoor's hosted login and sign-up pages without forking: themes, CSS, HTML, logo, background, form position, sign-in fields and organization choice."
+authors: [hsluoyz]
+tags: [Casdoor, Login Page, UI Customization, CSS, Themes, Branding, IAM, SSO]
+date: 2026-11-02
+---
+
+Yes, Casdoor supports custom styling of its authentication UI, and you don't need to fork the frontend to get it. Every application has a **UI Customization** tab where you set the logo, favicon, background image, custom CSS for desktop and mobile, the position of the form, a side panel, footer HTML and a theme. Two tables, **Signin items** and **Signup items**, decide which fields the login and sign-up pages show, in which order, with which labels and placeholders. All of it is stored per application in the database, so one Casdoor instance can serve many differently branded login pages, and organization admins can edit their own pages within safe limits.
+
+<!-- truncate -->
+
+## What to change and where
+
+| What you want to change | Where in Casdoor | Docs |
+|---|---|---|
+| Primary color, corner radius, dark or compact style | **Theme** of the organization, or of the application with **Follow organization theme** off | [Customize the theme](/docs/organization/customize-theme) |
+| A complete ready-made look | **Identity → Marketplace**, sign-in themes | [Marketplace](/docs/marketplace/overview) |
+| Logo, dark logo, favicon, page title | Application edit page | [Application settings](/docs/application/terminology) |
+| Background image (desktop and phone) | **Background URL**, **Background URL Mobile** | [UI customization](/docs/application/ui-customization#1-background-image) |
+| Look of the form | **Custom CSS**, **Custom CSS Mobile** | [UI customization](/docs/application/ui-customization#2-login-panel-style) |
+| Form on the left, center or right, or next to a panel | **Form position**, **Side panel HTML** | [UI customization](/docs/application/ui-customization#3-panel-position) |
+| Text below the form | **Footer HTML** | [Application settings](/docs/application/terminology#custom-html) |
+| Which fields the login page shows, order, placeholders | **Signin items** | [Sign-in items table](/docs/application/signin-items-table) |
+| Password, code, magic link, WebAuthn, LDAP and their order | **Signin methods** | [Sign-in methods](/docs/application/signin-methods) |
+| Sign-up fields, required flags, labels, regex | **Signup items** | [Sign-up items table](/docs/application/signup-items-table) |
+| Language selector | **Languages** sign-in item, **Languages** of the organization | [Sign-in items table](/docs/application/signin-items-table#language-selector-rules) |
+| Let users pick or type their organization | **Org choice mode** | [Specify login organization](/docs/application/specify-login-organization) |
+
+In the Chinese console the tab is called 界面定制 and the sign-in table 登录项, so if you are looking for how to change the 登录界面 of an application, start there.
+
+## Themes: organization, application and Marketplace
+
+The quickest change is the theme. A theme in Casdoor is a small object with a style (Default, Dark, Document or Blossom in the editor), a primary color, a border radius and a compact switch. You can set it on the organization, where it applies to the console for its members and to the entry pages of every application that follows the organization theme, or on a single application by turning off **Follow organization theme**. The application edit page has a live preview, so you can see the result before you save.
+
+If you want more than colors, the [Casdoor Marketplace](/docs/marketplace/overview) has sign-in themes. Installing one writes the theme data, form position, form CSS for desktop and mobile, side panel HTML, footer HTML and background URLs of one application. The casdoor-integrations repository currently holds 24 themes, from Midnight and Split to Terminal, Nord and Solarized. Uninstalling a theme restores what the application had before, so trying one costs nothing. Browse them at [marketplace.casdoor.com](https://marketplace.casdoor.com).
+
+## Branding: logo, favicon and background
+
+Each application has its own **Logo**, **Favicon** and **Title**, separate from the organization. One organization can run several products that share users but show different logos. There is also an optional **Logo dark**, shown when the page is in dark mode; without it, Casdoor keeps using the normal logo.
+
+**Background URL** sets the image behind the form. Set **Background URL Mobile** too if the desktop image crops badly on phones. The preview updates as soon as the URL loads.
+
+## Custom CSS and form layout
+
+**Custom CSS** takes plain CSS rules; Casdoor wraps them in a style element itself, so don't add one of your own. The main containers to target are `.login-panel` and `.login-form`:
+
+```css
+.login-panel {
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.2);
+}
+```
+
+**Custom CSS Mobile** holds rules for phones, so you don't need to write media queries for the common case.
+
+**Form position** places the form on the left, center or right. The fourth option, **Enable side panel**, centers the form and puts a panel next to it whose content comes from **Side panel HTML**. That field takes HTML, so a style element inside it is fine.
+
+**Footer HTML** is rendered below the sign-in and sign-up forms. If the application is the default application of its organization, its footer also replaces "Powered by Casdoor" in the admin console for that organization's users.
+
+When you are happy with a design on staging, **Export JSON** at the bottom of the application edit page copies the look (logo, favicon, backgrounds, CSS, form position, side panel, theme and the custom HTML fields) to the clipboard, and **Import JSON** on the same application on another instance applies it. The export contains no secrets or providers.
+
+## Fields, labels and order
+
+The **Signin items** table lists every element of the login page: the logo, the username and password fields, the forgot-password link, the agreement checkbox, the language selector, the captcha, provider buttons and so on. For each row you can set **Visible**, a custom **Placeholder**, per-item **Custom CSS** and a rule, and move it up or down. You can also add custom items whose label is HTML.
+
+A few rules worth knowing:
+
+- Hiding **Forgot password?** turns off password reset in the API too, not just the link.
+- The **Captcha** rule switches between a pop-up and an inline captcha. If you are choosing a captcha provider, see [CAPTCHA providers compared for login pages](/blog/captcha-for-login-pages).
+- The **Languages** rule switches between a globe icon and a labeled selector. The list itself is limited to the **Languages** of the organization, so an organization that only serves English and Japanese users shows only those two.
+
+The sign-in methods (password, verification code, magic link, WebAuthn, LDAP, Face ID and others) are a separate table, **Signin methods**, with its own order and display names.
+
+The **Signup items** table does the same for registration, with **Required**, **Regex** validation, custom **Label** and rules such as "No verification" for email. `POST /api/signup` also clears every field whose item is hidden, so API clients can't set fields your form doesn't show. **Prompted** asks users for missing fields, such as a phone number, after they sign in through a provider that didn't supply one.
+
+## Specify the login organization
+
+If several organizations share one Casdoor, users need a way to reach the right one. **Org choice mode** on the default application of an organization (or on `app-built-in`) adds an organization step to `/login`: **Input** shows a text field, **Select** shows a dropdown. After the user picks, Casdoor sends them to `/login/<organization>`, which shows that organization's own styled page. The browser remembers the last organization in `localStorage`, so a user whose console session expired lands on their own login page again.
+
+## What tenant admins can safely change
+
+Letting every customer style their own login page raises an obvious question: what stops an organization admin from adding a script that copies passwords, or a CSS selector that leaks each typed character through background image requests? Casdoor checks this on the server. When an admin who is not a global admin adds or saves an application, every custom HTML and CSS field that changed is validated, and the save is rejected if any of them breaks the rules:
+
+- HTML may only use layout and text elements such as `div`, `span`, `p`, headings, lists, links, images, tables, `style` and basic SVG shapes. `script`, `form`, `input` and `iframe` are refused, as are `on...` event handlers, `srcset`, `formaction`, `srcdoc` and similar attributes. `href` is allowed only on links with relative, `http`, `https`, `mailto` or `tel` URLs.
+- CSS may not contain backslashes, `<`, `image(`, `image-set(` and a few other functions. Every `url()` must be relative, a `data:` URL, or start with an allowed prefix: Google Fonts, Fontsource on jsDelivr, the Casdoor CDNs, this Casdoor's own origin, the domains of the global storage providers, or an entry of `formCssAllowedUrls`.
+- `@import` is allowed only from Google Fonts and Fontsource, because an imported stylesheet isn't checked itself.
+
+To let tenants load images from your own host, add it to `conf/app.conf` (see [Configuration](/docs/basic/configuration#backend-options)):
+
+```ini
+formCssAllowedUrls = "https://img.example.com/"
+```
+
+On top of the save-time check, the sign-in pages sanitize custom HTML before rendering it, unless the application belongs to the `built-in` organization or a global admin has turned on **Enable custom scripts** for it. Only a global admin can turn that switch on, and while it is on only a global admin can change that application's HTML. The same rules apply when a tenant installs a Marketplace theme: a theme that breaks them can only be installed by a global admin.
+
+**Signin HTML** and **Signup HTML** deserve a separate note: they replace the whole built-in page, form included. Since tenants can't add forms or scripts, these two fields are mainly for global admins; for branding, CSS, the side panel and the footer are the better tools.
+
+## Hosted login page or your own UI?
+
+You can build your own login screen on Casdoor's API, but the hosted page is usually the better choice. With OAuth 2.0 or OpenID Connect, users type their password only on the Casdoor origin and your application receives an authorization code, never the credentials. Captcha, MFA, social and enterprise providers, forgot-password, sign-up validation and the organization picker keep working without code on your side, and they keep getting fixes when you upgrade Casdoor. A custom UI has to reimplement each of those flows and puts passwords through your own servers. Guides for wiring the hosted page into an app: [Spring Boot SSO with OIDC](/blog/spring-boot-sso-oidc) and [Nginx SSO authentication](/blog/nginx-sso-authentication).
+
+Other hosted providers make the same trade. Idura Verify, for example, lets you add a stylesheet URL and custom HTML around its login box from its dashboard, under a strict Content Security Policy with an explicit list of style origins for fonts and images. Casdoor's `formCssAllowedUrls` plays the same role, with the difference that Casdoor is open source and self-hosted, so you control the list.
+
+## References
+
+- [Customize the look of the sign-in page](/docs/application/ui-customization)
+- [Customize the theme](/docs/organization/customize-theme)
+- [Sign-in items table](/docs/application/signin-items-table) and [Sign-up items table](/docs/application/signup-items-table)
+- [Specify login organization](/docs/application/specify-login-organization)
+- [Marketplace](/docs/marketplace/overview) and [casdoor/casdoor-integrations](https://github.com/casdoor/casdoor-integrations)
+- Casdoor source: [`object/application_util.go`](https://github.com/casdoor/casdoor/blob/master/object/application_util.go) and [`object/application_html.go`](https://github.com/casdoor/casdoor/blob/master/object/application_html.go)
+- Idura Verify: [Custom styling](https://docs.idura.app/verify/guides/custom-styling/)

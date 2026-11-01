@@ -1,0 +1,119 @@
+---
+slug: file-storage-and-cdn
+title: "How to Host Static Files on a CDN with Casdoor: S3, MinIO, Azure Blob and Other Storage Providers"
+description: "Where Casdoor keeps avatars and uploaded files (local disk, Amazon S3, MinIO, Azure Blob, GCS, OSS, COS, Synology) and how to serve them through a CDN."
+authors: [hsluoyz]
+tags: [Casdoor, Storage, CDN, Amazon S3, MinIO, Azure Blob, Object Storage]
+date: 2026-11-02
+---
+
+To host static files on a CDN, put them in object storage (Amazon S3, MinIO, Azure Blob Storage, Google Cloud Storage, Alibaba Cloud OSS or Tencent Cloud COS), make the CDN pull from that bucket as its origin, and hand out URLs on the CDN's domain. In Casdoor this is one setting: create a storage provider for the bucket and put the CDN address in its **Domain** field. Casdoor uploads avatars and other files through the provider's API and saves URLs that start with that domain. Casdoor's own frontend can come from a CDN as well, through `frontendCdnUrl` and `staticBaseUrl` in `app.conf`.
+
+<!-- truncate -->
+
+## Storage providers at a glance
+
+A storage provider decides where Casdoor writes uploaded files: user avatars, ID card images, terms-of-use pages, and anything uploaded on the **Resources** page. You add the provider to an application, and uploads made in that application go to it. The [storage provider overview](/docs/provider/storage/overview) lists all the types. This table covers the ones people usually ask about:
+
+| Storage | Casdoor provider type | Does Casdoor use the S3 API? | Self-hostable | How the public URL is set |
+|---|---|---|---|---|
+| Local file system | `Local File System` | No, plain files on disk | Yes, it is the Casdoor server | Served by Casdoor under `/files/`. **Domain** is read-only |
+| Amazon S3 | `AWS S3` | Yes | No | **Domain**: the bucket URL or a CloudFront domain. **Endpoint (Intranet)**: a VPC endpoint |
+| MinIO | `MinIO` | Yes, with path-style requests | Yes | **Domain**: the MinIO URL followed by the bucket name, or a CDN domain |
+| Alibaba Cloud OSS | `Aliyun OSS` | No, the OSS SDK | No | **Domain**: a CDN domain. Left empty, it becomes `bucket.endpoint`. **Endpoint (Intranet)**: the internal endpoint |
+| Tencent Cloud COS | `Tencent Cloud COS` | No, the COS API | No | **Domain**: a CDN domain |
+| Azure Blob Storage | `Azure Blob` | No, the Blob API | No | **Domain**: a custom or Front Door domain. Casdoor adds the container name to the path |
+| Google Cloud Storage | `Google Cloud Storage` | No, Google's Go client | No | **Domain**: left empty, it becomes `https://storage.googleapis.com`. Casdoor adds the bucket name to the path |
+| Synology NAS | `Synology` | No, the DSM File Station API | Yes | No **Domain** field. The URL is based on **Endpoint** |
+
+Casdoor also supports `Qiniu Cloud Kodo`, `CUCloud OSS`, and `Casdoor`, which stores files in another Casdoor instance. The per-provider guides for [Amazon S3](/docs/provider/storage/amazon-s3), [MinIO](/docs/provider/storage/minio), [Azure Blob](/docs/provider/storage/azure), [Google Cloud Storage](/docs/provider/storage/google-cloudstorage), [Alibaba Cloud OSS](/docs/provider/storage/aliyun-oss), [Tencent Cloud COS](/docs/provider/storage/tencentCloudCOS), [Synology NAS](/docs/provider/storage/synology-nas) and the [local file system](/docs/provider/storage/localFileSystem) show which value goes in which field.
+
+## Endpoint vs. Domain
+
+These two fields do different jobs, and most CDN problems come from mixing them up.
+
+- **Endpoint** is the address Casdoor uses to talk to the storage API: upload, delete, list. The CDN is not involved.
+- **Endpoint (Intranet)** replaces Endpoint when `isCloudIntranet = true` is set in `app.conf`. That keeps upload traffic on the provider's internal network when Casdoor runs in the same cloud. The field appears for AWS S3, Aliyun OSS, Azure Blob and CUCloud OSS.
+- **Domain** is the base of the URL that Casdoor saves and that browsers request. If you have a CDN, its domain goes here.
+- **Path prefix** is put in front of every object key. With a prefix of `casdoor`, an avatar ends up under `casdoor/avatar/...`.
+
+Casdoor builds the file URL from the scheme and host of Domain, then the path of Domain, then the path prefix, then the file path. A Domain without a scheme gets `https://`. The path part of Domain also becomes part of the object key, so `https://cdn.example.com/casdoor/` stores files under `casdoor/` in the bucket. For Azure Blob and Google Cloud Storage, Casdoor adds the container or bucket name as the first path segment after the host. Your CDN needs to serve that path.
+
+If Domain is empty, Casdoor fills it in from the provider's endpoint the first time it uses the provider, and saves it. Sometimes the result works, as with OSS and GCS. Sometimes it doesn't: for an S3 endpoint without the bucket name, or for MinIO, where path-style requests put the bucket name in the path, the generated URL misses the bucket. Set Domain yourself, upload one test avatar, and open the URL Casdoor returns before anyone else uses it.
+
+The provider that Casdoor uses for avatars it copies from social logins comes from `defaultStorageProvider` in `app.conf`. It is the name of a provider owned by `admin` (see the [configuration reference](/docs/basic/configuration)):
+
+```ini
+defaultStorageProvider = provider_storage_s3
+isCloudIntranet = false
+```
+
+## Public buckets, private buckets and signed URLs
+
+Casdoor saves one plain, permanent URL in the user's `avatar` field and in the resource record. It doesn't create signed or expiring URLs for these files. So whatever is at Domain has to answer an anonymous `GET`. There are two ways to do that.
+
+**Make the objects public.** With `AWS S3` and `MinIO`, Casdoor uploads every object with the `public-read` canned ACL. With `Aliyun OSS`, the client library does the same by default. On S3 this conflicts with the defaults for new buckets: according to AWS, new buckets use the **Bucket owner enforced** setting, which disables ACLs, and an upload that sets an ACL such as `public-read` fails with `AccessControlListNotSupported`. That is why the [Amazon S3 guide](/docs/provider/storage/amazon-s3) has you turn on ACLs and turn off **Block all public access**. On OSS, an object ACL takes precedence over the bucket ACL, so a `public-read` object can be read even in a private bucket. MinIO doesn't use the ACL for anonymous reads. It uses a bucket policy:
+
+```bash
+mc anonymous set download myminio/casdoor
+```
+
+Azure needs anonymous access allowed on the storage account and the container set to the **Blob** access level. Google Cloud Storage needs the Storage Object Viewer role (`roles/storage.objectViewer`) granted to `allUsers` on the bucket.
+
+**Keep the bucket private and let only the CDN read it.** The CDN signs its requests to the origin, and viewers go through the CDN without a signature. Each vendor has its own version:
+
+- CloudFront has origin access control (OAC). AWS requires **Bucket owner enforced** for OAC, or **Bucket owner preferred** if you need ACLs.
+- Alibaba Cloud CDN can fetch from a private OSS bucket after you authorize it.
+- Tencent Cloud CDN has origin-pull authentication for private COS buckets.
+- Azure Front Door Premium can reach a storage account over Private Link.
+- Google's Cloud CDN guide covers private bucket access too, where the Storage Object Viewer role goes to a service account instead of `allUsers`.
+
+This hides the bucket's own URL, but the files are still public through the CDN. With the `AWS S3` and `Aliyun OSS` types, the objects also stay readable at their bucket URLs, because of the `public-read` ACL that Casdoor sets.
+
+If avatars must not be public at all, a CDN in front of object storage is the wrong tool. Keep those files on a storage type you control, and limit who can reach that host.
+
+## Cache headers and the avatar trap
+
+On S3 and MinIO, Casdoor sets `Content-Type` from the file extension when it uploads. It doesn't set `Cache-Control` on any provider. That means the CDN's default TTL applies. On CloudFront, objects without `Cache-Control` are cached for the default TTL, which is 24 hours when you don't use a cache policy. To control this per object, add `Cache-Control` metadata in the bucket. For a whole path, use a cache rule on the CDN.
+
+Avatars need a short TTL. When a user changes their picture, Casdoor writes the new file to the same key, `avatar/<organization>/<username>.<extension>`, and saves the same URL. A long TTL means people see the old picture until it expires or until you purge or invalidate that path. Other uploads get a numbered suffix (`-1`, `-2`, ...) when the name is already taken, so a new upload gets a new URL and can be cached for a long time.
+
+A layout that works:
+
+| Path | Suggested caching |
+|---|---|
+| `avatar/*` | Short TTL (minutes), or purge on change |
+| `resource/*` and other uploads | Long TTL |
+| Hashed frontend assets (`assets/*`) | Very long TTL. The file name changes on every build |
+
+## Casdoor's own frontend on a CDN
+
+Separate from user uploads, there are three ways to move Casdoor's own static files off the Casdoor server.
+
+**`frontendCdnUrl`.** Use this if you install the frontend from the `casdoor-web` npm package. Point it at an npm CDN, for example:
+
+```ini
+frontendCdnUrl = "https://cdn.jsdelivr.net/npm/{name}@{version}"
+```
+
+Casdoor reads the package name and version from the `package.json` in the build folder. It rewrites the script and stylesheet links in `index.html` to that CDN and keeps the local paths as a fallback. If a file fails to load, the browser loads it from Casdoor, and a cookie keeps that browser on local files for the rest of the session. A frontend you build yourself has no such `package.json`, so the setting has no effect on it.
+
+**The deployment script.** For a frontend you build from source, [Host the frontend files on a CDN](/docs/deployment/deploy-cdn) explains `deployment/deploy_test.go`. It uploads `web/build/assets/` through one of your storage providers and points `index.html` at the provider's Domain, which must end with `/`. Vite hashes these file names, so they suit the long TTL in the table above.
+
+**`staticBaseUrl`.** This sets where default images such as logos, provider icons and the default avatar come from. The default is `https://cdn.casbin.org`, which serves the [casbin/static](https://github.com/casbin/static) repository. On a network without internet access, serve a copy of that repository yourself and point `staticBaseUrl` at it, as described in [Host static files on an intranet](/docs/deployment/deploy-intranet).
+
+## Picking one
+
+- **One server, small user base:** `Local File System`. Mount the `files` directory on a volume if Casdoor runs in a container. Casdoor sends `X-Content-Type-Options: nosniff` and a sandboxing `Content-Security-Policy` with these files, so an uploaded HTML or SVG file can't run script on your Casdoor domain.
+- **Self-hosted and S3-shaped:** `MinIO`. It is also the type the docs suggest for other S3-compatible stores.
+- **Already on a cloud:** use that cloud's object storage and CDN, set **Endpoint (Intranet)** where Casdoor runs in the same cloud, and set Domain to the CDN.
+
+## References
+
+- [Casdoor storage providers](/docs/provider/storage/overview) and the source: [`object/storage.go`](https://github.com/casdoor/casdoor/blob/master/object/storage.go), [`storage/`](https://github.com/casdoor/casdoor/tree/master/storage), [`routers/frontend_cdn.go`](https://github.com/casdoor/casdoor/blob/master/routers/frontend_cdn.go)
+- AWS: [Controlling ownership of objects and disabling ACLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html), [Restrict access to an Amazon S3 origin](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html), [Manage how long content stays in the cache](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html)
+- MinIO: [`mc anonymous set`](https://docs.min.io/community/minio-object-store/reference/minio-mc/mc-anonymous-set.html)
+- Microsoft: [Configure anonymous read access for containers and blobs](https://learn.microsoft.com/azure/storage/blobs/anonymous-read-access-configure), [Integrate an Azure Storage account with Azure Front Door](https://learn.microsoft.com/azure/frontdoor/integrate-storage-account)
+- Google Cloud: [Making data public](https://cloud.google.com/storage/docs/access-control/making-data-public), [Set up Cloud CDN with a backend bucket](https://cloud.google.com/cdn/docs/setting-up-cdn-with-bucket)
+- Alibaba Cloud: [Object ACL](https://www.alibabacloud.com/help/en/oss/user-guide/object-acl), [Origin fetch from private OSS buckets](https://www.alibabacloud.com/help/en/cdn/user-guide/grant-alibaba-cloud-cdn-access-permissions-on-private-oss-buckets)
+- Tencent Cloud: [Setting CDN Acceleration for COS](https://www.tencentcloud.com/document/product/436/18670)

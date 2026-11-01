@@ -1,0 +1,107 @@
+---
+slug: steam-telegram-login
+title: "Steam OAuth and Telegram OAuth with Casdoor: Adding Non-Standard Social Logins Through OIDC"
+description: "Steam uses OpenID 2.0 and Telegram signs widget data with HMAC. Here is how Casdoor adds Steam, Telegram, X and Facebook login and hands your app plain OIDC."
+authors: [hsluoyz]
+tags: [Casdoor, OAuth, OIDC, Steam, Telegram, Social Login, SSO]
+date: 2026-11-02
+---
+
+There is no "Steam OAuth": Steam signs users in with OpenID 2.0 and gives you a 64-bit SteamID, nothing more. Telegram's classic Login Widget isn't OAuth either: it hands your page a set of user fields plus an HMAC-SHA256 hash that you check with your bot token. Telegram now also runs a real OpenID Connect provider at `oauth.telegram.org`. If you put Casdoor between your app and these providers, Casdoor does the protocol-specific checks and your app only ever speaks OpenID Connect to Casdoor, the same way it would for Google or GitHub.
+
+<!-- truncate -->
+
+## The providers at a glance
+
+| Provider | Protocol | What identifies the user | Email available? | Casdoor provider type |
+|---|---|---|---|---|
+| Steam | OpenID 2.0 at `https://steamcommunity.com/openid/login`, plus the Steam Web API for the profile | SteamID64, taken from the claimed ID `https://steamcommunity.com/openid/id/<steamid>` | No | `Steam` |
+| Telegram (Login Widget) | Signed widget data, HMAC-SHA256 keyed with the SHA-256 of the bot token | Telegram user `id` | No | `Telegram` |
+| Telegram (OpenID Connect) | OIDC authorization code flow with PKCE at `https://oauth.telegram.org` | `sub` claim of the ID token | No email claim; phone with the `phone` scope | `Custom` |
+| X (Twitter) | OAuth 2.0 authorization code with PKCE | X user ID from `/2/users/me` | Not with Casdoor's default scopes | `Twitter` |
+| Facebook | OAuth 2.0 authorization code | App-scoped user ID | Only if the profile has a valid primary email | `Facebook` |
+
+The rest of this post goes through what each protocol actually returns and what Casdoor does with it.
+
+## Steam: OpenID 2.0, no OAuth
+
+Steam's developer pages describe Steam as an OpenID provider: your site sends the user to Steam, and Steam sends back a claimed ID of the form `https://steamcommunity.com/openid/id/<steamid>`. The number at the end is the user's 64-bit SteamID. There is no authorization code, no access token, no scopes, and no email: neither the OpenID response nor the Web API profile contains one.
+
+That is why searches for "steam oauth" lead nowhere useful: the protocol is OpenID 2.0, the predecessor of OpenID Connect, so an OAuth 2.0 or OIDC client library can't talk to Steam directly.
+
+What Casdoor does for a Steam sign-in:
+
+1. The Casdoor sign-in page builds an OpenID 2.0 `checkid_setup` request to `https://steamcommunity.com/openid/login`, with `openid.realm` set to the Casdoor origin and `openid.return_to` set to Casdoor's `/callback` page.
+2. When Steam redirects back, Casdoor posts the signed fields back to Steam with `openid.mode=check_authentication`. Only if Steam answers `is_valid:true` does it continue. It also checks that `openid.claimed_id` matches the `steamcommunity.com/openid/id/<digits>` pattern and extracts the SteamID from it.
+3. With the Steam Web API key that you enter as the provider's **Client secret**, Casdoor calls `ISteamUser/GetPlayerSummaries` to get the persona name and the avatar.
+
+The resulting Casdoor user has the SteamID64 as its username, the Steam persona name as its display name and the Steam avatar. The email field stays empty. Casdoor deliberately drops the placeholder text that the underlying library puts there. If your app needs an email address, collect it after sign-up.
+
+Setup takes two minutes: register a Web API key for your Casdoor domain on Steam's key page, create a provider of type `Steam` and paste the key as the client secret. The [Steam provider guide](/docs/provider/oauth/Steam) has the steps.
+
+## Telegram: the Login Widget and its HMAC check
+
+The classic Telegram login is a JavaScript widget. You create a bot with @BotFather, link your domain to it with `/setdomain`, and embed the widget. When the user confirms in Telegram, the widget either redirects to the URL in `data-auth-url` or calls a JavaScript function, passing `id`, `first_name`, `last_name`, `username`, `photo_url`, `auth_date` and `hash`.
+
+Nothing in that payload is a token. Anyone can type those fields into a URL, so the server must check the `hash`. Telegram's documented check works like this:
+
+```text
+data_check_string = all received fields except hash,
+                    as key=value, sorted by key, joined with "\n"
+secret_key        = SHA256(bot_token)
+valid             = hex(HMAC_SHA256(data_check_string, secret_key)) == hash
+```
+
+Telegram also tells you to check `auth_date` so that old data can't be replayed, but it leaves the window up to you.
+
+In Casdoor, the `Telegram` provider type takes the bot username (without `@`) as the **Client ID** and the bot token as the **Client secret**. When a user clicks the Telegram button, Casdoor opens its own `/telegram-login` page, which loads `telegram-widget.js` from telegram.org with your bot username and points `data-auth-url` back at Casdoor's `/callback`. The callback collects the fields and the Casdoor backend then:
+
+- rebuilds the data-check string from every field except `hash`, sorts it, and compares the HMAC-SHA256 against `hash` using `SHA256(bot token)` as the key;
+- rejects the data if `auth_date` is more than 24 hours old;
+- uses the numeric Telegram `id` as the identity, the `username` as the username, the first and last name as the display name, and `photo_url` as the avatar.
+
+Telegram usernames are optional. When a user has none, Casdoor generates `telegram_<id>`, which stays the same at every sign-in. The widget never sends an email address or a phone number, so a Telegram-only user in Casdoor has neither. See the [Telegram provider guide](/docs/provider/oauth/telegram) for the BotFather steps.
+
+## Telegram now offers OpenID Connect too
+
+Telegram's "Log In With Telegram" page now documents a standard OpenID Connect flow, and the old iframe widget documentation has moved to an archive page. The facts from Telegram's docs:
+
+- Discovery document: `https://oauth.telegram.org/.well-known/openid-configuration`. Authorization endpoint `https://oauth.telegram.org/auth`, token endpoint `https://oauth.telegram.org/token`, keys at `https://oauth.telegram.org/.well-known/jwks.json`.
+- In @BotFather you open your bot's **Login Widget** settings, register the allowed URLs (origins and exact redirect URIs), and get a client ID and client secret.
+- Authorization code flow, PKCE with `S256` recommended. The token request uses HTTP Basic authentication with the client ID and secret.
+- Scopes: `openid` is required; `profile` adds the name, `preferred_username` and `picture`; `phone` adds `phone_number` with the user's consent. There is no email claim.
+- There is no UserInfo endpoint. All user data is in the ID token, whose `iss` is `https://oauth.telegram.org` and whose `aud` is your bot ID.
+
+You can connect this flow with a Casdoor [custom OAuth provider](/docs/provider/oauth/CustomProvider). Set the **Auth URL** and **Token URL** to the endpoints above, set **Scope** to `openid profile` (add `phone` if you need it), turn on **Enable PKCE**, and leave **UserInfo URL** empty. Register Casdoor's `https://<your-casdoor-host>/callback` as an allowed URL in BotFather. With no UserInfo URL, Casdoor takes the user from the ID token in the token response: it requires `sub`, rejects an expired token, and checks that `aud` contains the client ID. Without a user mapping, `sub` becomes the user ID, `preferred_username` the username, `name` the display name and `picture` the avatar, and `phone_number` fills the phone. The Casdoor sign-in page recognizes a custom provider whose auth URL points at `oauth.telegram.org` and keeps the OAuth `state` short for it.
+
+Note that a Telegram user signed in through the widget and the same person signed in through OIDC are not automatically the same Casdoor user. The widget identity is the numeric `id`, while the OIDC identity is `sub`, and Telegram's own examples show different values for the two. Pick one method per application.
+
+## X (Twitter) and Facebook
+
+These two are ordinary OAuth 2.0, but each has a detail worth knowing.
+
+**X** requires a PKCE challenge on its OAuth 2.0 authorize URL. Casdoor's `Twitter` type generates a new code verifier for every sign-in, sends the `S256` challenge, and passes the verifier in the token exchange, so there is nothing to configure beyond the client ID and secret. Casdoor requests the `users.read tweet.read` scopes and reads the user from `/2/users/me`, which gives the user ID, the handle and the display name. It doesn't request an email field, so plan for X users without an email address. The [Twitter provider guide](/docs/provider/oauth/Twitter) covers the app settings.
+
+**Facebook** returns an app-scoped user ID: the same person has a different ID in each Facebook app, so moving to a new Facebook app means your users won't match their old records unless you link them by email. Casdoor asks for `email,public_profile` and reads `id`, `name`, `picture` and `email` from the Graph API. Facebook omits `email` when the profile has no valid address. See the [Facebook provider guide](/docs/provider/oauth/facebook).
+
+## How your app sees all of this: plain OIDC
+
+Your application never talks to Steam, Telegram, X or Facebook. It is an OIDC client of Casdoor, configured once with the Casdoor issuer, `https://<your-casdoor-host>/.well-known/openid-configuration`. You add the social providers to the Casdoor application on its **Providers** tab, and their buttons appear on the Casdoor sign-in page.
+
+After any of these sign-ins, Casdoor finds or creates a Casdoor user and finishes the normal authorization code flow with your app. The ID token your app receives is signed by Casdoor, and its `sub` is the Casdoor user ID, not the SteamID or the Telegram ID. So your app needs no OpenID 2.0 library, no HMAC code, no PKCE quirks per provider, and no special case for users without an email. The original provider ID is stored on the Casdoor user, for example in the `steam` or `telegram` field, if you ever need it.
+
+A few things to plan for:
+
+- **Account linking.** Casdoor links a social sign-in to an existing user by verified email, verified phone, or username, in the order the application's binding rule sets. Steam and widget-based Telegram provide neither email nor phone, so they create a separate user unless the user links the provider from an account that is already signed in. See [how Casdoor links accounts](/docs/provider/oauth/overview#automatic-account-linking).
+- **Extra profile fields.** Providers that pass on raw data, such as the Goth-based Steam type and custom providers, can fill more user fields through [user mapping](/docs/provider/oauth/user-mapping).
+- **The client side.** Any standard library works against Casdoor. [Connect a standard OIDC client](/docs/how-to-connect/oidc-client) lists the endpoints, and the [Spring Boot SSO with OIDC](/blog/spring-boot-sso-oidc) post shows a complete app.
+
+## References
+
+- Steam Web API and OpenID: [steamcommunity.com/dev](https://steamcommunity.com/dev)
+- Steamworks, User Authentication and Ownership: [partner.steamgames.com/doc/features/auth](https://partner.steamgames.com/doc/features/auth)
+- Telegram, Log In With Telegram (OpenID Connect): [core.telegram.org/bots/telegram-login](https://core.telegram.org/bots/telegram-login)
+- Telegram, Login Widget (legacy): [core.telegram.org/widgets/login-legacy](https://core.telegram.org/widgets/login-legacy)
+- X, OAuth 2.0 Authorization Code Flow with PKCE: [docs.x.com](https://docs.x.com/fundamentals/authentication/oauth-2-0/authorization-code)
+- Meta, Graph API User reference: [developers.facebook.com/docs/graph-api/reference/user](https://developers.facebook.com/docs/graph-api/reference/user/)
+- Casdoor source: [`idp/telegram.go`](https://github.com/casdoor/casdoor/blob/master/idp/telegram.go), [`idp/goth.go`](https://github.com/casdoor/casdoor/blob/master/idp/goth.go), [`idp/custom.go`](https://github.com/casdoor/casdoor/blob/master/idp/custom.go)

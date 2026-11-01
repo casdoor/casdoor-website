@@ -1,0 +1,126 @@
+---
+slug: dingtalk-wecom-lark-login
+title: "DingTalk, WeCom, Lark, Infoflow and WeChat OAuth Login with Casdoor"
+description: "Sign in with DingTalk, WeCom, Lark/Feishu, Baidu Infoflow and WeChat through Casdoor: app types, QR login, user IDs, email access, corporate tokens, sync."
+authors: [hsluoyz]
+tags: [Casdoor, DingTalk, WeCom, Lark, Feishu, WeChat, Infoflow, OAuth, SSO]
+date: 2026-11-02
+---
+
+Casdoor has built-in OAuth providers for DingTalk, WeCom (WeChat Work), Lark (Feishu), Baidu Infoflow and WeChat. You create an app in each vendor's developer console, paste its credentials into a Casdoor provider, and add the provider to your application. Casdoor runs the vendor flow (QR scan on a desktop, or sign-in inside the vendor's own client), fetches the corporate access token where the vendor needs one, and maps the vendor's user ID to a Casdoor user. Your application only talks OIDC to Casdoor and never sees a DingTalk header, a WeCom `user_ticket` or a WeChat `unionid`. For DingTalk, WeCom and Lark, a syncer can also import the whole org directory ahead of the first sign-in.
+
+<!-- truncate -->
+
+## At a glance
+
+| Provider | App you create | Where users sign in | ID that links the Casdoor user | Email and phone | Directory syncer |
+|---|---|---|---|---|---|
+| DingTalk | Internal app (AppKey, AppSecret) | DingTalk sign-in page, `login.dingtalk.com` | `openId`; `unionid` becomes the username | From the profile, replaced by the corporate directory; treated as verified | Yes |
+| WeCom | Self-built app (CorpID, Secret, AgentId), or third-party | Web login (QR, or quick login from WeCom desktop) or silent sign-in inside WeCom | `userid` (internal), `open_userid` (third-party) | Email only with `snsapi_privateinfo`; phone not read | Yes |
+| Lark / Feishu | Custom app (App ID, App Secret) | Lark sign-in page, Feishu or Lark global | `open_id`; username is `user_id`, else `union_id`, else `open_id` | Yes, if the app has the contact permissions | Yes |
+| Baidu Infoflow | Internal app (CorpID, Secret, AgentID) | Infoflow authorize page | `userid`, also the username | Email | No |
+| WeChat | Website app on the Open Platform, plus an Official Account | QR scan on a PC; inside the WeChat browser through the Official Account | `unionid`, else `openid` | Neither | No |
+
+The setup steps for each are in the docs: [DingTalk](/docs/provider/oauth/DingTalk), [WeCom](/docs/provider/oauth/weCom), [Lark](/docs/provider/oauth/lark), [Infoflow](/docs/provider/oauth/infoflow) and [WeChat](/docs/provider/oauth/Wechat). This post explains what happens behind each one.
+
+## What your application sees
+
+Every provider in the table ends the same way. Casdoor exchanges the vendor's code, finds or creates the user in the organization, and then issues its own authorization code to your app. Your app redeems it at Casdoor's token endpoint and gets a Casdoor ID token and access token, signed with the application's certificate. The claims come from the Casdoor user record: name, display name, email, phone, avatar, groups.
+
+Your backend code is the same for all five. Any OIDC library works; see the [OAuth 2.0 and OIDC reference](/docs/how-to-connect/oauth) and, for a full walkthrough, [Spring Boot SSO with OIDC](/blog/spring-boot-sso-oidc). If you do need the vendor's own API later, Casdoor stores the provider's access token on the user, as described in [OAuth providers](/docs/provider/oauth/overview#using-the-providers-access-token).
+
+## DingTalk
+
+Create an internal app on the DingTalk Open Platform and copy its AppKey and AppSecret into the Client ID and Client secret of the provider. The sign-in page sends the user to `https://login.dingtalk.com/oauth2/auth` with `scope=openid` and `prompt=login consent`. After the user confirms, Casdoor makes four calls:
+
+1. `POST https://api.dingtalk.com/v1.0/oauth2/userAccessToken` turns the code into a user access token.
+2. `GET https://api.dingtalk.com/v1.0/contact/users/me` returns the user's `openId`, `unionId`, nick, avatar, email and mobile. This needs the **Contact.User.Read** permission on the app.
+3. `POST https://api.dingtalk.com/v1.0/oauth2/accessToken` with `appKey` and `appSecret` returns the corporate (app) access token.
+4. With that token, `topapi/user/getbyunionid` maps the `unionid` to the corporate `userid`, and `topapi/v2/user/get` reads the directory record.
+
+If the user is not a member of the organization that owns the app, step 4 fails with DingTalk error 60121 and the sign-in stops. If the directory lookup succeeds, the directory email and mobile replace the personal ones, `unionid` becomes the username, and the job title is kept as an extra claim.
+
+### The corporate access token and its header
+
+DingTalk has two API generations that take the same token in different places:
+
+```http
+GET https://api.dingtalk.com/v1.0/contact/users/me
+x-acs-dingtalk-access-token: <token>
+```
+
+```http
+POST https://oapi.dingtalk.com/topapi/v2/user/get?access_token=<token>
+Content-Type: application/json
+
+{"userid": "<userid>"}
+```
+
+The new API on `api.dingtalk.com` reads the token only from the `x-acs-dingtalk-access-token` header. Call it without that header (or with `Authorization: Bearer`) and it answers `AuthenticationFailed.MissingParameter`, naming the header. The older `oapi.dingtalk.com` endpoints still take an `access_token` query parameter. Casdoor uses both: the header for `users/me`, the query parameter for the two `topapi` calls, with the corporate token from `v1.0/oauth2/accessToken` in both places. DingTalk documents that token as valid for 7,200 seconds and asks callers to cache it per app. DingTalk also marks the old `gettoken` endpoint as legacy for new apps.
+
+Casdoor counts the email and phone that DingTalk returns as verified, so the default binding rule (email, then phone) can attach a DingTalk sign-in to an existing user. See [how Casdoor links accounts](/docs/provider/oauth/overview#automatic-account-linking).
+
+## WeCom (WeChat Work)
+
+A WeCom provider has a **Sub type** and a **Method**:
+
+- **Internal** with **Normal** sends the user to the WeCom web login, `login.work.weixin.qq.com/wwlogin/sso/login` with `login_type=CorpApp`. WeCom shows a QR code, or a one-click quick login when WeCom desktop is running and signed in.
+- **Internal** with **Silent** uses `open.weixin.qq.com/connect/oauth2/authorize` with the app's `agentid`. This is the one to use for pages opened inside the WeCom client.
+- **Third-party** uses `login_type=ServiceApp` and the service provider's secret (`get_provider_token`), then `get_login_info`, and links the user by `open_userid`.
+
+For internal apps, Casdoor gets the corporate token from `cgi-bin/gettoken` with the CorpID and the app Secret, then exchanges the code for the member's `userid`. A visitor who is not a member comes back with an `openid` instead, and Casdoor rejects the sign-in. The token is a query parameter on every WeCom call; WeCom says it normally lasts 7,200 seconds and that `gettoken` is rate limited.
+
+The email address is the part to plan for. WeCom stopped returning avatar, gender, mobile and email from the member read API (`user/get`) for self-built apps created after 20:00 on 2022-06-20. To get the email, set the provider's scope to `snsapi_privateinfo`. WeCom then returns a `user_ticket`, which Casdoor redeems at `getuserdetail`. WeCom requires the admin to pick the sensitive fields in the app settings and the member to consent, and it never gives these fields to third-party apps. Casdoor does not read the phone number from WeCom.
+
+## Lark and Feishu
+
+Create a custom app on the [Feishu Open Platform](https://open.feishu.cn/) or the Lark global platform and copy the App ID and App Secret. Turn on **Use global endpoint** in the provider for Lark (`open.larksuite.com`); leave it off for Feishu (`open.feishu.cn`).
+
+Casdoor first gets a `tenant_access_token` from `auth/v3/tenant_access_token/internal`, then posts the code to `authen/v1/access_token` with that token in an `Authorization: Bearer` header. The response carries `open_id`, `union_id`, `user_id`, email, enterprise email and mobile. Feishu returns the sensitive ones only when the app holds the matching permission:
+
+| Field | Feishu permission |
+|---|---|
+| `user_id` | `contact:user.employee_id:readonly` |
+| `email` | `contact:user.email:readonly` |
+| `enterprise_email` | `contact:user.employee:readonly` |
+| `mobile` | `contact:user.phone:readonly` |
+
+Without them, sign-in still works: the username falls back from `user_id` to `union_id` to `open_id`. Casdoor uses `enterprise_email` when `email` is empty and treats both email and phone as verified. Feishu now lists the v1 `access_token` endpoint as a historical version, but it is still served.
+
+## Baidu Infoflow
+
+Infoflow (如流) is Baidu's workplace app. Register an app in the Infoflow admin, give it address book permissions, and copy the CorpID, Secret and AgentID into the provider with the **Internal** sub type. The sign-in page goes to `https://xpc.im.baidu.com/oauth2/authorize`. Casdoor then calls `qy.im.baidu.com/api/gettoken` with the CorpID and Secret, exchanges the code and AgentID for the member's `userid` at `api/user/getuserinfo`, and reads name, avatar and email from `api/user/get`. The `userid` becomes both the linked ID and the username, and the email counts as verified. There is no Infoflow syncer, so users are created on first sign-in.
+
+## WeChat
+
+WeChat login has two halves, and you usually need both:
+
+- **Web** sub type: a website app on the WeChat Open Platform. The PC sign-in page shows a QR code from `open.weixin.qq.com/connect/qrconnect` with `scope=snsapi_login`; the user scans it with the WeChat app.
+- **Mobile** sub type, or the second credential pair of the same provider: an Official Account. Inside the WeChat browser, a QR code is useless, so Casdoor switches to `connect/oauth2/authorize` with `snsapi_userinfo` and the Official Account's AppID. If no Official Account is configured, Casdoor tells the user to open the page in an external browser.
+
+WeChat returns no email or phone, only `openid`, `unionid`, nickname and avatar. Casdoor links the user by `unionid` when WeChat sends one, falling back to `openid`, and also stores the per-app `openid`. WeChat gives a user the same `unionid` across all apps and Official Accounts under one Open Platform account, so bind your website app and your Official Account to the same Open Platform account. Otherwise a user who scans on a PC and later signs in on a phone becomes two Casdoor users.
+
+## Importing the directory first
+
+For DingTalk, WeCom and Lark, a [syncer](/docs/syncer/overview) can pull users and departments in on a schedule, so accounts exist before anyone signs in and departments become Casdoor groups. Each one uses a corporate token from the vendor's directory API: the [DingTalk syncer](/docs/syncer/DingTalk) walks departments recursively, the [WeCom syncer](/docs/syncer/WeCom) falls back to `user/list_id` and `user/get` for apps created after 2022-08-15, and the [Lark syncer](/docs/syncer/Lark) has a **Lark platform** setting to choose Feishu or Lark global.
+
+The WeCom syncer writes the `userid` that the WeCom provider links by, so synced users sign in directly. The DingTalk and Lark syncers store the directory `userid` / `user_id`, while sign-in links by `openId` / `open_id`. Their first sign-in matches through the binding rule on email or phone instead, which works because both providers report those as verified.
+
+## QR login and account recovery
+
+QR login moves the password problem to the phone: if a user loses their WeChat or DingTalk account, they cannot scan. Because each of these identities is linked to a Casdoor user rather than being the user, the user can still sign in with a verification code or reset the password through the [forgot-password flow](/docs/application/signin-items-table#forgot-password-flow), as long as the application has an email or SMS provider and the user has an address on file. DingTalk and Lark fill that in from the directory; for WeChat, ask for a phone number at sign-up. To show more than one of these options on the page, see [sign-in methods](/docs/application/signin-methods).
+
+## References
+
+- DingTalk: get a user token (`userAccessToken`, `expireIn` 7200): https://open.dingtalk.com/document/isvapp-server/obtain-user-token
+- DingTalk: get the access token of an internal app: https://open.dingtalk.com/document/development/obtain-orgapp-token
+- DingTalk: obtain user personal information: https://open.dingtalk.com/document/orgapp-server/tutorial-obtaining-user-personal-information
+- WeCom: get access_token: https://developer.work.weixin.qq.com/document/path/91039
+- WeCom: web login component (`wwlogin/sso/login`): https://developer.work.weixin.qq.com/document/path/98152
+- WeCom: build the OAuth link and scopes: https://developer.work.weixin.qq.com/document/path/91022
+- WeCom: get sensitive member info (`getuserdetail`): https://developer.work.weixin.qq.com/document/path/95833
+- WeCom: read member (2022-06-20 field change): https://developer.work.weixin.qq.com/document/path/90196
+- Feishu: get user_access_token (v1) and field permissions: https://open.feishu.cn/document/server-docs/authentication-management/access-token/create-2
+- WeChat: website app login: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html
+- WeChat: UnionID: https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Authorized_Interface_Calling_UnionID.html
+- Casdoor providers: https://github.com/casdoor/casdoor/tree/master/idp

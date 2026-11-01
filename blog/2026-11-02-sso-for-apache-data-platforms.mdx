@@ -1,0 +1,162 @@
+---
+slug: sso-for-apache-data-platforms
+title: "DolphinScheduler, IoTDB and Other Apache Data Platforms: SSO with Casdoor"
+description: "Which Apache data projects support Casdoor SSO, since which version and with which config keys: DolphinScheduler, IoTDB, ShenYu, Pulsar Manager, ElasticJob UI."
+authors: [hsluoyz]
+tags: [Casdoor, SSO, OIDC, DolphinScheduler, IoTDB, ShenYu, Pulsar, ShardingSphere, RuoYi]
+date: 2026-11-02
+---
+
+Several Apache data and middleware projects ship a Casdoor login of their own: Apache DolphinScheduler has an authentication type called `CASDOOR_SSO` (since 3.2.0) and a generic OIDC mode (since 3.4.0), Apache ShenYu has a Casdoor plugin (since 2.5.1), Apache Pulsar Manager has a "Log in with Casdoor" button (since 0.3.0), and Apache APISIX has the `authz-casdoor` plugin (since 2.14.0). Apache IoTDB is the exception: the database itself authenticates with its own users and passwords, and only the now archived IoTDB Web Workbench talks to Casdoor. The table below lists every project, the version, and where the settings live; the second half of the post sets up user authentication in IoTDB step by step.
+
+<!-- truncate -->
+
+## Which Apache projects support Casdoor
+
+All facts in this table come from each project's source tree and release tags, checked on 2026-11-02.
+
+| Project | How it connects to Casdoor | First release | Settings |
+| --- | --- | --- | --- |
+| Apache DolphinScheduler | Built-in `CASDOOR_SSO` authentication type (Casdoor Java SDK, OAuth 2.0 code flow) | 3.2.0 | `security.authentication.type`, `casdoor.*` in `dolphinscheduler-api/src/main/resources/application.yaml` |
+| Apache DolphinScheduler | Generic OIDC login (Spring Security) | 3.4.0 | `security.authentication.oidc.*` in the same file |
+| Apache IoTDB Web Workbench | Casdoor login in the web console | no tagged release, repository archived | `casdoor.*` in `backend/src/main/resources/application.properties`, `VUE_APP_CASDOOR` in `frontend/.env` |
+| Apache IoTDB (server) | Native users and roles; an `OpenIdAuthorizer` existed up to 2.0.8 and was removed | n/a | see the IoTDB section below |
+| Apache ShenYu | Casdoor plugin on the gateway | 2.5.1 | plugin config `endpoint`, `client_id`, `client_secrect`, `certificate`, `organization-name`, `application-name` |
+| Apache Pulsar Manager | "Log in with Casdoor" button next to the password form | 0.3.0 | `casdoor.*` in `src/main/resources/application.properties`; front-end config in `front-end/src/main.js` since 0.4.0 |
+| Apache ShardingSphere ElasticJob UI | "Login with Casdoor" button | master only, after 3.0.2 | `casdoor.*` in the backend `application.properties` |
+| Apache APISIX | `authz-casdoor` plugin, or `openid-connect` | 2.14.0 | `endpoint_addr`, `client_id`, `client_secret`, `callback_url` |
+| RuoYi-Cloud (not an Apache project) | Code changes with the Casdoor Spring Boot SDK | n/a | your own login controller |
+
+Every SDK-based integration in the table follows the same pattern. You create an application in Casdoor, copy its client ID, client secret and the public certificate of its token cert, and paste them into the project's config together with the organization and application names. The project redirects the browser to Casdoor, receives an authorization code, exchanges it for a JWT, and verifies the JWT with the certificate. The certificate is the one under **Certs** in the Casdoor admin console; see [certificates](/docs/cert/overview) and the **Token cert** field in the [application settings reference](/docs/application/terminology).
+
+## Apache DolphinScheduler
+
+DolphinScheduler gives you two ways in.
+
+**`CASDOOR_SSO`** has been there since 3.2.0. Set the type and fill the top-level `casdoor` block of `dolphinscheduler-api/src/main/resources/application.yaml`:
+
+```yaml
+security:
+  authentication:
+    type: CASDOOR_SSO
+    casdoor:
+      user:
+        admin: "alice"   # this Casdoor user becomes a DolphinScheduler admin
+casdoor:
+  endpoint: https://door.example.com
+  client-id: <client id>
+  client-secret: <client secret>
+  certificate: |-
+    -----BEGIN CERTIFICATE-----
+    ...
+    -----END CERTIFICATE-----
+  organization-name: my-org
+  application-name: app-dolphinscheduler
+  redirect-url: http://localhost:5173/login
+```
+
+`redirect-url` is the DolphinScheduler UI login page, and it must also be in the **Redirect URLs** of the Casdoor application. On the first login, DolphinScheduler creates a local user with the Casdoor user name and email. The user named in `security.authentication.casdoor.user.admin` gets the admin type; everyone else becomes a general user. Our [DolphinScheduler guide](/docs/integration/java/dolphinscheduler) has the screenshots.
+
+**OIDC** arrived in 3.4.0. It is generic, so Casdoor works as an ordinary issuer. Spring Security's discovery requires the configured issuer to match the `issuer` in the discovery document, and Casdoor's issuer is the origin of its backend, so `issuer-uri` is just the Casdoor URL:
+
+```yaml
+api:
+  base-url: https://ds.example.com/dolphinscheduler
+  ui-url: https://ds.example.com
+security:
+  authentication:
+    type: OIDC
+    oidc:
+      enable: true
+      providers:
+        casdoor:
+          display-name: "Login with Casdoor"
+          issuer-uri: https://door.example.com
+          client-id: <client id>
+          client-secret: <client secret>
+          scope: openid, profile, email
+          user-name-attribute: preferred_username
+          groups-claim: groups
+      user:
+        auto-create: true
+        default-tenant-code: "default"
+        default-queue: "default"
+        admin-group-mapping:
+          - my-org/ds-admins
+```
+
+The redirect URL to register in Casdoor is `https://ds.example.com/dolphinscheduler/login/oauth2/code/casdoor`, that is, `api.base-url` plus `/login/oauth2/code/` plus the provider key. With the `profile` scope, Casdoor's UserInfo endpoint returns `preferred_username` and `groups`. By default groups arrive as `my-org/ds-admins`. Set **Token group format** to `Name (group)` in the application if you would rather write `ds-admins` in `admin-group-mapping`. If `auto-create` is `false` (the upstream default), only users that already exist in DolphinScheduler can sign in. The [standard OIDC client guide](/docs/how-to-connect/oidc-client) lists what the discovery document and UserInfo return.
+
+## Apache ShenYu
+
+The Casdoor plugin has shipped with the ShenYu gateway since 2.5.1. You turn it on in the ShenYu admin console and fill in the plugin data. Two details come from the source rather than the docs. First, the secret key is spelled `client_secrect`. Second, the certificate field is a single line, so you write `\n` where each line break goes. The plugin accepts a JWT from the `Authorization` header, or a `code` and `state` on the query string. It then passes the user downstream in the headers `name`, `id` and `organization`. Requests that carry neither are rejected with a token error, not redirected. On ShenYu's master branch (October 2026) the plugin moved out of the main repository into the ShenYu plugin store. The plugin name, fields and headers stayed the same, and you add the starter `shenyu-spring-boot-starter-plugin-casdoor` yourself. See [Using Casdoor in ShenYu](/docs/integration/java/shenyu).
+
+## Apache Pulsar Manager and ShardingSphere ElasticJob UI
+
+Pulsar Manager added Casdoor in 0.3.0. The back end reads `casdoor.endpoint`, `casdoor.clientId`, `casdoor.clientSecret`, `casdoor.certificate`, `casdoor.organizationName` and `casdoor.applicationName` from `src/main/resources/application.properties`. Since 0.4.0 the front end uses `casdoor-vue-sdk`, configured in `front-end/src/main.js` with `serverUrl`, `clientId`, `organizationName`, `appName` and `redirectPath`. A first-time Casdoor user gets a local Pulsar Manager account. See [Pulsar Manager](/docs/integration/java/Pulsar-manager).
+
+ElasticJob UI, the console of Apache ShardingSphere ElasticJob, merged Casdoor login in November 2022. That was after its last release, 3.0.2, so you need to build master. The keys use dashes: `casdoor.endpoint`, `casdoor.client-id`, `casdoor.client-secret`, `casdoor.certificate`, `casdoor.organization-name`, `casdoor.application-name`. See [ShardingSphere](/docs/integration/java/ShardingSphere).
+
+For Apache APISIX, both plugins are covered in [APISIX](/docs/integration/lua/apisix).
+
+## Step by step user authentication setup in Apache IoTDB
+
+IoTDB authenticates every session (CLI, JDBC, Session API) with a user name and password stored by the database. Since there is no Casdoor login on the server side, the setup is IoTDB's native user model. The statements below are for the tree model. The table model of IoTDB 2.x has its own syntax in the [table model guide](https://iotdb.apache.org/UserGuide/latest-Table/User-Manual/Authority-Management_apache.html).
+
+**Step 1. Change the root password.** `root` is the only administrator and cannot be deleted. Log in with the CLI and set a strong password:
+
+```sql
+ALTER USER root SET PASSWORD 'Str0ng_Passw0rd!';
+```
+
+**Step 2. Create users.** User names and passwords are 4 to 32 characters long. They can contain letters, digits and `!@#$%^&*()_+-=`, and from V2.0.7 a password cannot equal the user name. TimechoDB, Timecho's commercial IoTDB distribution, requires 12 to 32 characters with upper and lower case, a digit and a symbol, and it has a different default root password. Change it the same way.
+
+```sql
+CREATE USER ln_reader 'Read_Passw0rd!';
+CREATE USER ops_admin 'Ops_Passw0rd!';
+```
+
+**Step 3. Group privileges in roles.** New users have no privileges. Series privileges (`READ_DATA`, `WRITE_DATA`, `READ_SCHEMA`, `WRITE_SCHEMA`, or the aliases `READ`, `WRITE`, `ALL`) are granted on path patterns:
+
+```sql
+CREATE ROLE ln_readers;
+GRANT READ ON root.ln.** TO ROLE ln_readers;
+GRANT ROLE ln_readers TO ln_reader;
+```
+
+**Step 4. Delegate user management.** This is where versions differ. From V2.0.7, global privileges are `SYSTEM` and `SECURITY`. Before that, they were split into `MANAGE_USER`, `MANAGE_ROLE`, `MANAGE_DATABASE` and others. Global privileges are always granted on `root.**`:
+
+```sql
+-- IoTDB V2.0.7 and later, TimechoDB
+GRANT SECURITY ON root.** TO USER ops_admin;
+-- before V2.0.7
+GRANT MANAGE_USER, MANAGE_ROLE ON root.** TO USER ops_admin;
+```
+
+**Step 5. Connect and verify.**
+
+```bash
+sbin/start-cli.sh -h 127.0.0.1 -p 6667 -u ln_reader -pw 'Read_Passw0rd!'
+```
+
+Then run `LIST PRIVILEGES OF USER ln_reader;`. A user's effective privileges are the union of their own and those of their roles. To take a privilege away, revoke it from both the user and every role that grants it.
+
+### What about OIDC in IoTDB?
+
+Older IoTDB versions had `authorizer_provider_class=org.apache.iotdb.commons.auth.authorizer.OpenIdAuthorizer` with `openID_url`. The client passed an access token as the user name with an empty password. That authorizer was built around Keycloak. It treats a user as an administrator only if the token's `realm_access.roles` contains `iotdb_admin`, and every privilege check reduces to that test. Its token parser also sets a near-infinite clock skew, which in practice ignores token expiry. Casdoor does not emit `realm_access`, so this was never a fit. IoTDB removed it in March 2026 ([apache/iotdb#17320](https://github.com/apache/iotdb/pull/17320)), and it is absent from 2.0.10 and 2.0.11.
+
+If you want Casdoor accounts in front of IoTDB, the option that exists is the [IoTDB Web Workbench](/docs/integration/java/iotdb) integration. Its repository is archived on GitHub, so treat it as a starting point rather than a maintained product. The database connection itself still uses an IoTDB user from the steps above.
+
+## RuoYi
+
+RuoYi-Cloud has no Casdoor switch. Our [RuoYi guide](/docs/integration/java/RuoYi) replaces its password login with the Casdoor authorization code flow through the Casdoor Spring Boot SDK. It syncs the existing RuoYi users into Casdoor with a syncer, using bcrypt so their passwords keep working. For a plain Spring Boot app, start with [Spring Boot SSO with OIDC](/blog/spring-boot-sso-oidc).
+
+## References
+
+- Apache DolphinScheduler, [authentication types](https://github.com/apache/dolphinscheduler/blob/dev/docs/docs/en/guide/security/authentication-type.md) and [`application.yaml`](https://github.com/apache/dolphinscheduler/blob/dev/dolphinscheduler-api/src/main/resources/application.yaml)
+- Apache IoTDB, [Authority Management (from V2.0.7)](https://iotdb.apache.org/UserGuide/latest/User-Manual/Authority-Management-Upgrade_apache.html), [Authority Management (before V2.0.7)](https://iotdb.apache.org/UserGuide/latest/User-Manual/Authority-Management_apache.html), [CLI](https://iotdb.apache.org/UserGuide/latest/Tools-System/CLI_apache.html)
+- Timecho, [TimechoDB Authority Management](https://www.timecho.com/docs/UserGuide/latest/User-Manual/Authority-Management-Upgrade_timecho.html)
+- [apache/iotdb-web-workbench](https://github.com/apache/iotdb-web-workbench)
+- Apache ShenYu, [Casdoor plugin](https://shenyu.apache.org/docs/plugin-center/security/casdoor/) and [plugin store cutover](https://github.com/apache/shenyu/blob/master/docs/plugin-store-casdoor.md)
+- [apache/pulsar-manager](https://github.com/apache/pulsar-manager) and [apache/shardingsphere-elasticjob-ui](https://github.com/apache/shardingsphere-elasticjob-ui)
+- Apache APISIX, [authz-casdoor](https://apisix.apache.org/docs/apisix/plugins/authz-casdoor/)

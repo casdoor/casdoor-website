@@ -1,0 +1,210 @@
+---
+slug: oidc-rp-initiated-logout
+title: "RP-Initiated Logout and SSO Logout in OpenID Connect: How Casdoor Signs Users Out"
+description: "How OIDC RP-initiated logout, back-channel logout and token revocation work in Casdoor, what each one clears, and how single sign-out spans several apps."
+authors: [hsluoyz]
+tags: [Casdoor, OIDC, Logout, SSO, Session, OAuth]
+date: 2026-11-02
+---
+
+Logging a user out of an OpenID Connect app takes more than deleting your own session cookie. The user is still signed in at the identity provider, so the next "Sign in" click goes straight through without a password, and the other apps that share that identity provider session stay signed in too. A proper logout has three parts: clear your app's local session, send the browser to the provider's `end_session_endpoint` (RP-initiated logout) so the provider session ends, and let the provider tell the other apps through back-channel logout. With Casdoor, the end-session endpoint is `/api/logout`, back-channel logout is configured per application, and refresh tokens can be revoked at `/api/login/oauth/revoke`.
+
+<!-- truncate -->
+
+## Logout mechanisms at a glance
+
+| Mechanism | Who triggers it | What it clears | Casdoor support |
+|---|---|---|---|
+| Local app logout | Your app | Your app's session cookie and stored tokens only | Your code |
+| RP-initiated logout | Your app, by redirecting the browser | The Casdoor browser session and the token of the `id_token_hint` | Yes, `GET` or `POST /api/logout`, announced as `end_session_endpoint` |
+| Back-channel logout | Casdoor, server to server | The sessions of other apps, each app ends its own | Yes, per application **Backchannel logout URL** |
+| Front-channel logout | The provider, through hidden iframes | The sessions of other apps, through the browser | No, Casdoor doesn't announce `frontchannel_logout_supported` |
+| Token revocation (RFC 7009) | Your app, server or client | One access or refresh token, and the tokens that share its refresh token | Yes, `POST /api/login/oauth/revoke`, announced as `revocation_endpoint` |
+| Casdoor SSO logout | Your app, with the user's token or cookie | All sessions and tokens of the user, or the current session only | Yes, `/api/sso-logout`, Casdoor-specific |
+| SAML single logout | Casdoor or a SAML service provider | Sessions in SAML apps | Yes, signed `LogoutRequest` |
+
+## Local session vs. identity provider session
+
+There are at least two sessions involved in every OIDC sign-in, and often three:
+
+1. **Your app's session.** Usually a cookie that maps to the user and the tokens you got from the token endpoint.
+2. **The Casdoor session.** A cookie on the Casdoor domain. As long as it is valid, Casdoor signs the user in to any app of the organization without a password, after a one-click account picker or silently with automatic sign-in. That is what makes [single sign-on](/docs/session/single-sign-on) work.
+3. **An upstream identity provider session**, when the user signed in to Casdoor through Google, GitHub, an enterprise IdP and so on.
+
+Auth0 describes the same three layers in its logout documentation (application, Auth0 and identity provider session layers), and the model applies to any OIDC provider.
+
+"Localized application session termination" ends only the first one: your app forgets the user, the Casdoor session lives on. That is what happens when you just clear a cookie. "Centralized single sign-out" ends the Casdoor session and tells every app of the user to end its own. Most users who click "Sign out" expect the second, especially on a shared computer.
+
+For the third layer, Casdoor calls the logout URL of a Custom OAuth provider when the application signs users in through one and the provider has a logout URL set. It doesn't sign the user out of Google or GitHub.
+
+## RP-initiated logout with the end-session endpoint
+
+[OpenID Connect RP-Initiated Logout 1.0](https://openid.net/specs/openid-connect-rpinitiated-1_0.html) defines how a relying party (your app) asks the provider to end its session. The provider publishes the endpoint as `end_session_endpoint` in its discovery document, and the request carries these parameters:
+
+- `id_token_hint`: the ID token the provider issued to your app. The spec marks it RECOMMENDED. Casdoor uses it to find and expire that exact token.
+- `post_logout_redirect_uri`: where the browser goes afterwards. The spec requires it to be registered in advance. Casdoor checks it against the application's **Redirect URLs** and refuses to redirect to anything else.
+- `state`: an opaque value that Casdoor appends to the redirect, so your app can tell its own logout round trip from a forged one.
+- `client_id`: identifies the app when you can't send an ID token.
+
+The spec also defines `logout_hint` and `ui_locales`. Casdoor doesn't read them.
+
+Casdoor's discovery document at `/.well-known/openid-configuration` announces `end_session_endpoint` as `https://<your-casdoor>/api/logout`, so OIDC libraries that support RP-initiated logout pick it up without configuration. The endpoint accepts `GET` and `POST`, as the spec requires.
+
+What Casdoor does with the request, briefly (the [RP-initiated logout reference](/docs/session/rp-initiated-logout) has every branch):
+
+- With `id_token_hint`, Casdoor looks up the token, sends back-channel logout tokens to the user's applications, expires the token (its refresh token stops working too), clears the browser's Casdoor session and redirects to `post_logout_redirect_uri` with `state`.
+- Without `id_token_hint`, Casdoor signs out the current browser session and expires the tokens issued in it. If the browser has no session left, it still redirects when it knows the app, from the session or from `client_id`.
+- Without `post_logout_redirect_uri`, the endpoint returns a JSON response instead of a redirect.
+
+### Example: sign-out button in a browser app
+
+A single-page app that signed in with the authorization code flow and PKCE keeps the ID token after the token exchange. The sign-out handler clears local state first, then hands the browser to Casdoor:
+
+```js
+const ISSUER = "https://door.example.com";
+const CLIENT_ID = "your-client-id";
+
+async function signOut() {
+  const idToken = sessionStorage.getItem("id_token");
+
+  const discovery = await fetch(`${ISSUER}/.well-known/openid-configuration`)
+    .then((r) => r.json());
+
+  // 1. Forget the user locally, whatever happens next
+  sessionStorage.clear();
+
+  // 2. Remember a state value to check when Casdoor sends the browser back
+  const state = crypto.randomUUID();
+  sessionStorage.setItem("logout_state", state);
+
+  // 3. End the Casdoor session
+  const url = new URL(discovery.end_session_endpoint);
+  if (idToken) {
+    url.searchParams.set("id_token_hint", idToken);
+  } else {
+    url.searchParams.set("client_id", CLIENT_ID);
+  }
+  url.searchParams.set("post_logout_redirect_uri", "https://app.example.com/signed-out");
+  url.searchParams.set("state", state);
+  window.location.assign(url.toString());
+}
+
+// On https://app.example.com/signed-out
+const returned = new URLSearchParams(window.location.search).get("state");
+if (returned !== sessionStorage.getItem("logout_state")) {
+  console.warn("Unexpected logout redirect");
+}
+sessionStorage.removeItem("logout_state");
+```
+
+Add `https://app.example.com/signed-out` to the application's **Redirect URLs** in Casdoor, or Casdoor returns an error instead of redirecting. A server-rendered app does the same from its logout route: destroy the server session, then answer with a 302 to the end-session URL. For Spring Security, see the [Spring Boot SSO post](/blog/spring-boot-sso-oidc).
+
+## Back-channel logout: telling the other apps
+
+Ending the Casdoor session stops new silent sign-ins, but app B still has its own session cookie from an hour ago. Something has to tell app B. [OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html) does this server to server: the provider sends a `POST` with a form parameter `logout_token`, a signed JWT that names the user, to each app's registered back-channel URI.
+
+In Casdoor, set **Backchannel logout URL** on the application's edit page. When a user signs out through `/api/logout`, Casdoor sends a logout token to every application that holds an active token for that user and has this URL set. The token is signed with the application's certificate, the same key as its ID tokens, and contains:
+
+- `iss` and `aud`: the same issuer and client ID as the app's ID tokens
+- `sub`: the user's ID, the same value as `sub` in the ID token
+- `iat` and `jti`
+- `events` with the member `http://schemas.openid.net/event/backchannel-logout`
+- `sid` only for some logouts, such as [SSO logout](/docs/session/single-sign-out), and not for `/api/logout`
+
+Casdoor's ID tokens don't carry a `sid` claim, so key your local sessions by `sub` and end all of them for that user. Casdoor's logout token also has no `exp` claim, which the final spec lists as required, so check freshness with `iat` and don't make `exp` mandatory in your validator. Casdoor sends each token once, with a 30-second timeout, and doesn't retry. For applications outside the `built-in` organization, it refuses to call loopback and link-local addresses, so `http://localhost` won't receive logout tokens during development.
+
+### Example: a back-channel logout receiver
+
+This Express handler follows the validation steps of the spec, using the [`jose`](https://github.com/panva/jose) library:
+
+```js
+import express from "express";
+import { createRemoteJWKSet, jwtVerify } from "jose";
+
+// Take both values from the discovery document of your Casdoor
+const ISSUER = "https://door.example.com";
+const JWKS = createRemoteJWKSet(new URL(`${ISSUER}/.well-known/jwks`));
+const CLIENT_ID = process.env.CASDOOR_CLIENT_ID;
+const EVENT = "http://schemas.openid.net/event/backchannel-logout";
+
+const seenJti = new Map();
+const app = express();
+
+app.post(
+  "/oidc/backchannel-logout",
+  express.urlencoded({ extended: false }),
+  async (req, res) => {
+    res.set("Cache-Control", "no-store");
+    try {
+      const { payload } = await jwtVerify(req.body.logout_token, JWKS, {
+        issuer: ISSUER,
+        audience: CLIENT_ID,
+        maxTokenAge: "2m",
+      });
+
+      if (!payload.events || typeof payload.events[EVENT] !== "object") {
+        throw new Error("not a logout token");
+      }
+      if (!payload.sub && !payload.sid) {
+        throw new Error("no sub or sid");
+      }
+      if ("nonce" in payload) {
+        throw new Error("nonce is not allowed");
+      }
+      if (seenJti.has(payload.jti)) {
+        throw new Error("replayed token");
+      }
+      seenJti.set(payload.jti, Date.now());
+
+      // Your own helper: delete every session row that belongs to this user
+      await destroySessionsForUser(payload.sub);
+      res.sendStatus(200);
+    } catch (err) {
+      res.status(400).json({ error: "invalid_request", error_description: err.message });
+    }
+  }
+);
+```
+
+`jwtVerify` checks the signature, `iss`, `aud`, and with `maxTokenAge` the `iat` claim. To find sessions by user, store `sub` from the ID token in each session record at sign-in. Prune `seenJti` periodically, or keep it in Redis.
+
+## Revoking refresh tokens
+
+A refresh token outlives the session that created it. If your app keeps one, a logout that never touches it leaves a credential that can mint new access tokens for days.
+
+The end-session call with `id_token_hint` already expires that token, refresh token included. Revoke explicitly when the logout doesn't go through the browser, for example in a CLI, a desktop or mobile app, or when the user leaves only your app and keeps the Casdoor session. Casdoor implements [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009) at the `revocation_endpoint` of its discovery document:
+
+```bash
+curl -X POST https://door.example.com/api/login/oauth/revoke \
+  -u "$CLIENT_ID:$CLIENT_SECRET" \
+  -d token="$REFRESH_TOKEN" \
+  -d token_type_hint=refresh_token
+```
+
+A public client that used PKCE can send `client_id` in the body without a secret. Revoking a refresh token also expires the access tokens issued with it. After that, the refresh endpoint answers `invalid_grant` and introspection returns `"active": false`; [When Casdoor revokes tokens](/docs/token/overview#when-casdoor-revokes-tokens) lists every event that does this.
+
+One limit applies to every provider that issues JWT access tokens: an API that only checks the signature and `exp` keeps accepting a revoked access token until it expires. Keep access tokens short-lived, or have the API call [token introspection](/docs/how-to-connect/oauth#how-to-verify-access-token) when it must notice a logout at once.
+
+## Single sign-out across several apps
+
+With the pieces above, single sign-out works like this when the user clicks "Sign out" in app A:
+
+1. App A clears its session and redirects to `/api/logout` with `id_token_hint`.
+2. Casdoor sends logout tokens to the back-channel URLs of the user's other apps, expires the token, and ends the browser's Casdoor session.
+3. Apps B and C receive the logout token and delete their sessions for that `sub`.
+4. The browser lands on app A's signed-out page. Opening app B now shows the Casdoor sign-in page.
+
+An app without a back-channel URL stays signed in until its own session or access token expires. If you can't add a receiver to an app, keep its sessions short or make it validate the token on each request.
+
+For "sign me out everywhere" after a lost laptop, use Casdoor's [SSO logout endpoint](/docs/session/single-sign-out) with `logoutAll=true`: it expires every token and deletes every session of the user, and also sends signed notifications through notification providers to apps that don't speak OIDC. Administrators can end single sessions on the [Sessions page](/docs/session/management). For SAML apps, see [SAML single logout](/docs/how-to-connect/saml/overview#single-logout). Background reading: [single logout](https://www.casdoor.com/blog/single-logout) and [SAML single logout](https://www.casdoor.com/blog/saml-single-logout) on www.casdoor.com.
+
+## References
+
+- [OpenID Connect RP-Initiated Logout 1.0](https://openid.net/specs/openid-connect-rpinitiated-1_0.html)
+- [OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html)
+- [OpenID Connect Front-Channel Logout 1.0](https://openid.net/specs/openid-connect-frontchannel-1_0.html)
+- [RFC 7009: OAuth 2.0 Token Revocation](https://datatracker.ietf.org/doc/html/rfc7009)
+- [Auth0: Logout](https://auth0.com/docs/authenticate/login/logout)
+- [Casdoor: RP-initiated logout](/docs/session/rp-initiated-logout)
+- [Casdoor: Sign users out of all applications](/docs/session/single-sign-out)
+- [Casdoor: Connect a standard OIDC client](/docs/how-to-connect/oidc-client)
