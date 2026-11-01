@@ -21,10 +21,10 @@ A dummy payment gateway is a payment provider that accepts every checkout as pai
 | PayPal | Sandbox apps and sandbox accounts | `runmode` other than `prod` uses the sandbox | `PayPal` |
 | Paddle | Separate sandbox account at `sandbox-vendors.paddle.com` | `runmode` other than `prod` uses `sandbox-api.paddle.com` | `Paddle` |
 | Adyen | Test environment (`checkout-test.adyen.com`) | `runmode` other than `prod` uses the test environment | `Adyen` |
-| AirWallex | Separate sandbox account | `runmode` other than `prod` calls `api-demo.airwallex.com` | `AirWallex` |
+| AirWallex | Separate sandbox account | `runmode` other than `prod` calls `api.sandbox.airwallex.com` | `AirWallex` |
 | Lemon Squeezy | Store test mode with test-mode API keys | By the API key you enter | `Lemon Squeezy` |
 | FastSpring | Test storefront with `.test.` in the host | By the **Host** you enter | `FastSpring` |
-| Polar | Sandbox at `sandbox.polar.sh` | Not supported, Casdoor always calls `api.polar.sh` | `Polar` |
+| Polar | Sandbox at `sandbox.polar.sh` | Set the provider's **Host** to `https://sandbox-api.polar.sh` | `Polar` |
 
 `runmode` is the option in `conf/app.conf` (or the `runmode` environment variable) described in the [configuration reference](/docs/basic/configuration). Its default is `dev`, so a fresh Casdoor talks to the sandboxes of PayPal, Paddle, Adyen and AirWallex until you set it to `prod`.
 
@@ -68,7 +68,7 @@ This matters for subscriptions, because Balance is one of the two providers that
 
 **Paddle.** The sandbox is a separate account at `sandbox-vendors.paddle.com` with its own keys and products; nothing is shared with live. Paddle's test cards include `4242 4242 4242 4242` (succeeds) and `4000 0000 0000 0002` (declined).
 
-**Lemon Squeezy** has a test mode per store, and API keys created in test mode only see test data. **FastSpring** test orders go through a test storefront: insert `.test.` into the store host, for example `yourstore.test.onfastspring.com`, and enter that as the provider's **Host**. **Polar** has a sandbox with its own tokens, but the Casdoor Polar provider does not select it, so a Polar provider in Casdoor always works against live Polar. **Alipay** in Casdoor is also hard-wired to production.
+**Lemon Squeezy** has a test mode per store, and API keys created in test mode only see test data. **FastSpring** test orders go through a test storefront: insert `.test.` into the store host, for example `yourstore.test.onfastspring.com`, and enter that as the provider's **Host**. **Polar** has a sandbox with its own tokens; set the provider's **Host** to `https://sandbox-api.polar.sh` to use it, and leave **Host** empty for live Polar. **Alipay** in Casdoor is also hard-wired to production.
 
 ## A test plan for Casdoor products, plans and subscriptions
 
