@@ -62,12 +62,12 @@ You may want to configure `role_attribute_path` to map your user's role to Grafa
 
 ```ini
 [auth.generic_oauth]
-role_attribute_path = contains(roles[*].name, 'admin') && 'Admin' || contains(roles[*].name, 'editor') && 'Editor' || 'Viewer'
+role_attribute_path = contains(roles[*].name || roles || `[]`, 'admin') && 'Admin' || contains(roles[*].name || roles || `[]`, 'editor') && 'Editor' || 'Viewer'
 role_attribute_strict = true
 allow_assign_grafana_admin = true
 ```
 
-The JMESPath expression after `role_attribute_path` is important; see the [Grafana docs](https://grafana.com/docs/).
+Grafana reads roles from the ID token first, then from the UserInfo response. With the default `JWT` token format, the ID token carries `roles` as objects, so the expression matches `roles[*].name`. With `JWT-Standard`, the ID token has no roles and Grafana falls back to UserInfo, where `roles` is a list of role names; the `|| roles` part covers that case. See the [Grafana docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#configure-role-mapping) for the JMESPath syntax.
 
 ## Step 3: See if it works
 
