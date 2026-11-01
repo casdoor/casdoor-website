@@ -37,6 +37,9 @@ This guide explains how to use Google reCAPTCHA as the captcha of Casdoor. The t
 
 1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
 1. Set **Category** to `Captcha` and **Type** to the reCAPTCHA version that you registered: `reCAPTCHA`, `reCAPTCHA v2`, or `reCAPTCHA v3`.
+
+   reCAPTCHA v3 doesn't show a challenge, but returns a score from 0.0 to 1.0. With `reCAPTCHA v3`, Casdoor rejects a response whose score is below 0.5.
+
 1. Enter the **Site key** and the **Secret key**.
 
    ![reCAPTCHA provider in Casdoor](/img/providers/captcha/recaptcha_provider.png)

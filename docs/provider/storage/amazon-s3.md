@@ -48,10 +48,12 @@ This guide explains how to store the uploaded files of Casdoor, such as avatars,
    | Endpoint (Intranet) | VPC endpoint   | No       |
    | Bucket           | Bucket name       | Yes      |
    | Path prefix      | —                 | No       |
-   | Domain           | CloudFront domain | No       |
+   | Domain           | Bucket URL or CloudFront domain | Yes |
    | Region ID        | AWS region        | Yes      |
 
-   For the format of the endpoint, see [Website endpoints](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html).
+   **Endpoint** is the S3 REST API endpoint of the region, such as `https://s3.us-east-1.amazonaws.com`. See [Amazon S3 endpoints](https://docs.aws.amazon.com/general/latest/gr/s3.html). Don't use a website endpoint.
+
+   Set **Domain** to the URL that serves the files, such as `https://<bucket>.s3.us-east-1.amazonaws.com` or the domain of a CloudFront distribution. Casdoor builds the URLs of uploaded files from it. If **Domain** is empty, Casdoor fills it with the endpoint, which doesn't contain the bucket name, so the file URLs don't work.
 
    ![Amazon S3 provider in Casdoor](/img/providers/storage/amazonProvider.png)
 

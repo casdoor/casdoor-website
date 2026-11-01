@@ -17,14 +17,14 @@ This guide explains how to send the emails of Casdoor to [Mailpit](https://githu
 
 #### What you need
 
-- Mailpit running where Casdoor can reach it. By default, Mailpit listens on `127.0.0.1:1025` without TLS or authentication.
+- Mailpit running where Casdoor can reach it. By default, the SMTP server of Mailpit listens on `0.0.0.0:1025`, on all interfaces, without TLS or authentication, and the web UI on port `8025`.
 - Administrator access to the Casdoor admin console
 
 ---
 
 ## Run Mailpit
 
-Start Mailpit, so that its SMTP server is reachable at `127.0.0.1:1025`, or at the host and port that you configured.
+Start Mailpit, so that its SMTP server is reachable on port `1025` of its host, or at the address that you set with `--smtp`.
 
 ![Mailpit configuration](/img/providers/mailpit_conf.png)
 

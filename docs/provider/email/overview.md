@@ -60,7 +60,8 @@ An email provider that belongs to an organization other than `built-in` can send
 |---|---|
 | `%{user.friendlyName}` | The display name or another friendly name of the user |
 | `%s` | The verification code |
-| `%link` | The password reset URL. Use it only inside a `<reset-link>` block |
+| `%link` | The password reset URL. Use it only inside a `<reset-link>` block. In a magic-link email, the sign-in link |
+| `%expireTime` | The lifetime of the magic link in minutes. Replaced only in magic-link emails |
 
 ### Password reset link
 
@@ -68,10 +69,14 @@ To let users reset their password with a link in the email, put the link text an
 
 Casdoor fills in `%link` only if it knows its own public URL: `origin` or `originFrontend` is set in `conf/app.conf`, or the request reaches Casdoor on a loopback host such as `localhost`. Otherwise, it removes the `<reset-link>` block from password reset emails too, and the email contains only the code. Casdoor doesn't build the link from the `Host` header of the request, because anyone can set that header. The same rule applies to magic links, which fail with `please set "origin" in conf/app.conf to send magic links`. See the [Configuration reference](/docs/basic/configuration).
 
+A magic-link email uses the same **Email content**. If the content has no `%link`, Casdoor sends a built-in body with the link instead.
+
+Codes and magic links are valid for `verificationCodeTimeout` minutes, set in `conf/app.conf`. The default is 10. The examples below say 10 minutes, so change the text if you change the setting.
+
 Plain text:
 
 ```text
-You have requested a verification code at Casdoor. Here is your code: %s, please enter in 5 minutes. <reset-link>Or click %link to reset</reset-link>
+You have requested a verification code at Casdoor. Here is your code: %s, please enter in 10 minutes. <reset-link>Or click %link to reset</reset-link>
 ```
 
 HTML:
@@ -83,7 +88,7 @@ HTML:
     <h2>Password Reset Request</h2>
     <p>Hello %{'{'}user.friendlyName{'}'},</p>
     <p>Your verification code is: <strong>%s</strong></p>
-    <p>This code will expire in 5 minutes.</p>
+    <p>This code will expire in 10 minutes.</p>
     <reset-link>
         <p>Alternatively, you can <a href="%link">click here to reset your password</a> directly.</p>
     </reset-link>

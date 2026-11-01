@@ -30,7 +30,7 @@ This guide explains how to store the uploaded files of Casdoor in Alibaba Cloud 
 
 1. In the Casdoor admin console, go to **Identity** > **Providers** and add a provider.
 1. Set **Category** to `Storage` and **Type** to `Aliyun OSS`.
-1. Fill in the AccessKey ID as the **Client ID** and the AccessKey Secret as the **Client secret**, and set **Endpoint**, **Bucket**, and **Region ID**.
+1. Fill in the AccessKey ID as the **Client ID** and the AccessKey Secret as the **Client secret**, and set **Endpoint**, such as `oss-cn-hangzhou.aliyuncs.com`, and **Bucket**. Alibaba Cloud OSS takes the region from the endpoint, so the form has no **Region ID**.
 
    ![Alibaba Cloud OSS provider in Casdoor](/img/providers/storage/oss.png)
 

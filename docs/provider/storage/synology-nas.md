@@ -1,12 +1,12 @@
 ---
 title: Store files on a Synology NAS
 sidebar_label: Synology NAS
-description: Store uploaded files on a Synology NAS through its S3-compatible API.
+description: Store uploaded files on a Synology NAS through the File Station API of DSM.
 keywords: [Synology, NAS, storage, provider]
 authors: [xiao-kong-long]
 ---
 
-This guide explains how to store the uploaded files of Casdoor on a Synology NAS through its S3-compatible API.
+This guide explains how to store the uploaded files of Casdoor on a Synology NAS. Casdoor signs in to DSM with a DSM account and uploads the files through the File Station API to the `/home` shared folder, that is, the home folder of that account.
 
 ---
 
@@ -16,7 +16,8 @@ This guide explains how to store the uploaded files of Casdoor on a Synology NAS
 
 #### What you need
 
-- A Synology NAS with an S3-compatible endpoint and keys. See the [Synology developer documentation](https://www.synology.cn/zh-cn/support/developer#tool).
+- A Synology NAS that Casdoor can reach over HTTP or HTTPS, with the user home service turned on
+- A DSM account for Casdoor without 2-step verification. See the [File Station API guide](https://global.download.synology.com/download/Document/Software/DeveloperGuide/Package/FileStation/All/enu/Synology_File_Station_API_Guide.pdf).
 - Administrator access to the Casdoor admin console
 
 ---
@@ -29,13 +30,12 @@ This guide explains how to store the uploaded files of Casdoor on a Synology NAS
 
    | Casdoor field | Synology / meaning | Required |
    |---------------|--------------------|----------|
-   | Client ID     | SecretId (access key) | Yes   |
-   | Client secret | SecretKey          | Yes      |
-   | Endpoint      | S3 API endpoint    | Yes      |
-   | Bucket        | Bucket name        | No       |
-   | Path prefix   | Path prefix        | No       |
-   | Domain        | Custom domain      | No       |
-   | Region ID     | Region             | No       |
+   | Client ID     | Name of the DSM account | Yes |
+   | Client secret | Password of the DSM account | Yes |
+   | Endpoint      | URL of DSM, such as `https://nas.example.com:5001` | Yes |
+   | Path prefix   | Folder under `/home` for the files | No |
+
+   Casdoor doesn't use **Bucket** for Synology.
 
    ![Synology provider in Casdoor](/img/providers/storage/synologyConfig.png)
 
