@@ -68,7 +68,10 @@ Read the value of `registration_endpoint`:
 }
 ```
 
-The global discovery document has no `organization` parameter, so clients register in `built-in`. The discovery document of an application, `/.well-known/<application>/openid-configuration`, returns `https://your-casdoor.com/api/oauth/register?organization=<organization>`, with the organization of that application. A client that discovers Casdoor through an application registers in the organization of that application.
+The global discovery document has no `organization` parameter, so clients register in `built-in`. Two other discovery documents return `https://your-casdoor.com/api/oauth/register?organization=<organization>`, so that a client registers in that organization:
+
+- The discovery document of an application, `/.well-known/<application>/openid-configuration`, with the organization of the application.
+- The discovery document of an organization that has **Use organization issuer** turned on, `/.well-known/oauth-authorization-server/orgs/<organization>` or `/.well-known/openid-configuration/orgs/<organization>`. Its issuer is `https://your-casdoor.com/orgs/<organization>`. The [MCP gateway](/docs/how-to-connect/mcp/gateway) names this issuer as the authorization server of the MCP servers of the organization.
 
 ## Register a client {#registering-a-client}
 
@@ -109,8 +112,9 @@ Store `client_id` and `client_secret` securely. The client uses them in all late
 |---|---|---|
 | `redirect_uris` | Yes | Array of callback URLs that Casdoor may redirect to after sign-in |
 | `client_name` | No | Display name of the client. Casdoor generates a name if you omit it |
-| `grant_types` | No | Grant types that the client uses: `authorization_code`, `refresh_token`, or `urn:ietf:params:oauth:grant-type:device_code`. Casdoor drops any other value without an error. The default is `["authorization_code"]` |
-| `token_endpoint_auth_method` | No | How the client authenticates at the token endpoint: `none`, `client_secret_post`, or `client_secret_basic` |
+| `grant_types` | No | Grant types that the client uses: `authorization_code`, `refresh_token`, `urn:ietf:params:oauth:grant-type:device_code`, or `urn:ietf:params:oauth:grant-type:jwt-bearer`, which a registered client can use only to redeem an [ID-JAG](/docs/mcp-auth/enterprise-managed-authorization). Casdoor drops any other value without an error. The default is `["authorization_code"]` |
+| `token_endpoint_auth_method` | No | How the client authenticates at the token endpoint: `none`, `client_secret_post`, `client_secret_basic`, or `private_key_jwt` |
+| `jwks_uri` | With `private_key_jwt` | HTTPS URL of the key set whose keys sign the `client_assertion` of the client ([RFC 7523](https://www.rfc-editor.org/rfc/rfc7523)) |
 | `application_type` | No | `web` for server-side clients, or `native` for desktop and mobile clients |
 | `logo_uri` | No | URL of the logo of the client |
 | `client_uri` | No | URL of the home page of the client |
@@ -162,7 +166,17 @@ The token format and the token fields don't come from the default application. T
 
 A client can skip registration and use as its `client_id` an HTTPS URL that points to a client ID metadata document, as MCP clients do. The document is a JSON file with the same metadata as a registration request. Casdoor follows [draft-ietf-oauth-client-id-metadata-document](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/).
 
-Casdoor accepts these clients only when **Enable dynamic client registration** is on for the `built-in` organization. Otherwise, the authorization request fails with "client ID metadata documents are not accepted, enable dynamic client registration of the organization: built-in first". The discovery document shows the setting in `client_id_metadata_document_supported`.
+### Which organization {#cimd-organization}
+
+The same client, such as ChatGPT, Claude, or VS Code, has one client ID URL for all the Casdoor instances and organizations that it connects to. Casdoor therefore keeps one application per URL, shared by all organizations, and serves it as an application of the organization that the user signs in to:
+
+- The organization comes from the `organization` parameter of the authorization endpoint. The discovery document of an application, and that of an organization with **Use organization issuer**, add this parameter to `authorization_endpoint`. Without it, the organization is `built-in`.
+- Casdoor accepts the URL only when **Enable dynamic client registration** is on for that organization. Otherwise, the authorization request fails with "client ID metadata documents are not accepted, enable dynamic client registration of the organization: <organization> first". The discovery document shows the setting in `client_id_metadata_document_supported`.
+- The user signs in on the sign-in page of the organization, and the tokens carry the issuer of the user's organization, also after a refresh.
+
+The application belongs to `built-in`, has **Is shared** turned on, the URL as its client ID, a name that starts with `cimd_`, and the tag `cimd`. An application that an earlier version of Casdoor added to another organization becomes such a shared application on its next fetch.
+
+### The document {#cimd-document}
 
 The `client_id` URL must use `https`, have a path other than `/`, and contain no user information, no `#` fragment, and no `.` or `..` segments.
 
@@ -170,13 +184,13 @@ At `/login/oauth/authorize`, Casdoor fetches the document with a `GET` request. 
 
 - The response is HTTP 200, valid JSON, and at most 16 KB.
 - `client_id` equals the URL, and there is no `client_secret`.
-- `token_endpoint_auth_method` is empty or `none`: the client is a public client without a client secret.
+- `token_endpoint_auth_method` is empty or `none`, for a public client with PKCE, or `private_key_jwt` with an HTTPS `jwks_uri`, for a client that signs a `client_assertion`, such as ChatGPT.
 - `redirect_uris` holds at least one full URL.
 - The other metadata follows the rules of a registration request. `grant_types` defaults to `["authorization_code"]`.
 
-Casdoor then creates an application in the `built-in` organization, with the URL as its client ID, a name that starts with `cimd_`, and the tag `cimd`. It uses the same defaults and inherited settings as a registered client. The display name is `<client_name> (<host>)`, or the host. The home page is `client_uri` when it is on the same host, and `https://<host>` otherwise.
+The application uses the same defaults and inherited settings as a registered client, taken from the default application of `built-in`. The display name is `<client_name> (<host>)`, or the host. The home page is `client_uri` when it is on the same host, and `https://<host>` otherwise.
 
-On later authorization requests, Casdoor fetches the document again at most once an hour and updates the name, the home page, the redirect URLs, the grant types, the terms of use, and the logo. If an application without the tag `cimd` already has the URL as its client ID, Casdoor uses that application as it is.
+On later authorization requests, Casdoor fetches the document again at most once an hour and updates the name, the home page, the redirect URLs, the grant types, the terms of use, the logo, and the key set. If an application without the tag `cimd` already has the URL as its client ID, Casdoor uses that application as it is.
 
 ## Example: an MCP client {#complete-example-mcp-client}
 
@@ -211,4 +225,6 @@ With the credentials, the client runs the authorization code flow: the user sign
 - [OAuth 2.0](/docs/how-to-connect/oauth)
 - [Application categories](/docs/application/categories)
 - [Organizations](/docs/organization/overview)
-- [Connect Claude Desktop to the Casdoor MCP server](/docs/how-to-connect/mcp/connect-claude-desktop)
+- [Put MCP servers behind the Casdoor MCP gateway](/docs/how-to-connect/mcp/gateway)
+- [Connect Claude to the Casdoor MCP server](/docs/how-to-connect/mcp/connect-claude-desktop)
+- [Enterprise-managed authorization with ID-JAG](/docs/mcp-auth/enterprise-managed-authorization)

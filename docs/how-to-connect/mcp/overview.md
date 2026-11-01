@@ -13,7 +13,7 @@ MCP is a protocol on top of JSON-RPC 2.0 through which a client discovers the to
 Casdoor works with MCP in two directions:
 
 - **As an MCP server**: Casdoor offers its own management functions as tools. The pages of this section describe this server.
-- **As a registry of external MCP servers**: Casdoor stores the MCP servers that your organization uses, with their tokens and the tools that you allow. See [Register an external MCP server](/docs/how-to-connect/mcp/overview#registering-external-mcp-servers).
+- **As a registry of external MCP servers**: Casdoor stores the MCP servers that your organization uses, with their tokens and the tools that you allow. See [Register an external MCP server](/docs/how-to-connect/mcp/overview#registering-external-mcp-servers), and [Put MCP servers behind the Casdoor MCP gateway](/docs/how-to-connect/mcp/gateway) for a complete example with ChatGPT, Claude, Cursor, and VS Code.
 
 ## Connect to the Casdoor MCP server {#getting-started}
 
@@ -71,9 +71,10 @@ The endpoint `/api/mcp` accepts `POST` requests with JSON-RPC 2.0 payloads. Befo
 
 MCP client libraries perform the handshake for you. To connect a specific client, see:
 
-- [Connect Claude Desktop](/docs/how-to-connect/mcp/connect-claude-desktop)
+- [Connect Claude](/docs/how-to-connect/mcp/connect-claude-desktop)
 - [Connect Cursor](/docs/how-to-connect/mcp/connect-cursor)
 - [Connect ChatGPT](/docs/how-to-connect/mcp/connect-chatgpt)
+- [Connect VS Code](/docs/how-to-connect/mcp/connect-vscode)
 
 ## Register an external MCP server {#registering-external-mcp-servers}
 
@@ -91,7 +92,7 @@ MCP client libraries perform the handshake for you. To connect a specific client
 
 1. Save the server. Casdoor fetches the list of tools from the server and stores it.
 
-MCP clients reach the server through the proxy endpoint of Casdoor, `/api/server/<organization>/<server-name>`, with `GET` and `POST` requests. The proxy never forwards the `Cookie` header of the caller. It replaces the `Authorization` header of the caller with `Bearer <token>`, where `<token>` is the **Token** of the server, or removes the header when the server has no token. A request that Casdoor doesn't authorize gets the same answer as an [unauthenticated request to `/api/mcp`](/docs/how-to-connect/mcp/authentication#handling-unauthenticated-requests).
+MCP clients reach the server through the proxy endpoint of Casdoor, `/api/server/<organization>/<server-name>`, with `GET` and `POST` requests. A user of the organization may use it when they may sign in to the **Application** of the server; without an application, only administrators may. The endpoint has its own protected resource metadata, `/.well-known/oauth-protected-resource/api/server/<organization>/<server-name>`, which names the issuer of the organization as the authorization server, and it accepts only tokens issued for it or without a resource. See [Put MCP servers behind the Casdoor MCP gateway](/docs/how-to-connect/mcp/gateway). The proxy never forwards the `Cookie` header of the caller. It replaces the `Authorization` header of the caller with `Bearer <token>`, where `<token>` is the **Token** of the server, or removes the header when the server has no token. A request that Casdoor doesn't authorize gets the same answer as an [unauthenticated request to `/api/mcp`](/docs/how-to-connect/mcp/authentication#handling-unauthenticated-requests).
 
 Casdoor never returns the **Token** of a server in its API responses, so the field shows empty on the edit page after you save it. If you save the server with an empty **Token**, Casdoor keeps the stored token. To change the token, enter the new one.
 

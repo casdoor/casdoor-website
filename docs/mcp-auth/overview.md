@@ -41,6 +41,9 @@ The authorization server of an MCP server has to implement several standards. Ca
 | [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414): OAuth 2.0 Authorization Server Metadata | `/.well-known/oauth-authorization-server` |
 | [OpenID Connect Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html) | `/.well-known/openid-configuration` |
 | [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591): Dynamic Client Registration | `/api/oauth/register` |
+| [Client ID Metadata Documents](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/) | URL client IDs of ChatGPT, Claude, and VS Code, shared by all organizations |
+| [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728): Protected Resource Metadata | `/.well-known/oauth-protected-resource`, and one document per server behind the [MCP gateway](/docs/how-to-connect/mcp/gateway) |
+| [ID-JAG](https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/): Enterprise-Managed Authorization | JWT bearer grant with the ID-JAG of a trusted IdP. See [Enterprise-managed authorization](/docs/mcp-auth/enterprise-managed-authorization) |
 | [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636): PKCE | Authorization code flow |
 | [RFC 8707](https://datatracker.ietf.org/doc/html/rfc8707): Resource Indicators | Tokens whose audience is your MCP server |
 | [RFC 7517](https://datatracker.ietf.org/doc/html/rfc7517): JSON Web Key Set | `/.well-known/jwks`, for token validation |

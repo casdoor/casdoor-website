@@ -143,6 +143,7 @@ The token lacks the scope that the tool requires. Add the scope to `scopes` in `
 
 ## See also
 
+- [Put MCP servers behind the Casdoor MCP gateway](/docs/how-to-connect/mcp/gateway)
 - [MCP tools reference](/docs/how-to-connect/mcp/tools)
 - [MCP authentication](/docs/how-to-connect/mcp/authentication)
 - [MCP troubleshooting](/docs/how-to-connect/mcp/troubleshooting)
