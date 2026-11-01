@@ -360,3 +360,8 @@ html[data-theme="dark"] .theme-doc-sidebar-container div[title="Expand sidebar"]
 .mcp-nav-icon--dark { display: none; }
 [data-theme="dark"] .mcp-nav-icon--light { display: none; }
 [data-theme="dark"] .mcp-nav-icon--dark { display: inline; }
+
+/* keep the back-to-top button above the live chat button */
+button.theme-back-to-top-button {
+  bottom: 5.5rem;
+}

@@ -327,5 +327,10 @@ var _hmt = _hmt || [];
       src: "/js/isMainland.js",
       async: true,
     },
+    {
+      src: "https://chat.casdoor.com/widget.js",
+      "data-site": "casdoor",
+      async: true,
+    },
   ],
 };
