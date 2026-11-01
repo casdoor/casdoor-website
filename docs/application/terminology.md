@@ -133,7 +133,7 @@ Each OAuth and SAML provider in the **Providers** table has the following settin
 | **Signin methods** | Ordered list of sign-in methods shown on the sign-in page (e.g. Password, Verification code, WebAuthn). |
 | **Signup HTML** | Custom HTML injected into the sign-up page. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
 | **Signin HTML** | Custom HTML injected into the sign-in page. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
-| **Page HTML** | Custom HTML injected into the page `<head>` (e.g. meta tags, analytics snippets, or custom styles) for all of the application's pages. |
+| **Page HTML** | Custom HTML injected into the page `<head>` (e.g. meta tags, analytics snippets, or custom styles) for all of the application's pages. A `<script>` element, as most analytics snippets use, runs only in applications of the `built-in` organization and in applications with **Enable custom scripts** on. Casdoor refuses scripts that an organization admin saves. To use a script in another organization, a global admin turns on **Enable custom scripts** and enters the HTML. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
 | **Signin items** | Configure which fields and controls appear on the sign-in form. |
 | **Signup items** | Configure the registration form fields (visible only when **Enable signup** is on). |
 | **Background URL** | Desktop sign-in page background image (URL + preview). |
@@ -142,16 +142,19 @@ Each OAuth and SAML provider in the **Providers** table has the following settin
 | **Custom CSS Mobile** | CSS applied to the sign-in form (mobile). |
 | **Form position** | Horizontal alignment of the sign-in form: Left, Center, Right, or Enable side panel. |
 | **Side panel HTML** | HTML shown in the panel beside the sign-in form (visible when Form position is set to **Enable side panel**). |
-| **Theme** | Use the organization theme or define a custom color/border-radius for this application. |
+| **Theme** | Use the organization theme or define a custom theme for this application: the style (Default, Dark, Document, or Blossom), the primary color, the border radius, and **Is compact**. See [Customize the theme](/docs/organization/customize-theme). |
+| **Enable custom scripts** | Render the custom HTML of this application as it is, so that `<script>` elements run. Only a global admin can turn it on. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
 | **Header HTML** | Custom HTML injected into the page `<head>` of the sign-in and sign-up pages. |
 | **Footer HTML** | Custom HTML rendered below the sign-in and sign-up forms. The footer of the Casdoor admin console shows the **Footer HTML** of the default application of the signed-in user's organization, in place of "Powered by Casdoor". |
 
 ### Custom HTML and scripts {#custom-html}
 
-Casdoor treats the custom HTML of an application differently depending on its organization:
+Casdoor treats the custom HTML of an application differently depending on its organization and on **Enable custom scripts**:
 
 - Applications of the `built-in` organization: Casdoor renders the HTML as it is, and `<script>` elements run.
-- Applications of other organizations: Casdoor removes scripts, event handlers, and other active content before it renders the HTML. Links that open in another window get `rel="noopener noreferrer"`.
+- Applications of other organizations, unless **Enable custom scripts** is on: Casdoor removes scripts, event handlers, and other active content before it renders the HTML. Links that open in another window get `rel="noopener noreferrer"`.
+
+A global admin can turn on **Enable custom scripts** for an application of any organization. Casdoor then renders the custom HTML of that application as it is, like for `built-in`, and `<script>` elements run. Organization admins can't turn the switch on, and while it is on, they can't change the custom HTML of the application. Only a global admin can.
 
 This applies to **Header HTML**, **Page HTML**, **Footer HTML**, **Side panel HTML**, **Signin HTML**, **Signup HTML**, custom sign-in items, and the `Text` sign-up items. The footer of the admin console is always sanitized, also for `built-in`. What organization admins may save in these fields is limited too. See [What organization admins can put in custom HTML and CSS](/docs/application/ui-customization#organization-admin-limits).
 

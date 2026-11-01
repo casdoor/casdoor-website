@@ -28,6 +28,10 @@ On the **Basic** tab, turn on **Enable dark logo** to set **Logo dark**, a logo 
 
 The sign-in and sign-up pages don't use the logo of the organization. They show the logos of the application, see [Application terminology](/docs/application/terminology).
 
+## Languages
+
+**Languages** on the **Basic** tab limits the language selector on the sign-in and sign-up pages of the organization's applications to the languages it lists. The language selector in the header of the Casdoor admin console shows the same languages to the members of the organization. If **Languages** lists only one language, the sign-in and sign-up pages switch to that language and hide the selector. To hide the selector on these pages in any case, hide the `Languages` item in the sign-in or sign-up items of the application.
+
 ## Password storage
 
 **Password type** sets the algorithm with which Casdoor stores the passwords of the organization's users. New organizations use `bcrypt`.
