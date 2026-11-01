@@ -37,6 +37,10 @@ In Polar, open **Settings** > [Personal Access Tokens](https://polar.sh/settings
 
 Add the provider to the **Payment providers** of the product and save it. At checkout, users go to Polar and return to your application when the payment completes or is canceled.
 
+:::note
+Casdoor always calls the live Polar API (`api.polar.sh`), whatever the `runmode` in `conf/app.conf`. It has no switch for the Polar sandbox, so test with a separate Polar account or low prices, or use the [Dummy provider](/docs/provider/payment/dummy) for local testing.
+:::
+
 ## See also
 
 - [Payment providers](/docs/provider/payment/overview)

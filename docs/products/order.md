@@ -14,7 +14,7 @@ While closely related, orders and payments serve different purposes:
 - **Order**: Tracks what was purchased and its fulfillment state
 - **Payment**: Tracks how the transaction was paid
 
-Both are created when purchasing a product, but subscriptions use a different flow (Pricing → Plan → Payment → Subscription) without orders.
+Both are created when purchasing a product. Buying a plan from a pricing page goes through an order as well: Casdoor places an order for the plan's product and, when the user pays for it, creates the subscription together with the payment. The subscription becomes active once the payment succeeds.
 
 ## Creating Orders
 

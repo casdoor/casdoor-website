@@ -51,6 +51,10 @@ Add the provider to the **Payment providers** of the product and save it.
 
 <video src="/video/provider/payment/use_airwallex_buy_product.mp4" controls="controls" width="100%"></video>
 
+:::note
+When `runmode` in `conf/app.conf` of Casdoor is not `prod`, Casdoor uses the AirWallex demo environment (`api-demo.airwallex.com`), so use demo credentials in development. With `runmode = prod`, it uses the live API (`api.airwallex.com`).
+:::
+
 ## See also
 
 - [Payment providers](/docs/provider/payment/overview)
