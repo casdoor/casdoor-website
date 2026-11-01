@@ -111,7 +111,7 @@ In Casdoor, set **Backchannel logout URL** on the application's edit page. When 
 - `events` with the member `http://schemas.openid.net/event/backchannel-logout`
 - `sid` only for some logouts, such as [SSO logout](/docs/session/single-sign-out), and not for `/api/logout`
 
-Casdoor's ID tokens don't carry a `sid` claim, so key your local sessions by `sub` and end all of them for that user. Casdoor's logout token also has no `exp` claim, which the final spec lists as required, so check freshness with `iat` and don't make `exp` mandatory in your validator. Casdoor sends each token once, with a 30-second timeout, and doesn't retry. For applications outside the `built-in` organization, it refuses to call loopback and link-local addresses, so `http://localhost` won't receive logout tokens during development.
+Casdoor's ID tokens don't carry a `sid` claim, so key your local sessions by `sub` and end all of them for that user. The logout token expires two minutes after `iat`, so a validator that requires `exp`, as the spec does, accepts it. Casdoor sends each token once, with a 30-second timeout, and doesn't retry. For applications outside the `built-in` organization, it refuses to call loopback and link-local addresses, so `http://localhost` won't receive logout tokens during development.
 
 ### Example: a back-channel logout receiver
 

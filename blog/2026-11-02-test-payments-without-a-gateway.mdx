@@ -52,7 +52,7 @@ On a new database, Casdoor creates a built-in Dummy provider named `provider_pay
 
 ### Keep Dummy out of production
 
-`/api/notify-payment` is open to anonymous callers, because real gateways call it without a Casdoor session. For a real provider that is safe, since `Notify` checks the payment with the vendor. Dummy checks nothing and reports `Paid`. Any product that lists Dummy in its **Payment providers** shows it at checkout, and anyone who picks it gets the product for free. Remove Dummy from every product before you go live, and do not put it on products in an organization that real users can reach.
+`/api/notify-payment` is open to anonymous callers, because real gateways call it without a Casdoor session. For a real provider that is safe, since `Notify` checks the payment with the vendor. Dummy checks nothing and reports `Paid`, so for a Dummy payment Casdoor only accepts the call from the payment's own user or an admin of its organization. That still leaves the main risk: any product that lists Dummy in its **Payment providers** shows it at checkout, and any signed-in user who picks it gets the product for free. Remove Dummy from every product before you go live, and do not put it on products in an organization that real users can reach.
 
 ## Balance: the internal wallet you can fund with Dummy
 
