@@ -26,7 +26,7 @@ This guide explains how to connect Cursor to the MCP server of Casdoor, so that 
 
 ## About the connection
 
-Cursor connects to remote MCP servers over HTTP and runs the OAuth 2.0 flow itself. It uses the fixed redirect URL `cursor://anysphere.cursor-mcp/oauth/callback` for all MCP servers. Cursor gets its client ID in one of two ways:
+Cursor connects to remote MCP servers over HTTP and runs the OAuth 2.0 flow itself. The Cursor desktop app uses the redirect URL `http://localhost:8787/callback` for all MCP servers; older releases used `cursor://anysphere.cursor-mcp/oauth/callback`, and Cursor on the web and Cloud Agents use `https://www.cursor.com/agents/mcp/oauth/callback`. Cursor gets its client ID in one of two ways:
 
 - **Dynamic client registration (DCR)**: Cursor registers itself with Casdoor. This needs no application in Casdoor.
 - **A static client**: You create an application in Casdoor and give its client ID to Cursor.
@@ -44,7 +44,7 @@ Choose one of the two options.
 ### Create an application for Cursor
 
 1. In the Casdoor admin console, go to **Identity** > **Applications** and add an application, for example `cursor-mcp`.
-1. Add `cursor://anysphere.cursor-mcp/oauth/callback` to **Redirect URLs**.
+1. Add `http://localhost:8787/callback`, `https://www.cursor.com/agents/mcp/oauth/callback` and `cursor://anysphere.cursor-mcp/oauth/callback` to **Redirect URLs**.
 1. Optionally, set **Category** to `Agent` and the type to `MCP`. See [Application categories](/docs/application/categories).
 1. Save the application and copy its **Client ID**.
 
@@ -122,7 +122,7 @@ I've queried the Casdoor MCP server and found the following applications:
 
 ### Casdoor reports a redirect URL mismatch
 
-Check that `cursor://anysphere.cursor-mcp/oauth/callback` is in the **Redirect URLs** of the application.
+Check that `http://localhost:8787/callback` is in the **Redirect URLs** of the application. Older Cursor releases send `cursor://anysphere.cursor-mcp/oauth/callback` instead. See [MCP OAuth redirect URIs](/blog/mcp-oauth-redirect-uris) for the URIs of other clients.
 
 ### A tool call fails with insufficient_scope
 
