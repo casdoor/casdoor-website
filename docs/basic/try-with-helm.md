@@ -49,7 +49,18 @@ The chart is published as an OCI artifact on GitHub Container Registry. It is li
 1. Open Casdoor at the URL of the `casdoor` service in your cluster. With the default values, the service is of type `ClusterIP` on port 8000, so it is reachable only inside the cluster until you [expose it](/docs/basic/try-with-helm#exposing-casdoor).
 1. On the first visit, Casdoor opens the **Welcome to Casdoor** page. Set the password of `admin` and click **Set Password**. See [Sign in to the admin console](/docs/basic/server-installation#sign-in).
 
-   The chart has no value for this password. To set it before the first start instead, add `initAdminPassword = <admin-password>` to `config`, or pass `initAdminPassword` as an environment variable with `envFromSecret`.
+   To set the password before the first start instead, read it from a Secret:
+
+   ```bash
+   kubectl create secret generic casdoor-admin --from-literal=initAdminPassword='<admin-password>'
+   ```
+
+   ```yaml
+   initAdminPassword:
+     existingSecret: casdoor-admin
+   ```
+
+   `initAdminPassword.existingSecretKey` selects another key in the Secret. For a local test, `--set initAdminPassword.value=<admin-password>` also works, but it puts the password in the values file and the Helm release. The setting applies only when Casdoor creates a new database.
 
 ## Customize the deployment
 
@@ -63,6 +74,9 @@ Override the values of [`values.yaml`](https://github.com/casdoor/casdoor/blob/m
 | `image.pullPolicy` | Pull policy for the Casdoor Docker image. | `IfNotPresent` |
 | `image.tag` | Tag for the Casdoor Docker image. | `""` |
 | `config` | Configuration settings for the Casdoor application. | See [values.yaml](https://github.com/casdoor/casdoor/blob/master/manifests/casdoor/values.yaml) |
+| `initAdminPassword.value` | Password of `built-in/admin` for a new database; `existingSecret` is safer. | `""` |
+| `initAdminPassword.existingSecret` | Existing Secret that holds the initial password. | `""` |
+| `initAdminPassword.existingSecretKey` | Key of the initial password in `existingSecret`. | `initAdminPassword` |
 | `database.driver` | Database driver to use (`mysql`, `postgres`, `cockroachdb`, `sqlite`). | `sqlite` |
 | `database.user` | Database username. | `""` |
 | `database.password` | Database password. | `""` |

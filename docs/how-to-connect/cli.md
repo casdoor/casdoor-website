@@ -1,8 +1,8 @@
 ---
 title: Manage Casdoor from the command line
 sidebar_label: Casdoor CLI
-description: Install the Casdoor CLI, connect it to your Casdoor instance, and manage users and groups from the terminal.
-keywords: [CLI, command-line, terminal, bash, shell, user management, groups, permissions, OAuth2]
+description: Install the Casdoor CLI on macOS, Linux or Windows, log in to Casdoor, and manage users, groups and every other Casdoor object from the terminal.
+keywords: [CLI, command-line, terminal, bash, shell, powershell, windows, wsl, user management, groups, permissions, OAuth2]
 authors: [hsluoyz]
 ---
 
@@ -12,202 +12,151 @@ This guide explains how to install [Casdoor CLI](https://github.com/casdoor/casd
 
 #### Learning outcomes
 
-- Build and install the CLI on macOS or Linux.
-- Connect the CLI to your Casdoor instance and sign in.
-- Manage users and groups from the terminal.
+- Install the CLI on macOS, Linux or Windows.
+- Connect the CLI to your Casdoor instance and log in.
+- Manage users, groups and the other Casdoor objects from the terminal.
 - Set up a local environment to develop the CLI.
 
 #### What you need
 
-- macOS or Linux. The CLI is tested on Debian 12 and macOS Sonoma.
-- Go 1.22.0 or later
-- A system keyring: GNOME Keyring on Linux, Keychain on macOS
-- A running Casdoor instance and an [application](/docs/application/overview) for the CLI
+- macOS, Linux or Windows. WSL works as Linux.
+- Go 1.24.0 or later when you build it from source. The release binaries need no Go.
+- A running Casdoor instance and an [application](/docs/application/overview) for the CLI.
 
 ---
-
-:::caution
-The CLI doesn't run on Windows, including the Windows Subsystem for Linux (WSL). It stores credentials through the Secret Service DBus interface of GNOME Keyring, which WSL doesn't provide.
-:::
 
 ## About the CLI
 
 | Feature | Description |
 |---|---|
-| Sign-in in the browser | The CLI signs you in with the OAuth 2.0 flow of Casdoor in your browser. It never sees your password |
-| Token storage | The CLI stores tokens in the system keyring. Tokens are never written to disk as plaintext |
-| User management | Create, update, and delete users |
-| Group management | Create, change, and delete groups |
-| Permissions | The CLI controls what a user may do through Casdoor groups, with three built-in roles |
+| Browser sign-in | The CLI signs you in with the OAuth 2.0 flow (authorization code with PKCE) in your browser. It never sees your password |
+| Password and application logins | For a server without a browser, or for scripts and CI |
+| Profiles | Every server and login is saved as a profile, `casdoor login` remembers it |
+| Credential storage | A file only your user can read; on Windows the secrets are encrypted with DPAPI |
+| Every Casdoor object | Users, groups, roles, permissions, applications, providers and the other objects |
+| Output | Table, JSON, YAML or `owner/name`, for people and scripts |
 
-The built-in roles are:
+### Credential storage
 
-| Role | Rights |
+Each login is saved in a profile in `casdoor/config.json` in the user's config directory:
+
+| OS | Path |
 |---|---|
-| `lector` | Read-only access |
-| `editor` | Can create users, with limited rights to change them |
-| `administrator` | Can create, change, and delete users |
+| Linux | `~/.config/casdoor/config.json` |
+| macOS | `~/Library/Application Support/casdoor/config.json` |
+| Windows | `%AppData%\casdoor\config.json` |
+
+`casdoor profile path` prints the exact path. `$CASDOOR_CONFIG` uses another file.
+
+On Linux and macOS the file is created with mode `0600`. On Windows the client secret, access token and refresh token are encrypted with DPAPI, so another user or another computer cannot read them; a config encrypted on Windows cannot be used on another OS, log in again. In WSL, run the Linux binary and keep the config in the Linux home: a file under `/mnt/c` does not get the `0600` mode.
 
 ## Install the CLI
 
-1. Clone [casdoor-cli](https://github.com/casdoor/casdoor-cli).
-1. Build and install the CLI.
+Download the archive for your OS and architecture from the [latest release](https://github.com/casdoor/casdoor-cli/releases/latest): `.tar.gz` on macOS and Linux, `.zip` on Windows. Then put `casdoor` (or `casdoor.exe`) in your `PATH`.
 
-   On macOS:
-
-   ```bash
-   make build TARGET_OS=darwin && make install TARGET_OS=darwin
-   ```
-
-   On Linux:
-
-   ```bash
-   make build TARGET_OS=linux && make install TARGET_OS=linux
-   ```
-
-1. Add the install directory to your `PATH`.
-
-   In Bash:
-
-   ```bash
-   echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
-   source ~/.bashrc
-   ```
-
-   In Zsh:
-
-   ```bash
-   echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
-   source ~/.zshrc
-   ```
-
-1. Check that the CLI runs:
-
-   ```bash
-   casdoor --help
-   ```
-
-## Connect the CLI to Casdoor
-
-1. Create an application for the CLI in Casdoor in one of two ways:
-
-   - Load the `init_data.json` of the casdoor-cli repository. See [Initialize and manage data with a file](/docs/deployment/data-initialization).
-   - Create and configure the application by hand in the Casdoor admin console.
-
-1. Run the CLI. On its first run, it asks for a `config.yaml` with the connection details. Use `config.yaml.example` of the repository as a template. The required fields are:
-
-   ```yaml
-   application_name: your-app-name
-   casdoor_endpoint: https://your-casdoor-instance.com
-   certificate: |
-     -----BEGIN CERTIFICATE-----
-     Your certificate content here
-     -----END CERTIFICATE-----
-   client_id: your-client-id
-   client_secret: your-client-secret
-   organization_name: your-organization
-   redirect_uri: http://localhost:9000/callback
-   ```
-
-The CLI stores the configuration, Base64-encoded, in `~/.casdoor-cli/config.yaml` and reads it from there afterward.
-
-## Sign in and out
-
-To sign in, run:
+Or install it with Go:
 
 ```bash
-casdoor login
+go install github.com/casdoor/casdoor-cli/cmd/casdoor@latest
 ```
 
-The CLI opens your default browser, where you sign in to Casdoor.
-
-To sign out, run:
+Check that it runs:
 
 ```bash
-casdoor logout
+casdoor --help
 ```
 
-## Manage users and groups
+## Log in
 
-The CLI has the following commands:
+Create an application for the CLI in Casdoor, or use an existing one. The browser login needs `http://localhost:9000/callback` in the application's **Redirect URLs**; `--port` picks another port.
+
+**Browser** (the default):
 
 ```bash
-Usage:
-  casdoor [command]
-
-Available Commands:
-  completion  Generate the autocompletion script for the specified shell
-  groups      Manage Casdoor permissions
-  help        Help about any command
-  login       Login to your Casdoor account
-  logout      Logout from your Casdoor account
-  users       Manage Casdoor users
-
-Flags:
-  -d, --debug   verbose logging
-  -h, --help    help for casdoor
+casdoor login --endpoint https://door.casdoor.com --client-id <client-id> --organization <organization>
 ```
 
-Manage users:
+**Password**, for a server without a browser. Enable the `Password` grant type of the application:
 
 ```bash
-# List users
-casdoor users list
-
-# Create a user
-casdoor users create
-
-# Update a user
-casdoor users update
-
-# Delete a user
-casdoor users delete
+casdoor login --endpoint https://door.casdoor.com --client-id <client-id> --client-secret <client-secret> --organization <organization> --username alice
 ```
 
-Manage groups:
+**Application**, where no user logs in and the CLI acts as the application:
 
 ```bash
-# List groups
+casdoor login --endpoint https://door.casdoor.com --client-id <client-id> --client-secret <client-secret> --organization <organization> --client-credentials
+```
+
+What the CLI may do is Casdoor's decision: an admin of an organization manages that organization, a global admin (of the `built-in` organization) manages everything, a normal user mostly sees themselves. `casdoor whoami` shows the current login, `casdoor logout` forgets it.
+
+### Profiles
+
+Each login is saved as a profile, `default` unless `--profile` is given. The last login becomes the current profile.
+
+```bash
+casdoor login --profile prod --endpoint https://door.example.com --client-id <id> --organization acme
+casdoor profile list
+casdoor profile use prod
+casdoor --profile staging users list
+casdoor profile delete staging
+```
+
+The environment variables override the profile, so CI needs no config file:
+
+| Variable | Meaning |
+| --- | --- |
+| `CASDOOR_ENDPOINT` | the URL of the Casdoor server |
+| `CASDOOR_CLIENT_ID`, `CASDOOR_CLIENT_SECRET` | the application's credentials |
+| `CASDOOR_ORGANIZATION` | the organization, the default owner of the objects |
+| `CASDOOR_APPLICATION` | the application name |
+| `CASDOOR_ACCESS_TOKEN` | a user's access token, used instead of the client secret |
+| `CASDOOR_PROFILE` | the profile to use |
+| `CASDOOR_CONFIG` | the config file |
+
+## Manage objects
+
+Every object has the same commands:
+
+```bash
+casdoor <objects> list [--owner ORG] [--search field=value] [--sort field --desc] [--page N] [--page-size N] [--columns a,b]
+casdoor <objects> get NAME
+casdoor <objects> create [NAME] [--file FILE] [--set key=value ...]
+casdoor <objects> update NAME [--file FILE] [--set key=value ...]
+casdoor <objects> delete NAME [--yes]
+```
+
+For example:
+
+```bash
+casdoor users list --columns name,displayName,email
 casdoor groups list
+casdoor users update alice --set displayName="Alice Smith" --set properties.team=dev
+casdoor roles create admins --set users:='["acme/alice","acme/bob"]'
+```
 
-# Create a group
-casdoor groups create
+The objects are `users`, `groups`, `roles`, `permissions`, `models`, `adapters`, `enforcers`, `organizations`, `applications`, `providers`, `certs`, `tokens`, `sessions`, `ldaps`, `syncers`, `webhooks`, `invitations`, `resources`, `products`, `orders`, `payments`, `transactions`, `plans`, `pricings`, `subscriptions`, `coupons`, `keys`, `forms`, `tickets`, `agents`, `servers`, `entries`, `sites`, `rules` and `records`. `casdoor --help` lists them.
 
-# Update a group
-casdoor groups update
+`--set key=value` sets a string, `--set key:=json` any JSON value, and nested fields use dots. `--file` reads the fields from a JSON or YAML file, `-` from stdin. `-o table` is the default; `-o json`, `-o yaml` and `-o name` are for scripts.
 
-# Delete a group
-casdoor groups delete
+`casdoor enforce`, `casdoor api` and `casdoor completion` cover the rest:
+
+```bash
+casdoor enforce --permission acme/permission-1 acme/alice data1 read
+casdoor api get-global-users pageSize=10 p=1
+casdoor completion powershell
 ```
 
 ## Set up a development environment
 
-To work on the CLI itself:
+```bash
+git clone https://github.com/casdoor/casdoor-cli
+cd casdoor-cli
+go build ./cmd/casdoor
+go test ./...
+```
 
-1. In the casdoor-cli repository, start the local Casdoor environment:
-
-   ```bash
-   docker compose up -d
-   ```
-
-   Wait for the Casdoor container to initialize. It restarts several times while it sets up the database.
-
-1. Create `config.yaml` at the root of the repository from `config.yaml.example`, with the settings of the local environment.
-1. Run the CLI from source and sign in with the development credentials that the repository documents:
-
-   ```bash
-   go run main.go login
-   ```
-
-   Or build and install it first:
-
-   ```bash
-   make build TARGET_OS=darwin && make install TARGET_OS=darwin  # For macOS
-   # OR
-   make build TARGET_OS=linux && make install TARGET_OS=linux    # For Linux
-
-   casdoor login
-   ```
+Run `./casdoor login --endpoint ...` against a Casdoor instance you can use. The [demo](https://door.casdoor.com) is read-only for most objects.
 
 ## See also
 
