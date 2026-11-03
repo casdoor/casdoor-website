@@ -180,6 +180,23 @@ module.exports = {
           ],
         },
         {
+          title: "Related",
+          items: [
+            {
+              label: "CasWAF",
+              href: "https://caswaf.org",
+            },
+            {
+              label: "Apache Casbin",
+              href: "https://casbin.apache.org",
+            },
+            {
+              label: "Casvisor",
+              href: "https://casvisor.org",
+            },
+          ],
+        },
+        {
           title: "Community",
           items: [
             {
