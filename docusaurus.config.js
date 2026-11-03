@@ -44,7 +44,7 @@ module.exports = {
     },
     announcementBar: {
       id: "casdoor-cloud",
-      content: `<a target="_blank" rel="noopener" href="${cloudUrl("announcement")}"><b>Casdoor Cloud</b></a>: a dedicated Casdoor instance that we host and keep upgraded, from $29/month with no per-user fees. New accounts get $20 in free credit. <a target="_blank" rel="noopener" href="https://admin.casdoor.com/signup?from=%2Finstances%2Fnew%3Ftier%3Dbasic%26period%3DPostPaid">Start a free trial</a>.`,
+      content: `<a target="_blank" rel="noopener" href="${cloudUrl("announcement")}"><b>Casdoor Cloud</b></a>: a dedicated Casdoor instance that we host and keep upgraded, from $9/month with no per-user fees. New accounts get $4 in free credit. <a target="_blank" rel="noopener" href="https://admin.casdoor.com/signup?from=%2Finstances%2Fnew%3Ftier%3Dbasic%26period%3DPostPaid">Start a free trial</a>.`,
       isCloseable: true,
     },
     navbar: {
