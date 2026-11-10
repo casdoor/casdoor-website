@@ -281,6 +281,7 @@ module.exports = {
             "provider/email/resend",
             "provider/email/customHttp",
             "provider/email/azureACS",
+            "provider/email/microsoft365",
             "provider/email/brevo",
             "provider/email/mailhog",
             "provider/email/mailpit",

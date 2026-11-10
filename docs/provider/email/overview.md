@@ -32,6 +32,7 @@ An email provider sends the emails of Casdoor, such as verification codes at sig
 | `Azure ACS` | Azure Communication Services. See [Azure ACS](/docs/provider/email/azureACS) |
 | `SendGrid` | SendGrid. See [SendGrid](/docs/provider/email/sendgrid) |
 | `Resend` | Resend. See [Resend](/docs/provider/email/resend) |
+| `Microsoft 365` | The SMTP server of Exchange Online, signing in with OAuth instead of a password. See [Microsoft 365](/docs/provider/email/microsoft365) |
 | `Custom HTTP Email` | An HTTP API that you describe. See [Send email through your own HTTP API](/docs/provider/email/customHttp) |
 
 ## SSL mode
@@ -103,5 +104,6 @@ HTML:
 
 - [SendGrid](/docs/provider/email/sendgrid)
 - [Resend](/docs/provider/email/resend)
+- [Microsoft 365](/docs/provider/email/microsoft365)
 - [Send email through your own HTTP API](/docs/provider/email/customHttp)
 - [Add providers to an application](/docs/application/providers)
