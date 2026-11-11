@@ -34,6 +34,27 @@ curl https://your-casdoor.com/.well-known/my-app/oauth-protected-resource
 
 Use the application-specific endpoint when applications have different authorization requirements.
 
+### Organizations with their own issuer {#organization-endpoint}
+
+The metadata above names the global issuer, so an MCP client that connects to `/api/mcp` registers and signs users in on the default organization, `built-in`. When users of another organization use the MCP server, give them the endpoint of their organization:
+
+```text
+https://your-casdoor.com/api/mcp/orgs/<organization>
+```
+
+It is the same MCP server with the same tools. Only the protected resource metadata differs: the challenge of an unauthenticated request points to `/.well-known/oauth-protected-resource/api/mcp/orgs/<organization>`, which names the issuer of the organization as the authorization server:
+
+```json
+{
+  "resource": "https://your-casdoor.com/api/mcp/orgs/acme",
+  "authorization_servers": ["https://your-casdoor.com/orgs/acme"],
+  "bearer_methods_supported": ["header"],
+  "scopes_supported": ["openid", "profile", "email", "read", "write"]
+}
+```
+
+Turn on **Use organization issuer** for the organization first. Without it, the authorization server is still the global issuer. The client then reads the [discovery document of the organization](/docs/application/dynamic-client-registration), registers in the organization, and signs users in on its sign-in page.
+
 ## Authentication methods
 
 | Method | Tools that the client can call | Use it for |
