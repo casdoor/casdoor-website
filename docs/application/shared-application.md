@@ -46,6 +46,10 @@ https://door.casdoor.com/login/oauth/authorize?client_id=2dc94ccbec09612c04ac-or
 
 Users who sign in through this URL sign in to the organization `casbin`.
 
+:::note
+The suffix doesn't apply to a client ID that is a URL, such as the client ID of an MCP client that uses a [client ID metadata document](/docs/mcp-auth/overview), since the URL may contain `-org-` itself. Such a client keeps its URL as the client ID and adds the `organization` parameter to the authorization request instead, for example `organization=casbin`. The discovery document of an organization, `/orgs/<organization>/.well-known/openid-configuration`, has this parameter in its `authorization_endpoint` when the organization accepts URL client IDs, and the `iss` of the authorization response is then the issuer of that organization.
+:::
+
 ![Sign-in link of a shared application for one organization](/img/application/shared-application/shared_application_login_link.png)
 
 <video src="/img/application/shared-application/shared_application_demo.mp4" controls="controls" width="100%"></video>

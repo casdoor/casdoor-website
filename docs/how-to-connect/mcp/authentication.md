@@ -22,7 +22,8 @@ The response names the authorization server:
   "resource": "https://your-casdoor.com",
   "authorization_servers": ["https://your-casdoor.com"],
   "bearer_methods_supported": ["header"],
-  "scopes_supported": ["openid", "profile", "email"]
+  "scopes_supported": ["openid", "profile", "email", "read", "write"],
+  "resource_signing_alg_values_supported": ["RS256"]
 }
 ```
 
@@ -86,18 +87,19 @@ curl -X POST https://your-casdoor.com/api/mcp \
 Casdoor answers a request to `/api/mcp` that it doesn't authorize, for example a request without credentials, with HTTP 401 and the header:
 
 ```http
-WWW-Authenticate: Bearer realm="casdoor", resource_metadata="https://your-casdoor.com/.well-known/oauth-protected-resource"
+WWW-Authenticate: Bearer realm="casdoor", resource_metadata="https://your-casdoor.com/.well-known/oauth-protected-resource", scope="openid profile email read write"
 ```
 
-`resource_metadata` is the URL of the [protected resource metadata](/docs/how-to-connect/mcp/authentication#oauth-discovery) on the host of the request, including the base path of Casdoor. The scheme is `http` when the host contains no dot, such as `localhost:8000`, and `https` otherwise. An MCP client that follows the OAuth 2.0 specification reads the metadata from that URL and starts the authorization flow on its own.
+`resource_metadata` is the URL of the [protected resource metadata](/docs/how-to-connect/mcp/authentication#oauth-discovery) on the host of the request, including the base path of Casdoor. The scheme is `http` when the host contains no dot, such as `localhost:8000`, and `https` otherwise. `scope` lists the scopes that the client should request. An MCP client that follows the OAuth 2.0 specification reads the metadata from that URL and starts the authorization flow on its own.
 
 The body of the response depends on the request:
 
 | Request | Response |
 |---|---|
 | A JSON-RPC request with an `id` | HTTP 401 with a JSON-RPC error, whose `data` gives the reason |
-| A JSON-RPC notification, without an `id` | HTTP 202 with an empty body |
-| A body that isn't JSON-RPC, such as a `GET` request | HTTP 401 with an empty body |
+| A JSON-RPC notification, without an `id`, or a body that isn't JSON-RPC | HTTP 401 with an empty body |
+
+A request with a method other than `POST`, such as `GET`, gets HTTP 405 with the header `Allow: POST` and no challenge, whether or not it is authenticated: the MCP server doesn't open an SSE stream with `GET`. A signed-in user or a valid token that isn't allowed to do the operation gets HTTP 403 without a challenge, since signing in again wouldn't help.
 
 For example:
 
@@ -113,7 +115,7 @@ For example:
 }
 ```
 
-The proxy endpoint of an [external MCP server](/docs/how-to-connect/mcp/overview#registering-external-mcp-servers), `/api/server/<organization>/<server-name>`, answers in the same way, for `GET` and `POST` requests.
+The proxy endpoint of an [external MCP server](/docs/how-to-connect/mcp/overview#registering-external-mcp-servers), `/api/server/<organization>/<server-name>`, answers in the same way, except that it accepts `GET` requests, its challenge has no `scope`, and a `GET` request without credentials gets HTTP 401 with an empty body.
 
 ## See also
 
