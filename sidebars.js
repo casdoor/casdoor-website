@@ -144,6 +144,7 @@ module.exports = {
             "how-to-connect/mcp/connect-cursor",
             "how-to-connect/mcp/connect-chatgpt",
             "how-to-connect/mcp/connect-vscode",
+            "how-to-connect/mcp/connect-deepseek-harness",
           ],
         },
         "how-to-connect/face-id",

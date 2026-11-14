@@ -148,6 +148,7 @@ Each user adds the gateway URL to their client and signs in with their Acme acco
 | Claude Code | `claude mcp add --transport http tickets <url>` | CIMD `https://claude.ai/oauth/claude-code-client-metadata` | [Connect Claude](/docs/how-to-connect/mcp/connect-claude-desktop#claude-code) |
 | Cursor | `~/.cursor/mcp.json` | DCR | [Connect Cursor](/docs/how-to-connect/mcp/connect-cursor) |
 | VS Code | `.vscode/mcp.json` | CIMD `https://vscode.dev/oauth/client-metadata.json` | [Connect VS Code](/docs/how-to-connect/mcp/connect-vscode) |
+| DeepSeek Harness | The **Casdoor** page of its Casdoor plugin, which lists the servers | The application and agent of its [Marketplace](/docs/marketplace/overview) integration (Commercial edition) | [Connect DeepSeek Harness](/docs/how-to-connect/mcp/connect-deepseek-harness) |
 
 For example, in Cursor:
 
