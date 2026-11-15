@@ -164,10 +164,10 @@ Fields that the admin didn't change keep their value, even if it breaks the rule
 
 ### HTML rules
 
-- Only layout and text elements are allowed: for example `div`, `span`, `p`, headings, lists, `a`, `img`, tables, `section`, `details` and `summary`, `center`, `font`, `style`, and basic `svg` shapes and gradients. `script`, `form`, `input`, `iframe`, and other elements are refused.
+- Only layout and text elements are allowed: for example `div`, `span`, `p`, headings, lists, `a`, `img`, tables, `section`, `details` and `summary`, `center`, `font`, `style`, and basic `svg` shapes and gradients. `script`, `form`, `input`, `iframe`, and other elements are refused, unless a global admin adds them to **Allowed custom HTML elements** in the global settings. `script` can't be added; scripts need **Enable custom scripts**, which only a global admin can turn on.
 - Event handler attributes (`on...`) are refused, as are attributes such as `srcset`, `action`, `formaction`, `srcdoc`, `contenteditable`, and `xlink:href`.
 - `href` is allowed only on `a`, with a relative URL or an `http`, `https`, `mailto`, or `tel` URL.
-- `src` is allowed only on `img`. Its URL, the `background` and `poster` attributes, and any `url()` in an attribute follow the URL rule below.
+- `src` is allowed only on `img` and on the elements in **Allowed custom HTML elements**. Its URL, the `data` attribute of `object`, the `background` and `poster` attributes, and any `url()` in an attribute follow the URL rule below.
 - HTML comments and doctypes are refused.
 
 ### CSS rules
@@ -183,13 +183,14 @@ The allowed prefixes are:
 - `https://cdn.casbin.org/`, `https://cdn.casdoor.com/`, and `https://cdn.casvisor.com/`
 - The `origin` of this Casdoor
 - The **Domain** of each Storage provider of the `admin` owner
+- Each entry of **Allowed custom HTML URLs** in the global settings
 - Each entry of `formCssAllowedUrls` in `conf/app.conf`, a comma-separated list that is empty by default. See [Configuration](/docs/basic/configuration#backend-options).
 
-For example, to let organization admins use background images from your own image host, set:
+A global admin sets both lists on the **Global Settings** page (`/settings`), and the change applies to all organizations without a restart.
 
-```ini
-formCssAllowedUrls = "https://img.example.com/"
-```
+For example, to let organization admins use background images from your own image host, add `https://img.example.com/` to **Allowed custom HTML URLs**. To let them embed YouTube videos, also add `iframe` to **Allowed custom HTML elements** and `https://www.youtube.com/embed/` to **Allowed custom HTML URLs**.
+
+The error of a rejected save names the field and what in it isn't allowed, for example `page HTML (<iframe>)` or `page HTML (the src attribute of <iframe>)`.
 
 On the sign-in pages, Casdoor also removes scripts from the custom HTML of applications outside the `built-in` organization. See [Custom HTML and scripts](/docs/application/terminology#custom-html).
 
