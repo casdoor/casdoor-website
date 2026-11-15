@@ -170,7 +170,7 @@ A client can skip registration and use as its `client_id` an HTTPS URL that poin
 
 The same client, such as ChatGPT, Claude, or VS Code, has one client ID URL for all the Casdoor instances and organizations that it connects to. Casdoor therefore keeps one application per URL, shared by all organizations, and serves it as an application of the organization that the user signs in to:
 
-- The organization comes from the `organization` parameter of the authorization endpoint. The discovery document of an application, and that of an organization with **Use organization issuer**, add this parameter to `authorization_endpoint`. Without it, the organization is `built-in`.
+- The organization comes from the `organization` parameter of the authorization request. The discovery document of an application, and that of an organization with **Use organization issuer**, put the organization in the path of `authorization_endpoint`, for example `https://your-casdoor.com/orgs/acme/login/oauth/authorize`, which redirects to the sign-in page with `organization=acme`. Without it, the organization is `built-in`.
 - Casdoor accepts the URL only when **Enable dynamic client registration** is on for that organization. Otherwise, the authorization request fails with "client ID metadata documents are not accepted, enable dynamic client registration of the organization: <organization> first". The discovery document shows the setting in `client_id_metadata_document_supported`.
 - The user signs in on the sign-in page of the organization, and the tokens carry the issuer of the user's organization, also after a refresh.
 
