@@ -618,6 +618,7 @@ With federated credentials, an application trusts the tokens of an external Open
    | **Subject** | Required. The `sub` claim to accept. `*` matches any text, for example `repo:my-org/my-repo:*` |
    | **Audience** | The `aud` value to accept. If you leave it empty, Casdoor accepts its own origin, its token endpoint `https://<casdoor-host>/api/login/oauth/access_token`, or the client ID of the application |
    | **User** | The user that the token stands for: a username, or `{claim}` to take the username from a claim, for example `{email}`. If you leave it empty, the token stands for the application itself |
+   | **Enable signup** | Create the mapped user when it doesn't exist yet, on its first sign-in with a token of this issuer. Available only when **User** is set |
 
 1. In **Grant types**, turn on the grant that the workload uses.
 1. Click **Save**.
@@ -645,9 +646,45 @@ Casdoor verifies an external token as follows:
 - The token must have an `exp` claim. Casdoor allows one minute of clock skew.
 - A token of a trusted issuer whose subject matches no row fails, for example with `the subject: <sub> of issuer: <issuer> is not trusted by application: [<application>]`.
 
-With **User** empty, the new token is an application token, as with the client credentials grant, without a refresh token or an ID token. Otherwise, it's a token of the mapped user in the organization of the application. If that user doesn't exist, or the token lacks the claim, Casdoor returns `invalid_grant`.
+With **User** empty, the new token is an application token, as with the client credentials grant, without a refresh token or an ID token. Otherwise, it's a token of the mapped user in the organization of the application. If the token lacks the claim, Casdoor returns `invalid_grant`. If the user doesn't exist, Casdoor returns `invalid_grant` too, unless **Enable signup** is on for the row.
 
 The discovery document lists `private_key_jwt` in `token_endpoint_auth_methods_supported`.
+
+### Sign users up and in without a Casdoor page {#federated-signup}
+
+With **Enable signup**, a service that already verifies your users can give them a Casdoor account and a Casdoor token without showing any Casdoor page. For example, a mobile app signs students in with their school account through its own login service. The login service is an OIDC issuer with a JWKS, and after a successful sign-in it issues a short-lived JWT such as:
+
+```json
+{
+    "iss": "https://login.example.edu",
+    "sub": "student:2021001",
+    "aud": "casdoor",
+    "exp": 1765432100,
+    "student_id": "2021001",
+    "name": "Alice",
+    "email": "alice@example.edu",
+    "email_verified": true
+}
+```
+
+To accept it, add a row with **Issuer** `https://login.example.edu`, **Subject** `student:*`, **Audience** `casdoor`, **User** `{student_id}`, and **Enable signup** on, and turn on **JWT Bearer** in **Grant types**. The app or the login service then exchanges the JWT for a Casdoor token:
+
+```bash
+curl -X POST https://<casdoor-host>/api/login/oauth/access_token \
+  -d grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer \
+  -d client_id=<client-id> \
+  -d assertion=<jwt> \
+  -d scope=openid
+```
+
+The response has an access token, a refresh token, and an ID token of the user. On the first exchange of a student, Casdoor creates the user as follows:
+
+- The username is the value of the mapped claim. It must be a valid username or an email address, otherwise Casdoor returns `invalid_grant` and creates nothing.
+- The display name comes from `name`, the email from `email` and `email_verified`, and the avatar from `picture`, when the token has them.
+- The user joins the **Default group** of the application and gets its **Default tag**. With signup approval on, the user waits for approval and can't get a token until then.
+- Later exchanges with the same claim value sign in the same user. Concurrent first exchanges create one user.
+
+It works even when the application itself doesn't allow signup, because only the trusted issuer can create users this way. It doesn't apply to a shared application.
 
 ## DPoP (sender-constrained tokens) {#dpop-sender-constrained-tokens}
 

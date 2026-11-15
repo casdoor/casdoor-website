@@ -60,7 +60,7 @@ This page describes every field of the application edit page in the Casdoor admi
 | **Forced redirect origin** | When set, Casdoor forces all redirects to this origin. |
 | **Grant types** | Enabled OAuth grant types: Authorization Code, Password, Client Credentials, Token, ID Token, Refresh Token, Device Code, Token Exchange, JWT Bearer. |
 | **Scopes** | Custom scopes for Agent-category apps (name, display name, description); exposed in OIDC discovery. |
-| **Federated credentials** | External OpenID Connect (OIDC) issuers whose tokens Casdoor accepts as a credential of this application, without a client secret. Each row has **Issuer**, **JWKS URL**, **Subject**, **Audience**, and **User**. See [Federated credentials](/docs/how-to-connect/oauth#federated-credentials). |
+| **Federated credentials** | External OpenID Connect (OIDC) issuers whose tokens Casdoor accepts as a credential of this application, without a client secret. Each row has **Issuer**, **JWKS URL**, **Subject**, **Audience**, **User**, and **Enable signup**, which creates the mapped user on its first sign-in. See [Federated credentials](/docs/how-to-connect/oauth#federated-credentials). |
 | **Token format** | `JWT`, `JWT-Empty`, `JWT-Custom`, or `JWT-Standard`. A new application gets the **Default token format** of its organization. See [Token overview](/docs/token/overview). |
 | **Token signing method** | Signing algorithm: RS256, RS512, ES256, ES384, or ES512. |
 | **Token group format** | How the `groups` claim of every token format and the `groups` of `/api/userinfo` name each group: `ID (org/group)` (the default), `Path (org/parent/group)`, or `Name (group)`. `Path` replaces the removed `useGroupPathInToken` setting of `conf/app.conf`. |
