@@ -19,7 +19,7 @@ Casdoor supports these second factors:
 | Email | A code sent to the user's email address |
 | RADIUS | The password of the user's account on an external RADIUS server |
 
-Every method also gives the user recovery codes for when the second factor is lost. Administrators can make MFA optional or required for an organization with [MFA items](/docs/organization/mfa-items).
+Every method also gives the user recovery codes for when the second factor is lost. Administrators can make MFA optional or required for an organization with [MFA items](/docs/organization/mfa-items). Applications can also ask a signed-in user for a fresh code before a sensitive action with [step-up MFA](/docs/user/step-up-mfa).
 
 Once you enable MFA, Casdoor requires an authentication code every time someone attempts to sign in to your account. The only way someone can sign in to your account is if they know both your password and have access to the authentication code.
 
@@ -138,6 +138,8 @@ These paths also refuse a user when the organization has **Disable signin** on, 
 ## Limit on wrong codes
 
 Wrong MFA passcodes and wrong recovery codes count against **Failed signin limit** and **Failed signin frozen time** of the user's application: the application the user signed up with, or the default application of the organization. The defaults are 5 attempts and 15 minutes. After too many wrong codes, Casdoor refuses further codes until the frozen time has passed.
+
+A TOTP code is accepted only once: after a code has been used, the same code, or one from an earlier 30-second step, is refused until the authenticator app shows a new one.
 
 Casdoor counts wrong MFA codes separately from wrong passwords. The limit also applies to the passcode check during MFA setup, and to the time-based one-time password (TOTP) check of the built-in [RADIUS server](/docs/radius/overview).
 

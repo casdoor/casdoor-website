@@ -480,6 +480,7 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "user/multi-factor-authentication",
+        "user/step-up-mfa",
         "organization/mfa-items",
         "how-to-connect/totp-authenticator-app",
         {
