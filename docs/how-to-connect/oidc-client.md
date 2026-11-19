@@ -237,8 +237,31 @@ The endpoint of `app-example`, an application of the organization `casbin`, retu
 The JWKS of an application contains the public key of the application's own certificate. If the application has no certificate of its own, the JWKS contains the global certificates.
 
 :::note
-The `issuer` is the same in both documents. Casdoor always sets the `iss` claim of a token to the host of the Casdoor backend, and OIDC clients require the `issuer` of the discovery document to match it. Earlier versions returned an issuer that included the application name, such as `https://door.casdoor.com/.well-known/app-example`, which made strict clients reject the tokens.
+The `issuer` is the same in both documents. The `iss` claim of a token is the issuer of the application's organization, which is the host of the Casdoor backend unless the organization has its [own issuer](#organization-issuer), and OIDC clients require the `issuer` of the discovery document to match it. Earlier versions returned an issuer that included the application name, such as `https://door.casdoor.com/.well-known/app-example`, which made strict clients reject the tokens.
 :::
+
+The address of an application's document isn't the issuer followed by `/.well-known/openid-configuration`, so a client that only takes an issuer URL and builds the discovery URL itself can't find it. For such a client, give the organization its own issuer.
+
+## Discovery endpoints of an organization {#organization-issuer}
+
+Turn on **Use organization issuer** on the edit page of an organization, and the organization works as its own issuer, `https://<your-casdoor-host>/orgs/<organization-name>`. A client that appends `/.well-known/openid-configuration` to the issuer, or inserts `/.well-known/oauth-authorization-server` before its path as in [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414), finds the document of the organization:
+
+| Endpoint | URL |
+|---|---|
+| OpenID Connect Discovery | `https://<your-casdoor-host>/orgs/<organization-name>/.well-known/openid-configuration` |
+| OpenID Connect Discovery | `https://<your-casdoor-host>/.well-known/openid-configuration/orgs/<organization-name>` |
+| OAuth 2.0 Authorization Server Metadata | `https://<your-casdoor-host>/orgs/<organization-name>/.well-known/oauth-authorization-server` |
+| OAuth 2.0 Authorization Server Metadata | `https://<your-casdoor-host>/.well-known/oauth-authorization-server/orgs/<organization-name>` |
+
+The document of an organization differs from the global document in these fields:
+
+- `issuer` is `https://<your-casdoor-host>/orgs/<organization-name>`. The `iss` of the tokens of the organization's applications, of the UserInfo response and of the authorization response is this issuer too.
+- `registration_endpoint` carries the organization, as in the document of an application.
+- `scopes_supported` adds the custom **Scopes** of all the applications of the organization.
+
+For example, a mail server such as Stalwart publishes the issuer to mail clients only when `scopes_supported` lists `urn:ietf:params:oauth:scope:mail` and the other scopes of its services. Add these scopes to the **Scopes** of the mail server's application, and set the issuer of the organization in the mail server.
+
+For an organization that doesn't have its own issuer, these endpoints return 404. Clients that already validate the global issuer for the organization's applications need to switch to the new issuer after you turn it on.
 
 ## UserInfo fields {#oidc-userinfo-fields}
 
