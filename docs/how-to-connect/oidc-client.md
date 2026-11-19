@@ -237,7 +237,7 @@ The endpoint of `app-example`, an application of the organization `casbin`, retu
 The JWKS of an application contains the public key of the application's own certificate. If the application has no certificate of its own, the JWKS contains the global certificates.
 
 :::note
-The `issuer` is the same in both documents. The `iss` claim of a token is the issuer of the application's organization, which is the host of the Casdoor backend unless the organization has its [own issuer](#organization-issuer), and OIDC clients require the `issuer` of the discovery document to match it. Earlier versions returned an issuer that included the application name, such as `https://door.casdoor.com/.well-known/app-example`, which made strict clients reject the tokens.
+The `issuer` is the same in both documents. The `iss` claim of a token is the issuer of the application's organization, which is the host of the Casdoor backend unless the organization has its [own issuer](oidc-client.md#organization-issuer), and OIDC clients require the `issuer` of the discovery document to match it. Earlier versions returned an issuer that included the application name, such as `https://door.casdoor.com/.well-known/app-example`, which made strict clients reject the tokens.
 :::
 
 The address of an application's document isn't the issuer followed by `/.well-known/openid-configuration`, so a client that only takes an issuer URL and builds the discovery URL itself can't find it. For such a client, give the organization its own issuer.
