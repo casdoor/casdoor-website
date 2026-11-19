@@ -394,6 +394,26 @@ If the SDK has no function for an endpoint, [call the Casdoor API](/docs/basic/p
 
 When you create an application with `AddApplication()`, Casdoor fills in the default sign-up items (ID, Username, Display name, Password, Confirm password, Email, Phone, Agreement), sign-in items, and sign-in methods. The application works in the UI without further configuration.
 
+## Set a timeout or cancel API calls
+
+In `casdoor-go-sdk`, `WithContext()` returns a client that sends every API request with the given `context.Context`. Use it to cancel the calls together with the incoming HTTP request or to set a deadline. The original client is not affected:
+
+```go
+ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+defer cancel()
+
+users, err := auth.WithContext(ctx).GetUsers()
+if errors.Is(err, context.DeadlineExceeded) {
+    // Casdoor didn't answer in time
+}
+```
+
+`WithContext()` works with every API, including `GetOAuthToken()`, `RefreshOAuthToken()`, and `Logout()`. It can be combined with `WithAccessToken()`, which calls the APIs as the signed-in user:
+
+```go
+user, err := auth.WithAccessToken(token.AccessToken).WithContext(ctx).GetAccount()
+```
+
 ## See also
 
 - [Connect a standard OIDC client](/docs/how-to-connect/oidc-client)
