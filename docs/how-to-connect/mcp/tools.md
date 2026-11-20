@@ -174,7 +174,7 @@ The user tools work like the application tools.
 
 ## Other tools
 
-The server also has tools for organizations, roles, permissions, providers, and tokens. For the names of all tools and the scope that each one requires, see the [scope reference](/docs/how-to-connect/mcp/authorization#complete-scope-reference).
+With a commercial or enterprise license, the server also has tools for organizations, providers, roles, permissions, groups, certs and tokens, tools that set up an application for an app and connect third-party sign-in, a dry run of every change, a record of what agents changed, and approval and rollback of the changes. See [Let AI agents manage Casdoor](/docs/how-to-connect/mcp/manage-with-agents). For the scope that each tool requires, see the [scope reference](/docs/how-to-connect/mcp/authorization#complete-scope-reference).
 
 ## Result format {#response-format}
 

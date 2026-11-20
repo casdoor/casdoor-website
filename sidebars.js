@@ -135,6 +135,7 @@ module.exports = {
             "how-to-connect/mcp/overview",
             "how-to-connect/mcp/authentication",
             "how-to-connect/mcp/tools",
+            "how-to-connect/mcp/manage-with-agents",
             "how-to-connect/mcp/authorization",
             "how-to-connect/mcp/integration",
             "how-to-connect/mcp/error-handling",

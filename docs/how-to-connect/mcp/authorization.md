@@ -75,6 +75,30 @@ Some tools have requirements beyond the scope:
 | `token:read` | `get_tokens`, `get_token` | View access tokens and their metadata |
 | `token:write` | `delete_token` | Delete access tokens |
 
+### Group scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `group:read` | `get_groups`, `get_group` | View groups |
+| `group:write` | `add_group`, `update_group`, `delete_group` | Create, modify, and delete groups |
+
+### Cert scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `cert:read` | `get_certs`, `get_cert` | View certs, without their private keys |
+| `cert:write` | `add_cert`, `update_cert`, `delete_cert` | Create, modify, and delete certs |
+
+### Tools that set up apps
+
+| Tool | Scopes |
+|---|---|
+| `setup_application` | `application:write` |
+| `get_integration_guide`, `diagnose_login` | `application:read` |
+| `add_login_provider` | `provider:write` and `application:write` |
+
+The tools for organizations, providers, roles, permissions, groups, certs and tokens, and the tools that set up apps, need a commercial or enterprise license. See [Let AI agents manage Casdoor](/docs/how-to-connect/mcp/manage-with-agents).
+
 ### Alias scopes
 
 Three aliases stand for groups of scopes:
