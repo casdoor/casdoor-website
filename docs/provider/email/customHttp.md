@@ -43,6 +43,26 @@ This guide explains how to send the emails of Casdoor, such as verification code
 
 The page also shows **Host**, **Port**, **SSL mode**, **Enable proxy**, and **Test SMTP Connection**. A Custom HTTP Email provider doesn't use them.
 
+## Send to a private endpoint
+
+Casdoor limits organisation-owned providers to public addresses by default. If you operate a self-hosted instance, you can approve specific mail endpoints using `tenantPrivateEmailEndpoints` in `conf/app.conf`, or the environment variable of the same name. The organisation can continue to manage its providers in the admin console.
+
+Set the option to a JSON object keyed by the organisation name. For each exact HTTPS URL, set `allowedCIDRs` to the IPv4 or IPv6 destinations the provider may reach and `headers` to the custom header names it may send.
+
+```ini
+tenantPrivateEmailEndpoints = {"example-org":{"https://mail.internal.example.com/send":{"allowedCIDRs":["10.20.0.0/24","fd12:3456:789a::/64"],"headers":["Authorization","Accept-Language"]}}}
+```
+
+1. List each mail route with its full URL, including the path and any explicit port. Use a DNS hostname or an IP address covered by the endpoint's TLS certificate. Omit user information, query strings, fragments, and wildcards.
+1. List at least one specific destination network in CIDR notation. Use `/32` for a single IPv4 address or `/128` for a single IPv6 address.
+1. List only the custom headers required for the route. Include `Accept-Language` for verification emails and magic links because Casdoor can add that header automatically. Omit `headers` or use `[]` for a route that needs no custom headers. Keep header values in the provider configuration. Casdoor sets `Host` and `Content-Type` itself.
+1. Restart Casdoor after changing the setting. Set the provider's **Endpoint** to the same URL, **Method** to `POST`, and **Content type** to `application/x-www-form-urlencoded`.
+1. Send a test email, then complete a real verification flow to check the headers Casdoor sends in both cases.
+
+For an approved request, Casdoor verifies TLS and checks the destination address against `allowedCIDRs` before each connection. Loopback, link-local, multicast, known cloud metadata and standard IPv6 translation addresses remain blocked. Casdoor also keeps the existing block on [shared address space](../overview.md#which-addresses-a-provider-can-reach). The private connection uses a direct client with redirects disabled. Application credentials can use a listed endpoint only when their organisation owns the provider. A global administrator can send a test email from the provider editor. Casdoor rejects requests whose method, content type, or headers fall outside the grant.
+
+The default value, `{}`, grants no private access. If the setting is empty or the whole value is invalid, Casdoor uses the default [provider network policy](../overview.md#which-addresses-a-provider-can-reach). A valid organisation entry also uses that policy for URLs absent from its grant list. Each organisation's entry must be a JSON object. Casdoor logs malformed entries at startup and refuses Custom HTTP Email sends for those organisations until the setting is fixed. Approve only dedicated mail routes that you trust to accept requests from the organisation. Remove the URL from the setting and restart Casdoor to restore the default policy for that route.
+
 ## How Casdoor builds the request
 
 ### Field names
