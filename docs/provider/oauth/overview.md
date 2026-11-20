@@ -66,7 +66,7 @@ When a user signs in with an OAuth provider, Casdoor first looks for the Casdoor
 | `Phone` | The provider reports the phone number as verified, and a user of the organization has the same phone number and country code |
 | `Name` | A user of the organization has the same username, without regard to case |
 
-The default **Binding rule** is `Email`, `Phone`. Add `Name` only if usernames at the provider and in Casdoor belong to the same people. An empty **Binding rule** turns off linking. If the existing user has multi-factor authentication (MFA) turned on, Casdoor asks for the second factor before the sign-in completes.
+The default **Binding rule** is `Email`, `Phone`, and `Email`, `Phone`, `Name` for DingTalk, where `Name` only matches the `unionid` from the address book of your organization, not the nickname. For other providers, add `Name` only if usernames at the provider and in Casdoor belong to the same people. An empty **Binding rule** turns off linking. If the existing user has multi-factor authentication (MFA) turned on, Casdoor asks for the second factor before the sign-in completes.
 
 Whether an email address or a phone number counts as verified depends on the provider type. For example, Google reports the `email_verified` claim, the [OIDC type](/docs/provider/oauth/oidc) reads `email_verified` and `phone_number_verified`, and GitHub, GitLab, and DingTalk count every email address that they return as verified. A custom provider reads the user mapping keys `emailVerified` and `phoneVerified`. See [Map OAuth claims to user fields](/docs/provider/oauth/user-mapping#verified-email-and-phone).
 
