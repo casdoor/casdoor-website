@@ -79,3 +79,5 @@ Verify the integration works by logging into WordPress via Casdoor:
 3. You’ll be redirected to the Casdoor login page. Enter valid Casdoor user credentials.
 4. After successful authentication, Casdoor will redirect you back to WordPress—you should now be logged in (as the synced user).
 ![WordPress cas](/img/integration/php/WordPress/wordpress_cas_sso.png)
+
+For attribute mapping and keeping a local administrator account, see [WordPress SSO with CAS](https://www.casdoor.com/blog/wordpress-sso).

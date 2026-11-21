@@ -63,4 +63,4 @@ Choose **Auth0** if you want a fully managed service with an SLA and are comfort
 
 Choose **Casdoor** if you want open source, predictable cost as you grow, control over where identity data is stored, legacy protocol support, or built-in MCP authorization.
 
-See also the [comparison overview](/docs/comparison/overview).
+See also the [comparison overview](/docs/comparison/overview), the side-by-side [Casdoor vs Auth0 table](https://www.casdoor.com/compare/auth0), and the guide to [migrating from Auth0](https://www.casdoor.com/blog/migrate-from-auth0).

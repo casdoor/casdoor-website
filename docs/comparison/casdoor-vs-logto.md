@@ -66,4 +66,4 @@ Choose **Casdoor** if you need more protocols and providers, directory synchroni
 
 You can self-host Casdoor for free, or let us run it: [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives you a dedicated instance, priced per instance rather than per user.
 
-See also the [comparison overview](/docs/comparison/overview).
+See also the [comparison overview](/docs/comparison/overview) and the side-by-side [Casdoor vs Logto table](https://www.casdoor.com/compare/logto).

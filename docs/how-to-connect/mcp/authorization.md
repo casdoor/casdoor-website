@@ -219,3 +219,4 @@ A request must pass both checks.
 - [MCP tools reference](/docs/how-to-connect/mcp/tools)
 - [Custom scopes](/docs/application/scopes)
 - [Permissions](/docs/permission/overview)
+- [MCP authorization explained](https://www.casdoor.com/blog/mcp-authorization)

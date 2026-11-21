@@ -10,3 +10,5 @@ The **Keycloak syncer** extends the [database syncer](/docs/syncer/Database) wit
 User data in Keycloak is spread across several tables (`credential`, `keycloak_group`, `user_group_membership`, etc.). The syncer reads from these tables and maps them into Casdoor users.
 
 ![edit](/img/syncer/Keycloak/syncer_keycloak_edit.png)
+
+For a complete migration plan, including how password hashes carry over and how to cut over applications, see [Migrating from Keycloak to Casdoor](https://www.casdoor.com/blog/migrate-from-keycloak).

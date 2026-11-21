@@ -76,3 +76,5 @@ Shutdown Grafana and restart it.
 Go to the login page. You should see something like this:
 
 ![Final result](/img/integration/go/grafana/grafana_2.png)
+
+For role mapping and troubleshooting, see [Grafana SSO with OIDC](https://www.casdoor.com/blog/grafana-sso).

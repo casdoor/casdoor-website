@@ -97,3 +97,5 @@ After configuration:
 4. The syncer will automatically fetch all users from your Azure AD tenant
 
 The syncer handles pagination automatically, retrieving all users regardless of the total count.
+
+For a complete migration plan from Azure AD B2C, see [Migrating from Azure AD B2C to Casdoor](https://www.casdoor.com/blog/migrate-from-azure-ad-b2c).

@@ -50,6 +50,8 @@ The table describes each project as of 2026. Products change quickly; check the 
 - Your organization already has deep Keycloak expertise, custom SPIs, and Red Hat support. Staying is reasonable.
 - You need relationship-based authorization at very large scale, in the style of Google Zanzibar. Casdoor's permissions are built on [Casbin](/docs/permission/overview), which runs in-process; a dedicated Zanzibar-style service may fit better.
 
+Side-by-side tables for more products, including Okta, Clerk, WorkOS, Zitadel, FusionAuth, and Firebase Authentication, are on [casdoor.com/compare](https://www.casdoor.com/compare).
+
 ## Try it
 
 The fastest way to compare is to run Casdoor next to what you have:

@@ -57,3 +57,5 @@ All other statuses (`ACTIVE`, `STAGED`, `PROVISIONED`, `PASSWORD_EXPIRED`, `RECO
 Click **Test Connection** to verify connectivity before enabling. Toggle **Is enabled** for scheduled sync, or click **Sync** to run an immediate import.
 
 Pagination is handled internally via Okta's `Link` response headers; all users are retrieved regardless of directory size.
+
+For a complete migration plan from Okta, including what the syncer does not import, see [Migrating from Okta to Casdoor](https://www.casdoor.com/blog/migrate-from-okta).

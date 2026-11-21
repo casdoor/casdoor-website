@@ -79,3 +79,5 @@ Follow the steps below, or adapt from [GitLab OIDC docs](https://docs.gitlab.com
 5. Finish.
     You can now log in to your GitLab instance via Casdoor.
     ![GitLab login](/img/integration/ruby/gitlab/gitlab_login.png)
+
+For the full OmniAuth OIDC configuration and its common pitfalls, see [GitLab SSO with OpenID Connect](https://www.casdoor.com/blog/gitlab-sso).

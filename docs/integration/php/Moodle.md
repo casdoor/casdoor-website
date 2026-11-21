@@ -42,3 +42,5 @@ See [Moodle OAuth](https://docs.moodle.org/402/en/OAuth_2_authentication) and [F
 
 Log out of Moodle and test SSO.
 ![Login](/img/integration/php/Moodle/login.gif)
+
+For field mapping, locking and the limits of group sync, see [Moodle SSO with OAuth 2.0](https://www.casdoor.com/blog/moodle-sso).

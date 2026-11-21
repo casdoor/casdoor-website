@@ -128,3 +128,4 @@ OpenAI processes the data that ChatGPT reads from your Casdoor instance. Don't a
 - [MCP tools reference](/docs/how-to-connect/mcp/tools)
 - [MCP authentication](/docs/how-to-connect/mcp/authentication)
 - [MCP troubleshooting](/docs/how-to-connect/mcp/troubleshooting)
+- [Connect ChatGPT to an MCP server: walkthrough](https://www.casdoor.com/blog/connect-chatgpt-to-mcp-server)

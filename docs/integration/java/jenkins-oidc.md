@@ -72,3 +72,5 @@ Make sure to back up the Jenkins `config.xml` file to recover in case of any set
 
     Log out of Jenkins, and it should redirect you to Casdoor for authentication.
     ![Jenkins Login Page](/img/integration/java/jenkins-oidc/jenkins_login.png)
+
+For a comparison of the Casdoor plugin and the generic OIDC plugin, see [Jenkins SSO: Casdoor plugin vs generic OIDC](https://www.casdoor.com/blog/jenkins-sso).

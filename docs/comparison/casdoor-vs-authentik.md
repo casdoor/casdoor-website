@@ -69,4 +69,4 @@ Choose **Casdoor** if you want a single small service, more built-in sign-in pro
 
 You can self-host Casdoor for free, or let us run it: [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives you a dedicated instance, priced per instance rather than per user.
 
-See also the [comparison overview](/docs/comparison/overview).
+See also the [comparison overview](/docs/comparison/overview) and the side-by-side [Casdoor vs authentik table](https://www.casdoor.com/compare/authentik).

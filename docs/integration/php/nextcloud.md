@@ -95,3 +95,4 @@ If you switch the application to `JWT-Standard`, the ID token uses the standard 
 
 - [OpenID Connect user backend](https://github.com/nextcloud/user_oidc) on GitHub
 - [Token overview](/docs/token/overview)
+- [Nextcloud SSO with OpenID Connect: claim mapping and troubleshooting](https://www.casdoor.com/blog/nextcloud-sso)
