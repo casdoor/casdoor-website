@@ -40,7 +40,7 @@ Log providers of the types System Log, SELinux Log, and Agent read the logs of t
 
 ## Which addresses a provider can reach
 
-A provider of an organization other than `admin` and `built-in` can connect only to Internet addresses. Casdoor refuses private, loopback, link-local, and unspecified addresses, and the shared address space `100.64.0.0/10`. It checks the address that the host name resolves to. For HTTP requests, it checks every connection, including redirects. This stops an organization administrator from reaching the internal network of the Casdoor server, such as a database or a cloud metadata endpoint, through a provider.
+A provider of an organization other than `admin`, `built-in`, and the [trusted organizations](/docs/organization/overview#trusted-organization) can connect only to Internet addresses. Casdoor refuses private, loopback, link-local, and unspecified addresses, and the shared address space `100.64.0.0/10`. It checks the address that the host name resolves to. For HTTP requests, it checks every connection, including redirects. This stops an organization administrator from reaching the internal network of the Casdoor server, such as a database or a cloud metadata endpoint, through a provider.
 
 The rule covers these connections:
 
@@ -53,6 +53,8 @@ The rule covers these connections:
 | OAuth | The token, user info, and logout endpoints of the provider, and the OIDC discovery that the **Request** button fetches. The types GitHub, Google, Facebook, LinkedIn, Steam, Line, Amazon, Instagram, TikTok, Twitter, Uber, and Yahoo always use the proxy instead |
 
 To connect to a service on your internal network, such as a local SMTP server, create the provider as a global administrator. When an organization administrator clicks **Request** on an OIDC provider, Casdoor applies the same rule to the discovery fetch, whatever organization the provider belongs to.
+
+To let the administrators of an organization manage providers that connect to the internal network, a global administrator turns on [Trusted organization](/docs/organization/overview#trusted-organization) for it (commercial edition). The rule then doesn't apply to the providers of that organization, nor to the **Request** button for its administrators.
 
 ## Create a provider
 

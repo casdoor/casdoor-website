@@ -53,7 +53,7 @@ Providers that had the former **Disable SSL** option turned on behave as `Disabl
 
 If Casdoor can't reach the SMTP server directly, for example Gmail from a restricted network, turn on **Enable proxy**. Casdoor then sends email through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets. For SMTP, write `socks5Proxy` as `host:port`: the SMTP connection doesn't accept the `socks5://` prefix or a username and password in the value.
 
-An email provider that belongs to an organization other than `built-in` can send only to SMTP servers and HTTP endpoints at Internet addresses. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+An email provider that belongs to an organization other than `admin`, `built-in`, and the [trusted organizations](/docs/organization/overview#trusted-organization) can send only to SMTP servers and HTTP endpoints at Internet addresses. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
 
 ## Templates {#email-content-and-placeholders}
 

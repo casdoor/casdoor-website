@@ -39,7 +39,7 @@ Start Mailpit, so that its SMTP server is reachable on port `1025` of its host, 
 1. Save the provider.
 
 :::caution
-Create the provider as a global administrator, in the `admin` or `built-in` organization. A provider of another organization can reach only Internet addresses, so it can't connect to `127.0.0.1` or to another private address. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+Create the provider as a global administrator, in the `admin` or `built-in` organization, or in a [trusted organization](/docs/organization/overview#trusted-organization). A provider of another organization can reach only Internet addresses, so it can't connect to `127.0.0.1` or to another private address. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
 :::
 
 ## Verify the result {#3-test}

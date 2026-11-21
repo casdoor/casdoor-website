@@ -90,7 +90,7 @@ After an OAuth sign-in, Casdoor stores the access token of the provider on the u
 
 If the identity provider is reachable only through a proxy, turn on **Enable proxy** on the provider. Casdoor then sends the requests of the sign-in flow through the SOCKS5 proxy that `socks5Proxy` in `conf/app.conf` sets. Some provider types always use the proxy, whatever this setting: GitHub, Google, Facebook, LinkedIn, Steam, Line, Amazon, Instagram, TikTok, Twitter, Uber, and Yahoo.
 
-A provider that belongs to an organization other than `built-in` sends the requests of the sign-in flow only to Internet addresses, and **Enable proxy** has no effect on it. The provider types in the list above are the exception: they always use the proxy. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+A provider that belongs to an organization other than `admin`, `built-in`, and the [trusted organizations](/docs/organization/overview#trusted-organization) sends the requests of the sign-in flow only to Internet addresses, and **Enable proxy** has no effect on it. The provider types in the list above are the exception: they always use the proxy. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
 
 ## See also
 

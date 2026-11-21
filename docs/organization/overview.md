@@ -138,6 +138,14 @@ Enter a comma-separated list of `host` or `host:port` entries, for example `10.0
 
 Only a global administrator can change **Trusted database hosts**. Casdoor ignores changes by anyone else. A syncer can never use the database of Casdoor itself, even on a trusted host.
 
+## Trusted organization
+
+The [providers](/docs/provider/overview) of an organization other than `admin` and `built-in` can connect only to Internet addresses. Turn on **Trusted organization** (`isTrusted`) on the **Advanced** tab to let the providers of the organization connect to intranet addresses as well, like the providers of `built-in`, for example a mail relay, an SMS gateway, or an OIDC server on your internal network. It covers every connection listed in [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach), and the **Request** button of an OIDC provider for the administrators of the organization.
+
+Only a global administrator can change **Trusted organization**. Casdoor ignores changes by anyone else, and an organization that an organization administrator adds is never trusted. Trust only an organization whose administrators you would let reach your internal network: they can point its providers at any address the Casdoor server can reach.
+
+**Trusted organization** needs the commercial edition or higher. Without such a license, Casdoor refuses to save an organization with it turned on, and treats an organization that has it as an untrusted one. See [pricing](https://www.casdoor.com/pricing/self-hosted).
+
 ## LDAP passwords and RADIUS
 
 Two switches on the **Advanced** tab enable features of the built-in servers for the users of the organization. Only a global administrator can change them, and both are off by default.

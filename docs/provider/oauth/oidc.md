@@ -58,7 +58,7 @@ Casdoor fetches the discovery document from `<issuer>/.well-known/openid-configu
 The browser goes to the **Auth URL** at sign-in, so it must be set. If **Token URL** or **UserInfo URL** is empty, Casdoor reads it from the discovery document of the issuer at each sign-in.
 
 :::note
-The **Request** button calls `GET /api/get-idp-discovery?issuer=<issuer>`, which requires an administrator. For an organization administrator, Casdoor fetches the document only from Internet addresses, and refuses private, loopback, and link-local addresses. See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
+The **Request** button calls `GET /api/get-idp-discovery?issuer=<issuer>`, which requires an administrator. For an organization administrator, Casdoor fetches the document only from Internet addresses, and refuses private, loopback, and link-local addresses, unless the administrator's organization is a [trusted organization](/docs/organization/overview#trusted-organization). See [Which addresses a provider can reach](/docs/provider/overview#which-addresses-a-provider-can-reach).
 :::
 
 ## How Casdoor checks the ID token
