@@ -40,6 +40,17 @@ On the edit page of a user, where you assign the user to groups:
 
 ![Groups field of a user](/img/organization/organization_tree/groups_user.png)
 
+## Read groups through the API
+
+`GET /api/get-group?id=<organization>/<group>` returns one group, and `GET /api/get-groups?owner=<organization>` returns the groups of an organization. Both fill the `users` field with the IDs of the group's members.
+
+Looking up the members of a group reads all user-group assignments. When you only need the group itself, for example to check whether it exists before a sync creates or updates it, add `withUsers=false` and `get-group` leaves `users` empty:
+
+```bash
+curl "https://door.casdoor.com/api/get-group?id=<organization>/<group>&withUsers=false" \
+  -H "Authorization: Bearer <access-token>"
+```
+
 ## See also
 
 - [Users](/docs/user/overview)
