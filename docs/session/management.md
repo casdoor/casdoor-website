@@ -145,7 +145,7 @@ Casdoor automatically cleans up expired sessions based on your session timeout c
 
 **Use individual session deletion for security incidents**: If you detect suspicious activity from a specific device, delete just that session ID rather than logging the user out everywhere.
 
-**Educate users on session management**: Users should know how to view their active sessions in **My Account** and sign out the ones they don't recognize. See [Let users sign out their own sessions](#own-sessions).
+**Educate users on session management**: Users should know how to view their active sessions in **My Account** and sign out the ones they don't recognize. See [Let users sign out their own sessions](/docs/session/management#own-sessions).
 
 **Monitor session patterns**: Unusual numbers of concurrent sessions may indicate account sharing or credential compromise. Regular session audits can help identify security issues.
 
