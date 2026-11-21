@@ -70,6 +70,16 @@ The sign-in page then looks like this:
 A native app can sign users in with a verification code without opening the sign-in page. Turn on the [verification code grant](/docs/how-to-connect/oauth#verification-code-grant), which also signs up phone numbers and email addresses that have no account yet.
 :::
 
+## Limit code sign-in to groups {#limit-code-sign-in-to-groups}
+
+You can offer sign-in with a verification code or a magic link to some users only, for example to those who struggle with passwords, while administrators keep signing in with a password and MFA:
+
+1. On the **UI Customization** tab of the application, make sure **Signin methods** has **Verification code** or **Magic link**.
+1. In **Code signin groups**, select the groups whose members may use them.
+1. Save the application.
+
+Casdoor checks the groups on the server. It sends no code or magic link to the other users, and refuses their sign-in with a code with the error `Signing in with a verification code or a magic link is not enabled for your account`. Leave **Code signin groups** empty to let every user sign in with a code or a magic link.
+
 ## Hide password sign-in {#hide-password}
 
 The `Hide password` rule of **Password** removes password sign-in from the sign-in page and turns it off on the server. `/api/login` then rejects every request that signs in with a password, whatever `signinMethod` the client sends. The only exception is LDAP sign-in, when the application has the **LDAP** method.

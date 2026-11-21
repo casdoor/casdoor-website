@@ -93,6 +93,21 @@ export httpport=9000
 
 In Docker, pass the options with `-e`. See [Try with Docker](/docs/basic/try-with-docker).
 
+## Read options from files {#read-options-from-files}
+
+To keep secrets such as `dataSourceName` or `redisEndpoint` out of environment variables, put the value in a file and set `<option>_FILE` to the file's path. This works with Docker and Kubernetes secrets, which are mounted as files:
+
+```bash
+docker run -e driverName=postgres \
+  -e dataSourceName_FILE=/run/secrets/casdoor_dsn \
+  casbin/casdoor
+```
+
+- It works for every option in this page.
+- An environment variable named after the option itself takes precedence over `<option>_FILE`.
+- Casdoor drops the line breaks at the end of the file, so a file written with `echo` works.
+- If the file can't be read, Casdoor stops with an error that names the option.
+
 ## Options that affect the admin console
 
 The frontend reads the following options from the backend at runtime. Change them in `app.conf` or with environment variables and restart the backend. You don't need to rebuild the frontend.

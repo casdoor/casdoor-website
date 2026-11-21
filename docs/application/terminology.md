@@ -34,6 +34,7 @@ This page describes every field of the application edit page in the Casdoor admi
 | Field | Description |
 |---|---|
 | **Cookie expire** | Session cookie lifetime in hours (default: 720). Without "Remember me", the session is capped at 24 h regardless. |
+| **Sliding session** | Extend the session while the user keeps using it, instead of ending it **Cookie expire** hours after the sign-in. See [Sliding sessions](/docs/session/management#sliding-sessions). |
 | **Default group** | Group automatically assigned to new users signing up through this application, including both direct sign-up and OAuth-based registration. Providers and invitations can override this per-signup: the effective group follows the priority **invitation SignupGroup > provider SignupGroup > application Default group**. |
 | **Default tag** | Tag automatically assigned to new users who sign up through this application. |
 | **Enable signup** | Allow new accounts: on the signup page, by magic link or verification code, and on the first sign-in with one of the application's providers (whose **Can signup** is on). When off, only admins can create accounts. |
@@ -55,7 +56,8 @@ This page describes every field of the application edit page in the Casdoor admi
 | Field | Description |
 |---|---|
 | **Client ID** | OAuth 2.0 client identifier. |
-| **Client secret** | OAuth 2.0 client secret. |
+| **Client secret** | OAuth 2.0 client secret. **Copy** copies it, **Regenerate** fills in a new one and can keep the old one working for a while. See [Rotate the client secret](/docs/application/config#rotate-the-client-secret). |
+| **Previous client secret** | Shown while the secret replaced by **Regenerate** is still accepted, with the time it stops working and **Stop accepting it**. Stored in `previousClientSecret` and `previousClientSecretExpireTime`. |
 | **Redirect URLs** | Allowed redirect URLs after sign-in. Casdoor checks them for the authorization code flow, the implicit flow, and the CAS `service` parameter. See [Redirect URL matching](#redirect-url-matching). |
 | **Forced redirect origin** | When set, Casdoor forces all redirects to this origin. |
 | **Grant types** | Enabled OAuth grant types: Authorization Code, Password, Client Credentials, Token, ID Token, Refresh Token, Device Code, Token Exchange, JWT Bearer. |
@@ -131,6 +133,7 @@ Each OAuth and SAML provider in the **Providers** table has the following settin
 |---|---|
 | **Org choice mode** | How users select their organization at sign-in: `None`, `Select` (dropdown), or `Input` (text field). |
 | **Signin methods** | Ordered list of sign-in methods shown on the sign-in page (e.g. Password, Verification code, WebAuthn). |
+| **Code signin groups** | Shown when **Signin methods** has **Verification code** or **Magic link**. Only the members of these groups can sign in with a code or a magic link. Empty means everyone. See [Limit code sign-in to groups](/docs/application/signin-methods#limit-code-sign-in-to-groups). |
 | **Signup HTML** | Custom HTML injected into the sign-up page. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
 | **Signin HTML** | Custom HTML injected into the sign-in page. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
 | **Page HTML** | Custom HTML injected into the page `<head>` (e.g. meta tags, analytics snippets, or custom styles) for all of the application's pages. A `<script>` element, as most analytics snippets use, runs only in applications of the `built-in` organization and in applications with **Enable custom scripts** on. Casdoor refuses scripts that an organization admin saves. To use a script in another organization, a global admin turns on **Enable custom scripts** and enters the HTML. See [Custom HTML and scripts](/docs/application/terminology#custom-html). |
@@ -138,6 +141,8 @@ Each OAuth and SAML provider in the **Providers** table has the following settin
 | **Signup items** | Configure the registration form fields (visible only when **Enable signup** is on). |
 | **Background URL** | Desktop sign-in page background image (URL + preview). |
 | **Background URL Mobile** | Mobile sign-in page background image (URL + preview). |
+| **Background URL Dark** | Sign-in page background image in dark mode. |
+| **More background URLs** | Further background images. Each visit shows one of them or **Background URL**, picked at random. |
 | **Custom CSS** | CSS applied to the sign-in form (desktop). |
 | **Custom CSS Mobile** | CSS applied to the sign-in form (mobile). |
 | **Form position** | Horizontal alignment of the sign-in form: Left, Center, Right, or Enable side panel. |

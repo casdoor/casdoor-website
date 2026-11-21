@@ -68,6 +68,19 @@ The sign-in then runs as follows:
 
 **Code resend timeout** on the **Security** tab sets how many seconds a user must wait before requesting another verification code by email or SMS. The sign-in page shows the countdown. The default is 60. Set the value to `0` to use the global default.
 
+## Rotate the client secret {#rotate-the-client-secret}
+
+Change the client secret of an application on a schedule, or when it may have leaked, without breaking the services that use it:
+
+1. On the **OIDC/OAuth** tab of the application, click **Regenerate** next to **Client secret**.
+1. In the dialog, choose how long the current secret keeps working: until you save, 1 hour, 1 day, 7 days, or 30 days. Click **OK**. Casdoor fills in a new random secret.
+1. Click **Copy** to copy the new secret, and save the application.
+1. Put the new secret in the configuration of the services that use the application.
+
+Until the time you chose, Casdoor accepts both secrets wherever a client authenticates with its secret, such as the token endpoint. **Previous client secret** shows when the old secret stops working. Click **Stop accepting it** and save to end it earlier.
+
+To rotate the secret with a script, call `POST /api/update-application` with the new `clientSecret`, the old one in `previousClientSecret`, and the end of the grace period in `previousClientSecretExpireTime` as an RFC 3339 timestamp.
+
 ## Next steps
 
 - [Sign-in methods](/docs/application/signin-methods): Choose how users sign in.

@@ -214,6 +214,18 @@ Use `prompt=none` to check, for example from a hidden iframe, whether the user i
 | `access_denied` | The sign-in failed for another reason. `error_description` says why |
 | `server_error` | The request to Casdoor failed |
 
+### Suggest the account with login_hint {#login-hint}
+
+Add `login_hint=<username or email>` to the authorization URL when your application already knows who signs in. Casdoor fills in the username on its sign-in page, and passes the hint on to the identity provider that the user picks:
+
+| Provider | Casdoor adds to the URL of the provider |
+|---|---|
+| Google, Azure AD, Azure AD B2C, Microsoft Online, Okta, Auth0, ADFS, Casdoor, and custom OAuth and OIDC providers | `login_hint` |
+| GitHub | `login` |
+| SAML providers with the redirect binding, such as Microsoft Entra ID | `login_hint` on the SSO URL |
+
+The provider then preselects or fills in the account. SAML providers that use the POST binding, which Casdoor uses when **Sign request** is on, don't get the hint.
+
 ## Implicit grant
 
 Use this grant only for applications without a backend. Prefer the authorization code grant with PKCE.

@@ -84,6 +84,12 @@ For example, an application defines `files:read`, `files:write`, and `db:query`.
 
 If a pattern matches no scope, Casdoor rejects the request with `invalid_scope`.
 
+## Consent and revoking it {#consent}
+
+When an application has custom scopes, Casdoor shows a consent screen to the user for the scopes that the user hasn't answered yet, with their display names and descriptions, and remembers the answer. Users review and revoke what they granted in **My Account**, in the **Consents** section: a single scope, or the whole application with **Delete**.
+
+Revoking also expires the access and refresh tokens that the application holds for the user, so the application has to ask for consent again before it gets new ones.
+
 ## See also
 
 - [Application categories](/docs/application/categories)

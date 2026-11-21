@@ -85,9 +85,9 @@ Users of the `built-in` organization and the administrators of an organization (
 
 ## Expiry
 
-**Expire time** (`expireTime`) ends a permission automatically, for example for time-limited access as required by ISO/IEC 27001 control 5.18. Enter a timestamp in RFC 3339 format, such as `2026-12-31T23:59:59+08:00`. Leave it empty for a permission that never expires.
+**Expire time** (`expireTime`) ends a permission automatically, for example to grant access for a few hours, or for time-limited access as required by ISO/IEC 27001 control 5.18. Pick a date and time, or click **1 hour**, **1 day**, **7 days**, or **30 days** to set it that far from now. **Never** clears it, so the permission never expires. Through the API, `expireTime` is an RFC 3339 timestamp, such as `2026-12-31T23:59:59+08:00`.
 
-Casdoor checks the permissions at startup and then every hour, on the hour. For every enabled permission whose expire time has passed, it removes the Casbin policies of the permission and turns off **Is enabled**. An expired permission can therefore still apply for up to an hour.
+Casdoor checks the permissions at startup and then every minute. For every enabled permission whose expire time has passed, it removes the Casbin policies of the permission and turns off **Is enabled**. An expired permission can therefore still apply for up to a minute.
 
 To grant the access again, set a later expire time or clear it, and then turn **Is enabled** back on.
 

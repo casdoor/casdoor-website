@@ -39,6 +39,10 @@ The default background is white.
    ![Recording of setting the Background URL](/img/application/ui-customization/step1_backgroune_url.gif)
 
 1. To use another image on phones, set **Background URL Mobile**.
+1. To use another image when the sign-in page is shown in dark mode, set **Background URL Dark**.
+1. To show a different image now and then, add more images to **More background URLs**. Each visit to the sign-in page shows one of them or **Background URL**, picked at random.
+
+On a phone, **Background URL Mobile** takes precedence over the others. When you apply a theme from the [Marketplace](/docs/marketplace/overview), Casdoor saves these settings and restores them when you remove the theme.
 
 ## Style the sign-in form {#2-login-panel-style}
 

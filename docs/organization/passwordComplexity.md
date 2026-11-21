@@ -31,7 +31,7 @@ This guide explains how to enforce rules for the passwords of the users of an or
 | `SpecialChar` | Contain at least one special character |
 | `NoRepeat` | Contain no repeated characters |
 
-You can select several options. A password must then satisfy all of them.
+You can select several options. A password must then satisfy all of them. When a password misses several options, the error lists all of them, separated by semicolons, so the user can fix the password in one go. The change-password dialog also shows the options as a checklist while the user types.
 
 ## Set the rules {#configuration}
 
