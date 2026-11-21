@@ -153,6 +153,7 @@ For example, to create a `Contact` tab with the email address, the phone number,
 | `MFA accounts` | External accounts linked specifically for multi-factor authentication purposes. |
 | `Need update password` | Whether the user is required to change their password at next login. Admin-only. See [Forced password update](#forced-password-update). |
 | `IP whitelist` | IP addresses or CIDR ranges from which this user is allowed to sign in. Admin-only. |
+| `Sessions` | The browsers and devices where the user is signed in, with **Logout** for the other sessions. Only the user sees it. See [Let users sign out their own sessions](/docs/session/management#own-sessions). |
 
 ## Forced password update
 

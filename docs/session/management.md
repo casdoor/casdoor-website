@@ -76,6 +76,29 @@ When you delete a session record entirely (not just a single session ID), Casdoo
 
 Deleting all sessions for a user effectively logs them out from all devices and browsers simultaneously.
 
+## Let users sign out their own sessions {#own-sessions}
+
+Users see their own sessions in **My Account**, in the **Sessions** section. Each row shows the browser and the operating system, the IP address, the applications signed in with the session, and the last activity. The session of the current browser is marked **This device**.
+
+**Logout** on another session signs the user out of it, in the same way as an administrator ending it: the applications signed in with it get the OIDC back-channel and SAML logout, and its tokens expire. Use it after losing a device. The current session ends with the normal sign out.
+
+The section is the `Sessions` account item, which only the user sees. New organizations have it. To show, hide, or move it in an existing organization, add it to the [account items](/docs/organization/accountCustomization) of the organization. Organizations whose account items don't list it show it in the first tab.
+
+Your own application can do the same through the API, with the session cookie or the access token of the user:
+
+- `GET /api/get-my-sessions` lists the sessions of the user, with hashed session IDs, `applications`, `createdTime`, `lastActiveTime`, `expireTime`, `ip`, `userAgent`, and `isCurrent`.
+- `POST /api/delete-my-session?sessionId=<hashed session ID>` signs the user out of one of the other sessions.
+
+## Sliding sessions {#sliding-sessions}
+
+By default, a session ends **Cookie expire** hours after the sign-in, however actively the user works. Turn on **Sliding session** on the **Authentication** tab of the application to extend the session while it is used instead:
+
+- When less than half of **Cookie expire** is left, the next request moves the end of the session to **Cookie expire** hours from then, and sends the session cookie again with a matching lifetime.
+- A user who signs in with a **Cookie expire** of 8 hours and comes back every day therefore stays signed in. Only a break of more than 8 hours signs the user out.
+- Without **Auto sign in** at sign-in, the session is still capped at 24 hours, and it slides within that cap.
+
+The setting takes effect at the next sign-in.
+
 ## API for Session Deletion
 
 Developers can programmatically delete sessions using the Casdoor API:
@@ -122,7 +145,7 @@ Casdoor automatically cleans up expired sessions based on your session timeout c
 
 **Use individual session deletion for security incidents**: If you detect suspicious activity from a specific device, delete just that session ID rather than logging the user out everywhere.
 
-**Educate users on session management**: Users should know how to view their active sessions and remove ones they don't recognize. Consider adding a "My Sessions" page in your application that integrates with Casdoor's session API.
+**Educate users on session management**: Users should know how to view their active sessions in **My Account** and sign out the ones they don't recognize. See [Let users sign out their own sessions](#own-sessions).
 
 **Monitor session patterns**: Unusual numbers of concurrent sessions may indicate account sharing or credential compromise. Regular session audits can help identify security issues.
 
