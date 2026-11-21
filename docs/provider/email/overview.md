@@ -33,6 +33,8 @@ An email provider sends the emails of Casdoor, such as verification codes at sig
 | `SendGrid` | SendGrid. See [SendGrid](/docs/provider/email/sendgrid) |
 | `Resend` | Resend. See [Resend](/docs/provider/email/resend) |
 | `Microsoft 365` | The SMTP server of Exchange Online, signing in with OAuth instead of a password. See [Microsoft 365](/docs/provider/email/microsoft365) |
+| `Microsoft Graph` | The sendMail API of Microsoft Graph, for tenants where SMTP AUTH is off. See [Microsoft Graph](/docs/provider/email/microsoft-graph) |
+| `Gmail` | The SMTP server of Gmail, signing in with a Google JSON key instead of an app password. See [Gmail](/docs/provider/email/gmail) |
 | `Custom HTTP Email` | An HTTP API that you describe. See [Send email through your own HTTP API](/docs/provider/email/customHttp) |
 
 ## SSL mode
