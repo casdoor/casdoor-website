@@ -1,6 +1,6 @@
 ---
 title: OAuth 2.0
-description: Reference for the OAuth 2.0 endpoints of Casdoor - every supported grant type, the hybrid flow and response modes, PKCE, resource indicators, federated credentials, DPoP, token introspection, and the UserInfo endpoint.
+description: Reference for the OAuth 2.0 endpoints of Casdoor - every supported grant type, the hybrid flow and response modes, PKCE, PAR, CIBA, resource indicators, federated credentials, DPoP, token introspection, and the UserInfo endpoint.
 keywords: [OAuth 2.0, access token, refresh token, grant types]
 authors: [nomeguy]
 ---
@@ -16,6 +16,8 @@ Casdoor is an OAuth 2.0 authorization server. This page describes how to get an 
 | Refresh token | `https://<casdoor-host>/api/login/oauth/refresh_token` |
 | Token introspection | `https://<casdoor-host>/api/login/oauth/introspect` |
 | Token revocation | `https://<casdoor-host>/api/login/oauth/revoke` |
+| Pushed authorization request | `https://<casdoor-host>/api/login/oauth/par` |
+| Backchannel authentication | `https://<casdoor-host>/api/login/oauth/bc-authorize` |
 | UserInfo | `https://<casdoor-host>/api/userinfo` |
 
 In the examples, `ClientId` and `ClientSecret` are the **Client ID** and the **Client secret** of the Casdoor [application](/docs/application/overview).
@@ -32,6 +34,7 @@ In the examples, `ClientId` and `ClientSecret` are the **Client ID** and the **C
 | [Device Authorization](https://datatracker.ietf.org/doc/html/rfc8628) | RFC 8628 | Devices with limited input or no browser. |
 | [Token Exchange](https://datatracker.ietf.org/doc/html/rfc8693) | RFC 8693 | Swap an existing token for one with different scope or audience. |
 | [JWT Bearer](https://datatracker.ietf.org/doc/html/rfc7523) | RFC 7523 | Service auth using a signed JWT assertion instead of a client secret. |
+| [CIBA](/docs/how-to-connect/oauth#ciba) | OpenID Connect CIBA Core 1.0 | Sign-ins started by someone else, e.g. a call center or a bank counter, that the user approves on their own device. |
 | [Verification Code](/docs/how-to-connect/oauth#verification-code-grant) | Casdoor extension | Native apps that sign users in (and up) with a code sent by SMS or email. |
 | [Mobile One-Click](/docs/how-to-connect/mobile-one-click) | Casdoor extension | Native apps that sign users in (and up) with the phone number of the device, through Alibaba Cloud PNVS. |
 
@@ -137,6 +140,37 @@ With PKCE, `client_secret` is optional in the token request. If you send it, it 
 :::note
 When Casdoor itself signs users in at an external OAuth provider that requires PKCE, such as Twitter or a custom provider with PKCE turned on, Casdoor generates the code verifier for each flow. You don't implement PKCE for that part.
 :::
+
+### Pushed authorization requests (PAR) {#par}
+
+With [PAR (RFC 9126)](https://datatracker.ietf.org/doc/html/rfc9126), your backend sends the parameters of the authorization request to Casdoor first, and the browser only carries a short reference to them. The user can't see or change `redirect_uri`, `scope`, `state`, or the PKCE challenge on the way. FAPI 2.0 requires it.
+
+1. Send the parameters that would go into the authorization URL to the PAR endpoint, with the client credentials:
+
+   ```bash
+   curl -u ClientId:ClientSecret https://<casdoor-host>/api/login/oauth/par      -d response_type=code      -d redirect_uri=https://app.example.com/callback      -d scope=openid      -d state=STATE      -d code_challenge=YOUR_CHALLENGE      -d code_challenge_method=S256
+   ```
+
+   Casdoor checks them as it checks an authorization request and answers with status `201`:
+
+   ```json
+   {
+     "request_uri": "urn:ietf:params:oauth:request_uri:1adab98a7ac1c2af6ef06d5ad5541328d6b821c2",
+     "expires_in": 90
+   }
+   ```
+
+1. Within 90 seconds, send the user to the authorization endpoint with only the client ID and the `request_uri`:
+
+   ```url
+   https://<casdoor-host>/login/oauth/authorize?client_id=ClientId&request_uri=urn:ietf:params:oauth:request_uri:1adab98a7ac1c2af6ef06d5ad5541328d6b821c2
+   ```
+
+1. The rest is the same as the authorization code grant: Casdoor redirects back with a code, and you exchange it at the token endpoint.
+
+A `request_uri` works once. The client authenticates at the PAR endpoint with `client_secret_basic`, `client_secret_post`, or a client assertion. A public client without a secret can push too, but only with a PKCE challenge. You can also push a [request object](https://datatracker.ietf.org/doc/html/rfc9101) in the `request` parameter.
+
+To refuse every authorization request of an application that didn't come through PAR, turn on **Require PAR** in the **OIDC/OAuth** tab of the application. The application's [discovery document](/docs/how-to-connect/oidc-client#discovery-endpoints) then reports `require_pushed_authorization_requests: true`. Turn it on only when the application uses PAR, or its users can't sign in.
 
 ### Bind a token to one service {#binding-tokens-to-specific-services}
 
@@ -342,6 +376,46 @@ To reject the sign-in, send `userCode` and the `cancelToken` from the same URL a
 By default, Casdoor keeps pending device authorization requests, which map device codes to user codes, in memory. With several replicas of Casdoor, the polling request of the device and the confirmation in the browser can reach different replicas, and the flow then fails intermittently.
 
 To share the requests between replicas, set `redisEndpoint` in `conf/app.conf`. Casdoor then stores them in Redis. This is the same option that shares sessions, in the format `host:port[,poolSize[,password[,db]]]`, for example `localhost:6379,100,mypassword,2`, and no further option is needed. Several addresses in the first field, separated by `;`, use Redis Cluster. If Casdoor can't reach Redis at startup, it logs a warning and uses the in-memory store. See the [Configuration reference](/docs/basic/configuration).
+
+## CIBA {#ciba}
+
+With [OpenID Connect Client-Initiated Backchannel Authentication (CIBA)](https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html), the sign-in starts somewhere other than the user's browser: an agent in a call center, a bank counter, a point-of-sale terminal, or an AI agent that needs the user's approval. The application names the user, Casdoor asks the user to approve on their own device, and the application gets the tokens without a redirect. Casdoor supports the poll mode.
+
+1. Turn on **CIBA** in **Grant types** of the application, and add an **Email** provider to its **Providers**. Casdoor emails the user the link to approve.
+1. Send the request to the backchannel authentication endpoint, with the client credentials:
+
+   ```bash
+   curl -u ClientId:ClientSecret https://<casdoor-host>/api/login/oauth/bc-authorize      -d scope=openid      -d login_hint=alice@example.com      -d binding_message="Transfer 8842"
+   ```
+
+   | Parameter | Description |
+   |---|---|
+   | `scope` | Required, must contain `openid`. |
+   | `login_hint` | The username, email, or phone number of the user in the application's organization. |
+   | `id_token_hint` | An ID token that Casdoor issued to the application for the user. Send this or `login_hint`, not both. |
+   | `binding_message` | Optional, at most 100 characters. Show the same text on your side, so that the user can tell the request is yours. |
+   | `requested_expiry` | Optional, seconds the request stays valid. The default is 300, the maximum 1800. |
+
+   The response:
+
+   ```json
+   {
+     "auth_req_id": "7304fbfe7925a1578199ffd54a2b2ecf917004f84f7cc49009634fee3e4d2982",
+     "expires_in": 300,
+     "interval": 5
+   }
+   ```
+
+1. Casdoor emails the user a link to `https://<casdoor-host>/ciba/<organization>/<id>`. The user signs in there, sees the application, the binding message, and the scope, and approves or denies.
+1. Meanwhile, poll the token endpoint every `interval` seconds:
+
+   ```bash
+   curl -u ClientId:ClientSecret https://<casdoor-host>/api/login/oauth/access_token      -d grant_type=urn:openid:params:grant-type:ciba      -d auth_req_id=AUTH_REQ_ID
+   ```
+
+   Until the user answers, the response is the error `authorization_pending`. Polling faster than `interval` returns `slow_down` and adds 5 seconds to the interval. After the user approves, the response contains the access token, ID token, and refresh token. A denied request returns `access_denied`, an expired one `expired_token`.
+
+The backchannel authentication endpoint returns `unknown_user_id` when no user matches the hint, and `access_denied` when the user has no email address. Casdoor keeps pending CIBA requests in memory: with several replicas, route the requests of one client to the same replica.
 
 ## Resource owner password credentials grant
 

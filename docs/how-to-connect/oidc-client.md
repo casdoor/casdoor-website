@@ -101,6 +101,7 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "refresh_token",
     "urn:ietf:params:oauth:grant-type:device_code",
     "urn:ietf:params:oauth:grant-type:token-exchange",
+    "urn:openid:params:grant-type:ciba",
     "urn:casdoor:params:oauth:grant-type:verification-code",
     "urn:casdoor:params:oauth:grant-type:mobile-one-click"
   ],
@@ -162,6 +163,13 @@ For example, `https://door.casdoor.com/.well-known/openid-configuration` returns
     "HS512"
   ],
   "end_session_endpoint": "https://door.casdoor.com/api/logout",
+  "pushed_authorization_request_endpoint": "https://door.casdoor.com/api/login/oauth/par",
+  "require_pushed_authorization_requests": false,
+  "backchannel_authentication_endpoint": "https://door.casdoor.com/api/login/oauth/bc-authorize",
+  "backchannel_token_delivery_modes_supported": [
+    "poll"
+  ],
+  "backchannel_user_code_parameter_supported": false,
   "backchannel_logout_supported": true,
   "backchannel_logout_session_supported": true,
   "dpop_signing_alg_values_supported": [
