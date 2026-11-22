@@ -78,6 +78,11 @@ module.exports = {
           position: "left",
         },
         {
+          href: "https://marketplace.casdoor.com",
+          label: "Marketplace",
+          position: "left",
+        },
+        {
           label: "Password App",
           to: "/docs/how-to-connect/totp-authenticator-app",
           position: "left",
@@ -155,6 +160,10 @@ module.exports = {
             {
               label: "SDK",
               to: "/docs/how-to-connect/sdk",
+            },
+            {
+              label: "Marketplace",
+              to: "/docs/marketplace/overview",
             },
           ],
         },

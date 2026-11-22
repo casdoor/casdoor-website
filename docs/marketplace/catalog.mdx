@@ -1,0 +1,38 @@
+---
+title: Available integrations
+description: "Every integration in the Casdoor Marketplace by type: single sign-on for self-hosted apps, identity provider templates, actions and sign-in themes, with the ones that need a Commercial or Enterprise license."
+keywords: [Casdoor, marketplace, integrations, SSO, Grafana, GitLab, Keycloak, Higress, Kong, sign-in theme, actions, plugins]
+authors: [hsluoyz]
+---
+
+import {MarketplaceCatalog, MarketplaceCount} from "@site/src/components/Marketplace";
+
+The [Marketplace](/docs/marketplace/overview) has <MarketplaceCount /> integrations: <MarketplaceCount type="app" /> app integrations, <MarketplaceCount type="provider" /> identity providers, <MarketplaceCount type="action" /> actions and <MarketplaceCount type="theme" /> sign-in themes. Install them in the console under **Identity → Marketplace**, or open one below to read its setup guide at [marketplace.casdoor.com](https://marketplace.casdoor.com).
+
+Integrations marked **Commercial** or **Enterprise** need a self-hosted license of that edition, see [self-hosted pricing](https://www.casdoor.com/pricing/self-hosted). All others are open source in [casdoor/casdoor-integrations](https://github.com/casdoor/casdoor-integrations) and free in every edition.
+
+## App integrations
+
+Installing one creates a Casdoor [application](/docs/application/overview) with the redirect URLs, grant types and token format the app needs, then shows the app's own settings with your Casdoor address, client ID and client secret filled in.
+
+<MarketplaceCatalog type="app" />
+
+## Identity providers
+
+Installing one creates a [provider](/docs/provider/overview) so that people can sign in to Casdoor with an identity system they already have, and optionally adds it to the sign-in page of an application.
+
+<MarketplaceCatalog type="provider" />
+
+## Actions
+
+Actions are code that runs inside Casdoor as sandboxed WebAssembly and can reach only the hosts listed in their manifest: payment and SMS gateways, password checks, password migration from another system, and sign-in confirmation by push.
+
+<MarketplaceCatalog type="action" />
+
+## Sign-in themes
+
+Installing a theme changes the look of the sign-in pages of one application. The install dialog previews it on that application's real sign-in page, and uninstalling restores the look it had before. You can try every theme on the [demo site](https://door.casdoor.com/login).
+
+<MarketplaceCatalog type="theme" />
+
+The integrations for systems used mainly in mainland China, such as Weaver e-cology, Seeyon A8+, Yonyou, Kingdee, DingTalk for government and Beisen, are listed only on the Chinese Marketplace at [marketplace.casdoor.cn/zh](https://marketplace.casdoor.cn/zh/) and in the console when its language is Chinese.

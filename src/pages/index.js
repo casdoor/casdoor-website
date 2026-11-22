@@ -13,6 +13,7 @@ import HeroLoginCarousel from "../components/HeroLoginCarousel";
 import TabList from "../components/TabList";
 import TabItem from "@theme/TabItem";
 import CodeCard from "../components/CodeCard";
+import {MarketplaceSection} from "../components/Marketplace";
 import {UserList} from "@site/src/components/UserList";
 import {useWindowSize} from "@docusaurus/theme-common";
 
@@ -472,6 +473,7 @@ export default function Home() {
         <LearnHowTo />
         <MCPSection />
         <OpenClawSection />
+        <MarketplaceSection />
         <ContentInterface />
         <ContentLogin />
         <ContentSignup />

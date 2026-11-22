@@ -7,7 +7,7 @@ authors: [hsluoyz]
 
 The Marketplace is a catalog of ready-made integrations that you install from the Casdoor console. Instead of creating an application or provider by hand and copying settings from a guide, you pick an integration, fill in a few values, and Casdoor creates the objects for you. Uninstalling removes them again, or restores what was there before.
 
-Browse the catalog on the web at [marketplace.casdoor.com](https://marketplace.casdoor.com). The integrations themselves are open source in [casdoor/casdoor-integrations](https://github.com/casdoor/casdoor-integrations).
+Browse the catalog on the web at [marketplace.casdoor.com](https://marketplace.casdoor.com), or see [Available integrations](/docs/marketplace/catalog) for the full list. The free integrations are open source in [casdoor/casdoor-integrations](https://github.com/casdoor/casdoor-integrations).
 
 :::info
 
@@ -21,7 +21,12 @@ The Marketplace is in Casdoor master since October 2026 and in every release aft
 |---|---|---|
 | **App integration** | Creates an [application](/docs/application/overview) with the redirect URLs, grant types and token format the app needs. The guide then shows the app's own settings with your Casdoor address, client ID and client secret filled in. | Grafana, GitLab, Nextcloud, Vaultwarden, Argo CD, Immich, Open WebUI, Portainer, Gitea, Proxmox VE |
 | **Identity provider** | Creates a [provider](/docs/provider/overview) from a template, so your users can sign in to Casdoor with an identity system they already have. Optionally adds it to the sign-in page of an application. | Keycloak, authentik, ZITADEL, Authelia, GitLab Self-Managed |
-| **Sign-in theme** | Replaces the look of the sign-in pages of one application: `themeData`, `formOffset`, `formCss`, `formCssMobile`, `formSideHtml`, `footerHtml`, `formBackgroundUrl` and `formBackgroundUrlMobile` (**Background URL** and **Background URL Mobile**). | Midnight, Split |
+| **Action** | Adds code that runs inside Casdoor as sandboxed WebAssembly and can reach only the hosts its manifest lists: a payment or SMS provider, a password check, password migration from another system, user sync or sign-in confirmation by push. | Revolut, Vonage, Have I Been Pwned password check, Feishu / Lark sign-in confirmation |
+| **Sign-in theme** | Replaces the look of the sign-in pages of one application: `themeData`, `formOffset`, `formCss`, `formCssMobile`, `formSideHtml`, `footerHtml`, `formBackgroundUrl` and `formBackgroundUrlMobile` (**Background URL** and **Background URL Mobile**). | Midnight, Split, Paper, Pixel, Terminal and 19 more |
+
+## Free and paid integrations
+
+Most integrations are open source under Apache-2.0 and free in every edition. Integrations marked **Commercial edition** or **Enterprise edition** on their card need a self-hosted license of that edition (see [self-hosted pricing](https://www.casdoor.com/pricing/self-hosted)); they appear in the same Marketplace page, and Casdoor downloads them only when its license allows. [Available integrations](/docs/marketplace/catalog) marks which ones are paid.
 
 ## Install an integration
 

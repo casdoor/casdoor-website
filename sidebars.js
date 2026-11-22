@@ -205,6 +205,7 @@ module.exports = {
       link: {type: "generated-index"},
       items: [
         "marketplace/overview",
+        "marketplace/catalog",
       ],
     },
     {

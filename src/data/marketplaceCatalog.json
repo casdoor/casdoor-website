@@ -1,0 +1,875 @@
+{
+  "url": "https://marketplace.casdoor.com",
+  "integrations": [
+    {
+      "id": "argocd",
+      "type": "app",
+      "name": "Argo CD",
+      "description": "Connect Argo CD to Casdoor over OpenID Connect: oidc.config in argocd-cm, the client secret, PKCE, CLI login and RBAC from Casdoor groups.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "RBAC by group",
+        "CLI login"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/argocd/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "gitea",
+      "type": "app",
+      "name": "Gitea",
+      "description": "Add Casdoor to Gitea as an OpenID Connect authentication source: the add-oauth command, callback URL, and admins from a Casdoor group.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "Admin by group"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/gitea/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "gitlab",
+      "type": "app",
+      "name": "GitLab",
+      "description": "Configure self-managed GitLab to sign users in with Casdoor over OpenID Connect: gitlab.rb provider settings, account creation and group-based admins.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Group mapping"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/gitlab/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "grafana",
+      "type": "app",
+      "name": "Grafana",
+      "description": "Set up Grafana single sign-on with Casdoor over OpenID Connect: Generic OAuth settings, PKCE, and Grafana roles mapped from Casdoor groups.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Role mapping"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/grafana/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "immich",
+      "type": "app",
+      "name": "Immich",
+      "description": "Let people sign in to Immich with Casdoor: OAuth settings in the Immich admin, the web and mobile redirect URIs, and storage label mapping.",
+      "categories": [
+        "Productivity"
+      ],
+      "tags": [
+        "OIDC",
+        "Mobile apps"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/immich/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "nextcloud",
+      "type": "app",
+      "name": "Nextcloud",
+      "description": "Set up Nextcloud single sign-on with Casdoor using the OpenID Connect user backend (user_oidc): provider command, user ID and group mapping.",
+      "categories": [
+        "Productivity"
+      ],
+      "tags": [
+        "OIDC",
+        "Group sync"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/nextcloud/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "open-webui",
+      "type": "app",
+      "name": "Open WebUI",
+      "description": "Set up Open WebUI single sign-on with Casdoor over OpenID Connect: OAuth environment variables, sign-up, and group sync from Casdoor groups.",
+      "categories": [
+        "AI"
+      ],
+      "tags": [
+        "OIDC",
+        "Group sync"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": ""
+    },
+    {
+      "id": "portainer",
+      "type": "app",
+      "name": "Portainer",
+      "description": "Set up Portainer single sign-on with Casdoor using Portainer's custom OAuth provider: endpoints, user identifier, scopes and automatic user creation.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OAuth 2.0",
+        "Auto provisioning"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/portainer/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "proxmox",
+      "type": "app",
+      "name": "Proxmox VE",
+      "description": "Add Casdoor to Proxmox VE as an OpenID Connect realm: the pveum command, redirect URL, usernames, groups and permissions.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "Group sync"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/proxmox/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "vaultwarden",
+      "type": "app",
+      "name": "Vaultwarden",
+      "description": "Turn on Vaultwarden single sign-on with Casdoor over OpenID Connect: the SSO_* settings, the redirect URI, and the email verification check.",
+      "categories": [
+        "Productivity"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/vaultwarden/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "deepseek-harness",
+      "type": "app",
+      "name": "DeepSeek Harness",
+      "description": "Sign DeepSeek Harness in to Casdoor as an AI agent and give it the MCP servers of your organization through the Casdoor MCP gateway, with tool permissions, call records and audit, all set up from the web pages of Casdoor and DeepSeek Harness.",
+      "categories": [
+        "AI"
+      ],
+      "tags": [
+        "AI agent",
+        "MCP",
+        "OAuth",
+        "PKCE"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/deepseek-harness/1.0.1/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "higress",
+      "type": "app",
+      "name": "Higress",
+      "description": "Put Casdoor sign-in in front of the services behind Higress with a Wasm plugin: browsers are sent to Casdoor, API calls need a Casdoor token, and the user reaches the upstream in headers.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "API gateway",
+        "JWT"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/higress/1.0.0/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "kong",
+      "type": "app",
+      "name": "Kong Gateway",
+      "description": "Put Casdoor sign-in in front of the services behind Kong Gateway with a Lua plugin: browsers are sent to Casdoor, API calls need a Casdoor token, and the user reaches the upstream in headers.",
+      "categories": [
+        "DevOps & infrastructure"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "API gateway",
+        "JWT"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/kong/1.0.0/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "authelia",
+      "type": "provider",
+      "name": "Authelia",
+      "description": "Let people sign in to Casdoor through Authelia over OpenID Connect: the provider settings, and the client to add to Authelia's configuration.",
+      "categories": [
+        "Identity providers"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Self-hosted"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/authelia/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "authentik",
+      "type": "provider",
+      "name": "authentik",
+      "description": "Let people sign in to Casdoor with their authentik accounts over OpenID Connect: the provider settings, and the application and OAuth2 provider to create in authentik.",
+      "categories": [
+        "Identity providers"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Self-hosted"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/authentik/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "gitlab-self-managed",
+      "type": "provider",
+      "name": "GitLab Self-Managed",
+      "description": "Let people sign in to Casdoor with accounts on your own GitLab over OpenID Connect: the provider settings, and the OAuth application to create in GitLab.",
+      "categories": [
+        "Identity providers"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Self-hosted"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/gitlab-self-managed/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "keycloak",
+      "type": "provider",
+      "name": "Keycloak",
+      "description": "Let people sign in to Casdoor with their Keycloak accounts over OpenID Connect: the provider settings for a Keycloak realm, and the client to create on the Keycloak side.",
+      "categories": [
+        "Identity providers"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Self-hosted"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/keycloak/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "zitadel",
+      "type": "provider",
+      "name": "ZITADEL",
+      "description": "Let people sign in to Casdoor with their ZITADEL accounts over OpenID Connect: the provider settings, and the web application to create in the ZITADEL Console.",
+      "categories": [
+        "Identity providers"
+      ],
+      "tags": [
+        "OIDC",
+        "PKCE",
+        "Cloud or self-hosted"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": ""
+    },
+    {
+      "id": "revolut",
+      "type": "action",
+      "name": "Revolut",
+      "description": "Take card, Apple Pay, Google Pay and Revolut Pay payments for Casdoor products and plans through the Revolut Merchant API, on Revolut's hosted checkout page.",
+      "categories": [
+        "Payments"
+      ],
+      "tags": [
+        "Payment",
+        "Hosted checkout",
+        "Sandbox"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/revolut/1.0.1/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "vonage",
+      "type": "action",
+      "name": "Vonage",
+      "description": "Send sign-up, sign-in and MFA verification codes by SMS through the Vonage SMS API, formerly Nexmo.",
+      "categories": [
+        "SMS"
+      ],
+      "tags": [
+        "SMS",
+        "Verification code",
+        "Global"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "/data/integrations/vonage/1.0.0/logo.svg",
+      "screenshot": ""
+    },
+    {
+      "id": "common-password-check",
+      "type": "action",
+      "name": "Common password check",
+      "description": "Refuse the most used passwords and passwords that contain the username, with a list built into the action; nothing leaves Casdoor.",
+      "categories": [
+        "Security"
+      ],
+      "tags": [
+        "Password",
+        "Security"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/common-password-check/1.0.0/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "lark-push",
+      "type": "action",
+      "name": "Feishu / Lark sign-in confirmation",
+      "description": "When a sign-in needs the second factor, send the user a Feishu or Lark card; one tap on Confirm signs them in, no code to type.",
+      "categories": [
+        "MFA"
+      ],
+      "tags": [
+        "Feishu",
+        "Lark",
+        "MFA",
+        "Push"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/lark-push/1.0.0/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "hibp-password-check",
+      "type": "action",
+      "name": "Have I Been Pwned password check",
+      "description": "Refuse passwords that have appeared in data breaches, and ask users to change one at sign-in, checked against Have I Been Pwned without sending the password.",
+      "categories": [
+        "Security"
+      ],
+      "tags": [
+        "Password",
+        "Security",
+        "Breach"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/hibp-password-check/1.0.0/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "http-password-migration",
+      "type": "action",
+      "name": "Password migration by HTTP",
+      "description": "Move the passwords of users imported without one: on the first sign-in Casdoor asks your old system over HTTPS whether the password is right, then keeps it.",
+      "categories": [
+        "Migration"
+      ],
+      "tags": [
+        "Migration",
+        "Password"
+      ],
+      "edition": "Commercial",
+      "region": "",
+      "logo": "/data/integrations/http-password-migration/1.0.0/logo.png",
+      "screenshot": ""
+    },
+    {
+      "id": "aurora",
+      "type": "theme",
+      "name": "Aurora",
+      "description": "A pastel mesh of color tinted by your accent behind a frosted glass card, with soft rounded fields and a gradient button. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Glass",
+        "Gradient",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/aurora/1.0.0/screenshot.png"
+    },
+    {
+      "id": "backdrop",
+      "type": "theme",
+      "name": "Backdrop",
+      "description": "Your own picture behind the whole page, dimmed a little, with a frosted glass card on top. It comes with a dusk mountain scene; give it any image address to use yours. Organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Background image",
+        "Glass"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/backdrop/1.0.0/screenshot.png"
+    },
+    {
+      "id": "bare",
+      "type": "theme",
+      "name": "Bare",
+      "description": "Nothing but the form: no card, no background, a small left-aligned logo, quiet text tabs, hairline fields and a round button, with plenty of white space. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Minimal",
+        "No card",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/bare/1.0.0/screenshot.png"
+    },
+    {
+      "id": "blueprint",
+      "type": "theme",
+      "name": "Blueprint",
+      "description": "A technical drawing: white lines on blueprint-blue grid paper, a framed form labelled like a figure, dashed fields and a drafting typeface. It loads the Share Tech Mono font from Google Fonts. Organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Technical",
+        "Monospace",
+        "Web font"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/blueprint/1.0.0/screenshot.png"
+    },
+    {
+      "id": "brutal",
+      "type": "theme",
+      "name": "Brutal",
+      "description": "Neo-brutalism: thick black outlines, hard offset shadows and a loud accent on a dotted page; the button presses in when you hover it. Pick a bright accent, the text on it stays black. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Bold",
+        "Playful",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/brutal/1.0.0/screenshot.png"
+    },
+    {
+      "id": "catppuccin",
+      "type": "theme",
+      "name": "Catppuccin",
+      "description": "The Catppuccin Mocha palette: soft pastel colors on a warm dark base, rounded and cozy, with a mauve accent by default. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Color scheme",
+        "Pastel",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/catppuccin/1.0.0/screenshot.png"
+    },
+    {
+      "id": "civic",
+      "type": "theme",
+      "name": "Civic",
+      "description": "Plain and accessible, like a public service site: a black header with a blue stripe, no card, large bold labels, thick-bordered fields, a yellow focus ring and a solid button. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Accessible",
+        "Government",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/civic/1.0.0/screenshot.png"
+    },
+    {
+      "id": "cupertino",
+      "type": "theme",
+      "name": "Cupertino",
+      "description": "An airy grey page with a soft white card, large rounded fields, a segmented control for the sign-in methods and a tall button, with the system font of the visitor's device. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Minimal",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/cupertino/1.0.0/screenshot.png"
+    },
+    {
+      "id": "dracula",
+      "type": "theme",
+      "name": "Dracula",
+      "description": "The Dracula palette: a deep purple-grey night with pink and purple highlights, a gradient button and a cyan link color. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Color scheme",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/dracula/1.0.0/screenshot.png"
+    },
+    {
+      "id": "fluent",
+      "type": "theme",
+      "name": "Fluent",
+      "description": "A square white card with a soft shadow over a pastel wash, underlined fields and a compact square button on the right, in the spirit of Fluent Design. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Square",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/fluent/1.0.0/screenshot.png"
+    },
+    {
+      "id": "halves",
+      "type": "theme",
+      "name": "Halves",
+      "description": "A split screen without any HTML: the form sits on white in the left half, the right half is your color with rings and a dot grid. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Split screen",
+        "Pattern",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/halves/1.0.0/screenshot.png"
+    },
+    {
+      "id": "material",
+      "type": "theme",
+      "name": "Material",
+      "description": "A big rounded white sheet on a soft grey page, outlined 56px fields and a pill-shaped button on the right, in the spirit of Material Design. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Material",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/material/1.0.0/screenshot.png"
+    },
+    {
+      "id": "midnight",
+      "type": "theme",
+      "name": "Midnight",
+      "description": "A dark sign-in page with a soft glow in your accent color behind a frosted card. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/midnight/1.0.0/screenshot.png"
+    },
+    {
+      "id": "mono",
+      "type": "theme",
+      "name": "Mono",
+      "description": "Pure black and white: a hairline-bordered card over a fading grid, with a white button and nothing else competing for attention. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Monochrome",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/mono/1.0.0/screenshot.png"
+    },
+    {
+      "id": "nord",
+      "type": "theme",
+      "name": "Nord",
+      "description": "The Nord palette: arctic slate greys with a frost-blue accent and a cool aurora glow, calm and low in contrast. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Color scheme",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/nord/1.0.0/screenshot.png"
+    },
+    {
+      "id": "paper",
+      "type": "theme",
+      "name": "Paper",
+      "description": "An editorial look: a cream page, a serif face, small-caps labels over underlined fields and an ink-colored button. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Serif",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/paper/1.0.0/screenshot.png"
+    },
+    {
+      "id": "pixel",
+      "type": "theme",
+      "name": "Pixel",
+      "description": "An 8-bit game menu: a pixel font, stepped borders, a starry night sky, a blinking PRESS START and a chunky button that presses in. It loads the Press Start 2P font from Google Fonts. Organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Retro",
+        "Playful",
+        "Web font"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/pixel/1.0.0/screenshot.png"
+    },
+    {
+      "id": "prism",
+      "type": "theme",
+      "name": "Prism",
+      "description": "A slanted band of color from your accent to cyan and mint across the top of a light page, with a white card on a deep, soft shadow. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Gradient",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/prism/1.0.0/screenshot.png"
+    },
+    {
+      "id": "retro",
+      "type": "theme",
+      "name": "Retro",
+      "description": "A 90s desktop: a grey bevelled window with a title bar on a teal background, sunken fields, tabbed dialogs and a taskbar along the bottom. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Retro",
+        "Playful",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/retro/1.0.0/screenshot.png"
+    },
+    {
+      "id": "sketch",
+      "type": "theme",
+      "name": "Sketch",
+      "description": "Drawn by hand on ruled notebook paper: wobbly ink outlines, a handwritten typeface, wavy underlines and a marker-colored button, all slightly tilted. It loads the Patrick Hand font from Google Fonts. Organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Hand-drawn",
+        "Playful",
+        "Web font"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/sketch/1.0.0/screenshot.png"
+    },
+    {
+      "id": "solarized",
+      "type": "theme",
+      "name": "Solarized",
+      "description": "The Solarized Light palette: warm cream base tones and precise, muted colors, made for long reading, with a blue accent by default. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Color scheme",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/solarized/1.0.0/screenshot.png"
+    },
+    {
+      "id": "split",
+      "type": "theme",
+      "name": "Split",
+      "description": "A brand panel in your color with your own headline next to the sign-in form. It sets the side panel HTML, which organization admins can install on Casdoor 4.20.0 and later; before that only a global admin can.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Side panel"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/split/1.0.1/screenshot.png"
+    },
+    {
+      "id": "terminal",
+      "type": "theme",
+      "name": "Terminal",
+      "description": "An old phosphor screen: glowing monospace text, scanlines with a faint flicker, a blinking prompt and fields that read like a shell. CSS only, so organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Dark",
+        "Retro",
+        "Monospace",
+        "CSS only"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/terminal/1.0.0/screenshot.png"
+    },
+    {
+      "id": "waves",
+      "type": "theme",
+      "name": "Waves",
+      "description": "Friendly and round: three layers of waves in your color roll along the bottom of a light page, under a soft white card with pill-shaped fields and a rounded typeface. The waves are drawn in the CSS itself; the Nunito font comes from Google Fonts. Organization admins can install it.",
+      "categories": [
+        "Sign-in themes"
+      ],
+      "tags": [
+        "Light",
+        "Friendly",
+        "Illustration",
+        "Web font"
+      ],
+      "edition": "",
+      "region": "",
+      "logo": "",
+      "screenshot": "/data/integrations/waves/1.0.0/screenshot.png"
+    }
+  ]
+}
