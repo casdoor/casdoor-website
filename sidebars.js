@@ -485,6 +485,7 @@ module.exports = {
       items: [
         "user/multi-factor-authentication",
         "user/step-up-mfa",
+        "user/adaptive-risk",
         "organization/mfa-items",
         "how-to-connect/totp-authenticator-app",
         {
@@ -497,6 +498,15 @@ module.exports = {
             "provider/mfa/radius",
           ],
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "Device trust",
+      link: {type: "generated-index"},
+      items: [
+        "device-trust/overview",
+        "device-trust/device-agent",
       ],
     },
     {
@@ -589,6 +599,14 @@ module.exports = {
         "session/single-sign-on",
         "session/single-sign-out",
         "session/rp-initiated-logout",
+      ],
+    },
+    {
+      type: "category",
+      label: "Flows",
+      link: {type: "generated-index"},
+      items: [
+        "flows/overview",
       ],
     },
     {
