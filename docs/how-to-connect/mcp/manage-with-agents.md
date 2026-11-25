@@ -27,13 +27,20 @@ Without a license, `tools/list` shows only the application and user tools, and c
 
 ## Connect the agent
 
-Add `https://<your-casdoor>/api/mcp` to the agent as a remote MCP server, for example in Claude Code:
+Agents sign in with OAuth 2.0 and register themselves as a client first, which Casdoor allows only in an organization that turns it on:
 
-```shell
-claude mcp add --transport http casdoor https://door.example.com/api/mcp
-```
+1. In the console, go to **User Management** > **Organizations**, open `built-in` (for an admin of one organization, open that organization), turn on **Enable dynamic client registration**, and save it.
+1. Add `https://<your-casdoor>/api/mcp` to the agent as a remote MCP server, for example in Claude Code:
 
-The agent opens the Casdoor sign-in page. Sign in as an admin and grant the `read` and `write` scopes. For an admin of one organization, use `https://<your-casdoor>/api/mcp/orgs/<organization>` and allow [dynamic client registration](/docs/application/dynamic-client-registration) in that organization. Other agents: [Claude Desktop](/docs/how-to-connect/mcp/connect-claude-desktop), [Cursor](/docs/how-to-connect/mcp/connect-cursor), [VS Code](/docs/how-to-connect/mcp/connect-vscode), [ChatGPT](/docs/how-to-connect/mcp/connect-chatgpt).
+   ```shell
+   claude mcp add --transport http casdoor https://door.example.com/api/mcp
+   ```
+
+   For an admin of one organization, use `https://<your-casdoor>/api/mcp/orgs/<organization>`.
+
+1. The agent opens the Casdoor sign-in page. Sign in as an admin and grant the `read` and `write` scopes.
+
+Until the switch is on, the discovery document of Casdoor doesn't list a registration endpoint, and the agent says that the server doesn't support dynamic client registration. To keep the switch off, create an application for the agent and pass its client ID instead, see [Claude Code](/docs/how-to-connect/mcp/connect-claude-desktop#claude-code). Don't give an agent the client ID and secret of `app-built-in`: the agent then acts as the application with the rights of a global admin, and the [record of what agents changed](#what-agents-changed) can't tell who asked for a change. Other agents: [Claude Desktop](/docs/how-to-connect/mcp/connect-claude-desktop), [Cursor](/docs/how-to-connect/mcp/connect-cursor), [VS Code](/docs/how-to-connect/mcp/connect-vscode), [ChatGPT](/docs/how-to-connect/mcp/connect-chatgpt).
 
 ## Set up an app
 

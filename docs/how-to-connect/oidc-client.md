@@ -217,7 +217,7 @@ https://door.casdoor.com/.well-known/app-example/oauth-authorization-server
 The document of an application differs from the global document in these fields:
 
 - `jwks_uri` points to the JWKS of the application.
-- `registration_endpoint` carries the organization of the application, as in `https://door.casdoor.com/api/oauth/register?organization=<organization-name>`, so that clients that register through [dynamic client registration](/docs/application/dynamic-client-registration) land in that organization. The global document has no `organization` parameter, and registers clients in `built-in`.
+- `registration_endpoint` carries the organization of the application, as in `https://door.casdoor.com/api/oauth/register?organization=<organization-name>`, so that clients that register through [dynamic client registration](/docs/application/dynamic-client-registration) land in that organization. The global document has no `organization` parameter, and registers clients in `built-in`. A document leaves `registration_endpoint` out when the organization doesn't allow dynamic client registration.
 - `scopes_supported` adds the custom **Scopes** of the application.
 
 The global endpoint returns:

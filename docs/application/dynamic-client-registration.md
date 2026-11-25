@@ -50,7 +50,7 @@ Turn DCR on only for organizations that need it. Many setups work with applicati
 
 The registration endpoint is `/api/oauth/register`. It takes an optional `organization` query parameter, the organization in which Casdoor creates the client. The default is `built-in`.
 
-The discovery document advertises the endpoint. Request it:
+The discovery document advertises the endpoint when **Enable dynamic client registration** is on for the organization that clients register in, and leaves `registration_endpoint` out otherwise, so that clients ask for a client ID instead of failing to register. Request it:
 
 ```bash
 curl https://your-casdoor.com/.well-known/openid-configuration
