@@ -575,6 +575,16 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Migration",
+      link: {type: "generated-index"},
+      items: [
+        "migration/overview",
+        "migration/auth0",
+        "migration/keycloak",
+      ],
+    },
+    {
+      type: "category",
       label: "Certificates",
       link: {type: "generated-index"},
       items: [

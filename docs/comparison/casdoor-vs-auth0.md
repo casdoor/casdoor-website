@@ -53,7 +53,7 @@ Casdoor includes an [MCP server](/docs/how-to-connect/mcp/overview) for its own 
 
 ## Moving from Auth0 to Casdoor
 
-1. Export users from Auth0 and import them into Casdoor through the user import in the admin console or the [REST API](/docs/basic/public-api).
+1. Run a [migration from Auth0](/docs/migration/auth0). It reads the tenant through the Management API and adds the users with their Auth0 user IDs and social links, the applications with their client IDs and secrets, the organizations as groups, and the roles. With the password hash export from Auth0 support, users keep their passwords.
 2. During the transition, add Auth0 to Casdoor as an [OAuth provider](/docs/provider/oauth/overview) so users whose passwords have not been migrated can still sign in through Auth0.
 3. Point each application at Casdoor's OIDC discovery URL. Applications that use a standard OIDC library usually need only the issuer, client ID, and client secret changed. See [Standard OIDC client](/docs/how-to-connect/oidc-client).
 

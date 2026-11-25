@@ -68,7 +68,7 @@ Casdoor uses [Casbin](/docs/permission/overview). You choose or write a model (A
 
 You do not have to switch in one step.
 
-1. **Import users.** The [Keycloak syncer](/docs/syncer/Keycloak) reads Keycloak's database tables and maps users, credentials, and groups into Casdoor.
+1. **Import the realm.** A [migration](/docs/migration/keycloak) reads the realm export and adds the users with their IDs and passwords, the groups, the OIDC clients with their client IDs and secrets, the roles, and the realm's signing key with its key ID.
 2. **Run side by side.** Add Keycloak to Casdoor as a [SAML provider](/docs/provider/saml/keycloak) or a custom OIDC provider so existing Keycloak sessions keep working while applications move over.
 3. **Move applications one at a time.** Each application only needs a new issuer URL, client ID, and client secret, because both servers speak standard OIDC and SAML.
 

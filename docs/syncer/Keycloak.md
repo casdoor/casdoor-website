@@ -11,4 +11,4 @@ User data in Keycloak is spread across several tables (`credential`, `keycloak_g
 
 ![edit](/img/syncer/Keycloak/syncer_keycloak_edit.png)
 
-For a complete migration plan, including how password hashes carry over and how to cut over applications, see [Migrating from Keycloak to Casdoor](https://www.casdoor.com/blog/migrate-from-keycloak).
+To move a realm to Casdoor once, with its clients, roles, signing key and all password hashes, use a migration instead. See [Migrate from Keycloak](/docs/migration/keycloak).

@@ -7,6 +7,8 @@ authors: [leo220yuyaodog]
 
 Casdoor stores users in its **user** table. When you adopt Casdoor, you don’t have to migrate users manually—use a **syncer** to import and keep user data in sync from your existing source.
 
+A syncer keeps reading a system that stays in use. To move away from another identity system once, with its applications, roles and password hashes, use a [migration](/docs/migration/overview) instead.
+
 ## Supported syncers
 
 Casdoor supports these syncer types:
