@@ -80,4 +80,4 @@ Choose **Casdoor** if you want a smaller service to operate, login pages your te
 
 You can self-host Casdoor for free, or let us run it: [Casdoor Cloud](https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=docs&utm_content=comparison) gives you a dedicated instance, priced per instance rather than per user.
 
-See also the [comparison overview](/docs/comparison/overview), the side-by-side [Casdoor vs Keycloak table](https://www.casdoor.com/compare/keycloak), and the step-by-step guide to [migrating from Keycloak](https://www.casdoor.com/blog/migrate-from-keycloak).
+See also the [comparison overview](/docs/comparison/overview), the side-by-side [Casdoor vs Keycloak table](https://www.casdoor.com/compare/keycloak), the other [Keycloak alternatives](https://www.casdoor.com/blog/keycloak-alternatives), and the step-by-step guide to [migrating from Keycloak](https://www.casdoor.com/blog/migrate-from-keycloak). If you would rather keep Keycloak, [managed Keycloak hosting](https://www.casdoor.com/blog/managed-keycloak-hosting) compares the hosts.
