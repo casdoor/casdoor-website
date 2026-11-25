@@ -85,7 +85,7 @@ module.exports = {
           position: "left",
         },
         {
-          label: "Password App",
+          label: "Authenticator",
           className: "navbar__item--optional",
           to: "/docs/how-to-connect/totp-authenticator-app",
           position: "left",
