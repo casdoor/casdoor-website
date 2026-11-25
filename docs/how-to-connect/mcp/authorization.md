@@ -89,6 +89,13 @@ Some tools have requirements beyond the scope:
 | `cert:read` | `get_certs`, `get_cert` | View certs, without their private keys |
 | `cert:write` | `add_cert`, `update_cert`, `delete_cert` | Create, modify, and delete certs |
 
+### Migration scopes
+
+| Scope | Mapped Tools | Description |
+|-------|-------------|-------------|
+| `migration:read` | `get_migrations`, `get_migration` | View migrations and their reports |
+| `migration:write` | `plan_migration`, `apply_migration`, `undo_migration` | Preview, apply and undo migrations from other identity systems |
+
 ### Tools that set up apps
 
 | Tool | Scopes |

@@ -88,6 +88,10 @@ Users sign in with their email and password as before, because Casdoor accepts t
 
 The Management API returns at most 1,000 users for one search, so the action searches by creation time and goes on from the last user of each search. A tenant with tens of thousands of users takes several minutes, and longer when Auth0 limits the request rate.
 
+## Use an AI agent instead
+
+With Auth0 Migration installed, an AI agent connected to the [Casdoor MCP server](/docs/how-to-connect/mcp/overview) can create, preview and apply the migration for you. Give it the domain, client ID and client secret of the machine-to-machine application. It calls `plan_migration`, shows you the report, and calls `apply_migration` after you agree. See [Migration tools](/docs/how-to-connect/mcp/tools#migration-tools). The password hash export can't be passed through the agent, and applying again later doesn't add hashes to users that exist already. To use the export, let the agent only preview the migration, then choose the file on the migration page of the admin console and click **Apply** there.
+
 ## Switch the applications
 
 1. In each application, replace the Auth0 domain with your Casdoor address as the OpenID Connect (OIDC) issuer, or set the discovery URL to `https://<your-casdoor-host>/.well-known/openid-configuration`. Keep the client ID and client secret. See [Standard OIDC client](/docs/how-to-connect/oidc-client).

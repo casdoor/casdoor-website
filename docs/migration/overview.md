@@ -58,6 +58,10 @@ You need an admin account of the organization that the users go to. The organiza
 
 The files you choose are sent with each run and are not saved, so choose them again before each **Preview** or **Apply**. Together they can be up to 45 MB. Split a larger export into several migrations.
 
+## Run a migration from an AI agent
+
+An AI agent connected to the [Casdoor MCP server](/docs/how-to-connect/mcp/overview), such as Claude Code, can run the same migration with the [migration tools](/docs/how-to-connect/mcp/tools#migration-tools): `plan_migration` previews it and returns the report, and `apply_migration` applies it once you agree. Ask the agent, for example, to "move my Auth0 tenant to the organization `acme` of Casdoor". The import action has to be installed first, and actions that read export files, such as Keycloak Migration, run from the admin console only.
+
 ## Apply again
 
 A migration only adds objects whose names don't exist yet in the organization. It never changes or deletes an object that exists. You can apply the same migration again, for example right before you switch the applications, to bring over the users who signed up in the other system since the last run.

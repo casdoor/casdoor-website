@@ -129,7 +129,7 @@ In the organization's **Compliance** tab, **Approval of agent changes** holds th
 | Setting | Held calls |
 |---|---|
 | No approval | None |
-| Deletions need approval | The `delete_*` tools |
-| All changes need approval | Every tool that changes something |
+| Deletions need approval | The `delete_*` tools and `undo_migration` |
+| All changes need approval | Every tool that changes something, including `apply_migration` and `undo_migration` |
 
 A held call returns a link to the approval and the agent tells you to get it approved. An admin approves or rejects it on **LLM AI** > **Tool call approvals**; the user who asked for it can't approve it. Once approved, the same call (the same user, agent, tool and arguments) goes through once within an hour. Dry runs and people working in the console are never held.

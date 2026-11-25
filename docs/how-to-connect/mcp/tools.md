@@ -172,6 +172,22 @@ The user tools work like the application tools.
 | `update_user` | `id` and `user` object | Changes a user |
 | `delete_user` | `user` object | Deletes a user |
 
+## Migration tools {#migration-tools}
+
+The migration tools run a [migration](/docs/migration/overview) from another identity system, such as Auth0, through an import action installed from the Marketplace. Use them instead of adding the users, groups, roles and applications of the other system one by one: a migration keeps the user IDs, password hashes, client IDs and client secrets, and can be undone.
+
+| Tool | Arguments | Description |
+|---|---|---|
+| `get_migrations` | `organization` | Lists the migrations of an organization and the import actions installed in it |
+| `get_migration` | `organization`, `name` | Gets the settings, state and report of a migration |
+| `plan_migration` | `organization`, and optionally `name`, `action`, `host`, `clientId`, `clientSecret` and `metadata` | Creates or updates a migration and previews it. Nothing is changed |
+| `apply_migration` | `organization`, `name` | Adds the objects that the preview found. Works only after a successful preview |
+| `undo_migration` | `organization`, `name` | Deletes every object that the migration added |
+
+`plan_migration`, `apply_migration` and `undo_migration` wait up to 50 seconds for the run and return the report as a table. A longer run goes on in the background: call `get_migration` to see its result. Actions that read export files, such as Keycloak Migration, need the files uploaded on the migration page of the admin console, so run them there.
+
+The migration tools are in every edition. An organization admin can use them in their own organization.
+
 ## Other tools
 
 With a commercial or enterprise license, the server also has tools for organizations, providers, roles, permissions, groups, certs and tokens, tools that set up an application for an app and connect third-party sign-in, a dry run of every change, a record of what agents changed, and approval and rollback of the changes. See [Let AI agents manage Casdoor](/docs/how-to-connect/mcp/manage-with-agents). For the scope that each tool requires, see the [scope reference](/docs/how-to-connect/mcp/authorization#complete-scope-reference).
