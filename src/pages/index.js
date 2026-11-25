@@ -222,12 +222,78 @@ function Hero() {
             </a>
           </div>
           <CopyCommand command={DOCKER_COMMAND} />
+          <Endorsements />
         </div>
-        <div className={styles.heroArt}>
-          <ThemedImage sources={art("hero")} alt="" width={1400} height={1045} />
-        </div>
+        <HeroVisual />
       </div>
     </header>
+  );
+}
+
+// Official logos from github.com/cncf/artwork and github.com/ossf/artwork, color on light and white on dark
+function Endorsements() {
+  return (
+    <div className={styles.endorse}>
+      <p className={styles.endorseCaption}>
+        <Translate>Listed in the CNCF Cloud Native Landscape and awarded the OpenSSF Best Practices badge</Translate>
+      </p>
+      <div className={styles.endorseRow}>
+        <a href="https://landscape.cncf.io/?item=provisioning--security-compliance--casdoor" target="_blank" rel="noopener noreferrer">
+          <ThemedImage
+            className={styles.endorseCncf}
+            alt="CNCF Cloud Native Landscape"
+            width={164}
+            height={36}
+            sources={{light: "/img/home/trust/cncf-landscape-horizontal-color.svg", dark: "/img/home/trust/cncf-landscape-horizontal-white.svg"}}
+          />
+        </a>
+        <span className={styles.endorseSep} aria-hidden="true" />
+        <a href="https://www.bestpractices.dev/projects/15254" target="_blank" rel="noopener noreferrer" className={styles.endorseOssf}>
+          <ThemedImage
+            className={styles.endorseOssfLogo}
+            alt="OpenSSF"
+            width={99}
+            height={38}
+            sources={{light: "/img/home/trust/openssf-horizontal-color.svg", dark: "/img/home/trust/openssf-horizontal-white.svg"}}
+          />
+          <img src="/img/home/trust/bestpractices-passing.svg" alt="OpenSSF Best Practices: passing" width={184} height={20} />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// The admin console with a sign-in page in front of it, both screenshots of a real Casdoor. The typing, the button
+// press and the row highlight are CSS animations drawn over the screenshots.
+function HeroVisual() {
+  return (
+    <div className={styles.heroVisual}>
+      <div className={styles.consoleWin}>
+        <Browser url="auth.acme.example.com/applications">
+          <ThemedImage
+            className={styles.shot}
+            sources={consoleShot("applications")}
+            alt={translate({message: "Applications in the Casdoor admin console"})}
+            width={1600}
+            height={944}
+          />
+          <span className={styles.rowScan} aria-hidden="true" />
+        </Browser>
+      </div>
+      <div className={styles.loginCard}>
+        <ThemedImage
+          className={styles.loginImg}
+          sources={consoleShot("login")}
+          alt={translate({message: "A Casdoor sign-in page with Google, GitHub, Microsoft, Apple and Okta"})}
+          width={640}
+          height={760}
+        />
+        <span className={styles.typing} aria-hidden="true">
+          <span className={styles.typingText}>olivia.martin@acme.example.com</span>
+        </span>
+        <span className={styles.press} aria-hidden="true" />
+      </div>
+    </div>
   );
 }
 

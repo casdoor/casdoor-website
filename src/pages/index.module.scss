@@ -184,16 +184,310 @@ html[data-theme="dark"] .page {
   color: var(--h-text);
 }
 
-.heroArt {
-  min-width: 0;
+/* Hero: endorsements */
+
+.endorse {
+  margin-top: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--h-border);
 }
 
-/* the illustration fades into the hero background at its edges */
-.heroArt img {
+.endorseCaption {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--h-text-3);
+}
+
+.endorseRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.endorseCncf {
+  display: block;
+  width: auto;
+  height: 36px;
+}
+
+.endorseSep {
+  width: 1px;
+  height: 32px;
+  background: var(--h-border-strong);
+}
+
+.endorseOssf {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.endorseOssfLogo {
+  display: block;
+  width: auto;
+  height: 38px;
+}
+
+/* Hero: console and sign-in page */
+
+.heroVisual {
+  position: relative;
+  min-width: 0;
+  padding: 0 0 3.5rem 3rem;
+  perspective: 1600px;
+}
+
+.consoleWin {
+  animation: console-in 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+  transform-origin: 50% 100%;
+}
+
+.rowScan {
+  position: absolute;
+  left: 19.4%;
+  width: 78.4%;
+  top: 19.9%;
+  height: 9.9%;
+  border-radius: 4px;
+  background: rgb(90 36 240 / 9%);
+  box-shadow: inset 3px 0 0 rgb(90 36 240 / 70%);
+  pointer-events: none;
+  animation: row-scan 9s ease-in-out 1.6s infinite both;
+}
+
+.loginCard {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 34%;
+  min-width: 170px;
+  overflow: hidden;
+  border: 1px solid var(--h-border-strong);
+  border-radius: 12px;
+  background: var(--h-surface);
+  box-shadow: 0 24px 50px -16px rgb(20 10 60 / 35%);
+  container-type: inline-size;
+  animation:
+    card-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.7s both,
+    float 7s ease-in-out 1.8s infinite;
+}
+
+.loginImg {
   display: block;
   width: 100%;
   height: auto;
-  mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 58%, transparent 100%);
+}
+
+/* the username field of the screenshot, where the demo email is typed */
+.typing {
+  position: absolute;
+  left: 8.1%;
+  top: 31.2%;
+  width: 83.8%;
+  height: 6.8%;
+  display: flex;
+  align-items: center;
+  padding-left: 2.2%;
+  background: #fff;
+  color: #171717;
+  /* stylelint-disable-next-line unit-no-unknown -- container query unit */
+  font-size: 3.33cqw;
+  animation: typing-box 8s linear 1.8s infinite both;
+}
+
+html[data-theme="dark"] .typing {
+  background: #121212;
+  color: #fafafa;
+}
+
+.typingText {
+  position: relative;
+  white-space: nowrap;
+  animation: typing-text 8s steps(30) 1.8s infinite both;
+}
+
+/* the sign-in button of the screenshot */
+.press {
+  position: absolute;
+  left: 7.5%;
+  top: 64.4%;
+  width: 85%;
+  height: 7.7%;
+  /* stylelint-disable-next-line unit-no-unknown -- container query unit */
+  border-radius: 1.6cqw;
+  background: rgb(255 255 255 / 0%);
+  animation: press 8s ease 1.8s infinite both;
+}
+
+html[data-theme="dark"] .press {
+  animation-name: press-dark;
+}
+
+@keyframes console-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) rotateX(14deg) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translate(-24px, 24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@keyframes typing-box {
+  0%,
+  6% {
+    opacity: 0;
+  }
+
+  7%,
+  92% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes typing-text {
+  0%,
+  8% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  42%,
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes press {
+  0%,
+  50% {
+    background: rgb(255 255 255 / 0%);
+    transform: none;
+  }
+
+  54% {
+    background: rgb(255 255 255 / 22%);
+    transform: scale(0.97);
+  }
+
+  60%,
+  100% {
+    background: rgb(255 255 255 / 0%);
+    transform: none;
+  }
+}
+
+@keyframes press-dark {
+  0%,
+  50% {
+    background: rgb(0 0 0 / 0%);
+    transform: none;
+  }
+
+  54% {
+    background: rgb(0 0 0 / 18%);
+    transform: scale(0.97);
+  }
+
+  60%,
+  100% {
+    background: rgb(0 0 0 / 0%);
+    transform: none;
+  }
+}
+
+@keyframes row-scan {
+  0%,
+  12% {
+    top: 19.9%;
+  }
+
+  20%,
+  32% {
+    top: 39.8%;
+  }
+
+  40%,
+  52% {
+    top: 49.9%;
+  }
+
+  60%,
+  72% {
+    top: 69.8%;
+  }
+
+  80%,
+  92% {
+    top: 29.8%;
+  }
+
+  100% {
+    top: 19.9%;
+  }
+}
+
+/* Hero: text comes in first */
+
+.heroCopy > * {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.heroCopy > :nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.heroCopy > :nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.heroCopy > :nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.heroCopy > :nth-child(5) {
+  animation-delay: 0.32s;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* News */
@@ -730,10 +1024,9 @@ html[data-theme="dark"] .customerLogo {
     gap: 1rem;
   }
 
-  .heroArt {
-    width: 100%;
-    max-width: 30rem;
-    margin: 0 auto;
+  .heroVisual {
+    max-width: 40rem;
+    padding-left: 2rem;
   }
 }
 
@@ -840,6 +1133,10 @@ html[data-theme="dark"] .customerLogo {
     flex: 1 1 100%;
   }
 
+  .endorseSep {
+    display: none;
+  }
+
   .deployCard {
     padding: 1.5rem;
   }
@@ -848,6 +1145,18 @@ html[data-theme="dark"] .customerLogo {
 @media (prefers-reduced-motion: reduce) {
   .themeImg {
     transition: none;
+  }
+
+  .heroCopy > *,
+  .consoleWin,
+  .loginCard,
+  .press {
+    animation: none;
+  }
+
+  .rowScan,
+  .typing {
+    display: none;
   }
 }
 

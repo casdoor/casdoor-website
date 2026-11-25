@@ -63,14 +63,16 @@ module.exports = {
           label: "Docs",
         },
         {
-          type: "html",
+          type: "dropdown",
+          label: "Agent Auth",
           position: "left",
-          value: "<a href=\"/docs/how-to-connect/mcp/overview\" class=\"navbar__link navbar__link--mcp\"><img src=\"/img/mcp-icon-light.svg\" alt=\"MCP\" class=\"mcp-nav-icon mcp-nav-icon--light\" width=\"22\" height=\"22\" style=\"vertical-align:middle;margin-right:5px;\"><img src=\"/img/mcp-icon-dark.svg\" alt=\"MCP\" class=\"mcp-nav-icon mcp-nav-icon--dark\" width=\"22\" height=\"22\" style=\"vertical-align:middle;margin-right:5px;\">MCP</a>",
-        },
-        {
-          type: "html",
-          position: "left",
-          value: "<a href=\"/docs/llm/openclaw\" class=\"navbar__link navbar__link--openclaw\"><img src=\"https://openclaw.ai/apple-touch-icon.png\" alt=\"OpenClaw\" width=\"22\" height=\"22\" style=\"border-radius:5px;vertical-align:middle;margin-right:5px;\">OpenClaw</a>",
+          items: [
+            {label: "MCP authorization", to: "/docs/mcp-auth/overview"},
+            {label: "MCP gateway", to: "/docs/how-to-connect/mcp/gateway"},
+            {label: "Casdoor MCP server", to: "/docs/how-to-connect/mcp/overview"},
+            {label: "Agents", to: "/docs/agent/overview"},
+            {label: "OpenClaw", to: "/docs/llm/openclaw"},
+          ],
         },
         {
           href: "/ecosystem",
