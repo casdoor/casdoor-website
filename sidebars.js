@@ -581,6 +581,7 @@ module.exports = {
         "migration/overview",
         "migration/auth0",
         "migration/keycloak",
+        "migration/okta",
       ],
     },
     {

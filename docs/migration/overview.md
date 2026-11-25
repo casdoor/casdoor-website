@@ -13,8 +13,9 @@ Casdoor itself doesn't know how to read Auth0, Keycloak or any other system. Eac
 |---|---|---|
 | Auth0 | Auth0 Migration | The Auth0 Management API, and the password hash export from Auth0 support |
 | Keycloak | Keycloak Migration | The realm export of `kc.sh export` |
+| Okta | Okta Migration | The Okta API with an API token. Passwords are checked with Okta on each user's first sign-in |
 
-See [Migrate from Auth0](/docs/migration/auth0) and [Migrate from Keycloak](/docs/migration/keycloak) for the steps of each source.
+See [Migrate from Auth0](/docs/migration/auth0), [Migrate from Keycloak](/docs/migration/keycloak) and [Migrate from Okta](/docs/migration/okta) for the steps of each source.
 
 ## What a migration keeps
 
@@ -23,7 +24,7 @@ The point of a migration is that the applications and the users don't notice the
 | What | How Casdoor keeps it |
 |---|---|
 | User IDs | Casdoor saves the user with the ID of the other system. The `sub` claim of the tokens that Casdoor issues is that ID, so the data your applications keep per user still matches. |
-| Passwords | Casdoor saves the password hash of the other system. Hashes Casdoor checks itself, such as bcrypt, are used as they are. Other hashes are checked by the action at sign-in. See [Passwords](#passwords). |
+| Passwords | Casdoor saves the password hash of the other system. Hashes Casdoor checks itself, such as bcrypt, are used as they are. Other hashes are checked by the action at sign-in. For a system that never exports hashes, such as Okta, the action checks the password with the other system at the first sign-in. See [Passwords](#passwords). |
 | Authenticator apps | Time-based one-time password (TOTP) secrets are saved with the user, when the other system exports them. |
 | Social sign-in links | The user's ID at Google, GitHub and the other identity providers goes into the matching field of the Casdoor user, so the user who signs in with that provider in Casdoor is the same user. |
 | Client IDs and secrets | The applications get the client ID and client secret they had, so the applications only change the issuer, not their credentials. |
@@ -96,11 +97,11 @@ Undo also deletes the imported users who have signed in to Casdoor since, with e
 An action returns each password hash with a password type:
 
 - **A type Casdoor checks itself**, such as `bcrypt` or `pbkdf2-salt`: Casdoor saves the hash with that type, and the user signs in as before.
-- **`plugin`**: a hash that only the action can check, such as Keycloak's PBKDF2 with SHA-512 or Argon2. Casdoor saves it with the password type `plugin:<action>`. When the user signs in, Casdoor asks the action to check the password. After a successful sign-in, Casdoor saves the password again with the [password type of the organization](/docs/organization/overview), so the action is not needed for that user anymore.
+- **`plugin`**: a hash that only the action can check, such as Keycloak's PBKDF2 with SHA-512 or Argon2, or no hash at all when the action checks the password with the other system, as Okta Migration does. Casdoor saves it with the password type `plugin:<action>`. When the user signs in, Casdoor asks the action to check the password. After a successful sign-in, Casdoor saves the password again with the [password type of the organization](/docs/organization/overview), so the action is not needed for that user anymore.
 
 :::caution
 
-Don't uninstall the migration action while some users still have a password of type `plugin:<action>`. They can't sign in with their password until they reset it.
+Don't uninstall the migration action or delete the migration while some users still have a password of type `plugin:<action>`. The action gets the host and credentials of the organization's latest migration through it when it checks a password. Without them, these users can't sign in with their password until they reset it.
 
 :::
 
@@ -112,7 +113,7 @@ To migrate from a system that has no action yet, write an action of kind `import
 
 - `sdk.RegisterImport` registers a type with a `List` method. Casdoor calls it for each kind of object, one page at a time, with the cursor the previous page returned. `List` returns the objects in the JSON of Casdoor's own API.
 - A `Test` method (`sdk.ImportTester`) checks the connection or the files for **Test connection**.
-- A `VerifyImportedPassword` method (`sdk.ImportedPasswordVerifier`) checks the passwords that `List` returned with the password type `plugin`.
+- A `VerifyImportedPassword` method (`sdk.ImportedPasswordVerifier`) checks the passwords that `List` returned with the password type `plugin`. The request carries the configuration of the migration, so the action can ask the other system.
 
 The migration's **Host**, **Client ID**, **Client secret** and **Metadata** reach the action in its configuration, and the files in each request. The action can only reach the hosts its manifest lists. The Auth0 and Keycloak actions in the repository are complete examples.
 
@@ -120,5 +121,6 @@ The migration's **Host**, **Client ID**, **Client secret** and **Metadata** reac
 
 - [Migrate from Auth0](/docs/migration/auth0)
 - [Migrate from Keycloak](/docs/migration/keycloak)
+- [Migrate from Okta](/docs/migration/okta)
 - [Marketplace](/docs/marketplace/overview)
 - [Syncers](/docs/syncer/overview), to keep users in sync with a system that stays in use
