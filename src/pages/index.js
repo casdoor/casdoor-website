@@ -7,19 +7,26 @@ import CodeBlock from "@theme/CodeBlock";
 import ThemedImage from "@theme/ThemedImage";
 import Translate, {translate} from "@docusaurus/Translate";
 import Icon from "../components/Home/Icon";
-import catalog from "@site/src/data/marketplaceCatalog.json";
 import styles from "./index.module.scss";
 
 const DEMO_URL = "https://door.casdoor.com";
 const GITHUB_URL = "https://github.com/casdoor/casdoor";
-const MARKETPLACE_URL = catalog.url;
 const CLOUD_URL = "https://www.casdoor.com/pricing?utm_source=casdoor.ai&utm_medium=homepage";
-const CLOUD_TRIAL_URL = "https://admin.casdoor.com/signup?from=%2Finstances%2Fnew%3Ftier%3Dbasic%26period%3DPostPaid";
 const SELF_HOSTED_URL = "https://www.casdoor.com/pricing/self-hosted?utm_source=casdoor.ai&utm_medium=homepage";
 const DOCKER_COMMAND = "docker run -p 8000:8000 casbin/casdoor-all-in-one";
 
+// Illustrations and icons drawn with Gemini 3 Pro Image, light and dark versions, in static/img/home/art.
+// Console screenshots are of a local Casdoor with made-up data (the Acme Corp organization), in static/img/home/console.
+function art(name) {
+  return {light: `/img/home/art/${name}-light.webp`, dark: `/img/home/art/${name}-dark.webp`};
+}
+
+function consoleShot(name) {
+  return {light: `/img/home/console/${name}-light.webp`, dark: `/img/home/console/${name}-dark.webp`};
+}
+
 // Sign-in themes from the Casdoor Marketplace; the screenshots are in static/img/home/themes
-const HERO_THEMES = [
+const THEMES = [
   {id: "aurora", name: "Aurora"},
   {id: "split", name: "Split"},
   {id: "midnight", name: "Midnight"},
@@ -28,7 +35,7 @@ const HERO_THEMES = [
   {id: "halves", name: "Halves"},
 ];
 
-// Casdoor users, the same list and evidence as the customer wall of www.casdoor.com (cloudwork casdoor/users.md).
+// Casdoor users, the same evidence as the customer wall of www.casdoor.com (cloudwork casdoor/users.md).
 // These are Casdoor users, not Casbin users: static/data/users.json is the Casbin list.
 const CUSTOMERS = [
   {name: "Daimler Truck", logo: "gh-daimlertruck.png"},
@@ -38,48 +45,20 @@ const CUSTOMERS = [
   {name: "LOTTE", logo: "lotte.png"},
   {name: "NAVER", logo: "si-naver.svg"},
   {name: "CNPC", logo: "cnpc.svg"},
-  {name: "CIMB Niaga", logo: "cimb-niaga.png"},
-  {name: "KOSTAL", logo: "kostal.png"},
   {name: "iFLYTEK", logo: "gh-iflytek.png"},
-  {name: "Sangfor", logo: "gh-sangfor.png"},
   {name: "Percona", logo: "gh-percona.png"},
   {name: "Apache APISIX", logo: "apisix-mark.png"},
   {name: "Apache DolphinScheduler", logo: "si-apachedolphinscheduler.svg"},
   {name: "Apache Pulsar", logo: "si-apachepulsar.svg"},
-  {name: "Apache ShenYu", logo: "shenyu-mark.svg"},
-  {name: "LobeHub", logo: "gh-lobehub.png"},
-  {name: "Qiniu", logo: "gh-qiniu.png"},
-  {name: "OpenCSG", logo: "gh-opencsgs.png"},
-  {name: "AI71", logo: "ai71.png"},
-  {name: "Marlink", logo: "marlink.png"},
-  {name: "Korea NDMI", logo: "ndmi.svg"},
-  {name: "IIM Bangalore", logo: "iimb.svg"},
-  {name: "NFDI4Culture", logo: "gh-nfdi4culture.png"},
-  {name: "ForteBank", logo: "fortebank.png"},
-  {name: "RE/MAX Brasil", logo: "remax.png"},
-  {name: "Cake", logo: "cake.png"},
-  {name: "HSC Securities", logo: "hsc.png"},
-  {name: "Tsinghua FIB Lab", logo: "gh-tsinghua-fib-lab.png"},
-  {name: "OpenList", logo: "gh-openlistteam.png"},
-  {name: "Deepchecks", logo: "gh-deepchecks.png"},
 ];
 
-const SDKS = [
-  {name: "Go", logo: "si-go.svg"},
-  {name: "Java", logo: "si-openjdk.svg", mono: true},
-  {name: "Node.js", logo: "si-nodedotjs.svg"},
-  {name: "Python", logo: "si-python.svg"},
-  {name: "PHP", logo: "si-php.svg"},
-  {name: ".NET", logo: "si-dotnet.svg"},
-  {name: "Rust", logo: "si-rust.svg", mono: true},
-  {name: "React", logo: "si-react.svg"},
-  {name: "Vue", logo: "si-vuedotjs.svg"},
-  {name: "Angular", logo: "si-angular.svg", mono: true},
-  {name: "Next.js", logo: "si-nextdotjs.svg", mono: true},
-  {name: "Flutter", logo: "si-flutter.svg"},
-  {name: "iOS", logo: "si-apple.svg", mono: true},
-  {name: "Android", logo: "si-android.svg"},
+const NEWS = [
+  {date: "Nov 25", text: "Migration tools for Auth0, Keycloak and Okta", to: "/docs/migration/overview"},
+  {date: "Nov 23", text: "No-code Flows for sign-in and tokens", to: "/docs/flows/overview"},
+  {date: "Feb 22", text: "Casdoor joins the CNCF Landscape", to: "/blog/casdoor-joins-cncf-landscape"},
 ];
+
+const SDKS = ["Go", "Java", "Spring Boot", "Node.js", "Python", "PHP", ".NET", "Rust", "Ruby", "React", "Vue", "Angular", "Flutter", "iOS", "Android", "Unity"];
 
 const CODE_SAMPLES = [
   {
@@ -157,17 +136,50 @@ user = sdk.parse_jwt_token(token["access_token"])`,
   },
 ];
 
-function logoUrl(file) {
-  return `/img/home/logos/${file}`;
+function Browser({url, children}) {
+  return (
+    <div className={styles.browser}>
+      <div className={styles.browserBar}>
+        <span className={styles.browserDots} aria-hidden="true"><i /><i /><i /></span>
+        <span className={styles.browserUrl}>{url}</span>
+      </div>
+      <div className={styles.browserBody}>{children}</div>
+    </div>
+  );
 }
 
-function SectionHeader({eyebrow, title, lead, align = "center", invert}) {
+function ConsoleShot({name, url, alt}) {
   return (
-    <div className={clsx(styles.sectionHeader, align === "left" && styles.sectionHeaderLeft, invert && styles.invert)}>
-      {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
-      <h2 className={styles.sectionTitle}>{title}</h2>
-      {lead && <p className={styles.sectionLead}>{lead}</p>}
-    </div>
+    <Browser url={url}>
+      <ThemedImage className={styles.shot} sources={consoleShot(name)} alt={alt} width={1600} height={944} />
+    </Browser>
+  );
+}
+
+function ThemeShot() {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return undefined;
+    }
+    const id = setInterval(() => setActive((i) => (i + 1) % THEMES.length), 3500);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <Browser url="door.casdoor.com/login">
+      <a className={styles.themeLink} href={`${DEMO_URL}/login?theme=${THEMES[active].id}`} target="_blank" rel="noopener noreferrer">
+        {THEMES.map((theme, index) => (
+          <img
+            key={theme.id}
+            src={`/img/home/themes/${theme.id}.webp`}
+            alt={translate({message: "Casdoor sign-in page with the {theme} theme"}, {theme: theme.name})}
+            width={1280}
+            height={800}
+            className={clsx(styles.themeImg, index === active && styles.themeImgActive)}
+          />
+        ))}
+      </a>
+    </Browser>
   );
 }
 
@@ -183,300 +195,204 @@ function CopyCommand({command}) {
     });
   };
   return (
-    <div className={styles.command}>
-      <span className={styles.commandPrompt} aria-hidden="true">$</span>
-      <code className={styles.commandText}>{command}</code>
-      <button
-        type="button"
-        className={styles.commandCopy}
-        onClick={copy}
-        aria-label={translate({message: "Copy the command"})}>
-        <Icon name={copied ? "check" : "copy"} size={16} />
-      </button>
-    </div>
-  );
-}
-
-function ThemeShowcase() {
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  useEffect(() => {
-    if (paused || (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
-      return undefined;
-    }
-    const id = setInterval(() => setActive((i) => (i + 1) % HERO_THEMES.length), 4500);
-    return () => clearInterval(id);
-  }, [paused]);
-
-  const current = HERO_THEMES[active];
-  return (
-    <div className={styles.showcase} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className={styles.browser}>
-        <div className={styles.browserBar}>
-          <span className={styles.browserDots} aria-hidden="true"><i /><i /><i /></span>
-          <span className={styles.browserUrl}>
-            <Icon name="lock" size={12} />
-            door.casdoor.com/login
-          </span>
-        </div>
-        <a
-          className={styles.browserBody}
-          href={`${DEMO_URL}/login?theme=${current.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={translate({message: "Open the sign-in page of the live demo"})}>
-          {HERO_THEMES.map((theme, index) => (
-            <img
-              key={theme.id}
-              src={`/img/home/themes/${theme.id}.webp`}
-              alt={translate({message: "Casdoor sign-in page with the {theme} theme"}, {theme: theme.name})}
-              width={1280}
-              height={800}
-              loading={index === 0 ? "eager" : "lazy"}
-              className={clsx(styles.browserShot, index === active && styles.browserShotActive)}
-            />
-          ))}
-        </a>
-      </div>
-      <div className={styles.themeTabs} role="tablist" aria-label={translate({message: "Sign-in themes"})}>
-        {HERO_THEMES.map((theme, index) => (
-          <button
-            key={theme.id}
-            type="button"
-            role="tab"
-            aria-selected={index === active}
-            className={clsx(styles.themeTab, index === active && styles.themeTabActive)}
-            onClick={() => setActive(index)}>
-            {theme.name}
-          </button>
-        ))}
-      </div>
-    </div>
+    <button type="button" className={styles.command} onClick={copy} title={translate({message: "Copy the command"})}>
+      <code>$ {command}</code>
+      <Icon name={copied ? "check" : "copy"} size={15} />
+    </button>
   );
 }
 
 function Hero() {
   return (
     <header className={styles.hero}>
-      <div className={styles.heroGrid} aria-hidden="true" />
       <div className={clsx("container", styles.heroInner)}>
         <div className={styles.heroCopy}>
-          <Link to="/docs/migration/overview" className={styles.announce}>
-            <span className={styles.announceTag}><Translate>New</Translate></span>
-            <span><Translate>Migrate from Auth0, Keycloak and Okta</Translate></span>
-            <Icon name="arrow-right" size={14} />
-          </Link>
           <h1 className={styles.heroTitle}>
-            <Translate>The open-source identity platform for apps and AI agents</Translate>
+            <Translate>Open-source identity and access management</Translate>
           </h1>
           <p className={styles.heroLead}>
-            <Translate>Casdoor is a single sign-on and IAM platform that you run anywhere. Sign users in with OAuth 2.0, OpenID Connect, SAML, CAS, LDAP and passkeys, connect 70+ identity providers, and secure MCP servers and AI agents, all from one admin console.</Translate>
+            <Translate>Single sign-on, MFA and user management for your applications, your customers and your AI agents. Run Casdoor on your own servers for free, or let us host it for you.</Translate>
           </p>
-          <div className={styles.heroActions}>
+          <div className={styles.actions}>
             <Link className={clsx(styles.btn, styles.btnPrimary)} to="/docs/basic/try-with-docker">
               <Translate>Get started</Translate>
-              <Icon name="arrow-right" size={16} />
             </Link>
-            <a className={clsx(styles.btn, styles.btnSecondary)} href={DEMO_URL} target="_blank" rel="noopener noreferrer">
-              <Translate>Try the live demo</Translate>
-              <Icon name="external" size={15} />
+            <a className={clsx(styles.btn, styles.btnOutline)} href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+              <Translate>Live demo</Translate>
             </a>
           </div>
           <CopyCommand command={DOCKER_COMMAND} />
-          <ul className={styles.heroFacts}>
-            <li><Icon name="scale" size={16} /><Translate>Apache-2.0 license</Translate></li>
-            <li><Icon name="star" size={16} /><Translate>14k+ GitHub stars</Translate></li>
-            <li><Icon name="download" size={16} /><Translate>2.5M+ Docker pulls</Translate></li>
-          </ul>
         </div>
-        <ThemeShowcase />
+        <div className={styles.heroArt}>
+          <ThemedImage sources={art("hero")} alt="" width={1400} height={1045} />
+        </div>
       </div>
     </header>
   );
 }
 
-function Customers() {
-  const items = [...CUSTOMERS, ...CUSTOMERS];
+function News() {
   return (
-    <section className={styles.customers} aria-label={translate({message: "Organizations using Casdoor"})}>
-      <div className="container">
-        <p className={styles.customersTitle}><Translate>Trusted by engineering teams at</Translate></p>
-      </div>
-      <div className={styles.marquee}>
-        <div className={styles.marqueeTrack}>
-          {items.map((customer, index) => (
-            <span key={index} className={styles.customer} aria-hidden={index >= CUSTOMERS.length}>
-              <img src={logoUrl(customer.logo)} alt="" width={28} height={28} loading="lazy" />
-              {customer.name}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const FEATURES = [
-  {
-    icon: "log-in",
-    title: <Translate>Single sign-on</Translate>,
-    text: <Translate>One login for all your apps. Casdoor is an OAuth 2.0 and OpenID Connect provider, a SAML identity provider and a CAS server, with sign-in and sign-up pages that you configure without code.</Translate>,
-    link: "/docs/how-to-connect/overview",
-  },
-  {
-    icon: "globe",
-    title: <Translate>Social and enterprise login</Translate>,
-    text: <Translate>70+ built-in providers, from Google, GitHub, Apple and Microsoft Entra ID to WeCom, DingTalk and Lark, plus any SAML or OIDC identity provider.</Translate>,
-    link: "/docs/provider/oauth/overview",
-  },
-  {
-    icon: "key",
-    title: <Translate>MFA and passkeys</Translate>,
-    text: <Translate>Passwords, email and SMS codes, TOTP, WebAuthn and passkeys, with multi-factor authentication that each organization makes optional or required.</Translate>,
-    link: "/docs/user/multi-factor-authentication",
-  },
-  {
-    icon: "building",
-    title: <Translate>Multi-tenant organizations</Translate>,
-    text: <Translate>Serve many customers or business units from one instance. Each organization has its own users, groups, roles, applications and branding.</Translate>,
-    link: "/docs/organization/overview",
-  },
-  {
-    icon: "refresh",
-    title: <Translate>Directory sync and provisioning</Translate>,
-    text: <Translate>Sync users from LDAP, Active Directory, Okta, Google Workspace and databases, provision them over SCIM 2.0, and serve LDAP and RADIUS to legacy systems.</Translate>,
-    link: "/docs/syncer/overview",
-  },
-  {
-    icon: "shield-check",
-    title: <Translate>Fine-grained authorization</Translate>,
-    text: <Translate>Permissions built on Apache Casbin, with ACL, RBAC and ABAC models and an API that your services call to enforce them.</Translate>,
-    link: "/docs/permission/overview",
-  },
-  {
-    icon: "workflow",
-    title: <Translate>No-code flows</Translate>,
-    text: <Translate>Run checks and actions before and after sign-up, sign-in and token issuance: require MFA, add token claims or call your own service.</Translate>,
-    link: "/docs/flows/overview",
-  },
-  {
-    icon: "activity",
-    title: <Translate>Sessions, tokens and audit</Translate>,
-    text: <Translate>JWT access and ID tokens with refresh and revocation, session management with single sign-out, and a record of every sign-in and admin action.</Translate>,
-    link: "/docs/session/overview",
-  },
-  {
-    icon: "import",
-    title: <Translate>Migration from other providers</Translate>,
-    text: <Translate>Import users, password hashes and applications from Auth0, Keycloak and Okta, and keep client IDs so your apps keep working.</Translate>,
-    link: "/docs/migration/overview",
-  },
-];
-
-function Features() {
-  return (
-    <section className={styles.section}>
-      <div className="container">
-        <SectionHeader
-          eyebrow={<Translate>Platform</Translate>}
-          title={<Translate>Authentication, authorization and user management in one platform</Translate>}
-          lead={<Translate>Everything you need to sign users in and control what they can do, from the first login page to enterprise directories.</Translate>}
-        />
-        <div className={styles.featureGrid}>
-          {FEATURES.map((feature) => (
-            <Link key={feature.link} to={feature.link} className={styles.featureCard}>
-              <span className={styles.featureIcon}><Icon name={feature.icon} size={22} /></span>
-              <h3>{feature.title}</h3>
-              <p>{feature.text}</p>
-              <span className={styles.cardLink}><Translate>Learn more</Translate><Icon name="arrow-right" size={14} /></span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ArchitectureColumn({title, items}) {
-  return (
-    <div className={styles.archColumn}>
-      <p className={styles.archLabel}>{title}</p>
-      <ul>
-        {items.map((item) => (
-          <li key={item.key} className={styles.archItem}>
-            <span className={styles.archItemIcon}>
-              {item.icon ? <Icon name={item.icon} size={18} /> : <img src={item.logo} alt="" width={18} height={18} />}
-            </span>
-            {item.label}
-          </li>
+    <div className={styles.news}>
+      <div className={clsx("container", styles.newsInner)}>
+        <span className={styles.newsLabel}><Translate>News</Translate></span>
+        {NEWS.map((item) => (
+          <Link key={item.to} to={item.to} className={styles.newsItem}>
+            <span className={styles.newsDate}>{item.date}</span>
+            <span className={styles.newsText}>{item.text}</span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
 
-function Architecture() {
-  const apps = [
-    {key: "web", icon: "monitor", label: <Translate>Web applications</Translate>},
-    {key: "mobile", icon: "smartphone", label: <Translate>Mobile and desktop apps</Translate>},
-    {key: "api", icon: "code", label: <Translate>APIs and microservices</Translate>},
-    {key: "selfhosted", icon: "box", label: <Translate>Grafana, GitLab, Nextcloud and more</Translate>},
-    {key: "agents", icon: "bot", label: <Translate>AI agents and MCP clients</Translate>},
-  ];
-  const sources = [
-    {key: "social", icon: "globe", label: <Translate>Google, GitHub, Apple, Microsoft</Translate>},
-    {key: "enterprise", icon: "building", label: <Translate>Entra ID, Okta and any SAML or OIDC IdP</Translate>},
-    {key: "ldap", icon: "network", label: <Translate>LDAP and Active Directory</Translate>},
-    {key: "im", icon: "users", label: <Translate>WeCom, DingTalk and Lark</Translate>},
-    {key: "db", icon: "database", label: <Translate>Your own user database</Translate>},
-  ];
-  const core = [
-    <Translate key="sso">Single sign-on</Translate>,
-    <Translate key="mfa">MFA and passkeys</Translate>,
-    <Translate key="users">Users and organizations</Translate>,
-    <Translate key="perm">Permissions</Translate>,
-    <Translate key="audit">Sessions and audit</Translate>,
+function Customers() {
+  return (
+    <section className={styles.customers}>
+      <div className="container">
+        <p className={styles.customersTitle}>
+          <Translate>Used in production by teams at</Translate>
+        </p>
+        <ul className={styles.customerGrid}>
+          {CUSTOMERS.map((customer) => (
+            <li key={customer.name} className={styles.customer}>
+              <img className={styles.customerLogo} src={`/img/home/logos/${customer.logo}`} alt="" width={26} height={26} loading="lazy" />
+              <span className={styles.customerName}>{customer.name}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function Stats() {
+  const stats = [
+    {value: "14.9k", label: <Translate>GitHub stars</Translate>},
+    {value: "2.5M+", label: <Translate>Docker pulls</Translate>},
+    {value: "300+", label: <Translate>contributors</Translate>},
+    {value: "70+", label: <Translate>built-in identity providers</Translate>},
   ];
   return (
-    <section className={clsx(styles.section, styles.sectionMuted)}>
+    <section className={styles.stats}>
+      <div className={clsx("container", styles.statsInner)}>
+        {stats.map((stat, index) => (
+          <div key={index} className={styles.stat}>
+            <strong>{stat.value}</strong>
+            <span>{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const USE_CASES = [
+  {
+    id: "workforce",
+    icon: "sso",
+    tab: <Translate>Employees and internal apps</Translate>,
+    title: <Translate>One login for every internal app</Translate>,
+    text: <Translate>Connect Grafana, GitLab, Nextcloud and your own applications to Casdoor over OIDC, SAML or CAS. Employees sign in once with their company account and a second factor, and reach every app from there.</Translate>,
+    capabilities: [
+      <Translate key="1">OAuth 2.0 and OpenID Connect provider</Translate>,
+      <Translate key="2">SAML 2.0 identity provider and CAS server</Translate>,
+      <Translate key="3">LDAP and RADIUS for legacy systems and VPNs</Translate>,
+      <Translate key="4">Sync from Active Directory, Okta and Google Workspace</Translate>,
+      <Translate key="5">TOTP, passkeys and step-up MFA</Translate>,
+      <Translate key="6">Session management and single sign-out</Translate>,
+    ],
+    link: {label: <Translate>Connect an application</Translate>, to: "/docs/how-to-connect/overview"},
+    visual: <ConsoleShot name="applications" url="auth.acme.example.com/applications" alt="Applications in the Casdoor admin console" />,
+  },
+  {
+    id: "customers",
+    icon: "customers",
+    tab: <Translate>Customer sign-up and sign-in</Translate>,
+    title: <Translate>Sign-up and sign-in pages that match your brand</Translate>,
+    text: <Translate>Let customers sign in with Google, Apple, GitHub, WeChat or a one-time code, and design the pages in the admin console: logo, colors, fields and the methods each application offers.</Translate>,
+    capabilities: [
+      <Translate key="1">70+ social and enterprise identity providers</Translate>,
+      <Translate key="2">Passwordless sign-in with email, SMS and passkeys</Translate>,
+      <Translate key="3">Configurable sign-up fields and invitation codes</Translate>,
+      <Translate key="4">Captcha and IP allow lists</Translate>,
+      <Translate key="5">Sign-in themes from the Marketplace</Translate>,
+      <Translate key="6">Products, payments and subscriptions</Translate>,
+    ],
+    link: {label: <Translate>Customize the sign-in page</Translate>, to: "/docs/application/ui-customization"},
+    visual: <ThemeShot />,
+  },
+  {
+    id: "b2b",
+    icon: "organizations",
+    tab: <Translate>B2B and multi-tenant SaaS</Translate>,
+    title: <Translate>Give every customer its own organization</Translate>,
+    text: <Translate>One Casdoor serves many tenants. Each organization has its own users, groups, roles, applications and sign-in providers, and its own administrators who manage them without seeing anyone else.</Translate>,
+    capabilities: [
+      <Translate key="1">Organizations with their own admins</Translate>,
+      <Translate key="2">Enterprise SSO per organization over SAML or OIDC</Translate>,
+      <Translate key="3">SCIM 2.0 provisioning</Translate>,
+      <Translate key="4">Groups, roles and Casbin permissions</Translate>,
+      <Translate key="5">Webhooks and a REST API</Translate>,
+      <Translate key="6">Records of every sign-in and change</Translate>,
+    ],
+    link: {label: <Translate>Organizations</Translate>, to: "/docs/organization/overview"},
+    visual: <ConsoleShot name="users" url="auth.acme.example.com/users" alt="Users of an organization in the Casdoor admin console" />,
+  },
+  {
+    id: "agents",
+    icon: "agents",
+    tab: <Translate>AI agents and MCP</Translate>,
+    title: <Translate>Put AI agents and MCP servers behind your login</Translate>,
+    text: <Translate>Publish MCP servers through the Casdoor gateway so that Claude, ChatGPT, Cursor and VS Code users sign in with their company account, and choose which tools each server exposes. Casdoor is also an MCP server itself and an OAuth 2.1 authorization server for your own.</Translate>,
+    capabilities: [
+      <Translate key="1">MCP gateway with per-user access</Translate>,
+      <Translate key="2">Tool allow lists and token revocation</Translate>,
+      <Translate key="3">OAuth 2.1 with dynamic client registration and PKCE</Translate>,
+      <Translate key="4">Agent identities in each organization</Translate>,
+      <Translate key="5">Manage Casdoor from any MCP client</Translate>,
+      <Translate key="6">Agent traces with OpenClaw</Translate>,
+    ],
+    link: {label: <Translate>MCP gateway guide</Translate>, to: "/docs/how-to-connect/mcp/gateway"},
+    visual: <ConsoleShot name="mcp-server" url="auth.acme.example.com/servers/acme/tickets" alt="An MCP server in the Casdoor admin console" />,
+  },
+];
+
+function UseCases() {
+  const [active, setActive] = useState(USE_CASES[0].id);
+  const current = USE_CASES.find((c) => c.id === active);
+  return (
+    <section className={styles.section}>
       <div className="container">
-        <SectionHeader
-          eyebrow={<Translate>How it works</Translate>}
-          title={<Translate>One identity layer between your apps and your users</Translate>}
-          lead={<Translate>Your applications hand sign-in to Casdoor over standard protocols. Casdoor checks the user against the identity sources you connect and returns a verified identity.</Translate>}
-        />
-        <div className={styles.arch}>
-          <ArchitectureColumn title={<Translate>Your applications</Translate>} items={apps} />
-          <div className={styles.archLink} aria-hidden="true">
-            <span>OIDC</span><span>SAML</span><span>CAS</span><span>LDAP</span>
+        <h2 className={styles.sectionTitle}><Translate>Built for every kind of login</Translate></h2>
+        <div className={styles.useCases}>
+          <div className={styles.useCaseTabs} role="tablist" aria-label={translate({message: "Use cases"})}>
+            {USE_CASES.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                role="tab"
+                aria-selected={c.id === active}
+                className={clsx(styles.useCaseTab, c.id === active && styles.useCaseTabActive)}
+                onClick={() => setActive(c.id)}>
+                <ThemedImage sources={art(c.icon)} alt="" width={44} height={44} />
+                <span>{c.tab}</span>
+              </button>
+            ))}
           </div>
-          <div className={styles.archCore}>
-            <ThemedImage
-              className={styles.archLogo}
-              alt="Casdoor"
-              width={157}
-              height={34}
-              sources={{
-                light: "https://cdn.casbin.org/img/casdoor-logo_1185x256.png",
-                dark: "https://cdn.casbin.org/img/casdoor-logo_1185x256_dark.png",
-              }}
-            />
-            <ul>
-              {core.map((item, index) => (
-                <li key={index}><Icon name="check" size={15} />{item}</li>
-              ))}
-            </ul>
+          <div className={styles.useCasePanel} role="tabpanel">
+            <div className={styles.useCaseText}>
+              <h3>{current.title}</h3>
+              <p>{current.text}</p>
+              <p className={styles.capTitle}><Translate>Key capabilities</Translate></p>
+              <ul className={styles.caps}>
+                {current.capabilities.map((cap, index) => <li key={index}>{cap}</li>)}
+              </ul>
+              <Link className={styles.more} to={current.link.to}>{current.link.label} <Icon name="arrow-right" size={14} /></Link>
+            </div>
+            <div className={styles.useCaseVisual}>{current.visual}</div>
           </div>
-          <div className={styles.archLink} aria-hidden="true">
-            <span>OAuth</span><span>SAML</span><span>LDAP</span><span>SCIM</span>
-          </div>
-          <ArchitectureColumn title={<Translate>Identity sources</Translate>} items={sources} />
-        </div>
-        <div className={styles.protocols}>
-          {["OAuth 2.0 / 2.1", "OpenID Connect", "SAML 2.0", "CAS 3.0", "LDAP", "SCIM 2.0", "RADIUS", "WebAuthn", "TOTP", "JWT", "MCP"].map((protocol) => (
-            <span key={protocol} className={styles.protocol}>{protocol}</span>
-          ))}
         </div>
       </div>
     </section>
@@ -486,44 +402,21 @@ function Architecture() {
 function Developers() {
   const [active, setActive] = useState(CODE_SAMPLES[0].id);
   const sample = CODE_SAMPLES.find((s) => s.id === active);
-  const steps = [
-    {
-      title: <Translate>Run Casdoor</Translate>,
-      text: <Translate>Start it with Docker, Kubernetes or a single binary, on MySQL, PostgreSQL, SQL Server, Oracle or SQLite.</Translate>,
-    },
-    {
-      title: <Translate>Create an application</Translate>,
-      text: <Translate>Pick its sign-in methods and providers in the admin console and copy the client ID and secret.</Translate>,
-    },
-    {
-      title: <Translate>Connect your app</Translate>,
-      text: <Translate>Use any OpenID Connect or SAML library, or a Casdoor SDK, to send users to Casdoor and read the token.</Translate>,
-    },
-  ];
   return (
-    <section className={styles.section}>
+    <section className={clsx(styles.section, styles.sectionAlt)}>
       <div className={clsx("container", styles.devGrid)}>
         <div>
-          <SectionHeader
-            align="left"
-            eyebrow={<Translate>Developers</Translate>}
-            title={<Translate>Add sign-in to your app in minutes</Translate>}
-            lead={<Translate>Casdoor speaks the standards your stack already supports, and ships SDKs for the languages and frameworks you use.</Translate>}
-          />
-          <ol className={styles.steps}>
-            {steps.map((step, index) => (
-              <li key={index}>
-                <span className={styles.stepNumber}>{index + 1}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <div className={styles.inlineLinks}>
-            <Link to="/docs/how-to-connect/sdk"><Translate>Browse all SDKs</Translate><Icon name="arrow-right" size={14} /></Link>
-            <a href={`${DEMO_URL}/swagger/`} target="_blank" rel="noopener noreferrer"><Translate>REST API reference</Translate><Icon name="arrow-right" size={14} /></a>
+          <h2 className={styles.sectionTitle}><Translate>Works with the stack you already have</Translate></h2>
+          <p className={styles.sectionText}>
+            <Translate>Casdoor speaks OpenID Connect, OAuth 2.0, SAML and CAS, so most frameworks and off-the-shelf apps connect with their existing login settings. For everything else there are SDKs and a REST API.</Translate>
+          </p>
+          <p className={styles.sdkList}>
+            <strong><Translate>SDKs:</Translate></strong> {SDKS.join(", ")}
+          </p>
+          <div className={styles.links}>
+            <Link to="/docs/how-to-connect/sdk"><Translate>SDK documentation</Translate> <Icon name="arrow-right" size={14} /></Link>
+            <a href={`${DEMO_URL}/swagger/`} target="_blank" rel="noopener noreferrer"><Translate>REST API reference</Translate> <Icon name="arrow-right" size={14} /></a>
+            <Link to="/ecosystem"><Translate>Integrations</Translate> <Icon name="arrow-right" size={14} /></Link>
           </div>
         </div>
         <div className={styles.codePanel}>
@@ -545,12 +438,49 @@ function Developers() {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+function Deploy() {
+  const options = [
+    {
+      icon: "selfhosted",
+      name: <Translate>Self-hosted</Translate>,
+      note: <Translate>Free, Apache-2.0</Translate>,
+      text: <Translate>One Go binary and a SQL database: MySQL, PostgreSQL, SQL Server, Oracle or SQLite. Deploy it with Docker, Helm, the Kubernetes operator or Terraform. No limit on users or applications.</Translate>,
+      cta: <Translate>Installation guide</Translate>,
+      href: "/docs/basic/server-installation",
+    },
+    {
+      icon: "cloud",
+      name: <Translate>Casdoor Cloud</Translate>,
+      note: <Translate>From $9 per month</Translate>,
+      text: <Translate>A dedicated Casdoor instance that we host and keep upgraded, with no per-user fees. New accounts get $4 in credit to try it.</Translate>,
+      cta: <Translate>See Cloud pricing</Translate>,
+      href: CLOUD_URL,
+    },
+    {
+      icon: "enterprise",
+      name: <Translate>Commercial and Enterprise</Translate>,
+      note: <Translate>Annual license</Translate>,
+      text: <Translate>Self-hosted editions with adaptive risk, provisioning, audit and compliance features, and support from the team that builds Casdoor.</Translate>,
+      cta: <Translate>Compare editions</Translate>,
+      href: SELF_HOSTED_URL,
+    },
+  ];
+  return (
+    <section className={styles.section}>
       <div className="container">
-        <div className={styles.sdkRow}>
-          {SDKS.map((sdk) => (
-            <Link key={sdk.name} to="/docs/how-to-connect/sdk" className={styles.sdk}>
-              <img src={logoUrl(sdk.logo)} alt="" width={22} height={22} className={clsx(sdk.mono && styles.mono)} loading="lazy" />
-              {sdk.name}
+        <h2 className={styles.sectionTitle}><Translate>Run it your way</Translate></h2>
+        <div className={styles.deployGrid}>
+          {options.map((o, index) => (
+            <Link key={index} to={o.href} className={styles.deployCard}>
+              <ThemedImage sources={art(o.icon)} alt="" width={96} height={96} />
+              <h3>{o.name}</h3>
+              <p className={styles.deployNote}>{o.note}</p>
+              <p>{o.text}</p>
+              <span className={styles.more}>{o.cta} <Icon name="arrow-right" size={14} /></span>
             </Link>
           ))}
         </div>
@@ -559,156 +489,7 @@ function Developers() {
   );
 }
 
-const AGENT_FEATURES = [
-  {
-    icon: "bot",
-    title: <Translate>Built-in MCP server</Translate>,
-    text: <Translate>Manage applications, users and permissions from Claude, ChatGPT, Cursor or VS Code. Every tool call is authorized with scopes.</Translate>,
-    link: "/docs/how-to-connect/mcp/overview",
-  },
-  {
-    icon: "key",
-    title: <Translate>OAuth 2.1 for your MCP servers</Translate>,
-    text: <Translate>Use Casdoor as the authorization server of your own MCP servers, with dynamic client registration, PKCE and resource indicators.</Translate>,
-    link: "/docs/mcp-auth/overview",
-  },
-  {
-    icon: "shield-check",
-    title: <Translate>MCP gateway</Translate>,
-    text: <Translate>Publish MCP servers behind single sign-on, with per-user access, a tool allowlist, tokens bound to each server and instant revocation.</Translate>,
-    link: "/docs/how-to-connect/mcp/gateway",
-  },
-  {
-    icon: "eye",
-    title: <Translate>Agent observability</Translate>,
-    text: <Translate>Collect the traces, metrics and logs of OpenClaw agents over OpenTelemetry and see what each agent did next to the user it acted for.</Translate>,
-    link: "/docs/llm/openclaw",
-  },
-];
-
-function Agents() {
-  return (
-    <section className={clsx(styles.section, styles.sectionDark)}>
-      <div className={clsx("container", styles.agentGrid)}>
-        <div>
-          <SectionHeader
-            align="left"
-            invert
-            eyebrow={<Translate>AI agents and MCP</Translate>}
-            title={<Translate>Identity for AI agents, built in</Translate>}
-            lead={<Translate>Agents need the same controls as people: who they are, who they act for and what they may call. Casdoor brings single sign-on, scopes and audit to the Model Context Protocol.</Translate>}
-          />
-          <div className={styles.agentCards}>
-            {AGENT_FEATURES.map((feature) => (
-              <Link key={feature.link} to={feature.link} className={styles.agentCard}>
-                <span className={styles.agentIcon}><Icon name={feature.icon} size={20} /></span>
-                <div>
-                  <h3>{feature.title}</h3>
-                  <p>{feature.text}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className={styles.agentCode}>
-          <p className={styles.agentCodeTitle}>
-            <Translate>Connect an MCP client to Casdoor</Translate>
-          </p>
-          <div className={styles.darkCode}>
-            <div className={styles.darkCodeTitle}>mcp.json</div>
-            <pre><code>{"{\n  "}<span className={styles.tokKey}>&quot;mcpServers&quot;</span>{": {\n    "}<span className={styles.tokKey}>&quot;casdoor&quot;</span>{": {\n      "}<span className={styles.tokKey}>&quot;url&quot;</span>{": "}<span className={styles.tokStr}>&quot;https://auth.example.com/api/mcp&quot;</span>{"\n    }\n  }\n}"}</code></pre>
-          </div>
-          <p className={styles.agentCodeNote}>
-            <Translate>The client registers itself, the user signs in with Casdoor and approves the scopes, and the client receives a token bound to the server.</Translate>
-          </p>
-          <div className={styles.agentClients}>
-            {["Claude", "ChatGPT", "Cursor", "VS Code", "DeepSeek Harness"].map((client) => (
-              <span key={client}>{client}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Customize() {
-  const integrations = catalog.integrations;
-  const apps = integrations.filter((i) => i.type === "app" || i.type === "provider");
-  const themeCount = integrations.filter((i) => i.type === "theme").length;
-  const themes = ["midnight", "split", "aurora", "prism"].map((id) => HERO_THEMES.find((t) => t.id === id));
-  return (
-    <section className={clsx(styles.section, styles.sectionMuted)}>
-      <div className="container">
-        <SectionHeader
-          eyebrow={<Translate>Customization and Marketplace</Translate>}
-          title={<Translate>Your brand on every sign-in page</Translate>}
-          lead={
-            <Translate values={{count: integrations.length, themes: themeCount}}>
-              {"Set the logo, colors, fields and sign-in methods of each application without code, or install any of {count} integrations from the Casdoor Marketplace in one click, including {themes} sign-in themes."}
-            </Translate>
-          }
-        />
-        <div className={styles.themeGrid}>
-          {themes.map((theme) => (
-            <a
-              key={theme.id}
-              className={styles.themeCard}
-              href={`${MARKETPLACE_URL}/integrations/${theme.id}/`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src={`/img/home/themes/${theme.id}.webp`} alt="" width={1280} height={800} loading="lazy" />
-              <span>{theme.name}</span>
-            </a>
-          ))}
-        </div>
-        <div className={styles.integrations}>
-          {apps.map((integration) => (
-            <a
-              key={integration.id}
-              className={styles.integration}
-              href={`${MARKETPLACE_URL}/integrations/${integration.id}/`}
-              target="_blank"
-              rel="noopener noreferrer">
-              {integration.logo && <img src={`${MARKETPLACE_URL}${integration.logo}`} alt="" width={20} height={20} loading="lazy" />}
-              {integration.name}
-            </a>
-          ))}
-        </div>
-        <div className={styles.centerActions}>
-          <a className={clsx(styles.btn, styles.btnSecondary)} href={MARKETPLACE_URL} target="_blank" rel="noopener noreferrer">
-            <Translate>Browse the Marketplace</Translate>
-            <Icon name="external" size={15} />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function OpenSource() {
-  const points = [
-    {
-      icon: "scale",
-      title: <Translate>Apache-2.0, no per-user fees</Translate>,
-      text: <Translate>Self-host Casdoor for free, for any number of users and applications, with the full source code on GitHub.</Translate>,
-    },
-    {
-      icon: "database",
-      title: <Translate>Your data, your database</Translate>,
-      text: <Translate>Users and settings stay in a database you control: MySQL, PostgreSQL, SQL Server, Oracle, SQLite and more.</Translate>,
-    },
-    {
-      icon: "server",
-      title: <Translate>Runs anywhere</Translate>,
-      text: <Translate>One Go binary with a React console. Deploy with Docker, Helm, the Kubernetes operator or Terraform, on any cloud or on premises.</Translate>,
-    },
-    {
-      icon: "shield-check",
-      title: <Translate>Built in the open</Translate>,
-      text: <Translate>300+ contributors, public code review and an OpenSSF Best Practices badge, with a published security policy.</Translate>,
-    },
-  ];
   const comparisons = [
     {name: "Keycloak", to: "/docs/comparison/casdoor-vs-keycloak"},
     {name: "Auth0", to: "/docs/comparison/casdoor-vs-auth0"},
@@ -716,116 +497,38 @@ function OpenSource() {
     {name: "Logto", to: "/docs/comparison/casdoor-vs-logto"},
   ];
   return (
-    <section className={styles.section}>
-      <div className="container">
-        <SectionHeader
-          eyebrow={<Translate>Open source</Translate>}
-          title={<Translate>Own your identity stack, with no lock-in</Translate>}
-        />
-        <div className={styles.pointGrid}>
-          {points.map((point, index) => (
-            <div key={index} className={styles.point}>
-              <span className={styles.pointIcon}><Icon name={point.icon} size={20} /></span>
-              <h3>{point.title}</h3>
-              <p>{point.text}</p>
-            </div>
-          ))}
-        </div>
-        <div className={styles.trustRow}>
-          <a className={styles.trustBadge} href="https://www.bestpractices.dev/projects/15254" target="_blank" rel="noopener noreferrer">
-            <Icon name="shield-check" size={16} />
-            <span>OpenSSF Best Practices</span>
-            <strong>Passing</strong>
-          </a>
-          <Link className={styles.trustBadge} to="/blog/casdoor-joins-cncf-landscape">
-            <img src="https://landscape.cncf.io/images/logo_header.svg" alt="" height={18} />
-            <span><Translate>CNCF Cloud Native Landscape</Translate></span>
-          </Link>
-          <div className={styles.compare}>
-            <span><Translate>Compare Casdoor with</Translate></span>
-            {comparisons.map((c) => (
-              <Link key={c.name} to={c.to}>{c.name}</Link>
-            ))}
+    <section className={clsx(styles.section, styles.sectionAlt)}>
+      <div className={clsx("container", styles.osGrid)}>
+        <ThemedImage className={styles.osArt} sources={art("opensource")} alt="" width={220} height={220} />
+        <div>
+          <h2 className={styles.sectionTitle}><Translate>Open source, Apache-2.0</Translate></h2>
+          <p className={styles.sectionText}>
+            <Translate values={{
+              github: <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>,
+            }}>
+              {"The whole open-source edition is on {github} under the Apache-2.0 license, with no limit on users. Casdoor holds the OpenSSF Best Practices badge and is listed in the CNCF Cloud Native Landscape."}
+            </Translate>
+          </p>
+          <div className={styles.badges}>
+            <a href="https://www.bestpractices.dev/projects/15254" target="_blank" rel="noopener noreferrer">
+              <img src="https://www.bestpractices.dev/projects/15254/badge" alt="OpenSSF Best Practices" height={20} loading="lazy" />
+            </a>
+            <a href="https://github.com/casdoor/casdoor/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.shields.io/github/license/casdoor/casdoor?style=flat" alt="License" height={20} loading="lazy" />
+            </a>
+            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+              <img src="https://img.shields.io/github/stars/casdoor/casdoor?style=flat" alt="GitHub stars" height={20} loading="lazy" />
+            </a>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Deploy() {
-  const plans = [
-    {
-      icon: "server",
-      name: <Translate>Self-hosted</Translate>,
-      price: <Translate>Free and open source</Translate>,
-      text: <Translate>Run the open-source edition on your own servers, with every protocol, provider and the MCP server included.</Translate>,
-      items: [
-        <Translate key="1">Unlimited users and applications</Translate>,
-        <Translate key="2">Docker, Kubernetes and binaries</Translate>,
-        <Translate key="3">Community support on GitHub and Discord</Translate>,
-      ],
-      cta: <Translate>Install Casdoor</Translate>,
-      href: "/docs/basic/server-installation",
-    },
-    {
-      icon: "cloud",
-      name: <Translate>Casdoor Cloud</Translate>,
-      price: <Translate>From $9 per month</Translate>,
-      text: <Translate>A dedicated Casdoor instance that we host and keep upgraded, with no per-user fees.</Translate>,
-      items: [
-        <Translate key="1">A dedicated instance, not a shared tenant</Translate>,
-        <Translate key="2">Pay as you go, monthly or yearly</Translate>,
-        <Translate key="3">$4 in free credit to start</Translate>,
-      ],
-      cta: <Translate>Start a free trial</Translate>,
-      href: CLOUD_TRIAL_URL,
-      secondary: {label: <Translate>See pricing</Translate>, href: CLOUD_URL},
-      featured: true,
-    },
-    {
-      icon: "briefcase",
-      name: <Translate>Commercial and Enterprise</Translate>,
-      price: <Translate>Annual license</Translate>,
-      text: <Translate>Self-hosted editions with advanced security and compliance features, priority support and upgrades from the Casdoor team.</Translate>,
-      items: [
-        <Translate key="1">Adaptive risk and advanced MFA policies</Translate>,
-        <Translate key="2">Provisioning, audit and compliance tools</Translate>,
-        <Translate key="3">Priority support from the maintainers</Translate>,
-      ],
-      cta: <Translate>Compare editions</Translate>,
-      href: SELF_HOSTED_URL,
-    },
-  ];
-  return (
-    <section className={clsx(styles.section, styles.sectionMuted)}>
-      <div className="container">
-        <SectionHeader
-          eyebrow={<Translate>Deployment</Translate>}
-          title={<Translate>Run it yourself, or let us run it for you</Translate>}
-        />
-        <div className={styles.planGrid}>
-          {plans.map((plan, index) => (
-            <div key={index} className={clsx(styles.plan, plan.featured && styles.planFeatured)}>
-              <span className={styles.planIcon}><Icon name={plan.icon} size={20} /></span>
-              <h3>{plan.name}</h3>
-              <p className={styles.planPrice}>{plan.price}</p>
-              <p className={styles.planText}>{plan.text}</p>
-              <ul>
-                {plan.items.map((item, i) => (
-                  <li key={i}><Icon name="check" size={16} />{item}</li>
-                ))}
-              </ul>
-              <div className={styles.planActions}>
-                <Link className={clsx(styles.btn, plan.featured ? styles.btnPrimary : styles.btnSecondary)} to={plan.href}>
-                  {plan.cta}
-                </Link>
-                {plan.secondary && (
-                  <Link className={styles.textLink} to={plan.secondary.href}>{plan.secondary.label}</Link>
-                )}
-              </div>
-            </div>
-          ))}
+          <p className={styles.compare}>
+            <Translate>Compare Casdoor with</Translate>{" "}
+            {comparisons.map((c, index) => (
+              <React.Fragment key={c.name}>
+                {index > 0 && ", "}
+                <Link to={c.to}>{c.name}</Link>
+              </React.Fragment>
+            ))}
+          </p>
         </div>
       </div>
     </section>
@@ -834,28 +537,26 @@ function Deploy() {
 
 function FinalCta() {
   return (
-    <section className={styles.finalCta}>
+    <section className={styles.final}>
       <div className={clsx("container", styles.finalInner)}>
-        <h2><Translate>Start building with Casdoor</Translate></h2>
-        <p><Translate>Run Casdoor locally in one command and connect your first app in minutes.</Translate></p>
-        <div className={styles.heroActions}>
-          <Link className={clsx(styles.btn, styles.btnLight)} to="/docs/basic/try-with-docker">
+        <div>
+          <h2 className={styles.sectionTitle}><Translate>Try Casdoor</Translate></h2>
+          <p className={styles.sectionText}>
+            <Translate values={{
+              discord: <a href="https://discord.gg/5rPsrAzK7S" target="_blank" rel="noopener noreferrer">Discord</a>,
+            }}>
+              {"Look around the live demo, or start your own instance with Docker. Questions are welcome on {discord}."}
+            </Translate>
+          </p>
+        </div>
+        <div className={styles.actions}>
+          <Link className={clsx(styles.btn, styles.btnPrimary)} to="/docs/basic/try-with-docker">
             <Translate>Get started</Translate>
-            <Icon name="arrow-right" size={16} />
           </Link>
-          <a className={clsx(styles.btn, styles.btnGhost)} href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-            <Icon name="star" size={16} />
-            <Translate>Star on GitHub</Translate>
+          <a className={clsx(styles.btn, styles.btnOutline)} href={DEMO_URL} target="_blank" rel="noopener noreferrer">
+            <Translate>Live demo</Translate>
           </a>
         </div>
-        <p className={styles.finalNote}>
-          <Translate values={{
-            discord: <a href="https://discord.gg/5rPsrAzK7S" target="_blank" rel="noopener noreferrer">Discord</a>,
-            sponsor: <a href="mailto:admin@casdoor.org"><Translate>sponsor the project</Translate></a>,
-          }}>
-            {"Questions? Join the community on {discord}, or {sponsor}."}
-          </Translate>
-        </p>
       </div>
     </section>
   );
@@ -902,22 +603,21 @@ const structuredData = {
 export default function Home() {
   return (
     <Layout
-      title="Open-Source IAM and SSO Platform for Apps and AI Agents"
-      description="Casdoor is an open-source identity and access management (IAM) and single sign-on (SSO) platform: OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, passkeys and MFA, 70+ identity providers, and a built-in MCP server for AI agents.">
+      title="Open-Source Identity and Access Management (IAM) and SSO"
+      description="Casdoor is an open-source identity and access management (IAM) and single sign-on (SSO) platform: OAuth 2.0, OIDC, SAML, CAS, LDAP, SCIM, passkeys and MFA, 70+ identity providers, and an MCP gateway for AI agents.">
       <Head>
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Head>
       <div className={styles.page}>
         <Hero />
+        <News />
         <main>
           <Customers />
-          <Features />
-          <Architecture />
+          <Stats />
+          <UseCases />
           <Developers />
-          <Agents />
-          <Customize />
-          <OpenSource />
           <Deploy />
+          <OpenSource />
           <FinalCta />
         </main>
       </div>
