@@ -84,6 +84,7 @@ module.exports = {
         },
         {
           label: "Password App",
+          className: "navbar__item--optional",
           to: "/docs/how-to-connect/totp-authenticator-app",
           position: "left",
         },
@@ -94,6 +95,7 @@ module.exports = {
         },
         {
           label: "Help",
+          className: "navbar__item--optional",
           to: "/help",
           position: "left",
         },

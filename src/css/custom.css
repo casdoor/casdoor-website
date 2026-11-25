@@ -365,3 +365,68 @@ html[data-theme="dark"] .theme-doc-sidebar-container div[title="Expand sidebar"]
 button.theme-back-to-top-button {
   bottom: 5.5rem;
 }
+
+/* navbar: one line per item, and the logo never shrinks under the items */
+.navbar__brand {
+  flex-shrink: 0;
+}
+
+.navbar__item,
+.navbar__link {
+  white-space: nowrap;
+}
+
+.navbar__items > .navbar__item {
+  flex-shrink: 0;
+}
+
+/* between the mobile menu (996px) and wide screens the items do not fit: shrink the search box to its icon, then
+   drop the community icons, the demo button (it is in the homepage hero) and the least used links; all of them stay
+   in the mobile menu and the footer */
+@media (min-width: 997px) and (max-width: 1760px) {
+  .navbar__item {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+
+  .navbar .DocSearch-Button-Placeholder,
+  .navbar .DocSearch-Button-Keys {
+    display: none;
+  }
+
+  .navbar .DocSearch-Button {
+    padding: 0 0.5rem;
+  }
+
+  .navbar__items .navbar__link > svg[class*="iconExternalLink"] {
+    display: none;
+  }
+}
+
+@media (min-width: 997px) and (max-width: 1420px) {
+  .navbar__items--right .header-community-qq,
+  .navbar__items--right .header-community-wechat,
+  .navbar__items--right .header-community-discord {
+    display: none;
+  }
+
+  .navbar__item {
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+  }
+}
+
+@media (min-width: 997px) and (max-width: 1320px) {
+  .navbar__items--right .casdoor-signup,
+  .navbar__items .navbar__item--optional {
+    display: none;
+  }
+}
+
+@media (min-width: 997px) and (max-width: 1200px) {
+  .navbar__item {
+    font-size: 13px;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+}
