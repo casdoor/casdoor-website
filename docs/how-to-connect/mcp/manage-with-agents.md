@@ -29,7 +29,7 @@ Without a license, `tools/list` shows only the application and user tools, and c
 
 Agents sign in with OAuth 2.0 and register themselves as a client first, which Casdoor allows only in an organization that turns it on:
 
-1. In the console, go to **User Management** > **Organizations**, open `built-in` (for an admin of one organization, open that organization), turn on **Enable dynamic client registration**, and save it.
+1. In the console, go to **User Management** > **Organizations**, open `built-in` (for an admin of one organization, open that organization), turn on **Enable dynamic client registration**, and save it. Casdoor Cloud instances have it on in `built-in` already.
 1. Add `https://<your-casdoor>/api/mcp` to the agent as a remote MCP server, for example in Claude Code:
 
    ```shell
