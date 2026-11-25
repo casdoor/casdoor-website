@@ -65,13 +65,6 @@ const tag = {
       id: "showcase.tag.favorite.description",
     }),
   },
-  Web3: {
-    label: translate({message: "Web3"}),
-    description: translate({
-      message: "go language",
-      id: "showcase.tag.favorite.description",
-    }),
-  },
   Provider: {
     label: translate({message: "Provider"}),
     description: translate({

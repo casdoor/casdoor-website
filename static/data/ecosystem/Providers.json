@@ -568,25 +568,5 @@
       "Captcha"
     ],
     "image": "/img/ecosystem/gee.png"
-  },
-  {
-    "title": "MetaMask",
-    "url": "https://casdoor.org/docs/provider/web3/metamask",
-    "description": "",
-    "tags": [
-      "Provider",
-      "Web3"
-    ],
-    "image": "/img/ecosystem/metaMask.png"
-  },
-  {
-    "title": "Web3-Onboard",
-    "url": "https://casdoor.org/docs/provider/web3/web3onboard",
-    "description": "",
-    "tags": [
-      "Provider",
-      "Web3"
-    ],
-    "image": "/img/ecosystem/onboard.png"
   }
 ]

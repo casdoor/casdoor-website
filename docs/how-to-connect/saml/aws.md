@@ -20,7 +20,7 @@ This guide explains how to use Casdoor as the SAML identity provider (IdP) of AW
 #### What you need
 
 - An AWS account with the rights to configure IAM and VPC
-- An Amazon VPC with an EC2 instance. See [Get started with Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html) and [Get started with Amazon EC2](https://docs.aws.amazon.com/ec2/latest/userGuide/EC2_GetStarted.html). To test the connection, allow ICMP from the CIDR of the VPC in the security group of the instance.
+- An Amazon VPC with an EC2 instance. See [Get started with Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html) and [Get started with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html). To test the connection, allow ICMP from the CIDR of the VPC in the security group of the instance.
 - A private certificate in [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/). See the [AWS Client VPN administrator guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html).
 - A Windows or Mac computer with the [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn-download/) application
 - An [application](/docs/application/overview) in Casdoor

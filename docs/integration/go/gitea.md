@@ -5,9 +5,9 @@ keywords: [Gitea, OAuth, OIDC]
 authors: [ComradeProgrammer]
 ---
 
-[Gitea](https://gitea.io/en-us/) supports OAuth2/OIDC for sign-in. This guide configures Casdoor as the identity provider.
+[Gitea](https://about.gitea.com/) supports OAuth2/OIDC for sign-in. This guide configures Casdoor as the identity provider.
 
-**Prerequisites:** Gitea installed and an admin account. See [install Gitea](https://docs.gitea.io/en-us/install-from-binary/). The first registered user is admin if you did not create one during install.
+**Prerequisites:** Gitea installed and an admin account. See [install Gitea](https://docs.gitea.com/installation/install-from-binary). The first registered user is admin if you did not create one during install.
 
 ### 1. Create a Casdoor application
 

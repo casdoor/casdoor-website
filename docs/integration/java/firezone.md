@@ -5,7 +5,7 @@ keywords: [OIDC, FireZone, IDP]
 authors: [dingchenzy]
 ---
 
-This guide configures [FireZone](https://docs.firezone.dev/deploy/) to use [Casdoor](/docs/basic/server-installation) as the OIDC IdP.
+This guide configures [FireZone](https://www.firezone.dev/kb/deploy) to use [Casdoor](/docs/basic/server-installation) as the OIDC IdP.
 
 ## Step 1: Deploy Casdoor and FireZone
 

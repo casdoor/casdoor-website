@@ -2,7 +2,6 @@
 title: Unity
 description: Use the Casdoor-dotnet-sdk for Unity development.
 keywords: [Unity]
-authors: [Wrapping-2000]
 ---
 
 ## Step 1: Deploy Casdoor

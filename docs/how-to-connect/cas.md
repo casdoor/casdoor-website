@@ -50,7 +50,7 @@ For example, for the demo site `https://door.casdoor.com`, the organization `cas
 | `/p3/proxyValidate` | 3.0 |
 | `/samlValidate` | SAML 1.1 validation |
 
-For the parameters of each endpoint, see the [CAS protocol specification](https://apereo.github.io/cas/7.1.x/protocol/CAS-Protocol-Specification.html).
+For the parameters of each endpoint, see the [CAS protocol specification](https://apereo.github.io/cas/7.3.x/protocol/CAS-Protocol-Specification.html).
 
 ## Configure the application
 

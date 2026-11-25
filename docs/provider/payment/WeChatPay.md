@@ -3,7 +3,7 @@ title: Take payments with WeChat Pay
 sidebar_label: WeChat Pay
 description: Use WeChat Pay as the payment provider of your Casdoor products, with Native payment and JSAPI payment inside WeChat.
 keywords: [WeChat Pay, payment]
-authors: [Wrapping-2000, Chinoholo0807]
+authors: [Chinoholo0807]
 ---
 
 This guide explains how to let users pay for your Casdoor products with WeChat Pay. Casdoor supports [Native payment](https://pay.weixin.qq.com/docs/merchant/products/native-payment/introduction.html), with a QR code, and [JSAPI payment](https://pay.weixin.qq.com/docs/merchant/products/jsapi-payment/introduction.html), inside the WeChat app.

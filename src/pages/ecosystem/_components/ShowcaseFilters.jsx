@@ -15,9 +15,9 @@ export default function ShowcaseFilters() {
   const filteredUsers = useFilteredList();
   const siteCountPlural = useSiteCountPlural();
 
-  const IntegrationList = TagList.slice(0, 9);
-  const ProviderList = TagList.slice(9, 20);
-  const SDKList = TagList.slice(20);
+  const IntegrationList = TagList.slice(0, 8);
+  const ProviderList = TagList.slice(8, 19);
+  const SDKList = TagList.slice(19);
 
   return (
     <section className="container margin-top--l margin-bottom--lg">

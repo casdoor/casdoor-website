@@ -230,7 +230,7 @@ function OpenClawSection() {
               <Translate>
                 {"The "}
               </Translate>
-              <Link href="https://openclaw.io"><Translate>OpenClaw</Translate></Link>
+              <Link href="https://openclaw.ai"><Translate>OpenClaw</Translate></Link>
               <Translate>
                 {" agent collects OpenTelemetry traces, metrics, and logs from your LLM applications and pushes them to Casdoor over OTLP. Every tool call, agent-to-agent interaction, and LLM invocation is recorded as a structured entry — giving you a full audit trail of what your agents actually did at runtime."}
               </Translate>
