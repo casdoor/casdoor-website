@@ -141,7 +141,7 @@ Call a tool with `tools/call`, the name of the tool, and its arguments.
 }
 ```
 
-`delete_application`:
+`delete_application` takes the ID of the application like `get_application`, or `owner` and `name`, or the `application` object with its `owner` and `name`:
 
 ```json
 {
@@ -151,10 +151,7 @@ Call a tool with `tools/call`, the name of the tool, and its arguments.
   "params": {
     "name": "delete_application",
     "arguments": {
-      "application": {
-        "owner": "my-org",
-        "name": "old-app"
-      }
+      "id": "my-org/old-app"
     }
   }
 }
@@ -170,7 +167,7 @@ The user tools work like the application tools.
 | `get_user` | `id`, or `owner` and `email`, or `owner` and `phone` | Gets one user |
 | `add_user` | `user` object | Creates a user |
 | `update_user` | `id` and `user` object | Changes a user |
-| `delete_user` | `user` object | Deletes a user |
+| `delete_user` | `id`, or `owner` and `name`, or `user` object | Deletes a user |
 
 ## Migration tools {#migration-tools}
 
