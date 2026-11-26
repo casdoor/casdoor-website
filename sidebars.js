@@ -358,6 +358,15 @@ module.exports = {
         },
         {
           type: "category",
+          label: "Web3",
+          collapsed: true,
+          link: {type: "generated-index"},
+          items: [
+            "provider/web3/wallet",
+          ],
+        },
+        {
+          type: "category",
           label: "Payments",
           collapsed: true,
           link: {type: "generated-index"},
