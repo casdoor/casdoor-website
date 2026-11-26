@@ -48,6 +48,14 @@ With `Select`, it shows a list of organizations:
 The organization choice appears only on `/login` and `/login/<organization>`, and only if the application is the default application of the organization or `app-built-in`.
 :::
 
+## Sign in as organization/username {#organization-username}
+
+Without an organization choice, users of other organizations can still use `/login`: they enter `<organization>/<username>` as the username, for example `my-org/alice`. Casdoor then signs them in through the default application of `my-org`, the same as signing in on `/login/my-org`, so the sign-in methods, MFA and captcha of that application apply.
+
+When a name isn't found on `/login`, the error tells the user to sign in on `/login/<organization>` or to enter `<organization>/<username>`. The hint is added for every unknown name, so it doesn't tell whether the account exists in another organization. It isn't added when `enableErrorMask` is on, where an unknown user gets the same error as a wrong password.
+
+This only applies to the Casdoor sign-in page of `app-built-in`. A sign-in for another application, such as an OAuth authorization request, still looks the user up in that application's organization only.
+
 ## Return to the same organization {#automatic-redirect-after-session-expiry}
 
 When a user submits the sign-in form, the browser stores the organization of the form in `localStorage` as `lastLoginOrg`, whether the sign-in succeeds or not. Visiting a sign-in page such as `/login/my-org` without submitting the form doesn't store anything.
