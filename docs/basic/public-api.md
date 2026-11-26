@@ -202,15 +202,15 @@ Supported codes include `en`, `zh`, `es`, `fr`, `de`, `ja`, and `ko`. For the fu
 
 ## Read error responses
 
-Every API response is a JSON object with a `status` field. A failed request returns `"status": "error"` and a localized message in `msg`.
+Every API response is a JSON object with a `status` field. A failed request returns `"status": "error"` and a localized message in `msg`. The HTTP status code stays `200`, so check `status` rather than the HTTP status.
 
-Failed sign-ins through `POST /api/login` with a password, including LDAP, and failed multi-factor authentication (MFA) steps also return a `code` field. Unlike `msg`, it doesn't depend on the language, so your code can branch on it:
+Common errors also return a `code` field. Unlike `msg`, it doesn't depend on `Accept-Language` or the wording of the message, so your code can branch on it:
 
 ```json
 {
   "status": "error",
-  "code": "wrong-password",
-  "msg": "password or code is incorrect, you have 4 remaining chances",
+  "code": "email-exists",
+  "msg": "Email already exists",
   "sub": "",
   "name": "",
   "data": null,
@@ -219,16 +219,114 @@ Failed sign-ins through `POST /api/login` with a password, including LDAP, and f
 }
 ```
 
+Errors that aren't listed below omit `code`; handle them by `status` and show `msg`.
+
+### Duplicates
+
 | `code` | Reason |
 |---|---|
-| `user-not-found` | The user doesn't exist in the organization |
-| `account-disabled` | The user is forbidden to sign in, or is a guest user who hasn't set a username and password |
-| `account-frozen` | The user entered a wrong password or code too many times and must wait |
-| `wrong-password` | The password is incorrect |
-| `password-expired` | The password has expired and must be reset |
-| `mfa-failed` | The MFA passcode or recovery code is incorrect |
+| `username-exists` | Another user in the organization has this username |
+| `email-exists` | Another user in the organization has this email |
+| `phone-exists` | Another user in the organization has this phone number |
+| `user-exists` | Some of the imported users already exist, or a user appears twice in the uploaded file |
+| `account-already-linked` | The third-party account is already linked to another user, or the user is already linked to another account of the provider |
 
-Other errors omit `code`. Casdoor also stores the reason in the detail of the sign-in record. When `enableErrorMask2` is `true` in [`app.conf`](/docs/basic/configuration), responses carry neither `code` nor the detailed message.
+`POST /api/add-user` checks the username before the email. If you derive the username from the email, a duplicate email returns `username-exists`.
+
+### Invalid input
+
+| `code` | Reason |
+|---|---|
+| `username-required` | The username is empty |
+| `username-invalid` | The username is too short or too long, starts with a digit, contains spaces or other characters that aren't allowed, or is an email address where emails aren't allowed |
+| `email-required` | The email is empty |
+| `email-invalid` | The email isn't a valid email address |
+| `email-domain-not-allowed` | The email domain isn't allowed to sign up |
+| `phone-required` | The phone number is empty |
+| `phone-invalid` | The phone number isn't valid, or isn't valid in the user's region |
+| `phone-region-not-allowed` | The region of the phone number isn't allowed to sign up |
+| `password-required` | The password is empty |
+| `password-invalid` | The password doesn't meet the organization's password rules, or contains spaces |
+| `password-reused` | The new password is the same as the current password or one of the recent passwords |
+| `field-required` | A required field, such as the display name, first name, last name or affiliation, is empty |
+| `field-invalid` | A field doesn't match the format the organization or application requires, or the display name isn't a valid real name |
+| `parameter-required` | A required request parameter is missing |
+
+### Invitation codes and sign-up
+
+| `code` | Reason |
+|---|---|
+| `invitation-code-required` | The application requires an invitation code and none was given |
+| `invitation-code-invalid` | The invitation code doesn't exist |
+| `invitation-code-expired` | The invitation code has expired |
+| `invitation-code-used` | The invitation code has been used up |
+| `invitation-code-suspended` | The invitation code is suspended |
+| `invitation-code-mismatch` | The invitation code is bound to a different username, email or phone number |
+| `signup-disabled` | The application doesn't allow new users to sign up |
+
+### Sign-in
+
+| `code` | Reason |
+|---|---|
+| `user-not-found` | The user doesn't exist |
+| `wrong-password` | The password or code is incorrect |
+| `account-disabled` | The user is forbidden to sign in, or is a guest user who hasn't set a username and password |
+| `account-deleted` | The user has been deleted |
+| `account-frozen` | The user entered a wrong password or code too many times and must wait |
+| `account-pending-approval` | The user is waiting for an administrator's approval |
+| `password-expired` | The password has expired and must be reset |
+| `mfa-failed` | The multi-factor authentication (MFA) passcode or recovery code is incorrect |
+| `risk-denied` | [Adaptive risk](/docs/user/adaptive-risk) or [device trust](/docs/device-trust/overview) refused the sign-in |
+| `ip-frozen` | Too many sign-ins failed from the client's IP address and it must wait |
+| `ip-banned` | The client's IP address isn't in the IP whitelist of the user, application or organization |
+| `signin-disabled` | The organization or application doesn't let users sign in |
+| `signin-method-disabled` | The sign-in method, such as password, SMS, email, LDAP, WebAuthn, face or magic link, isn't enabled for the application |
+
+When `enableErrorMask` is `true` in [`app.conf`](/docs/basic/configuration), an unknown user returns `wrong-password` instead of `user-not-found`, so the response doesn't reveal which accounts exist. Casdoor also stores the sign-in reason in the detail of the sign-in record.
+
+### Sessions and permissions
+
+| `code` | Reason |
+|---|---|
+| `login-required` | The request isn't signed in, or the session has expired |
+| `invalid-token` | The token is invalid |
+| `permission-denied` | The caller isn't allowed to perform the operation |
+| `demo-mode-forbidden` | The operation isn't allowed in demo mode |
+| `edition-required` | The feature needs a commercial or enterprise edition license |
+
+### Missing objects
+
+| `code` | Reason |
+|---|---|
+| `application-not-found` | The application doesn't exist |
+| `organization-not-found` | The organization doesn't exist |
+| `provider-not-found` | The provider doesn't exist |
+| `object-not-found` | The requested object doesn't exist |
+
+### Verification codes and magic links
+
+| `code` | Reason |
+|---|---|
+| `verification-code-wrong` | The verification code is incorrect |
+| `verification-code-expired` | The verification code has expired |
+| `verification-code-used` | The verification code has already been used |
+| `verification-code-not-sent` | No verification code has been sent to the email or phone number |
+| `verification-code-too-frequent` | A code was sent too recently; wait before sending another |
+| `verification-code-limit` | Too many codes have been sent to the phone number, or today's SMS quota has run out |
+| `captcha-failed` | The CAPTCHA check failed |
+| `email-provider-missing` | The application has no email provider to send the code |
+| `sms-provider-missing` | The application has no SMS provider to send the code |
+| `magic-link-invalid` | The magic link is invalid |
+| `magic-link-expired` | The magic link has expired |
+| `magic-link-used` | The magic link has already been used |
+
+### Billing
+
+| `code` | Reason |
+|---|---|
+| `insufficient-balance` | The user's or organization's balance would fall below its credit limit |
+
+When `enableErrorMask2` is `true` in [`app.conf`](/docs/basic/configuration), responses carry neither `code` nor the detailed message.
 
 ## Sign a user out of all sessions
 
